@@ -28,7 +28,7 @@ uint32 func_8001D878(void)
     return D_80098AB8 & 0x20;
 }
 
-void func_8001D888(sint32 arg)
+void Sce_cd_read_wait(sint32 arg)
 {
     while (Cd_read_sync2())
     {
@@ -883,7 +883,7 @@ void func_8001F1DC(void)
     Scene_work.flag_9  = 0;
 }
 
-void func_8001F20C(uint8 *script, uint32 arg)
+void Sce_script_set(uint8 *script, uint32 arg)
 {
     D_800BC7F0           = arg;
     Scene_work.script_A4 = script;
@@ -919,7 +919,7 @@ sint32 func_8001F23C(void)
         {
             Cd_read_comb(next);
         }
-        func_8001D888(0);
+        Sce_cd_read_wait(0);
         func_8003A3B4();
         func_8003AD14();
     }
@@ -962,7 +962,7 @@ sint32 func_8001F3C8(void)
             SCENE_GAME_FIXED.value_6A = cd;
         }
         func_8001F5E4();
-        func_8001D888(0);
+        Sce_cd_read_wait(0);
         Obj_work_flag_change(0x3FE, 0x80);
         func_80031AA4();
     }

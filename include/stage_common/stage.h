@@ -211,7 +211,7 @@ void func_8001DDE4(sint32 id);
 void func_8001E6C0(sint32 a0, sint32 a1, sint32 a2);
 // Spawns a scene command's object; returns its work slot (ROCK_NEO's SCENE_SLOT, any slot size).
 void *func_8001EAE8(void *entry);
-void func_8001F20C(void *a, void *b);
+void Sce_script_set(void *a, void *b);
 void func_80067B7C(void);
 sint32 Sce_flag_test(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);

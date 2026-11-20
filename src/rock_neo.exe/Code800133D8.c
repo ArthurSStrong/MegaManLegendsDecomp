@@ -27,7 +27,7 @@ void func_80013420(void)
     Game_work.flags_82                       = 0;
     func_8005C258();
     Cd_read_comb(20);
-    func_8001D888(1);
+    Sce_cd_read_wait(1);
     func_80019FB4();
     MojiTaskKill();
     func_80063BA8();

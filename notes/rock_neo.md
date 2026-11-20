@@ -953,7 +953,7 @@ explain the two functions' `ori` encodings.
 Banked by `tools/twins.py` (byte-identical to a matched function; C copied, build-checked):
 `func_8004E488` (same code as `func_80054BAC`: `return 0;`), `func_8005B85C` (same code as
 `func_8005AB78`), and after the twins run below `func_800181D4`, `func_8005B98C`, `func_80066714`.
-Named `func_8001D888` -> `Sce_read_sync`: waits a frame at a time (`Thread_wait(1)`) until
+Named `Sce_cd_read_wait` -> `Sce_read_sync`: waits a frame at a time (`Thread_wait(1)`) until
 `Cd_read_sync2()` reports the CD queue empty. Same purpose as `Cd_read_sync`, different code (it calls
 `Cd_read_sync2` instead of comparing the queue pointers); its caller is in `code_800133D8`
 (`func_80013420`), which loads `a0 = 1` in the call's delay slot, so Capcom's version probably took an

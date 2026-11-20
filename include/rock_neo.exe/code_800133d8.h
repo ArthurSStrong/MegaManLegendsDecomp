@@ -81,7 +81,7 @@ void func_80028DE0(void);
 
 void func_8005C258(void);
 void Cd_read_comb(sint32 arg);
-void func_8001D888(sint32 arg);
+void Sce_cd_read_wait(sint32 arg);
 void func_80019FB4(void);
 void func_80063BA8(void);
 void func_80063EF0(void);

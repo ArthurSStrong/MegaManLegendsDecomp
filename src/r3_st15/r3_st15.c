@@ -361,7 +361,7 @@ void func_80100A84(STAGE_ROOM_WORK *wp)
     sint32 i;
 
     func_8001E6C0(0, 0, 0);
-    func_8001F20C(D_80102A78, D_801027B8);
+    Sce_script_set(D_80102A78, D_801027B8);
     for (i = 0; i < 7; i++)
     {
         func_8001EAE8(&D_80102A00[i]);

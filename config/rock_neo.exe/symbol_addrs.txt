@@ -256,9 +256,11 @@ Cd_set_volume = 0x8001D394; // type:func
 Cd_read_comb = 0x8001D440; // type:func
 Cd_read_sync = 0x8001D7E4; // type:func
 Cd_read_sync2 = 0x8001D838; // type:func
+Sce_cd_read_wait = 0x8001D888; // type:func
 Sce_flag_test = 0x8001DA58; // type:func
 Sce_flag_on = 0x8001DA8C; // type:func
 Sce_flag_off = 0x8001DCD0; // type:func
+Sce_script_set = 0x8001F20C; // type:func
 Model_Shadow_Trans = 0x8002C794; // type:func
 Obj_work_flag_change = 0x8002EE90; // type:func
 Close_EVE_WORK = 0x800319F4; // type:func
@@ -792,7 +794,8 @@ Debug_work = 0x800C4C10; // size:0x38
 Scene_work = 0x800C4C48; // size:0xA8
 SHL_PROGBIN_LOAD_ADDRESS = 0x800D8800;
 Thread_current = 0x801F8300; // absolute:True
-D_8009A770 = 0x8009A770; // stand-in CODE486_SOLID inside D_8009A710 (func_80051BE4)
+// D_8009A770: stand-in CODE486_SOLID inside D_8009A710 (func_80051BE4)
+D_8009A770 = 0x8009A770;
 
 // Pointer targets of data tables (C functions, strings in merged rodata, fields inside larger
 // objects), labelled so the tables point at symbols and move with the program (tools/shift_test.py).
@@ -940,9 +943,11 @@ D_800BD1C2 = 0x800BD1C2;
 D_800BD1D4 = 0x800BD1D4;
 // Tables of pointers that splat typed from their code accesses as bytes or halfwords, which keeps
 // their pointers as numbers: typed as words here (asm output only).
-D_80089A20 = 0x80089A20; // type:u32 // function table after D_800899E0
+// D_80089A20: function table after D_800899E0
+D_80089A20 = 0x80089A20; // type:u32
 D_8008F168 = 0x8008F168; // type:u32
-D_8008D19C = 0x8008D19C; // size:0x1E0 type:u32 // CODE5C_ROOM[40]
+// D_8008D19C: CODE5C_ROOM[40]
+D_8008D19C = 0x8008D19C; // size:0x1E0 type:u32
 // Stack pointers asm_fastmem saves while it runs on the scratchpad (linker_syms_rock_neo.exe.ld).
 D_80098B44 = 0x80098B44; // size:0x4
 D_80098B68 = 0x80098B68; // size:0x4

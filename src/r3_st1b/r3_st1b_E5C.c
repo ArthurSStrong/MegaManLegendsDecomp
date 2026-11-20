@@ -562,7 +562,7 @@ void func_80101C00(STAGE_ROOM_WORK *wp)
     sint32 i;
 
     func_8001E6C0(0, 0, 0);
-    func_8001F20C(D_8010DD68, D_8010DB10);
+    Sce_script_set(D_8010DD68, D_8010DB10);
     for (i = 0; i < 7; i++)
     {
         func_8001EAE8(&D_8010DCF0[i]);
@@ -781,7 +781,7 @@ void func_801021BC(STAGE_ROOM *wp)
     sint32 i;
     func_8001E068();
     func_8001E6C0(0, 0, 0);
-    func_8001F20C(D_8010DF28, D_8010DDC8);
+    Sce_script_set(D_8010DF28, D_8010DDC8);
     for (i = 0; i < 6; i++)
     {
         func_8001EAE8(&D_8010DEB0[i]);
