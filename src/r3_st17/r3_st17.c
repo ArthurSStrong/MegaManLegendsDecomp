@@ -5446,15 +5446,15 @@ void func_8010B458(STAGE_OBJ *wp)
 
     func_8010B7A4(wp);
     face = &wp->u_4E0.face;
-    if (wp->routine_2 == 0 && D_80098788 == 0)
+    if (wp->routine_2 == 0 && Sound_fade_flags == 0)
     {
-        func_8001D854(0x10);
+        Sound_fade_start(0x10);
         func_8005D4E8();
         wp->routine_2++;
     }
     if (face->value_2 == 0)
     {
-        if (wp->routine_2 != 0 && D_80098788 == 0)
+        if (wp->routine_2 != 0 && Sound_fade_flags == 0)
         {
             wp->u_C.b.byte_C = 1;
             wp->routine_0    = 2;

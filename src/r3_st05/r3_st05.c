@@ -335,12 +335,12 @@ void func_80101420(STAGE_ROOM *wp)
         case 3:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_4++;
             }
             break;
         case 4:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(7, 0, 0);
                 wp->routine_4++;
@@ -572,9 +572,9 @@ void func_80101C24(STAGE_ROOM *wp)
                 {
                     wp->routine_7 = 1;
                     func_80017C30(0xA);
-                    func_8001D854(0x40);
+                    Sound_fade_start(0x40);
                 }
-                if (D_80098A72 != 0 || D_80098788 != 0 || Cd_read_sync2() != 0)
+                if (D_80098A72 != 0 || Sound_fade_flags != 0 || Cd_read_sync2() != 0)
                 {
                     break;
                 }
@@ -2563,7 +2563,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
             {
                 break;
             }
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             Sce_script_timer_clear();
             func_8001E6C0(0, 0, 0);
             D_800BC7F0 = D_80130194;
@@ -2663,7 +2663,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
             }
             break;
         case 10:
-            if (D_80098788 == 0 && --wp->timer_C < 0)
+            if (Sound_fade_flags == 0 && --wp->timer_C < 0)
             {
                 func_80106074(0);
                 func_80106074(1);
@@ -2675,7 +2675,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
                 stcom36_func_0118();
                 stcom36_func_0028(1);
                 Sce_flag_on(5);
-                func_8001D854(0x20);
+                Sound_fade_start(0x20);
                 Sound_work.volume_6 = 0x7F;
             }
             break;

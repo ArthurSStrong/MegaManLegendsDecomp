@@ -232,20 +232,20 @@ void Sound_call(sint32 sound, ...);
 #endif
 void func_8003B140(void);
 void func_80017C30(sint32 arg);
-void func_8001D854(sint32 arg);
+void Sound_fade_start(sint32 arg);
 void func_80016D64(void);
 void func_8001B33C(void);
 void func_8001B314(void);
 void func_80019C20(void);
 #ifdef __wasm32__
-sint32 func_8001F23C(void);
+sint32 Sce_stage_load(void);
 #else
-void func_8001F23C(void);
+void Sce_stage_load(void);
 #endif
 #ifdef __wasm32__
-sint32 func_8001F3C8(void);
+sint32 Sce_room_load(void);
 #else
-void func_8001F3C8(void);
+void Sce_room_load(void);
 #endif
 extern uint32 D_80098958;
 void Sub_screen_gauge_set(sint32 x, sint32 y, sint32 width, sint32 row);

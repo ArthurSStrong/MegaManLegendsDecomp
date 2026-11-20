@@ -129,11 +129,11 @@ void func_80112ED0(ST1D_VIEW *wp)
     {
         if (Sce_flag_test(D_801155B8[Game_work.value_51]))
         {
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             wp->routine_1++;
         }
     }
-    else if (D_80098788 == 0)
+    else if (Sound_fade_flags == 0)
     {
         wp->routine_0 = 1;
     }

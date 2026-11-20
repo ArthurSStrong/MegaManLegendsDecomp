@@ -5999,7 +5999,7 @@ void func_8011BA74(ST1A_OBJ *wp)
                 fp->routine_3    = 0x3C;
                 fp->routine_2    = 0;
             }
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             // fall through
         case 1:
             wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;

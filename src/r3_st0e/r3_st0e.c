@@ -146,12 +146,12 @@ void func_801005A0(STAGE_ROOM *wp)
         case 0:
             if (func_80042238(&Player_work) != 0)
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_5++;
             }
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Player_work.flags_0 &= ~3;
                 Obj_work_flag_change(0x56, 5);
@@ -261,7 +261,7 @@ void func_80100870(STAGE_ROOM *wp)
                 Sce_flag_on(0x528);
                 func_8001E3F0(0xD);
                 func_8001D974();
-                func_8001D854(0x20);
+                Sound_fade_start(0x20);
                 wp->flags_0 = 0;
                 func_80017C30(2);
                 break;

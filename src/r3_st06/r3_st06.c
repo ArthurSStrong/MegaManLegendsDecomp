@@ -1177,7 +1177,7 @@ void func_801026CC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 2:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 MojiTaskExec2(0, 0xB);
                 wp->routine_5++;
@@ -1449,7 +1449,7 @@ void func_8010305C(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(0xA, 0, 0);
                 wp->routine_6++;
@@ -1654,7 +1654,7 @@ void func_80103438(STAGE_ROOM *wp)
                 wp->routine_4++;
             }
             else if (Sce_skip_check() && wp->reserved09[1] == 1 && D_80098A72 == 0 &&
-                     D_80098788 == 0)
+                     Sound_fade_flags == 0)
             {
                 func_80017C30(0xA);
                 wp->routine_4++;
@@ -1667,7 +1667,7 @@ void func_80103438(STAGE_ROOM *wp)
             }
             break;
         case 5:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 D_800A395C = 1;
                 func_80039820();

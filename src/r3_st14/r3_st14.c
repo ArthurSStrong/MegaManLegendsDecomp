@@ -177,12 +177,12 @@ void func_80100784(STAGE_ROOM *wp)
         case 0:
             if (func_80042238(&Player_work))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_5++;
             }
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Player_work.flags_0 &= ~3;
                 Obj_work_flag_change(0x56, 5);
@@ -291,7 +291,7 @@ void func_80100A54(STAGE_ROOM *wp)
                 Obj_work_flag_change(0x56, 0xA);
                 Sce_flag_on(0x529);
                 func_8001E3F0(0xE);
-                func_8001D854(0x20);
+                Sound_fade_start(0x20);
                 wp->flags_0 = 0;
                 func_80017C30(2);
                 break;
@@ -370,12 +370,12 @@ void func_80100D00(STAGE_ROOM *wp)
             if (func_80042238(&Player_work))
             {
                 wp->reserved09[1] = 0x80;
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_5++;
             }
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Player_work.flags_0 &= ~3;
                 Obj_work_flag_change(0x10, 0x80);

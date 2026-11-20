@@ -783,7 +783,7 @@ void func_801019A8(STAGE_ROOM *wp)
         case 0:
             if (func_80042238(&Player_work) != 0)
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_8001B314();
                 if (Game_work.value_50 == 0xB)
                 {
@@ -832,7 +832,7 @@ void func_801019A8(STAGE_ROOM *wp)
             }
             func_8001EC0C();
             Sce_script_update();
-            if (wp->routine_4 == 5 && D_80098A72 == 0 && D_80098788 == 0)
+            if (wp->routine_4 == 5 && D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 if (Game_work.value_50 == 0xB)
                 {

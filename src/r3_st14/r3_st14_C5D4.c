@@ -1743,13 +1743,13 @@ void func_8010F9F8(STAGE_OBJ *wp)
 {
     if (wp->routine_1 == 0)
     {
-        if (D_80098788 == 0)
+        if (Sound_fade_flags == 0)
         {
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             wp->routine_1++;
         }
     }
-    else if (D_80098788 == 0)
+    else if (Sound_fade_flags == 0)
     {
         Sce_flag_on(0x50);
         Sound_call(0x27, 0, 0);

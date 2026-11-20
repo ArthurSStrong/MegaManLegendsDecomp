@@ -804,7 +804,7 @@ void func_80127AE4(STAGE_EV *wp)
             }
             break;
         case 8:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             wp->routine_1++;
             // fall through
         case 9:
@@ -826,7 +826,7 @@ void func_80127AE4(STAGE_EV *wp)
             }
             break;
         case 11:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sce_flag_on(0x57);
                 wp->routine_1 = 0xFF;

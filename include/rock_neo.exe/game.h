@@ -224,7 +224,7 @@ extern GAME_FUNC Game_main_tbl[];
 extern GAME_WORK Game_work;
 extern GAME_ENTRY_WORK D_800C3558;
 extern sint16 D_80098A72;
-extern uint8 D_80098788;
+extern uint8 Sound_fade_flags;
 extern uint16 D_80098910;
 extern sint16 D_800C3560;
 extern sint16 D_800C3562;
@@ -247,14 +247,14 @@ void func_80016D64(void);
 void func_80015EE8(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset);
 void Sce_flag_on(sint32 flag);
 #ifdef __wasm32__
-sint32 func_8001F23C(void);
+sint32 Sce_stage_load(void);
 #else
-void func_8001F23C(void);
+void Sce_stage_load(void);
 #endif
 #ifdef __wasm32__
-sint32 func_8001F3C8(void);
+sint32 Sce_room_load(void);
 #else
-void func_8001F3C8(void);
+void Sce_room_load(void);
 #endif
 void func_80038648(void);
 void func_8001D8C0(sint32 mode);
@@ -311,7 +311,7 @@ void func_80028DE0(void);
 void Map_screen_init(void);
 sint32 Map_screen_task(void);
 
-void func_8001D854(sint32 arg);
+void Sound_fade_start(sint32 arg);
 sint32 func_8001A0A8(sint32 arg);
 void func_80016DAC(void);
 void func_80016E90(void);
@@ -323,7 +323,7 @@ void func_8003A744(void);
 void func_801D8130(void);
 sint32 func_801D816C(void);
 
-void func_8001D990(void);
+void Sce_update(void);
 void func_80063C30(void);
 void func_80039D38(GAME_DELTA *delta);
 void Obj_work_flag_change(sint32 mask, sint32 flags);

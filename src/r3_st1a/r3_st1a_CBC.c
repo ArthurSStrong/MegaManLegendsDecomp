@@ -43,7 +43,7 @@ void func_80100CD4(STAGE_ROOM *wp)
             if (Sce_flag_test(0x6C) != 0)
             {
                 Sce_flag_on(0x6C);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_80017C30(0xE);
                 Sce_event_start(0x46);
                 wp->routine_4 = 0xFF;
@@ -2357,7 +2357,7 @@ void func_80105278(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 func_8001F580(0xC0, 1, 1);
                 func_8005D7C0();

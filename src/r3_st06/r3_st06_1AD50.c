@@ -181,7 +181,7 @@ void func_8011B164(ST06_EVENT *wp)
         }
         if (Sce_flag_test(0x640))
         {
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             wp->routine_1 = 0;
             wp->routine_0++;
         }

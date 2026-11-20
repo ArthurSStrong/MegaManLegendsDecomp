@@ -577,13 +577,13 @@ void func_80117FC4(STAGE_OBJ *wp)
                 STAGE_PL.routine_0 = 3;
                 STAGE_PL.routine_1 = 0;
                 STAGE_PL.value_448 = 0;
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 Sound_work.volume_6 = 0x64;
                 wp->routine_3++;
             }
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(0xB, 0, 0);
                 wp->routine_3 = 0;
@@ -835,12 +835,12 @@ void func_801188C0(ST05_ACTOR *wp)
             wp->value_E      = 0;
             wp->value_F++;
             STAGE_PL.flags_bd |= 0x20;
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             func_8001E3F0(3);
             Sound_work.volume_6 = 100;
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(0xB, 0, 0);
                 wp->value_F++;

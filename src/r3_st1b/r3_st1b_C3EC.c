@@ -16,12 +16,12 @@ void func_8010C3EC(STAGE_EV *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 func_80017C30(0xA);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_0++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 D_800C356C = 2;
                 D_800C356E = 0x16;

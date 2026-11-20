@@ -15,11 +15,11 @@ void Obj_work_flag_change(sint32 arg, sint32 flags);
 // Small data reached through $gp
 static SCENE_HALF_BYTES D_80098198;
 
-void func_8001D854(uint8 arg)
+void Sound_fade_start(uint8 arg)
 {
-    if (D_80098788 == 0)
+    if (Sound_fade_flags == 0)
     {
-        D_80098788 = arg;
+        Sound_fade_flags = arg;
     }
 }
 
@@ -81,7 +81,7 @@ void func_8001D974(void)
     Game_work.flags_53++;
 }
 
-void func_8001D990(void)
+void Sce_update(void)
 {
     SCENE_WORK *wp;
 
@@ -891,7 +891,7 @@ void Sce_script_set(uint8 *script, uint32 arg)
     Scene_work.flag_9    = script[1];
 }
 
-sint32 func_8001F23C(void)
+sint32 Sce_stage_load(void)
 {
     SCENE_GAME_VIEW *gw;
     sint32 routine;
@@ -940,7 +940,7 @@ sint32 func_8001F23C(void)
     return 0;
 }
 
-sint32 func_8001F3C8(void)
+sint32 Sce_room_load(void)
 {
     SCENE_GAME_VIEW *gw;
     uint8 *pw;

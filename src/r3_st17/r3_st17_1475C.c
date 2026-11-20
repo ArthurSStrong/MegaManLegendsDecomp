@@ -226,7 +226,7 @@ void func_80114F00(STAGE_OBJ *wp)
             Pl00_shot_enable_off(&Player_work);
             STAGE_PL_BYTE(0x449) = 1;
             STAGE_PL_BYTE(0x175) = 0;
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             if (Moji_flag & 0x08000000)
             {
                 func_80053AA4(0);
@@ -415,14 +415,14 @@ void func_8011552C(STAGE_OBJ *wp)
             }
             break;
         case 5:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             func_80017C30(9);
             Sound_call(0x182, 0, 0);
             Sound_call(0x184, 0, 0);
             wp->routine_1++;
             break;
         case 6:
-            if (D_80098A72 == 0 && D_80098788 == 0 && func_80042238(pl) != 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -489,7 +489,7 @@ void func_80115780(STAGE_OBJ *wp)
             if (wp->position_fixed.v.x == 0)
             {
                 MojiTaskExec2(0, 3);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
             }
             else if (wp->position_fixed.v.x == 0x78)
             {
@@ -505,7 +505,7 @@ void func_80115780(STAGE_OBJ *wp)
             wp->routine_1++;
             break;
         case 5:
-            if (D_80098A72 == 0 && D_80098788 == 0 && func_80042238(pl) != 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
             {
                 if (Moji_flag & 0x8000000)
                 {
@@ -581,7 +581,7 @@ void func_80115A24(STAGE_OBJ *wp)
             wp->routine_1++;
             break;
         case 4:
-            if (D_80098A72 == 0 && D_80098788 == 0 && func_80042238(pl) != 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;

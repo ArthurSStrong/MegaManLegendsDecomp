@@ -168,7 +168,7 @@ void func_80100B98(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(0xC, 0, 0);
                 Sound_work.volume_6 = 0x73;

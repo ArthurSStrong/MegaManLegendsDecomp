@@ -146,7 +146,7 @@ extern SCENE_GAME_VIEW Game_work;
 extern SCENE_PLAYER_VIEW Player_work;
 extern uint8 Sce_flag[];
 extern SCENE_FUNC D_8008980C[];
-extern uint8 D_80098788;
+extern uint8 Sound_fade_flags;
 extern uint8 D_80098AB8;
 extern uint16 D_800C0C2A;
 extern uint32 D_800988E8;

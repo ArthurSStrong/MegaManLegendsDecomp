@@ -222,14 +222,14 @@ void func_801104C8(STAGE_OBJ *wp)
             if (func_80042238((STCOM_PL_WORK *)&Player_work) != 0)
             {
                 func_80110150(wp);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_801100C0(0, -1, 0x300, 0);
                 wp->routine_1++;
                 return;
             }
             return;
         case 1:
-            if ((D_80098A72 == 0) && (D_80098788 == 0))
+            if ((D_80098A72 == 0) && (Sound_fade_flags == 0))
             {
                 Sound_call(0x21, 1, 0);
                 MojiTaskExec2(0, 0xDU);
@@ -247,13 +247,13 @@ void func_801105AC(STAGE_OBJ50 *wp)
         case 0:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 MojiTaskExec2(0, ST08_GAME_WORD(0x150) + 0x16);
                 wp->routine_1++;
             }
             break;
         case 1:
-            if (!(Moji_flag & 0x8000000) && D_80098788 == 0)
+            if (!(Moji_flag & 0x8000000) && Sound_fade_flags == 0)
             {
                 func_80042314(&Player_work);
                 Sound_call2(0x16D, &Player_work.position);
@@ -280,7 +280,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             if (func_80042238(&Player_work))
             {
                 Sound_call2(0x16D, &Player_work.position);
-                func_8001D854(0x40);
+                Sound_fade_start(0x40);
                 func_80053AA4(2);
                 func_80053AA4(3);
                 if ((uint32)wp->value_48 >= D_8011422C[ST08_GAME_WORD(0x150)].value_4)
@@ -295,7 +295,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             }
             break;
         case 4:
-            if (!(Moji_flag & 0x8000000) && D_80098788 == 0)
+            if (!(Moji_flag & 0x8000000) && Sound_fade_flags == 0)
             {
                 if ((uint32)wp->value_48 >= D_8011422C[ST08_GAME_WORD(0x150)].value_4)
                 {

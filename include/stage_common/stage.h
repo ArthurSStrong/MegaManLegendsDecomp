@@ -723,10 +723,10 @@ typedef struct
 
 extern STAGE_SOUND_WORK Sound_work;
 extern uint8 D_80098840;
-extern uint8 D_80098788;
+extern uint8 Sound_fade_flags;
 void Cd_read_comb(sint32 id);
 sint32 Cd_read_sync2(void);
-void func_8001D854(sint32 arg);
+void Sound_fade_start(sint32 arg);
 void func_80032304(void *wp, sint32 anim, sint32 arg);
 void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 void func_80033A28(void *wp);

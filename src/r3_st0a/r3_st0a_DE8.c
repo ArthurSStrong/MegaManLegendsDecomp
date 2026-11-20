@@ -258,7 +258,7 @@ void func_801014B0(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 2:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 wp->flags_0 = 0;
             }

@@ -621,7 +621,7 @@ void func_8012BBF8(STAGE_OBJ50 *wp)
     switch (wp->routine_1)
     {
         case 0:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             Sce_flag_on(0x7E0);
             func_8012BB3C();
             wp->routine_1++;
@@ -633,7 +633,7 @@ void func_8012BBF8(STAGE_OBJ50 *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 Sound_work.volume_6 = 0x50;
                 Sound_call(0x1D, 1, 0);
@@ -701,16 +701,16 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
             wp->routine_2++;
             break;
         case 4:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 msg = Game_work_90[wp->value_F].kind_0 + 0x4E;
                 MojiTaskExec2(0, wp->value_F * 4 + msg);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_2++;
             }
             break;
         case 5:
-            if (!(Moji_flag & 0x08000000) && D_80098788 == 0)
+            if (!(Moji_flag & 0x08000000) && Sound_fade_flags == 0)
             {
                 func_80042314(&Player_work);
                 MojiTaskExec2(2, 0x39);
@@ -788,7 +788,7 @@ void func_8012BF74(ST05_RACE *wp)
     {
         func_80053AA4(2);
         func_80053AA4(3);
-        func_8001D854(0x40);
+        Sound_fade_start(0x40);
     }
 }
 

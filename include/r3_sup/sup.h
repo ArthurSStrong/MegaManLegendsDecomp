@@ -186,7 +186,7 @@ extern SUP_PLAYER Player_work;
 
 extern SUP_GAME Game_work;
 extern sint32 Moji_flag;
-extern uint8 D_80098788;
+extern uint8 Sound_fade_flags;
 extern sint16 D_80098A72;
 // Joy1, as this module reads it.
 typedef struct
@@ -250,10 +250,10 @@ void func_8001B314(void);
 void func_8001B33C(void);
 void func_80016D64(void);
 void func_80017C30(sint32 arg);
-void func_8001D854(sint32 arg);
+void Sound_fade_start(sint32 arg);
 void func_80019C20(void);
-void func_8001F23C(void);
-void func_8001F3C8(void);
+void Sce_stage_load(void);
+void Sce_room_load(void);
 void func_8001F5E4(void);
 void func_8002FA10(void *obj, void *arg);
 void func_80037594(void);

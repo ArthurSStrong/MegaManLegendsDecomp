@@ -99,7 +99,7 @@ extern SOUND_FUNC D_800823A0[];
 
 extern uint16 *D_80082320[];
 extern void func_8001B33C(void);
-extern void func_8001D854(sint32 arg);
+extern void Sound_fade_start(sint32 arg);
 typedef struct
 {
     uint8 reserved0[2];

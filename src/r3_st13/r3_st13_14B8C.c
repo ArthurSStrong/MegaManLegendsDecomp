@@ -52,7 +52,7 @@ void func_80114CF0(STAGE_OBJ *wp)
 
 void func_80114D2C(STAGE_OBJ *wp)
 {
-    if ((uint16)STAGE_PL.position.y > 0xFFD7 && !(STAGE_PL_BYTE(6) & 0x40) && D_80098788 == 0 && func_80042238(&Player_work))
+    if ((uint16)STAGE_PL.position.y > 0xFFD7 && !(STAGE_PL_BYTE(6) & 0x40) && Sound_fade_flags == 0 && func_80042238(&Player_work))
     {
         Sound_call(0x32, 0, 0);
         Sce_flag_on(0x64B);
@@ -100,9 +100,9 @@ void func_80114F98(STAGE_OBJ *wp)
     {
         life |= D_80118D50[i]->life_6E;
     }
-    if (life == 0 && D_80098788 == 0)
+    if (life == 0 && Sound_fade_flags == 0)
     {
-        func_8001D854(0x10);
+        Sound_fade_start(0x10);
         Sce_flag_off(0x64B);
         Sce_flag_on(0x53);
         func_8005D4E8();
@@ -115,7 +115,7 @@ void func_80114F98(STAGE_OBJ *wp)
 
 void func_80115060(STAGE_OBJ *wp)
 {
-    if (D_80098788 == 0)
+    if (Sound_fade_flags == 0)
     {
         Sound_call(0x31, 0, 0);
         wp->routine_1++;
@@ -150,12 +150,12 @@ void func_801150F4(STAGE_EV *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 func_80017C30(0xA);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_0++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 D_800C356C = 2;
                 D_800C356E = 0x16;

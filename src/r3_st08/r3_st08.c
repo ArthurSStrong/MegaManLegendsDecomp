@@ -687,7 +687,7 @@ void func_801018CC(STAGE_ROOM *wp)
         case 0:
             if (func_80042238(&Player_work))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_80101798();
                 STAGE_GAME.value_83 = 2;
                 func_800425FC(&Player_work, 0);
@@ -703,7 +703,7 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 Sound_call(0x19, 1, 0);
                 wp->routine_4 = 2;
@@ -734,13 +734,13 @@ void func_801018CC(STAGE_ROOM *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 MojiTaskExec2(0, ST08_GAME_WORD(0x120) + 9);
                 wp->routine_4 = 4;
             }
             break;
         case 4:
-            if (!(Moji_flag & 0x8000000) && D_80098788 == 0)
+            if (!(Moji_flag & 0x8000000) && Sound_fade_flags == 0)
             {
                 Sound_call2(0x163, &Player_work.position);
                 Sound_work.volume_6 = 0x1E;
@@ -762,7 +762,7 @@ void func_801018CC(STAGE_ROOM *wp)
             if (func_80042238(&Player_work))
             {
                 Sound_call2(0x163, &Player_work.position);
-                func_8001D854(0x40);
+                Sound_fade_start(0x40);
                 func_80053AA4(2);
                 func_80053AA4(3);
                 func_80053AA4(1);
@@ -771,7 +771,7 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
         case 7:
-            if (!(Moji_flag & 0x8000000) && D_80098788 == 0)
+            if (!(Moji_flag & 0x8000000) && Sound_fade_flags == 0)
             {
                 if (Scene_work.value_A < (uint8)D_80113208[ST08_GAME_WORD(0x120)].value_4)
                 {
@@ -894,7 +894,7 @@ void func_801018CC(STAGE_ROOM *wp)
         case 14:
             if (D_800C356C_A[0] == 2)
             {
-                func_8001D854(0xA0);
+                Sound_fade_start(0xA0);
                 STAGE_GAME.value_83 = 0;
                 D_800C356C_A[0]++;
                 func_80042314(&Player_work);

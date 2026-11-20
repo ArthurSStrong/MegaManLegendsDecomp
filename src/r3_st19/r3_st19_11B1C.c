@@ -791,7 +791,7 @@ void func_80112D00(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (D_80098788 == 0 && func_80042238(&Player_work) != 0)
+            if (Sound_fade_flags == 0 && func_80042238(&Player_work) != 0)
             {
                 pl->routine_0   = 3;
                 pl->routine_1   = 1;

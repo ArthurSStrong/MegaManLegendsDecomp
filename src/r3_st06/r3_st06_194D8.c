@@ -201,7 +201,7 @@ void func_80119AF8(ST06_WAIT *wp)
     if (wp->routine_1 == 0)
     {
         Sound_work.volume_6 = 0x7F;
-        func_8001D854(0x10);
+        Sound_fade_start(0x10);
         wp->timer_14 = 300;
         wp->routine_1++;
     }

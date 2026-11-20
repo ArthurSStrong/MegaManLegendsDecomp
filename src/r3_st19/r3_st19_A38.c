@@ -54,13 +54,13 @@ void func_80100B2C(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             func_80017C30(0xD);
             MojiTaskKill();
             wp->routine_4++;
             break;
         case 3:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 Sce_event_start(0x42);
                 func_8001E460(0, 0, 0);

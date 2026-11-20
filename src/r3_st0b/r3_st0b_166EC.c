@@ -382,12 +382,12 @@ void func_801170A8(ST0B_EVENT *wp)
             }
             break;
         case 2:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             func_80017C30(0xA);
             wp->routine_2++;
             break;
         case 3:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 func_8005D87C();
                 wp->routine_2++;
@@ -509,13 +509,13 @@ void func_80117300(ST0B_EVENT *wp)
         case 4:
             if (!(Moji_flag & 0x800000))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_80017C30(0xA);
                 wp->routine_2++;
             }
             break;
         case 5:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 func_8005D87C();
                 wp->routine_2++;
@@ -614,14 +614,14 @@ void func_8011754C(ST0B_EVENT *wp)
         case 5:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 Sound_call(0x101, 0, 0);
                 func_80017C30(0xA);
                 wp->routine_2++;
             }
             break;
         case 6:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 D_80120368->routine_0 = 2;
                 func_8005D87C();
@@ -658,7 +658,7 @@ void func_80117830(STAGE_OBJ *wp)
             Pl00_shot_enable_off(&Player_work);
             STAGE_PL.value_449 = 1;
             STAGE_PL.value_175 = 0;
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             if (Moji_flag & 0x08000000)
             {
                 func_80053AA4(0);
@@ -892,12 +892,12 @@ void func_80117E2C(ST0B_EVENT *wp)
                 wp->timer_1C++;
                 break;
             }
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             wp->timer_1C = 0;
             wp->routine_3++;
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_call(0x2A, 0, 0);
                 wp->routine_3++;
@@ -1406,7 +1406,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
         case 0:
             if (func_80042238(&Player_work) != 0)
             {
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_8001B314();
                 if (STAGE_GAME.value_50 == 0xB)
                 {
@@ -1455,7 +1455,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
             }
             func_8001EC0C();
             Sce_script_update();
-            if (wp->routine_4 == 5 && D_80098A72 == 0 && D_80098788 == 0)
+            if (wp->routine_4 == 5 && D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 if (STAGE_GAME.value_50 == 0xB)
                 {

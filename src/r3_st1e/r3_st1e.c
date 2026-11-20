@@ -641,11 +641,11 @@ void func_80100ED4(STAGE_ROOM *wp)
             break;
         case 5:
             D_80098840 = 1;
-            func_8001D854(0x40);
+            Sound_fade_start(0x40);
             wp->routine_5++;
             break;
         case 6:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 D_80098840          = 4;
                 Sound_work.volume_6 = 0x7F;

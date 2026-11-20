@@ -534,13 +534,13 @@ void func_8010A044(STAGE_OBJ50 *wp)
                 }
                 else
                 {
-                    func_8001D854(0x10);
+                    Sound_fade_start(0x10);
                     wp->routine_1++;
                 }
             }
             break;
         case 3:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 MojiTaskExec2(0, 0xB);
                 Sound_work.volume_6 = D_80111D0C[wp->u_C.b.lo];
@@ -559,19 +559,19 @@ void func_8010A044(STAGE_OBJ50 *wp)
             {
                 pl->value_448 = 0x31;
                 func_80053AA4(0);
-                func_8001D854(0x40);
+                Sound_fade_start(0x40);
                 wp->routine_1++;
             }
             break;
         case 6:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 Sound_work.volume_6 = 0x7F;
                 wp->routine_1++;
             }
             break;
         case 7:
-            func_8001D854(0x20);
+            Sound_fade_start(0x20);
             wp->routine_1 = 10;
             break;
         case 10:

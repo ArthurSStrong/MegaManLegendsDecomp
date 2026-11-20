@@ -79,7 +79,7 @@ void func_80100820(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             func_80017C30(0xD);
             wp->routine_4++;
             break;

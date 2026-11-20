@@ -602,7 +602,7 @@ void func_8005FBB4(SUB_SEL *wp)
                 gw->value_50 = gw->value_79;
                 gw->value_51 = gw->value_7A;
                 func_80017C30(0x17);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_2++;
             }
             break;
@@ -612,8 +612,8 @@ void func_8005FBB4(SUB_SEL *wp)
             func_8001B314();
             D_80098958 |= 0x800;
             func_80019C20();
-            func_8001F23C();
-            func_8001F3C8();
+            Sce_stage_load();
+            Sce_room_load();
             Game_work.routine_0 = 5;
             Game_work.routine_1 = 2;
             break;

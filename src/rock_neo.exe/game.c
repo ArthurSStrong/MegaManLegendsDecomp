@@ -90,7 +90,7 @@ void func_80015734(GAME_WORK *wp)
         wp->flags_52   = wp->flags_53;
         func_80015EE8(&Player_work, entry, 1);
     }
-    func_8001F23C();
+    Sce_stage_load();
     wp->routine_0 = 2;
     wp->routine_1 = 1;
     wp->flags_82 &= 0xFE;
@@ -114,7 +114,7 @@ void func_80015840(GAME_WORK *wp)
             // fall through
         case 1:
             func_80038648();
-            func_8001F3C8();
+            Sce_room_load();
             entry->flags14 = 0;
             wp->routine_0  = 3;
             wp->routine_1  = 0;
@@ -128,7 +128,7 @@ void func_800158F0(GAME_WORK *wp)
     PL_WORK *player;
     GAME_DELTA delta;
 
-    func_8001D990();
+    Sce_update();
     func_80063C30();
     entry  = &D_800C3558;
     player = &Player_work;
@@ -179,7 +179,7 @@ void func_800158F0(GAME_WORK *wp)
                     wp->routine_51 = entry->room;
                     wp->flags_52   = wp->flags_53;
                     func_80015EE8(player, entry, 0);
-                    func_8001F3C8();
+                    Sce_room_load();
                     entry->flags14 = 0;
                 }
                 else
@@ -403,7 +403,7 @@ void func_80016160(GAME_WORK *wp)
     {
         case 0:
             player->flags_bd |= 0x40;
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 if (*(uint16 *)&Game_work.routine_50 == 0x603 ||
                     *(uint16 *)&Game_work.routine_50 == 0xB13 ||
@@ -417,7 +417,7 @@ void func_80016160(GAME_WORK *wp)
                 }
                 func_8001D7AC(sound);
                 func_80017C30(0x17);
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 wp->routine_1++;
             }
             func_80015DB4();
@@ -433,7 +433,7 @@ void func_80016160(GAME_WORK *wp)
             }
             break;
         case 2:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 func_8001B33C();
                 func_8001B314();
@@ -477,7 +477,7 @@ void func_80016160(GAME_WORK *wp)
                 {
                     func_8001D7AC(0x17);
                     func_80016434(result);
-                    func_8001D854(0x10);
+                    Sound_fade_start(0x10);
                     func_80017C30(0x15);
                     wp->routine_1++;
                 }
@@ -488,7 +488,7 @@ void func_80016160(GAME_WORK *wp)
             }
             break;
         case 6:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 MojiTaskKill();
                 Game_logo_kill(-1);
@@ -680,14 +680,14 @@ void func_80016798(GAME_WORK *wp)
             if ((D_800C0C2A & 8) || func_8001A0A8(0) == 0)
             {
                 wp->routine_1++;
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_80017C30(10);
             }
             break;
         case 5:
             func_80016DAC();
         wait:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 wp->routine_1++;
             }
@@ -750,14 +750,14 @@ void func_800169AC(GAME_WORK *wp)
             if ((D_800C0C2A & 8) || func_8001A0A8(0) == 0)
             {
                 wp->routine_1++;
-                func_8001D854(0x10);
+                Sound_fade_start(0x10);
                 func_80017C30(10);
             }
             break;
         case 5:
             func_80016DAC();
         wait:
-            if (D_80098A72 == 0 && D_80098788 == 0)
+            if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
                 wp->routine_1++;
             }
@@ -826,7 +826,7 @@ void func_80016D38(GAME_WORK *wp)
 
 void func_80016D64(void)
 {
-    while (D_80098788 != 0)
+    while (Sound_fade_flags != 0)
     {
         Thread_wait(1);
     }

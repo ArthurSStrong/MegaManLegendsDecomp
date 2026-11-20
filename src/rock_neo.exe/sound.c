@@ -205,7 +205,7 @@ void func_80019C20(void)
     }
     if (diff)
     {
-        func_8001D854(0x10);
+        Sound_fade_start(0x10);
         D_80098958 |= 0x800;
     }
 }
@@ -251,7 +251,7 @@ void func_80019DE0(void)
     func_8006B594();
     SsSetTableSize(D_800C1010, 4, 4);
     SsSetTickMode(1);
-    D_80098788       = 0;
+    Sound_fade_flags       = 0;
     D_80098938       = D_800BE4F8;
     D_80098958       = 0;
     Sound_work.unk04 = 0x7F;
@@ -776,26 +776,26 @@ void func_8001AEF0(void)
     uint8(*tbl)[8];
 
     sw = &Sound_work;
-    if (!func_8001AE6C(D_80098788 & 3, (uint16 *)&sw->unk0C))
+    if (!func_8001AE6C(Sound_fade_flags & 3, (uint16 *)&sw->unk0C))
     {
-        D_80098788 &= 0xFC;
+        Sound_fade_flags &= 0xFC;
     }
-    if (!func_8001AE6C((D_80098788 & 0xC) >> 2, (uint16 *)&sw->unk10))
+    if (!func_8001AE6C((Sound_fade_flags & 0xC) >> 2, (uint16 *)&sw->unk10))
     {
-        D_80098788 &= 0xF3;
+        Sound_fade_flags &= 0xF3;
     }
-    if (!func_8001AE6C((D_80098788 & 0x30) >> 4, (uint16 *)&sw->unk12))
+    if (!func_8001AE6C((Sound_fade_flags & 0x30) >> 4, (uint16 *)&sw->unk12))
     {
-        D_80098788 &= 0xCF;
+        Sound_fade_flags &= 0xCF;
     }
     D_80098958 |= 0x400;
-    if (!func_8001AE6C(D_80098788 >> 6, (uint16 *)&sw->unk0E))
+    if (!func_8001AE6C(Sound_fade_flags >> 6, (uint16 *)&sw->unk0E))
     {
-        if (D_80098788 & 0x40)
+        if (Sound_fade_flags & 0x40)
         {
             func_8001D494(0, 1, 0);
         }
-        D_80098788 &= 0x3F;
+        Sound_fade_flags &= 0x3F;
     }
     vol = sw->unk04 * sw->unk0C / 127;
     SsSetMVol(vol, vol);

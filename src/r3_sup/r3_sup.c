@@ -36,7 +36,7 @@ void func_801D81B0(void)
             func_8001B314();
             break;
         case 1:
-            if (D_80098788 == 0)
+            if (Sound_fade_flags == 0)
             {
                 D_801DC208.routine_1 = 0;
                 D_801DC208.routine_0++;
@@ -1466,7 +1466,7 @@ void func_801DB800(void)
     {
         case 0:
             func_80017C30(0x17);
-            func_8001D854(0x10);
+            Sound_fade_start(0x10);
             D_801DC208.routine_3++;
             break;
         case 1:
@@ -1477,8 +1477,8 @@ void func_801DB800(void)
             D_800C356E = Game_work.area_50.b.stage;
             D_800C356F = Game_work.area_50.b.room;
             func_80019C20();
-            func_8001F23C();
-            func_8001F3C8();
+            Sce_stage_load();
+            Sce_room_load();
             func_801DBC5C(D_801DC138[Game_work.area_50.b.stage]);
             D_801DC208.value_08 = -1;
             break;
