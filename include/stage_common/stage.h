@@ -207,7 +207,7 @@ void func_80022FD4(void *tbl);
 void func_8002EA50(void *spawn, sint32 spawn_player);
 void func_800371A0(void *blocks, void *arg1);
 void func_8005DC10(sint32 arg);
-void func_8001DDE4(sint32 id);
+void Sce_event_start(sint32 id);
 void func_8001E6C0(sint32 a0, sint32 a1, sint32 a2);
 // Spawns a scene command's object; returns its work slot (ROCK_NEO's SCENE_SLOT, any slot size).
 void *func_8001EAE8(void *entry);
@@ -220,7 +220,7 @@ extern uint16 D_800C0C2A;
 void func_8001B33C(void);
 void func_8001D58C(uint32 arg);
 uint32 func_8001D878(void);
-uint32 func_8001DE84(void);
+uint32 Sce_skip_check(void);
 void func_8001EC0C(void);
 void func_8001F070(void);
 void Obj_work_flag_change(sint32 mask, sint32 flags);

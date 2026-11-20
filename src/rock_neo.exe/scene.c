@@ -255,7 +255,7 @@ sint16 func_8001DDC0(uint8 *p)
     return D_80098198.half;
 }
 
-void func_8001DDE4(uint8 arg)
+void Sce_event_start(uint8 arg)
 {
     SCENE_WORK *wp;
     sint32 i;
@@ -283,7 +283,7 @@ void func_8001DDE4(uint8 arg)
     }
 }
 
-uint32 func_8001DE84(void)
+uint32 Sce_skip_check(void)
 {
     if (Game_work.option_5A != 0 || Sce_flag_test(Scene_work.routine_1 + 0x380) != 0)
     {
@@ -415,7 +415,7 @@ void func_8001E20C(sint8 index)
     }
 }
 
-void func_8001E390(sint32 arg)
+void Sce_flag_select(sint32 arg)
 {
     uint32 i;
 

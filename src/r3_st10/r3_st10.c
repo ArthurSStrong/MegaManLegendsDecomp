@@ -93,7 +93,7 @@ void func_8010079C(STAGE_ROOM *wp)
         func_8001DF10(D_8011004C);
         if (!Sce_flag_test(0x48))
         {
-            func_8001DDE4(0x63);
+            Sce_event_start(0x63);
             Sce_flag_on(0x48);
         }
         else

@@ -53,7 +53,7 @@ void func_8010023C(STAGE_ROOM_WORK *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DDE4(0x30);
+        Sce_event_start(0x30);
         wp->routine_4++;
     }
 }

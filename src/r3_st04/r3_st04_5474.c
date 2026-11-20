@@ -203,12 +203,12 @@ sint32 func_80105A8C(ST04_ACTOR *wp)
         STCOM_PLAYER_WORK_PTR->target_184 = NULL;
         if (Game_work.value_50 == 4)
         {
-            func_8001DDE4(9);
+            Sce_event_start(9);
             STAGE_SCENE_BYTE(4) = 1;
         }
         else
         {
-            func_8001DDE4(0x1D);
+            Sce_event_start(0x1D);
             STAGE_SCENE_BYTE(4) = 0;
         }
     }
@@ -432,7 +432,7 @@ void func_801061D8(ST04_ACTOR *wp)
 
     cam = &D_800BC730;
     pl  = ST04_PL;
-    if (wp->routine_0 >= 0x15 && func_8001DE84())
+    if (wp->routine_0 >= 0x15 && Sce_skip_check())
     {
         Sce_flag_on(0x618);
         Sce_flag_on(0x20);

@@ -87,7 +87,7 @@ void func_80100670(STAGE_ROOM *wp)
 {
     if (Sce_flag_test(0x7B0))
     {
-        func_8001DDE4(0);
+        Sce_event_start(0);
         return;
     }
     switch (wp->routine_4)
@@ -106,7 +106,7 @@ void func_80100670(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x60C))
             {
-                func_8001DDE4(0x17);
+                Sce_event_start(0x17);
                 STAGE_SCENE_BYTE(4) = 0;
                 wp->routine_4       = 0xFF;
             }
@@ -120,7 +120,7 @@ void func_8010071C(void)
 {
     if (Sce_flag_test(0x7B0) != 0)
     {
-        func_8001DDE4(0);
+        Sce_event_start(0);
     }
 }
 
@@ -212,7 +212,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
             wp->tbl_A4[1](wp);
         }
     }
-    if (wp->routine_6 != 0 && wp->routine_6 < 3 && func_8001DE84())
+    if (wp->routine_6 != 0 && wp->routine_6 < 3 && Sce_skip_check())
     {
         func_80100BF0();
         MojiTaskKill();

@@ -193,7 +193,7 @@ void func_801077AC(STAGE_ACTOR *wp)
                 wp->routine_2     = 0;
                 wp->routine_3     = 0;
                 Sce_flag_on(0x234);
-                func_8001E390(0x2E9);
+                Sce_flag_select(0x2E9);
             }
             break;
     }

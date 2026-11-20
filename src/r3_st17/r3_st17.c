@@ -65,27 +65,27 @@ void func_80100778(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            func_8001DDE4(0x34);
+            Sce_event_start(0x34);
             wp->routine_4++;
             break;
         case 1:
             if (Sce_flag_test(0x605) != 0)
             {
-                func_8001DDE4(0x35);
+                Sce_event_start(0x35);
                 wp->routine_4++;
             }
             break;
         case 2:
             if (Sce_flag_test(0x606) != 0)
             {
-                func_8001DDE4(0x36);
+                Sce_event_start(0x36);
                 wp->routine_4++;
             }
             break;
         case 3:
             if (Sce_flag_test(0x607) != 0)
             {
-                func_8001DDE4(0x37);
+                Sce_event_start(0x37);
                 wp->routine_4++;
             }
             break;

@@ -51,7 +51,7 @@ void func_80100270(STAGE_ROOM *wp)
 {
     if ((*((sint8 *)&Game_work + 0x82) & 0x80) && wp->routine_4 == 0)
     {
-        func_8001DDE4(0xA);
+        Sce_event_start(0xA);
         wp->routine_4++;
     }
 }
@@ -67,7 +67,7 @@ void func_801002CC(STAGE_ROOM *wp)
         {
             id = 0x24;
         }
-        func_8001DDE4(id);
+        Sce_event_start(id);
         wp->routine_4++;
     }
 }
@@ -735,7 +735,7 @@ void func_80101430(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4++;
@@ -1113,7 +1113,7 @@ void func_80101E20(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4++;

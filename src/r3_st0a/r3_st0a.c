@@ -82,7 +82,7 @@ void func_8010058C(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x26) != 0)
             {
-                func_8001DDE4(0x14);
+                Sce_event_start(0x14);
                 func_8001E460(1, 1, 1);
                 wp->routine_4 = 2;
             }
@@ -90,7 +90,7 @@ void func_8010058C(STAGE_ROOM *wp)
         case 2:
             if (Sce_flag_test(0x10) != 0)
             {
-                func_8001DDE4(0x15);
+                Sce_event_start(0x15);
                 func_8001E460(1, 0, 0);
                 wp->routine_4 = 3;
             }

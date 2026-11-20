@@ -213,7 +213,7 @@ void func_80100168(STAGE_ROOM *wp)
     }
     func_8001EC0C();
     func_8001F070();
-    if (func_8001DE84() != 0 && wp->routine_5 >= 2)
+    if (Sce_skip_check() != 0 && wp->routine_5 >= 2)
     {
         Sound_call2(0x188, &D_801129A0->position);
         func_80053AA4(0);
@@ -422,7 +422,7 @@ void func_80101000(STAGE_ROOM *wp)
         case 0:
             if (!Sce_flag_test(0x30))
             {
-                func_8001DDE4(0x1E);
+                Sce_event_start(0x1E);
                 wp->routine_4++;
             }
             else
@@ -447,7 +447,7 @@ void func_801010AC(void)
 {
     if (Sce_flag_test(0x28) != 0)
     {
-        func_8001DDE4(0x18);
+        Sce_event_start(0x18);
     }
 }
 
@@ -814,7 +814,7 @@ void func_801019A8(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(0xA);
                 wp->routine_4++;

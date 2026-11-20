@@ -211,7 +211,7 @@ void func_80101394(STAGE_ROOM *wp)
             if (wp->routine_8 != 0xFF)
             {
                 wp->tbl_A4[1](wp);
-                if (func_8001DE84() != 0 && !(wp->reserved09[1] & 0x80))
+                if (Sce_skip_check() != 0 && !(wp->reserved09[1] & 0x80))
                 {
                     wp->reserved09[1] |= 1;
                     wp->routine_5 = 0;

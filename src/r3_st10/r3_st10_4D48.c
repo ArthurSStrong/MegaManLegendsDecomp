@@ -205,12 +205,12 @@ sint32 func_80105360(ST10_ACTOR *wp)
         STAGE_PL.target_184 = NULL;
         if (STAGE_GAME.value_50 == 4)
         {
-            func_8001DDE4(9);
+            Sce_event_start(9);
             ST10_SCENE_BYTE_4 = 1;
         }
         else
         {
-            func_8001DDE4(0x1D);
+            Sce_event_start(0x1D);
             ST10_SCENE_BYTE_4 = 0;
         }
     }

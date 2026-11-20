@@ -185,7 +185,7 @@ typedef struct
 extern uint8 Game_work[];
 #define CODE486_GAME_BYTE52 (*(sint8 *)(Game_work + 0x52))
 void Sce_flag_on(sint32 flag);
-void func_8001DDE4(sint32 id);
+void Sce_event_start(sint32 id);
 uint32 Sce_flag_test(uint32 flag);
 void func_80063BC8(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 

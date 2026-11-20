@@ -86,7 +86,7 @@ void func_80100820(STAGE_ROOM *wp)
         case 2:
             if (D_80098A72 == 0)
             {
-                func_8001DDE4(0x42);
+                Sce_event_start(0x42);
                 wp->routine_4++;
             }
             break;
@@ -97,7 +97,7 @@ void func_801008F0(STAGE_ROOM *wp)
 {
     if ((wp->routine_4 == 0) && (Sce_flag_test(0x34) != 0))
     {
-        func_8001DDE4(0x41);
+        Sce_event_start(0x41);
         wp->routine_4++;
     }
 }

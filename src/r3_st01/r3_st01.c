@@ -52,7 +52,7 @@ void func_8010022C(STAGE_ROOM_WORK *wp)
         case 1:
             if (D_80098A72 == 0)
             {
-                func_8001DDE4(0x47);
+                Sce_event_start(0x47);
                 D_80098A8C = 0;
                 wp->routine_4++;
             }
@@ -168,7 +168,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             wp->routine_4++;
             // fall through
         case 5:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4 = 10;

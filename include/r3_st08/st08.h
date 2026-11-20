@@ -312,7 +312,7 @@ void func_8003697C(void);
 
 extern uint8 D_80118514;
 
-void func_8001E390(sint32 a0);
+void Sce_flag_select(sint32 a0);
 
 extern void *D_80112434[]; // room models by room
 extern void *D_8011262C[]; // spawn list by room

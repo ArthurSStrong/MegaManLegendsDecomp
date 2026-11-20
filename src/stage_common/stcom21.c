@@ -536,7 +536,7 @@ void stcom21_func_0D9C(void)
     {
         Sce_flag_off(0x220);
         Sce_flag_off(0x221);
-        func_8001E390(0x2E0);
+        Sce_flag_select(0x2E0);
     }
     else if (!Sce_flag_test(0x220) && Sce_flag_test(0x221))
     {

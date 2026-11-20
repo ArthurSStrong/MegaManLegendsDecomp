@@ -510,7 +510,7 @@ void func_8010B7DC(STAGE_OBJ *wp)
 {
     if (Player_work.position.z < -0x5153)
     {
-        func_8001DDE4(0x1F);
+        Sce_event_start(0x1F);
         wp->routine_0++;
     }
     func_80032488(wp);

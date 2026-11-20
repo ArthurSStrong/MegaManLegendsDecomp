@@ -59,7 +59,7 @@ void func_80100448(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x7B0))
             {
-                func_8001DDE4(0);
+                Sce_event_start(0);
             }
             break;
     }
@@ -69,7 +69,7 @@ void func_801004B4(void)
 {
     if (Sce_flag_test(0x7B0) != 0)
     {
-        func_8001DDE4(0);
+        Sce_event_start(0);
     }
 }
 
@@ -77,7 +77,7 @@ void func_801004E4(void)
 {
     if (Sce_flag_test(0x7B0) != 0)
     {
-        func_8001DDE4(0);
+        Sce_event_start(0);
     }
 }
 
@@ -92,7 +92,7 @@ void func_80100514(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x7B0))
             {
-                func_8001DDE4(0);
+                Sce_event_start(0);
             }
             break;
     }
@@ -102,7 +102,7 @@ void func_80100580(STAGE_ROOM *wp)
 {
     if (Sce_flag_test(0x7B0))
     {
-        func_8001DDE4(0);
+        Sce_event_start(0);
         return;
     }
     switch (wp->routine_4)
@@ -121,7 +121,7 @@ void func_80100580(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x27))
             {
-                func_8001DDE4(0x25);
+                Sce_event_start(0x25);
                 wp->routine_4++;
             }
             break;
@@ -129,7 +129,7 @@ void func_80100580(STAGE_ROOM *wp)
             if (func_801006DC(&D_80114FF8))
             {
                 Sce_flag_on(0x41);
-                func_8001DDE4(0x28);
+                Sce_event_start(0x28);
                 func_8001E4C4(D_80114FFC, D_80115064);
                 wp->routine_4++;
             }
@@ -229,7 +229,7 @@ void func_80100784(STAGE_ROOM *wp)
             func_8001F070();
             break;
     }
-    if (func_8001DE84())
+    if (Sce_skip_check())
     {
         wp->reserved09[1] |= 1;
     }
@@ -253,7 +253,7 @@ void func_8010098C(STAGE_ROOM *wp)
             wp->routine_5 = 0;
             wp->routine_4++;
         }
-        else if (func_8001DE84())
+        else if (Sce_skip_check())
         {
             if (wp->reserved09[1] & 2)
             {
@@ -423,7 +423,7 @@ void func_80100D00(STAGE_ROOM *wp)
             func_8001F070();
             break;
     }
-    if (func_8001DE84())
+    if (Sce_skip_check())
     {
         wp->reserved09[1] |= 1;
     }
@@ -434,7 +434,7 @@ void func_80100D00(STAGE_ROOM *wp)
 // func_80116D94).
 void func_80100EF0(STAGE_ROOM *wp)
 {
-    if (wp->routine_8 == 0xFF || (wp->tbl_A4[1](wp), func_8001DE84() != 0) ||
+    if (wp->routine_8 == 0xFF || (wp->tbl_A4[1](wp), Sce_skip_check() != 0) ||
         wp->reserved09[1] == 1)
     {
         wp->routine_5 = 0;
@@ -454,7 +454,7 @@ void func_80100EF0(STAGE_ROOM *wp)
     else
     {
         wp->tbl_A4[1](wp);
-        if (func_8001DE84() != 0 || wp->reserved09[1] == 1)
+        if (Sce_skip_check() != 0 || wp->reserved09[1] == 1)
         {
             wp->routine_4++;
             wp->routine_5 = 0;

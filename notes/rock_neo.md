@@ -744,7 +744,7 @@ frame comes for free: no unused local needed.
 Also banked: `func_80068244`, `func_8006849C`, `func_8006890C`, `func_80068998`, `func_80068AB0`,
 `func_80068B3C`: call `func_800680BC(0/1/2)` and set or clear bit 1 (sometimes bit 0) of
 `obj_24[0..2]->routine_0`. `func_8006849C` tests `Scene_work.field_0C` (0x0C, otherwise only cleared by
-`func_8001DDE4`) instead of `timer_10`. Two matching idioms: when two objects clear bit 1, the mask is an
+`Sce_event_start`) instead of `timer_10`. Two matching idioms: when two objects clear bit 1, the mask is an
 `int` local (`mask = ~2`; a literal folds to `andi 0xFD` at each use, the target loads -3 once), and the
 register split shows which objects shared one pointer local (`obj_24[0]` separate, `[1]`/`[2]` one local).
 Also banked: steps `func_80068290`, `func_80068388`, `func_800687D8`, `func_80068A24`, `func_80068BE4`,
@@ -763,21 +763,21 @@ Banked `func_80068DAC(sw)` (0x80068DAC), the scene's main routine, a switch on `
 0 waits for `func_80042238(Player_work)`, clears bits 0-1 of `Player_work[0].unk00` and plays XA
 `0x2001000B`; 1 waits for `func_8001D878`, sets `field_0C = 30`; 2 counts `field_0C` down, then
 `func_80017C30(2)`; 3 `event_scene_init` and falls through to 4 (ends when `D_80098A72 == 0` and the
-event table reached its 0xFF entry or `func_8001DE84` says START skipped, `func_80017C30(10)`) and 5:
+event table reached its 0xFF entry or `Sce_skip_check` says START skipped, `func_80017C30(10)`) and 5:
 the per-frame work (`event_step_call`, `screen_tile_draw(field_68, 6C, 70, 74)` while `field_64`, the
 camera, `Sce_event_update`, the empty `func_80068DA4` at `timer_14 == 0x4680`, 5 minutes). In 5 with
 `D_80098A72 == 0` it sets the `D_800C3560`.. block for the next stage (0x1B, 6), clears `unk00`, pauses
-the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`func_80042314`), `func_8001E390(0x2EB)`,
+the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`func_80042314`), `Sce_flag_select(0x2EB)`,
 `Sce_flag_on(0x55)`, `func_8001D974`. So `screen_tile_draw` takes `uint8` r, g, b (the caller loads
 the low bytes of the `uint32` fields with `lbu`), and the stores only match with `D_800C356C = 2`
 written first (its constant is loaded before the others; its store stays in place).
 
 `scene.c` (0x8001D928..0x8001F798): banked `func_8001D928(keep)` (clears `D_800BE438[16]` unless `keep`,
 then `Scene_work` bytes 0-3 with one word store and `D_800989F8`/`_9FC`/`_A00`; the clear loop only
-matches as a walking pointer `*p++ = 0`, the indexed loop comes out descending), `func_8001DDE4(arg)`
+matches as a walking pointer `*p++ = 0`, the indexed loop comes out descending), `Sce_event_start(arg)`
 (unless `Player_work[0].unk6E < 0`: `unk00 = 1`, `unk01 = arg`, clears the event bytes, timers and
 `obj_24[]`; needs a local `sw = &Scene_work` for `unk00` and the `obj_24` loop only, the target's loop base
-is `sw + 0x3C` with offset 0x24), `func_8001DE84` (1 if `Joy1` START is pressed and `Game_work.unk05A` or
+is `sw + 0x3C` with offset 0x24), `Sce_skip_check` (1 if `Joy1` START is pressed and `Game_work.unk05A` or
 scene flag `0x380 + Scene_work.unk01` is set; nested `if`s, a single condition gives `sltu`),
 `func_8001F6C4` (seeks `Cd_seek_file` to the stage's first file from `D_800893BC[D_800C356E]` unless
 `Game_work.unk068` already has it, else to entry `D_800C356F + 1` unless negative or equal to `unk06A`; one

@@ -4267,7 +4267,7 @@ sint32 func_80051A78(CODE486_EXIT *exit)
             {
                 return 0;
             }
-            func_8001DDE4(0x1B);
+            Sce_event_start(0x1B);
             return 1;
         case 2:
             if (Sce_flag_test(0x28) != 0)
@@ -4275,7 +4275,7 @@ sint32 func_80051A78(CODE486_EXIT *exit)
                 return 0;
             }
             Sce_flag_on(0x28);
-            func_8001DDE4(0x18);
+            Sce_event_start(0x18);
             return 1;
         case 3:
             if (Sce_flag_test(0x29) != 0)
@@ -4283,7 +4283,7 @@ sint32 func_80051A78(CODE486_EXIT *exit)
                 return 0;
             }
             Sce_flag_on(0x29);
-            func_8001DDE4(0x27);
+            Sce_event_start(0x27);
             return 1;
         default:
             return 0;

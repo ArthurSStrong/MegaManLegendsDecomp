@@ -546,7 +546,7 @@ void func_80068DAC(CODE68_WORK *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_a4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_a4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4++;
@@ -581,7 +581,7 @@ void func_80068DAC(CODE68_WORK *wp)
                 func_8001D494(0, 1, 0);
                 Player_work.routine_0 |= 1;
                 func_80042314(&Player_work);
-                func_8001E390(0x2EB);
+                Sce_flag_select(0x2EB);
                 Sce_flag_on(0x55);
                 func_8001D974();
             }

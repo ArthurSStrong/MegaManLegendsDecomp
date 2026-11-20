@@ -529,7 +529,7 @@ void func_8011A44C(STAGE_ROOM *wp)
         case 1:
             if (wp->routine_8 != 0xFF)
             {
-                if (func_8001DE84() != 0 && !(D_80122B98 & 0x80))
+                if (Sce_skip_check() != 0 && !(D_80122B98 & 0x80))
                 {
                     D_80122B98    = 1;
                     wp->routine_5 = 0;

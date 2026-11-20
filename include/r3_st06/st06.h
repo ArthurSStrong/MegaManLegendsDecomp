@@ -1578,7 +1578,7 @@ sint32 func_80112488(ST06_ACTOR *wp);
 
 void func_8011201C(ST06_ACTOR *wp);
 
-void func_8001E390(sint32 id);
+void Sce_flag_select(sint32 id);
 
 sint32 func_80048C60(STCOM_SVECTOR *pos);
 

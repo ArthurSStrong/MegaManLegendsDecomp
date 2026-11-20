@@ -79,7 +79,7 @@ void func_80100860(STAGE_ROOM *wp)
 
 void func_80100A7C(STAGE_ROOM *wp)
 {
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }

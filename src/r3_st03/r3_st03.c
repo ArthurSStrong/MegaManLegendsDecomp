@@ -191,7 +191,7 @@ void func_80100990(STAGE_ROOM *wp)
             else
             {
                 stcom36_func_0028(0);
-                func_8001DDE4(8);
+                Sce_event_start(8);
                 Scene_work.reserved00[4] = 0;
                 wp->routine_4            = 1;
                 func_80101918(0);
@@ -210,7 +210,7 @@ void func_80100990(STAGE_ROOM *wp)
                     dz = (Player_work.position.z >> 9) - D_80114F2D;
                     if ((uint32)dx < D_80114F2E && (uint32)dz < D_80114F2F)
                     {
-                        func_8001DDE4(8);
+                        Sce_event_start(8);
                         Scene_work.reserved00[4] = 1;
                         Sce_flag_on(0x605);
                     }
@@ -223,7 +223,7 @@ void func_80100990(STAGE_ROOM *wp)
                 if (Sce_flag_test(0x604))
                 {
                     Sce_flag_off(0x604);
-                    func_8001DDE4(8);
+                    Sce_event_start(8);
                     Scene_work.reserved00[4] = 2;
                 }
                 break;
@@ -253,7 +253,7 @@ void func_80100BF8(STAGE_ROOM *wp)
             else if (Sce_flag_test(1) && Sce_flag_test(2))
             {
                 wp->routine_4 = 2;
-                func_8001DDE4(8);
+                Sce_event_start(8);
                 Scene_work.reserved00[4] = 3;
             }
             else if (Sce_flag_test(0x1A))
@@ -304,7 +304,7 @@ void func_80100BF8(STAGE_ROOM *wp)
             else if (Sce_flag_test(0x604))
             {
                 Sce_flag_off(0x604);
-                func_8001DDE4(8);
+                Sce_event_start(8);
                 Scene_work.reserved00[4] = 4;
             }
             break;
@@ -319,7 +319,7 @@ void func_80100BF8(STAGE_ROOM *wp)
             break;
         case 4:
             obj = ST03_SCENE_OBJ_0;
-            func_8001DDE4(0x60);
+            Sce_event_start(0x60);
             ST03_SCENE_OBJ_0 = obj;
             wp->routine_4    = 5;
             break;
@@ -330,7 +330,7 @@ void func_80100BF8(STAGE_ROOM *wp)
                 {
                     func_80031824(ST03_SCENE_OBJ_0);
                 }
-                func_8001DDE4(0x61);
+                Sce_event_start(0x61);
                 Sce_flag_on(0x46);
                 wp->routine_4 = 0xFF;
             }
@@ -377,7 +377,7 @@ void func_80100F54(STAGE_ROOM *wp)
                 dz = (Player_work.position.z >> 8) - D_80114F31;
                 if ((uint32)dx < D_80114F32 && (uint32)dz < D_80114F33)
                 {
-                    func_8001DDE4(0x1C);
+                    Sce_event_start(0x1C);
                     Sce_flag_on(0x2E);
                 }
             }
@@ -959,7 +959,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
     {
         wp->tbl_A4[1](wp);
     }
-    if ((uint32)(wp->routine_6 - 3) < 8 && func_8001DE84())
+    if ((uint32)(wp->routine_6 - 3) < 8 && Sce_skip_check())
     {
         MojiTaskKill();
         func_80063BA8();
@@ -1091,7 +1091,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
     {
         wp->tbl_A4[1](wp);
     }
-    if ((uint32)(wp->routine_6 - 2) < 4 && func_8001DE84())
+    if ((uint32)(wp->routine_6 - 2) < 4 && Sce_skip_check())
     {
         MojiTaskKill();
         func_80063BA8();
@@ -1313,7 +1313,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
     {
         wp->tbl_A4[1](wp);
     }
-    if (wp->routine_6 < 11 && func_8001DE84())
+    if (wp->routine_6 < 11 && Sce_skip_check())
     {
         func_80103CC4(3);
         func_80103CC4(4);
@@ -1574,7 +1574,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
     {
         wp->tbl_A4[1](wp);
     }
-    if (wp->routine_6 < 16 && func_8001DE84())
+    if (wp->routine_6 < 16 && Sce_skip_check())
     {
         Sce_flag_on(0x607);
         MojiTaskKill();
@@ -1749,7 +1749,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
         {
             wp->tbl_A4[1](wp);
         }
-        if (wp->routine_6 != 0 && wp->routine_6 < 7 && func_8001DE84())
+        if (wp->routine_6 != 0 && wp->routine_6 < 7 && Sce_skip_check())
         {
             if (wp->routine_6 < 5)
             {

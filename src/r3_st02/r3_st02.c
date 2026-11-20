@@ -53,7 +53,7 @@ void func_80100238(void)
     {
         if (Sce_flag_test(p->flag) != 0)
         {
-            func_8001DDE4(p->id);
+            Sce_event_start(p->id);
             return;
         }
     }
@@ -992,7 +992,7 @@ void func_80101CC0(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 5:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4++;

@@ -236,12 +236,12 @@ sint32 func_8012AFA0(void)
                 func_8001E3F0(4);
             }
             Sce_flag_on(0x205);
-            func_8001E390(0x2E6);
+            Sce_flag_select(0x2E6);
         }
         else
         {
             func_8001E3F0(8);
-            func_8001E390(0x2E5);
+            Sce_flag_select(0x2E5);
         }
         Sce_flag_off(0x7E0);
         Sce_flag_off(0x236);

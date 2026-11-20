@@ -1138,7 +1138,7 @@ void func_801139E8(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 5:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 Sce_flag_on(0x21);

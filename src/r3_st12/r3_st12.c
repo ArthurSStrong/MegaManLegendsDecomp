@@ -84,7 +84,7 @@ void func_80100510(STAGE_ROOM_WORK *wp)
             if (Sce_flag_test(0x21) && !Sce_flag_test(0x6A))
             {
                 func_8001E20C(0);
-                func_8001DDE4(0x33);
+                Sce_event_start(0x33);
                 wp->routine_4++;
                 Sce_flag_on(0x6A);
             }
@@ -401,7 +401,7 @@ void func_80100D88(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 6:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(10);
                 wp->routine_4 = 10;

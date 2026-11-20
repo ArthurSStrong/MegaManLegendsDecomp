@@ -800,7 +800,7 @@ void func_801161C8(STAGE_OBJ *wp)
     ST17_PL_KEYS *pl;
 
     pl = (ST17_PL_KEYS *)&Player_work;
-    if (wp->routine_2 < 3 && func_8001DE84() != 0)
+    if (wp->routine_2 < 3 && Sce_skip_check() != 0)
     {
         if (Moji_flag & 0x08000000)
         {
@@ -1190,7 +1190,7 @@ void func_80116B04(STAGE_ROOM *wp)
             }
             break;
     }
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }
@@ -1209,7 +1209,7 @@ void func_80116D94(STAGE_ROOM *wp)
     else
     {
         wp->tbl_A4[1](wp);
-        if (func_8001DE84() != 0 || wp->reserved09[1] == 1)
+        if (Sce_skip_check() != 0 || wp->reserved09[1] == 1)
         {
             func_80017C30(8);
             wp->routine_5 = 0;
@@ -1706,7 +1706,7 @@ void func_80117CEC(STAGE_ROOM *wp)
             }
             break;
     }
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }
@@ -1770,7 +1770,7 @@ void func_80117EFC(STAGE_ROOM *wp)
             func_8001EC0C();
             break;
     }
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }
@@ -2230,7 +2230,7 @@ void func_80118CD0(STAGE_ROOM *wp)
             }
             break;
     }
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }
@@ -2287,7 +2287,7 @@ void func_80118EC0(STAGE_ROOM *wp)
             func_8001EC0C();
             break;
     }
-    if (func_8001DE84() != 0)
+    if (Sce_skip_check() != 0)
     {
         wp->reserved09[1] |= 1;
     }

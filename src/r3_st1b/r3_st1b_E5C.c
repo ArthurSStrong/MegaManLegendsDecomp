@@ -15,7 +15,7 @@ void func_80100E64(STAGE_OBJ *wp)
     {
         if ((Sce_flag_test(0x33) == 0) && (Sce_flag_test(0x21) != 0))
         {
-            func_8001DDE4(0x56);
+            Sce_event_start(0x56);
             Sce_flag_on(0x33);
         }
         else
@@ -157,7 +157,7 @@ sint32 func_80101250(ST1B_VIEW *wp)
         }
         else if ((Sce_flag_test(0x22C) != 0) && (Sce_flag_test(0x22E) == 0))
         {
-            func_8001DDE4(0x54);
+            Sce_event_start(0x54);
             wp->value_4 = 0xFF;
         }
     }
@@ -614,7 +614,7 @@ void func_80101CB0(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || func_8001DE84() != 0))
+            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
                 func_80017C30(0xA);
                 wp->routine_4++;

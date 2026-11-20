@@ -58,7 +58,7 @@ void func_80108180(ST08_ACTOR *wp)
         }
         else if (Sce_flag_test(0x549))
         {
-            func_8001DDE4(0x57);
+            Sce_event_start(0x57);
             ST08_SCENE_OBJ(0) = wp;
             ST08_SCENE_OBJ(1) = func_80107FF8();
             wp->routine_1     = 2;

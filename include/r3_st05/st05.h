@@ -1615,7 +1615,7 @@ void func_8001E4C4(void *a, void *b);
 sint32 func_80048EA4(STCOM_SVECTOR *pos, void *a1, sint32 a2, sint32 a3);
 void func_8012B44C(STAGE_OBJ50 *wp);
 
-void func_8001E390(sint32 id);
+void Sce_flag_select(sint32 id);
 
 // A 0x34-byte record of the shop counters (by work slot value_F): where func_8012B680 puts the
 // player, and func_8012B948's numbers.

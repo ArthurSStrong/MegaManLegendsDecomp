@@ -261,7 +261,7 @@ void func_801011B8(STAGE_ROOM *wp)
             {
                 wp->routine_4++;
             }
-            if (func_8001DE84() != 0)
+            if (Sce_skip_check() != 0)
             {
                 wp->routine_4 = 10;
             }
