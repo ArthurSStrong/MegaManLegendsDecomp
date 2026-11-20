@@ -23,11 +23,13 @@
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #include <ucontext.h>
-#else
+#elif !defined(_WIN32)
 #include <pthread.h>
 #endif
 #include <sys/time.h>
+#ifndef _WIN32
 #include <sys/wait.h>
+#endif
 #include <time.h>
 #include <unistd.h>
 
@@ -126,6 +128,11 @@ int port_window_open(const char *title, int scale)
 // The OS thread the game runs on (its threads are coroutines in it).
 #ifdef __linux__
 static pid_t game_tid;
+#elif defined(_WIN32)
+// Windows has no signals. The 64-bit build runs on the game-paced clock (vertical blanks are
+// delivered when the game waits for one), so "interrupts off" is a flag and there is no timer
+// (and so no watchdog).
+static int irq_blocked;
 #else
 static pthread_t game_thread;
 static int game_thread_set;
@@ -210,6 +217,41 @@ static void pace_vblank(void)
     }
 }
 
+#ifdef _WIN32
+static int deliver_vblank(void)
+{
+    if (irq_blocked || !vblank_on)
+    {
+        return 0; // interrupts are off (a critical section, or the callbacks stopped)
+    }
+    irq_blocked = 1;
+    if (port_options.paced)
+    {
+        pace_vblank();
+    }
+    vblank_interrupt();
+    irq_blocked = 0;
+    return 1;
+}
+
+void port_vblank_start(void (*handler)(void))
+{
+    if (!port_options.deterministic)
+    {
+        port_log_limited("vblank", 1, "no real-time clock on Windows: using the game-paced one");
+        port_options.deterministic = 1;
+        port_options.paced         = 1;
+    }
+    vblank_handler = handler;
+    vblank_on      = 1;
+}
+
+void port_vblank_stop(void)
+{
+    vblank_handler = NULL;
+    vblank_on      = 0;
+}
+#else
 static int deliver_vblank(void)
 {
     sigset_t set, old;
@@ -328,6 +370,7 @@ void port_vblank_stop(void)
     vblank_handler = NULL;
     vblank_on      = 0;
 }
+#endif // _WIN32
 
 void port_reset_clock(void)
 {
@@ -342,6 +385,19 @@ uint32_t port_vblank_count(void)
     return vblanks;
 }
 
+#ifdef _WIN32
+int port_irq_block(void)
+{
+    int was     = irq_blocked;
+    irq_blocked = 1;
+    return was;
+}
+
+void port_irq_restore(int blocked)
+{
+    irq_blocked = blocked;
+}
+#else
 int port_irq_block(void)
 {
     sigset_t set, old;
@@ -360,6 +416,7 @@ void port_irq_restore(int blocked)
     sigaddset(&set, SIGALRM);
     sigprocmask(blocked ? SIG_BLOCK : SIG_UNBLOCK, &set, NULL);
 }
+#endif
 
 // The console's polls per vertical blank in the movie player's CD wait (0x3FFFFF polls are
 // about two seconds there).

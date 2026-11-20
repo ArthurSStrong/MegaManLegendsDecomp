@@ -6,6 +6,14 @@ endif()
 find_program(PORT_WASM_CLANG NAMES clang REQUIRED)
 find_program(PORT_WASM_LD NAMES wasm-ld REQUIRED)
 find_program(PORT_WASM2C NAMES wasm2c REQUIRED)
+# LLD 21 put the stack first by default and added --no-stack-first; older wasm-ld already puts
+# it after the data and does not know the option.
+execute_process(COMMAND ${PORT_WASM_LD} --help OUTPUT_VARIABLE PORT_WASM_LD_HELP ERROR_QUIET)
+if(PORT_WASM_LD_HELP MATCHES "--no-stack-first")
+    set(PORT_WASM_NO_STACK_FIRST --no-stack-first)
+else()
+    set(PORT_WASM_NO_STACK_FIRST)
+endif()
 find_path(PORT_WABT_INCLUDE wasm-rt.h REQUIRED)
 find_path(PORT_WABT_RUNTIME wasm-rt-impl.c PATH_SUFFIXES wabt/wasm2c
     PATHS /usr/share /usr/local/share REQUIRED)
@@ -58,7 +66,7 @@ add_custom_command(
             --export=Cd_read_sync2 --export=Cd_cmd_set_movie --export=Intro_task
             --export=Cd_cmd_exec --export=Intro_init --export=psx_main
             --export=Cd_sync_cb --export=Movie_sector_cb --export=Movie_dct_out_callback
-            --no-stack-first --global-base=${SHIM_STACK_BASE} -z stack-size=65536
+            ${PORT_WASM_NO_STACK_FIRST} --global-base=${SHIM_STACK_BASE} -z stack-size=65536
             --initial-memory=${SHIM_MEMORY} --max-memory=${SHIM_MEMORY}
             ${SHIM_WASM_OBJ} -o ${SHIM_WASM}
     DEPENDS ${SHIM_BOUND}
@@ -181,7 +189,8 @@ math(EXPR AOT_GAME_MEMORY "${SHIM_MEMORY} + 0xA00000")
 add_custom_command(
     OUTPUT "${AOT_GAME_WASM}"
     COMMAND ${PORT_WASM_LD} --fatal-warnings --no-entry --export-all --import-undefined
-            --no-stack-first --global-base=${SHIM_MEMORY} -z stack-size=65536
+            --export=__stack_pointer # not in --export-all before wasm-ld 21
+            ${PORT_WASM_NO_STACK_FIRST} --global-base=${SHIM_MEMORY} -z stack-size=65536
             --initial-memory=${AOT_GAME_MEMORY} --max-memory=${AOT_GAME_MEMORY}
             ${AOT_GAME_OBJECTS} -o "${AOT_GAME_WASM}"
     DEPENDS ${AOT_GAME_OBJECTS}
@@ -220,7 +229,7 @@ add_custom_command(
     OUTPUT "${AOT_GAME_CHECK_WASM}"
     COMMAND ${PORT_WASM_LD} --fatal-warnings --no-entry --export=func_8001E3F0
             --export=func_800665FC --export=func_80066750
-            --no-stack-first --global-base=${SHIM_MEMORY} -z stack-size=65536
+            ${PORT_WASM_NO_STACK_FIRST} --global-base=${SHIM_MEMORY} -z stack-size=65536
             --initial-memory=${AOT_GAME_MEMORY} --max-memory=${AOT_GAME_MEMORY}
             ${AOT_GAME_OBJECTS} -o "${AOT_GAME_CHECK_WASM}"
     DEPENDS ${AOT_GAME_OBJECTS}
@@ -316,8 +325,10 @@ set(OVL64_LD "${REPO}/build/${OVL64_PROBE}/${OVL64_PROBE}.ld")
     math(EXPR OVL64_SLOT "${OVL64_SLOT} + 1")
     add_custom_command(
         OUTPUT "${OVL64_WASM}"
+        # --export=__stack_pointer: not in --export-all before wasm-ld 21; dispatch.c reads it.
         COMMAND ${PORT_WASM_LD} --fatal-warnings --no-entry --export-all --import-memory
-                --import-undefined --no-stack-first --global-base=${OVL64_GLOBAL_BASE} -z stack-size=0
+                --export=__stack_pointer
+                --import-undefined ${PORT_WASM_NO_STACK_FIRST} --global-base=${OVL64_GLOBAL_BASE} -z stack-size=0
                 --initial-memory=${AOT_GAME_MEMORY} --max-memory=${AOT_GAME_MEMORY}
                 ${OVL64_OBJECTS} -o "${OVL64_WASM}"
         DEPENDS ${OVL64_OBJECTS}

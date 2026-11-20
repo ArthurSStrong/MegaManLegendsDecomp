@@ -8,13 +8,15 @@
 #include "port_remote.h"
 
 #include <SDL3/SDL.h>
+#ifndef _WIN32
 #include <poll.h>
 #include <signal.h>
+#include <sys/wait.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -1362,6 +1364,8 @@ int platform_menu_run(void)
 }
 
 // --- window host (port_remote.h) ------------------------------------------------------------
+// Linux only (fork and a shared block); Windows runs one process.
+#ifndef _WIN32
 
 static volatile sig_atomic_t host_signal;
 
@@ -1452,3 +1456,4 @@ int platform_host_run(int child)
     }
     return 1;
 }
+#endif // _WIN32

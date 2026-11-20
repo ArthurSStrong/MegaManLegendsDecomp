@@ -21,9 +21,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
 #include <ucontext.h>
+#endif
 
-// Coroutines: ucontext on Linux. Apple's tvOS has the ucontext functions but they do not switch
+// Coroutines: Win32 fibers on Windows (port_win32.h brings in windows.h); ucontext on Linux. Apple's tvOS has the ucontext functions but they do not switch
 // (the game's second thread never ran there), so Apple platforms use mml_coro_switch below, a
 // stack switch saving the callee-saved registers. -DPORT_OWN_CORO selects it elsewhere too.
 #if defined(__APPLE__) && !defined(PORT_OWN_CORO)
@@ -40,7 +42,11 @@ typedef struct
 {
     int used;
     ENTRY entry;
+#ifdef _WIN32
+    void *fiber; // the thread's fiber (the main thread's: from ConvertThreadToFiber)
+#else
     ucontext_t ctx;
+#endif
     void *sp; // PORT_OWN_CORO: the saved stack pointer while switched out
     void *stack;
 } THREAD;
@@ -128,6 +134,27 @@ void mml_coro_start(void)
 }
 #endif
 
+#ifdef _WIN32
+static void WINAPI fiber_start(void *arg)
+{
+    (void)arg;
+    thread_start();
+}
+
+// The main thread becomes a fiber the first time another thread is opened.
+static void main_fiber(void)
+{
+    if (threads[0].fiber == NULL)
+    {
+        threads[0].fiber = ConvertThreadToFiber(NULL);
+        if (threads[0].fiber == NULL)
+        {
+            abort();
+        }
+    }
+}
+#endif
+
 static void thread_start(void)
 {
     ENTRY entry = threads[current].entry;
@@ -167,6 +194,19 @@ long OpenTh(ENTRY entry, uint32_t stack, uint32_t gp)
         port_log("OpenTh: no free thread");
         return -1;
     }
+#ifdef _WIN32
+    main_fiber();
+    // A closed slot's old fiber is never resumed; free it unless it is the one running now.
+    if (threads[i].fiber != NULL && i != current)
+    {
+        DeleteFiber(threads[i].fiber);
+    }
+    threads[i].fiber = CreateFiber(THREAD_STACK, fiber_start, NULL);
+    if (threads[i].fiber == NULL)
+    {
+        abort();
+    }
+#else
     if (threads[i].stack == NULL)
     {
         threads[i].stack = malloc(THREAD_STACK);
@@ -186,6 +226,7 @@ long OpenTh(ENTRY entry, uint32_t stack, uint32_t gp)
     threads[i].ctx.uc_link          = NULL;
     makecontext(&threads[i].ctx, thread_start, 0);
 #endif
+#endif // _WIN32
     threads[i].entry = entry;
     threads[i].used  = 1;
     return (long)(HANDLE_TH | (uint32_t)i);
@@ -226,7 +267,10 @@ long ChangeTh(long handle)
     if (guest_thread_switch != NULL)
         guest_thread_switch(from, to);
 #endif
-#ifdef PORT_OWN_CORO
+#if defined(_WIN32)
+    main_fiber();
+    SwitchToFiber(threads[to].fiber);
+#elif defined(PORT_OWN_CORO)
     mml_coro_switch(&threads[from].sp, threads[to].sp);
 #else
     swapcontext(&threads[from].ctx, &threads[to].ctx);

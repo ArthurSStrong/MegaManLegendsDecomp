@@ -24,6 +24,16 @@
 #ifdef __APPLE__
 #define st_mtim st_mtimespec // Darwin's name for the modification time
 #endif
+#ifdef _WIN32
+// Windows' stat has whole seconds only.
+static struct timespec stat_mtime(const struct stat *st)
+{
+    struct timespec t = {st->st_mtime, 0};
+    return t;
+}
+#else
+#define stat_mtime(st) ((st)->st_mtim)
+#endif
 
 #define ST_FIRST   0x51
 #define ST_MIDDLE  0x52
@@ -142,7 +152,7 @@ static void load(CARD *c)
         return;
     }
     c->on_disk = 1;
-    c->mtime   = st.st_mtim;
+    c->mtime   = stat_mtime(&st);
     c->size    = st.st_size;
     if (st.st_size != MEMCARD_SIZE)
     {
@@ -230,7 +240,7 @@ static int save(CARD *c)
     if (stat(c->path, &st) == 0)
     {
         c->on_disk = 1;
-        c->mtime   = st.st_mtim;
+        c->mtime   = stat_mtime(&st);
         c->size    = st.st_size;
     }
     return 0;
@@ -271,8 +281,8 @@ int memcard_poll(int slot)
     {
         exists = stat(c->path, &st) == 0;
         if (exists != c->on_disk ||
-            (exists && (st.st_mtim.tv_sec != c->mtime.tv_sec ||
-                        st.st_mtim.tv_nsec != c->mtime.tv_nsec || st.st_size != c->size)))
+            (exists && (stat_mtime(&st).tv_sec != c->mtime.tv_sec ||
+                        stat_mtime(&st).tv_nsec != c->mtime.tv_nsec || st.st_size != c->size)))
         {
             load(c); // changed behind our back: a different card was inserted
         }
