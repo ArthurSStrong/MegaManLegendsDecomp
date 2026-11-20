@@ -23,7 +23,7 @@ void Sound_fade_start(uint8 arg)
     }
 }
 
-uint32 func_8001D878(void)
+uint32 Sce_cd_reading(void)
 {
     return D_80098AB8 & 0x20;
 }
@@ -36,7 +36,7 @@ void Sce_cd_read_wait(sint32 arg)
     }
 }
 
-void func_8001D8C0(sint32 arg)
+void Sce_flag_init(sint32 arg)
 {
     sint32 i;
     uint32 *p;
@@ -240,7 +240,7 @@ void Sce_flag_off(uint32 flag)
     }
 }
 
-sint16 func_8001DD88(void)
+sint16 half_get_next(void)
 {
     D_80098198.byte[0] = D_80098B60[0];
     D_80098198.byte[1] = D_80098B60[1];
@@ -248,7 +248,7 @@ sint16 func_8001DD88(void)
     return D_80098198.half;
 }
 
-sint16 func_8001DDC0(uint8 *p)
+sint16 half_get(uint8 *p)
 {
     D_80098198.byte[0] = p[0];
     D_80098198.byte[1] = p[1];
@@ -487,7 +487,7 @@ void func_8001E4C4(uint8 *ids, uint8 *flags)
     }
 }
 
-void func_8001E550(void)
+void Sce_camera_apply(void)
 {
     sint32 pos[3];
     sint32 target[3];
@@ -522,7 +522,7 @@ void func_8001E550(void)
     ((SCENE_CAM_FUNC)func_800384A4)(pos, target);
 }
 
-void func_8001E6C0(sint32 arg0, sint32 arg1, sint32 arg2)
+void Sce_camera_start(sint32 arg0, sint32 arg1, sint32 arg2)
 {
     D_800BC7D0 = arg0 << 16;
     D_800A395C = 3;
@@ -676,7 +676,7 @@ SCENE_SLOT *func_8001EB98(SCENE_CMD *cmd)
     return slot;
 }
 
-void func_8001EC0C(void)
+void Sce_camera_script_exec(void)
 {
     SCENE_CAM *cam;
     SCENE_WORK *sw;
@@ -961,7 +961,7 @@ sint32 Sce_room_load(void)
             Cd_read_comb(cd);
             SCENE_GAME_FIXED.value_6A = cd;
         }
-        func_8001F5E4();
+        Sce_pl_parts_load();
         Sce_cd_read_wait(0);
         Obj_work_flag_change(0x3FE, 0x80);
         func_80031AA4();
@@ -1006,7 +1006,7 @@ sint32 Sce_room_load(void)
     return 0;
 }
 
-void func_8001F580(sint16 arg0, sint32 arg1, sint32 arg2)
+void Sce_file_read(sint16 arg0, sint32 arg1, sint32 arg2)
 {
     if (arg1 != 0)
     {
@@ -1019,7 +1019,7 @@ void func_8001F580(sint16 arg0, sint32 arg1, sint32 arg2)
     Cd_read_comb(arg0);
 }
 
-void func_8001F5E4(void)
+void Sce_pl_parts_load(void)
 {
     sint32 value;
     sint32 idx;

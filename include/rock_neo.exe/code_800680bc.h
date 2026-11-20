@@ -138,7 +138,7 @@ void func_800680BC(sint32 arg);
 void func_80068508(CODE68_CHILD *child, sint32 index);
 void func_80068120(sint32 r, sint32 g, sint32 b, uint16 tpage);
 void func_80101D94(void);
-void func_8001E6C0(sint32 a0, sint32 a1, sint32 a2);
+void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
 #ifdef __wasm32__
 void *Sce_slot_open(CODE68_ENTRY *entry);
 #else
@@ -150,11 +150,11 @@ void func_80068DA4(void);
 void func_80017C30(sint32 arg);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_8001D58C(uint32 arg);
-uint32 func_8001D878(void);
+uint32 Sce_cd_reading(void);
 void func_8001D974(void);
 uint32 Sce_skip_check(void);
 void Sce_flag_select(sint32 arg);
-void func_8001EC0C(void);
+void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 sint32 func_80042238(PL_WORK *pl);
 void func_80042314(PL_WORK *pl);

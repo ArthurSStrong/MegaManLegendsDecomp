@@ -8,7 +8,7 @@
 
 void stcom36_func_0000(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 

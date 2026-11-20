@@ -76,7 +76,7 @@ void func_80100C10(STAGE_ROOM *wp)
             if (func_80042238(pl) != 0)
             {
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0           = D_8011014C;
                 wp->tbl_A4           = D_8011013C;
                 STAGE_PL.routine_0   = 3;
@@ -130,7 +130,7 @@ void func_80100C10(STAGE_ROOM *wp)
 
 void func_80100E38(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -224,7 +224,7 @@ void func_801010C8(STAGE_ROOM *wp)
 {
     STAGE_OBJ *slot;
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_80110174;
     wp->tbl_A4 = D_801101C8;
     slot       = Sce_slot_open(&D_801101A0[0]);
@@ -252,7 +252,7 @@ void func_801011B8(STAGE_ROOM *wp)
             if (func_80042238(&Player_work) != 0)
             {
                 func_801010C8(wp);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 wp->routine_4++;
             }
             break;
@@ -269,7 +269,7 @@ void func_801011B8(STAGE_ROOM *wp)
         case 2:
             func_80101178((STAGE_ROOM_WORK *)wp);
             func_80101068((ST10_PL *)&Player_work);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 2)
             {

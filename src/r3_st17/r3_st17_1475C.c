@@ -1129,7 +1129,7 @@ void func_80116B04(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x5E, 0x80);
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             wp->reserved09[1] = 0x80;
             // A plain (non-struct) store: retail keeps it before D_800BC7F0's.
             *(uint32 *)&wp->timer_C = 0;
@@ -1175,7 +1175,7 @@ void func_80116B04(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            if (func_8001D878() != 0)
+            if (Sce_cd_reading() != 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0             = D_80121368;
@@ -1194,7 +1194,7 @@ void func_80116B04(STAGE_ROOM *wp)
     {
         wp->reserved09[1] |= 1;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1216,7 +1216,7 @@ void func_80116D94(STAGE_ROOM *wp)
             wp->routine_4++;
         }
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1278,7 +1278,7 @@ void func_80116E28(STAGE_ROOM *wp)
     }
     if (wp->reserved09[1] != 0)
     {
-        func_8001EC0C();
+        Sce_camera_script_exec();
         Sce_script_update();
     }
 }
@@ -1663,7 +1663,7 @@ void func_80117CEC(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x5E, 0x80);
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0  = D_80121ABC;
             wp->tbl_A4  = D_80121B08;
             wp->timer_C = 0;
@@ -1710,7 +1710,7 @@ void func_80117CEC(STAGE_ROOM *wp)
     {
         wp->reserved09[1] |= 1;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1719,8 +1719,8 @@ void func_80117EFC(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001EC0C();
-            if (func_8001D878() != 0)
+            Sce_camera_script_exec();
+            if (Sce_cd_reading() != 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0 = D_80121B18;
@@ -1745,11 +1745,11 @@ void func_80117EFC(STAGE_ROOM *wp)
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
         case 3:
             wp->tbl_A4[1](wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
         case 4:
             if (wp->routine_8 != 0xFF)
@@ -1767,7 +1767,7 @@ void func_80117EFC(STAGE_ROOM *wp)
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
     }
     if (Sce_skip_check() != 0)
@@ -2017,7 +2017,7 @@ void func_8011865C(STAGE_ROOM *wp)
             }
             break;
         case 4:
-            if (func_8001D878() != 0)
+            if (Sce_cd_reading() != 0)
             {
                 Sound_call(0x182, 0, 0);
                 Sound_call(0x184, 0, 0);
@@ -2183,7 +2183,7 @@ void func_80118CD0(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x5E, 0x80);
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0  = D_80122088;
             wp->tbl_A4  = D_801220D4;
             wp->timer_C = 0;
@@ -2234,7 +2234,7 @@ void func_80118CD0(STAGE_ROOM *wp)
     {
         wp->reserved09[1] |= 1;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -2243,8 +2243,8 @@ void func_80118EC0(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001EC0C();
-            if (func_8001D878() != 0)
+            Sce_camera_script_exec();
+            if (Sce_cd_reading() != 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_801220E4;
@@ -2262,11 +2262,11 @@ void func_80118EC0(STAGE_ROOM *wp)
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
         case 2:
             wp->tbl_A4[1](wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
         case 3:
             if (wp->routine_8 != 0xFF)
@@ -2284,7 +2284,7 @@ void func_80118EC0(STAGE_ROOM *wp)
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             break;
     }
     if (Sce_skip_check() != 0)

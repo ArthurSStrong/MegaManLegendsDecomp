@@ -254,7 +254,7 @@ void Sound_fade_start(sint32 arg);
 void func_80019C20(void);
 void Sce_stage_load(void);
 void Sce_room_load(void);
-void func_8001F5E4(void);
+void Sce_pl_parts_load(void);
 void func_8002FA10(void *obj, void *arg);
 void func_80037594(void);
 void func_8002F9C4(void *obj, void *arg);

@@ -3886,7 +3886,7 @@ typedef struct
 
 sint32 func_80048C60(STCOM_SVECTOR *pos);
 
-void func_8001F580(sint32 arg0, sint32 arg1, sint32 arg2);
+void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 
 extern sint32 D_80139710;
 

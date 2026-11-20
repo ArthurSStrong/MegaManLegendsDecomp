@@ -208,7 +208,6 @@ sint32 catan(sint32 x);
 extern sint16 D_80089200[];
 extern sint16 D_80089204[];
 extern sint16 D_80089208[];
-SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos);
 SCENE_SLOT *Sce_slot_open(SCENE_CMD *cmd);
 uint32 Sce_flag_test(uint32 flag);
 void func_8001F798(sint32 arg);
@@ -318,7 +317,7 @@ void func_80036A1C(void);
 // (no shared base register), as the script-step helpers need.
 #define SCENE_WORK_FIXED (*(SCENE_WORK *)0x800C4C48)
 
-// func_800384A4 as func_8001E550 calls it: retail passes only the two vectors.
+// func_800384A4 as Sce_camera_apply calls it: retail passes only the two vectors.
 typedef void (*SCENE_CAM_FUNC)(sint32 *pos, sint32 *target);
 
 // Game_work through its fixed address (same view type). The stage-load helpers read
@@ -326,6 +325,6 @@ typedef void (*SCENE_CAM_FUNC)(sint32 *pos, sint32 *target);
 // not fold them into the &Game_work register the rest of the function uses.
 #define SCENE_GAME_FIXED (*(SCENE_GAME_VIEW *)0x800C1B10)
 
-void func_8001F5E4(void);
+void Sce_pl_parts_load(void);
 
 #endif

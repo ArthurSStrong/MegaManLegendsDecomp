@@ -489,7 +489,7 @@ void func_80068CE0(CODE68_WORK *wp)
 {
     CODE68_ENTRY *entry;
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     entry      = D_8008FF88;
     D_800BC7F0 = D_8008FFD8;
     wp->tbl_a4 = D_8009039C;
@@ -528,7 +528,7 @@ void func_80068DAC(CODE68_WORK *wp)
             }
             break;
         case 1:
-            if (func_8001D878() != 0)
+            if (Sce_cd_reading() != 0)
             {
                 wp->word_c = 0x1E;
                 wp->routine_4++;
@@ -559,7 +559,7 @@ void func_80068DAC(CODE68_WORK *wp)
                 func_80068120((uint8)wp->word_68, (uint8)wp->word_6c, (uint8)wp->word_70,
                               wp->word_74);
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->word_14 == 0x4680)
             {

@@ -44,7 +44,7 @@ void func_80015634(GAME_WORK *wp)
         func_80065AA8();
     }
     func_8003BE40(mode);
-    func_8001D8C0(mode);
+    Sce_flag_init(mode);
     func_8003B278(mode);
     func_8005DBB4(mode);
     func_80067E6C(mode);
@@ -374,7 +374,7 @@ void func_80015FE8(GAME_WORK *wp)
         case 3:
             D_80098810 = 1;
             D_80098864 = 0;
-            func_8001F5E4();
+            Sce_pl_parts_load();
             wp->routine_1++;
             break;
         case 4:

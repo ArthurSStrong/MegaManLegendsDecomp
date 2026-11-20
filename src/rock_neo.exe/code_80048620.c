@@ -39,7 +39,7 @@ void func_80048704(CODE486_TASK *task)
     switch (task->routine_1)
     {
         case 0:
-            func_8001E6C0(CODE486_ENTRY_H(entry, 0), CODE486_ENTRY_H(entry, 2),
+            Sce_camera_start(CODE486_ENTRY_H(entry, 0), CODE486_ENTRY_H(entry, 2),
                           CODE486_ENTRY_H(entry, 4));
             pl->kind      = 3;
             pl->routine_1 = 1;
@@ -91,7 +91,7 @@ void func_80048704(CODE486_TASK *task)
             if (D_800C356C == 0)
             {
                 D_800BC7F0[0] = D_8008A9E4[CODE486_ENTRY_H(entry, 0x12) >> 10];
-                func_8001E6C0(CODE486_ENTRY_H(entry, 8), CODE486_ENTRY_H(entry, 0xA),
+                Sce_camera_start(CODE486_ENTRY_H(entry, 8), CODE486_ENTRY_H(entry, 0xA),
                               CODE486_ENTRY_H(entry, 0xC));
                 pl->kind      = 3;
                 pl->routine_1 = 1;
@@ -141,7 +141,7 @@ void func_80048704(CODE486_TASK *task)
             }
             break;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 

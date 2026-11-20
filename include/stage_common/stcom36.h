@@ -57,7 +57,7 @@ void *Sce_slot_open(STCOM36_SPAWN *entry);
 #else
 void Sce_slot_open(STCOM36_SPAWN *entry);
 #endif
-void func_8001EC0C(void);
+void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 sint32 func_8002FE74(uint8 id);
 

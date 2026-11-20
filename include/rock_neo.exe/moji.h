@@ -215,7 +215,7 @@ extern uint8 *D_8008CAD4[];
 extern sint32 D_800989A8;
 extern uint8 D_800BE420[];
 uint32 func_80054424(uint8 *p);
-uint32 func_8001D878(void);
+uint32 Sce_cd_reading(void);
 extern sint32 D_800986F0;
 extern uint8 D_80098930;
 extern uint8 D_80098B6C;

@@ -561,7 +561,7 @@ void func_80101C00(STAGE_ROOM_WORK *wp)
 {
     sint32 i;
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     Sce_script_set(D_8010DD68, D_8010DB10);
     for (i = 0; i < 7; i++)
     {
@@ -622,7 +622,7 @@ void func_80101CB0(STAGE_ROOM *wp)
             // fall through
         case 5:
             func_80101C70(wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0)
             {
@@ -780,7 +780,7 @@ void func_801021BC(STAGE_ROOM *wp)
 {
     sint32 i;
     Sce_slot_close_all();
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     Sce_script_set(D_8010DF28, D_8010DDC8);
     for (i = 0; i < 6; i++)
     {
@@ -823,7 +823,7 @@ void func_801022D4(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (func_8001D878() != 0)
+            if (Sce_cd_reading() != 0)
             {
                 wp->timer_C = 0x14;
                 wp->routine_4++;
@@ -849,7 +849,7 @@ void func_801022D4(STAGE_ROOM *wp)
             // fall through
         case 6:
             func_80102294(wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 6 && D_80098A72 == 0)
             {

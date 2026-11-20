@@ -85,7 +85,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             }
             break;
         case 1:
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             cam->pos_10 = wp->pos_38.x << 16;
             cam->pos_14 = wp->pos_38.y << 16;
             cam->pos_18 = wp->pos_38.z << 16;

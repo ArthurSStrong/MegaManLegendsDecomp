@@ -268,7 +268,7 @@ void func_80101330(STAGE_ROOM *wp)
 {
     STCOM_SVECTOR unused; // unused: reserves the frame's 8 extra bytes
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     if (Sce_flag_test(0x641) != 0)
     {
         D_800BC7F0 = D_8012E4DC;
@@ -329,7 +329,7 @@ void func_80101420(STAGE_ROOM *wp)
                 break;
             }
             func_801013E0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 3:
@@ -447,7 +447,7 @@ void func_801017C4(STAGE_ROOM *wp)
                 *(uint16 *)&wp->routine_6 = 0;
             }
             func_80101BE4((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 2:
@@ -461,7 +461,7 @@ void func_801017C4(STAGE_ROOM *wp)
             wp->routine_4++;
             break;
         case 4:
-            if (func_8001D878() == 0)
+            if (Sce_cd_reading() == 0)
             {
                 break;
             }
@@ -481,7 +481,7 @@ void func_801017C4(STAGE_ROOM *wp)
                 *(uint16 *)&wp->routine_6 = 0;
             }
             func_80101BE4((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             if (D_80137DBC != 0)
             {
                 func_80102944();
@@ -507,7 +507,7 @@ void func_801019DC(STAGE_ROOM *wp)
 {
     wp->reserved09[2] = D_800A395A;
     wp->reserved09[1] = D_800A395B;
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_8012E874;
     Sce_slot_open(&D_8012E7FC[0]);
     wp->tbl_A4        = D_8012EE28;
@@ -521,7 +521,7 @@ void func_801019DC(STAGE_ROOM *wp)
 void func_80101A70(STAGE_ROOM *wp)
 {
     wp->word_14 = 0;
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_8012E8E8;
     Sce_slot_open(D_8012E7E8);
     Sce_slot_open(D_8012E7E8 + 0x28);
@@ -591,7 +591,7 @@ void func_80101C24(STAGE_ROOM *wp)
         case 1:
             Obj_work_flag_change(0x156, 0x80);
             D_800BC7F0 = D_8012EDE0;
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             pl->pos_438.x = 0x400;
             pl->pos_438.y = -1;
@@ -1147,7 +1147,7 @@ void func_80102AA8(STAGE_ROOM *wp)
         case 1:
             if (func_80042238(pl))
             {
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0    = D_8012EF50;
                 wp->tbl_A4    = D_8012F144;
                 wp->timer_C   = 0;
@@ -1167,7 +1167,7 @@ void func_80102AA8(STAGE_ROOM *wp)
                 wp->routine_5   = 0;
                 wp->routine_7   = 0;
                 wp->routine_4++;
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 Sce_script_update();
             }
             break;
@@ -1213,7 +1213,7 @@ void func_80102BDC(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_8012F154;
@@ -1267,7 +1267,7 @@ void func_80102BDC(STAGE_ROOM *wp)
             Sce_script_update();
             return;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1701,7 +1701,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
             if (func_80042238(pl) != 0)
             {
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0 = D_801302AC;
                 wp->tbl_A4 = D_80130224;
                 stcom36_func_0028(3);
@@ -2565,7 +2565,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
             }
             Sound_fade_start(0x10);
             Sce_script_timer_clear();
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0 = D_80130194;
             wp->tbl_A4 = D_80130184;
             wp->routine_6++;

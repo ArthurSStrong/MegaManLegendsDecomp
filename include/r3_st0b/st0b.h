@@ -815,7 +815,7 @@ typedef struct
 
 void func_80101110(uint8 r, uint8 g, uint8 b, uint16 abr);
 void func_80101E90(uint8 r, uint8 g, uint8 b, uint16 abr);
-void func_8001EC0C(void);
+void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 void func_801024DC(STAGE_ROOM_WORK *wp);
 extern STAGE_OBJ_FUNC D_8011A420[];

@@ -156,7 +156,7 @@ void func_8010C37C(STAGE_10C *wp);
 void Sce_flag_off(sint32 flag);
 void func_80100578(void);
 
-void func_8001EC0C(void);
+void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 sint16 func_80048E6C(void *wp);
 void func_80102158(STAGE_ROOM_WORK *wp);

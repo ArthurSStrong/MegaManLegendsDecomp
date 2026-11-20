@@ -876,7 +876,7 @@ void func_80101B80(STAGE_ROOM *wp)
     if (wp->routine_6 == 0)
     {
         Sce_script_timer_clear();
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC7F0 = D_8010BFD4;
         wp->tbl_A4 = D_8010BFCC;
         wp->routine_6++;
@@ -898,7 +898,7 @@ void func_80101C1C(STAGE_ROOM *wp)
             if (func_80042238(pl))
             {
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0               = D_8010BFE8;
                 wp->tbl_A4               = D_8010BFD8;
                 STAGE_PL.routine_0       = 3;

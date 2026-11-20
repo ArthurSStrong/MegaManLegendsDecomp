@@ -734,8 +734,8 @@ The object must be read into a local of that type: the byte stores alias the arr
 Entries are typed `EVENT_ENT` (`scene.h`); `event_step_call` (0x80068D64) runs the current entry's function
 unless `ev_08` is 0xFF. Also banked: steps `func_80068344`, `func_80068728` (sets `obj_24[3]->field_E` and
 `Scene_work.field_64`), `func_80068760`, and `event_scene_init` (the scene's setup: resets the camera
-with `func_8001E6C0(0, 0, 0)`, installs camera script `D_8008FFD8` in `Sce_camera_work.arg_C0` (a `uint32 *`
-command list stepped by `func_8001EC0C`) and event table `D_8009039C`, opens the four `SCENE_OBJ_ENT`s of
+with `Sce_camera_start(0, 0, 0)`, installs camera script `D_8008FFD8` in `Sce_camera_work.arg_C0` (a `uint32 *`
+command list stepped by `Sce_camera_script_exec`) and event table `D_8009039C`, opens the four `SCENE_OBJ_ENT`s of
 `D_8008FF88` with `Sce_slot_open`, clears `field_64`); `func_800680BC(arg)` resets the bytes/halfwords `D_800C3560`-`D_800C3571`
 (`D_800C356F = arg`, `D_800C356E = 0x18`); `part_col_step(obj, n)` steps
 `WORK_5A4.pos_180[n].col` by 0x421 up to 0x4210 (an RGB555 fade on `obj_24[1]`). It matches only with the
@@ -761,7 +761,7 @@ takes 0x28 bytes from the scratchpad pointer `Map_prim_ptr` (0x1F800070, Capcom'
 `Disp_env_ptr` (0x80098934) is the shim's name for the current `DISP_ENV`.
 Banked `func_80068DAC(sw)` (0x80068DAC), the scene's main routine, a switch on `Scene_work.routine_4`:
 0 waits for `func_80042238(Player_work)`, clears bits 0-1 of `Player_work[0].unk00` and plays XA
-`0x2001000B`; 1 waits for `func_8001D878`, sets `field_0C = 30`; 2 counts `field_0C` down, then
+`0x2001000B`; 1 waits for `Sce_cd_reading`, sets `field_0C = 30`; 2 counts `field_0C` down, then
 `func_80017C30(2)`; 3 `event_scene_init` and falls through to 4 (ends when `D_80098A72 == 0` and the
 event table reached its 0xFF entry or `Sce_skip_check` says START skipped, `func_80017C30(10)`) and 5:
 the per-frame work (`event_step_call`, `screen_tile_draw(field_68, 6C, 70, 74)` while `field_64`, the
@@ -799,7 +799,7 @@ The step has to read `sw->ev_ptr_A4->ev_0` after `sw->ev_ptr_A4++` (old pointer 
 Banked `Sce_event_next` the same way: written exactly as `Sce_event_update`'s step through `sw`, it matches.
 
 Also banked in `scene.c`: `func_8001F740` (`func_8001F798(Game_work.unk050)`, then
-`D_8008980C[unk050]()`, `STAGE_FUNC`), `func_8001F5E4` (reloads three files with `Cd_read_comb` when
+`D_8008980C[unk050]()`, `STAGE_FUNC`), `Sce_pl_parts_load` (reloads three files with `Cd_read_comb` when
 they change: `D_80089200[Player_work[0].unk16A]` → `Game_work.file_070`,
 `D_80089204[(sint8)unk16B >> 1]` → `file_072`, and when `tbl_sel >= 2`, `D_80089208[tbl_sel]` →
 `file_074`; the `file` local must be `sint32`, a `sint16` reloads the table for the store),
@@ -807,11 +807,11 @@ they change: `D_80089200[Player_work[0].unk16A]` → `Game_work.file_070`,
 `Player_work[0].ids_454[32]` and `ids_450[3]`; needs `p = Sce_flag; p += flag >> 3;` and `mask`/`bit`
 locals assigned in that order), and the camera pair on `Sce_camera_work` (`SCENE_CAM_WORK`, `scene.h`; one
 object from 0x800BC730 to at least 0x800BC7F3, which splat splits into many labels; `D_800BC7F0` is its
-`arg_C0`): `func_8001E550` hands position and angles (`func_80038324`) or look-at point
+`arg_C0`): `Sce_camera_apply` hands position and angles (`func_80038324`) or look-at point
 (`func_800384A4`, whose second argument is a `VECTOR *`) to the camera code, through a local
 `cp = &Sce_camera_work` (CSE turns the accesses before the first join into `%lo(sym+off)`, the later ones
 keep the base register, as in the target); the high halfwords at `ang_40 + 2/6/0xA` are plain
-`vx >> 16`, which GCC narrows to `lh`. `func_8001E6C0(x, y, z)` resets it from the current camera
+`vx >> 16`, which GCC narrows to `lh`. `Sce_camera_start(x, y, z)` resets it from the current camera
 (`D_800A39A0`, angles `D_800A3968/396C/3964 & 0xFFF` into vx/vy/vz); `D_800A395C = 3` only schedules
 right when written after the first `ofs_A0` store.
 
@@ -873,7 +873,7 @@ a file; `cmd_ptr_6C = cmd_top_48 = ...`, so `cmd_top_48` is stored first; clears
 byte -1 to 0 (or 3 when `Moji_flag & 0x20000` and the next byte equals `unk_71`). The id bytes load with
 `lb`: cast to `sint8`, since typing the fields `sint8` breaks `Sce_flag_off`).
 Banked, this round: `func_800548C4` (XA wait command: first pass sets bit `0x01000000` and starts
-`Cd_xa_play_id(get_le32(arg))`; then once `func_8001D878()` (`Cd_stat & 0x20`) is set, `timer_4 = 5`,
+`Cd_xa_play_id(get_le32(arg))`; then once `Sce_cd_reading()` (`Cd_stat & 0x20`) is set, `timer_4 = 5`,
 `Moji_flag |= 0x100000`, flags `|= 0x40000` and `&= ~0x01000000` in one expression, step 5; always sets
 `0x10000000`, returns 0), `func_800545C8` (the `func_80054700` wait, but at 0 it also sets `timer_4 = 5`,
 clears `unk_71..73`, sets `cmd_top_48` to the stepped `cmd_ptr_6C`, `unk_3C = unk_3E`, `Moji_flag |=

@@ -100,7 +100,7 @@ void func_801077AC(STAGE_ACTOR *wp)
     {
         case 0:
             func_80107AE4(wp);
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             cam->pos_10 = -0x93 << 16;
             cam->pos_14 = -0xE0 << 16;
             cam->pos_18 = 0x18A << 16;

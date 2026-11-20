@@ -610,7 +610,7 @@ void func_801D952C(void)
             {
                 Player_work.value_44f = 0;
             }
-            func_8001F5E4();
+            Sce_pl_parts_load();
         }
     }
 }
@@ -1617,7 +1617,7 @@ void func_801DBD78(void)
             Player_work.value_171 = Player_work.value_173 = 1;
             Player_work.value_44e                         = 1;
             Player_work.value_44f                         = 1;
-            func_8001F5E4();
+            Sce_pl_parts_load();
             func_80037594();
             *(uint32 *)&D_801DC208.routine_0 = 2;
             break;

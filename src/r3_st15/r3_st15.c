@@ -360,7 +360,7 @@ void func_80100A84(STAGE_ROOM_WORK *wp)
 {
     sint32 i;
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     Sce_script_set(D_80102A78, D_801027B8);
     for (i = 0; i < 7; i++)
     {
@@ -392,7 +392,7 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
             }
             break;
         case 1:
-            if (func_8001D878() != 0)
+            if (Sce_cd_reading() != 0)
             {
                 wp->timer_C = 1;
                 wp->routine_4++;
@@ -412,7 +412,7 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
         case 4:
         case 5:
             func_80100AF4(wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0)
             {

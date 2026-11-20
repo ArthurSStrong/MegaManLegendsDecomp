@@ -652,7 +652,7 @@ void func_801266F0(ST05_OBJ *wp)
 {
     if (wp->routine_3 >= 4)
     {
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC730.pos_10 = wp->position.x << 16;
         D_800BC730.pos_14 = (wp->position.y - 0x12C) << 16;
         D_800BC730.pos_18 = wp->position.z << 16;

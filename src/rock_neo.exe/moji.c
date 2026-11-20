@@ -191,7 +191,7 @@ void func_80053B40(void)
                     wp->val_BA = 0;
                 }
                 if (!(wp->flags_0 & 0x08000000) && (wp->val_B8 & 0x1000) &&
-                    (wp->flags_0 & 0x40000) && func_8001D878() != 0)
+                    (wp->flags_0 & 0x40000) && Sce_cd_reading() != 0)
                 {
                     wp->flags_0 &= ~0x40000;
                     func_8001D494(0, 1, 0);
@@ -532,7 +532,7 @@ sint32 func_800548C4(MOJI_WORK *wp)
         wp->flags_0 |= 0x1000000;
         func_8001D58C(func_80054424(wp->pos_6C + 1));
     }
-    else if (func_8001D878() != 0)
+    else if (Sce_cd_reading() != 0)
     {
         wp->val_4 = 5;
         Moji_flag |= 0x100000;

@@ -218,7 +218,7 @@ sint32 func_80062CF0(DEBUG_WORK *wp)
                 {
                     pl[0x44F] = 1;
                 }
-                func_8001F5E4();
+                Sce_pl_parts_load();
                 Cd_read_sync();
             }
             return 0;
@@ -300,7 +300,7 @@ sint32 func_80063058(DEBUG_WORK *wp)
             if (idx != (sint8)pl[0x171])
             {
                 pl[0x171] = pl[0x173] = idx;
-                func_8001F5E4();
+                Sce_pl_parts_load();
                 Cd_read_sync();
             }
             return 0;
@@ -382,7 +382,7 @@ sint32 func_80063334(DEBUG_WORK *wp)
             if (idx != (sint8)pl[0x16A])
             {
                 pl[0x16A] = idx;
-                func_8001F5E4();
+                Sce_pl_parts_load();
                 Cd_read_sync();
             }
             return 0;
@@ -543,7 +543,7 @@ sint32 func_800638D8(DEBUG_WORK *wp)
             if (idx != (sint8)pl[0x16B])
             {
                 pl[0x16B] = idx;
-                func_8001F5E4();
+                Sce_pl_parts_load();
                 Cd_read_sync();
             }
             return 0;

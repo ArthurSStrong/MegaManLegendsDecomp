@@ -64,7 +64,7 @@ void func_80100378(STAGE_ROOM *wp)
         STAGE_PL.fixed_428.z = STAGE_PL.position.z << 16;
         STAGE_PL.value_444   = 0;
         STAGE_PL.value_442   = 0xB2C;
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC740    = -0x120000;
         D_800BC744    = -0x970000;
         D_800BC748    = -0x340000;

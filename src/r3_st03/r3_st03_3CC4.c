@@ -128,7 +128,7 @@ void func_80103EBC(ST03_ROOM_WORK *wp)
             wp->child_24->value_E          = 8;
             wp->child_24->position.z       = 0x413C;
             wp->child_24->position_fixed.z = 0x413C0000;
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             cam->pos_10 = 0x19A10000;
             cam->pos_14 = 0xFF740000;
             cam->pos_18 = 0x41B20000;
@@ -252,7 +252,7 @@ void func_801044A4(ST03_ROOM_WORK *wp)
             pl->flags_BD |= 0x10;
             pl->rot_440.y = func_80031198(&pl->pos_438, &wp->child_24->position);
             pl->rot_440.z = 0;
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC730.pos_10 = 0xF6400000;
             D_800BC730.pos_14 = 0xFF7C0000;
             D_800BC730.pos_18 = 0xAEB90000;
@@ -419,7 +419,7 @@ void func_80104A74(ST03_PL *wp)
 
 void func_80104AD4(STAGE_ROOM *wp)
 {
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0         = D_801166C0;
     wp->tbl_A4         = D_80116768;
     STAGE_PL.routine_0 = 3;
@@ -459,7 +459,7 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
         case 2:
             func_80104B40(wp);
             func_80104A74(ST03_PL_PTR);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 2)
             {
@@ -563,7 +563,7 @@ void func_80104EBC(ST03_PL *wp)
 void func_80104F1C(STAGE_ROOM *wp)
 {
     STAGE_OBJ *slot;
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_80116794;
     wp->tbl_A4 = D_80116810;
     slot       = Sce_slot_open(&D_801167E8[0]);
@@ -593,7 +593,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             if (func_80042238(&Player_work))
             {
                 func_80104F1C((STAGE_ROOM *)wp);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 wp->routine_4++;
             }
             break;
@@ -610,7 +610,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
         case 2:
             func_80104FB4(wp);
             func_80104EBC(ST03_PL_PTR);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 2)
             {

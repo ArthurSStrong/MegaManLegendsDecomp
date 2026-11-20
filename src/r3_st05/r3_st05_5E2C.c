@@ -109,7 +109,7 @@ void func_801060D4(STAGE_ROOM *wp)
                 STAGE_PL.value_444   = 0;
                 STAGE_PL.value_448   = 0;
                 STAGE_PL.flags_bd |= 0x10;
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 cam->rot_40 = (STAGE_PL.rotation.y + 0x800) << 16;
                 angle       = (uint16)STAGE_PL.rotation.y;
                 angle += 0x800;
@@ -267,7 +267,7 @@ void func_801066D4(STAGE_ROOM *wp)
         STAGE_PL.fixed_428.z = 0x0B000000;
         STAGE_PL.value_442   = 0x200;
         wp->routine_7        = 1;
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC7F0 = D_80130788;
         func_80017C30(1);
         Sce_script_next();
@@ -377,7 +377,7 @@ void func_80106934(STAGE_ROOM *wp)
             func_801068F4((STAGE_ROOM_WORK *)wp);
             if (wp->routine_7 != 0)
             {
-                func_8001EC0C();
+                Sce_camera_script_exec();
             }
             Sce_script_update();
             break;

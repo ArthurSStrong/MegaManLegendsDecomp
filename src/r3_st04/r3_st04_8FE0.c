@@ -549,13 +549,13 @@ void func_8010A044(STAGE_OBJ50 *wp)
             }
             break;
         case 4:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 wp->routine_1++;
             }
             break;
         case 5:
-            if (D_800C0C26 != 0 || !(Moji_flag & 0x8000000) || !func_8001D878())
+            if (D_800C0C26 != 0 || !(Moji_flag & 0x8000000) || !Sce_cd_reading())
             {
                 pl->value_448 = 0x31;
                 func_80053AA4(0);

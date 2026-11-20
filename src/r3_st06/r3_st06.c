@@ -491,7 +491,7 @@ void func_8010130C(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0_A[0] = D_80122894;
             wp->tbl_A4      = D_80122744;
             Sce_slot_open(&D_8012271C[0]);
@@ -524,7 +524,7 @@ void func_8010130C(STAGE_ROOM *wp)
             }
             break;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -723,7 +723,7 @@ void func_80101470(STAGE_ROOM *wp)
 
 void func_80101A38(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -754,7 +754,7 @@ void func_80101AF4(STAGE_ROOM *wp)
             if (func_80042238(pl))
             {
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0 = D_80123140;
                 wp->tbl_A4 = D_80123130;
                 MojiTaskExec2(0, 0xA);
@@ -968,7 +968,7 @@ void func_8010205C(STAGE_REC_S *rec)
 
 void func_80102124(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1071,7 +1071,7 @@ void func_8010246C(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0        = D_801231F4;
             wp->tbl_A4        = D_80123240;
             wp->timer_C       = 0;
@@ -1110,7 +1110,7 @@ void func_8010246C(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 4:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_80123250;
@@ -1120,7 +1120,7 @@ void func_8010246C(STAGE_ROOM *wp)
             }
             break;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1198,12 +1198,12 @@ void func_801026CC(STAGE_ROOM *wp)
 
 void func_80102878(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
 }
 
 void func_80102898(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
 }
 
 void func_801028B8(STAGE_ROOM *wp)
@@ -1213,7 +1213,7 @@ void func_801028B8(STAGE_ROOM *wp)
     {
         D_800C0F96[0] = STAGE_PL.value_124;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
 }
 
 void func_80102908(STAGE_ROOM *wp)
@@ -1306,9 +1306,9 @@ void func_80102B3C(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0            = D_801238CC[wp->reserved09[2]];
                 wp->tbl_A4            = D_801238E0[wp->reserved09[2]];
                 wp->timer_C           = 0;
@@ -1316,7 +1316,7 @@ void func_80102B3C(STAGE_ROOM *wp)
                 Player_work.routine_1 = 0;
                 pl->flags_0 &= ~2;
                 wp->reserved09[1] = 0;
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 Sce_script_update();
                 wp->routine_5 = 0;
                 wp->routine_4++;
@@ -1339,7 +1339,7 @@ void func_80102C5C(ST06_OBJ *wp)
         wp->value_5 = 0;
         wp->value_4++;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1359,7 +1359,7 @@ void func_80102D54(STAGE_ROOM *wp)
     STCOM_PL_WORK *pl;
 
     Obj_work_flag_change(0x1A, 0x80);
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0            = D_801238CC[wp->reserved09[2]];
     pl                    = &Player_work;
     wp->tbl_A4            = D_801238E0[wp->reserved09[2]];
@@ -1380,10 +1380,10 @@ void func_80102D54(STAGE_ROOM *wp)
     STAGE_PL.flags_bd |= 0x10;
     Sce_slot_open(D_801234AC);
     wp->reserved09[1] = 0x80;
-    func_8001F580(0x60, 0, 1);
+    Sce_file_read(0x60, 0, 1);
     wp->routine_5 = 0;
     wp->routine_4++;
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1407,7 +1407,7 @@ void func_80102EB8(STAGE_ROOM *wp)
             wp->routine_4++;
         }
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1463,7 +1463,7 @@ void func_8010305C(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 wp->routine_6 = 0;
                 Sce_script_next();
@@ -1590,7 +1590,7 @@ void func_80103384(void)
 
 void func_8010338C(STAGE_ROOM *wp)
 {
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0        = D_80123944;
     wp->tbl_A4        = D_801239C0;
     wp->reserved09[2] = 0;
@@ -1632,7 +1632,7 @@ void func_80103438(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 wp->reserved09[1] |= 1;
                 func_8005D7C0();
@@ -1662,7 +1662,7 @@ void func_80103438(STAGE_ROOM *wp)
             else
             {
                 func_801033F8((STAGE_ROOM_WORK *)wp);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 Sce_script_update();
             }
             break;
@@ -1709,7 +1709,7 @@ void func_8010374C(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             wp->reserved09[1] = 0x80;
             // A plain (non-struct) store: retail keeps it before D_800BC7F0's.
             *(uint32 *)&wp->timer_C = 0;
@@ -1734,7 +1734,7 @@ void func_8010374C(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            if (func_8001D878())
+            if (Sce_cd_reading())
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_80123A80;
@@ -1749,7 +1749,7 @@ void func_8010374C(STAGE_ROOM *wp)
     {
         wp->reserved09[1] |= 1;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1771,7 +1771,7 @@ void func_80103904(STAGE_ROOM_WORK *wp)
             wp->routine_5 = 0;
         }
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1802,7 +1802,7 @@ void func_80103998(ST06_OBJ *wp)
     }
     if (wp->routine_2 != 0)
     {
-        func_8001EC0C();
+        Sce_camera_script_exec();
         Sce_script_update();
     }
 }
@@ -2899,7 +2899,7 @@ void func_80105C34(void)
 
 void func_80105C3C(STAGE_ROOM *wp)
 {
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     if (Sce_flag_test(0x629))
     {
         D_800BC7F0 = D_8012411C;
@@ -2941,7 +2941,7 @@ void func_80105D20(STAGE_ROOM *wp)
             func_80105C3C(wp);
             wp->routine_4++;
             pl->flags_0 |= 3;
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 1:
@@ -2962,7 +2962,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 pl->flags_bd |= 0x10;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 2:
@@ -2970,7 +2970,7 @@ void func_80105D20(STAGE_ROOM *wp)
             {
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 3:
@@ -2979,7 +2979,7 @@ void func_80105D20(STAGE_ROOM *wp)
             wp->reserved09[1] = 1;
             Sce_script_next();
             wp->routine_4++;
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 4:
@@ -2995,7 +2995,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 wp->routine_4 = 0xC;
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 5:
@@ -3006,19 +3006,19 @@ void func_80105D20(STAGE_ROOM *wp)
                 D_800C356C_A[0]++;
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 6:
             if (D_800C356C == 0)
             {
                 func_80017C30(2);
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 wp->routine_4++;
                 Sce_script_next();
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 7:
@@ -3033,7 +3033,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 Sce_script_next();
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 9:
@@ -3049,7 +3049,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 wp->routine_4 = 0x10;
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 10:
@@ -3296,7 +3296,7 @@ void func_801067CC(STAGE_ROOM *wp)
     STAGE_SPAWNED *obj;
     sint32 i;
 
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_80124484;
     wp->tbl_A4 = D_801245B0;
     for (i = 0; i < 2; i++)
@@ -3329,7 +3329,7 @@ void func_801068BC(STAGE_ROOM *wp)
             if (func_80042238(&Player_work) != 0)
             {
                 func_801067CC(wp);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 wp->routine_4++;
             }
             break;
@@ -3350,7 +3350,7 @@ void func_801068BC(STAGE_ROOM *wp)
         case 4:
             func_8010687C((STAGE_ROOM_WORK *)wp);
             func_80106720((STAGE_PL_SCRIPT *)&Player_work);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 4)
             {
@@ -3498,7 +3498,7 @@ void func_80106B98(STAGE_ROOM *wp)
                     obj->position_fixed.v.z = obj->position.z << 16;
                     wp->child_24            = obj;
                 }
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 cam->pos_10 = obj->position.x << 16;
                 cam->pos_14 = (obj->position.y - 0x84) << 16;
                 cam->pos_18 = (obj->position.z + 0x120) << 16;
@@ -3759,7 +3759,7 @@ void func_801075A0(ST06_OBJ *wp)
         STAGE_PL.fixed_428.z = D_801245FC[wp->value_6].z << 16;
         STAGE_PL.value_442   = D_801245FC[wp->value_6].angle;
         wp->value_7          = 1;
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC7F0 = D_801247D8[wp->value_6];
         func_80017C30(1);
         Sce_script_next();
@@ -3837,7 +3837,7 @@ void func_80107908(STAGE_ROOM *wp)
         STAGE_PL.fixed_428.z = D_801245FC[wp->routine_6].z << 16;
         STAGE_PL.value_442   = D_801245FC[wp->routine_6].angle;
         Sce_script_timer_clear();
-        func_8001E6C0(0, 0, 0);
+        Sce_camera_start(0, 0, 0);
         D_800BC7F0 = D_801247D8[wp->routine_6];
         func_80017C30(1);
         wp->routine_4     = 3;
@@ -3917,7 +3917,7 @@ void func_80107B94(STAGE_ROOM *wp)
                 func_80107B54((STAGE_ROOM_WORK *)wp);
                 if (wp->routine_7 != 0)
                 {
-                    func_8001EC0C();
+                    Sce_camera_script_exec();
                 }
                 Sce_script_update();
             }
@@ -4060,7 +4060,7 @@ void func_80108074(STAGE_PL_SCRIPT *wp)
 
 void func_801080D4(STAGE_ROOM *wp)
 {
-    func_8001E6C0(0, 0, 0);
+    Sce_camera_start(0, 0, 0);
     D_800BC7F0 = D_80124824;
     wp->tbl_A4 = D_80124934;
     Sce_slot_open(&D_801248E4[0]);
@@ -4088,7 +4088,7 @@ void func_801081B0(STAGE_ROOM *wp)
             if (func_80042238(&Player_work))
             {
                 func_801080D4(wp);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 wp->routine_4++;
             }
             break;
@@ -4105,7 +4105,7 @@ void func_801081B0(STAGE_ROOM *wp)
         case 2:
             func_80108170((STAGE_ROOM_WORK *)wp);
             func_80108074((STAGE_PL_SCRIPT *)&Player_work);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 2)
             {

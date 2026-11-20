@@ -692,7 +692,7 @@ void func_801018CC(STAGE_ROOM *wp)
                 STAGE_GAME.value_83 = 2;
                 func_800425FC(&Player_work, 0);
                 ST08_PL->value_44B = 1;
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 cam->pos_10   = 0;
                 cam->pos_14   = -0x100 << 16;
                 cam->pos_18   = 0x490 << 16;
@@ -932,7 +932,7 @@ void func_80101FE0(STAGE_ROOM *wp)
         case 0:
             slot = Sce_slot_open(D_80113238);
             slot->flags_6 &= ~0x20;
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0 = D_8011324C;
             wp->tbl_A4 = (STAGE_ROOM2_FUNC *)D_801132EC;
             wp->routine_5++;
@@ -970,7 +970,7 @@ void func_801020C4(STAGE_ROOM *wp)
         wp->routine_5 = 0;
         wp->routine_4 += 2;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -984,7 +984,7 @@ void func_80102158(STAGE_ROOM_WORK *wp)
     {
         wp->routine_4++;
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -1144,7 +1144,7 @@ void func_80102498(STAGE_ROOM *wp)
                 pl->fixed_428.x = pl->pos_438.x << 16;
                 pl->fixed_428.z = pl->pos_438.z << 16;
                 pl->rot_440.y   = func_80031198(&pl->pos_438, &actor->position);
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 cam->pos_10  = -0x365 << 16;
                 cam->pos_14  = -0x2D1 << 16;
                 cam->pos_18  = 0x73C << 16;

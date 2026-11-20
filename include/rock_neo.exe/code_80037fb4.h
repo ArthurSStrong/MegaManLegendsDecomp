@@ -219,7 +219,7 @@ extern PL_HEIGHT_INFO D_80097D60;
 extern sint16 D_80098660;
 extern sint16 D_80098662;
 extern sint16 D_80098664;
-void func_8001E550(void);
+void Sce_camera_apply(void);
 sint32 func_8003A218();
 sint32 func_8003A154(sint32 arg0, sint32 arg1, sint32 arg2);
 sint32 func_80049C54(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info,

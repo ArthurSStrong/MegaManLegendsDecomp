@@ -15,9 +15,9 @@
 //
 // Equipping does what Roll's equip does (func_801D952C): +0x172 = id; where weapons are
 // usable, Obj_work_flag_change(8, 0x80) (removes the old weapon's shots before its code goes
-// away), +0x170 = +0x172 and +0x44F = (id > 0). Roll then calls func_8001F5E4, which queues the
+// away), +0x170 = +0x172 and +0x44F = (id > 0). Roll then calls Sce_pl_parts_load, which queues the
 // weapon's ARM file (D_80089208[id]: the projectile code at 0x800D8800 and its data) on the CD.
-// The pause menu does that itself when it closes: func_80015FE8 state 3 calls func_8001F5E4 and
+// The pause menu does that itself when it closes: func_80015FE8 state 3 calls Sce_pl_parts_load and
 // state 4 hands the field back only when the CD queue is empty (Cd_read_sync2), so the new
 // weapon's code is in memory before Mega Man can fire it. The page therefore only changes
 // Player_work while the pause menu is up and leaves the loading to the game's own exit path.

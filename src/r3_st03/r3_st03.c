@@ -831,7 +831,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
                 break;
             }
             Sce_script_timer_clear();
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0 = D_80115FC4;
             wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_80115FB4;
             wp->routine_6++;
@@ -866,7 +866,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
             wp->routine_7 = 1;
             wp->routine_6++;
             Sce_script_timer_clear();
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             D_800BC7F0 = D_80116034;
             wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_8011600C;
             // fall through
@@ -1031,7 +1031,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
             {
                 Sound_call(0x10E, 0, 0);
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0      = D_80116164;
                 wp->tbl_A4      = D_8011614C;
                 pl->fixed_428.x = 0xF6400000;
@@ -1149,7 +1149,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
                 pl->flags_BD &= ~0x40;
                 wp->routine_6++;
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0 = D_801161F8;
                 wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_801161D0;
                 MojiTaskExec2(0, 0x2E);
@@ -1380,7 +1380,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             {
                 func_80039E50();
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0      = D_8011644C;
                 wp->tbl_A4      = (STAGE_ROOM_FUNC *)D_8011642C;
                 pl->routine_8   = 3;
@@ -1623,7 +1623,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             }
             stcom36_func_0028(0xB);
             Sce_script_timer_clear();
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             if (Sce_flag_test(0x16))
             {
                 D_800BC7F0 = D_8011639C;

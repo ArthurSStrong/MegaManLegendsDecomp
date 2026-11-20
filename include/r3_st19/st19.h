@@ -1645,7 +1645,7 @@ extern uint8 D_8011F4DC; // the player's value_170 while the scene runs (func_80
 
 extern uint8 D_8011F4E0; // and value_171
 
-void func_8001F580(sint32 arg0, sint32 arg1, sint32 arg2);
+void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 
 // An ST19_OBJ's joint matrices from +0x1E8 (func_80104124).
 #define ST19_OBJ_MATRIX(wp) ((STAGE_MATRIX *)((uint8 *)(wp) + 0x1E8))

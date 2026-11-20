@@ -142,7 +142,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
             if (func_80042238(pl))
             {
                 Sce_script_timer_clear();
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 D_800BC7F0           = D_8011DD8C;
                 wp->tbl_A4           = D_8011DD7C;
                 STAGE_PL.routine_0   = 3;
@@ -234,7 +234,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
 
 void func_80100AF8(void)
 {
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 

@@ -156,7 +156,7 @@ void func_801005A0(STAGE_ROOM *wp)
                 Player_work.flags_0 &= ~3;
                 Obj_work_flag_change(0x56, 5);
                 Obj_work_flag_change(0x28, 0x80);
-                func_8001E6C0(0, 0, 0);
+                Sce_camera_start(0, 0, 0);
                 wp->reserved09[1] = 2;
                 // A plain (non-struct) store: retail keeps it before D_800BC7F0's.
                 *(uint32 *)&wp->timer_C = 0;
@@ -164,7 +164,7 @@ void func_801005A0(STAGE_ROOM *wp)
                 wp->tbl_A4              = D_80110118;
                 Sce_slot_open(&D_8010FF50[0]);
                 Sce_slot_open(&D_8010FF50[1]);
-                func_8001EC0C();
+                Sce_camera_script_exec();
                 Sce_script_update();
                 wp->routine_5++;
             }
@@ -174,18 +174,18 @@ void func_801005A0(STAGE_ROOM *wp)
             {
                 wp->routine_5++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
         case 3:
             func_8001D58C(0x20000016);
             func_80017C30(1);
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             wp->routine_5++;
             break;
         case 4:
-            if (func_8001D878() != 0 && D_80098A72 == 0)
+            if (Sce_cd_reading() != 0 && D_80098A72 == 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_8010FFC8;
@@ -194,7 +194,7 @@ void func_801005A0(STAGE_ROOM *wp)
                 wp->reserved09[1] &= 3;
                 wp->routine_4++;
             }
-            func_8001EC0C();
+            Sce_camera_script_exec();
             Sce_script_update();
             break;
     }
@@ -233,7 +233,7 @@ void func_801007A8(STAGE_ROOM *wp)
             wp->routine_4++;
         }
     }
-    func_8001EC0C();
+    Sce_camera_script_exec();
     Sce_script_update();
 }
 
@@ -269,7 +269,7 @@ void func_80100870(STAGE_ROOM *wp)
     }
     if (wp->reserved09[1] != 0)
     {
-        func_8001EC0C();
+        Sce_camera_script_exec();
         Sce_script_update();
     }
 }

@@ -257,7 +257,7 @@ sint32 Sce_room_load(void);
 void Sce_room_load(void);
 #endif
 void func_80038648(void);
-void func_8001D8C0(sint32 mode);
+void Sce_flag_init(sint32 mode);
 void func_8003B278(sint32 mode);
 void func_8003BE40(sint32 mode);
 void func_8005DBB4(sint32 mode);
@@ -282,7 +282,7 @@ void Game_logo_kill(sint32 index);
 
 void func_8005EBE4(void);
 sint32 func_8005EC34(void);
-void func_8001F5E4(void);
+void Sce_pl_parts_load(void);
 
 void func_800175D8(void);
 void func_800679B8(void);

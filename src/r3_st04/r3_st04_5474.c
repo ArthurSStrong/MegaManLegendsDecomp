@@ -455,7 +455,7 @@ void func_801061D8(ST04_ACTOR *wp)
             }
             break;
         case 20:
-            func_8001E6C0(0, 0, 0);
+            Sce_camera_start(0, 0, 0);
             cam->pos_10   = -0xDE80000;
             cam->pos_14   = -0xC80000;
             cam->pos_18   = 0xBDB0000;

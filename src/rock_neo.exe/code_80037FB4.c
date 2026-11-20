@@ -223,7 +223,7 @@ void func_80038894(void)
     cw = &Camera_work;
     if (D_800A395C != 1)
     {
-        func_8001E550();
+        Sce_camera_apply();
         D_80098668 = 0;
         return;
     }

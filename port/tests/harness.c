@@ -18,9 +18,9 @@
 // Decompiled game functions under test (src/rock_neo.exe).
 void Sce_flag_on(uint32_t flag);                                       // scene.c
 uint32_t Sce_flag_test(uint32_t flag);                                 // scene.c
-int32_t func_8001E83C(int16_t x0, int16_t y0, int16_t x1, int16_t y1); // scene.c
+int32_t Sce_point_angle(int16_t x0, int16_t y0, int16_t x1, int16_t y1); // scene.c
 uint32_t func_8003AC24(uint32_t key);                                  // code_8003AC24.c
-int16_t func_8001DDC0(uint8_t *p);                                     // scene.c (file static)
+int16_t half_get(uint8_t *p);                                     // scene.c (file static)
 void Vsync_handler(void);                                              // main.c
 void func_800131FC(void);                                              // main.c
 void func_80017684(void *src, void *dst, int32_t count);               // asm_fastmem (native C)
@@ -133,19 +133,19 @@ static void test_retail_data(const char *exe)
     int i;
     int32_t e, s, w, n;
 
-    printf("-- func_8001E83C (angle from two points; retail table D_800891F0 + catan)\n");
+    printf("-- Sce_point_angle (angle from two points; retail table D_800891F0 + catan)\n");
     for (i = 0; i < 4; i++)
     {
         uint32_t want = file_word(exe, 0x800891F0 + 4 * i);
         CHECK((uint32_t)D_800891F0[i] == want, "D_800891F0[%d] = 0x%X (file: 0x%X)", i,
               (uint32_t)D_800891F0[i], want);
     }
-    e = func_8001E83C(0, 0, 100, 0);
-    s = func_8001E83C(0, 0, 0, 100);
-    w = func_8001E83C(0, 0, -100, 0);
-    n = func_8001E83C(0, 0, 0, -100);
+    e = Sce_point_angle(0, 0, 100, 0);
+    s = Sce_point_angle(0, 0, 0, 100);
+    w = Sce_point_angle(0, 0, -100, 0);
+    n = Sce_point_angle(0, 0, 0, -100);
     printf("     east 0x%X, south 0x%X, west 0x%X, north 0x%X, diagonal 0x%X\n", e, s, w, n,
-           func_8001E83C(0, 0, 100, 100));
+           Sce_point_angle(0, 0, 100, 100));
     // PsyQ's catan (run from the retail image) is a CORDIC approximation: an angle can be one
     // unit off the exact value (catan(1.0) is 0x1FF, not 0x200).
     CHECK(near(((s - e) & 0xFFF), 0x400) || near(((e - s) & 0xFFF), 0x400),
@@ -241,7 +241,7 @@ static void test_placement(void)
     tbl[1] = 0xAA;
     CHECK(lookup(0x11) == 0xAA, "call through the literal retail address 0x8003AC24");
     *(volatile uint16_t *)0x80098198 = 0;
-    CHECK(func_8001DDC0(bytes) == 0x1234 && *(volatile uint16_t *)0x80098198 == 0x1234,
+    CHECK(half_get(bytes) == 0x1234 && *(volatile uint16_t *)0x80098198 == 0x1234,
           "file static D_80098198 (scene.c) lives at its retail address: 0x%04X",
           *(volatile uint16_t *)0x80098198);
 }
