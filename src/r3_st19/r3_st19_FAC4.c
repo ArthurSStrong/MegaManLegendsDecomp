@@ -268,8 +268,8 @@ void func_801103DC(STAGE_ROOM *wp)
             wp->reserved09[2] = 0;
             D_800BC7F0_A[0]   = D_8011856C;
             wp->tbl_A4        = D_80118D98;
-            func_8001EAE8(&D_80118544[0]);
-            func_8001EAE8(&D_80118544[1]);
+            Sce_slot_open(&D_80118544[0]);
+            Sce_slot_open(&D_80118544[1]);
             wp->routine_5++;
             break;
         case 1:
@@ -524,7 +524,7 @@ void func_80110BD0(STAGE_ROOM *wp)
             func_80111C08(9);
             break;
         case 0x3A:
-            func_8001EAE8(D_8011851C);
+            Sce_slot_open(D_8011851C);
             wp->child_24->routine_1 = 0;
             wp->child_24->routine_2 = 0;
             break;
@@ -666,7 +666,7 @@ void func_80111024(STAGE_ROOM *wp)
         STAGE_PL.value_448      = 0x84;
         wp->child_24->routine_1 = 9;
         wp->child_24->routine_2 = 0;
-        func_8001EAE8(D_80118530);
+        Sce_slot_open(D_80118530);
     }
     if (wp->frame_10 == 0x262)
     {
@@ -896,8 +896,8 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
         case 2:
             if (func_8001D878() != 0)
             {
-                func_8001EAE8(&D_80118544[0]);
-                func_8001EAE8(&D_80118544[1]);
+                Sce_slot_open(&D_80118544[0]);
+                Sce_slot_open(&D_80118544[1]);
                 STAGE_PL.value_442   = 0xC00;
                 STAGE_PL.pos_438.x   = -0xBB8;
                 STAGE_PL.pos_438.z   = -0xA00;

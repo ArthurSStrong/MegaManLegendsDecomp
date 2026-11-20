@@ -122,7 +122,7 @@ void func_80100400(STAGE_ROOM_WORK *wp)
     entry      = D_80100F1C;
     D_800BC7F0 = D_80100F30;
     wp->tbl_A4 = D_80100F7C;
-    func_8001EAE8(entry);
+    Sce_slot_open(entry);
 }
 
 void func_8010045C(STAGE_ROOM_WORK *wp)

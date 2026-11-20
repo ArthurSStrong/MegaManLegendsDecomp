@@ -180,7 +180,7 @@ void func_801011B4(STAGE_ROOM *wp)
             else
             {
                 wp->reserved09[2] = 0;
-                func_8001EAE8(D_801154CC);
+                Sce_slot_open(D_801154CC);
                 func_80017C30(7);
                 func_8001D58C(0x20000009);
                 wp->routine_5 = 0;
@@ -289,9 +289,9 @@ void func_8010162C(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         tbl = D_8011551C;
-        func_8001EAE8(&tbl[0]);
-        func_8001EAE8(&tbl[-3]);
-        func_8001EAE8(&tbl[-2]);
+        Sce_slot_open(&tbl[0]);
+        Sce_slot_open(&tbl[-3]);
+        Sce_slot_open(&tbl[-2]);
         wp->routine_6 = 0;
     }
     switch (wp->routine_6)
@@ -373,9 +373,9 @@ void func_801017F0(STAGE_ROOM *wp)
         func_80031824(wp->child_2C);
         func_80031A4C(wp->child_34);
         tbl = D_80115508;
-        func_8001EAE8(&tbl[0]);
-        func_8001EAE8(&tbl[2]);
-        func_8001EAE8(&tbl[3]);
+        Sce_slot_open(&tbl[0]);
+        Sce_slot_open(&tbl[2]);
+        Sce_slot_open(&tbl[3]);
         wp->routine_6 = 0;
     }
     ((STAGE_OBJ50 *)wp->child_38)->pos_38.y -= 5;

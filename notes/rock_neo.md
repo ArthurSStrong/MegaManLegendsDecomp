@@ -728,7 +728,7 @@ entry's frame and resets the timer. Entry bytes 0 and 1 are copied to `Scene_wor
 (many overlays) clears the timers and both bytes. Banked steps `func_8006885C`, `func_8006888C` (calls stage code
 `func_80101D94` at frame 10), `func_800688BC`, `func_800688E4`, `func_80068BC0`, `func_80068CB8`: at frame 0
 each sets `field_9` (and clears `field_A`) of one of `Scene_work.obj_24[0..2]`. `obj_24` is `void *[16]`:
-`func_8001E968` fills it from four pools by the kind byte of each object entry, and this scene's entries
+`slot_alloc` fills it from four pools by the kind byte of each object entry, and this scene's entries
 (`D_8008FF88`, opened by `event_scene_init`) make `[0]` a `WORK_3C0`, `[1]`/`[2]` `WORK_5A4`, `[3]` a `WORK_50`.
 The object must be read into a local of that type: the byte stores alias the array.
 Entries are typed `EVENT_ENT` (`scene.h`); `event_step_call` (0x80068D64) runs the current entry's function
@@ -736,7 +736,7 @@ unless `ev_08` is 0xFF. Also banked: steps `func_80068344`, `func_80068728` (set
 `Scene_work.field_64`), `func_80068760`, and `event_scene_init` (the scene's setup: resets the camera
 with `func_8001E6C0(0, 0, 0)`, installs camera script `D_8008FFD8` in `Sce_camera_work.arg_C0` (a `uint32 *`
 command list stepped by `func_8001EC0C`) and event table `D_8009039C`, opens the four `SCENE_OBJ_ENT`s of
-`D_8008FF88` with `func_8001EAE8`, clears `field_64`); `func_800680BC(arg)` resets the bytes/halfwords `D_800C3560`-`D_800C3571`
+`D_8008FF88` with `Sce_slot_open`, clears `field_64`); `func_800680BC(arg)` resets the bytes/halfwords `D_800C3560`-`D_800C3571`
 (`D_800C356F = arg`, `D_800C356E = 0x18`); `part_col_step(obj, n)` steps
 `WORK_5A4.pos_180[n].col` by 0x421 up to 0x4210 (an RGB555 fade on `obj_24[1]`). It matches only with the
 field written at each use: a `sint16 *col = &wp->pos_180[n].col` local adds an `addiu 0x180`. Its 8-byte

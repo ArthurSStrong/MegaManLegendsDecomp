@@ -771,7 +771,7 @@ void func_80112BD8(STAGE_ROOM *wp)
     }
     for (i = 0; i < 3; i++)
     {
-        func_8001EAE8(&D_8011909C[i]);
+        Sce_slot_open(&D_8011909C[i]);
     }
 }
 

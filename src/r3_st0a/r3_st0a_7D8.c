@@ -31,8 +31,8 @@ void func_80100860(STAGE_ROOM *wp)
             wp->timer_C = 0;
             Obj_work_flag_change(0xA, 0x80);
             tbl = D_80114F5C;
-            func_8001EAE8(&tbl[0]);
-            func_8001EAE8(&tbl[1]);
+            Sce_slot_open(&tbl[0]);
+            Sce_slot_open(&tbl[1]);
             wp->routine_5++;
             // fall through
         case 1:
@@ -57,7 +57,7 @@ void func_80100860(STAGE_ROOM *wp)
         case 2:
             for (i = 2; i < 7; i++)
             {
-                func_8001EAE8(&D_80114F5C[i]);
+                Sce_slot_open(&D_80114F5C[i]);
             }
             pl->routine_1++;
             wp->routine_5++;

@@ -98,7 +98,7 @@ void func_8010079C(STAGE_ROOM *wp)
         }
         else
         {
-            slot = func_8001EAE8(D_801101B4);
+            slot = Sce_slot_open(D_801101B4);
             slot->flags_6 &= ~0x20;
         }
         wp->routine_4++;

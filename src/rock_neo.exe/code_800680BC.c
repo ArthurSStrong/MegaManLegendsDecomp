@@ -493,10 +493,10 @@ void func_80068CE0(CODE68_WORK *wp)
     entry      = D_8008FF88;
     D_800BC7F0 = D_8008FFD8;
     wp->tbl_a4 = D_8009039C;
-    func_8001EAE8(entry);
-    func_8001EAE8(entry + 1);
-    func_8001EAE8(entry + 2);
-    func_8001EAE8(entry + 3);
+    Sce_slot_open(entry);
+    Sce_slot_open(entry + 1);
+    Sce_slot_open(entry + 2);
+    Sce_slot_open(entry + 3);
     wp->word_64 = 0;
 }
 

@@ -267,7 +267,7 @@ void func_80100BF8(STAGE_ROOM *wp)
                 if (Sce_flag_test(0x22) && !Sce_flag_test(0x45))
                 {
                     func_80103CC4(0);
-                    obj = func_8001EAE8(D_80116754);
+                    obj = Sce_slot_open(D_80116754);
                     obj->flags_6 &= ~0x20;
                 }
                 wp->routine_4 = 0xFF;

@@ -566,9 +566,9 @@ void func_80104F1C(STAGE_ROOM *wp)
     func_8001E6C0(0, 0, 0);
     D_800BC7F0 = D_80116794;
     wp->tbl_A4 = D_80116810;
-    slot       = func_8001EAE8(&D_801167E8[0]);
+    slot       = Sce_slot_open(&D_801167E8[0]);
     slot->flags_6 &= ~0x20;
-    func_8001EAE8(&D_801167E8[1]);
+    Sce_slot_open(&D_801167E8[1]);
     STAGE_PL.routine_0 = 3;
     STAGE_PL.routine_1 = 0;
     STAGE_PL.value_C   = 0;

@@ -824,7 +824,7 @@ void func_80118C3C(ST09_BOX *wp);
 void func_80118DC0(ST09_BOX *wp);
 sint32 func_80118FC0(ST09_BOX *wp);
 
-// An object a room's script spawns (a 0x14-byte record, func_8001EAE8; stcom36's STCOM36_SPAWN).
+// An object a room's script spawns (a 0x14-byte record, Sce_slot_open; stcom36's STCOM36_SPAWN).
 typedef struct
 {
     uint8 index_0; // 00: its slot in Scene_work's object table

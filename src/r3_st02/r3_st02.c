@@ -908,11 +908,11 @@ void func_80101B2C(STAGE_ROOM *wp)
 
     func_8001E6C0(0, 0, 0);
     D_800BC7F0 = D_80106C30;
-    func_8001EAE8(&D_80107328[0]);
-    func_8001EAE8(&D_80107328[1]);
-    func_8001EAE8(&D_80107328[2]);
-    func_8001EAE8(&D_80107328[3]);
-    func_8001EAE8(&D_80107328[4]);
+    Sce_slot_open(&D_80107328[0]);
+    Sce_slot_open(&D_80107328[1]);
+    Sce_slot_open(&D_80107328[2]);
+    Sce_slot_open(&D_80107328[3]);
+    Sce_slot_open(&D_80107328[4]);
     fx = (STAGE_FX *)func_80031618();
     if (fx != NULL)
     {

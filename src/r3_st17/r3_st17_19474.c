@@ -72,7 +72,7 @@ void func_8011961C(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            func_8001EAE8(D_80122038);
+            Sce_slot_open(D_80122038);
             wp->routine_6++;
             break;
         case 1:
@@ -95,7 +95,7 @@ void func_801196A8(STAGE_ROOM *wp)
     {
         child = wp->child_28;
         child->flags_0 &= 0xFD;
-        func_8001EAE8(D_8012204C);
+        Sce_slot_open(D_8012204C);
         func_80119838(D_800C3558, 0);
     }
 }
@@ -104,7 +104,7 @@ void func_80119700(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8001EAE8(D_80122074);
+        Sce_slot_open(D_80122074);
     }
 }
 
@@ -112,7 +112,7 @@ void func_80119738(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8001EAE8(D_80122060);
+        Sce_slot_open(D_80122060);
     }
 }
 
@@ -279,7 +279,7 @@ void func_80119BDC(STAGE_ROOM *wp)
             func_80119A14(0);
             wp->child_24->flags_0 &= ~2;
             wp->child_24->routine_0++;
-            func_8001EAE8(D_801226F0);
+            Sce_slot_open(D_801226F0);
             Obj_work_flag_change(0x60, 0x80);
             break;
         case 1:
@@ -301,7 +301,7 @@ void func_80119D28(STAGE_ROOM *wp)
     {
         case 0:
             func_8003187C(wp->child_28);
-            func_8001EAE8(D_80122704);
+            Sce_slot_open(D_80122704);
             Obj_work_flag_change(0x60, 0x80);
             break;
         case 1:
@@ -320,7 +320,7 @@ void func_80119DE8(STAGE_ROOM *wp)
     {
         case 0:
             func_8003187C(wp->child_2C);
-            func_8001EAE8(D_80122718);
+            Sce_slot_open(D_80122718);
             Obj_work_flag_change(0x60, 0x80);
             break;
         case 1:
@@ -368,8 +368,8 @@ void func_80119EB8(STAGE_ROOM *wp)
             }
             else
             {
-                func_8001EAE8(&D_80122740[0]);
-                func_8001EAE8(&D_80122740[1]);
+                Sce_slot_open(&D_80122740[0]);
+                Sce_slot_open(&D_80122740[1]);
                 func_80017C30(7);
                 wp->routine_6 = 0;
                 Sce_script_next();
@@ -486,7 +486,7 @@ void func_8011A2FC(STAGE_ROOM *wp)
             D_800BC7F0  = D_80122768;
             wp->tbl_A4  = D_801227C4;
             wp->timer_C = 0;
-            func_8001EAE8(D_801226DC);
+            Sce_slot_open(D_801226DC);
             wp->routine_5++;
             break;
         case 1:

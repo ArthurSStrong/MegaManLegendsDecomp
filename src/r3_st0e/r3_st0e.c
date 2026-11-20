@@ -162,8 +162,8 @@ void func_801005A0(STAGE_ROOM *wp)
                 *(uint32 *)&wp->timer_C = 0;
                 D_800BC7F0              = D_8010FF78;
                 wp->tbl_A4              = D_80110118;
-                func_8001EAE8(&D_8010FF50[0]);
-                func_8001EAE8(&D_8010FF50[1]);
+                Sce_slot_open(&D_8010FF50[0]);
+                Sce_slot_open(&D_8010FF50[1]);
                 func_8001EC0C();
                 Sce_script_update();
                 wp->routine_5++;

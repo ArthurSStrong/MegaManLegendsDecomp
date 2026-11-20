@@ -930,7 +930,7 @@ void func_80101FE0(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            slot = func_8001EAE8(D_80113238);
+            slot = Sce_slot_open(D_80113238);
             slot->flags_6 &= ~0x20;
             func_8001E6C0(0, 0, 0);
             D_800BC7F0 = D_8011324C;

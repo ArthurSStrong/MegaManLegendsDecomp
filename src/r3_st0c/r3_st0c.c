@@ -379,7 +379,7 @@ void func_80100ED4(STAGE_ROOM *wp)
 
     if (wp->routine_4 == 0)
     {
-        slot = func_8001EAE8(D_8010CB70);
+        slot = Sce_slot_open(D_8010CB70);
         slot->flags_6 &= ~0x20;
         pos.x = 0xB00;
         pos.y = 0;
@@ -761,7 +761,7 @@ void func_8010189C(STAGE_ROOM *wp)
     wp->tbl_A4 = D_8010CE4C;
     for (i = 0; i < 10; i++)
     {
-        func_8001EAE8(&D_8010CC00[i]);
+        Sce_slot_open(&D_8010CC00[i]);
     }
     STAGE_PL.routine_0 = 3;
     STAGE_PL.routine_1 = 1;

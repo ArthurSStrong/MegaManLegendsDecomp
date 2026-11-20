@@ -258,7 +258,7 @@ void func_801066D4(STAGE_ROOM *wp)
 {
     if (D_80098A72 == 0)
     {
-        func_8001EAE8(D_80130774);
+        Sce_slot_open(D_80130774);
         STAGE_PL.pos_438.x   = -0x100;
         STAGE_PL.pos_438.y   = -1;
         STAGE_PL.pos_438.z   = 0xB00;

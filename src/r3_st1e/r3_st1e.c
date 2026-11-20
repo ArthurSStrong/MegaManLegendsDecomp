@@ -672,7 +672,7 @@ void func_80101078(STAGE_ROOM *wp)
     Sce_script_set(D_8010496C, D_8010444C);
     for (i = 0, entry = D_8010487C; i < 0xC; i++, entry++)
     {
-        func_8001EAE8(entry);
+        Sce_slot_open(entry);
     }
     ep = func_800316BC();
     if (ep != NULL)

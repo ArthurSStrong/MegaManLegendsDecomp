@@ -318,7 +318,7 @@ void func_8001DF10(SCENE_CMD_LIST *list)
     for (i = 0; i < list->count; i++)
     {
         slot = list->cmds_4[i].slot_0;
-        func_8001EAE8(&list->cmds_4[i]);
+        Sce_slot_open(&list->cmds_4[i]);
         D_800ACD40[slot] = Scene_work.slot_24[slot];
         D_800ACD40[slot]->flags_6 &= 0xDF;
         D_800988E8 |= 0x80000000 >> slot;
@@ -330,7 +330,7 @@ void func_8001DFEC(SCENE_CMD_LIST *work, sint32 index)
     uint32 slot;
 
     slot = work->cmds_4[index].slot_0;
-    func_8001EAE8(&work->cmds_4[index]);
+    Sce_slot_open(&work->cmds_4[index]);
     D_800ACD40[slot] = Scene_work.slot_24[slot];
     D_800988E8 |= 0x80000000 >> slot;
 }
@@ -541,21 +541,21 @@ void func_8001E6C0(sint32 arg0, sint32 arg1, sint32 arg2)
     func_800398E0(0);
 }
 
-void func_8001E7E4(sint32 a, sint32 b, sint32 c)
+void camera_pos_set(sint32 a, sint32 b, sint32 c)
 {
     D_800BC740 = a << 16;
     D_800BC744 = b << 16;
     D_800BC748 = c << 16;
 }
 
-void func_8001E810(sint32 a, sint32 b, sint32 c)
+void camera_rot_set(sint32 a, sint32 b, sint32 c)
 {
     D_800BC770 = a << 16;
     D_800BC774 = b << 16;
     D_800BC778 = c << 16;
 }
 
-sint32 func_8001E83C(sint16 x0, sint16 y0, sint16 x1, sint16 y1)
+sint32 Sce_point_angle(sint16 x0, sint16 y0, sint16 x1, sint16 y1)
 {
     sint32 dx;
     sint32 dy;
@@ -587,7 +587,7 @@ sint32 func_8001E83C(sint16 x0, sint16 y0, sint16 x1, sint16 y1)
 
 // The type 0xE0 slot shares the table store with the others, and an unknown type jumps to the
 // common return: one assignment and one return of slot keep its priority below pos.
-SCENE_SLOT *func_8001E968(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos)
+SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos)
 {
     SCENE_SLOT *slot;
     SCENE_SLOT *wp;
@@ -641,11 +641,11 @@ end:
     return slot;
 }
 
-SCENE_SLOT *func_8001EAE8(SCENE_CMD *cmd)
+SCENE_SLOT *Sce_slot_open(SCENE_CMD *cmd)
 {
     SCENE_SLOT *slot;
 
-    slot = func_8001E968(cmd->slot_0, cmd->kind_1, cmd->type_3, (SCENE_POS *)&cmd->word_C);
+    slot = slot_alloc(cmd->slot_0, cmd->kind_1, cmd->type_3, (SCENE_POS *)&cmd->word_C);
     if (slot == 0)
     {
         return 0;
@@ -670,7 +670,7 @@ SCENE_SLOT *func_8001EB98(SCENE_CMD *cmd)
     SCENE_SLOT *slot;
 
     saved = Scene_work.slot_24[cmd->slot_0];
-    slot  = func_8001EAE8(cmd);
+    slot  = Sce_slot_open(cmd);
     slot->flags_6 &= 0xDF;
     Scene_work.slot_24[cmd->slot_0] = saved;
     return slot;

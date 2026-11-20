@@ -178,7 +178,7 @@ void func_801005E4(STAGE_ROOM_WORK *wp)
     wp->tbl_A4 = D_801038C8;
     for (i = 0; i < 3; i++)
     {
-        func_8001EAE8(&D_801036FC[i]);
+        Sce_slot_open(&D_801036FC[i]);
     }
 }
 
@@ -376,7 +376,7 @@ void func_80100BDC(STAGE_ROOM_WORK *wp)
     wp->tbl_A4 = D_80103AD4;
     for (i = 0; i < 3; i++)
     {
-        func_8001EAE8(&D_801038F8[i]);
+        Sce_slot_open(&D_801038F8[i]);
     }
 }
 

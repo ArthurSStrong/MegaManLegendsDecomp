@@ -232,7 +232,7 @@ void stcom20_func_06E8(STCOM20_WORK *wp)
         {
             wp->param_C   = 1;
             wp->routine_1 = 2;
-            wp->angle_66  = func_8001E83C(0, 0, wp->ctl.x_24, wp->ctl.z_28);
+            wp->angle_66  = Sce_point_angle(0, 0, wp->ctl.x_24, wp->ctl.z_28);
         }
         if (wp->ctl.hit_1C & 0x2000000)
         {

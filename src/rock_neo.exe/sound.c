@@ -448,7 +448,7 @@ void func_8001A274(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint
                 return;
             }
             angle = p_Player_work->rot_56 -
-                    func_8001E83C(p_Player_work->x, p_Player_work->z, pos->x_4, pos->z_8);
+                    Sce_point_angle(p_Player_work->x, p_Player_work->z, pos->x_4, pos->z_8);
             angle &= 0xFFF;
             side = (ccos(angle) << 7) >> 12;
             if (side < 0)

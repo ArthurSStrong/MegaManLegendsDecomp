@@ -114,7 +114,7 @@ void func_80100580(STAGE_ROOM *wp)
             }
             else
             {
-                func_8001EAE8(D_80115074);
+                Sce_slot_open(D_80115074);
                 wp->routine_4++;
             }
             break;
@@ -193,8 +193,8 @@ void func_80100784(STAGE_ROOM *wp)
                 *(uint32 *)&wp->timer_C = 0;
                 D_800BC7F0              = D_801150BC;
                 wp->tbl_A4              = D_80115214;
-                func_8001EAE8(&D_80115094[0]);
-                func_8001EAE8(&D_80115094[1]);
+                Sce_slot_open(&D_80115094[0]);
+                Sce_slot_open(&D_80115094[1]);
                 func_8001EC0C();
                 Sce_script_update();
                 wp->routine_5++;
@@ -386,7 +386,7 @@ void func_80100D00(STAGE_ROOM *wp)
                 *(uint32 *)&wp->timer_C = 0;
                 D_800BC7F0              = D_80115264;
                 wp->tbl_A4              = D_801153E4;
-                func_8001EAE8(D_80115250);
+                Sce_slot_open(D_80115250);
                 func_8001EC0C();
                 Sce_script_update();
                 wp->routine_5++;

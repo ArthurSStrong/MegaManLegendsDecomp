@@ -227,9 +227,9 @@ void func_801010C8(STAGE_ROOM *wp)
     func_8001E6C0(0, 0, 0);
     D_800BC7F0 = D_80110174;
     wp->tbl_A4 = D_801101C8;
-    slot       = func_8001EAE8(&D_801101A0[0]);
+    slot       = Sce_slot_open(&D_801101A0[0]);
     slot->flags_6 &= ~0x20;
-    slot = func_8001EAE8(&D_801101A0[1]);
+    slot = Sce_slot_open(&D_801101A0[1]);
     slot->flags_6 &= ~0x20;
     STAGE_PL.routine_0 = 3;
     STAGE_PL.routine_1 = 0;

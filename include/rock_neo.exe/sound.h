@@ -239,7 +239,7 @@ extern void SsSeqClose(sint16 seq);
 extern void SsSepClose(sint16 seq);
 
 extern sint32 ccos(sint32 angle);
-extern sint32 func_8001E83C(sint16 x0, sint16 z0, sint16 x1, sint16 z1);
+extern sint32 Sce_point_angle(sint16 x0, sint16 z0, sint16 x1, sint16 z1);
 #define GAME_WORK_FLAG58 (*(sint8 *)((uint8 *)&Game_work + 0x58))
 
 extern sint32 func_8001AE6C(sint32 flags, uint16 *p);

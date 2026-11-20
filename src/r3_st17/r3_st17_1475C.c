@@ -1135,8 +1135,8 @@ void func_80116B04(STAGE_ROOM *wp)
             *(uint32 *)&wp->timer_C = 0;
             D_800BC7F0              = D_80121318;
             wp->tbl_A4              = D_801218D0;
-            func_8001EAE8(&D_8012123C[0]);
-            func_8001EAE8(&D_8012123C[1]);
+            Sce_slot_open(&D_8012123C[0]);
+            Sce_slot_open(&D_8012123C[1]);
             func_80117BEC(0, 0);
             D_800BBA90[0].value_20 = 0;
             D_800BBA90[0].flags_0  = 3;
@@ -1352,7 +1352,7 @@ void func_80117264(STAGE_ROOM *wp)
     {
         D_800BBA90[0].flags_0 = 0;
         Player_work.flags_0 &= ~2;
-        func_8001EAE8(D_80121278);
+        Sce_slot_open(D_80121278);
         func_80117A40(0, 2);
     }
 }
@@ -1378,7 +1378,7 @@ void func_801172F4(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[1].flags_0 = 3;
         ST17_MODEL_TBL[1].value_2F = 6;
         func_8003187C(wp->child_24);
-        func_8001EAE8(D_801212DC);
+        Sce_slot_open(D_801212DC);
         func_80117A40(0, 3);
     }
 }
@@ -1391,7 +1391,7 @@ void func_80117370(STAGE_ROOM *wp)
     {
         child = wp->child_28;
         child->flags_0 &= 0xFD;
-        func_8001EAE8(D_80121278);
+        Sce_slot_open(D_80121278);
         func_80117A40(0, 2);
     }
 }
@@ -1417,7 +1417,7 @@ void func_80117420(STAGE_ROOM *wp)
         func_80117BEC(2, 1);
         STAGE_MODEL_TBL[1].flags_0 = 3;
         func_80031824(wp->child_28);
-        func_8001EAE8(D_8012123C);
+        Sce_slot_open(D_8012123C);
     }
 }
 
@@ -1431,8 +1431,8 @@ void func_8011748C(STAGE_ROOM *wp)
             D_800BBA90[0].flags_0      = 3;
             ST17_MODEL_TBL[0].value_2F = 6;
             func_80031824(wp->child_24);
-            func_8001EAE8(&D_801212F0[0]);
-            func_8001EAE8(&D_801212F0[1]);
+            Sce_slot_open(&D_801212F0[0]);
+            Sce_slot_open(&D_801212F0[1]);
             func_80117A40(0, 1);
             break;
         case 30:
@@ -1459,7 +1459,7 @@ void func_801175B4(STAGE_ROOM *wp)
         ST17_MODEL_TBL[1].value_2F = 2;
         func_8003187C(wp->child_24);
         func_80031824(wp->child_28);
-        func_8001EAE8(D_8012123C);
+        Sce_slot_open(D_8012123C);
         func_80117A40(0, 3);
     }
 }
@@ -1471,7 +1471,7 @@ void func_80117648(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[0].flags_0 = 0;
         STAGE_MODEL_TBL[1].flags_0 = 0;
         func_80031824(wp->child_24);
-        func_8001EAE8(D_80121278);
+        Sce_slot_open(D_80121278);
         func_80117A40(0, 2);
     }
 }
@@ -1486,7 +1486,7 @@ void func_801176A8(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[1].flags_0 = 3;
         ST17_MODEL_TBL[1].value_2F = 2;
         func_8003187C(wp->child_24);
-        func_8001EAE8(D_80121250);
+        Sce_slot_open(D_80121250);
         func_80117A40(0, 3);
     }
 }
@@ -1502,7 +1502,7 @@ void func_80117740(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[1].flags_0 = 3;
         ST17_MODEL_TBL[1].value_2F = 6;
         func_8003187C(wp->child_28);
-        func_8001EAE8(D_8012123C);
+        Sce_slot_open(D_8012123C);
     }
     if (wp->frame_10 == 0x7C)
     {
@@ -1531,7 +1531,7 @@ void func_80117830(STAGE_ROOM *wp)
         func_80117BEC(0xA, 1);
         STAGE_MODEL_TBL[1].flags_0 = 3;
         ST17_MODEL_TBL[1].value_2F = 6;
-        func_8001EAE8(D_80121250);
+        Sce_slot_open(D_80121250);
         wp->child_24->routine_1 = 6;
         wp->child_24->routine_2 = 0;
     }
@@ -1558,11 +1558,11 @@ void func_80117948(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         func_8003187C(wp->child_28);
-        func_8001EAE8(&D_80121278[0]);
-        func_8001EAE8(&D_80121278[1]);
-        func_8001EAE8(&D_80121278[2]);
-        func_8001EAE8(&D_80121278[3]);
-        func_8001EAE8(&D_80121278[4]);
+        Sce_slot_open(&D_80121278[0]);
+        Sce_slot_open(&D_80121278[1]);
+        Sce_slot_open(&D_80121278[2]);
+        Sce_slot_open(&D_80121278[3]);
+        Sce_slot_open(&D_80121278[4]);
         func_80117A40(0, 2);
     }
 }
@@ -1667,8 +1667,8 @@ void func_80117CEC(STAGE_ROOM *wp)
             D_800BC7F0  = D_80121ABC;
             wp->tbl_A4  = D_80121B08;
             wp->timer_C = 0;
-            func_8001EAE8(&D_80121A44[0]);
-            func_8001EAE8(&D_80121A44[1]);
+            Sce_slot_open(&D_80121A44[0]);
+            Sce_slot_open(&D_80121A44[1]);
             wp->reserved09[1] = 0x80;
             wp->routine_5++;
             break;
@@ -1948,8 +1948,8 @@ void func_80118578(STAGE_ROOM *wp)
         Player_work.value_448 = 0;
         wp->child_28->flags_0 &= ~2;
         wp->child_24->flags_0 &= ~2;
-        func_8001EAE8(&D_80121A6C[0]);
-        func_8001EAE8(&D_80121A6C[1]);
+        Sce_slot_open(&D_80121A6C[0]);
+        Sce_slot_open(&D_80121A6C[1]);
         func_8011896C(D_800C3558, 1);
     }
     else if (wp->frame_10 == 1)
@@ -2041,7 +2041,7 @@ void func_80118818(STAGE_ROOM *wp)
         child = wp->child_28;
         child->flags_0 &= ~2;
         func_8003187C(wp->child_24);
-        func_8001EAE8(D_80121A94);
+        Sce_slot_open(D_80121A94);
         func_8011896C(D_800C3558, 2);
     }
 }
@@ -2058,7 +2058,7 @@ void func_801188C0(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8001EAE8(D_80121AA8);
+        Sce_slot_open(D_80121AA8);
     }
 }
 
@@ -2187,12 +2187,12 @@ void func_80118CD0(STAGE_ROOM *wp)
             D_800BC7F0  = D_80122088;
             wp->tbl_A4  = D_801220D4;
             wp->timer_C = 0;
-            func_8001EAE8(D_80121FE8);
+            Sce_slot_open(D_80121FE8);
             wp->reserved09[1] = 0x80;
             wp->routine_5++;
             break;
         case 1:
-            func_8001EAE8(D_80121FFC);
+            Sce_slot_open(D_80121FFC);
             wp->routine_5++;
             // fall through
         case 2:
@@ -2383,8 +2383,8 @@ void func_801192C4(STAGE_ROOM *wp)
         Player_work.value_448 = 0;
         wp->child_24->flags_0 &= ~2;
         wp->child_28->flags_0 &= ~2;
-        func_8001EAE8(&D_80122010[0]);
-        func_8001EAE8(&D_80122010[1]);
+        Sce_slot_open(&D_80122010[0]);
+        Sce_slot_open(&D_80122010[1]);
         func_80119838(D_800C3558, 1);
     }
     else if (wp->frame_10 == 1)

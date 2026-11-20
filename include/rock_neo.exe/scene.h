@@ -24,7 +24,7 @@ typedef struct
     uint8 reserved10[4];
 } SCENE_CMD;
 
-// Slot record returned by func_8001E968.
+// Slot record returned by slot_alloc.
 typedef struct
 {
     uint8 flags_0;
@@ -54,7 +54,7 @@ typedef struct
     uint16 half_58;
 } SCENE_SLOT;
 
-// Position record passed to func_8001E968
+// Position record passed to slot_alloc
 typedef struct
 {
     sint16 x_0;
@@ -208,8 +208,8 @@ sint32 catan(sint32 x);
 extern sint16 D_80089200[];
 extern sint16 D_80089204[];
 extern sint16 D_80089208[];
-SCENE_SLOT *func_8001E968(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos);
-SCENE_SLOT *func_8001EAE8(SCENE_CMD *cmd);
+SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos);
+SCENE_SLOT *Sce_slot_open(SCENE_CMD *cmd);
 uint32 Sce_flag_test(uint32 flag);
 void func_8001F798(sint32 arg);
 

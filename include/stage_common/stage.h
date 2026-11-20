@@ -210,7 +210,7 @@ void func_8005DC10(sint32 arg);
 void Sce_event_start(sint32 id);
 void func_8001E6C0(sint32 a0, sint32 a1, sint32 a2);
 // Spawns a scene command's object; returns its work slot (ROCK_NEO's SCENE_SLOT, any slot size).
-void *func_8001EAE8(void *entry);
+void *Sce_slot_open(void *entry);
 void Sce_script_set(void *a, void *b);
 void func_80067B7C(void);
 sint32 Sce_flag_test(sint32 flag);

@@ -343,7 +343,7 @@ void func_80100CC4(STAGE_ROOM *wp)
     wp->tbl_A4 = D_80108AF0;
     for (i = 0; i < 0xC; i++)
     {
-        func_8001EAE8(&D_80108804[i]);
+        Sce_slot_open(&D_80108804[i]);
     }
 }
 

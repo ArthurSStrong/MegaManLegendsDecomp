@@ -249,7 +249,7 @@ void func_80100B20(sint8 skip)
         for (i = 0; i < 1; i++)
         {
             index = D_8011DD68[i].index_0;
-            func_8001EAE8(&D_8011DD68[i]);
+            Sce_slot_open(&D_8011DD68[i]);
             D_8011EA60[index] = STAGE_SCENE_OBJ(index);
             D_8011EA60[index]->flags_6 &= ~0x20;
             D_8011DD60 |= 0x80000000 >> index;

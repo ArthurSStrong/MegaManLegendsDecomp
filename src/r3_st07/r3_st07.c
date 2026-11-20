@@ -90,7 +90,7 @@ void func_8010036C(STAGE_ROOM *wp)
             wp->reserved09[1] = 0x80;
             wp->reserved09[2] = 0;
             wp->timer_C       = 0;
-            func_8001EAE8(&D_80105B8C);
+            Sce_slot_open(&D_80105B8C);
             for (i = 0; i < 8; i++)
             {
                 D_800BBA90[i].flags_0  = D_80106124[i].flags_0;
@@ -271,7 +271,7 @@ void func_80100944(STAGE_ROOM *wp)
         D_800BBAC8 = 0;
         do
         {
-            func_8001EAE8(entry);
+            Sce_slot_open(entry);
             i++;
             entry++;
         } while (i < 4);
@@ -300,7 +300,7 @@ void func_801009B8(STAGE_ROOM *wp)
         entry = D_80105BDC;
         do
         {
-            func_8001EAE8(entry);
+            Sce_slot_open(entry);
             i++;
             entry++;
         } while (i < 7);
@@ -348,7 +348,7 @@ void func_80100B14(STAGE_ROOM *wp)
         entry = D_80105C18;
         do
         {
-            func_8001EAE8(entry);
+            Sce_slot_open(entry);
             i++;
             entry++;
         } while (i < 0xC);
@@ -377,7 +377,7 @@ void func_80100B98(STAGE_ROOM *wp)
         entry                 = D_80105C7C;
         do
         {
-            func_8001EAE8(entry);
+            Sce_slot_open(entry);
             i++;
             entry++;
         } while (i < 0xF);
@@ -399,7 +399,7 @@ void func_80100C4C(STAGE_ROOM *wp)
         func_80031824(wp->child_2C);
         do
         {
-            func_8001EAE8(entry);
+            Sce_slot_open(entry);
             i++;
             entry++;
         } while (i < 0x1D);
@@ -684,7 +684,7 @@ void func_8010136C(STAGE_ROOM *wp)
     wp->tbl_A4 = D_80106354;
     do
     {
-        func_8001EAE8(entry);
+        Sce_slot_open(entry);
         i++;
         entry++;
     } while (i < 0xA);
@@ -1062,7 +1062,7 @@ void func_80101D5C(STAGE_ROOM *wp)
     wp->tbl_A4 = D_801065E4;
     do
     {
-        func_8001EAE8(entry);
+        Sce_slot_open(entry);
         i++;
         entry++;
     } while (i < 0xA);
