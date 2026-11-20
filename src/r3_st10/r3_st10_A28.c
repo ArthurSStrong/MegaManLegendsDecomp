@@ -13,7 +13,7 @@ void func_80100A44(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80110074);
+        Sce_slot_open_list(D_80110074);
         wp->routine_4 = 0xFF;
     }
 }
@@ -22,7 +22,7 @@ void func_80100A90(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_8011007C);
+        Sce_slot_open_list(D_8011007C);
         wp->routine_4 = 0xFF;
     }
 }

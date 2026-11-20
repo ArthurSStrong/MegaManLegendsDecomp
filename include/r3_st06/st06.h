@@ -1553,7 +1553,7 @@ extern STAGE_ROOM_FUNC D_801228A8[];
 
 void func_80113A1C(ST06_ACTOR *wp);
 
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 
 void func_801067CC(STAGE_ROOM *wp);

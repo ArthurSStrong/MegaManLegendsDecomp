@@ -97,7 +97,7 @@ extern uint8 D_80106104[];
 extern uint8 D_80106118[];
 extern uint8 D_80106138[];
 
-void func_8001DF10(uint8 *);
+void Sce_slot_open_list(uint8 *);
 void func_8010035C(STAGE_ROOM *wp);
 
 void func_80100460(STAGE_ROOM *wp);
@@ -150,7 +150,7 @@ sint32 func_80100DD0(void);
 void func_8010025C(void);
 
 sint32 func_8003B2D4(sint32 row, sint32 bit);
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 extern uint8 D_80105900[][8];
 sint16 func_80048E6C(void *wp);

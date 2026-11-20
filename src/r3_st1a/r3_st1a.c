@@ -149,7 +149,7 @@ void func_80100B70(STAGE_ROOM *wp)
             }
             else
             {
-                func_8001DF10(D_8012E944);
+                Sce_slot_open_list(D_8012E944);
                 wp->routine_4 = 1;
             }
             break;

@@ -355,7 +355,7 @@ void func_80100C18(void)
 
 void func_80100DE8(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     func_8001E4C4(D_8010CB98, D_8010CBA0[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
@@ -393,7 +393,7 @@ void func_80100F58(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_8010CB40);
+        Sce_slot_open_list(D_8010CB40);
         wp->routine_4 = 0xFF;
     }
 }
@@ -406,7 +406,7 @@ void func_80100FAC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_8010CB40);
+        Sce_slot_open_list(D_8010CB40);
         wp->routine_4 = 0xFF;
     }
 }
@@ -455,7 +455,7 @@ void func_801010DC(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB48);
+        Sce_slot_open_list(&D_8010CB48);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }
@@ -465,7 +465,7 @@ void func_80101130(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB48);
+        Sce_slot_open_list(&D_8010CB48);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }
@@ -475,7 +475,7 @@ void func_80101184(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB50);
+        Sce_slot_open_list(&D_8010CB50);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }
@@ -485,7 +485,7 @@ void func_801011D8(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB58);
+        Sce_slot_open_list(&D_8010CB58);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }
@@ -495,7 +495,7 @@ void func_8010122C(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB60);
+        Sce_slot_open_list(&D_8010CB60);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }
@@ -505,7 +505,7 @@ void func_80101280(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8010CB68);
+        Sce_slot_open_list(&D_8010CB68);
         func_8003786C(0x19D);
         wp->value_4 = 0xFF;
     }

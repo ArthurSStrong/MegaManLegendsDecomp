@@ -56,7 +56,7 @@ void func_801005CC(void)
 // Sets up the room's scene flags and restarts its script.
 void func_80100780(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     func_8001E4C4(D_801171D0, D_801171D8[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }

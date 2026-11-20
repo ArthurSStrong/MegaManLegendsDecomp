@@ -46,7 +46,7 @@ void func_801003E4(void)
 
 void func_80100570(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     D_800989FC = 0;
 }
 
@@ -103,12 +103,12 @@ void func_801006F0(STAGE_ROOM_WORK *wp)
         case 0:
             if (Sce_flag_test(0x27))
             {
-                func_8001DF10(Sce_flag_test(0x54) ? &D_80119890 : D_80119898);
+                Sce_slot_open_list(Sce_flag_test(0x54) ? &D_80119890 : D_80119898);
                 wp->routine_4 = 0xFF;
             }
             else
             {
-                func_8001DF10(&D_80119890);
+                Sce_slot_open_list(&D_80119890);
                 if (Sce_flag_test(0x29))
                 {
                     wp->routine_4 = 0xFF;
@@ -135,7 +135,7 @@ void func_801007BC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(&D_80119890);
+        Sce_slot_open_list(&D_80119890);
         wp->routine_4 = 0xFF;
     }
 }

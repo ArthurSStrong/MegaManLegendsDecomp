@@ -66,7 +66,7 @@ extern uint8 D_801087B0[];
 extern uint8 D_801087B8[];
 extern uint8 D_801087F0[];
 
-void func_8001DF10(uint8 *);
+void Sce_slot_open_list(uint8 *);
 void func_801004BC(STAGE_ROOM *wp);
 
 void func_80100468(STAGE_ROOM *wp);
@@ -91,7 +91,7 @@ void func_80100CC4(STAGE_ROOM *wp);
 extern STCOM_SVECTOR D_801087C0[];
 extern uint32 D_801087E0[];
 sint32 func_80048C60(STCOM_SVECTOR *pos);
-void func_8001E20C(sint32 arg);
+void Sce_slot_close(sint32 arg);
 void func_801005BC(STAGE_ROOM_WORK *wp);
 
 void func_80100664(STAGE_ROOM_WORK *wp);

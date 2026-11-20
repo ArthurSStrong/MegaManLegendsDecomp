@@ -564,7 +564,7 @@ void func_80111C6C(STAGE_PL_VIEW *pl);
 
 extern uint8 D_801171D0[];
 extern uint8 D_801171D8[][8];
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(uint8 *ids, uint8 *flags);
 
 sint32 func_80048E6C(void *wp);
@@ -573,7 +573,7 @@ sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint
 
 extern uint8 D_8011835C[][2];
 
-void func_8001DF10(uint8 *list);
+void Sce_slot_open_list(uint8 *list);
 extern uint8 D_801171C0[];
 
 extern STAGE_FX_FUNC D_801184A0[];
@@ -594,7 +594,7 @@ extern STAGE_FX *D_8011F4A8[];
 
 extern uint8 D_8011851C[];
 
-void func_8001E20C(sint32 flag);
+void Sce_slot_close(sint32 flag);
 
 extern STAGE_OBJ_FUNC D_80117AB4[];
 

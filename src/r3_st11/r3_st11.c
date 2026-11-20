@@ -39,7 +39,7 @@ void func_8010011C(void)
 
 void func_80100284(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     func_8001E4C4(D_80109BB4, D_80109BBC[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
@@ -61,7 +61,7 @@ void func_80100370(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109B8C);
+        Sce_slot_open_list(D_80109B8C);
         wp->routine_4++;
     }
 }
@@ -70,9 +70,9 @@ void func_801003C4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109B94);
-        func_8001E20C(0);
-        func_8001E20C(1);
+        Sce_slot_open_list(D_80109B94);
+        Sce_slot_close(0);
+        Sce_slot_close(1);
         wp->routine_4++;
     }
 }
@@ -81,7 +81,7 @@ void func_80100428(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109B94);
+        Sce_slot_open_list(D_80109B94);
         wp->routine_4++;
     }
 }
@@ -90,7 +90,7 @@ void func_8010047C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109B9C);
+        Sce_slot_open_list(D_80109B9C);
         wp->routine_4++;
     }
 }
@@ -99,7 +99,7 @@ void func_801004D0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109BA4);
+        Sce_slot_open_list(D_80109BA4);
         wp->routine_4++;
     }
 }
@@ -108,7 +108,7 @@ void func_80100524(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80109BAC);
+        Sce_slot_open_list(D_80109BAC);
         wp->routine_4++;
     }
 }

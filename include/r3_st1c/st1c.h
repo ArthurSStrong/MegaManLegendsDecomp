@@ -86,8 +86,8 @@ void func_801001D0(void);
 extern uint8 D_80103C3C[][8]; // by level (func_80100234)
 extern uint8 D_80103C5C[][8]; // by level (func_801002B0)
 extern uint8 D_80103C8C[];    // weights by scene flag (func_80100360; indexed from 0x38)
-void func_8001DF10(void *entry);
-void func_8001E20C(sint32 arg);
+void Sce_slot_open_list(void *entry);
+void Sce_slot_close(sint32 arg);
 uint8 func_80100360(void);
 extern uint8 D_80104460[];
 void func_80102E3C(ST1C_OBJ *wp);

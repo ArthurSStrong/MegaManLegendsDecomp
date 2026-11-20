@@ -619,7 +619,7 @@ extern void *D_80164008[];
 
 void func_8010051C(void);
 void func_801007D0(void);
-void func_8001DF10(uint8 *);
+void Sce_slot_open_list(uint8 *);
 void func_80100808(STAGE_ROOM *wp);
 sint32 func_80100968(void);
 void func_80100B70(STAGE_OBJ *wp);

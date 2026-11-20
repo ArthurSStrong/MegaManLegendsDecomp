@@ -68,7 +68,7 @@ void func_80100354(void)
 void func_801006B0(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
-    func_8001DEE4();
+    Sce_slot_list_clear();
     func_8001E4C4(D_80110094, D_8011009C[STAGE_GAME_VALUE_52]);
 }
 
@@ -90,7 +90,7 @@ void func_8010079C(STAGE_ROOM *wp)
 
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_8011004C);
+        Sce_slot_open_list(D_8011004C);
         if (!Sce_flag_test(0x48))
         {
             Sce_event_start(0x63);
@@ -113,7 +113,7 @@ void func_80100840(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_8011005C);
+        Sce_slot_open_list(D_8011005C);
         wp->routine_4++;
     }
 }
@@ -122,7 +122,7 @@ void func_80100894(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80110084);
+        Sce_slot_open_list(D_80110084);
         wp->routine_4++;
     }
 }
@@ -131,7 +131,7 @@ void func_801008E8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80110054);
+        Sce_slot_open_list(D_80110054);
         wp->routine_4++;
     }
 }

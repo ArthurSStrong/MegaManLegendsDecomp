@@ -615,7 +615,7 @@ extern uint8 D_80164006[];
 extern uint8 D_80164007[];
 extern sint32 D_80164008[];
 
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_80100570(void);
 
 void func_801060E0(ST0B_OBJ *wp);
@@ -666,7 +666,7 @@ extern uint8 D_8011974C[][8];
 
 sint32 func_8003648C(void *track, void *wp);
 sint32 func_800364B0(void *track, void *target, sint32 angle);
-void func_8001DF10(uint8 *list);
+void Sce_slot_open_list(uint8 *list);
 
 // PsyQ's TILE (a flat rectangle), as func_80101110 fills it.
 typedef struct

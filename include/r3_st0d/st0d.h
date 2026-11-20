@@ -751,7 +751,7 @@ extern sint32 D_800BC770;
 extern sint32 D_800BC774;
 extern sint32 D_800BC778;
 
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 void func_80100358(void);
 void func_80100DB4(STAGE_ROOM *wp);
@@ -806,7 +806,7 @@ void func_80101118(STAGE_ROOM *wp);
 void func_8010134C(STAGE_ROOM *wp);
 STAGE_OBJ *func_80036294(sint32 id);
 void func_80100BA4(sint32 arg);
-void func_8001DF10(uint8 *script);
+void Sce_slot_open_list(uint8 *script);
 void func_80101548(sint32 mode, uint8 arg);
 void func_80104BE0(ST0D_ACTOR *wp, uint16 *bob);
 void func_8010964C(ST0D_BOBBER *wp, ST0D_BOB *bob);

@@ -5,7 +5,7 @@ void func_801007D8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80114EE0);
+        Sce_slot_open_list(D_80114EE0);
         wp->routine_4 = 0xFF;
     }
 }

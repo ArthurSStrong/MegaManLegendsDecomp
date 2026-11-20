@@ -737,7 +737,7 @@ void Sce_script_next(void);
 void func_80053AA4(sint32 arg);
 void func_8003697C(void);
 void func_8002FF34(void *wp, sint32 x, sint32 y, sint32 z);
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 void func_80101B2C(void);
 void func_801007B4(void);

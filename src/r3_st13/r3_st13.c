@@ -151,7 +151,7 @@ void func_80100808(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        func_8001DF10(D_80117294);
+        Sce_slot_open_list(D_80117294);
         wp->routine_4 = 0xFF;
     }
 }
@@ -160,7 +160,7 @@ void func_80100854(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        func_8001DF10(&D_8011729C);
+        Sce_slot_open_list(&D_8011729C);
         func_80100988();
         wp->value_4 = 0xFF;
     }

@@ -299,7 +299,7 @@ void func_8001DEDC(void)
 {
 }
 
-void func_8001DEE4(void)
+void Sce_slot_list_clear(void)
 {
     sint32 i;
 
@@ -310,7 +310,7 @@ void func_8001DEE4(void)
     }
 }
 
-void func_8001DF10(SCENE_CMD_LIST *list)
+void Sce_slot_open_list(SCENE_CMD_LIST *list)
 {
     sint16 i;
     uint32 slot;
@@ -325,7 +325,7 @@ void func_8001DF10(SCENE_CMD_LIST *list)
     }
 }
 
-void func_8001DFEC(SCENE_CMD_LIST *work, sint32 index)
+void slot_open_index(SCENE_CMD_LIST *work, sint32 index)
 {
     uint32 slot;
 
@@ -335,7 +335,7 @@ void func_8001DFEC(SCENE_CMD_LIST *work, sint32 index)
     D_800988E8 |= 0x80000000 >> slot;
 }
 
-void func_8001E068(void)
+void Sce_slot_close_all(void)
 {
     SCENE_SLOT *slot;
     sint32 i;
@@ -378,7 +378,7 @@ void func_8001E068(void)
     }
 }
 
-void func_8001E20C(sint8 index)
+void Sce_slot_close(sint8 index)
 {
     SCENE_SLOT *slot;
 

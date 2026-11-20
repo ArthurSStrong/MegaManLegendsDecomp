@@ -48,7 +48,7 @@ void func_8010051C(void)
 
 void func_801006B8(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     func_8001E4C4(D_801226A4, D_801226AC[STAGE_GAME_VALUE_52]);
     if (STAGE_GAME_VALUE_52 == 0)
     {

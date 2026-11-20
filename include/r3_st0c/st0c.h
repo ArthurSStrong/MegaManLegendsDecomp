@@ -461,11 +461,11 @@ extern uint8 D_80164007[];
 extern void *D_80164008[];
 
 void func_8010012C(STAGE_ROOM *wp);
-void func_8001DEE4(void);
+void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 void func_80100DE8(void);
 void func_80100E34(void);
-void func_8001DF10(uint8 *);
+void Sce_slot_open_list(uint8 *);
 void func_80100F58(STAGE_ROOM *wp);
 void func_80100FAC(STAGE_ROOM *wp);
 sint32 func_80101330(void);

@@ -40,7 +40,7 @@ void func_8010037C(void)
 
 void func_801004E4(void)
 {
-    func_8001DEE4();
+    Sce_slot_list_clear();
     *(uint32 *)&D_800989F8.routine_4 = 0;
     func_8001E4C4(D_80114EE8, D_80114EF0[STAGE_GAME_VALUE_52]);
 }
@@ -63,7 +63,7 @@ void func_8010058C(STAGE_ROOM *wp)
         case 0:
             if (Sce_flag_test(0x26) == 0)
             {
-                func_8001DF10(D_80114EB8);
+                Sce_slot_open_list(D_80114EB8);
                 obj = func_800316BC();
                 if (obj != NULL)
                 {

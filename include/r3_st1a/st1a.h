@@ -4129,7 +4129,7 @@ sint32 func_80036A88(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 // Game_work's word at +0x174 (STAGE_GAME_VIEW names its low halfword).
 #define ST1A_GAME_U32(offset) (*(uint32 *)((uint8 *)&Game_work + (offset)))
 
-void func_8001DF10(uint8 *script);
+void Sce_slot_open_list(uint8 *script);
 
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 
