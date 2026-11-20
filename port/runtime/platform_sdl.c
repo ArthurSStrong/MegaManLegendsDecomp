@@ -592,6 +592,17 @@ static void stick_to_dpad(PSX_PAD_STATE *s)
     s->lx = s->ly = s->rx = s->ry = 0x80;
 }
 
+// The port menu (Esc; below platform_present): while it is open the game gets released pads,
+// and the window host freezes the game process.
+static int menu_open;
+static int menu_quit; // "Quit game" was chosen
+static int menu_hold; // the menu just closed: no input reaches the game until all is released
+static void menu_show(void);
+static void menu_key(SDL_Scancode sc);
+static void menu_pad_button(int button);
+static void menu_pad_axis(int axis, int value);
+static int any_input_held(void);
+
 int platform_poll(PSX_PAD_STATE pads[PLATFORM_PADS])
 {
     SDL_Event ev;
@@ -608,9 +619,15 @@ int platform_poll(PSX_PAD_STATE pads[PLATFORM_PADS])
                 {
                     break;
                 }
+                if (menu_open)
+                {
+                    menu_key(ev.key.scancode);
+                    break;
+                }
                 if (key_is(ev.key.scancode, K_QUIT))
                 {
-                    return 0;
+                    menu_show();
+                    break;
                 }
                 if (key_is(ev.key.scancode, K_VRAM))
                 {
@@ -633,15 +650,46 @@ int platform_poll(PSX_PAD_STATE pads[PLATFORM_PADS])
             case SDL_EVENT_GAMEPAD_REMOVED:
                 close_gamepad(ev.gdevice.which);
                 break;
+            case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+                if (menu_open)
+                {
+                    menu_pad_button(ev.gbutton.button);
+                }
+                else if (ev.gbutton.button == SDL_GAMEPAD_BUTTON_GUIDE)
+                {
+                    menu_show();
+                }
+                break;
+            case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+                if (menu_open)
+                {
+                    menu_pad_axis(ev.gaxis.axis, ev.gaxis.value);
+                }
+                break;
             default:
                 break;
         }
+    }
+    if (menu_quit)
+    {
+        return 0;
+    }
+    if (menu_hold && !menu_open && !any_input_held())
+    {
+        menu_hold = 0;
     }
     for (i = 0; i < PLATFORM_PADS; i++)
     {
         psx_pad_reset(&pads[i]);
         pads[i].analog    = analog_mode;
         pads[i].connected = (i == 0) || gamepads[i] != NULL;
+    }
+    if (menu_open || menu_hold)
+    {
+        return 1;
+    }
+    for (i = 0; i < PLATFORM_PADS; i++)
+    {
         if (gamepads[i] != NULL)
         {
             read_gamepad(gamepads[i], &pads[i]);
@@ -825,6 +873,494 @@ void platform_present(void)
     present(gpu_vram(), d->x, d->y, d->w, d->h, d->is24, port_overlay());
 }
 
+// --- the port menu (Esc) --------------------------------------------------------------------
+// Esc (keyboard.quit) or the gamepad's guide button opens it over the frozen game: resume, the
+// keyboard and gamepad bindings, a few settings, and quit. Every change applies at once and is
+// written to the settings file (port_config_save). Keys: arrows, Enter/Space, Left/Right for
+// values, Esc/Backspace back. Gamepad: d-pad, south = choose, east = back, start = resume.
+
+enum
+{
+    MENU_MAIN,
+    MENU_KEYS,
+    MENU_PAD,
+    MENU_SETTINGS
+};
+enum
+{
+    SET_FULLSCREEN,
+    SET_INTEGER,
+    SET_SMOOTH,
+    SET_PAD_MODE,
+    SET_VOLUME,
+    SET_COUNT
+};
+
+#define MENU_SLOT_CROSS 4 // psx_buttons[4], "cross"
+
+static PORT_OVERLAY menu_layer;
+static int menu_page;
+static int menu_cursor;
+static int menu_capture;      // waiting for the input to bind to menu_cursor's button
+static int start_volume = -1; // [audio] volume when the game started (the game applies it)
+
+static const char *const main_items[]  = {"Resume", "Controls: keyboard", "Controls: gamepad",
+                                          "Settings", "Quit game"};
+static const char *const page_titles[] = {"MEGA MAN LEGENDS", "KEYBOARD", "GAMEPAD", "SETTINGS"};
+static const char *const button_labels[PSX_BUTTONS] = {
+    "Up", "Down", "Left", "Right", "Cross", "Circle", "Square", "Triangle",
+    "L1", "L2",   "R1",   "R2",    "L3",    "R3",     "Start",  "Select"};
+static const char *const setting_labels[SET_COUNT] = {"Fullscreen", "Integer scale",
+                                                      "Smooth pixels", "Pad mode", "Volume"};
+
+static int menu_items(void)
+{
+    switch (menu_page)
+    {
+        case MENU_MAIN:
+            return (int)(sizeof(main_items) / sizeof(main_items[0]));
+        case MENU_SETTINGS:
+            return SET_COUNT + 1; // + Back
+        default:
+            return PSX_BUTTONS + 1; // + Back
+    }
+}
+
+static const char *pad_input_name(int input)
+{
+    int j;
+
+    for (j = 0; j < (int)(sizeof(pad_inputs) / sizeof(pad_inputs[0])); j++)
+    {
+        if (pad_inputs[j].input == input)
+        {
+            return pad_inputs[j].name;
+        }
+    }
+    return "-";
+}
+
+static int menu_volume(void)
+{
+    return port_config_int("audio", "volume", 100);
+}
+
+static const char *setting_value(int i, char *buf, size_t size)
+{
+    switch (i)
+    {
+        case SET_FULLSCREEN:
+            return (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) ? "on" : "off";
+        case SET_INTEGER:
+            return integer_scale ? "on" : "off";
+        case SET_SMOOTH:
+            return port_config_bool("video", "smooth", 0) ? "on" : "off";
+        case SET_PAD_MODE:
+            return analog_mode ? "analog" : "digital";
+        case SET_VOLUME:
+            snprintf(buf, size, "< %d%% >", menu_volume());
+            return buf;
+        default:
+            return NULL;
+    }
+}
+
+static void draw_menu(void)
+{
+    PORT_OVERLAY *o = &menu_layer;
+    int n           = menu_items();
+    char buf[32];
+    int i;
+
+    port_overlay_clear(o);
+    port_overlay_box(o, 4, 2, 32, n + 6, 160);
+    port_overlay_center(o, 3, OVL_TITLE, "%s", page_titles[menu_page]);
+    for (i = 0; i < n; i++)
+    {
+        int row          = 5 + i;
+        int colour       = i == menu_cursor ? OVL_CURSOR : OVL_TEXT;
+        const char *name = "Back";
+        const char *val  = NULL;
+
+        if (menu_page == MENU_MAIN)
+        {
+            name = main_items[i];
+        }
+        else if ((menu_page == MENU_KEYS || menu_page == MENU_PAD) && i < PSX_BUTTONS)
+        {
+            name = button_labels[i];
+            if (menu_capture && i == menu_cursor)
+            {
+                val = menu_page == MENU_KEYS ? "press a key" : "press a button";
+            }
+            else if (menu_page == MENU_KEYS)
+            {
+                val = keys[i][0] != SDL_SCANCODE_UNKNOWN ? SDL_GetScancodeName(keys[i][0]) : "-";
+            }
+            else
+            {
+                val = pad_input_name(pad_binds[i][0]);
+            }
+        }
+        else if (menu_page == MENU_SETTINGS && i < SET_COUNT)
+        {
+            name = setting_labels[i];
+            val  = setting_value(i, buf, sizeof(buf));
+        }
+        port_overlay_print(o, row, 6, colour, "%s%s", i == menu_cursor ? "> " : "  ", name);
+        if (val != NULL)
+        {
+            port_overlay_print(o, row, 22, menu_capture && i == menu_cursor ? OVL_ON : colour, "%s",
+                               val);
+        }
+    }
+    if (menu_capture)
+    {
+        port_overlay_center(o, 6 + n, OVL_DIM, "Esc (or guide): cancel");
+    }
+    else
+    {
+        port_overlay_center(o, 6 + n, OVL_DIM, "Enter/Cross: choose  Esc/Circle: back");
+    }
+}
+
+static void menu_show(void)
+{
+    if (start_volume < 0)
+    {
+        start_volume = menu_volume();
+    }
+    menu_open    = 1;
+    menu_page    = MENU_MAIN;
+    menu_cursor  = 0;
+    menu_capture = 0;
+    if (audio_stream != NULL)
+    {
+        SDL_PauseAudioStreamDevice(audio_stream);
+    }
+}
+
+static void menu_close(void)
+{
+    menu_open = 0;
+    menu_hold = 1; // the key that closed it may be a game button too
+    if (audio_stream != NULL)
+    {
+        SDL_ResumeAudioStreamDevice(audio_stream);
+    }
+}
+
+static void save_bool(const char *section, const char *key, int on)
+{
+    port_config_save(section, key, on ? "yes" : "no");
+}
+
+static void change_setting(int i, int dir)
+{
+    char buf[16];
+    int on, v;
+
+    switch (i)
+    {
+        case SET_FULLSCREEN:
+            on = !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN);
+            SDL_SetWindowFullscreen(window, on);
+            save_bool("video", "fullscreen", on);
+            break;
+        case SET_INTEGER:
+            integer_scale = !integer_scale;
+            save_bool("video", "integer_scale", integer_scale);
+            break;
+        case SET_SMOOTH:
+            on = !port_config_bool("video", "smooth", 0);
+            SDL_SetTextureScaleMode(texture, on ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+            if (texture24 != NULL)
+            {
+                SDL_SetTextureScaleMode(texture24,
+                                        on ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+            }
+            save_bool("video", "smooth", on);
+            break;
+        case SET_PAD_MODE:
+            analog_mode = !analog_mode;
+            port_config_save("pad", "mode", analog_mode ? "analog" : "digital");
+            break;
+        case SET_VOLUME:
+            v = menu_volume() + dir * 10;
+            v = v < 0 ? 0 : v > 100 ? 100 : v;
+            snprintf(buf, sizeof(buf), "%d", v);
+            port_config_save("audio", "volume", buf);
+            // The game mixed at start_volume; scale its output to the new one.
+            if (audio_stream != NULL)
+            {
+                SDL_SetAudioStreamGain(audio_stream, start_volume > 0 ? (float)v / start_volume
+                                                                      : (v > 0 ? 1.0f : 0.0f));
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+static void menu_back(void)
+{
+    if (menu_capture)
+    {
+        menu_capture = 0;
+    }
+    else if (menu_page == MENU_MAIN)
+    {
+        menu_close();
+    }
+    else
+    {
+        menu_cursor = menu_page; // the page's line in the main list
+        menu_page   = MENU_MAIN;
+    }
+}
+
+static void menu_choose(void)
+{
+    int n = menu_items();
+
+    if (menu_page == MENU_MAIN)
+    {
+        switch (menu_cursor)
+        {
+            case 0:
+                menu_close();
+                break;
+            case 4:
+                menu_quit = 1;
+                break;
+            default:
+                menu_page   = menu_cursor; // MENU_KEYS, MENU_PAD, MENU_SETTINGS
+                menu_cursor = 0;
+                break;
+        }
+    }
+    else if (menu_cursor == n - 1)
+    {
+        menu_back();
+    }
+    else if (menu_page == MENU_SETTINGS)
+    {
+        change_setting(menu_cursor, 1);
+    }
+    else
+    {
+        menu_capture = 1;
+    }
+}
+
+static void menu_move(int dir)
+{
+    int n       = menu_items();
+    menu_cursor = (menu_cursor + dir + n) % n;
+}
+
+static void bind_key_now(int button, SDL_Scancode sc)
+{
+    port_config_save("keyboard", psx_buttons[button].name, SDL_GetScancodeName(sc));
+    bind_keys(button, psx_buttons[button].name);
+    menu_capture = 0;
+}
+
+static void bind_pad_now(int button, int input)
+{
+    port_config_save("gamepad", psx_buttons[button].name, pad_input_name(input));
+    bind_pad(button, psx_buttons[button].name);
+    menu_capture = 0;
+}
+
+static void menu_key(SDL_Scancode sc)
+{
+    if (menu_capture)
+    {
+        if (sc == SDL_SCANCODE_ESCAPE || key_is(sc, K_QUIT))
+        {
+            menu_capture = 0;
+        }
+        else if (menu_page == MENU_KEYS)
+        {
+            bind_key_now(menu_cursor, sc);
+        }
+        return;
+    }
+    switch (sc)
+    {
+        case SDL_SCANCODE_UP:
+            menu_move(-1);
+            break;
+        case SDL_SCANCODE_DOWN:
+            menu_move(1);
+            break;
+        case SDL_SCANCODE_LEFT:
+        case SDL_SCANCODE_RIGHT:
+            if (menu_page == MENU_SETTINGS && menu_cursor < SET_COUNT)
+            {
+                change_setting(menu_cursor, sc == SDL_SCANCODE_LEFT ? -1 : 1);
+            }
+            break;
+        case SDL_SCANCODE_RETURN:
+        case SDL_SCANCODE_KP_ENTER:
+        case SDL_SCANCODE_SPACE:
+            menu_choose();
+            break;
+        case SDL_SCANCODE_ESCAPE:
+        case SDL_SCANCODE_BACKSPACE:
+            menu_back();
+            break;
+        default:
+            if (key_is(sc, MENU_SLOT_CROSS)) // keyboard.cross (X): choose, like Enter
+            {
+                menu_choose();
+            }
+            else if (key_is(sc, K_QUIT))
+            {
+                menu_back();
+            }
+            else if (key_is(sc, K_FULLSCREEN))
+            {
+                change_setting(SET_FULLSCREEN, 1);
+            }
+            break;
+    }
+}
+
+static void menu_pad_button(int button)
+{
+    if (menu_capture)
+    {
+        if (button == SDL_GAMEPAD_BUTTON_GUIDE)
+        {
+            menu_capture = 0;
+        }
+        else if (menu_page == MENU_PAD)
+        {
+            bind_pad_now(menu_cursor, button);
+        }
+        return;
+    }
+    switch (button)
+    {
+        case SDL_GAMEPAD_BUTTON_DPAD_UP:
+            menu_move(-1);
+            break;
+        case SDL_GAMEPAD_BUTTON_DPAD_DOWN:
+            menu_move(1);
+            break;
+        case SDL_GAMEPAD_BUTTON_DPAD_LEFT:
+        case SDL_GAMEPAD_BUTTON_DPAD_RIGHT:
+            if (menu_page == MENU_SETTINGS && menu_cursor < SET_COUNT)
+            {
+                change_setting(menu_cursor, button == SDL_GAMEPAD_BUTTON_DPAD_LEFT ? -1 : 1);
+            }
+            break;
+        case SDL_GAMEPAD_BUTTON_SOUTH:
+            menu_choose();
+            break;
+        case SDL_GAMEPAD_BUTTON_EAST:
+            menu_back();
+            break;
+        case SDL_GAMEPAD_BUTTON_START:
+        case SDL_GAMEPAD_BUTTON_GUIDE:
+            menu_close();
+            break;
+        default:
+            break;
+    }
+}
+
+// While binding on the gamepad page: a trigger or a stick pushed far enough is an input too.
+static void menu_pad_axis(int axis, int value)
+{
+    int input = PAD_NONE;
+
+    if (!menu_capture || menu_page != MENU_PAD)
+    {
+        return;
+    }
+    switch (axis)
+    {
+        case SDL_GAMEPAD_AXIS_LEFT_TRIGGER:
+            input = value > trigger ? PAD_TRIGGER_L : PAD_NONE;
+            break;
+        case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER:
+            input = value > trigger ? PAD_TRIGGER_R : PAD_NONE;
+            break;
+        case SDL_GAMEPAD_AXIS_LEFTX:
+        case SDL_GAMEPAD_AXIS_RIGHTX:
+        case SDL_GAMEPAD_AXIS_LEFTY:
+        case SDL_GAMEPAD_AXIS_RIGHTY:
+            if (value < -24000 || value > 24000)
+            {
+                int stick = axis == SDL_GAMEPAD_AXIS_RIGHTX || axis == SDL_GAMEPAD_AXIS_RIGHTY;
+                int dir   = (axis == SDL_GAMEPAD_AXIS_LEFTY || axis == SDL_GAMEPAD_AXIS_RIGHTY)
+                                ? (value < 0 ? 2 : 3)  // up, down
+                                : (value < 0 ? 0 : 1); // left, right
+                input     = PAD_STICK_DIR + stick * 4 + dir;
+            }
+            break;
+        default:
+            break;
+    }
+    if (input != PAD_NONE)
+    {
+        bind_pad_now(menu_cursor, input);
+    }
+}
+
+static int any_input_held(void)
+{
+    int numkeys, i, b;
+    const bool *state = SDL_GetKeyboardState(&numkeys);
+
+    for (i = 0; i < numkeys; i++)
+    {
+        if (state[i])
+        {
+            return 1;
+        }
+    }
+    for (i = 0; i < PLATFORM_PADS; i++)
+    {
+        for (b = 0; gamepads[i] != NULL && b < SDL_GAMEPAD_BUTTON_COUNT; b++)
+        {
+            if (SDL_GetGamepadButton(gamepads[i], (SDL_GamepadButton)b))
+            {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+// Draws the menu over the picture the window last showed.
+static void present_menu(const uint16_t *vram, const int32_t disp[5])
+{
+    draw_menu();
+    present(vram, disp[0], disp[1], disp[2], disp[3], disp[4], &menu_layer);
+}
+
+int platform_menu_run(void)
+{
+    const GPU_DISPLAY *d = gpu_display();
+    int32_t disp[5]      = {d->x, d->y, d->w, d->h, d->is24};
+    PSX_PAD_STATE pads[PLATFORM_PADS];
+
+    while (menu_open)
+    {
+        if (!platform_poll(pads))
+        {
+            return 0;
+        }
+        present_menu(gpu_vram(), disp);
+        SDL_Delay(10);
+    }
+    return 1;
+}
+
 // --- window host (port_remote.h) ------------------------------------------------------------
 
 static volatile sig_atomic_t host_signal;
@@ -844,6 +1380,7 @@ int platform_host_run(int child)
     PSX_PAD_STATE pads[PLATFORM_PADS];
     struct pollfd pfd;
     int status = 0, fresh = 1;
+    int frozen     = 0; // the game process is stopped (SIGSTOP) while the port menu is open
     unsigned shown = 0;
 
     signal(SIGINT, on_host_signal);
@@ -862,6 +1399,10 @@ int platform_host_run(int child)
             struct timespec ts = {0, 10000000};
             int i;
 
+            if (frozen)
+            {
+                kill(child, SIGCONT);
+            }
             // Ask the game to stop (it finishes its files), then make sure.
             r->quit = 1;
             for (i = 0; i < 300 && waitpid(child, &status, WNOHANG) != child; i++)
@@ -875,8 +1416,18 @@ int platform_host_run(int child)
             }
             break;
         }
+        if (menu_open != frozen)
+        {
+            kill(child, menu_open ? SIGSTOP : SIGCONT);
+            frozen = menu_open;
+        }
         memcpy(r->pads, pads, sizeof(pads));
-        if (port_remote_take_frame(vram, disp, &overlay) || fresh)
+        if (menu_open)
+        {
+            present_menu(vram, disp);
+            SDL_Delay(10);
+        }
+        else if (port_remote_take_frame(vram, disp, &overlay) || fresh)
         {
             shown += !fresh;
             present(vram, disp[0], disp[1], disp[2], disp[3], disp[4], &overlay);

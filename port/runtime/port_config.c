@@ -93,6 +93,7 @@ const char port_config_default_text[] =
     "fullscreen = F11\n"
     "analog_toggle = F3\n"
     "vram_view = Tab\n"
+    "# The port menu over the frozen game: resume, controls, settings, quit (gamepad: guide).\n"
     "quit = Escape\n"
     "# The mod panel, while the game's pause menu is open (modded runs only).\n"
     "mods_menu = M\n"

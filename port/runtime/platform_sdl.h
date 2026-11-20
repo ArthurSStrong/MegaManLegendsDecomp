@@ -9,7 +9,8 @@
 //   keyboard arrows = d-pad, X/C/Z/S = Cross/Circle/Square/Triangle, Q/W = L2/L1,
 //            E/R = R1/R2, Enter = Start, Right Shift = Select, I/J/K/L = left stick
 //   window   F11 = fullscreen, Tab = toggle full VRAM / display area, F3 = toggle analog
-//            mode, Esc = quit; M / right-stick click = the mod panel (a host button,
+//            mode, Esc / guide = the port menu (resume, controls, settings, quit; the game is
+//            frozen while it is open); M / right-stick click = the mod panel (a host button,
 //            PORT_HOST_MODS, never sent to the game)
 #ifndef PORT_PLATFORM_SDL_H
 #define PORT_PLATFORM_SDL_H
@@ -31,6 +32,10 @@ int platform_poll(PSX_PAD_STATE pads[PLATFORM_PADS]);
 // with the port's text layer (port_overlay()) over it when that is visible.
 void platform_present(void);
 
+// The port menu (Esc): while platform_poll has it open, shows it over the last picture and
+// handles it until it closes. Returns 0 if the player chose to quit (or closed the window).
+// Only for a game that runs in the window's own process; the window host freezes its game.
+int platform_menu_run(void);
 // Shows all of VRAM (1) or the display area (0); Tab toggles it.
 void platform_set_full_vram(int on);
 

@@ -76,7 +76,10 @@ make install-desktop   # optional: an application-menu entry
 
 - **Controls:** a gamepad maps by position (south/east/west/north = Cross/Circle/Square/Triangle,
   shoulders L1/R1, triggers L2/R2). Keyboard: arrows, X/C/Z/S = Cross/Circle/Square/Triangle,
-  Q/W = L2/L1, E/R = R1/R2, Enter = Start, Right Shift = Select. F11 fullscreen, Esc quits.
+  Q/W = L2/L1, E/R = R1/R2, Enter = Start, Right Shift = Select. F11 fullscreen.
+- **Port menu:** Esc (or a gamepad's guide button) freezes the game and opens a menu: resume,
+  rebind the keyboard or gamepad, fullscreen, scaling, pad mode, volume, and quit. Changes apply
+  at once and are saved to the settings file.
 - **Settings:** `~/.config/megaman-legends/config.ini`, written with commented defaults on first
   start (bindings, including stick directions as buttons; window scale; volume; disc and card
   paths).

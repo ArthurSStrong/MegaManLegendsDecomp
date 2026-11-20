@@ -810,7 +810,7 @@ void port_frame_drawn(void)
 #ifdef PORT_HAVE_SDL
     else if (!port_options.headless)
     {
-        if (!platform_poll(pads))
+        if (!platform_poll(pads) || !platform_menu_run())
         {
             port_stop(0, "window closed");
         }
