@@ -34,3 +34,10 @@ permuter/
 
 # Local settings for port/appletv/deploy.sh (Mac host, team, device; the Mac password)
 .env
+
+# Sony's PsyQ SDK documentation (local copy only; never commit)
+notes/sdk/
+
+# Local work plan and agent scratch files
+/PLAN.md
+logs/
