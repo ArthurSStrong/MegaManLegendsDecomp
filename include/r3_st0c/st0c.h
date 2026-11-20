@@ -504,7 +504,7 @@ void func_8010A5E0(ST0C_SHL *wp);
 #define ST0C_PL_FIXED_428 (*(STAGE_FIXED_VECTOR *)&STAGE_PL.fixed_428)
 
 extern sint16 D_800C0F96;
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_80053AA4(sint32 arg);
 void func_8003A264(void);
 

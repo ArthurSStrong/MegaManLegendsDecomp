@@ -189,7 +189,7 @@ void func_801011B4(STAGE_ROOM *wp)
             break;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80101394(STAGE_ROOM *wp)
@@ -201,7 +201,7 @@ void func_80101394(STAGE_ROOM *wp)
             if (func_8001D878() != 0)
             {
                 func_8005D7C0();
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 D_800BC7F0 = D_801155B4;
                 wp->tbl_A4 = D_801158BC;
                 wp->routine_5++;
@@ -226,7 +226,7 @@ void func_80101394(STAGE_ROOM *wp)
             func_8001EC0C();
             break;
     }
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_801014B0(STAGE_ROOM *wp)

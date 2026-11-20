@@ -561,7 +561,7 @@ void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
 sint32 func_8002FEA4_int(void *wp, sint32 x, sint32 y, sint32 z) __asm__("func_8002FEA4");
 sint32 func_80048EA4(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
 STAGE_OBJ *func_80031498(void);
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 sint32 func_80048E6C(void *wp);
 void func_8005D4D4(void);

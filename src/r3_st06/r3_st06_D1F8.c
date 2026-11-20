@@ -91,7 +91,7 @@ void func_8010D2E8(ST06_ACTOR *wp)
         case 26:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 pl->flags_0 |= 2;
                 wp->routine_0++;
             }
@@ -119,7 +119,7 @@ void func_8010D2E8(ST06_ACTOR *wp)
                 if (scene->work_1C >= 0x103)
                 {
                     wp->routine_0++;
-                    func_8001F158();
+                    Sce_script_next();
                     pl->flags_0 |= 2;
                 }
                 else if (scene->work_1C < 0x100)

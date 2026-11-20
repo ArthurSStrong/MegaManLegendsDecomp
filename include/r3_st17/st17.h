@@ -1372,7 +1372,7 @@ void func_8010BE04(STAGE_OBJ *wp);
 extern uint8 D_801227D4[];
 extern STAGE_ROOM2_FUNC D_80122A34[];
 extern sint32 D_80122B98;
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 extern STAGE_SCRIPT_ENTRY D_801212F0[];
 extern sint16 D_80121978[]; // shake offsets
 extern sint32 D_800BC7D4;   // the screen shake
@@ -1383,7 +1383,7 @@ extern uint8 D_80122B9C;
 extern STAGE_SCRIPT_ENTRY D_801226F0[];
 extern STCOM_SVECTOR D_80122A04[];
 extern STAGE_SCRIPT_ENTRY D_80122740[];
-void func_8001F158(void);
+void Sce_script_next(void);
 extern uint8 D_801220E4[];
 extern STAGE_ROOM2_FUNC D_80122628[];
 void func_8003697C(void);

@@ -825,7 +825,7 @@ void func_8001EC0C(void)
     cam->pos_78 += cam->vel_88;
 }
 
-void func_8001F070(void)
+void Sce_script_update(void)
 {
     uint8 *script;
     sint16 time;
@@ -854,7 +854,7 @@ void func_8001F070(void)
     }
 }
 
-void func_8001F158(void)
+void Sce_script_next(void)
 {
     uint8 *script;
 
@@ -874,7 +874,7 @@ void func_8001F158(void)
     SCENE_WORK_FIXED.work_10 = 0;
 }
 
-void func_8001F1DC(void)
+void Sce_script_timer_clear(void)
 {
     Scene_work.work_10 = 0;
     Scene_work.work_18 = 0;

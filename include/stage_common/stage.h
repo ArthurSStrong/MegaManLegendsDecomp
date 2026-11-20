@@ -222,7 +222,7 @@ void func_8001D58C(uint32 arg);
 uint32 func_8001D878(void);
 uint32 Sce_skip_check(void);
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_80039820(void);

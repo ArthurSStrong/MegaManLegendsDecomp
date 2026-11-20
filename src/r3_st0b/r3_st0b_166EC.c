@@ -1454,7 +1454,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
                 D_800C356A = STAGE_PL.value_442;
             }
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0 && D_80098788 == 0)
             {
                 if (STAGE_GAME.value_50 == 0xB)

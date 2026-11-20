@@ -727,13 +727,13 @@ extern void *D_80164008[];
 void func_8001D974(void);
 void func_80063BA8(void);
 void func_8001B314(void);
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_80036478(void *track, uint8 arg1, uint32 arg2);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
 sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_80053AA4(sint32 arg);
 void func_8003697C(void);
 void func_8002FF34(void *wp, sint32 x, sint32 y, sint32 z);

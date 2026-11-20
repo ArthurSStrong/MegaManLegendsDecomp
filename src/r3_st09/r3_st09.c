@@ -141,7 +141,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
         case 0:
             if (func_80042238(pl))
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0           = D_8011DD8C;
                 wp->tbl_A4           = D_8011DD7C;
@@ -235,7 +235,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
 void func_80100AF8(void)
 {
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80100B20(sint8 skip)

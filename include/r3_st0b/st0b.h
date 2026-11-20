@@ -358,7 +358,7 @@ typedef struct
 
 typedef void (*ST0B_FX_FUNC)(ST0B_FX *wp);
 
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_801026E4(void);
 
 void func_801053B0(ST0B_OBJ *wp);
@@ -816,7 +816,7 @@ typedef struct
 void func_80101110(uint8 r, uint8 g, uint8 b, uint16 abr);
 void func_80101E90(uint8 r, uint8 g, uint8 b, uint16 abr);
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 void func_801024DC(STAGE_ROOM_WORK *wp);
 extern STAGE_OBJ_FUNC D_8011A420[];
 void func_80102DD8(STAGE_OBJ *wp, STAGE_FACE16 *face);
@@ -2599,7 +2599,7 @@ extern STAGE_OBJ_FUNC D_8011B4A8[];
 
 extern ST0B_BOB2_FUNC D_8011B404[];
 
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 
 // The floating object's control block at +0x308 and its hit point at +0x180 (func_8010CEE0).
 #define ST0B_OBJ_HIT_B(wp)   ((ST0B_HIT_B *)((uint8 *)(wp) + 0x308))

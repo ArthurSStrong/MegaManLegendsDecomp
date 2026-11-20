@@ -99,7 +99,7 @@ void func_80100724(uint8 arg0, uint8 arg1, sint16 arg2, sint16 arg3, uint16 arg4
 
 void func_8010159C(sint16 arg0, sint16 arg1, sint16 arg2, sint16 arg3);
 
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_80102328(STAGE_FX *wp);
 
 void func_80107620(STAGE_ACTOR *wp);
@@ -157,7 +157,7 @@ void Sce_flag_off(sint32 flag);
 void func_80100578(void);
 
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 sint16 func_80048E6C(void *wp);
 void func_80102158(STAGE_ROOM_WORK *wp);
 

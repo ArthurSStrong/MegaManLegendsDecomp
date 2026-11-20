@@ -838,7 +838,7 @@ void func_80100B20(sint8 skip);
 void func_80100788(STAGE_ROOM_WORK *wp);
 void func_801005F4(void);
 void func_80100BF0(void);
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_80063BA8(void);
 void func_8001B314(void);
 

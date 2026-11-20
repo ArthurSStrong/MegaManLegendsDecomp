@@ -129,7 +129,7 @@ void func_801125AC(ST06_ACTOR *wp)
         case 2:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_0++;
             }
             break;
@@ -175,7 +175,7 @@ void func_801125AC(ST06_ACTOR *wp)
             {
                 if (!(Moji_flag & 0xFF))
                 {
-                    func_8001F158();
+                    Sce_script_next();
                     wp->routine_0 = 0xA;
                 }
                 else
@@ -896,7 +896,7 @@ void func_80113EA0(ST06_OBJ *wp)
         case 2:
             if (--wp->u_C.b.byte_C == 0)
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->u_C.b.byte_C     = 3;
                 wp->value_44.half[0] = 0;
                 wp->routine_1++;

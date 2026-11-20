@@ -357,7 +357,7 @@ void func_80102878(void);
 
 void func_80102898(void);
 
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_80105C14(void);
 
 void func_801140DC(STAGE_OBJ *wp);
@@ -1731,7 +1731,7 @@ typedef struct
     uint8 value_448;                   // 448
 } ST06_PL_SCRIPT;
 
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 
 void func_80102388(uint8 index, uint8 kind);
 

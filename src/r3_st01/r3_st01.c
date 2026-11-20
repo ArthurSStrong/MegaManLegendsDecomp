@@ -177,7 +177,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
         case 10:
             func_8010045C(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 10 && D_80098A72 == 0)
             {
                 Obj_work_flag_change(0x56, 0x80);

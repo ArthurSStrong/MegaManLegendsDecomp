@@ -243,6 +243,6 @@ extern uint8 D_80105DD0[];
 extern uint8 D_80105E2C[];
 extern STAGE_ROOM2_FUNC D_80105E1C[];
 extern STAGE_ROOM2_FUNC D_801060D4[];
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 sint32 func_8003B2D4(sint32 row, sint32 bit);
 #endif // ST07_H

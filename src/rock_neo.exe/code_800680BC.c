@@ -560,7 +560,7 @@ void func_80068DAC(CODE68_WORK *wp)
                               wp->word_74);
             }
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->word_14 == 0x4680)
             {
                 func_80068DA4();

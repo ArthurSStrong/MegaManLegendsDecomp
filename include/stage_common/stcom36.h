@@ -58,7 +58,7 @@ void *func_8001EAE8(STCOM36_SPAWN *entry);
 void func_8001EAE8(STCOM36_SPAWN *entry);
 #endif
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 sint32 func_8002FE74(uint8 id);
 
 #endif // STCOM36_H

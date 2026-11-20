@@ -197,7 +197,7 @@ void func_80100844(STAGE_ROOM *wp)
         case 4:
             if (func_8001D878() != 0)
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 D_800BC7F0    = D_801199B0;
                 wp->tbl_A4    = D_80119CAC;
                 wp->routine_5 = 0;
@@ -212,7 +212,7 @@ void func_80100844(STAGE_ROOM *wp)
         wp->reserved09[1] |= 1;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80100A64(STAGE_ROOM_WORK *wp)
@@ -234,7 +234,7 @@ void func_80100A64(STAGE_ROOM_WORK *wp)
         }
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80100AF8(STAGE_ROOM *wp)
@@ -276,7 +276,7 @@ void func_80100AF8(STAGE_ROOM *wp)
     if (wp->reserved09[1] != 0)
     {
         func_8001EC0C();
-        func_8001F070();
+        Sce_script_update();
     }
 }
 
@@ -563,7 +563,7 @@ void func_80101270(STAGE_ROOM *wp)
             if (func_8001D878() != 0)
             {
                 func_80017C30(2);
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 D_800BC7F0 = D_80119E2C;
                 wp->tbl_A4 = D_8011A248;
                 wp->routine_5++;
@@ -585,7 +585,7 @@ void func_80101270(STAGE_ROOM *wp)
         wp->reserved09[1] |= 1;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80101480(STAGE_ROOM_WORK *wp)
@@ -607,7 +607,7 @@ void func_80101480(STAGE_ROOM_WORK *wp)
         }
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 // registers: retail keeps the constant 2 of the camera stores in a0 (the call's first argument) and loads &Player_work into a1 before them
@@ -651,7 +651,7 @@ void func_80101524(STAGE_ROOM_WORK *wp)
     if (wp->reserved09[1] != 0)
     {
         func_8001EC0C();
-        func_8001F070();
+        Sce_script_update();
     }
 }
 
@@ -834,7 +834,7 @@ void func_801019B0(STAGE_ROOM *wp)
             if (wp->frame_10 == 500)
             {
                 wp->routine_5 = 0;
-                func_8001F158();
+                Sce_script_next();
                 for (i = 0; i < 4; i++)
                 {
                     func_80031824((&wp->child_24)[i]);
@@ -1071,12 +1071,12 @@ void func_80102270(STAGE_ROOM *wp)
             wp->tbl_A4              = D_8011A410;
             func_80017C30(2);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             wp->routine_5++;
             // fall through
         case 3:
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (D_80098A72 == 0)
             {
                 D_800BC7F0    = D_8011A30C;
@@ -1109,7 +1109,7 @@ void func_80102430(STAGE_ROOM_WORK *wp)
         wp->routine_4 += 2;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_801024DC(STAGE_ROOM_WORK *wp)
@@ -1123,7 +1123,7 @@ void func_801024DC(STAGE_ROOM_WORK *wp)
         wp->routine_4++;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_8010255C(STAGE_ROOM_WORK *wp)
@@ -1141,7 +1141,7 @@ void func_8010255C(STAGE_ROOM_WORK *wp)
                 {
                     func_8003697C();
                 }
-                func_8001F158();
+                Sce_script_next();
                 func_80042314(&Player_work);
                 D_800A395C = 1;
                 func_80039820();
@@ -1171,7 +1171,7 @@ void func_8010255C(STAGE_ROOM_WORK *wp)
 
 void func_801026E4(void)
 {
-    func_8001F158();
+    Sce_script_next();
 }
 
 void func_80102704(STAGE_ROOM *wp)
@@ -1226,7 +1226,7 @@ void func_801027F4(STAGE_ROOM *wp)
         case 3:
             if (D_80098A72 == 0)
             {
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }

@@ -256,7 +256,7 @@ void func_801006A8(STAGE_ROOM_WORK *wp)
         case 10:
             func_80100668(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 10 && D_80098A72 == 0)
             {
                 D_800C356C            = 2;
@@ -446,7 +446,7 @@ void func_80100C84(STAGE_ROOM_WORK *wp)
         case 10:
             func_80100C44(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 10 && D_80098A72 == 0)
             {
                 if (STAGE_GAME_VALUE_52 == 7 && Sce_flag_test(0x21) != 0)

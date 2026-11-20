@@ -75,7 +75,7 @@ void func_80100C10(STAGE_ROOM *wp)
         case 0:
             if (func_80042238(pl) != 0)
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0           = D_8011014C;
                 wp->tbl_A4           = D_8011013C;
@@ -131,7 +131,7 @@ void func_80100C10(STAGE_ROOM *wp)
 void func_80100E38(void)
 {
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80100E60(void)
@@ -208,7 +208,7 @@ void func_80100E68(ST10_PL *wp)
             break;
         case 8:
             wp->routine_D++;
-            func_8001F158();
+            Sce_script_next();
             break;
     }
 }
@@ -270,7 +270,7 @@ void func_801011B8(STAGE_ROOM *wp)
             func_80101178((STAGE_ROOM_WORK *)wp);
             func_80101068((ST10_PL *)&Player_work);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 2)
             {
                 wp->routine_4 = 11;

@@ -9,7 +9,7 @@
 void stcom36_func_0000(void)
 {
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 // Spawns a room's scripted objects and remembers them.

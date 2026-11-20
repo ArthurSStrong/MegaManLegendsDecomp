@@ -221,7 +221,7 @@ void func_8001E4C4(void *a, void *b);
 extern uint8 D_8010AF4C[][8];
 extern STAGE_ROOM_FUNC D_8010AF2C[];
 extern STAGE_ROOM_FUNC *D_8010AEEC[];
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 extern uint8 D_8010BFD4[];
 extern STAGE_ROOM2_FUNC D_8010BFCC[];
 extern uint16 D_80111CB4[];

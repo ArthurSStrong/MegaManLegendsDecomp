@@ -830,7 +830,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
             {
                 break;
             }
-            func_8001F1DC();
+            Sce_script_timer_clear();
             func_8001E6C0(0, 0, 0);
             D_800BC7F0 = D_80115FC4;
             wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_80115FB4;
@@ -865,7 +865,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
             }
             wp->routine_7 = 1;
             wp->routine_6++;
-            func_8001F1DC();
+            Sce_script_timer_clear();
             func_8001E6C0(0, 0, 0);
             D_800BC7F0 = D_80116034;
             wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_8011600C;
@@ -908,7 +908,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
         case 7:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 MojiTaskExec2(0, 3);
                 wp->routine_6++;
                 obj                        = ST03_SPAWNED_0;
@@ -922,7 +922,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
         case 8:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_6++;
                 obj                        = D_8011CB34[0];
                 obj->routine_1             = 4;
@@ -1030,7 +1030,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 Sound_call(0x10E, 0, 0);
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0      = D_80116164;
                 wp->tbl_A4      = D_8011614C;
@@ -1148,7 +1148,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
                 func_80039E50();
                 pl->flags_BD &= ~0x40;
                 wp->routine_6++;
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0 = D_801161F8;
                 wp->tbl_A4 = (STAGE_ROOM_FUNC *)D_801161D0;
@@ -1184,7 +1184,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             {
                 wp->routine_6++;
                 pl->flags_0 |= 2;
-                func_8001F158();
+                Sce_script_next();
                 obj                        = D_8011CB34[2];
                 obj->routine_1             = 1;
                 *(uint16 *)&obj->routine_2 = 0;
@@ -1266,7 +1266,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         case 9:
             if (--wp->timer_C < 0)
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_6++;
                 pl->fixed_428.x = 0xF5D70000;
                 pl->fixed_428.y = 0xFFFF0000;
@@ -1379,7 +1379,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             if (!(Moji_flag & 0x08000000) && func_80042238(pl))
             {
                 func_80039E50();
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0      = D_8011644C;
                 wp->tbl_A4      = (STAGE_ROOM_FUNC *)D_8011642C;
@@ -1443,7 +1443,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 pl->flags_0 &= ~2;
                 func_80030150(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0x9B2;
-                func_8001F158();
+                Sce_script_next();
                 Sound_call(0x150, 0, 0);
                 Sound_call(0x150, 0, 0);
                 stcom36_func_0118();
@@ -1505,7 +1505,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
         case 12:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 stcom36_func_0118();
                 stcom36_func_0028(0xF);
                 wp->timer_C = 0x1E;
@@ -1622,7 +1622,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 break;
             }
             stcom36_func_0028(0xB);
-            func_8001F1DC();
+            Sce_script_timer_clear();
             func_8001E6C0(0, 0, 0);
             if (Sce_flag_test(0x16))
             {
@@ -1678,7 +1678,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             func_8002FF34(pl, 0x200, 0, 0);
             if (wp->timer_C == 5)
             {
-                func_8001F158();
+                Sce_script_next();
                 spawned->routine_1             = 3;
                 *(uint16 *)&spawned->routine_2 = 0;
             }

@@ -264,7 +264,7 @@ void func_8010AFC0(ST03_ACTOR *wp)
         case 4:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_0++;
             }
             break;
@@ -297,7 +297,7 @@ void func_8010AFC0(ST03_ACTOR *wp)
         case 10:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_0++;
             }
             break;
@@ -310,7 +310,7 @@ void func_8010AFC0(ST03_ACTOR *wp)
         case 12:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_0++;
             }
             break;
@@ -440,7 +440,7 @@ void func_8010B444(ST03_ACTOR *wp)
         case 7:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_0++;
             }
             break;

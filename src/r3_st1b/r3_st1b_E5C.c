@@ -623,7 +623,7 @@ void func_80101CB0(STAGE_ROOM *wp)
         case 5:
             func_80101C70(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0)
             {
                 func_8001D494(0, 1, 0);
@@ -850,7 +850,7 @@ void func_801022D4(STAGE_ROOM *wp)
         case 6:
             func_80102294(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 6 && D_80098A72 == 0)
             {
                 D_800C356C  = 2;

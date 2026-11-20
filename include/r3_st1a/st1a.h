@@ -3856,7 +3856,7 @@ void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
 
 void func_801025F4(sint32 x, sint32 y, sint16 radius, sint16 shade);
 
-void func_8001F158(void);
+void Sce_script_next(void);
 
 sint32 func_80107110(sint32 arg);
 
@@ -3893,7 +3893,7 @@ extern sint32 D_80139710;
 void func_8003697C(void);
 
 extern sint32 D_801396FC;
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_80103B9C(uint8 shade);
 
 void func_8010702C(void);

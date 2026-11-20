@@ -155,7 +155,7 @@ void func_8001D974(void);
 uint32 Sce_skip_check(void);
 void Sce_flag_select(sint32 arg);
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 sint32 func_80042238(PL_WORK *pl);
 void func_80042314(PL_WORK *pl);
 void Sce_flag_on(sint32 flag);

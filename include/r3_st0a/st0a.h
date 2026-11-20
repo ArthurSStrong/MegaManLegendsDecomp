@@ -997,7 +997,7 @@ void func_8003187C(void *wp);
 void func_80031A4C(void *wp);
 
 void func_8005D7C0(void);
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_8003697C(void);
 void func_80053AA4(sint32 arg);
 void Game_logo_kill(sint32 index);

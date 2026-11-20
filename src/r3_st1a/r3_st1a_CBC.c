@@ -108,7 +108,7 @@ void func_80100DFC(STAGE_ROOM *wp)
             wp->routine_6 = 0;
             wp->routine_7 = 0;
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             break;
     }
 }
@@ -147,7 +147,7 @@ void func_80100FC4(STAGE_ROOM *wp)
     {
         wp->reserved09[1] |= 1;
     }
-    func_8001F070();
+    Sce_script_update();
 }
 
 // Stores match; retail loads the shared constant 0x800 (and case 1's 1) earlier than GCC, which puts each right before its first use.
@@ -231,7 +231,7 @@ void func_80101304(STAGE_ROOM *wp)
                 wp->routine_5 = 1;
                 wp->routine_6 = 0;
                 wp->reserved09[1] &= 0x7F;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }
@@ -626,7 +626,7 @@ void func_80101C14(STAGE_ROOM *wp)
                 wp->routine_5 = 3;
                 wp->routine_6 = 0;
                 wp->reserved09[1] &= 0x7F;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }
@@ -1055,7 +1055,7 @@ void func_8010288C(STAGE_ROOM *wp)
                 D_801396FC &= ~0x80;
                 wp->routine_6 = 0;
                 wp->routine_5++;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }
@@ -1441,7 +1441,7 @@ void func_80103448(STAGE_ROOM *wp)
             Obj_work_flag_change(0x17E, 0x80);
             func_8001E6C0(0, 0, 0);
             func_80102590(2);
-            func_8001F1DC();
+            Sce_script_timer_clear();
             D_800BC7F0  = D_8012F894;
             wp->tbl_A4  = D_8012FE48;
             wp->timer_C = 0;
@@ -1464,7 +1464,7 @@ void func_80103448(STAGE_ROOM *wp)
             break;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_8010358C(STAGE_ROOM *wp)
@@ -1513,7 +1513,7 @@ void func_8010358C(STAGE_ROOM *wp)
     {
         D_801396FC |= 1;
     }
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_801036F4(STAGE_ROOM *wp)
@@ -1757,7 +1757,7 @@ void func_80103CB8(STAGE_ROOM *wp)
             if (func_8001D878() != 0)
             {
                 func_80017C30(7);
-                func_8001F158();
+                Sce_script_next();
                 wp->routine_6 = 0;
             }
             break;
@@ -2175,7 +2175,7 @@ void func_80104BAC(STAGE_ROOM *wp)
             break;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80104CE8(STAGE_ROOM *wp)
@@ -2188,7 +2188,7 @@ void func_80104CE8(STAGE_ROOM *wp)
             func_8001EC0C();
             if (func_8001D878() != 0)
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 D_800BC7F0 = D_80130010;
                 D_80139710 &= ~0x80;
                 wp->tbl_A4 = D_80130498;
@@ -2237,7 +2237,7 @@ void func_80104CE8(STAGE_ROOM *wp)
     {
         D_80139710 |= 1;
     }
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80104EC8(ST1A_ROOM_A0 *wp)
@@ -2396,7 +2396,7 @@ void func_80105278(STAGE_ROOM *wp)
                 func_80106FBC(0);
                 func_80106FF4(0);
                 func_8001EC0C();
-                func_8001F070();
+                Sce_script_update();
                 wp->routine_5++;
             }
             break;
@@ -2404,7 +2404,7 @@ void func_80105278(STAGE_ROOM *wp)
             func_80017C30(6);
             func_8010702C();
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             wp->routine_4 = 1;
             wp->routine_5 = 0;
             wp->routine_6 = 0;
@@ -2448,7 +2448,7 @@ void func_80105488(STAGE_ROOM *wp)
     }
     func_8010702C();
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80105598(STAGE_ROOM *wp)
@@ -2508,7 +2508,7 @@ void func_801056D4(STAGE_ROOM *wp)
             {
                 func_8001EAE8(D_80130520);
                 wp->routine_6 = 0;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }
@@ -2876,7 +2876,7 @@ void func_80106018(ST1A_ROOM *wp)
             {
                 wp->routine_5 = 2;
                 wp->routine_6 = 0;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }

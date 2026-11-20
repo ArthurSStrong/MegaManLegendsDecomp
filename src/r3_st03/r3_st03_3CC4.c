@@ -460,7 +460,7 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
             func_80104B40(wp);
             func_80104A74(ST03_PL_PTR);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 2)
             {
                 wp->routine_4 = 0xB;
@@ -547,7 +547,7 @@ void func_80104D04(ST03_PL *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 wp->value_D++;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
     }
@@ -611,7 +611,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             func_80104FB4(wp);
             func_80104EBC(ST03_PL_PTR);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 2)
             {
                 wp->routine_4 = 0xB;

@@ -820,7 +820,7 @@ void func_8010494C(ST0D_LIFT *wp, ST0D_PATH *path);
 ST0D_GRID_OBJ *func_80108468(STAGE_OBJ *owner, uint8 rows, STCOM_SVECTOR *origin);
 sint32 func_80030374(sint16 *a, sint16 *b);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_80107EF8(ST0D_VILLAGER *wp, ST0D_TALK *talk);
 void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk);
 sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

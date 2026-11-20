@@ -142,7 +142,7 @@ void func_80048704(CODE486_TASK *task)
             break;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80048A40(PL_WORK *pl)

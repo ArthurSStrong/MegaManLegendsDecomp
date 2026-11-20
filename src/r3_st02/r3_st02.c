@@ -1017,7 +1017,7 @@ void func_80101CC0(STAGE_ROOM *wp)
                     D_800BC7D0 = D_801074BC[ST02_FRAME & 1] << 16;
                     break;
             }
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 6 && D_80098A72 == 0)
             {
                 D_800C356C = 2;

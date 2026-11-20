@@ -732,7 +732,7 @@ void func_80101158(STAGE_ROOM *wp)
         case 5:
             func_80101118(wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0)
             {
                 D_800C356C  = 2;

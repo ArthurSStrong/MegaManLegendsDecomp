@@ -193,7 +193,7 @@ void func_8004B3C0(sint32 *arg);
 void func_80048A9C(CODE486_TASK *task);
 void func_8001E6C0(sint32 a0, sint32 a1, sint32 a2);
 void func_8001EC0C(void);
-void func_8001F070(void);
+void Sce_script_update(void);
 sint32 rsin(sint32 angle);
 sint32 rcos(sint32 angle);
 extern sint8 D_800C356C;

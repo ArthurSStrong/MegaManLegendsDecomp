@@ -330,7 +330,7 @@ void func_80101420(STAGE_ROOM *wp)
             }
             func_801013E0((STAGE_ROOM_WORK *)wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             break;
         case 3:
             if (!(Moji_flag & 0x08000000))
@@ -448,7 +448,7 @@ void func_801017C4(STAGE_ROOM *wp)
             }
             func_80101BE4((STAGE_ROOM_WORK *)wp);
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             break;
         case 2:
             if (Cd_read_sync2() == 0)
@@ -495,7 +495,7 @@ void func_801017C4(STAGE_ROOM *wp)
                     D_800BC7D4 = D_8012EF00[STAGE_FRAME & 3] << 16;
                     break;
             }
-            func_8001F070();
+            Sce_script_update();
             break;
         case 6:
             func_80101C24(wp);
@@ -592,7 +592,7 @@ void func_80101C24(STAGE_ROOM *wp)
             Obj_work_flag_change(0x156, 0x80);
             D_800BC7F0 = D_8012EDE0;
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             pl->pos_438.x = 0x400;
             pl->pos_438.y = -1;
             pl->pos_438.z = 0x1BE0;
@@ -1168,7 +1168,7 @@ void func_80102AA8(STAGE_ROOM *wp)
                 wp->routine_7   = 0;
                 wp->routine_4++;
                 func_8001EC0C();
-                func_8001F070();
+                Sce_script_update();
             }
             break;
     }
@@ -1215,7 +1215,7 @@ void func_80102BDC(STAGE_ROOM *wp)
         case 3:
             if (func_8001D878())
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 D_800BC7F0    = D_8012F154;
                 wp->tbl_A4    = D_8012F3B8;
                 pl->routine_0 = 3;
@@ -1264,11 +1264,11 @@ void func_80102BDC(STAGE_ROOM *wp)
             }
             break;
         default:
-            func_8001F070();
+            Sce_script_update();
             return;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 #ifdef __wasm32__
@@ -1640,7 +1640,7 @@ void func_801038C4(STAGE_ROOM *wp)
             {
                 break;
             }
-            func_8001F1DC();
+            Sce_script_timer_clear();
             wp->routine_6++;
             // fall through
         case 1:
@@ -1700,7 +1700,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
         case 0:
             if (func_80042238(pl) != 0)
             {
-                func_8001F1DC();
+                Sce_script_timer_clear();
                 func_8001E6C0(0, 0, 0);
                 D_800BC7F0 = D_801302AC;
                 wp->tbl_A4 = D_80130224;
@@ -1733,7 +1733,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
                 stcom36_func_0118();
                 stcom36_func_0028(4);
                 wp->routine_6++;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
         case 3:
@@ -1873,7 +1873,7 @@ void func_80104000(STAGE_REC_S *rec)
         case 1:
             if (--rec->timer_8 == 0)
             {
-                func_8001F158();
+                Sce_script_next();
                 func_8010602C(2, 0xA);
                 rec->step_2++;
             }
@@ -1912,7 +1912,7 @@ void func_80104000(STAGE_REC_S *rec)
         case 5:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 Sce_flag_on(0x608);
                 rec->step_2++;
             }
@@ -1952,7 +1952,7 @@ void func_80104250(STAGE_REC_S *rec)
         case 2:
             if (--rec->timer_8 == 0)
             {
-                func_8001F158();
+                Sce_script_next();
                 func_8010602C(3, 0xB);
                 rec->step_2++;
             }
@@ -1991,7 +1991,7 @@ void func_80104250(STAGE_REC_S *rec)
         case 6:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 Sce_flag_on(0x609);
                 rec->step_2++;
             }
@@ -2061,7 +2061,7 @@ void func_801044F4(STAGE_REC_S *rec)
         case 4:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001F158();
+                Sce_script_next();
                 MojiTaskExec2(0, 3);
                 rec->step_2++;
             }
@@ -2143,7 +2143,7 @@ void func_80104774(STAGE_REC_S *rec)
             }
             if (!(Moji_flag & 0x08000000) && pl->flags_A7 < 0)
             {
-                func_8001F158();
+                Sce_script_next();
                 rec->step_2++;
             }
             break;
@@ -2281,7 +2281,7 @@ void func_80104BD0(STAGE_REC_S *rec)
             {
                 obj->routine_1             = 0;
                 *(uint16 *)&obj->routine_2 = 0;
-                func_8001F158();
+                Sce_script_next();
                 Sce_flag_on(0x60C);
                 Sce_flag_on(0x60D);
                 rec->step_2++;
@@ -2564,7 +2564,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
                 break;
             }
             func_8001D854(0x10);
-            func_8001F1DC();
+            Sce_script_timer_clear();
             func_8001E6C0(0, 0, 0);
             D_800BC7F0 = D_80130194;
             wp->tbl_A4 = D_80130184;

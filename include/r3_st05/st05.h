@@ -403,7 +403,7 @@ sint32 func_80107CC8(STAGE_ROOM *wp);
 
 void func_801279A8(STAGE_OBJ *wp);
 
-void func_8001F158(void);
+void Sce_script_next(void);
 void func_801067A0(STAGE_OBJ *wp);
 
 extern STAGE_ROOM2_FUNC D_8012EF08[];
@@ -2490,7 +2490,7 @@ sint32 Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 
 void func_8003697C(void);
 
-void func_8001F1DC(void);
+void Sce_script_timer_clear(void);
 void func_8005D7C0(void);
 
 void func_80107CEC(void);

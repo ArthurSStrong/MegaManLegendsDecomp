@@ -189,7 +189,7 @@ void func_80100168(STAGE_ROOM *wp)
                 D_801129A0->u_C.b[0] = 0;
                 Sound_call2(0x17B, &D_801129A0->position);
                 wp->routine_5++;
-                func_8001F158();
+                Sce_script_next();
             }
             break;
         case 10:
@@ -212,7 +212,7 @@ void func_80100168(STAGE_ROOM *wp)
             break;
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
     if (Sce_skip_check() != 0 && wp->routine_5 >= 2)
     {
         Sound_call2(0x188, &D_801129A0->position);
@@ -257,7 +257,7 @@ void func_801008FC(STAGE_ROOM *wp)
         }
     }
     func_8001EC0C();
-    func_8001F070();
+    Sce_script_update();
 }
 
 void func_80100A40(STAGE_ROOM *wp)
@@ -831,7 +831,7 @@ void func_801019A8(STAGE_ROOM *wp)
                 D_800C356A = STAGE_PL.value_442;
             }
             func_8001EC0C();
-            func_8001F070();
+            Sce_script_update();
             if (wp->routine_4 == 5 && D_80098A72 == 0 && D_80098788 == 0)
             {
                 if (Game_work.value_50 == 0xB)
