@@ -734,7 +734,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos);
 sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 void Sce_script_next(void);
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 void func_8003697C(void);
 void func_8002FF34(void *wp, sint32 x, sint32 y, sint32 z);
 void Sce_slot_list_clear(void);

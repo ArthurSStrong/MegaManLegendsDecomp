@@ -96,7 +96,7 @@ void func_80017B24(void);
 void func_8001A110(void);
 void func_8001C95C(void);
 void func_800203A8(void);
-void func_80053B40(void);
+void Moji_update(void);
 void func_80064060(void);
 void func_80077748(sint32 mode);
 void InitGeom(void);

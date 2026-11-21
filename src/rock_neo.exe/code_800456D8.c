@@ -555,7 +555,7 @@ void func_80046A0C(CODE456_WORK *wp)
         wp->routine_8 = 5;
         if (wp->flag_3 == 0)
         {
-            func_80043294(D_8008A678[Game_work.option_5b][idx], 0, 0);
+            Money_add(D_8008A678[Game_work.option_5b][idx], 0, 0);
         }
         else
         {

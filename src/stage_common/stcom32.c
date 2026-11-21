@@ -138,7 +138,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
         case 3:
             if (pl->flags_A7 < 0)
             {
-                func_8005C150(2, 0, stcom32_D_00A8[wp->variant_3], 0);
+                Moji_param_exec(2, 0, stcom32_D_00A8[wp->variant_3], 0);
                 if (wp->variant_3 == 0)
                 {
                     wp->flags_0 |= 2;

@@ -148,7 +148,7 @@ void func_80116A88(ST0B_EVENT *wp)
                 wp->timer_1C = 0;
                 if (Moji_flag & 0x800000)
                 {
-                    func_80053AA4(4);
+                    Moji_task_kill(4);
                     func_8001D494(0, 1, 0);
                 }
                 MojiTaskExec2(4, 0);
@@ -474,7 +474,7 @@ void func_80117300(ST0B_EVENT *wp)
                 Obj_work_flag_change(0x7F, 1);
                 if (Moji_flag & 0x08000000)
                 {
-                    func_80053AA4(0);
+                    Moji_task_kill(0);
                     func_8001D494(0, 1, 0);
                 }
                 MojiTaskExec2(0, 4);
@@ -571,7 +571,7 @@ void func_8011754C(ST0B_EVENT *wp)
             {
                 if (Moji_flag & 0x800000)
                 {
-                    func_80053AA4(4);
+                    Moji_task_kill(4);
                     func_8001D494(0, 1, 0);
                 }
                 MojiTaskExec2(4, 9);
@@ -591,7 +591,7 @@ void func_8011754C(ST0B_EVENT *wp)
                 {
                     if (Moji_flag & 0x800000)
                     {
-                        func_80053AA4(4);
+                        Moji_task_kill(4);
                         func_8001D494(0, 1, 0);
                     }
                     wp->routine_3 = 0;
@@ -661,7 +661,7 @@ void func_80117830(STAGE_OBJ *wp)
             Sound_fade_start(0x10);
             if (Moji_flag & 0x08000000)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_8001D494(0, 1, 0);
             }
             MojiTaskExec2(0, 0x12);

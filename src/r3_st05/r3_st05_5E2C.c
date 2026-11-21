@@ -368,7 +368,7 @@ void func_80106934(STAGE_ROOM *wp)
             }
             if (Sce_skip_check() && wp->reserved09[1] == 1 && D_80098A72 == 0)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_80017C30(9);
             next:
                 wp->routine_4++;

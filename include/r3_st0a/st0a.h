@@ -999,7 +999,7 @@ void func_80031A4C(void *wp);
 void func_8005D7C0(void);
 void Sce_script_timer_clear(void);
 void func_8003697C(void);
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 void Game_logo_kill(sint32 index);
 void func_8003A264(void);
 extern sint16 D_8011B5FC; // the gate's height (func_80101A78)

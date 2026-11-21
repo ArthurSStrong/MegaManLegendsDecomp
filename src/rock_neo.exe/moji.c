@@ -14,17 +14,17 @@ uint32 Moji_flag3;
 uint32 D_80098960;
 sint32 D_80098B2C;
 uint8 D_800988F4;
-uint8 D_8009899C;
-uint8 D_80098830;
+uint8 Moji_list_top;
+uint8 Moji_item;
 uint8 D_80098850;
 uint8 D_80098851;
 uint8 D_800987F8;
-sint32 D_800989A8;
+sint32 Moji_list_count;
 uint8 D_80098930;
 uint8 D_80098B6C;
-sint32 D_80098AF4;
+sint32 Moji_amount;
 uint8 D_800989D4;
-uint32 D_800989E0;
+uint32 Moji_time;
 sint32 D_800986F0;
 uint8 D_80098A64;
 uint8 D_800986E0;
@@ -33,7 +33,7 @@ uint8 D_800986E8;
 uint8 D_800986EC;
 uint32 D_800987E0;
 
-void func_80053788(void)
+void Moji_init(void)
 {
     sint16 i;
     MOJI_WORK *wp;
@@ -141,7 +141,7 @@ void MojiTaskKill(void)
     Moji_flag = 0;
 }
 
-void func_80053AA4(uint8 index)
+void Moji_task_kill(uint8 index)
 {
     MOJI_WORK *wp;
 
@@ -162,7 +162,7 @@ void func_80053AA4(uint8 index)
 // store. The slot test is `flags_0 & 0x80000000`: combine turns it into bgez, but the constant
 // stays loaded for the Moji_flag update (dbr puts it in bgez's slot). `wp` is set before the
 // Moji_flag mask so its address load splits 0x3043FFFF's lui/ori.
-void func_80053B40(void)
+void Moji_update(void)
 {
     MOJI_WORK *wp;
     DR_AREA *area;
@@ -305,91 +305,91 @@ void func_80053B40(void)
     }
 }
 
-void func_800542FC(MOJI_WORK *wp)
+void Moji_text_skip1(MOJI_WORK *wp)
 {
     wp->pos_14 += 1;
 }
 
-void func_80054310(MOJI_WORK *wp)
+void Moji_text_skip2(MOJI_WORK *wp)
 {
     wp->pos_14 += 2;
 }
 
-void func_80054324(MOJI_WORK *wp)
+void Moji_text_skip3(MOJI_WORK *wp)
 {
     wp->pos_14 += 3;
 }
 
-void func_80054338(MOJI_WORK *wp)
+void Moji_text_skip4(MOJI_WORK *wp)
 {
     wp->pos_14 += 4;
 }
 
-void func_8005434C(MOJI_WORK *wp)
+void Moji_text_skip5(MOJI_WORK *wp)
 {
     wp->pos_14 += 5;
 }
 
-void func_80054360(MOJI_WORK *wp)
+void Moji_text_skip6(MOJI_WORK *wp)
 {
     wp->pos_14 += 6;
 }
 
-void func_80054374(MOJI_WORK *wp)
+void Moji_text_skip7(MOJI_WORK *wp)
 {
     wp->pos_14 += 7;
 }
 
-void func_80054388(MOJI_WORK *wp)
+void Moji_text_skip9(MOJI_WORK *wp)
 {
     wp->pos_14 += 9;
 }
 
-void func_8005439C(MOJI_WORK *wp)
+void Moji_text_skip11(MOJI_WORK *wp)
 {
     wp->pos_14 += 11;
 }
 
-sint32 func_800543B0(MOJI_WORK2 *wp)
+sint32 Moji_cmd_skip1(MOJI_WORK2 *wp)
 {
     wp->pos_6C += 1;
     return 1;
 }
 
-sint32 func_800543C8(MOJI_WORK2 *wp)
+sint32 Moji_cmd_skip2(MOJI_WORK2 *wp)
 {
     wp->pos_6C += 2;
     return 1;
 }
 
-sint32 func_800543E0(MOJI_WORK2 *wp)
+sint32 Moji_cmd_skip3(MOJI_WORK2 *wp)
 {
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_800543F8(MOJI_WORK2 *wp)
+sint32 Moji_cmd_skip5(MOJI_WORK2 *wp)
 {
     wp->pos_6C += 5;
     return 1;
 }
 
-uint16 func_80054410(uint8 *p)
+uint16 get_le16(uint8 *p)
 {
     return p[0] | (p[1] << 8);
 }
 
-uint32 func_80054424(uint8 *p)
+uint32 get_le32(uint8 *p)
 {
     return p[0] + (p[1] << 8) + (p[2] << 16) + (p[3] << 24);
 }
 
-sint32 func_80054450(MOJI_WORK *wp)
+sint32 Moji_cmd_end_wait(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        wp->val_4 = func_80054410(wp->pos_6C + 1);
+        wp->val_4 = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
     if (wp->val_4 <= 0)
@@ -418,14 +418,14 @@ sint32 func_80054450(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_8005457C(MOJI_WORK *wp)
+sint32 Moji_cmd_newline(MOJI_WORK *wp)
 {
     wp->count_3B += 1;
     wp->pos_6C += 1;
     return 1;
 }
 
-void func_8005459C(MOJI_WORK *wp)
+void Moji_text_newline(MOJI_WORK *wp)
 {
     wp->pos_10 = wp->val_8;
     wp->pos_12 += 12;
@@ -433,12 +433,12 @@ void func_8005459C(MOJI_WORK *wp)
     wp->pos_14 += 1;
 }
 
-sint32 func_800545C8(MOJI_WORK *wp)
+sint32 Moji_cmd_page_wait(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        wp->val_4 = func_80054410(wp->pos_6C + 1);
+        wp->val_4 = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
     if (wp->val_4 <= 0)
@@ -468,18 +468,18 @@ void func_80054694(MOJI_WORK *wp)
 
 sint32 func_800546B0(MOJI_WORK *wp)
 {
-    wp->val_3F = func_80054410(wp->pos_6C + 1);
+    wp->val_3F = get_le16(wp->pos_6C + 1);
     wp->val_4  = wp->val_3F;
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_80054700(MOJI_WORK *wp)
+sint32 Moji_cmd_wait(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        wp->val_4 = func_80054410(wp->pos_6C + 1);
+        wp->val_4 = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
     if (wp->val_4 <= 0)
@@ -494,17 +494,17 @@ sint32 func_80054700(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80054798(MOJI_WORK *wp)
+sint32 Moji_cmd_window_rect(MOJI_WORK *wp)
 {
-    wp->val_8  = func_80054410(wp->pos_6C + 1);
-    wp->val_A  = func_80054410(wp->pos_6C + 3);
+    wp->val_8  = get_le16(wp->pos_6C + 1);
+    wp->val_A  = get_le16(wp->pos_6C + 3);
     wp->val_7E = wp->pos_6C[5];
     wp->val_7F = wp->pos_6C[6];
     wp->pos_6C += 7;
     return 1;
 }
 
-sint32 func_80054804(MOJI_WORK *wp)
+sint32 Moji_cmd_sync(MOJI_WORK *wp)
 {
     sint32 flags;
 
@@ -518,19 +518,19 @@ sint32 func_80054804(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80054874(MOJI_WORK *wp)
+sint32 Moji_cmd_se(MOJI_WORK *wp)
 {
-    Sound_call(func_80054410(wp->pos_6C + 1), 0, 0);
+    Sound_call(get_le16(wp->pos_6C + 1), 0, 0);
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_800548C4(MOJI_WORK *wp)
+sint32 Moji_cmd_voice(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        func_8001D58C(func_80054424(wp->pos_6C + 1));
+        func_8001D58C(get_le32(wp->pos_6C + 1));
     }
     else if (Sce_cd_reading() != 0)
     {
@@ -543,7 +543,7 @@ sint32 func_800548C4(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_8005497C(MOJI_WORK *wp)
+sint32 Moji_cmd_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
     if (wp->base_44 != 0)
@@ -557,7 +557,7 @@ sint32 func_8005497C(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80054A04(MOJI_WORK *wp)
+void Moji_text_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 2);
     if (wp->base_44 != 0)
@@ -570,20 +570,20 @@ void func_80054A04(MOJI_WORK *wp)
     }
 }
 
-sint32 func_80054A84(MOJI_WORK *wp)
+sint32 Moji_cmd_return(MOJI_WORK *wp)
 {
     wp->depth_C0 -= 1;
     wp->pos_6C = (uint8 *)wp->jump_tbl_4C[wp->depth_C0];
     return 1;
 }
 
-void func_80054AB4(MOJI_WORK *wp)
+void Moji_text_return(MOJI_WORK *wp)
 {
     wp->depth_BE -= 1;
     wp->pos_14 = (uint8 *)wp->jump_tbl_18[wp->depth_BE];
 }
 
-sint32 func_80054ADC(MOJI_WORK *wp)
+sint32 Moji_cmd_window(MOJI_WORK *wp)
 {
     if (wp->flags_0 & 0x2000000)
     {
@@ -595,7 +595,7 @@ sint32 func_80054ADC(MOJI_WORK *wp)
     return 0;
 }
 
-void func_80054B4C(MOJI_WORK *wp)
+void Moji_text_window(MOJI_WORK *wp)
 {
     D_8008AB08[wp->val_7C](wp);
 }
@@ -612,7 +612,7 @@ sint32 func_80054BAC(void)
     return 0;
 }
 
-sint32 func_80054BB4(MOJI_WORK *wp)
+sint32 Moji_cmd_choice(MOJI_WORK *wp)
 {
     wp->flags_0 |= 0x400800;
     wp->v_72.count++;
@@ -621,7 +621,7 @@ sint32 func_80054BB4(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80054BEC(MOJI_WORK *wp)
+void Moji_text_choice(MOJI_WORK *wp)
 {
     sint16 old;
 
@@ -715,7 +715,7 @@ void func_80054BEC(MOJI_WORK *wp)
     wp->pos_14 += 3;
 }
 
-sint32 func_80054E54(MOJI_WORK *wp)
+sint32 Moji_cmd_select(MOJI_WORK *wp)
 {
     uint8 *p;
     uint8 next;
@@ -800,7 +800,7 @@ sint32 func_80054E54(MOJI_WORK *wp)
                 {
                     if (wp->pos_6C[0] == 0xE8)
                     {
-                        Moji_flag |= 0x40000000 | D_800BE2F8[(sint8)wp->val_71];
+                        Moji_flag |= 0x40000000 | Moji_list[(sint8)wp->val_71];
                     }
                     else
                     {
@@ -813,7 +813,7 @@ sint32 func_80054E54(MOJI_WORK *wp)
                     if (wp->pos_6C[1] & 0x40)
                     {
                         wp->val_79 = wp->val_71;
-                        D_800988F4 = D_8009899C;
+                        D_800988F4 = Moji_list_top;
                     }
                     if (wp->pos_6C[1] & 0x20)
                     {
@@ -858,7 +858,7 @@ sint32 func_80054E54(MOJI_WORK *wp)
     return 0;
 }
 
-void func_80055304(MOJI_WORK *wp)
+void Moji_text_select(MOJI_WORK *wp)
 {
     wp->pos_14 += wp->v_72.skip + 2;
 }
@@ -870,7 +870,7 @@ sint32 func_8005531C(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80055344(MOJI_WORK *wp)
+sint32 Moji_cmd_exec(MOJI_WORK *wp)
 {
     uint8 *p;
     uint8 id;
@@ -891,25 +891,25 @@ sint32 func_80055344(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_800553A8(MOJI_WORK *wp)
+sint32 Moji_cmd_flag_on(MOJI_WORK *wp)
 {
-    Sce_flag_on(func_80054410(wp->pos_6C + 1));
+    Sce_flag_on(get_le16(wp->pos_6C + 1));
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_800553F0(MOJI_WORK *wp)
+sint32 Moji_cmd_flag_off(MOJI_WORK *wp)
 {
-    Sce_flag_off(func_80054410(wp->pos_6C + 1));
+    Sce_flag_off(get_le16(wp->pos_6C + 1));
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_80055438(MOJI_WORK *wp)
+sint32 Moji_cmd_flag_branch(MOJI_WORK *wp)
 {
     sint32 x;
 
-    if (Sce_flag_test(func_80054410(wp->pos_6C + 1)))
+    if (Sce_flag_test(get_le16(wp->pos_6C + 1)))
     {
         x = wp->pos_6C[3];
     }
@@ -930,14 +930,14 @@ sint32 func_80055438(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_800554E4(MOJI_WORK *wp)
+sint32 Moji_cmd_scroll(MOJI_WORK *wp)
 {
     sint32 step;
 
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        wp->val_4 = func_80054410(wp->pos_6C + 1);
+        wp->val_4 = get_le16(wp->pos_6C + 1);
         wp->count_3B += 1;
     }
     wp->flags_0 |= 0x10000000;
@@ -965,9 +965,9 @@ sint32 func_800554E4(MOJI_WORK *wp)
     return 0;
 }
 
-void func_800555F4(MOJI_WORK *wp)
+void Moji_text_space(MOJI_WORK *wp)
 {
-    wp->pos_10 += func_80054410(wp->pos_14 + 1);
+    wp->pos_10 += get_le16(wp->pos_14 + 1);
     wp->pos_14 += 3;
 }
 
@@ -985,7 +985,7 @@ sint32 func_80055660(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80055688(MOJI_WORK *wp)
+sint32 Moji_cmd_key_wait(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
@@ -1019,12 +1019,12 @@ sint32 func_80055688(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_800557B8(MOJI_WORK *wp)
+sint32 Moji_cmd_voice_wait(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        wp->val_4 = func_80054410(wp->pos_6C + 1);
+        wp->val_4 = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
     if (wp->val_4 <= 0 || !(wp->flags_0 & 0x40000))
@@ -1038,7 +1038,7 @@ sint32 func_800557B8(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80055868(MOJI_WORK *wp)
+sint32 Moji_cmd_camera(MOJI_WORK *wp)
 {
     sint32 vec[3];
     MOJI_POS pos;
@@ -1052,22 +1052,22 @@ sint32 func_80055868(MOJI_WORK *wp)
         wp->flags_0 |= 0x1000000;
         pos    = *D_800987B8;
         vec[0] = D_800987B8->x;
-        vec[1] = D_800987B8->y + (sint16)func_80054410(wp->pos_6C + 9);
+        vec[1] = D_800987B8->y + (sint16)get_le16(wp->pos_6C + 9);
         vec[2] = D_800987B8->z;
         if (Scene_work == 0)
         {
-            func_80039FAC(vec, func_80054410(wp->pos_6C + 3),
-                          func_80031198(&pos, &pl->position) + func_80054410(wp->pos_6C + 5),
-                          D_800A396C + func_80054410(wp->pos_6C + 7));
+            func_80039FAC(vec, get_le16(wp->pos_6C + 3),
+                          func_80031198(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                          D_800A396C + get_le16(wp->pos_6C + 7));
         }
         else
         {
-            func_80039FFC(vec, func_80054410(wp->pos_6C + 3),
-                          func_80031198(&pos, &pl->position) + func_80054410(wp->pos_6C + 5),
-                          D_800A396C + func_80054410(wp->pos_6C + 7));
+            func_80039FFC(vec, get_le16(wp->pos_6C + 3),
+                          func_80031198(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                          D_800A396C + get_le16(wp->pos_6C + 7));
         }
         wp->flags_0 |= 0x10000;
-        state[1] = func_80054410(wp->pos_6C + 1);
+        state[1] = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
     if (func_8003A13C() == 0)
@@ -1079,7 +1079,7 @@ sint32 func_80055868(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80055A78(MOJI_WORK *wp)
+sint32 Moji_cmd_room_branch(MOJI_WORK *wp)
 {
     sint32 x;
 
@@ -1104,24 +1104,24 @@ sint32 func_80055A78(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80055B14(MOJI_WORK *wp)
+sint32 Moji_cmd_logo(MOJI_WORK *wp)
 {
     uint32 id;
 
-    if ((uint16)func_80054410(wp->pos_6C + 1) != 0)
+    if ((uint16)get_le16(wp->pos_6C + 1) != 0)
     {
-        Game_logo_kill((sint16)func_80054410(wp->pos_6C + 3));
+        Game_logo_kill((sint16)get_le16(wp->pos_6C + 3));
     }
     else
     {
-        id = func_80054410(wp->pos_6C + 3);
-        func_80063FC0(id, func_80054424(wp->pos_6C + 5));
+        id = get_le16(wp->pos_6C + 3);
+        func_80063FC0(id, get_le32(wp->pos_6C + 5));
     }
     wp->pos_6C += 9;
     return 1;
 }
 
-sint32 func_80055BB0(MOJI_WORK *wp)
+sint32 Moji_cmd_window_close(MOJI_WORK *wp)
 {
     if (wp->flags_0 & 0x4000000)
     {
@@ -1134,7 +1134,7 @@ sint32 func_80055BB0(MOJI_WORK *wp)
 }
 
 
-sint32 func_80055C1C(MOJI_WORK *wp)
+sint32 Moji_cmd_camera_end(MOJI_WORK *wp)
 {
     if (wp->flags_0 & 0x10000)
     {
@@ -1145,14 +1145,14 @@ sint32 func_80055C1C(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80055C80(MOJI_WORK *wp)
+sint32 Moji_cmd_option_set(MOJI_WORK *wp)
 {
     *D_8008D0D4[wp->pos_6C[1]] = wp->pos_6C[2];
     wp->pos_6C += 3;
     return 1;
 }
 
-sint32 func_80055CC4(MOJI_WORK *wp)
+sint32 Moji_cmd_toggle(MOJI_WORK *wp)
 {
     wp->flags_0 |= 0x404000;
     wp->v_72.count++;
@@ -1161,7 +1161,7 @@ sint32 func_80055CC4(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80055CFC(MOJI_WORK *wp)
+void Moji_text_toggle(MOJI_WORK *wp)
 {
     sint16 old;
 
@@ -1260,7 +1260,7 @@ void func_80055CFC(MOJI_WORK *wp)
     wp->pos_14 += 7;
 }
 
-void func_800560D0(MOJI_WORK *wp)
+void Moji_text_option_bright(MOJI_WORK *wp)
 {
     if (*D_8008D0D4[wp->pos_14[1]] == wp->pos_14[2])
     {
@@ -1273,14 +1273,14 @@ void func_800560D0(MOJI_WORK *wp)
     wp->pos_14 += 3;
 }
 
-sint32 func_80056128(MOJI_WORK *wp)
+sint32 Moji_cmd_newline_n(MOJI_WORK *wp)
 {
     wp->count_3B += 1;
     wp->pos_6C += 2;
     return 1;
 }
 
-void func_80056148(MOJI_WORK *wp)
+void Moji_text_newline_n(MOJI_WORK *wp)
 {
     wp->pos_10 = wp->val_8;
     wp->pos_12 += wp->pos_14[1];
@@ -1288,7 +1288,7 @@ void func_80056148(MOJI_WORK *wp)
     wp->pos_14 += 2;
 }
 
-void func_80056180(MOJI_WORK *wp)
+void Moji_text_bright(MOJI_WORK *wp)
 {
     wp->val_78 = wp->pos_14[1];
     wp->pos_14 += 2;
@@ -1374,34 +1374,34 @@ sint32 func_80056280(MOJI_WORK *wp)
     return 1;
 }
 
-void func_800563A8(MOJI_WORK *wp)
+void Moji_text_list_item(MOJI_WORK *wp)
 {
     if (D_80098850 == 0)
     {
-        D_80098830 = D_800BE2F8[D_8009899C + (sint8)wp->val_71];
+        Moji_item = Moji_list[Moji_list_top + (sint8)wp->val_71];
     }
     else
     {
-        D_80098830 = D_800BE2F8[D_8009899C + (sint8)wp->val_71] + 0x20;
+        Moji_item = Moji_list[Moji_list_top + (sint8)wp->val_71] + 0x20;
     }
     if (wp->flags_0 & 0x2000)
     {
         if (wp->base_44 != 0)
         {
             MojiTaskExec(wp->pos_14[1], wp->base_44,
-                         (uint8)(wp->pos_14[2] + D_800BE2F8[D_8009899C + (sint8)wp->val_71]));
+                         (uint8)(wp->pos_14[2] + Moji_list[Moji_list_top + (sint8)wp->val_71]));
         }
         else
         {
             MojiTaskExec(wp->pos_14[1],
-                         D_8008CACC[wp->pos_14[2] + D_800BE2F8[D_8009899C + (sint8)wp->val_71]],
+                         D_8008CACC[wp->pos_14[2] + Moji_list[Moji_list_top + (sint8)wp->val_71]],
                          0xFF);
         }
     }
     wp->pos_14 += 3;
 }
 
-void func_800564C8(MOJI_WORK *wp)
+void Moji_text_choice_msg(MOJI_WORK *wp)
 {
     if (wp->base_44 != 0)
     {
@@ -1414,42 +1414,42 @@ void func_800564C8(MOJI_WORK *wp)
     wp->pos_14 += 3;
 }
 
-void func_80056558(MOJI_WORK *wp)
+void Moji_text_list_choice_msg(MOJI_WORK *wp)
 {
     if (wp->base_44 != 0)
     {
         MojiTaskExec(wp->pos_14[1], wp->base_44,
-                     (uint8)(wp->pos_14[2] + D_800BE2F8[(sint8)wp->val_71 + D_8009899C]));
+                     (uint8)(wp->pos_14[2] + Moji_list[(sint8)wp->val_71 + Moji_list_top]));
     }
     else
     {
         MojiTaskExec(
             wp->pos_14[1],
-            D_8008CACC[wp->pos_14[2] + ((sint8 *)D_800BE2F8)[(sint8)wp->val_71 + D_8009899C]],
+            D_8008CACC[wp->pos_14[2] + ((sint8 *)Moji_list)[(sint8)wp->val_71 + Moji_list_top]],
             0xFF);
     }
     wp->pos_14 += 3;
 }
 
-void func_80056610(MOJI_WORK *wp)
+void Moji_text_parts_msg(MOJI_WORK *wp)
 {
     if (wp->base_44 != 0)
     {
         MojiTaskExec(wp->pos_14[1], wp->base_44,
                      (uint8)(wp->pos_14[2] +
-                             ((uint8 *)&Player_work)[(sint8)wp->val_71 + D_8009899C + 0x454] - 1));
+                             ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454] - 1));
     }
     else
     {
         MojiTaskExec(wp->pos_14[1],
                      D_8008CAC8[wp->pos_14[2] +
-                                ((uint8 *)&Player_work)[(sint8)wp->val_71 + D_8009899C + 0x454]],
+                                ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454]],
                      0xFF);
     }
     wp->pos_14 += 3;
 }
 
-void func_800566CC(MOJI_WORK *wp)
+void Moji_text_equip_msg(MOJI_WORK *wp)
 {
     if (wp->base_44 != 0)
     {
@@ -1466,16 +1466,16 @@ void func_800566CC(MOJI_WORK *wp)
     wp->pos_14 += 3;
 }
 
-sint32 func_80056778(MOJI_WORK *wp)
+sint32 Moji_cmd_list_choice(MOJI_WORK *wp)
 {
     wp->pos_6C[5] = D_800987F8;
     if (D_80098850 == 0)
     {
-        D_80098830 = D_800BE2F8[D_8009899C + wp->v_72.skip];
+        Moji_item = Moji_list[Moji_list_top + wp->v_72.skip];
     }
     else
     {
-        D_80098830 = D_800BE2F8[D_8009899C + wp->v_72.skip] + 0x20;
+        Moji_item = Moji_list[Moji_list_top + wp->v_72.skip] + 0x20;
     }
     wp->flags_0 |= 0x402000;
     wp->v_72.count++;
@@ -1484,7 +1484,7 @@ sint32 func_80056778(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80056820(MOJI_WORK *wp)
+void Moji_text_list_choice(MOJI_WORK *wp)
 {
     sint16 old;
     sint32 decided;
@@ -1510,10 +1510,10 @@ void func_80056820(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[2] >> 4;
                     wp->val_BC = 0;
-                    if ((uint32)D_800989A8 >= 6 && old == (sint8)wp->val_71 && D_8009899C != 0)
+                    if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 && Moji_list_top != 0)
                     {
                         Sound_call(0x81, 1, 0);
-                        D_8009899C--;
+                        Moji_list_top--;
                     }
                 }
                 else if ((*(uint32 *)&wp->val_B8 & 0x100010) == 0x10)
@@ -1522,10 +1522,10 @@ void func_80056820(MOJI_WORK *wp)
                     {
                         wp->val_71 = wp->pos_14[2] >> 4;
                         wp->val_BC = 12;
-                        if ((uint32)D_800989A8 >= 6 && old == (sint8)wp->val_71 && D_8009899C != 0)
+                        if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 && Moji_list_top != 0)
                         {
                             Sound_call(0x81, 1, 0);
-                            D_8009899C--;
+                            Moji_list_top--;
                         }
                     }
                     else
@@ -1537,11 +1537,11 @@ void func_80056820(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[2] & 0xF;
                     wp->val_BC = 0;
-                    if ((uint32)D_800989A8 >= 6 && old == (sint8)wp->val_71 &&
-                        D_8009899C < (uint32)D_800989A8 - 5)
+                    if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 &&
+                        Moji_list_top < (uint32)Moji_list_count - 5)
                     {
                         Sound_call(0x81, 1, 0);
-                        D_8009899C++;
+                        Moji_list_top++;
                     }
                 }
                 else if ((*(uint32 *)&wp->val_B8 & 0x400040) == 0x40)
@@ -1550,11 +1550,11 @@ void func_80056820(MOJI_WORK *wp)
                     {
                         wp->val_71 = wp->pos_14[2] & 0xF;
                         wp->val_BC = 12;
-                        if ((uint32)D_800989A8 >= 6 && old == (sint8)wp->val_71 &&
-                            D_8009899C < (uint32)D_800989A8 - 5)
+                        if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 &&
+                            Moji_list_top < (uint32)Moji_list_count - 5)
                         {
                             Sound_call(0x81, 1, 0);
-                            D_8009899C++;
+                            Moji_list_top++;
                         }
                     }
                     else
@@ -1603,22 +1603,22 @@ void func_80056820(MOJI_WORK *wp)
             {
                 Sound_call(0x81, 1, 0);
             }
-            if ((uint32)D_800989A8 >= 6)
+            if ((uint32)Moji_list_count >= 6)
             {
                 Game_logo_kill(0);
                 Game_logo_kill(1);
                 if (!decided)
                 {
-                    if (D_8009899C != 0 && D_800989A8 - 5 != D_8009899C)
+                    if (Moji_list_top != 0 && Moji_list_count - 5 != Moji_list_top)
                     {
                         func_80063FC0(0, 0x20003);
                         func_80063FC0(1, 0x20004);
                     }
-                    else if (D_8009899C != 0)
+                    else if (Moji_list_top != 0)
                     {
                         func_80063FC0(0, 0x20003);
                     }
-                    else if (D_800989A8 - 5 != D_8009899C)
+                    else if (Moji_list_count - 5 != Moji_list_top)
                     {
                         func_80063FC0(0, 0x20004);
                     }
@@ -1633,11 +1633,11 @@ void func_80056820(MOJI_WORK *wp)
     }
     if (D_80098850 == 0)
     {
-        D_80098830 = D_800BE2F8[D_8009899C + (sint8)wp->val_73];
+        Moji_item = Moji_list[Moji_list_top + (sint8)wp->val_73];
     }
     else
     {
-        D_80098830 = D_800BE2F8[D_8009899C + (sint8)wp->val_73] + 0x20;
+        Moji_item = Moji_list[Moji_list_top + (sint8)wp->val_73] + 0x20;
     }
     wp->pos_14[5] = D_800987F8;
     wp->val_78 += 0x50;
@@ -1661,7 +1661,7 @@ void func_80056820(MOJI_WORK *wp)
 // itself: jump2 then cross-jumps that store into a new label, which its "other jump to the same
 // label" search never visits, so the two base_44 paths stay separate as in retail. The unused
 // 8-byte local gives the 0x40 frame.
-sint32 func_80056D10(MOJI_WORK *wp)
+sint32 Moji_cmd_shop_list(MOJI_WORK *wp)
 {
     uint8 *have;
     uint8 *seen;
@@ -1673,8 +1673,8 @@ sint32 func_80056D10(MOJI_WORK *wp)
     uint8 *script;
 
     base       = D_80097F64[D_80098850];
-    D_800989A8 = 0;
-    D_8009899C = D_800988F4;
+    Moji_list_count = 0;
+    Moji_list_top = D_800988F4;
     have       = &Sce_flag[base >> 3];
     seen       = &Sce_flag[(sint32)(base - 0x80) >> 3];
     if (*(sint16 *)((uint8 *)&Player_work + 0xB0) >= 0xA0)
@@ -1700,8 +1700,8 @@ sint32 func_80056D10(MOJI_WORK *wp)
         {
             if (!((seen[i >> 3] | ~have[i >> 3]) & (0x80 >> (i & 7))))
             {
-                D_800BE2F8[D_800989A8] = i;
-                D_800989A8++;
+                Moji_list[Moji_list_count] = i;
+                Moji_list_count++;
             }
             else if (D_80098850 == 1)
             {
@@ -1709,14 +1709,14 @@ sint32 func_80056D10(MOJI_WORK *wp)
                 {
                     if (*(sint16 *)((uint8 *)&Player_work + 0xB0) != 0xA0)
                     {
-                        D_800BE2F8[D_800989A8] = i;
-                        D_800989A8++;
+                        Moji_list[Moji_list_count] = i;
+                        Moji_list_count++;
                     }
                 }
                 else if (i == 5 && MOJI_GAME->value7D != 0 && MOJI_GAME->value7D < 0x63)
                 {
-                    D_800BE2F8[D_800989A8] = i;
-                    D_800989A8++;
+                    Moji_list[Moji_list_count] = i;
+                    Moji_list_count++;
                 }
             }
         }
@@ -1724,25 +1724,25 @@ sint32 func_80056D10(MOJI_WORK *wp)
         {
             if (D_80098850 == 1)
             {
-                D_800BE2F8[D_800989A8] = i;
-                n                      = D_800989A8++;
+                Moji_list[Moji_list_count] = i;
+                n                      = Moji_list_count++;
                 if (i < 0x20 || (uint32)(i - 0x24) < 0x14 || (uint32)(i - 0x4C) < 5)
                 {
-                    D_800989A8 = n;
+                    Moji_list_count = n;
                 }
             }
             else
             {
-                D_800BE2F8[D_800989A8] = i;
-                D_800989A8++;
+                Moji_list[Moji_list_count] = i;
+                Moji_list_count++;
             }
         }
     }
-    if (D_800989A8 != 0)
+    if (Moji_list_count != 0)
     {
-        if ((uint32)D_800989A8 < 5)
+        if ((uint32)Moji_list_count < 5)
         {
-            index = (wp->pos_6C - D_800989A8)[7];
+            index = (wp->pos_6C - Moji_list_count)[7];
             if (index == 0xFF)
             {
                 wp->pos_6C += 7;
@@ -1800,7 +1800,7 @@ sint32 func_80056D10(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_800570B0(MOJI_WORK *wp)
+sint32 Moji_cmd_exec_if(MOJI_WORK *wp)
 {
     uint8 *p;
     uint8 id;
@@ -1837,10 +1837,10 @@ void func_80057144(MOJI_WORK *wp)
 {
     wp->val_40 = Game_work[7];
     wp->pos_14 += 1;
-    func_8005BF10(0, wp->val_40, wp->pos_14);
+    num_to_text(0, wp->val_40, wp->pos_14);
 }
 
-sint32 func_80057184(MOJI_WORK *wp)
+sint32 Moji_cmd_option_exec(MOJI_WORK *wp)
 {
     uint8 *p;
     uint8 a;
@@ -1868,10 +1868,10 @@ sint32 func_80057184(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_8005721C(MOJI_WORK *wp)
+sint32 Moji_cmd_shop_check(MOJI_WORK *wp)
 {
-    D_80098930 = D_800BE2F8[D_8009899C + (sint8)wp->val_71] + wp->pos_6C[1];
-    if (Sce_flag_test(0x2EE) == 0 && func_8004327C(-D_8008FD3C[D_80098930]) != 0)
+    D_80098930 = Moji_list[Moji_list_top + (sint8)wp->val_71] + wp->pos_6C[1];
+    if (Sce_flag_test(0x2EE) == 0 && Money_check(-D_8008FD3C[D_80098930]) != 0)
     {
         D_80098B6C = 1;
     }
@@ -1883,19 +1883,19 @@ sint32 func_8005721C(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_800572C8(MOJI_WORK *wp)
+sint32 Moji_cmd_shop_trade(MOJI_WORK *wp)
 {
     uint8 *next;
 
     if (Sce_flag_test(0x2EE) != 0)
     {
-        func_80043294(D_8008FD3C[D_80098930] >> 2, 0, 0);
+        Money_add(D_8008FD3C[D_80098930] >> 2, 0, 0);
         Sce_flag_off(D_80098930 | 0x500);
         Sub_screen_rb_parts_set();
     }
     else
     {
-        func_80043294(-D_8008FD3C[D_80098930], 0, 0);
+        Money_add(-D_8008FD3C[D_80098930], 0, 0);
         if (D_80098930 == 0x23)
         {
             // Player_work + 0xB0 (not yet named in PL_WORK)
@@ -1917,7 +1917,7 @@ sint32 func_800572C8(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80057408(MOJI_WORK *wp)
+sint32 Moji_cmd_jump(MOJI_WORK *wp)
 {
     sint32 x;
 
@@ -1958,7 +1958,7 @@ sint32 func_80057408(MOJI_WORK *wp)
     return 1;
 }
 
-void func_8005753C(MOJI_WORK *wp)
+void Moji_text_jump(MOJI_WORK *wp)
 {
     uint8 *p = wp->pos_14;
 
@@ -1972,45 +1972,45 @@ void func_8005753C(MOJI_WORK *wp)
     }
 }
 
-void func_80057574(MOJI_WORK *wp)
+void Moji_text_price(MOJI_WORK *wp)
 {
     if (Sce_flag_test(0x2EE) != 0)
     {
         if (D_80098850 == 0)
         {
-            func_8005BF10(0, D_8008FD3C[D_800BE2F8[D_8009899C + (sint8)wp->val_73 - 1]] >> 2,
+            num_to_text(0, D_8008FD3C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]] >> 2,
                           wp->pos_14 + 1);
         }
         else
         {
-            func_8005BF10(0, D_8008FD7C[D_800BE2F8[D_8009899C + (sint8)wp->val_73 - 1]] >> 2,
+            num_to_text(0, D_8008FD7C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]] >> 2,
                           wp->pos_14 + 1);
         }
     }
     else if (D_80098850 == 0)
     {
-        func_8005BF10(0, D_8008FD3C[D_800BE2F8[D_8009899C + (sint8)wp->val_73 - 1]],
+        num_to_text(0, D_8008FD3C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]],
                       wp->pos_14 + 1);
     }
     else
     {
-        func_8005BF10(0, D_8008FD7C[D_800BE2F8[D_8009899C + (sint8)wp->val_73 - 1]],
+        num_to_text(0, D_8008FD7C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]],
                       wp->pos_14 + 1);
     }
     wp->pos_14 += 1;
 }
 
-sint32 func_800576C4(MOJI_WORK *wp)
+sint32 Moji_cmd_item_msg(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 1);
-    wp->pos_6C                      = D_8008CBA4[D_80098830];
+    wp->pos_6C                      = D_8008CBA4[Moji_item];
     return 1;
 }
 
-void func_80057708(MOJI_WORK *wp)
+void Moji_text_item_msg(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 1);
-    wp->pos_14                      = D_8008CBA4[D_80098830];
+    wp->pos_14                      = D_8008CBA4[Moji_item];
 }
 
 sint32 func_80057744(MOJI_WORK *wp)
@@ -2051,11 +2051,11 @@ sint32 func_800577FC(MOJI_WORK *wp)
 {
     sint32 x;
 
-    if (func_8004327C(-((MOJI_GAME->value7D - MOJI_GAME->value7C) * 10)) == 0)
+    if (Money_check(-((MOJI_GAME->value7D - MOJI_GAME->value7C) * 10)) == 0)
     {
         x = wp->pos_6C[1];
     }
-    else if (MOJI_GAME->value60 >= 0x80 && func_8004327C(-1) == 0)
+    else if (MOJI_GAME->value60 >= 0x80 && Money_check(-1) == 0)
     {
         x = wp->pos_6C[3];
     }
@@ -2093,12 +2093,12 @@ sint32 func_80057924(MOJI_WORK *wp)
     if (wp->pos_6C[1] == 0)
     {
         next = &MOJI_GAME->value7D;
-        func_80043294(-((*next - MOJI_GAME->value7C) * 10), 0, 0);
+        Money_add(-((*next - MOJI_GAME->value7C) * 10), 0, 0);
         MOJI_GAME->value7C = *next;
     }
     else
     {
-        func_80043294(-MOJI_GAME->value1C, 0, 0);
+        Money_add(-MOJI_GAME->value1C, 0, 0);
         MOJI_GAME->value7C = MOJI_GAME->value7D;
     }
     wp->pos_6C += 2;
@@ -2107,57 +2107,57 @@ sint32 func_80057924(MOJI_WORK *wp)
 
 void func_800579D8(MOJI_WORK *wp)
 {
-    func_8005BF10(1, (MOJI_GAME->value7D - MOJI_GAME->value7C) * 10, ++wp->pos_14);
+    num_to_text(1, (MOJI_GAME->value7D - MOJI_GAME->value7C) * 10, ++wp->pos_14);
 }
 
 
-sint32 func_80057A24(MOJI_WORK *wp)
+sint32 Moji_cmd_item_get(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 1);
-    Sce_flag_on(D_80098830 | 0x500);
-    wp->pos_6C = D_8008CBA4[D_80098830];
+    Sce_flag_on(Moji_item | 0x500);
+    wp->pos_6C = D_8008CBA4[Moji_item];
     return 1;
 }
 
-void func_80057A94(MOJI_WORK *wp)
+void Moji_text_item_get(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 1);
-    wp->pos_14                      = D_8008CBA4[D_80098830];
+    wp->pos_14                      = D_8008CBA4[Moji_item];
 }
 
-sint32 func_80057AD0(MOJI_WORK *wp)
+sint32 Moji_cmd_item_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
     wp->pos_6C                      = D_8008CBA4[wp->pos_6C[1]];
     return 1;
 }
 
-void func_80057B24(MOJI_WORK *wp)
+void Moji_text_item_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 2);
     wp->pos_14                      = D_8008CBA4[wp->pos_14[1]];
 }
 
 
-sint32 func_80057B70(MOJI_WORK *wp)
+sint32 Moji_cmd_money_add(MOJI_WORK *wp)
 {
-    func_80043294(D_80098AF4, 0, 0);
+    Money_add(Moji_amount, 0, 0);
     wp->pos_6C += 1;
     return 1;
 }
 
 
-sint32 func_80057BB4(MOJI_WORK *wp)
+sint32 Moji_cmd_money_sub(MOJI_WORK *wp)
 {
-    func_80043294(-D_80098AF4, 0, 0);
+    Money_add(-Moji_amount, 0, 0);
     wp->pos_6C += 1;
     return 1;
 }
 
-void func_80057BFC(MOJI_WORK *wp)
+void Moji_text_amount(MOJI_WORK *wp)
 {
     wp->pos_14 += 1;
-    func_8005BF10(1, D_80098AF4, wp->pos_14);
+    num_to_text(1, Moji_amount, wp->pos_14);
 }
 
 sint32 func_80057C2C(MOJI_WORK *wp)
@@ -2173,10 +2173,10 @@ sint32 func_80057C2C(MOJI_WORK *wp)
     {
         if (*flags & (0x80 >> i))
         {
-            D_800BE2F8[count++] = i;
+            Moji_list[count++] = i;
         }
     }
-    D_800BE2F8[count] = 8;
+    Moji_list[count] = 8;
     x                 = wp->pos_6C[count];
     if ((uint8)x == 0xFF)
     {
@@ -2203,14 +2203,14 @@ sint32 func_80057C2C(MOJI_WORK *wp)
 sint32 func_80057D00(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
-    wp->pos_6C                      = D_8008CE10[D_800BE2F8[wp->pos_6C[1]]];
+    wp->pos_6C                      = D_8008CE10[Moji_list[wp->pos_6C[1]]];
     return 1;
 }
 
 void func_80057D60(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 2);
-    wp->pos_14                      = D_8008CE10[D_800BE2F8[wp->pos_14[1]]];
+    wp->pos_14                      = D_8008CE10[Moji_list[wp->pos_14[1]]];
 }
 
 sint32 func_80057DB8(MOJI_WORK *wp)
@@ -2219,7 +2219,7 @@ sint32 func_80057DB8(MOJI_WORK *wp)
 
     index = Moji_flag & 0xFF;
     Moji_flag &= ~0xFF;
-    Moji_flag |= D_800BE2F8[index];
+    Moji_flag |= Moji_list[index];
     wp->pos_6C += 1;
     return 1;
 }
@@ -2243,15 +2243,15 @@ void func_80057E50(MOJI_WORK *wp)
     p = wp->pos_14;
     if (p[1] == 0)
     {
-        func_8005BFC0(D_800989E0, p + 3);
+        time_to_text(Moji_time, p + 3);
     }
     else if (p[1] == 1)
     {
-        func_8005BFC0(MOJI_GAME->value84[p[2]].value0, p + 3);
+        time_to_text(MOJI_GAME->value84[p[2]].value0, p + 3);
     }
     else if (p[1] == 2)
     {
-        func_8005C0E4(MOJI_GAME->value84[p[2]].value0, p + 8);
+        num2_to_text(MOJI_GAME->value84[p[2]].value0, p + 8);
         wp->pos_14[3] = 0xC6;
         wp->pos_14[4] = 0xC6;
         wp->pos_14[5] = 0xC6;
@@ -2260,7 +2260,7 @@ void func_80057E50(MOJI_WORK *wp)
     }
     else if (p[1] == 3)
     {
-        func_8005C0E4(D_800989EC, p + 8);
+        num2_to_text(Moji_num2, p + 8);
         wp->pos_14[3] = 0xC6;
         wp->pos_14[4] = 0xC6;
         wp->pos_14[5] = 0xC6;
@@ -2289,7 +2289,7 @@ void func_80057E50(MOJI_WORK *wp)
 // the store), hence the cast and name[i + 2]. `wp->val_71 = ++cur` (cur set twice, so GCC no
 // longer knows it is a zero-extended byte) gives retail's cursor load order, and the left-arrow
 // test reads a copy of the cursor shifted into the top byte (retail's sll 24 in the merge block).
-sint32 func_80057FF8(MOJI_WORK *wp)
+sint32 Moji_cmd_name_entry(MOJI_WORK *wp)
 {
     uint8 cur;
     sint32 cur_byte;
@@ -2680,12 +2680,12 @@ sint32 func_80058C08(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80058C28(MOJI_WORK *wp)
+sint32 Moji_cmd_flag_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 3);
-    if (Sce_flag_test(func_80054410(wp->pos_6C + 1)))
+    if (Sce_flag_test(get_le16(wp->pos_6C + 1)))
     {
-        wp->pos_6C = D_8008BAA4[func_80054410(wp->pos_6C + 1)];
+        wp->pos_6C = D_8008BAA4[get_le16(wp->pos_6C + 1)];
     }
     else
     {
@@ -2694,12 +2694,12 @@ sint32 func_80058C28(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80058CC8(MOJI_WORK *wp)
+void Moji_text_flag_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 3);
-    if (Sce_flag_test(func_80054410(wp->pos_14 + 1)))
+    if (Sce_flag_test(get_le16(wp->pos_14 + 1)))
     {
-        wp->pos_14 = D_8008BAA4[func_80054410(wp->pos_14 + 1)];
+        wp->pos_14 = D_8008BAA4[get_le16(wp->pos_14 + 1)];
     }
     else
     {
@@ -2707,14 +2707,14 @@ void func_80058CC8(MOJI_WORK *wp)
     }
 }
 
-void func_80058D64(MOJI_WORK *wp)
+void Moji_text_locate(MOJI_WORK *wp)
 {
-    wp->pos_10 = func_80054410(wp->pos_14 + 1);
-    wp->pos_12 = func_80054410(wp->pos_14 + 3);
+    wp->pos_10 = get_le16(wp->pos_14 + 1);
+    wp->pos_12 = get_le16(wp->pos_14 + 3);
     wp->pos_14 += 5;
 }
 
-sint32 func_80058DB4(MOJI_WORK *wp)
+sint32 Moji_cmd_list_clear(MOJI_WORK *wp)
 {
     sint32 i;
     uint8 *p;
@@ -2722,9 +2722,9 @@ sint32 func_80058DB4(MOJI_WORK *wp)
 
     value      = 0xFF;
     i          = 0x7F;
-    D_8009899C = 0;
+    Moji_list_top = 0;
     wp->pos_6C += 1;
-    p = &D_800BE2F8[0x7F];
+    p = &Moji_list[0x7F];
     for (; i >= 0; i--)
     {
         *p-- = value;
@@ -2732,24 +2732,24 @@ sint32 func_80058DB4(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80058DEC(MOJI_WORK *wp)
+void Moji_text_list_from_flags(MOJI_WORK *wp)
 {
     uint8 *bits;
     sint32 i;
 
     bits       = D_800BE420;
-    D_800989A8 = 0;
+    Moji_list_count = 0;
     for (i = 0; i < 0x40; i++)
     {
         if (bits[i >> 3] & (0x80 >> (i & 7)))
         {
-            D_800BE2F8[D_800989A8] = i;
-            D_800989A8++;
+            Moji_list[Moji_list_count] = i;
+            Moji_list_count++;
         }
     }
-    for (i = D_800989A8; i < 0x80; i++)
+    for (i = Moji_list_count; i < 0x80; i++)
     {
-        D_800BE2F8[i] = 0xFF;
+        Moji_list[i] = 0xFF;
     }
     wp->pos_14++;
 }
@@ -2770,7 +2770,7 @@ void func_80058F18(MOJI_WORK *wp)
     uint32 bit;
     sint16 old;
 
-    if (D_80098851 == (sint8)wp->val_73 + D_8009899C && (D_80098960 & 1))
+    if (D_80098851 == (sint8)wp->val_73 + Moji_list_top && (D_80098960 & 1))
     {
         wp->pos_14[5] = 0x60;
         wp->val_78    = 0x10;
@@ -2791,11 +2791,11 @@ void func_80058F18(MOJI_WORK *wp)
             {
                 wp->val_71 = wp->pos_14[1];
                 wp->val_BC = 0;
-                if (old == (sint8)wp->val_71 && D_8009899C != 0)
+                if (old == (sint8)wp->val_71 && Moji_list_top != 0)
                 {
                     Moji_flag3 |= bit;
                     Sound_call(0x81, 1, 0);
-                    D_8009899C -= 2;
+                    Moji_list_top -= 2;
                 }
             }
             else if ((*(uint32 *)&wp->val_B8 & 1048592) == 0x10)
@@ -2804,11 +2804,11 @@ void func_80058F18(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[1];
                     wp->val_BC = 12;
-                    if (old == (sint8)wp->val_71 && D_8009899C != 0)
+                    if (old == (sint8)wp->val_71 && Moji_list_top != 0)
                     {
                         Moji_flag3 |= bit;
                         Sound_call(0x81, 1, 0);
-                        D_8009899C -= 2;
+                        Moji_list_top -= 2;
                     }
                 }
                 else
@@ -2820,11 +2820,11 @@ void func_80058F18(MOJI_WORK *wp)
             {
                 wp->val_71 = wp->pos_14[2];
                 wp->val_BC = 0;
-                if (old == (sint8)wp->val_71 && D_8009899C < D_800989D4)
+                if (old == (sint8)wp->val_71 && Moji_list_top < D_800989D4)
                 {
                     Moji_flag3 |= bit;
                     Sound_call(0x81, 1, 0);
-                    D_8009899C += 2;
+                    Moji_list_top += 2;
                 }
             }
             else if ((*(uint32 *)&wp->val_B8 & 4194368) == 0x40)
@@ -2833,11 +2833,11 @@ void func_80058F18(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[2];
                     wp->val_BC = 12;
-                    if (old == (sint8)wp->val_71 && D_8009899C < D_800989D4)
+                    if (old == (sint8)wp->val_71 && Moji_list_top < D_800989D4)
                     {
                         Moji_flag3 |= bit;
                         Sound_call(0x81, 1, 0);
-                        D_8009899C += 2;
+                        Moji_list_top += 2;
                     }
                 }
                 else
@@ -2913,7 +2913,7 @@ sint32 func_800592FC(MOJI_WORK *wp)
         if (wp->val_BA & 0x4000)
         {
             Moji_flag &= ~0xFF;
-            slot = D_800BE2F8[D_8009899C + (sint8)wp->val_71];
+            slot = Moji_list[Moji_list_top + (sint8)wp->val_71];
             if (slot != 0xFF)
             {
                 Moji_flag |= 0x40000000 | (uint8)(slot + 0x40);
@@ -2923,16 +2923,16 @@ sint32 func_800592FC(MOJI_WORK *wp)
                 Moji_flag |= 0x400000FF;
             }
         }
-        else if (D_8009899C != 0 && D_8009899C < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x2001A);
             func_80063FC0(1, 0x2001B);
         }
-        else if (D_8009899C != 0)
+        else if (Moji_list_top != 0)
         {
             func_80063FC0(0, 0x2001A);
         }
-        else if (D_8009899C < D_800989D4)
+        else if (Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x2001B);
         }
@@ -2941,7 +2941,7 @@ sint32 func_800592FC(MOJI_WORK *wp)
     {
         wp->val_4 -= 1;
     }
-    value = D_800BE2F8[D_8009899C + (sint8)wp->val_71];
+    value = Moji_list[Moji_list_top + (sint8)wp->val_71];
     if (value != 0xFF)
     {
         Moji_flag3 = (uint8)(value + 0x40);
@@ -2954,25 +2954,25 @@ sint32 func_800592FC(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_800594CC(MOJI_WORK *wp)
+sint32 Moji_cmd_list_msg(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 1);
-    wp->pos_6C = D_8008CCA4[((sint8 *)D_800BE2F8)[D_8009899C + wp->v_72.skip - 1]];
+    wp->pos_6C = D_8008CCA4[((sint8 *)Moji_list)[Moji_list_top + wp->v_72.skip - 1]];
     return 1;
 }
 
-void func_80059530(MOJI_WORK *wp)
+void Moji_text_list_msg(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 1);
-    wp->pos_14 = D_8008CCA4[((sint8 *)D_800BE2F8)[D_8009899C + (sint8)wp->val_73 - 1]];
+    wp->pos_14 = D_8008CCA4[((sint8 *)Moji_list)[Moji_list_top + (sint8)wp->val_73 - 1]];
 }
 
-sint32 func_8005958C(MOJI_WORK *wp)
+sint32 Moji_cmd_part_name(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 3);
     if (wp->pos_6C[1] != 0)
     {
-        wp->pos_6C = D_8008CBA0[((sint8 *)&Player_work)[wp->pos_6C[2] + D_8009899C + 0x454]];
+        wp->pos_6C = D_8008CBA0[((sint8 *)&Player_work)[wp->pos_6C[2] + Moji_list_top + 0x454]];
     }
     else
     {
@@ -2986,12 +2986,12 @@ sint32 func_8005958C(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80059660(MOJI_WORK *wp)
+void Moji_text_part_name(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 3);
     if (wp->pos_14[1] != 0)
     {
-        wp->pos_14 = D_8008CBA0[((sint8 *)&Player_work)[wp->pos_14[2] + D_8009899C + 0x454]];
+        wp->pos_14 = D_8008CBA0[((sint8 *)&Player_work)[wp->pos_14[2] + Moji_list_top + 0x454]];
     }
     else
     {
@@ -3004,7 +3004,7 @@ void func_80059660(MOJI_WORK *wp)
     }
 }
 
-sint32 func_80059728(MOJI_WORK *wp)
+sint32 Moji_cmd_buster_slot(MOJI_WORK *wp)
 {
     if (!(wp->flags_0 & 0x1000000))
     {
@@ -3016,7 +3016,7 @@ sint32 func_80059728(MOJI_WORK *wp)
     wp->flags_0 &= ~0x400000;
     Moji_flag3 = ((uint8 *)&Player_work)[(sint8)Moji_work[1].val_71 + 0x450];
     Moji_flag3 = Moji_flag3 |
-                 (((uint8 *)&Player_work)[D_8009899C + Moji_work[2].val_79 + 0x454] << 8) | 0x10000;
+                 (((uint8 *)&Player_work)[Moji_list_top + Moji_work[2].val_79 + 0x454] << 8) | 0x10000;
     if (wp->val_4 <= 0)
     {
         if (*(uint32 *)&wp->val_B8 & 0x10080000)
@@ -3044,7 +3044,7 @@ sint32 func_80059728(MOJI_WORK *wp)
 }
 
 // The script hand-off is written out in both confirm branches; GCC cross-jumps the copies.
-sint32 func_800598C8(MOJI_WORK *wp)
+sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
 {
     uint8 *parts;
     uint8 *script;
@@ -3061,7 +3061,7 @@ sint32 func_800598C8(MOJI_WORK *wp)
     wp->flags_0 &= ~0x400000;
     Moji_flag3 = ((uint8 *)&Player_work)[(sint8)Moji_work[1].val_71 + 0x450];
     parts      = (uint8 *)&Player_work + 0x454;
-    Moji_flag3 = Moji_flag3 | (parts[D_8009899C + (sint8)Moji_work[2].val_71] << 8);
+    Moji_flag3 = Moji_flag3 | (parts[Moji_list_top + (sint8)Moji_work[2].val_71] << 8);
     if (wp->val_4 <= 0)
     {
         Game_logo_kill(0);
@@ -3082,8 +3082,8 @@ sint32 func_800598C8(MOJI_WORK *wp)
         else if (wp->val_BA & 0x4000)
         {
             Sound_call(0x82, 1, 0);
-            temp                                  = parts[(sint8)wp->val_71 + D_8009899C];
-            parts[(sint8)wp->val_71 + D_8009899C] = ((uint8 *)&Player_work)[D_80098B2D + 0x450];
+            temp                                  = parts[(sint8)wp->val_71 + Moji_list_top];
+            parts[(sint8)wp->val_71 + Moji_list_top] = ((uint8 *)&Player_work)[D_80098B2D + 0x450];
             ((uint8 *)&Player_work)[D_80098B2D + 0x450] = temp;
             Sub_screen_rb_parts_set();
             script     = wp->base_44;
@@ -3096,16 +3096,16 @@ sint32 func_800598C8(MOJI_WORK *wp)
             MojiTaskExec(wp->pos_6C[1], script, wp->pos_6C[2]);
             MojiTaskExec(next, script, index);
         }
-        else if (D_8009899C != 0 && D_8009899C < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x20018);
             func_80063FC0(1, 0x20019);
         }
-        else if (D_8009899C != 0)
+        else if (Moji_list_top != 0)
         {
             func_80063FC0(0, 0x20018);
         }
-        else if (D_8009899C < D_800989D4)
+        else if (Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x20019);
         }
@@ -3125,29 +3125,29 @@ sint32 func_80059B44(MOJI_WORK *wp)
     count = 0;
     if (Sce_flag_test(0x23D) != 0 && MOJI_GAME->value28 != 0x1F4)
     {
-        D_800BE2F8[count++] = 0;
+        Moji_list[count++] = 0;
     }
     if (Sce_flag_test(0x23E) != 0 && MOJI_GAME->value2C != 0xC8)
     {
-        D_800BE2F8[count++] = 1;
+        Moji_list[count++] = 1;
     }
     if (Sce_flag_test(0x23F) != 0 && MOJI_GAME->value30 != 0xFA)
     {
-        D_800BE2F8[count++] = 2;
+        Moji_list[count++] = 2;
     }
     if (Sce_flag_test(0x240) != 0 && MOJI_GAME->value34 != 0xC8)
     {
-        D_800BE2F8[count++] = 3;
+        Moji_list[count++] = 3;
     }
     if (MOJI_GAME->value66 * 0x96 != MOJI_GAME->value38)
     {
-        D_800BE2F8[count++] = 5;
+        Moji_list[count++] = 5;
     }
     if (MOJI_GAME->value67 * 0xB4 != MOJI_GAME->value3C)
     {
-        D_800BE2F8[count++] = 4;
+        Moji_list[count++] = 4;
     }
-    D_800BE2F8[count] = 6;
+    Moji_list[count] = 6;
     value             = wp->pos_6C[1] + 6;
     value -= count;
     wp->val_C2 = (uint8)value;
@@ -3167,21 +3167,21 @@ sint32 func_80059D20(MOJI_WORK *wp)
 
     p     = wp->pos_6C;
     index = p[1];
-    slot  = D_800BE2F8[index];
+    slot  = Moji_list[index];
     limit = D_8008AF00[slot];
     if (slot < 4)
     {
-        func_8005BF10(0, limit - ((sint32 *)((uint8 *)Game_work + 0x28))[slot], p + 7);
+        num_to_text(0, limit - ((sint32 *)((uint8 *)Game_work + 0x28))[slot], p + 7);
     }
     else
     {
-        func_8005BF10(0,
+        num_to_text(0,
                       ((uint8 *)Game_work)[0x6B - slot] * limit -
                           *(sint32 *)((uint8 *)Game_work + 0x4C - slot * 4),
                       p + 7);
     }
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
-    wp->pos_6C                      = D_8008CE5C[D_800BE2F8[index]];
+    wp->pos_6C                      = D_8008CE5C[Moji_list[index]];
     return 1;
 }
 
@@ -3190,10 +3190,10 @@ void func_80059E24(MOJI_WORK *wp)
     uint32 idx = wp->pos_14[1];
 
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 2);
-    wp->pos_14                      = D_8008CE5C[D_800BE2F8[idx]];
+    wp->pos_14                      = D_8008CE5C[Moji_list[idx]];
 }
 
-// Number entry. As in func_80057FF8, a uint8 cursor plus a copy shifted into the top byte
+// Number entry. As in Moji_cmd_name_entry, a uint8 cursor plus a copy shifted into the top byte
 // (cur << 24) for the left-arrow test gives retail's cursor load and sll; done = 1 written last
 // in the two confirm branches gives retail's placement.
 sint32 func_80059E74(MOJI_WORK *wp)
@@ -3352,20 +3352,20 @@ sint32 func_80059E74(MOJI_WORK *wp)
             D_800987E0 *= 10;
             D_800987E0 += NAME_REC(wp, i)[2] - D_8008D028[0];
         }
-        if (func_8004327C(-D_80098AF4) != 0)
+        if (Money_check(-Moji_amount) != 0)
         {
             limit = MOJI_GAME->value1C;
         }
         else
         {
-            limit = D_80098AF4;
+            limit = Moji_amount;
         }
         if (limit < D_800987E0)
         {
-            func_8005BF10(2, limit, D_800BE2F8);
+            num_to_text(2, limit, Moji_list);
             for (i = 0; i < wp->v_72.skip - 1; i++)
             {
-                NAME_REC(wp, i)[2] = D_800BE2F8[i + 1];
+                NAME_REC(wp, i)[2] = Moji_list[i + 1];
             }
             D_800987E0    = limit;
             NAME_CHAR(wp) = NAME_REC(wp, (sint8)wp->val_71)[2] - D_8008D028[0];
@@ -3373,10 +3373,10 @@ sint32 func_80059E74(MOJI_WORK *wp)
     }
     else
     {
-        func_8005BF10(2, D_800987E0, D_800BE2F8);
+        num_to_text(2, D_800987E0, Moji_list);
         for (i = 0; i < wp->v_72.skip - 1; i++)
         {
-            NAME_REC(wp, i)[2] = D_800BE2F8[i + 1];
+            NAME_REC(wp, i)[2] = Moji_list[i + 1];
         }
         for (i = 0; i < wp->v_72.skip; i++)
         {
@@ -3415,7 +3415,7 @@ sint32 func_8005A598(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_8005A634(MOJI_WORK *wp)
+sint32 Moji_cmd_parts_sort(MOJI_WORK *wp)
 {
     uint8 temp;
 
@@ -3444,8 +3444,8 @@ sint32 func_8005A634(MOJI_WORK *wp)
             Sound_call(0x82, 1, 0);
             if (D_80098851 != 0xFF)
             {
-                temp = ((uint8 *)&Player_work)[(sint8)wp->val_71 + D_8009899C + 0x454];
-                ((uint8 *)&Player_work)[(sint8)wp->val_71 + D_8009899C + 0x454] =
+                temp = ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454];
+                ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454] =
                     ((uint8 *)&Player_work)[D_80098851 + 0x454];
                 ((uint8 *)&Player_work)[D_80098851 + 0x454] = temp;
                 Sub_screen_rb_parts_set();
@@ -3454,19 +3454,19 @@ sint32 func_8005A634(MOJI_WORK *wp)
             }
             else
             {
-                D_80098851 = wp->val_71 + D_8009899C;
+                D_80098851 = wp->val_71 + Moji_list_top;
             }
         }
-        else if (D_8009899C != 0 && D_8009899C < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x20018);
             func_80063FC0(1, 0x20019);
         }
-        else if (D_8009899C != 0)
+        else if (Moji_list_top != 0)
         {
             func_80063FC0(0, 0x20018);
         }
-        else if (D_8009899C < D_800989D4)
+        else if (Moji_list_top < D_800989D4)
         {
             func_80063FC0(0, 0x20019);
         }
@@ -3478,7 +3478,7 @@ sint32 func_8005A634(MOJI_WORK *wp)
     return 0;
 }
 
-void func_8005A858(MOJI_WORK *wp)
+void Moji_text_char_space(MOJI_WORK *wp)
 {
     wp->pos_10 += 12;
     wp->pos_14 += 1;
@@ -3879,7 +3879,7 @@ void func_8005BCE4(MOJI_WORK *wp, sint32 index)
     }
 }
 
-void func_8005BF10(sint32 mode, uint32 value, uint8 *out)
+void num_to_text(sint32 mode, uint32 value, uint8 *out)
 {
     uint32 i;
     uint32 digit;
@@ -3903,7 +3903,7 @@ void func_8005BF10(sint32 mode, uint32 value, uint8 *out)
 }
 
 // Frame count as a time string. One index variable serves every digit, as retail's a0.
-void func_8005BFC0(uint32 frames, uint8 *out)
+void time_to_text(uint32 frames, uint8 *out)
 {
     uint32 sec;
     uint32 idx;
@@ -3921,7 +3921,7 @@ void func_8005BFC0(uint32 frames, uint8 *out)
     out[0] = D_8008D028[idx];
 }
 
-void func_8005C0E4(uint32 value, uint8 *out)
+void num2_to_text(uint32 value, uint8 *out)
 {
     out[0] = D_8008D028[value / 10];
     out[1] = D_8008D028[value % 10];
@@ -3931,16 +3931,16 @@ void func_8005C0E4(uint32 value, uint8 *out)
     }
 }
 
-void func_8005C150(sint32 index, sint32 mode, sint32 value, sint32 id)
+void Moji_param_exec(sint32 index, sint32 mode, sint32 value, sint32 id)
 {
     switch ((uint32)mode)
     {
         case 0:
-            D_80098830 = value;
+            Moji_item = value;
             MojiTaskExec(id, D_8008CAD0[D_8008AF40[index]], 0xFF);
             break;
         case 1:
-            D_80098AF4 = value;
+            Moji_amount = value;
             MojiTaskExec(id, D_8008CAD4[D_8008AF40[index]], 0xFF);
             break;
         case 2:
@@ -3949,24 +3949,24 @@ void func_8005C150(sint32 index, sint32 mode, sint32 value, sint32 id)
     }
 }
 
-void func_8005C218(sint32 value)
+void Moji_item_set(sint32 value)
 {
-    D_80098830 = value;
+    Moji_item = value;
 }
 
-void func_8005C224(sint32 value)
+void Moji_amount_set(sint32 value)
 {
-    D_80098AF4 = value;
+    Moji_amount = value;
 }
 
-void func_8005C230(uint32 value)
+void Moji_time_set(uint32 value)
 {
-    D_800989E0 = value;
+    Moji_time = value;
 }
 
-void func_8005C23C(uint32 value)
+void Moji_num2_set(uint32 value)
 {
-    D_800989EC = value;
+    Moji_num2 = value;
 }
 
 void func_8005C24C(sint32 value)

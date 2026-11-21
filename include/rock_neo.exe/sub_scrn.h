@@ -207,7 +207,7 @@ void func_8001B314(void);
 void func_8001B33C(void);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void Sce_flag_off(uint32 flag);
-void func_8005C218(sint32 value);
+void Moji_item_set(sint32 value);
 void func_80013420(void);
 void func_80012F78(void (*entry)(void));
 void Pl00_shot_enable_off(SUB_PLAYER *wp);

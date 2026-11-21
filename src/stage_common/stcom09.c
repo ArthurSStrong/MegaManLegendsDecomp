@@ -137,7 +137,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
                 else if (wp->value_D & 0x80)
                 {
                     id = (((wp->value_D & 0x7F) << 8) | (uint8)wp->param_E) * 10;
-                    func_8005C150(2, 1, id / 10, 0);
+                    Moji_param_exec(2, 1, id / 10, 0);
                     Sce_flag_on(wp->flag_C + 0x400);
                 }
                 else if (wp->param_E != -1)
@@ -148,19 +148,19 @@ void stcom09_func_0268(STCOM09_WORK *wp)
                     }
                     else
                     {
-                        func_8005C150(2, 0, (uint8)wp->param_E, 0);
+                        Moji_param_exec(2, 0, (uint8)wp->param_E, 0);
                     }
                     Sce_flag_on(wp->flag_C + 0x400);
                     pl->value_448 = 0x35;
                 }
                 else
                 {
-                    func_8005C150(2, 2, 0, 0);
+                    Moji_param_exec(2, 2, 0, 0);
                 }
             }
             else
             {
-                func_8005C150(2, 2, 0, 0);
+                Moji_param_exec(2, 2, 0, 0);
             }
             wp->routine_0++;
             break;

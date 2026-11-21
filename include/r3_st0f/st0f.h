@@ -182,7 +182,7 @@ void func_80103C28(ST0F_OBJ *wp);
 sint32 func_80103E08(void);
 sint32 func_80104490(ST0F_OBJ *wp);
 void func_801043CC(ST0F_OBJ *wp);
-void func_8005C224(sint32 arg);
+void Moji_amount_set(sint32 arg);
 void Sce_flag_select(sint32 arg);
 
 extern void *D_80104B24[];       // spawn list by room

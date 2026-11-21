@@ -578,7 +578,7 @@ void func_801D952C(void)
     {
         D_801DC208.value_0a = D_801DC208.value_92 * 16;
         D_801DC208.value_92 = 0;
-        func_80053AA4(0);
+        Moji_task_kill(0);
         MojiTaskExec(0, SUP_SCRIPT, D_801DC088[D_801DC268][0]);
         D_801DC208.rot_88.vz = 0;
         D_801DC208.rot_88.vy = 0;
@@ -587,11 +587,11 @@ void func_801D952C(void)
     if (Joy1.pressed & 0x1000)
     {
         D_801DC208.value_90 = 2;
-        func_80053AA4(0);
+        Moji_task_kill(0);
     }
     if (Joy1.pressed & 0x4008)
     {
-        func_80053AA4(0);
+        Moji_task_kill(0);
         MojiTaskExec(0, SUP_SCRIPT, 0x65);
         Sound_call(0x88, 0, 0);
         D_801DC208.anim_94    = 8;
@@ -649,7 +649,7 @@ void func_801D9794(void)
     {
         D_801DC208.value_0a = D_801DC208.value_92 * 16;
         D_801DC208.value_92 = 0;
-        func_80053AA4(0);
+        Moji_task_kill(0);
         func_8005C24C(D_801DC208.value_60);
         MojiTaskExec(0, SUP_SCRIPT, 0x83);
         D_801DC208.rot_88.vz = 0;
@@ -660,13 +660,13 @@ void func_801D9794(void)
     {
         D_801DC208.value_90 = 2;
         D_801DC208.routine_3++;
-        func_80053AA4(0);
-        func_80053AA4(1);
+        Moji_task_kill(0);
+        Moji_task_kill(1);
     }
     if (Joy1.pressed & 0x4008)
     {
-        func_80053AA4(0);
-        func_8005C224(
+        Moji_task_kill(0);
+        Moji_amount_set(
             (D_8008D8EC +
              D_801DC208.value_60 * 20)[Player_work.level_4f4[D_801DC0C8[D_801DC208.value_60]][0]] *
             10);
@@ -713,7 +713,7 @@ void func_801D99CC(void)
     price = ((uint16(*)[5][4])D_8008D8EC)[D_801DC208.value_60][D_801DC208.value_96][level] * 10;
     if (redraw)
     {
-        func_80053AA4(0);
+        Moji_task_kill(0);
         switch (D_801DC208.value_96)
         {
             case 0:
@@ -733,19 +733,19 @@ void func_801D99CC(void)
                 msg = D_801DC1F4[D_801DC208.value_60];
                 break;
         }
-        func_8005C224(price);
+        Moji_amount_set(price);
         MojiTaskExec(0, SUP_SCRIPT, msg);
     }
     if (Joy1.pressed & 0x1000)
     {
         D_801DC208.routine_3++;
         D_801DC208.value_90 = 2;
-        func_80053AA4(0);
+        Moji_task_kill(0);
     }
     if ((Moji_flag & 0x20000) && (Joy1.pressed & 0x4008))
     {
-        func_80053AA4(0);
-        if (func_8004327C(-price))
+        Moji_task_kill(0);
+        if (Money_check(-price))
         {
             MojiTaskExec(0, SUP_SCRIPT, 0x85);
             D_801DC208.value_90 = 1;
@@ -1162,7 +1162,7 @@ void func_801DAB58(void)
                 case 1:
                     D_801DC208.value_90  = 0;
                     D_801DC208.routine_3 = 6;
-                    func_80053AA4(1);
+                    Moji_task_kill(1);
                     break;
                 case 2:
                     func_8005C24C(D_801DC208.value_60);
@@ -1175,7 +1175,7 @@ void func_801DAB58(void)
                 case 3:
                     D_801DC208.value_90  = 0;
                     D_801DC208.routine_3 = 7;
-                    func_80053AA4(1);
+                    Moji_task_kill(1);
                     break;
             }
             break;
@@ -1197,7 +1197,7 @@ void func_801DAB58(void)
             break;
         case 8:
             (*(Player_work.level_4f4[D_801DC0C8[D_801DC208.value_60]] + D_801DC208.value_96))++;
-            func_80043294(-D_801DC208.value_98, 0, 0);
+            Money_add(-D_801DC208.value_98, 0, 0);
             func_801DB1C0();
             func_80037594();
             MojiTaskExec(0, SUP_SCRIPT, 0x87);
@@ -1215,7 +1215,7 @@ void func_801DAB58(void)
             }
             break;
         case 10:
-            func_80053AA4(3);
+            Moji_task_kill(3);
             D_801DC208.vec_28   = D_801DC208.vec_0c;
             D_801DC208.value_38 = D_801DC208.value_1c;
             D_801DC208.value_3c = D_801DC208.value_20;

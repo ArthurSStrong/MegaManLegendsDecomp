@@ -125,7 +125,7 @@ void func_801092F8(STAGE_OBJ50 *wp)
         case 1:
             if (!func_801099D8(wp))
             {
-                func_8005C150(0, 2, 0, 0);
+                Moji_param_exec(0, 2, 0, 0);
             }
             else if (wp->u_C.b.hi == 0)
             {
@@ -136,17 +136,17 @@ void func_801092F8(STAGE_OBJ50 *wp)
                 if (wp->u_C.b.hi & 0x80)
                 {
                     zenny = (((wp->u_C.b.hi & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(0, 1, zenny / 10, 0);
+                    Moji_param_exec(0, 1, zenny / 10, 0);
                     Sce_flag_on(wp->u_C.b.lo + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(0, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(0, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->u_C.b.lo + 0x400);
                 }
                 else
                 {
-                    func_8005C150(0, 2, 0, 0);
+                    Moji_param_exec(0, 2, 0, 0);
                 }
             }
             wp->routine_2++;
@@ -419,7 +419,7 @@ void func_80109CCC(STAGE_OBJ50 *wp)
         case 1:
             if (!func_80109F34(wp))
             {
-                func_8005C150(1, 2, 0, 0);
+                Moji_param_exec(1, 2, 0, 0);
             }
             else if (wp->u_C.b.hi == 0)
             {
@@ -430,17 +430,17 @@ void func_80109CCC(STAGE_OBJ50 *wp)
                 if (wp->u_C.b.hi & 0x80)
                 {
                     zenny = (((wp->u_C.b.hi & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(1, 1, zenny / 10, 0);
+                    Moji_param_exec(1, 1, zenny / 10, 0);
                     Sce_flag_on(wp->u_C.b.lo + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(1, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(1, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->u_C.b.lo + 0x400);
                 }
                 else
                 {
-                    func_8005C150(1, 2, 0, 0);
+                    Moji_param_exec(1, 2, 0, 0);
                 }
             }
             wp->routine_1++;
@@ -558,7 +558,7 @@ void func_8010A044(STAGE_OBJ50 *wp)
             if (D_800C0C26 != 0 || !(Moji_flag & 0x8000000) || !Sce_cd_reading())
             {
                 pl->value_448 = 0x31;
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 Sound_fade_start(0x40);
                 wp->routine_1++;
             }

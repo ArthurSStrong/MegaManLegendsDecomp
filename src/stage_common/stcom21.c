@@ -161,14 +161,14 @@ void stcom21_func_0460(STCOM21_WORK *wp)
             }
             break;
         case 3:
-            if (func_8004327C(-10) < 0)
+            if (Money_check(-10) < 0)
             {
                 MojiTaskExec(0, D_8008CE08, -1);
                 wp->routine_2 = 0x14;
             }
             else
             {
-                func_80043294(-10, 0, 0);
+                Money_add(-10, 0, 0);
                 wp->value_E = 0x10;
                 wp->routine_2++;
             }
@@ -673,7 +673,7 @@ void stcom21_func_11A0(STCOM21_WORK *wp)
         case 1:
             if (!stcom21_func_1880(wp))
             {
-                func_8005C150(0, 2, 0, 0);
+                Moji_param_exec(0, 2, 0, 0);
             }
             else if (wp->value_D == 0)
             {
@@ -684,17 +684,17 @@ void stcom21_func_11A0(STCOM21_WORK *wp)
                 if (wp->value_D & 0x80)
                 {
                     zenny = (((wp->value_D & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(0, 1, zenny / 10, 0);
+                    Moji_param_exec(0, 1, zenny / 10, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(0, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(0, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else
                 {
-                    func_8005C150(0, 2, 0, 0);
+                    Moji_param_exec(0, 2, 0, 0);
                 }
             }
             wp->routine_2++;
@@ -947,7 +947,7 @@ void stcom21_func_1B74(STCOM21_WORK *wp)
         case 1:
             if (!stcom21_func_1DDC(wp))
             {
-                func_8005C150(1, 2, 0, 0);
+                Moji_param_exec(1, 2, 0, 0);
             }
             else if (wp->value_D == 0)
             {
@@ -958,17 +958,17 @@ void stcom21_func_1B74(STCOM21_WORK *wp)
                 if (wp->value_D & 0x80)
                 {
                     zenny = (((wp->value_D & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(1, 1, zenny / 10, 0);
+                    Moji_param_exec(1, 1, zenny / 10, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(1, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(1, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else
                 {
-                    func_8005C150(1, 2, 0, 0);
+                    Moji_param_exec(1, 2, 0, 0);
                 }
             }
             wp->routine_1++;

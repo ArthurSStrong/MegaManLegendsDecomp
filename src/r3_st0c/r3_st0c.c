@@ -216,7 +216,7 @@ void func_80100168(STAGE_ROOM *wp)
     if (Sce_skip_check() != 0 && wp->routine_5 >= 2)
     {
         Sound_call2(0x188, &D_801129A0->position);
-        func_80053AA4(0);
+        Moji_task_kill(0);
         D_800A395C = 1;
         func_80039820();
         wp->routine_4 = 2;

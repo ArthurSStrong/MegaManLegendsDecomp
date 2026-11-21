@@ -144,7 +144,7 @@ void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 void func_8001E460(sint32 a0, sint32 a1, sint32 a2);
 void Sce_flag_off(sint32 flag);
-void func_8005C224(sint32 arg);
+void Moji_amount_set(sint32 arg);
 extern sint32 D_80113220;
 extern uint8 D_80113224;
 extern ST08_PAIR D_80113208[];
@@ -542,8 +542,8 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner);
 
 // The rock game's script (func_801105AC): its place in the ranking (0xFF: none) and the score calls.
 extern uint8 D_80118598;
-void func_8005C218(sint32 arg);
-void func_8005C230(sint32 score);
+void Moji_item_set(sint32 arg);
+void Moji_time_set(sint32 score);
 void func_8005C24C(sint32 arg);
 sint32 func_8001A0A8(sint32 arg);
 
@@ -552,7 +552,7 @@ void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg
 
 // The shooting game's script (func_801018CC): its place in the ranking (0xFF: none).
 extern uint8 D_80118510;
-void func_8005C23C(sint32 hits);
+void Moji_num2_set(sint32 hits);
 void func_800425FC(void *pl, sint32 arg);
 
 #endif // ST08_H

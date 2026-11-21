@@ -713,7 +713,7 @@ void func_80101470(STAGE_ROOM *wp)
         func_80017C30(9);
         if (Moji_flag & 0x08000000)
         {
-            func_80053AA4(0);
+            Moji_task_kill(0);
             func_8001D494(0, 1, 0);
         }
         wp->routine_5 = 0x14;
@@ -2990,7 +2990,7 @@ void func_80105D20(STAGE_ROOM *wp)
             }
             if (Sce_skip_check() != 0 && wp->reserved09[1] == 1)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_8001D494(0, 1, 0);
                 wp->routine_4 = 0xC;
             }
@@ -3044,7 +3044,7 @@ void func_80105D20(STAGE_ROOM *wp)
             }
             if (Sce_skip_check() != 0 && wp->reserved09[1] == 1)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_8001D494(0, 1, 0);
                 wp->routine_4 = 0x10;
             }
@@ -3358,7 +3358,7 @@ void func_801068BC(STAGE_ROOM *wp)
             }
             break;
         case 10:
-            func_80053AA4(0);
+            Moji_task_kill(0);
             func_8001D494(0, 1, 0);
             D_800A395C = 1;
             func_80039820();
@@ -3694,7 +3694,7 @@ void func_80106B98(STAGE_ROOM *wp)
     }
     if (Sce_skip_check() != 0 && D_800C356C == 0 && D_80098A72 == 0 && wp->routine_4 == 1)
     {
-        func_80053AA4(0);
+        Moji_task_kill(0);
         func_8001D494(0, 1, 0);
         wp->routine_5 = 0;
         wp->routine_4++;
@@ -3908,7 +3908,7 @@ void func_80107B94(STAGE_ROOM *wp)
             }
             else if (Sce_skip_check() && wp->reserved09[1] == 1 && D_80098A72 == 0)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_80017C30(9);
                 wp->routine_4++;
             }
@@ -4113,7 +4113,7 @@ void func_801081B0(STAGE_ROOM *wp)
             }
             break;
         case 10:
-            func_80053AA4(0);
+            Moji_task_kill(0);
             func_8001D494(0, 1, 0);
             func_8003697C();
             wp->routine_4++;

@@ -505,7 +505,7 @@ void func_8010A5E0(ST0C_SHL *wp);
 
 extern sint16 D_800C0F96;
 void Sce_script_next(void);
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 void func_8003A264(void);
 
 #endif

@@ -555,11 +555,11 @@ void func_8012B948(STAGE_OBJ50 *wp)
     if (kind == 3)
     {
         d = (uint32)(D_801379F8[wp->value_F].value_0 - (wp->value_48 & ~3)) / 15;
-        func_8005C224(D_801379F8[wp->value_F].value_10 + d * d);
+        Moji_amount_set(D_801379F8[wp->value_F].value_10 + d * d);
     }
     else
     {
-        func_8005C224(D_801379F8[wp->value_F].value_4[kind]);
+        Moji_amount_set(D_801379F8[wp->value_F].value_4[kind]);
     }
 }
 
@@ -786,8 +786,8 @@ void func_8012BF74(ST05_RACE *wp)
     }
     if (wp->routine_1 == 2)
     {
-        func_80053AA4(2);
-        func_80053AA4(3);
+        Moji_task_kill(2);
+        Moji_task_kill(3);
         Sound_fade_start(0x40);
     }
 }
@@ -896,7 +896,7 @@ void func_8012C4F4(STAGE_OBJ *wp)
             if (func_80042238(&Player_work))
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
-                func_8005C218(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
+                Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
                 func_8001E3F0(7);
                 MojiTaskExec2(0, 0x36);
                 wp->routine_3++;
@@ -983,7 +983,7 @@ void func_8012C830(STAGE_OBJ *wp)
             if (func_80042238(&Player_work))
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
-                func_8005C218(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
+                Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
                 func_8001E3F0(7);
                 MojiTaskExec2(0, 0x4D);
                 wp->routine_3++;
@@ -1021,7 +1021,7 @@ void func_8012C9B0(STAGE_OBJ *wp)
 void func_8012C9EC(STAGE_OBJ *wp)
 {
     D_80137A98[wp->routine_1](wp);
-    func_8005C230(wp->value_48.value);
+    Moji_time_set(wp->value_48.value);
 }
 
 void func_8012CA40(STAGE_OBJ50 *wp)

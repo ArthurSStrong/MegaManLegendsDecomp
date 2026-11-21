@@ -112,8 +112,8 @@ STCOM21_OBJ *func_80031418(void);
 sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
                      sint32 target_angle, sint32 target_range);
 sint32 func_8004324C(STCOM_PL_WORK *pl);
-sint32 func_8004327C(sint32 a0);
-void func_80043294(sint32 a0, sint32 a1, sint32 a2);
+sint32 Money_check(sint32 a0);
+void Money_add(sint32 a0, sint32 a1, sint32 a2);
 void func_80043340(sint32 a0, sint32 a1);
 void Sce_flag_select(sint32 a0);
 void func_8001E3F0(sint32 a0);

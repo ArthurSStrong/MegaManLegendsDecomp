@@ -665,7 +665,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                 }
                 else if ((Moji_flag & 0xFF) == 0)
                 {
-                    if (func_8004327C(-1) == -1)
+                    if (Money_check(-1) == -1)
                     {
                         MojiTaskExec2(0, 0x68);
                         wp->value_E   = 8;
@@ -682,7 +682,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                 }
                 else if ((Moji_flag & 0xFF) == 2)
                 {
-                    func_8005C224(0x5DC);
+                    Moji_amount_set(0x5DC);
                     MojiTaskExec2(0, 0x67);
                     wp->value_E   = 8;
                     wp->value_D   = 1;
@@ -696,22 +696,22 @@ void func_8010E4C4(ST06_ACTOR *wp)
                 switch (Moji_flag & 0xFF)
                 {
                     case 0:
-                        func_8005C224(500 - STAGE_GAME.value_28);
+                        Moji_amount_set(500 - STAGE_GAME.value_28);
                         break;
                     case 1:
-                        func_8005C224(200 - STAGE_GAME.value_2C);
+                        Moji_amount_set(200 - STAGE_GAME.value_2C);
                         break;
                     case 2:
-                        func_8005C224(250 - STAGE_GAME.value_30);
+                        Moji_amount_set(250 - STAGE_GAME.value_30);
                         break;
                     case 3:
-                        func_8005C224(200 - STAGE_GAME.value_34);
+                        Moji_amount_set(200 - STAGE_GAME.value_34);
                         break;
                     case 4:
-                        func_8005C224(STAGE_GAME.value_67 * 180 - STAGE_GAME.value_3C);
+                        Moji_amount_set(STAGE_GAME.value_67 * 180 - STAGE_GAME.value_3C);
                         break;
                     case 5:
-                        func_8005C224(STAGE_GAME.value_66 * 150 - STAGE_GAME.value_38);
+                        Moji_amount_set(STAGE_GAME.value_66 * 150 - STAGE_GAME.value_38);
                         break;
                     case 6:
                         wp->routine_1 = 0xFF;
@@ -732,7 +732,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value1;
                     sum += D_800987E0;
                     *value1 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -749,7 +749,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value2;
                     sum += D_800987E0;
                     *value2 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -766,7 +766,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value3;
                     sum += D_800987E0;
                     *value3 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -783,7 +783,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value4;
                     sum += D_800987E0;
                     *value4 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -800,7 +800,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value5;
                     sum += D_800987E0;
                     *value5 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -817,7 +817,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     sum    = *value6;
                     sum += D_800987E0;
                     *value6 = sum;
-                    func_80043294(-D_800987E0, 0, 1);
+                    Money_add(-D_800987E0, 0, 1);
                     MojiTaskExec2(0, 0x73);
                 }
                 wp->routine_1 = 0xFF;
@@ -843,7 +843,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                         wp->routine_1 = 0xFF;
                         break;
                     case 2:
-                        func_8005C224(0x5DC);
+                        Moji_amount_set(0x5DC);
                         MojiTaskExec2(0, 0x67);
                         wp->value_E   = 8;
                         wp->value_D   = 1;
@@ -862,7 +862,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     wp->value_D   = 1;
                     wp->routine_1 = 0xFF;
                 }
-                else if (func_8004327C(-0x5DC) == -1)
+                else if (Money_check(-0x5DC) == -1)
                 {
                     MojiTaskExec2(0, 0x68);
                     wp->value_E   = 8;
@@ -874,7 +874,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                     MojiTaskExec2(0, 0x69);
                     wp->value_E = 8;
                     wp->value_D = 1;
-                    func_80043294(-0x5DC, 0, 1);
+                    Money_add(-0x5DC, 0, 1);
                     Sce_flag_on(0x233);
                     wp->routine_1 = 0xFF;
                 }
@@ -886,7 +886,7 @@ void func_8010E4C4(ST06_ACTOR *wp)
                 switch (Moji_flag & 0xFF)
                 {
                     case 0:
-                        if (func_8004327C(-1) == -1)
+                        if (Money_check(-1) == -1)
                         {
                             MojiTaskExec2(0, 0x68);
                             wp->value_E   = 8;

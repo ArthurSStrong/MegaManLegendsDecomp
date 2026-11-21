@@ -668,12 +668,12 @@ void func_80101858(STAGE_ROOM *wp)
 {
     if (ST08_GAME_WORD(0x120) == 3)
     {
-        func_8005C224(D_80113220 +
+        Moji_amount_set(D_80113220 +
                       (Scene_work.value_A - D_80113224) * (Scene_work.value_A - D_80113224) * 2);
     }
     else
     {
-        func_8005C224(D_80113208[ST08_GAME_WORD(0x120)].value_0);
+        Moji_amount_set(D_80113208[ST08_GAME_WORD(0x120)].value_0);
     }
 }
 
@@ -763,9 +763,9 @@ void func_801018CC(STAGE_ROOM *wp)
             {
                 Sound_call2(0x163, &Player_work.position);
                 Sound_fade_start(0x40);
-                func_80053AA4(2);
-                func_80053AA4(3);
-                func_80053AA4(1);
+                Moji_task_kill(2);
+                Moji_task_kill(3);
+                Moji_task_kill(1);
                 MojiTaskExec2(0, 0x1F);
                 wp->routine_4 = 7;
             }
@@ -789,7 +789,7 @@ void func_801018CC(STAGE_ROOM *wp)
                     {
                         if (ST08_GAME_WORD(0x120) == 3)
                         {
-                            func_8005C218(0x64);
+                            Moji_item_set(0x64);
                             MojiTaskExec2(0, 7);
                             Sce_flag_on(0x314);
                             Sound_call(0x1C, 1, 0);
@@ -805,7 +805,7 @@ void func_801018CC(STAGE_ROOM *wp)
                     }
                     else if (ST08_GAME_WORD(0x120) == 3)
                     {
-                        func_8005C218(0x64);
+                        Moji_item_set(0x64);
                         Sce_flag_on(0x314);
                         MojiTaskExec2(0, 5);
                         Sound_call(0x1B, 1, 0);
@@ -907,8 +907,8 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
     }
-    func_8005C230(STAGE_SCENE_WORD(0xC));
-    func_8005C23C(Scene_work.value_A);
+    Moji_time_set(STAGE_SCENE_WORD(0xC));
+    Moji_num2_set(Scene_work.value_A);
 }
 
 void func_80101F84(STAGE_FX *wp)
@@ -1262,7 +1262,7 @@ void func_80102498(STAGE_ROOM *wp)
         {
             func_80039E50();
         }
-        func_80053AA4(0);
+        Moji_task_kill(0);
         D_80118514    = 1;
         wp->routine_5 = 0;
         wp->routine_4++;

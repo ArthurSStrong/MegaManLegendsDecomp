@@ -1089,7 +1089,7 @@ void func_8010E660(STAGE_OBJ *wp, ST17_BOSS *ext)
             }
             else if ((ext->flags_141 >> ext->value_13F) & 1)
             {
-                func_80053AA4(4);
+                Moji_task_kill(4);
                 func_8001D494(0, 1, 0);
                 wp->routine_3 = 0;
             }

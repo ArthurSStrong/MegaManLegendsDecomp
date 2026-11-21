@@ -952,7 +952,7 @@ sint32 func_80060618(SUB_WORK *wp)
                             }
                             else if (pl->value_44F == 0)
                             {
-                                func_8005C218(pl->value_172 + 0x80);
+                                Moji_item_set(pl->value_172 + 0x80);
                                 MojiTaskExec(0, (uint8 *)0x801F2000, 0x5E);
                                 pl->value_44F = 1;
                                 pl->value_170 = pl->value_172;

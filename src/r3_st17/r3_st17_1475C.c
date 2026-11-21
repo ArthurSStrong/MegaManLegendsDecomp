@@ -229,7 +229,7 @@ void func_80114F00(STAGE_OBJ *wp)
             Sound_fade_start(0x10);
             if (Moji_flag & 0x08000000)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_8001D494(0, 1, 0);
             }
             MojiTaskExec2(0, 0x10);
@@ -432,7 +432,7 @@ void func_8011552C(STAGE_OBJ *wp)
         case 7:
             if (Moji_flag & 0x800000)
             {
-                func_80053AA4(4);
+                Moji_task_kill(4);
                 func_8001D494(0, 1, 0);
             }
             func_8005D87C();
@@ -509,7 +509,7 @@ void func_80115780(STAGE_OBJ *wp)
             {
                 if (Moji_flag & 0x8000000)
                 {
-                    func_80053AA4(0);
+                    Moji_task_kill(0);
                     Game_logo_kill(-1);
                 }
                 pl->routine_0 = 3;
@@ -520,7 +520,7 @@ void func_80115780(STAGE_OBJ *wp)
         case 6:
             if (Moji_flag & 0x800000)
             {
-                func_80053AA4(4);
+                Moji_task_kill(4);
                 func_8001D494(0, 1, 0);
             }
             func_8005D87C();
@@ -591,7 +591,7 @@ void func_80115A24(STAGE_OBJ *wp)
         case 5:
             if (Moji_flag & 0x800000)
             {
-                func_80053AA4(4);
+                Moji_task_kill(4);
                 func_8001D494(0, 1, 0);
             }
             func_8005D87C();
@@ -804,7 +804,7 @@ void func_801161C8(STAGE_OBJ *wp)
     {
         if (Moji_flag & 0x08000000)
         {
-            func_80053AA4(0);
+            Moji_task_kill(0);
             func_8001D494(0, 1, 0);
         }
         Sound_key_off_voice(0x11);
@@ -882,7 +882,7 @@ void func_801161C8(STAGE_OBJ *wp)
         case 6:
             if (Moji_flag & 0x08000000)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 func_8001D494(0, 1, 0);
             }
             MojiTaskExec2(0, 0);

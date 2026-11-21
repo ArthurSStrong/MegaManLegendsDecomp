@@ -429,7 +429,7 @@ typedef struct
 } ST04_PL_WORK;
 
 extern STAGE_CAM D_800BC730;
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 
 #define ST04_PL ((ST04_PL_WORK *)&Player_work)
 

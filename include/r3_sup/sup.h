@@ -264,7 +264,7 @@ void func_80023728(void *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80028F90(void *rec);
 void func_800322A8(void *obj, sint32 anim, sint32 arg);
 void func_80032488(void *obj);
-void func_80043294(sint32 arg0, sint32 arg1, sint32 arg2);
+void Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_8002A160(void *obj, uint32 flags);
 
 // Moji scripts loaded with the module.
@@ -286,11 +286,11 @@ void func_801D8B68(void);
 void func_801DBBE0(void);
 void func_801DB800(void);
 void func_8003B140(void);
-void func_80053AA4(sint32 arg);
-void func_8005C224(sint32 price);
+void Moji_task_kill(sint32 arg);
+void Moji_amount_set(sint32 price);
 void func_8005C24C(sint32 kind);
 void Obj_work_flag_change(sint32 a0, sint32 a1);
-sint32 func_8004327C(sint32 amount);
+sint32 Money_check(sint32 amount);
 void func_801D8F68(void);
 void func_801DAB58(void);
 sint32 func_801DB43C(void);

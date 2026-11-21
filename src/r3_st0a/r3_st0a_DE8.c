@@ -239,7 +239,7 @@ void func_801014B0(STAGE_ROOM *wp)
             func_8001D494(0, 1, 0);
             if (Moji_flag & 0x8000000)
             {
-                func_80053AA4(0);
+                Moji_task_kill(0);
                 Game_logo_kill(-1);
             }
             wp->routine_5++;

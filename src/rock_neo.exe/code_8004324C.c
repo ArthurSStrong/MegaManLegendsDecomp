@@ -10,12 +10,12 @@ sint32 func_8004324C(CODE43_FLAGS *wp)
     return 0;
 }
 
-sint32 func_8004327C(sint32 amount)
+sint32 Money_check(sint32 amount)
 {
     return -(Game_work.money_1c < (uint32)-amount);
 }
 
-void func_80043294(sint32 amount, sint32 arg1, sint32 alt)
+void Money_add(sint32 amount, sint32 arg1, sint32 alt)
 {
     if (arg1 == 0)
     {

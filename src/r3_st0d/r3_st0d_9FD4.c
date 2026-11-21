@@ -124,7 +124,7 @@ void func_8010A2EC(ST0D_STCOM21_WORK *wp)
         case 1:
             if (!func_8010A9CC(wp))
             {
-                func_8005C150(0, 2, 0, 0);
+                Moji_param_exec(0, 2, 0, 0);
             }
             else if (wp->value_D == 0)
             {
@@ -135,17 +135,17 @@ void func_8010A2EC(ST0D_STCOM21_WORK *wp)
                 if (wp->value_D & 0x80)
                 {
                     zenny = (((wp->value_D & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(0, 1, zenny / 10, 0);
+                    Moji_param_exec(0, 1, zenny / 10, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(0, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(0, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else
                 {
-                    func_8005C150(0, 2, 0, 0);
+                    Moji_param_exec(0, 2, 0, 0);
                 }
             }
             wp->routine_2++;
@@ -415,7 +415,7 @@ void func_8010ACC0(ST0D_STCOM21_WORK *wp)
         case 1:
             if (!func_8010AF28(wp))
             {
-                func_8005C150(1, 2, 0, 0);
+                Moji_param_exec(1, 2, 0, 0);
             }
             else if (wp->value_D == 0)
             {
@@ -426,17 +426,17 @@ void func_8010ACC0(ST0D_STCOM21_WORK *wp)
                 if (wp->value_D & 0x80)
                 {
                     zenny = (((wp->value_D & 0x7F) << 8) | (uint8)wp->value_E) * 10;
-                    func_8005C150(1, 1, zenny / 10, 0);
+                    Moji_param_exec(1, 1, zenny / 10, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else if (wp->value_E != -1)
                 {
-                    func_8005C150(1, 0, (uint8)wp->value_E, 0);
+                    Moji_param_exec(1, 0, (uint8)wp->value_E, 0);
                     Sce_flag_on(wp->value_C + 0x400);
                 }
                 else
                 {
-                    func_8005C150(1, 2, 0, 0);
+                    Moji_param_exec(1, 2, 0, 0);
                 }
             }
             wp->routine_1++;

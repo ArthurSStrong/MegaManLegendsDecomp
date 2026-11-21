@@ -222,7 +222,7 @@ extern uint8 D_80097EE8[];
 void func_80031988(void *wp);
 uint32 func_8002FE74(uint8 id);
 void func_8002F9C4(void *wp, uint8 *arg);
-void func_80043294(uint32 id, sint32 arg1, sint32 arg2);
+void Money_add(uint32 id, sint32 arg1, sint32 arg2);
 void func_80043340(uint32 id, sint32 arg1);
 sint32 func_80048EA4(void *snd, CODE456_REC12 *rec, sint32 arg2, sint32 arg3);
 sint32 func_8004B5CC(void *snd, PL_SHORT_VECTOR *old, sint32 arg2, CODE456_REC12 *rec);

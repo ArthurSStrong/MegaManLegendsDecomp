@@ -123,7 +123,7 @@ void func_80104264(ST0F_OBJ *wp)
             }
             break;
         case 2:
-            func_8005C224(0x7D0);
+            Moji_amount_set(0x7D0);
             func_80063BC8(&wp->position, 2, 0, 0x21);
             func_800322A8(wp, 8, 0);
             wp->routine_1 = 0;

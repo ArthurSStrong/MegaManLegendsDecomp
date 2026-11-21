@@ -509,7 +509,7 @@ void func_8010BFA4(ST05_OBJ *wp);
 void func_80123094(STAGE_OBJ *wp);
 
 extern STAGE_OBJ_FUNC D_80137A98[];
-void func_8005C230(sint32);
+void Moji_time_set(sint32);
 void func_8012C9EC(STAGE_OBJ *wp);
 
 void func_80118D1C(STAGE_OBJ *wp);
@@ -2364,7 +2364,7 @@ typedef struct
 
 extern ST05_GAME_REC Game_work_90[] __asm__("Game_work+0x90");
 
-void func_8005C224(sint32 price);
+void Moji_amount_set(sint32 price);
 
 STAGE_OBJ *func_80031498(void);
 
@@ -2432,7 +2432,7 @@ typedef struct
     sint32 value_4C;        // 4C
 } ST05_RACE;
 
-void func_8005C218(sint32 arg);
+void Moji_item_set(sint32 arg);
 
 void func_8005C24C(sint32 arg);
 
@@ -2497,7 +2497,7 @@ void func_80107CEC(void);
 
 sint32 func_80030604(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 
 void func_80039C54(STCOM_FIXED_VECTOR *vec, sint32 dist, sint32 angle,
                    sint32 arg3); // ROCK_NEO.EXE: places the camera

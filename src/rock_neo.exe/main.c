@@ -58,7 +58,7 @@ void main(void)
         func_8001A110();
         func_8001C95C();
         func_800203A8();
-        func_80053B40();
+        Moji_update();
         func_80064060();
         DrawSync(0);
         func_80017B24();
@@ -657,7 +657,7 @@ void func_8001326C(sint8 *state)
         SetDrawMode(&D_80098A10[i], 0, 0, GetTPage(2, 2, 0, 0), NULL);
     }
     func_80063EF0();
-    func_80053788();
+    Moji_init();
     func_800665E8();
     Cd_read_comb(0x1D);
     Game_work.option_5b  = 1;

@@ -1660,11 +1660,11 @@ sint32 func_8003B2D4(sint32 row, sint32 bit);
 
 sint16 func_8010EB68(void);
 
-sint32 func_8004327C(sint32 a0);
+sint32 Money_check(sint32 a0);
 
-void func_80043294(sint32 a0, sint32 a1, sint32 a2);
+void Money_add(sint32 a0, sint32 a1, sint32 a2);
 
-void func_8005C224(sint32 price);
+void Moji_amount_set(sint32 price);
 
 sint32 func_80048EA4(STCOM_SVECTOR *pos, void *arg1, sint32 arg2, sint32 arg3);
 

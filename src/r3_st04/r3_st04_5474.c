@@ -436,7 +436,7 @@ void func_801061D8(ST04_ACTOR *wp)
     {
         Sce_flag_on(0x618);
         Sce_flag_on(0x20);
-        func_80053AA4(0);
+        Moji_task_kill(0);
         wp->routine_0 = 0x1D;
     }
     switch (wp->routine_0)

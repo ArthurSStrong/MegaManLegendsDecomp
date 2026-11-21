@@ -56,7 +56,7 @@ Evidence:
   alignment (size rounded up to a power of two, capped at 16). psylink didn't align the pool that
   way (`D_80098AA8`, 16 bytes, at `0x80098AA8`; byte variables at odd addresses), and the
   pool's assembly definitions are 4-aligned, so every multi-word common defined in C made `ld`
-  warn (first: `moji`'s `D_800989E0[4]`). The bytes never depend on it (the assembly definition
+  warn (first: `moji`'s `Moji_time[4]`). The bytes never depend on it (the assembly definition
   wins); the flag only stops the false warning.
 
 ## Pipeline

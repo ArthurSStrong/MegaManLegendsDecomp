@@ -816,41 +816,41 @@ keep the base register, as in the target); the high halfwords at `ang_40 + 2/6/0
 right when written after the first `ofs_A0` store.
 
 `moji.c` (message control codes): banked `func_800546B0` (`timer_4 = unk_3F = get_le16(arg)`, chained),
-`func_80054874` (`Sound_call(get_le16(arg), 0, 0)`), `func_800560D0`, `func_80058D64` (cursor x/y from two
-16-bit arguments), `func_800594CC` (the `cmd_ptr_6C` twin of `func_80059530`; `unk_72` is `sint8`, `lb`).
+`Moji_cmd_se` (`Sound_call(get_le16(arg), 0, 0)`), `Moji_text_option_bright`, `Moji_text_locate` (cursor x/y from two
+16-bit arguments), `Moji_cmd_list_msg` (the `cmd_ptr_6C` twin of `Moji_text_list_msg`; `unk_72` is `sint8`, `lb`).
 `MOJI_CMD_WORK` was merged into `MOJI_WORK`: `Moji_work` is an array of 0xC4-byte entries
-(`func_80053B40` walks it in 0xC4 steps; `func_80058788` gets the entry index as `wp - Moji_work`, an
+(`Moji_update` walks it in 0xC4 steps; `func_80058788` gets the entry index as `wp - Moji_work`, an
 exact division by 0xC4), and the two views' fields don't overlap. Each entry has two read pointers with
 their own call stacks: `mes_ptr_14`/`call_stk_18`/`call_sp_BE` (text) and `cmd_ptr_6C`/`call_stk_4C`/
-`call_sp_C0` (commands). Also banked, all matching at once: `func_80054798`, `func_8005497C` and
-`func_80054A04` (call into a message of `mes_file_44`, or of `D_8008CACC` when it's NULL), `func_80058788`,
-`func_80058DB4` (fills `D_800BE2F8[0..0x7F]` with 0xFF; GCC reverses the loop), `two_digit_set` (two
+`call_sp_C0` (commands). Also banked, all matching at once: `Moji_cmd_window_rect`, `Moji_cmd_call` and
+`Moji_text_call` (call into a message of `mes_file_44`, or of `D_8008CACC` when it's NULL), `func_80058788`,
+`Moji_cmd_list_clear` (fills `Moji_list[0..0x7F]` with 0xFF; GCC reverses the loop), `two_digit_set` (two
 digits from `D_8008D028`, leading 0 replaced by font code 0x4F).
-`func_80054874` zero-extends the id (`andi 0xFFFF`), so `Sound_call`'s `id` is `uint16`, not `sint16`
-(`sound.c` still matches). Parked `func_80055C1C` (`NON_MATCHING`; if `flags_0 & 0x10000`, call
+`Moji_cmd_se` zero-extends the id (`andi 0xFFFF`), so `Sound_call`'s `id` is `uint16`, not `sint16`
+(`sound.c` still matches). Parked `Moji_cmd_camera_end` (`NON_MATCHING`; if `flags_0 & 0x10000`, call
 `func_80039E18` and clear the bit; then step 1): only the tail differs, the read pointer gets `$v0` where the
 target has `$v1` and `li $v0,1` in the load delay slot. Banked later: the cause was the callee's return
 type (see the `Money_add` paragraph below); `func_80039E18` is now declared `sint32`.
 Also banked, matching at once: `func_80058EA0` (the `func_80058788` twin with flags `0x402800`; sets pool
-byte `D_80098851` to 0xFF), `func_80054804` (fails, returns 0, while `Moji_work[arg]` has bit 31 set and
-bit 17 clear), `func_80054ADC` and `func_80055BB0` (call `D_8008AAC0[unk_7C]`, a handler table splat
+byte `D_80098851` to 0xFF), `Moji_cmd_sync` (fails, returns 0, while `Moji_work[arg]` has bit 31 set and
+bit 17 clear), `Moji_cmd_window` and `Moji_cmd_window_close` (call `D_8008AAC0[unk_7C]`, a handler table splat
 split into several labels), `func_80057DF4` (writes the low bytes of `Game_work.unk084[D_800989D4][2..4]`
-into its own command's argument bytes; `sltiu`, so the counter is unsigned) and `func_80056778`.
-`func_80055BB0` needs the bit-set path written first.
-Also banked, matching: `func_800553F0` (`Sce_flag_off` of the 16-bit argument), `func_80055A78` and
+into its own command's argument bytes; `sltiu`, so the counter is unsigned) and `Moji_cmd_list_choice`.
+`Moji_cmd_window_close` needs the bit-set path written first.
+Also banked, matching: `Moji_cmd_flag_off` (`Sce_flag_off` of the 16-bit argument), `Moji_cmd_room_branch` and
 `func_8005A598` (pick byte 3 or 4 as a message of `mes_file_44` by `Game_work.unk050/051` equal to bytes
 1/2, or `Game_work.unk060` within [byte 1, byte 2]; 0xFF skips; `cmd_top_48 = cmd_ptr_6C = ...`, chained, so
-`cmd_ptr_6C` is stored first), `func_80053AA4` (`MojiTaskKill` for one entry `n`; clears Moji_flag bits
-`0x403E0000` and `0x08000000 >> n`), `func_80058C28`/`func_80058CC8` (command/text twins: push, then call into
+`cmd_ptr_6C` is stored first), `Moji_task_kill` (`MojiTaskKill` for one entry `n`; clears Moji_flag bits
+`0x403E0000` and `0x08000000 >> n`), `Moji_cmd_flag_call`/`Moji_text_flag_call` (command/text twins: push, then call into
 `D_8008BAA4[flag]` if scene flag `flag` is set, else `D_8008CE58`; both `get_le16` calls cast to `uint16`). Pool bytes `D_800987F8`, `D_80098850`,
 `D_80098851` are separate commons (`$gp` at an odd address), now tentative in `moji.c`.
-Banked, matching at once: `func_80054700` (wait command: loads `timer_4` (`sint16`, `lh`) from the 16-bit
+Banked, matching at once: `Moji_cmd_wait` (wait command: loads `timer_4` (`sint16`, `lh`) from the 16-bit
 argument once, under flags_0 bit `0x01000000`, sets bit `0x10000000`, counts down, steps 3 at 0; returns 0),
-`func_80055438` (the `func_80055A78` twin choosing byte 3 or 4 by `Sce_flag_test` of the 16-bit argument),
-`func_8005721C` (`D_80098930 = D_800BE2F8[D_8009899C + unk_71] + arg`; `D_80098B6C = 1` when scene flag
+`Moji_cmd_flag_branch` (the `Moji_cmd_room_branch` twin choosing byte 3 or 4 by `Sce_flag_test` of the 16-bit argument),
+`Moji_cmd_shop_check` (`D_80098930 = Moji_list[Moji_list_top + unk_71] + arg`; `D_80098B6C = 1` when scene flag
 0x2EE is clear and `Money_check(-D_8008FD3C[D_80098930])`, i.e. the money can't cover that price; pool
 bytes `D_80098930`/`D_80098B6C` now tentative in `moji.c`).
-Parked, then banked: `func_80057B70`/`func_80057BB4` (`Money_add(±D_80098AF4, 0, 0)`, step 1)
+Parked, then banked: `Moji_cmd_money_add`/`Moji_cmd_money_sub` (`Money_add(±Moji_amount, 0, 0)`, step 1)
 and `func_80057924` (`Money_add` of `-(Game_work.unk07D - unk07C) * 10` or of `-money`, then `unk07C =
 unk07D` in each branch (the target duplicates the tail), step 2). Only the tail differs: `cmd_ptr_6C` in `$v0`
 where the target has `$v1` with `li $v0,1` in the load delay slot. **Cause: the callee's return type.** With
@@ -861,27 +861,27 @@ declared `sint32` (no `return`); all four functions match, as do `Money_add`'s o
 tail pattern (`$v0`/`$v1` swap right after a call to a `void` function) elsewhere.
 Banked, matching: `Moji_init` (moji init: `Cd_read_comb(30)` + `Cd_read_sync`, then for each of the 5
 entries clears `flags_0`, `cmd_ptr_6C`, `cmd_top_48` and sets `no_6` to its index (`sint16` counter); clears
-pool words `D_80098B2C` (bytes OR'd in per entry by `func_80053B40`, read as bytes at `+1`/`+2` elsewhere),
-`Moji_flag` and `D_80098960` (frame counter bumped by `func_80053B40`). Only `cmd_ptr_6C` is stored through a
+pool words `D_80098B2C` (bytes OR'd in per entry by `Moji_update`, read as bytes at `+1`/`+2` elsewhere),
+`Moji_flag` and `D_80098960` (frame counter bumped by `Moji_update`). Only `cmd_ptr_6C` is stored through a
 `&Moji_work[i]` pointer; the other fields by index), `MojiTaskKill` (ORs and clears every entry's `flags_0`,
 `mes_no_C2 = 0xFF`, XA stop if bit `0x40000` was set, `Moji_flag = 0`; `MOJI_WORK_MAX` = 5),
 `func_80057744` (byte 1 or 2 as message by `Game_work.unk07D == unk07C`, falls back to `D_8008CACC` without
 a file; `cmd_ptr_6C = cmd_top_48 = ...`, so `cmd_top_48` is stored first; clears `unk_3E`, `unk_3C`,
-`unk_72`), `func_800557B8` (`func_80054700`'s wait, also ending once bit `0x40000` (XA) clears; clears bits
-`0x11000000`), and the twins `func_8005958C`/`func_80059660` (push, then call into `D_8008CBA4[id - 1]` with
-`id = Player_work[0].ids_454[arg2 + D_8009899C]` if `arg1`, else `ids_450[arg2]` after setting the code's
+`unk_72`), `Moji_cmd_voice_wait` (`Moji_cmd_wait`'s wait, also ending once bit `0x40000` (XA) clears; clears bits
+`0x11000000`), and the twins `Moji_cmd_part_name`/`Moji_text_part_name` (push, then call into `D_8008CBA4[id - 1]` with
+`id = Player_work[0].ids_454[arg2 + Moji_list_top]` if `arg1`, else `ids_450[arg2]` after setting the code's
 byte -1 to 0 (or 3 when `Moji_flag & 0x20000` and the next byte equals `unk_71`). The id bytes load with
 `lb`: cast to `sint8`, since typing the fields `sint8` breaks `Sce_flag_off`).
-Banked, this round: `func_800548C4` (XA wait command: first pass sets bit `0x01000000` and starts
+Banked, this round: `Moji_cmd_voice` (XA wait command: first pass sets bit `0x01000000` and starts
 `Cd_xa_play_id(get_le32(arg))`; then once `Sce_cd_reading()` (`Cd_stat & 0x20`) is set, `timer_4 = 5`,
 `Moji_flag |= 0x100000`, flags `|= 0x40000` and `&= ~0x01000000` in one expression, step 5; always sets
-`0x10000000`, returns 0), `func_800545C8` (the `func_80054700` wait, but at 0 it also sets `timer_4 = 5`,
+`0x10000000`, returns 0), `Moji_cmd_page_wait` (the `Moji_cmd_wait` wait, but at 0 it also sets `timer_4 = 5`,
 clears `unk_71..73`, sets `cmd_top_48` to the stepped `cmd_ptr_6C`, `unk_3C = unk_3E`, `Moji_flag |=
 0x200000`), `func_80057C2C` (lists the set bits of `Sce_flag[0x63]` (flags 0x318-0x31F) into
-`D_800BE2F8`, terminated by 8, then takes `cmd_ptr_6C[count]` as message; 0xFF steps 9. Needs a local
+`Moji_list`, terminated by 8, then takes `cmd_ptr_6C[count]` as message; 0xFF steps 9. Needs a local
 `flag = &Sce_flag[0x63]` assigned first: with `Sce_flag[0x63]` written inline the hoisted address moves
-after the counter inits), `func_80058DEC` (text twin over 64 flags from `Sce_flag[0xA8]` (0x540-0x57F),
-count in pool word `D_800989A8`, now tentative in `moji.c`; rest of `D_800BE2F8[0..0x7F]` set to 0xFF),
+after the counter inits), `Moji_text_list_from_flags` (text twin over 64 flags from `Sce_flag[0xA8]` (0x540-0x57F),
+count in pool word `Moji_list_count`, now tentative in `moji.c`; rest of `Moji_list[0..0x7F]` set to 0xFF),
 `func_8005861C` (push, then message byte 2, 3 or 4 of the command by `D_8008D8EC[D_800989D4][n]`: `[0]`
 zero, `[Player_work[0].rec[r].idx[n]]` zero (r = 0, or `D_800989D4 + 1`), or neither; clears/sets `Moji_flag`
 bit `0x20000`). Parked `six_digit_set` (`NON_MATCHING`; six digits of `n` by `D_8008AF24` (100000..1),
@@ -890,17 +890,17 @@ leading zeros as `D_8008AF3C[pad]` until a nonzero digit (flag in `.sbss` `D_800
 `lui/addiu %lo(D_8008AF24+0x18)`, where the target computes `addiu t3,t0,0x18` from the table register.
 Tried: a pointer loop (`for`, gets a pre-test; `do/while`), a local table pointer indexed or walked
 (`*place++` with `dst[i]` gives the right shape but the end from `dst + 6`), walking both pointers, `sint32 i`.
-Banked, matching: the `six_digit_set` text codes `func_80057BFC` (`D_80098AF4`), `func_80057144`
+Banked, matching: the `six_digit_set` text codes `Moji_text_amount` (`Moji_amount`), `func_80057144`
 (`money_40 = Game_work.money`, then prints it; the target reloads `money_40`) and `func_800579D8`
-(`(Game_work.unk07D - unk07C) * 10`), each writing at `++mes_ptr_14`; `func_800554E4` (scroll command:
-like `func_80054700`'s wait, but also `unk_3B++` on the first pass; each frame after the countdown
+(`(Game_work.unk07D - unk07C) * 10`), each writing at `++mes_ptr_14`; `Moji_cmd_scroll` (scroll command:
+like `Moji_cmd_wait`'s wait, but also `unk_3B++` on the first pass; each frame after the countdown
 `scroll_38 -= unk_3A` until `timer_4 * unk_3A < -(unk_3B * 12)`, then `scroll_38 += unk_3B * 12`, clears
 `unk_71..73`/`unk_3B`/bit `0x01000000`, `cmd_top_48 = cmd_ptr_6C += 3`, `unk_3C = unk_3E`; `unk_3B` is
 `sint8`, `lb`); `func_8005AB78` (window state in `unk_7D`: 0 sets flags `0x06000000`, margins
 `unk_B4 = unk_B6 = arg`, `Moji_flag |= 0x200000` and the four `corner_88` points from the margins and
 `unk_7E`/`unk_7F` * 12; 2 sets `0x10000000` and clears `0x06000000`; void, in a data table).
 Parked `func_80059D20` (`NON_MATCHING`; prints `D_8008AF00[i] - Game_work.unk028[i]` for `i =
-D_800BE2F8[arg] < 4`, else `unk062[9 - i] * D_8008AF00[i] - unk028[9 - i]`, at `cmd + 7`, then calls into
+Moji_list[arg] < 4`, else `unk062[9 - i] * D_8008AF00[i] - unk028[9 - i]`, at `cmd + 7`, then calls into
 `D_8008CE5C[i]`). Only the else branch differs: the target reuses the `i * 4` computed for
 `D_8008AF00[i]`; ours recomputes it (best form `(&arr[9])[-i]`, which at least folds the 9 into the
 symbol offset as the target does).

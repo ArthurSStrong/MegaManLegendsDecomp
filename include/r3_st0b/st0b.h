@@ -2309,7 +2309,7 @@ sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECT
 void func_8003697C(void);
 
 void Pl00_shot_enable_off(void *pl);
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 
 // The control block at +0x328 of ST0B_BOAT.
 typedef struct

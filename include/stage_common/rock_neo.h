@@ -205,7 +205,7 @@ void Close_EVE_WORK(void *wp);
 void Sound_call2(sint16 id, void *args);
 void Sce_flag_on(sint32 flag);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
-void func_8005C150(sint32 index, sint32 mode, sint32 value, sint32 id);
+void Moji_param_exec(sint32 index, sint32 mode, sint32 value, sint32 id);
 void func_80017C30(sint32 arg);
 sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      sint32 arg6, sint32 arg7, sint32 arg8);

@@ -702,7 +702,7 @@ extern STCOM_SVECTOR D_80122A2C[];
 extern STCOM_SVECTOR D_801219C8[];
 extern uint16 D_8011AF58[];
 extern STAGE_EV *D_80122B50;
-void func_80053AA4(sint32 arg);
+void Moji_task_kill(sint32 arg);
 void func_8005D87C(void);
 void func_8005D6E8(void *wp);
 void func_80116510(STAGE_OBJ *wp);

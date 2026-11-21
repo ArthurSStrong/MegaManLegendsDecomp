@@ -277,7 +277,7 @@ void func_801011B8(STAGE_ROOM *wp)
             }
             break;
         case 10:
-            func_80053AA4(0);
+            Moji_task_kill(0);
             func_8001D494(0, 1, 0);
             D_800A395C = 1;
             func_80039820();

@@ -188,7 +188,7 @@ void func_801103A8(STAGE_OBJ50 *wp)
     {
         value = D_8011422C[ST08_GAME_WORD(0x150)].value_0;
     }
-    func_8005C224(value);
+    Moji_amount_set(value);
 }
 
 // Whether the time is up or no slot of kind 0x26 is still running.
@@ -281,8 +281,8 @@ void func_801105AC(STAGE_OBJ50 *wp)
             {
                 Sound_call2(0x16D, &Player_work.position);
                 Sound_fade_start(0x40);
-                func_80053AA4(2);
-                func_80053AA4(3);
+                Moji_task_kill(2);
+                Moji_task_kill(3);
                 if ((uint32)wp->value_48 >= D_8011422C[ST08_GAME_WORD(0x150)].value_4)
                 {
                     MojiTaskExec2(0, 0x20);
@@ -310,7 +310,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
                 {
                     if (ST08_GAME_WORD(0x150) == 3)
                     {
-                        func_8005C218(0x5C);
+                        Moji_item_set(0x5C);
                         MojiTaskExec2(0, 0x12);
                         Sce_flag_on(0x315);
                         Sound_call(0x23, 1, 0);
@@ -398,7 +398,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             }
             break;
     }
-    func_8005C230(wp->value_48);
+    Moji_time_set(wp->value_48);
 }
 
 void func_80110A54(STAGE_OBJ50 *wp)

@@ -20,6 +20,6 @@ long func_8001246C(void);
 void Thread_wait(sint32 arg);
 void func_80012E10(sint32 index, THREAD_FUNC entry);
 void func_80012F78(THREAD_FUNC entry);
-void func_80053788(void);
+void Moji_init(void);
 
 #endif // SYSTEM_H
