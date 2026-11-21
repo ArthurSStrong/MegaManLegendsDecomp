@@ -81,7 +81,7 @@ void func_80122BA4(STAGE_PROP *wp)
 
 void func_80122C34(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80122C54(ST05_PROP_B *wp)
@@ -225,7 +225,7 @@ void func_80123094(STAGE_OBJ *wp)
 {
     if (wp->routine_2 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         Sce_flag_on(0x611);
         wp->routine_2++;
     }

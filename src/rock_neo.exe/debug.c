@@ -781,7 +781,7 @@ void func_800640F0(LOGO_WORK *wp)
                 }
                 break;
             case 2:
-                if (((Game_work.timer_0c / 15) % 60) & 1)
+                if (((Game_work.play_time / 15) % 60) & 1)
                 {
                     continue;
                 }

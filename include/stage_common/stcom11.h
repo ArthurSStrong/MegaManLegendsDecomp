@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The 0x10C-byte work slot stcom11 runs on (freed through ROCK_NEO's func_800318D8): a sprite
+// The 0x10C-byte work slot stcom11 runs on (freed through ROCK_NEO's Close_SHL_WORK): a sprite
 // thrown in one of four ways (type_3).
 typedef struct
 {

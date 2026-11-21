@@ -51,7 +51,7 @@ void func_801078B8(STAGE_STCOM15_WORK_4E0 *wp)
     sint32 life;
 
     ctl = &wp->ctl;
-    if ((((ST00_PAIR_CTL *)&wp->ctl)->part_34 = func_80031518()) != NULL)
+    if ((((ST00_PAIR_CTL *)&wp->ctl)->part_34 = Open_SHL_WORK()) != NULL)
     {
         ((ST00_PAIR_CTL *)&wp->ctl)->part_34->flags_0      = 0x25;
         ((ST00_PAIR_CTL *)&wp->ctl)->part_34->kind_2       = 0xA;
@@ -65,7 +65,7 @@ void func_801078B8(STAGE_STCOM15_WORK_4E0 *wp)
     {
         func_8003187C(wp);
     }
-    if ((((ST00_PAIR_CTL *)ctl)->part_38 = func_80031518()) != NULL)
+    if ((((ST00_PAIR_CTL *)ctl)->part_38 = Open_SHL_WORK()) != NULL)
     {
         ((ST00_PAIR_CTL *)ctl)->part_38->flags_0      = 0x25;
         ((ST00_PAIR_CTL *)ctl)->part_38->kind_2       = 0xA;
@@ -84,7 +84,7 @@ void func_801078B8(STAGE_STCOM15_WORK_4E0 *wp)
     else
     {
         func_8003187C(wp);
-        func_800318D8(((ST00_PAIR_CTL *)ctl)->part_34);
+        Close_SHL_WORK(((ST00_PAIR_CTL *)ctl)->part_34);
     }
     wp->rotation.x          = 0;
     wp->rotation.z          = 0;
@@ -256,8 +256,8 @@ void func_80107D04(STAGE_STCOM15_WORK_4E0 *wp)
 void func_80107F00(ST00_PAIR_OBJ *wp)
 {
     func_8003187C(wp);
-    func_800318D8(wp->child_514);
-    func_800318D8(wp->child_518);
+    Close_SHL_WORK(wp->child_514);
+    Close_SHL_WORK(wp->child_518);
 }
 
 void func_80107F40(ST00_GLOW_OBJ *wp)
@@ -931,8 +931,8 @@ void func_80109180(STAGE_STCOM15_WORK_4E0 *wp)
             {
                 func_8005D6E8(wp);
                 func_8003187C(wp);
-                func_800318D8(((ST00_PAIR_CTL *)ctl)->part_34);
-                func_800318D8(((ST00_PAIR_CTL *)ctl)->part_38);
+                Close_SHL_WORK(((ST00_PAIR_CTL *)ctl)->part_34);
+                Close_SHL_WORK(((ST00_PAIR_CTL *)ctl)->part_38);
                 func_80047228(wp, &wp->joints_180[0], wp->variant_3);
             }
             break;
@@ -1842,7 +1842,7 @@ void func_8010B1C0(STAGE_STCOM15_WORK_4E0 *wp)
             }
             if (ctl->timer_34 == 0 && wp->value_80 <= 0x1FFFFF)
             {
-                shot = (ST00_SHOT *)func_80031518();
+                shot = (ST00_SHOT *)Open_SHL_WORK();
                 if (shot != NULL)
                 {
                     shot->flags_0  = 1;

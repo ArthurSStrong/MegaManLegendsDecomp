@@ -58,5 +58,5 @@ void func_8010A8E8(void)
 
 void func_8010A8F0(STAGE_FX *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }

@@ -233,7 +233,7 @@ void func_80037738(sint32 value, uint32 amount);
 // Distance between two positions.
 sint32 func_800302E4(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 // Frees a 0x10C-byte work slot.
-void func_800318D8(void *wp);
+void Close_SHL_WORK(void *wp);
 // PsyQ libgte.
 STCOM_MATRIX *RotMatrixYXZ(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 STCOM_MATRIX *ScaleMatrix(STCOM_MATRIX *m, STCOM_FIXED_VECTOR *v);
@@ -244,7 +244,7 @@ void func_800334C4(void *wp);
 sint32 func_80048DAC(STCOM_SVECTOR *pos);
 sint32 func_8004B414(void *wp);
 // Frees a 0x3C0-byte work slot.
-void func_80031824(void *wp);
+void Close_EM_WORK(void *wp);
 // Hand-written: copies `count` 32-byte blocks.
 void func_800176DC(void *src, void *dst, sint32 count);
 

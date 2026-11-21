@@ -24,7 +24,7 @@ void func_80100168(STAGE_ROOM *wp)
             wp->timer_C = 0;
             if (func_80042238(pl) != 0)
             {
-                owner      = (ST0C_VIEW *)func_80031518();
+                owner      = (ST0C_VIEW *)Open_SHL_WORK();
                 D_801129A0 = owner;
                 owner->kind_2 = 0x11;
                 owner->position.x = -0x1AFF;
@@ -45,7 +45,7 @@ void func_80100168(STAGE_ROOM *wp)
                 child = owner->child_CC;
                 for (; i >= 0; i--)
                 {
-                    obj = (ST0C_VIEW *)func_80031418();
+                    obj = (ST0C_VIEW *)Open_EM_WORK();
                     if (obj != NULL)
                     {
                         obj->flags_0          = D_8010BEDC[i].flags_0;
@@ -71,7 +71,7 @@ void func_80100168(STAGE_ROOM *wp)
                 i = 3;
                 do
                 {
-                    obj = (ST0C_VIEW *)func_80031418();
+                    obj = (ST0C_VIEW *)Open_EM_WORK();
                     if (obj != NULL)
                     {
                         obj->flags_0          = D_8010BE8C[i].flags_0;

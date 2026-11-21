@@ -218,7 +218,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
 
 void func_8011057C(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8011059C(ST1A_VIEW_J *wp)
@@ -704,7 +704,7 @@ void func_801110B4(ST1A_VIEW_H *wp, uint8 kind)
     dist   = SquareRoot0(wp->value_80);
     ctl    = ST1A_CTL_OF(wp);
     pl     = &STAGE_PL;
-    slot   = func_80031518();
+    slot   = Open_SHL_WORK();
     shot   = (ST1A_SHOT_B *)&wp->value_1D8;
     if (slot != NULL)
     {
@@ -3802,7 +3802,7 @@ void func_801171E8(ST1A_ACTOR *wp)
             func_801172D8(wp);
             break;
         case 1:
-            slot = func_80031518();
+            slot = Open_SHL_WORK();
             if (slot != NULL)
             {
                 slot->flags_0            = 1;
@@ -4949,7 +4949,7 @@ void func_80119320(ST1A_OBJ *wp)
     bp->value_7C   = 0;
     bp->value_7D   = 0;
     bp->value_7F   = 0;
-    bp->part_58[0] = func_80031518();
+    bp->part_58[0] = Open_SHL_WORK();
     if (bp->part_58[0] != NULL)
     {
         bp->part_58[0]->flags_0  = 1;
@@ -4959,7 +4959,7 @@ void func_80119320(ST1A_OBJ *wp)
         wp->u_F8.part[5].value_3 = -1;
         bp->part_58[0]->value_6 |= 0x20;
     }
-    bp->part_58[1] = func_80031518();
+    bp->part_58[1] = Open_SHL_WORK();
     if (bp->part_58[1] != NULL)
     {
         bp->part_58[1]->flags_0   = 1;
@@ -4969,7 +4969,7 @@ void func_80119320(ST1A_OBJ *wp)
         wp->u_F8.part[10].value_3 = -1;
         bp->part_58[1]->value_6 |= 0x20;
     }
-    bp->part_58[2] = func_80031518();
+    bp->part_58[2] = Open_SHL_WORK();
     if (bp->part_58[2] != NULL)
     {
         bp->part_58[2]->flags_0  = 1;
@@ -4979,7 +4979,7 @@ void func_80119320(ST1A_OBJ *wp)
         wp->u_F8.part[6].value_3 = -1;
         bp->part_58[2]->value_6 |= 0x20;
     }
-    bp->part_58[3] = func_80031518();
+    bp->part_58[3] = Open_SHL_WORK();
     if (bp->part_58[3] != NULL)
     {
         bp->part_58[3]->flags_0   = 1;
@@ -5153,7 +5153,7 @@ void func_80119B18(ST1A_OBJ *wp)
             wp->hit_440.value_8 = D_8009884C[wp->kind_2]->value_A;
             wp->value_493       = 0;
             wp->value_492       = 0;
-            fp                  = (ST1A_FLASH *)func_80031518();
+            fp                  = (ST1A_FLASH *)Open_SHL_WORK();
             if (fp != NULL)
             {
                 fp->flags_0      = 1;
@@ -5982,7 +5982,7 @@ void func_8011BA74(ST1A_OBJ *wp)
             wp->hit_440.value_8 = D_8009884C[wp->kind_2]->value_A;
             wp->value_493       = 0;
             wp->value_492       = 0;
-            fp                  = (ST1A_FLASH *)func_80031518();
+            fp                  = (ST1A_FLASH *)Open_SHL_WORK();
             if (fp != NULL)
             {
                 fp->flags_0      = 1;
@@ -6018,10 +6018,10 @@ void func_8011BA74(ST1A_OBJ *wp)
                 }
                 bp->hit_0.flags_0.half &= ~0x180;
                 func_8003187C(wp);
-                func_800318D8(bp->part_58[0]);
-                func_800318D8(bp->part_58[1]);
-                func_800318D8(bp->part_58[2]);
-                func_800318D8(bp->part_58[3]);
+                Close_SHL_WORK(bp->part_58[0]);
+                Close_SHL_WORK(bp->part_58[1]);
+                Close_SHL_WORK(bp->part_58[2]);
+                Close_SHL_WORK(bp->part_58[3]);
                 Sce_flag_on(0x58);
             }
             bp->hit_0.value_4 = (bp->hit_0.value_4 + 1) & 0x3F;
@@ -6056,7 +6056,7 @@ sint32 func_8011BD08(ST1A_OBJ *wp, sint32 i)
 {
     ST1A_BLOCK *bp = (ST1A_BLOCK *)&wp->hit_440;
 
-    bp->slot_68[i] = (ST1A_10C *)func_80031518();
+    bp->slot_68[i] = (ST1A_10C *)Open_SHL_WORK();
     if (bp->slot_68[i] != NULL)
     {
         bp->slot_68[i]->flags_0   = 1;
@@ -6386,7 +6386,7 @@ void func_8011C870(ST1A_OBJ *wp)
     {
         case 0:
         default:
-            fp = (ST1A_FLASH *)func_80031518();
+            fp = (ST1A_FLASH *)Open_SHL_WORK();
             if (fp != NULL)
             {
                 fp->flags_0      = 1;
@@ -6462,7 +6462,7 @@ void func_8011CAB4(ST1A_OBJ *wp)
     {
         case 0:
         default:
-            slot = func_80031518();
+            slot = Open_SHL_WORK();
             if (slot != NULL)
             {
                 slot->flags_0      = 1;
@@ -6891,7 +6891,7 @@ void func_8011D240(ST1A_OBJ *wp)
         case 4:
             if (wp->value_A4 < 0x18)
             {
-                slot = func_80031518();
+                slot = Open_SHL_WORK();
                 if (slot != NULL)
                 {
                     slot->flags_0         = 1;
@@ -7020,7 +7020,7 @@ void func_8011DA38(ST1A_OBJ *wp)
             }
             if (wp->value_A4 >= 2 && wp->value_A4 <= 10 && !(wp->value_A4 & 1))
             {
-                shot = (ST1A_DEBRIS *)func_80031518();
+                shot = (ST1A_DEBRIS *)Open_SHL_WORK();
                 if (shot != NULL)
                 {
                     shot->flags_0   = 1;
@@ -7092,7 +7092,7 @@ void func_8011DCD8(ST1A_OBJ *wp)
             aim->value_9A = 0xF;
             aim->value_9B = 0;
             wp->routine_2++;
-            sight = (ST1A_SIGHT *)func_80031518();
+            sight = (ST1A_SIGHT *)Open_SHL_WORK();
             if (sight != NULL)
             {
                 aim->sight_D8    = sight;
@@ -7223,7 +7223,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
                 if (wp->value_A4 == 0x2B)
                 {
                     Sound_call2(0x1F8, &wp->position);
-                    slot = func_80031518();
+                    slot = Open_SHL_WORK();
                     if (slot != NULL)
                     {
                         slot->flags_0      = 1;
@@ -7261,7 +7261,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
                 }
                 if (STAGE_FRAME & 1)
                 {
-                    slot = func_80031518();
+                    slot = Open_SHL_WORK();
                     if (slot != NULL)
                     {
                         slot->flags_0   = 1;
@@ -7277,7 +7277,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             wp->position_fixed.v.y = wp->position.y << 16;
             if (wp->value_A7 < 0 && aim->count_CC >= 0x5B)
             {
-                slot = func_80031518();
+                slot = Open_SHL_WORK();
                 if (slot != NULL)
                 {
                     slot->flags_0      = 1;
@@ -7794,7 +7794,7 @@ void func_8011F208(void)
 {
     STAGE_10C *slot;
 
-    slot = func_80031518();
+    slot = Open_SHL_WORK();
     if (slot != NULL)
     {
         slot->flags_0   = 1;

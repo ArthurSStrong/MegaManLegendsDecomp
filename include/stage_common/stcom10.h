@@ -129,9 +129,9 @@ void Sce_flag_off(sint32 flag);
 sint32 Sce_flag_test(sint32 flag);
 sint32 func_8002FE74(uint8 id);
 STCOM10_OBJ *func_80036294(uint8 id);
-STCOM10_OBJ *func_80031418(void);
+STCOM10_OBJ *Open_EM_WORK(void);
 STCOM10_OBJ *func_80031498(void);
-STCOM10_OBJ *func_80031518(void);
+STCOM10_OBJ *Open_SHL_WORK(void);
 STCOM10_OBJ50 *func_80031734(void);
 
 void stcom10_func_0134(STCOM10_WORK *wp);

@@ -45,7 +45,7 @@ void func_80105078(STAGE_OBJ *wp, sint16 *base)
 
 void func_801050E8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80105108(STAGE_WORK *wp)

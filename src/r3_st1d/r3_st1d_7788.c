@@ -87,7 +87,7 @@ void func_80107AF0(ST1D_VIEW *wp)
             }
             else
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 // Frees the effects taken so far only when the first one failed (then [-1]).
                 while (i == 0)
                 {
@@ -99,7 +99,7 @@ void func_80107AF0(ST1D_VIEW *wp)
         }
         wp->value_D = ((STAGE_OBJ *)ext->u_58.obj)->value_1;
         wp->value_E = ((STAGE_OBJ *)ext->u_5C.p)->value_1;
-        obj         = func_80031418();
+        obj         = Open_EM_WORK();
         ext->u_4C.p = obj;
         if (obj != NULL)
         {
@@ -131,7 +131,7 @@ void func_80107AF0(ST1D_VIEW *wp)
         }
         else
         {
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             for (i = 0; i < 4; i++)
             {
                 func_80031988(((STAGE_OBJ **)&ext->effect_50)[i]);
@@ -203,14 +203,14 @@ void func_80107EB8(ST1D_VIEW *wp)
 
 void func_80107F58(ST1D_VIEW *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
     if (!((uint8)wp->value_F & 0x40))
     {
         func_80031988(wp->ext.effect_50);
         func_80031988(wp->ext.piece_54);
         if (!((uint8)wp->value_F & 2))
         {
-            func_80031824(wp->ext.u_4C.p);
+            Close_EM_WORK(wp->ext.u_4C.p);
             func_80031988(wp->ext.u_58.obj);
             func_80031988(wp->ext.u_5C.p);
         }
@@ -254,7 +254,7 @@ void func_8010802C(ST1D_VIEW *wp)
                 i = 0;
                 do
                 {
-                    piece = (STAGE_PIECE *)func_80031518();
+                    piece = (STAGE_PIECE *)Open_SHL_WORK();
                     if (piece != NULL)
                     {
                         piece->flags_0        = 1;
@@ -340,14 +340,14 @@ void func_801081D0(ST1D_VIEW *wp)
             {
                 if (wp->value_F & 2)
                 {
-                    func_80031824(wp);
+                    Close_EM_WORK(wp);
                     func_80031988(ext->effect_50);
                     func_80031988(ext->piece_54);
                 }
             }
             else
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             break;
     }

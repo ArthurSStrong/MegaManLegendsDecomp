@@ -1261,7 +1261,7 @@ void func_80102F20(ST1A_ROOM_FX *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031824(wp->child_28);
+        Close_EM_WORK(wp->child_28);
         func_80031A4C(wp->child_2C);
         func_80031988(wp->fx_A0);
         func_8010282C(wp, 3);
@@ -1351,12 +1351,12 @@ void func_801031C8(STAGE_ROOM *wp)
     {
         case 0:
             D_800BBA90[3].flags_0 = 0;
-            func_80031824(wp->child_28);
-            func_80031824(wp->child_2C);
-            func_80031824(wp->child_30);
-            func_80031824(wp->child_34);
-            func_80031824(wp->child_38);
-            func_80031824(wp->child_3C);
+            Close_EM_WORK(wp->child_28);
+            Close_EM_WORK(wp->child_2C);
+            Close_EM_WORK(wp->child_30);
+            Close_EM_WORK(wp->child_34);
+            Close_EM_WORK(wp->child_38);
+            Close_EM_WORK(wp->child_3C);
             func_80102590(0xF);
             wp->child_24->flags_0 |= 2;
             wp->child_24->routine_1  = 0;
@@ -2029,7 +2029,7 @@ void func_801047D0(STAGE_ROOM *wp)
     {
         case 0:
             func_80031A4C(wp->child_28);
-            func_80031824(wp->child_24);
+            Close_EM_WORK(wp->child_24);
             Sce_slot_open(&D_8012FFA0);
             wp->routine_6++;
             break;
@@ -2816,17 +2816,17 @@ void func_80106018(ST1A_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031824(wp->child[0]);
+        Close_EM_WORK(wp->child[0]);
         func_80031A4C(wp->child[1]);
-        func_80031824(wp->child[2]);
-        func_80031824(wp->child[3]);
+        Close_EM_WORK(wp->child[2]);
+        Close_EM_WORK(wp->child[3]);
         for (i = 4; i < 10; i++)
         {
-            func_800318D8(wp->child[i]);
+            Close_SHL_WORK(wp->child[i]);
         }
-        func_80031824(wp->child[10]);
-        func_80031824(wp->child[11]);
-        func_80031824(wp->child[12]);
+        Close_EM_WORK(wp->child[10]);
+        Close_EM_WORK(wp->child[11]);
+        Close_EM_WORK(wp->child[12]);
         for (i = 0; i < 13; i++)
         {
             wp->child[i] = NULL;
@@ -3120,7 +3120,7 @@ void func_801069CC(STAGE_ROOM *wp)
     {
         case 0:
             func_8003187C(wp->child_28);
-            func_80031824(wp->child_2C);
+            Close_EM_WORK(wp->child_2C);
             wp->child_28 = NULL;
             wp->child_2C = NULL;
             pl->flags_0 |= 2;

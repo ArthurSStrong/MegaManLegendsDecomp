@@ -16,7 +16,7 @@ typedef struct
 } STCOM31_CTL;
 
 // The 0x10C-byte work slot of a vehicle that drives along waypoints (freed through ROCK_NEO's
-// func_800318D8).
+// Close_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

@@ -39,7 +39,7 @@ static void orig_8003FDA8(uint32_t a0)
 }
 static void orig_800158F0(uint32_t a0)
 {
-    w2c_rock__neo_func_800158F0_0x5Forig(INST, a0);
+    w2c_rock__neo_Game_play_0x5Forig(INST, a0);
 }
 
 typedef struct

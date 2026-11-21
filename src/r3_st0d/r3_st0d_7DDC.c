@@ -208,7 +208,7 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                     STAGE_CAM_REQ_PTR->value_D  = 0;
                     STAGE_CAM_REQ_PTR->value_10 = 2;
                 }
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             else
             {
@@ -226,14 +226,14 @@ ST0D_GRID_OBJ *func_80108468(STAGE_OBJ *owner, uint8 rows, STCOM_SVECTOR *origin
     ST0D_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0D_GRID_OBJ *)func_80031418();
+    wp = (ST0D_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
     }
     if (rows == 0 || rows > 6)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return NULL;
     }
     grid        = &wp->grid;
@@ -274,7 +274,7 @@ ST0D_GRID_OBJ *func_801085AC(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
     ST0D_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0D_GRID_OBJ *)func_80031418();
+    wp = (ST0D_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
@@ -306,7 +306,7 @@ ST0D_GRID_OBJ *func_801085AC(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
             grid->value_10 = 0x2E404040;
             break;
         default:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             return NULL;
     }
     grid->mask_1     = 0x3F;

@@ -607,7 +607,7 @@ void func_8005FBB4(SUB_SEL *wp)
             }
             break;
         case 4:
-            func_80016D64();
+            Sound_fade_wait();
             func_8001B33C();
             func_8001B314();
             D_80098958 |= 0x800;
@@ -1713,8 +1713,8 @@ void Sub_screen_basic_param_set(void)
         p++;
     }
     p = Sub_screen_basic_param_set_sub(p, 0x2400A4, Game_work.value_1C, 0x306);
-    p = Sub_screen_basic_param_set_sub(p, 0x240106, Game_work.timer_0c / 108000, 2);
-    p = Sub_screen_basic_param_set_sub(p, 0x24011A, (Game_work.timer_0c / 1800) % 60, 2);
+    p = Sub_screen_basic_param_set_sub(p, 0x240106, Game_work.play_time / 108000, 2);
+    p = Sub_screen_basic_param_set_sub(p, 0x24011A, (Game_work.play_time / 1800) % 60, 2);
     *(SUB_PRIM **)0x1F800070 = p;
     addPrims(&((SUB_OT78 *)D_80098934)->tag_78, start, p - 1);
 }

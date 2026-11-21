@@ -373,7 +373,7 @@ void func_8010CAD4(STCOM16_WORK *wp)
 
 void func_8010D3E8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010D408(STCOM16_WORK *wp)

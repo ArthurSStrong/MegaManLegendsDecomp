@@ -248,7 +248,7 @@ sint32 func_800665FC(sint32 arg);
 void Sound_call(sint32 sound, ...);
 void func_8001B314(void);
 void func_8001B33C(void);
-void func_80016D64(void);
+void Sound_fade_wait(void);
 void func_80017C30(sint32 arg);
 void Sound_fade_start(sint32 arg);
 void func_80019C20(void);

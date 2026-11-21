@@ -34,7 +34,7 @@ typedef struct
     uint8 reserved1E[2];   // EA
 } STCOM25_CTL;
 
-// The 0x10C-byte work slot (freed through func_800318D8) of a block that rolls over and over
+// The 0x10C-byte work slot (freed through Close_SHL_WORK) of a block that rolls over and over
 // along a course of map cells.
 typedef struct
 {

@@ -96,7 +96,7 @@ void stcom12_func_0164(STCOM12_WORK *wp)
 
 void stcom12_func_02E4(STCOM12_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom12_func_0304(STCOM12_WORK *wp)
@@ -323,7 +323,7 @@ void stcom12_func_0710(STCOM12_WORK *wp)
             pl->flags_bd &= ~0x40;
             Sce_flag_on(0x238);
             pl->flags_0 |= 2;
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             break;
     }
 }

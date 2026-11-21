@@ -8,14 +8,14 @@ ST0B_GRID_OBJ *func_80109CB0(STAGE_OBJ *owner, uint8 rows, STCOM_SVECTOR *origin
     ST0B_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0B_GRID_OBJ *)func_80031418();
+    wp = (ST0B_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
     }
     if (rows == 0 || rows > 6)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return NULL;
     }
     grid        = &wp->grid;
@@ -56,7 +56,7 @@ ST0B_GRID_OBJ *func_80109DF4(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
     ST0B_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0B_GRID_OBJ *)func_80031418();
+    wp = (ST0B_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
@@ -88,7 +88,7 @@ ST0B_GRID_OBJ *func_80109DF4(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
             grid->value_10 = 0x2E404040;
             break;
         default:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             return NULL;
     }
     grid->mask_1     = 0x3F;
@@ -1223,7 +1223,7 @@ void func_8010C264(STAGE_OBJ *wp, ST0B_BOB *bob)
             for (i = 0; i < 2; i++)
             {
                 turn = i * 0x200 - 0x100;
-                slot = (STAGE_PROP *)func_80031518();
+                slot = (STAGE_PROP *)Open_SHL_WORK();
                 if (slot != NULL)
                 {
                     slot->flags_0    = 1;
@@ -1289,7 +1289,7 @@ void func_8010C3B0(STAGE_OBJ *wp, ST0B_BOB *bob)
         case 1:
             if (bob->value_18 == 0)
             {
-                shot = (ST0B_10C *)func_80031518();
+                shot = (ST0B_10C *)Open_SHL_WORK();
                 if (shot != NULL)
                 {
                     shot->flags_0    = 1;
@@ -1509,7 +1509,7 @@ void func_8010C8C0(ST0B_OBJ *wp, ST0B_BOB *bob)
 
 void func_8010CC38(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010CC58(STAGE_OBJ *wp)
@@ -1570,7 +1570,7 @@ void func_8010CD90(ST0B_OBJ *wp)
 
 void func_8010CEA0(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010CEC0(STAGE_OBJ *wp)
@@ -1867,7 +1867,7 @@ void func_8010D6AC(ST0B_BOAT *wp, ST0B_BOAT_CTL *ctl)
     spawned = 0;
     func_80030058(&dir, wp->rotation.y, 0x600, 0, 0);
     func_80030150(&dir, &step);
-    fx = (ST0B_SPRAY *)func_80031518();
+    fx = (ST0B_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
     {
         fx->flags_0 = 3;
@@ -1889,7 +1889,7 @@ void func_8010D6AC(ST0B_BOAT *wp, ST0B_BOAT_CTL *ctl)
         fx->accel.x      = 0;
         spawned          = 1;
     }
-    fx = (ST0B_SPRAY *)func_80031518();
+    fx = (ST0B_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
     {
         fx->flags_0 = 3;
@@ -2234,7 +2234,7 @@ void func_8010DEF4(STAGE_OBJ *wp, ST0B_HIT_B *ctl)
 
 void func_8010E34C(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010E36C(STAGE_OBJ *wp)

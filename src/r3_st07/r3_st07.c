@@ -267,7 +267,7 @@ void func_80100944(STAGE_ROOM *wp)
     {
         i     = 1;
         entry = D_80105BA0;
-        func_80031824(wp->child_24);
+        Close_EM_WORK(wp->child_24);
         D_800BBAC8 = 0;
         do
         {
@@ -290,9 +290,9 @@ void func_801009B8(STAGE_ROOM *wp)
     {
         for (i = 0; i < 3; i++)
         {
-            func_80031824((&wp->child_24)[i]);
+            Close_EM_WORK((&wp->child_24)[i]);
         }
-        for (i = 0, ep = D_800A3B40; i < 0x40; i++, ep++)
+        for (i = 0, ep = Effect_work_tbl; i < 0x40; i++, ep++)
         {
             func_80031988(ep);
         }
@@ -342,7 +342,7 @@ void func_80100B14(STAGE_ROOM *wp)
     {
         for (i = 0; i < 3; i++)
         {
-            func_80031824((&wp->child_24)[i]);
+            Close_EM_WORK((&wp->child_24)[i]);
         }
         i     = 7;
         entry = D_80105C18;
@@ -366,9 +366,9 @@ void func_80100B98(STAGE_ROOM *wp)
     {
         for (i = 0; i < 5; i++)
         {
-            func_80031824((&wp->child_24)[i]);
+            Close_EM_WORK((&wp->child_24)[i]);
         }
-        for (i = 0, ep = D_800A3B40; i < 0x40; i++, ep++)
+        for (i = 0, ep = Effect_work_tbl; i < 0x40; i++, ep++)
         {
             func_80031988(ep);
         }
@@ -393,10 +393,10 @@ void func_80100C4C(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         i = 0xF;
-        func_80031824(wp->child_24);
-        func_80031824(wp->child_28);
+        Close_EM_WORK(wp->child_24);
+        Close_EM_WORK(wp->child_28);
         entry = D_80105CB8;
-        func_80031824(wp->child_2C);
+        Close_EM_WORK(wp->child_2C);
         do
         {
             Sce_slot_open(entry);
@@ -1467,7 +1467,7 @@ void func_80102A24(STAGE_OBJ *wp)
 
 void func_80102A90(STAGE_EFFECT *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80102AB0(STAGE_OBJ *wp)

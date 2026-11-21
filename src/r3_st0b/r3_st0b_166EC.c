@@ -217,7 +217,7 @@ void func_80116A88(ST0B_EVENT *wp)
                     obj = D_801203D4[i];
                     if (obj->flags_0 != 0 && obj->kind_2 == 0x32)
                     {
-                        func_80031824(obj);
+                        Close_EM_WORK(obj);
                     }
                 }
                 for (i = 7; i < 10; i++)
@@ -685,7 +685,7 @@ void func_80117938(STAGE_OBJ *wp)
 {
     STAGE_OBJ *obj;
 
-    obj = (STAGE_OBJ *)func_80031518();
+    obj = (STAGE_OBJ *)Open_SHL_WORK();
     if (obj != NULL)
     {
         obj->flags_0 = 1;
@@ -824,7 +824,7 @@ void func_80117C50(STAGE_OBJ *owner, sint32 kind, sint32 index, ST0B_PLACE *plac
     STAGE_OBJ *obj;
     ST0B_SETUP_2C *setup;
 
-    obj = func_80031418();
+    obj = Open_EM_WORK();
     if (obj != NULL)
     {
         obj->flags_0            = 1;

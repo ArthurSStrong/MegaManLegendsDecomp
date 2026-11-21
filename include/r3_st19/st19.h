@@ -585,7 +585,7 @@ void func_8003187C(void *wp);
 // ROCK_NEO scalar declared as an array: GCC then keeps later struct loads after the stores.
 extern sint32 D_800BC7D4[];
 extern sint16 D_80118E88[];
-STAGE_OBJ *func_80031418(void);
+STAGE_OBJ *Open_EM_WORK(void);
 
 extern STAGE_OBJ_FUNC D_80118070[];
 
@@ -796,7 +796,7 @@ typedef struct
     sint32 hit_40;           // 388
 } ST19_HOME;
 
-// The 0x10C-byte slot (func_80031518) a spinning car holds in front of it (func_80104124).
+// The 0x10C-byte slot (Open_SHL_WORK) a spinning car holds in front of it (func_80104124).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -1530,7 +1530,7 @@ typedef struct
     uint8 reserved36C[0x54];           // 36C
 } ST19_TURRET;
 
-// The 0x10C-byte slot (func_80031518) of a turret's shell (func_8010601C).
+// The 0x10C-byte slot (Open_SHL_WORK) of a turret's shell (func_8010601C).
 typedef struct
 {
     uint8 flags_0;                     // 00

@@ -159,7 +159,7 @@ void func_801059D4(STAGE_STCOM15_WORK_348 *wp)
             case 5:
             case 8:
                 func_80047148(wp, &wp->joints_180[0]);
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 *(uint16 *)&wp->routine_2 = 0;
                 break;
             case 6:
@@ -207,7 +207,7 @@ void func_801059D4(STAGE_STCOM15_WORK_348 *wp)
 
 void func_80105D20(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80105D40(STAGE_STCOM15_WORK_348 *wp)
@@ -861,7 +861,7 @@ void func_80107334(ST09_VIEW_B *wp)
             }
             else
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 // Frees the effects taken so far only when the first one failed (then [-1]).
                 while (i == 0)
                 {
@@ -873,7 +873,7 @@ void func_80107334(ST09_VIEW_B *wp)
         }
         wp->value_D = ((STAGE_OBJ *)ext->u_58.obj)->value_1;
         wp->value_E = ((STAGE_OBJ *)ext->u_5C.p)->value_1;
-        obj         = func_80031418();
+        obj         = Open_EM_WORK();
         ext->u_4C.p = obj;
         if (obj != NULL)
         {
@@ -905,7 +905,7 @@ void func_80107334(ST09_VIEW_B *wp)
         }
         else
         {
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             for (i = 0; i < 4; i++)
             {
                 func_80031988(((STAGE_OBJ **)&ext->effect_50)[i]);
@@ -977,14 +977,14 @@ void func_801076FC(ST09_VIEW *wp)
 
 void func_8010779C(ST09_VIEW *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
     if (!((uint8)wp->u_C.b[3] & 0x40))
     {
         func_80031988(wp->ext.effect_50);
         func_80031988(wp->ext.piece_54);
         if (!((uint8)wp->u_C.b[3] & 2))
         {
-            func_80031824(wp->ext.u_4C.p);
+            Close_EM_WORK(wp->ext.u_4C.p);
             func_80031988(wp->ext.u_58.obj);
             func_80031988(wp->ext.u_5C.p);
         }
@@ -1028,7 +1028,7 @@ void func_80107870(ST09_VIEW *wp)
                 i = 0;
                 do
                 {
-                    piece = (STAGE_PIECE *)func_80031518();
+                    piece = (STAGE_PIECE *)Open_SHL_WORK();
                     if (piece != NULL)
                     {
                         piece->flags_0        = 1;
@@ -1114,14 +1114,14 @@ void func_80107A14(ST09_VIEW *wp)
             {
                 if (wp->u_C.b[3] & 2)
                 {
-                    func_80031824(wp);
+                    Close_EM_WORK(wp);
                     func_80031988(ext->effect_50);
                     func_80031988(ext->piece_54);
                 }
             }
             else
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             break;
     }
@@ -1225,7 +1225,7 @@ void func_80107E54(ST09_ACTOR *wp)
         switch (wp->routine_1)
         {
             case 2:
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 Sce_flag_on(0xC);
                 *(uint16 *)&wp->routine_2 = 0;
                 break;
@@ -1270,7 +1270,7 @@ void func_80107E54(ST09_ACTOR *wp)
 
 void func_80108098(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801080B8(ST09_ACTOR *wp)
@@ -1292,7 +1292,7 @@ void func_801080B8(ST09_ACTOR *wp)
             ctl->timer_4 = 0x3C;
             // fall through
         case 1:
-            for (i = 0, obj = D_8009F108; i < 16; i++, obj++)
+            for (i = 0, obj = Em_work_tbl; i < 16; i++, obj++)
             {
                 if ((D_800987E8 & (0x80000000 >> i)) && obj->kind_2 != 0x13 &&
                     (uint8)((obj->position.x >> 9) - D_8011DF64.x) < D_8011DF64.w &&
@@ -1609,7 +1609,7 @@ void func_80108A8C(ST09_ACTOR *wp)
                 fx->variant_3       = 0x41;
                 fx->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80047148(wp, &wp->value_180);
             Sound_call2(0xA1, &wp->value_180);
         }
@@ -1618,7 +1618,7 @@ void func_80108A8C(ST09_ACTOR *wp)
 
 void func_80108C70(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80108C90(STAGE_ACTOR *wp)

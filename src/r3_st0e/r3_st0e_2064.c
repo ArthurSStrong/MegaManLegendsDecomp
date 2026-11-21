@@ -62,7 +62,7 @@ void func_801021D4(ST0E_ACTOR *wp)
         func_8010D9F8(0, 1, 2, &wp->value_188);
         func_8010D9F8(0, 2, 2, &wp->value_188);
         func_8010D9F8(0, 3, 4, &wp->value_188);
-        obj = (ST0E_10C *)func_80031518();
+        obj = (ST0E_10C *)Open_SHL_WORK();
         if (obj != NULL)
         {
             obj->flags_0   = 1;
@@ -155,5 +155,5 @@ void func_80102518(STAGE_OBJ *wp)
     {
         STAGE_PL.target_184 = NULL;
     }
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }

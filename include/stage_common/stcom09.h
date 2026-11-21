@@ -43,7 +43,7 @@ typedef union
     sint32 words[8];
 } STCOM09_MATRIX;
 
-// The 0x3C0-byte work slot stcom09 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom09 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00
@@ -113,7 +113,7 @@ extern uint8 stcom09_D_0028[];        // data_78
 // ROCK_NEO.EXE.
 extern STCOM09_KIND **D_80098844;
 extern uint8 *D_8008CE74; // a message script
-STCOM09_SHOT *func_80031518(void);
+STCOM09_SHOT *Open_SHL_WORK(void);
 void func_80036478(void *track, uint8 arg1, uint32 arg2);
 sint32 func_8003648C(void *track, void *wp);
 #ifdef __wasm32__

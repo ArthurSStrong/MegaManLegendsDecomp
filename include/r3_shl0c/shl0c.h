@@ -4,7 +4,7 @@
 #include "common.h"
 #include "shl/shl.h"
 
-// An entry of ROCK_NEO.EXE's 32-slot object table D_8009CF88 (stride 0x10C).
+// An entry of ROCK_NEO.EXE's 32-slot object table Shl_work_tbl (stride 0x10C).
 typedef struct
 {
     sint8 flag_0; // 00
@@ -13,7 +13,7 @@ typedef struct
     uint8 reserved1c[0xF0];
 } SHL0C_OBJ;
 
-extern SHL0C_OBJ D_8009CF88[32];
+extern SHL0C_OBJ Shl_work_tbl[32];
 
 extern SHL_BOX D_800D9080;
 extern sint32 D_800D908C[];   // scale by value_f

@@ -115,7 +115,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
                 stcom06_func_0E10(wp, effect);
             }
             wp->flags_0 = 0;
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
             return;
         }
     }
@@ -128,7 +128,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
             stcom06_func_0E10(wp, effect);
         }
         wp->flags_0 = 0;
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     wp->sprite.hit_14 = 0;
@@ -143,7 +143,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
                 stcom06_func_0E10(wp, effect);
             }
             wp->flags_0 = 0;
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
             return;
         }
     }
@@ -214,7 +214,7 @@ void stcom06_func_0594(STCOM06_WORK *wp)
         stcom06_func_0E10(wp, effect);
     }
     wp->flags_0 = 0;
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom06_func_06A0(STCOM06_WORK *wp)
@@ -248,7 +248,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
                 stcom06_func_0E10(wp, effect);
             }
             wp->flags_0 = 0;
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
             return;
         }
     }
@@ -261,7 +261,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
             stcom06_func_0E10(wp, effect);
         }
         wp->flags_0 = 0;
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     wp->sprite.hit_14 = 0;
@@ -315,7 +315,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
         stcom06_func_0E10(wp, effect);
     }
     wp->flags_0 = 0;
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom06_func_0934(STCOM06_WORK *wp)

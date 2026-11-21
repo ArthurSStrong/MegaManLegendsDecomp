@@ -264,7 +264,7 @@ void func_801016B0(STAGE_OBJ *wp)
 
 void func_80101770(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80101790(STAGE_WORK *wp)
@@ -601,7 +601,7 @@ void func_80102190(STAGE_OBJ *wp)
 
 void func_8010223C(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010225C(STAGE_WORK *wp)

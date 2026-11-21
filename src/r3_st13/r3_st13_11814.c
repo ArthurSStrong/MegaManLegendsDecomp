@@ -356,7 +356,7 @@ void func_80112348(STAGE_STCOM15_WORK_4E0 *wp)
             }
             if (ctl->timer_34 == 0 && wp->value_80 <= 0x1FFFFF)
             {
-                shot = (ST13_SHOT *)func_80031518();
+                shot = (ST13_SHOT *)Open_SHL_WORK();
                 if (shot != NULL)
                 {
                     shot->flags_0  = 1;

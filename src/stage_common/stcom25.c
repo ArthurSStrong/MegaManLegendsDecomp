@@ -86,7 +86,7 @@ void stcom25_func_02CC(STCOM25_WORK *wp)
 
 void stcom25_func_040C(STCOM25_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom25_func_042C(void)

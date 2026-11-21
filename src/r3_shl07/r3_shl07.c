@@ -40,7 +40,7 @@ void func_800D888C(SHL_WORK *wp)
     push = D_800D8C30[Player_work.value_530];
     for (i = 0; i < 64; i++)
     {
-        fx = &D_800A3B40[i];
+        fx = &Effect_work_tbl[i];
         if (fx->routine_0 == 0 || fx->kind_2 != 0x87 || fx->routine_8 >= 5)
         {
             continue;

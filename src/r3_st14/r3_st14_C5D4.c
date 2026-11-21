@@ -137,7 +137,7 @@ void func_8010C9CC(ST14_ACTOR *wp)
                 func_8010D890(&wp->joint_180[7]);
                 func_8010D890(&wp->joint_180[8]);
                 func_80047148_2(wp, &wp->joint_180[0]);
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             break;
     }
@@ -643,7 +643,7 @@ void func_8010D8FC(ST14_ACTOR *wp)
 {
     ST14_PIECE *piece;
 
-    piece = (ST14_PIECE *)func_80031518();
+    piece = (ST14_PIECE *)Open_SHL_WORK();
     if (piece != NULL)
     {
         piece->flags_0    = 5;

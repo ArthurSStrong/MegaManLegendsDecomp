@@ -336,8 +336,8 @@ makes it longer (317).
 
 ## WORK_48 kinds
 
-A slot of the effect pool `D_800A3B40` (`func_80031618` / `func_80031988`) is an object whose kind is `id_2`: the
-pool update (game's `func_800172F4`/`func_800173B4`) calls `handler[id_2]`, from the stage overlay's table (pointer at
+A slot of the effect pool `Effect_work_tbl` (`func_80031618` / `func_80031988`) is an object whose kind is `id_2`: the
+pool update (game's `effect_stage_move`/`effect_common_move`) calls `handler[id_2]`, from the stage overlay's table (pointer at
 scratchpad `0x1F800064`) for ids below 0x80, and from `D_80089858 + id * 4` for 0x80-0x8A (11 ROCK_NEO kinds). As
 Capcom does with `EM_WORK` -> `MODEL_WORK`, each ROCK_NEO kind has its own full struct and its handlers take it; the
 shared code takes the generic `WORK_48`, and callers cast at the boundary (`func_80031988((WORK_48 *)wp)`).
@@ -370,7 +370,7 @@ the names from before this split (`u_18.s`, `u_18.mtx`, `field_C.rec`, `u_44`, `
 ## Shot pools: SHL_WORK and PL_SHL_WORK
 
 Capcom's `SHL_WORK` (their shot 0x38: `be_flag`, `id`, `type`, `routine_0..2`, `pos_l`, `pos`, `efc.model.m` /
-`.sv` / `.rgbc`, and `free[]`, over which `SHL38_FREE` is cast) is the slot of the pool `D_8009CF88[32]`, kind 0x60
+`.sv` / `.rgbc`, and `free[]`, over which `SHL38_FREE` is cast) is the slot of the pool `Shl_work_tbl[32]`, kind 0x60
 (`Open_SHL_WORK` / `Close_SHL_WORK`; the scene code and the overlays). Ours: header, the `MODEL_WORK` layout to 0x87,
 an `EFC` at 0x88 and `free[0x54]` at 0xB8, for the overlays' shot kinds to cast their own structs over. ROCK_NEO has
 no per-kind code for this pool yet.
@@ -380,7 +380,7 @@ no per-kind code for this pool yet.
 position, two bytes, two halfwords) is the same. Where `EFC` starts and that `free` follows it are inferred from that
 match and from `EFC_MODEL`'s size (0x30); Capcom's offsets for `SHL_WORK` aren't known.
 
-The player's shots, pool `D_800BFB20[16]` (kind 0x10, `func_80031598` / `func_80031930`, spawned by `func_80035724`),
+The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `func_80031598` / `func_80031930`, spawned by `func_80035724`),
 have their own struct, `PL_SHL_WORK`: same layout, with the sprite `EFC` and the free block written out, because a
 player's shot keeps its own bytes in both (the flight direction `dir_A4` in the EFC's kind bytes, `tgt_BC` and
 `owner_C4` in the free block). Its `id_2` is byte 0xB of the player's action record (`D_80089A8B`); the handlers are
@@ -489,7 +489,7 @@ macros local to the parked block) leaves one extra `move`. The flag test has to 
 `code_8002E7A8.c` (batch 2): banked `func_800355F0` (view matrix from `Player_work[n]`; `Player_work` is
 now an array, the target indexes it by symbol; `unk56` read as `(uint16)` for `lhu`), `func_80033D80`
 (scratchpad matrix `0x1F8000C0` + `ApplyMatrix`/`RotMatrix`/`MulMatrix`), `func_80037440` (counts
-`D_800BFB20[n]` by id into `D_8009856C[16]`; `D_800BFB22` is declared as a second `SHL_WORK` array so
+`Pl_shl_work_tbl[n]` by id into `D_8009856C[16]`; `D_800BFB22` is declared as a second `SHL_WORK` array so
 the access keeps its own `lui`), `Angle_xz_vector`, `Angle_xz_svector` (`catan` of the x/z delta).
 Parked `func_80036C50` (`NON_MATCHING`; 4-entry table at `D_8009A306`, stride 0x14): the target keeps
 `&D_8009A306` in a3 for the first compare and the loop; ours folds the first compare to `lui`+`%lo` and
@@ -534,7 +534,7 @@ and the slot allocators `Open_EVE_WORK`, `func_80031734` (pool bitmask scan; onl
 differs: the target keeps the stores in source order around the mask update). A scratch test with the
 mask as a struct member (`MEM_IN_STRUCT_P`, so the store aliases the `wp->` stores) gave exactly the
 target order, so the mask words (`D_800987EC`, `D_800989CC`) may be members of a pool struct; a scalar
-`uint32` lets the scheduler hoist the `wp->` stores. The model-pool allocators `func_80031418`,
+`uint32` lets the scheduler hoist the `wp->` stores. The model-pool allocators `Open_EM_WORK`,
 `Open_SHL_WORK` and `func_80031598` are banked: they matched once `field_74` (a `sint8`, read with `lb`
 everywhere) was cleared with one word store over 0x74-0x77, like their other multi-field clears.
 
@@ -563,7 +563,7 @@ in an extra s-register). The `D_8009857C`..`D_80098654` statics are now `MATRIX`
 `Player_work.pos` is an `SVECTOR` (the 8-byte copy in `func_8003606C` only compiles with the unaligned
 `lwl`/`lwr` per-access form from a struct member, not from a cast pointer). Parked (`NON_MATCHING`):
 `func_8003606C` (squared xz distance, `<< 2`, of every object in three pools to each of the two players, -1 when
-over 0x10000000, stored at +0x80/+0x84; the target keeps `D_8009F108` in t6 across the outer loop, computes the
+over 0x10000000, stored at +0x80/+0x84; the target keeps `Em_work_tbl` in t6 across the outer loop, computes the
 next-object pointer first (`a3 = a1 + size`) with the counter increment in the branch delay slot; ours moves the
 pointer add into the delay slot and the counter to the loop tail; needs an unused 8-byte `SVECTOR` local) and
 `func_80033A28` (unpacks 75 twelve-bit values from the 0x20-word block at `0x1F800180` into 25 `SVECTOR`s at
@@ -687,7 +687,7 @@ GCC always cross-jumps the identical `sub` stores the target keeps separate), `f
 return 1; return 0;`: two separate `if`s fold the second test to `sltu`, a bare `return a || b` uses a temp),
 `Money_check` (`-(Game_work.money < -amount)`: -1 when `money` can't cover a negative change; `money` at
 `Game_work+0x1C`, capped at 999999 by `Money_add`), `func_800433C0` (`D_8008A0CC[wp->routine_8](wp)` on a
-`SHL_WORK` of the `D_800BFB20` pool), `func_800435BC`, `func_80043740` and `func_80043E00` (spawn a `WORK_48`
+`SHL_WORK` of the `Pl_shl_work_tbl` pool), `func_800435BC`, `func_80043740` and `func_80043E00` (spawn a `WORK_48`
 at the slot's position; in `func_80043E00` the `flag_3`/`field_C` stores are written after the position).
 Batch 2: banked `Money_add` (0x80043294; `amount` added to `money`, clamped to 999999 when positive, reset to 0
 on underflow when not, which also adds it to `Game_work+0x20`/`+0x24` by `c`; does nothing unless `b == 0`),
@@ -922,7 +922,7 @@ register (t6); the target hoists `0x07000000`, `0xFFFFFF` and the OT address int
 registers, frame 0x38, `otz` at sp+0x14); loop 1 walks copies of the sxy/sz bases; and the face pointer
 is a plain `f` with offsets 0/2/4/8 where ours strength-reduces it to `&f->uv[2]`.
 Parked `parts_model_draw` (`NON_MATCHING`; draws a `PARTS_WORK`, the 0x560-byte objects `parts_model_draw_all`
-walks from `D_800C3580` (4) and `D_8009F108` (16): projects `pos` (culls by depth and screen
+walks from `D_800C3580` (4) and `Em_work_tbl` (16): projects `pos` (culls by depth and screen
 bounds), picks a level of detail of `model_80` by z (> 0x708, > 0x2BC), depth-cues the RGB555
 colour `col_55E`, then per visible part `gte_MulMatrix0`s the view matrix by `part_mtx[i]`, adds the
 rotated `part_pos[i]` to the view translation and calls `mesh_draw`). Everything matches except
@@ -930,7 +930,7 @@ the fog CLUT lookup in `D_800C0DC0`: the target builds the address with `lui`/`o
 `addu $at,$at,v0` and `lbu 0($at)`, the only such sequence in ROCK_NEO. maspsx gives a constant base
 `lui`, `addu $at,v0,$at`, `lbu %lo($at)` (one instruction shorter) and a symbol `%hi`/`%lo`; neither
 fits, so matching needs a toolchain change (an ASPSX expansion maspsx doesn't model). Found on the way:
-the 0x560 stride conflicts with `WORK_5A4 D_800C3580[]` and `WORK_3C0 D_8009F108[]` (settled: dead
+the 0x560 stride conflicts with `WORK_5A4 D_800C3580[]` and `WORK_3C0 Em_work_tbl[]` (settled: dead
 code, see below); the per-part
 colour needs a `sint32` local (`lh`, not `lhu`); the `mesh_draw` argument is an integer sum with the
 offset first (`addu a0,a0,v0`); `gte_lddp` is passed `&Scratch_dp`, the address, not the value.
@@ -945,8 +945,8 @@ object with its own assembler setting. Matching needs a per-file toolchain chang
 **`parts_model_draw_all`, `parts_model_draw` and `mesh_draw` are dead code.** Nothing calls
 `parts_model_draw_all`: no `jal`, no data table, no stage overlay (`tools/callers.py`), and it is
 `parts_model_draw`'s only caller, which is `mesh_draw`'s only caller. Its arrays are not the live
-pools: `D_800C3580` and `D_8009F108` hold `WORK_5A4[4]` and `WORK_3C0[16]` (cleared as 0x168C and
-0x3BFC bytes and allocated by `func_80031498`/`func_80031418` at those sizes), while the 0x560 stride
+pools: `D_800C3580` and `Em_work_tbl` hold `WORK_5A4[4]` and `WORK_3C0[16]` (cleared as 0x168C and
+0x3BFC bytes and allocated by `func_80031498`/`Open_EM_WORK` at those sizes), while the 0x560 stride
 would put the 16th entry's end at 0x800A4708, over `Cd_cmd_queue` (0x800A3A40). So `PARTS_WORK` is
 the layout of an older build, not a view of `WORK_5A4`/`WORK_3C0`; the stale object would also
 explain the two functions' `ori` encodings.
@@ -961,8 +961,8 @@ argument it never used.
 
 Twins run (one of each all-assembly twin group, then `twins.py --apply`):
 - `func_80013F60` (`code_800133D8`; `routine_1++` of `D_80098AA8` unless `D_80098A72`) and its
-  game.c copies `func_80016D0C`/`func_80016D38`, the same bytes on `Game_work` (`GAME_WORK.routine_0`/`_1`,
-  `func_800155A4` runs `Game_main_tbl[routine_0]` on it). Written by hand, since the types differ.
+  game.c copies `fade_wait_next`/`fade_wait_next2`, the same bytes on `Game_work` (`GAME_WORK.routine_0`/`_1`,
+  `Game_task` runs `Game_main_tbl[routine_0]` on it). Written by hand, since the types differ.
 - `func_800666D8` (`code_8006430C`; runs `D_8008FD20[routine_1]` of its module state `D_80098910`,
   `CODE_8006430C_WORK`); routines 1 and 2 of `D_8008FD10` are the same code.
 - `func_800180D4` (`code_8001786C`, `D_800821BC[0]`): once `Dbl_buff_idx` is 1, zeroes both buffers'

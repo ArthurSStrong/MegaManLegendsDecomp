@@ -46,15 +46,15 @@ typedef struct
     uint8 routine_3;
     GAME_WORD04 work04;
     GAME_WORD08 work08;
-    uint32 timer_0c;
+    uint32 play_time; // frames played (30 per second), capped at GAME_TIMER_MAX (99:59:59)
     uint32 value10;
     uint32 value14;
     uint16 flags_18;
     uint16 flags_1a;
     uint8 reserved1c[0x34];
-    sint8 routine_50;
-    uint8 routine_51;
-    uint8 flags_52;
+    sint8 stage_no;
+    uint8 area_no;
+    uint8 sce_no; // scenario number (Capcom: sce_no)
     uint8 flags_53;
     uint8 flags_54;
     uint8 flags_55;
@@ -99,14 +99,15 @@ typedef struct
     uint8 reserved1a[0xE];
 } GAME_ENTRY_WORK;
 
-// Dispatch records: observed common prefix and each array stride.
+// Dispatch records: observed common prefix and each array stride. GAME_WORK_3C0 is Capcom's
+// EM_WORK (Em_work_tbl, Open_EM_WORK/Close_EM_WORK); GAME_WORK_24 is EVE_WORK (Eve_work_tbl).
 typedef struct
 {
     sint8 flags;
     uint8 reserved01;
     uint8 kind;
     uint8 reserved03;
-    uint8 routine;
+    uint8 id2; // Capcom: id2, the second index into Enemy_move_ptr
     uint8 reserved05;
     uint8 active;
     uint8 reserved07[0x3B9];
@@ -119,7 +120,7 @@ typedef struct
     uint8 reserved01;
     uint8 kind;
     uint8 reserved03;
-    uint8 routine;
+    uint8 id2;
     uint8 reserved05;
     uint8 active;
     uint8 reserved07[0x59D];
@@ -139,7 +140,7 @@ typedef struct
 } GAME_WORK_10C;
 typedef void (*GAME_FUNC_10C)(GAME_WORK_10C *wp);
 // The overflow table D_80089820 is called as returning a value (keeps its call distinct
-// from the GAME_TABLE_10C call in func_80017210).
+// from the GAME_TABLE_10C call in shl_work_move).
 typedef sint32 (*GAME_FUNC_10C_RET)(GAME_WORK_10C *wp);
 
 typedef struct
@@ -185,7 +186,8 @@ typedef void (*GAME_FUNC)(GAME_WORK *wp);
 
 #define GAME_SCRATCH_MODE (*(uint8 *)0x1F800001)
 
-#define GAME_TABLE_3C0 (*(GAME_FUNC_3C0 ***)0x1F800058)
+// The stage's enemy handlers, Enemy_move_ptr[id][id2] (Capcom's name, from em1c_move_erase).
+#define Enemy_move_ptr (*(GAME_FUNC_3C0 ***)0x1F800058)
 #define GAME_TABLE_5A4 (*(GAME_FUNC_5A4 ***)0x1F80005C)
 #define GAME_TABLE_10C (*(GAME_FUNC_10C **)0x1F800060)
 #define GAME_TABLE_48  (*(GAME_FUNC_48 **)0x1F800064)
@@ -204,18 +206,18 @@ extern sint32 D_800A39F8;
 extern sint32 D_80098004;
 extern uint8 D_800C0C24;
 extern uint8 Scene_work;
-extern GAME_WORK_3C0 D_8009F108[16];
+extern GAME_WORK_3C0 Em_work_tbl[16];
 extern GAME_WORK_3C0 *D_80098820;
 extern GAME_WORK_5A4 D_800C3580[4];
 extern GAME_WORK_5A4 *D_800989D0;
-extern GAME_WORK_10C D_800BFB20[16];
-extern GAME_WORK_10C D_8009CF88[32];
+extern GAME_WORK_10C Pl_shl_work_tbl[16];
+extern GAME_WORK_10C Shl_work_tbl[32];
 extern GAME_WORK_10C *D_800988F8;
 extern GAME_FUNC_10C D_80089820[];
-extern GAME_WORK_48 D_800A3B40[64];
+extern GAME_WORK_48 Effect_work_tbl[64];
 extern GAME_WORK_48 *D_800988E4;
 extern GAME_FUNC_48 D_80089858[];
-extern GAME_WORK_24 D_800A2D08[16];
+extern GAME_WORK_24 Eve_work_tbl[16];
 extern GAME_WORK_24 *D_800988F0;
 extern GAME_WORK_50 D_800BF118[32];
 extern GAME_WORK_50 *D_80098924;
@@ -237,14 +239,14 @@ extern uint8 D_800C356F;
 extern uint8 D_800C3570;
 
 sint32 func_800665FC(sint32 arg);
-void func_80015DB4(void);
+void game_update(void);
 void func_8001B314(void);
 void func_80031AA4(void);
-void func_80016BC0(void);
-void func_80016BF4(void);
+void play_time_count(void);
+void soft_reset_check(void);
 
-void func_80016D64(void);
-void func_80015EE8(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset);
+void Sound_fade_wait(void);
+void player_entry_set(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset);
 void Sce_flag_on(sint32 flag);
 #ifdef __wasm32__
 sint32 Sce_stage_load(void);
@@ -286,19 +288,19 @@ void Sce_pl_parts_load(void);
 
 void func_800175D8(void);
 void func_800679B8(void);
-void func_80017478(void);
+void eve_work_move(void);
 void func_8003C07C(void);
 void func_8003606C(void);
 void func_8005C2B8(void);
 void func_80017094(void);
-void func_80016FD4(void);
-void func_80017210(void);
-void func_800172F4(void);
+void Em_work_move(void);
+void shl_work_move(void);
+void effect_stage_move(void);
 void func_80017528(void);
 void func_80051BE4(void);
 void func_8003C2D8(void);
-void func_80017154(void);
-void func_800173B4(void);
+void pl_shl_work_move(void);
+void effect_common_move(void);
 void func_80038894(void);
 void func_8003450C(void);
 void func_80037F60(void);
@@ -313,11 +315,11 @@ sint32 Map_screen_task(void);
 
 void Sound_fade_start(sint32 arg);
 sint32 func_8001A0A8(sint32 arg);
-void func_80016DAC(void);
-void func_80016E90(void);
-void func_80016D0C(GAME_WORK *wp);
-void func_80016D38(GAME_WORK *wp);
-void func_80016434(sint32 mode);
+void game_over_draw(void);
+void shutter_draw(void);
+void fade_wait_next(GAME_WORK *wp);
+void fade_wait_next2(GAME_WORK *wp);
+void support_warp_set(sint32 mode);
 void func_80019D18(void);
 void func_8003A744(void);
 void func_801D8130(void);

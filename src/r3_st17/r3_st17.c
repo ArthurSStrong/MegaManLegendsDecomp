@@ -601,14 +601,14 @@ STAGE_OBJ *func_80101A14(STAGE_OBJ *owner, uint8 count, STCOM_SVECTOR *pos)
     uint8 i;
     uint8 j;
 
-    wp = func_80031418();
+    wp = Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
     }
     if (count == 0 || count > 6)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return NULL;
     }
     wp->flags_0 = 1;
@@ -649,7 +649,7 @@ STAGE_OBJ *func_80101B58(STAGE_OBJ *owner, sint8 kind, STCOM_SVECTOR *pos)
     uint8 i;
     uint8 j;
 
-    wp = func_80031418();
+    wp = Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
@@ -681,7 +681,7 @@ STAGE_OBJ *func_80101B58(STAGE_OBJ *owner, sint8 kind, STCOM_SVECTOR *pos)
             rb->color_10 = 0x2E404040;
             break;
         default:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             return NULL;
     }
     rb->value_1 = 0x3F;
@@ -1495,7 +1495,7 @@ void func_80103520(STAGE_OBJ *wp, ST17_PART28 *part)
 void func_801036B4(STAGE_OBJ *wp, STAGE_OBJ **owner)
 {
     (*owner)->u_C.b.byte_C |= 1 << wp->u_C.b.byte_C;
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801036EC(STAGE_OBJ *wp, ST17_PART28 *part)
@@ -2202,7 +2202,7 @@ void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part)
     spawned = 0;
     func_80030058(&fixed, wp->rotation.y, 0x600, 0, 0);
     func_80030150(&fixed, &v);
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0 = 3;
@@ -2225,7 +2225,7 @@ void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part)
         shot->value_4C.half[0] = 0;
         func_80104B34((STAGE_XYZ *)&shot->position);
     }
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0 = 3;
@@ -5623,7 +5623,7 @@ void func_8010BA40(STAGE_OBJ *wp, sint32 side, sint32 level)
         func_80030058(&fixed, (wp->rotation.y + D_8011BD64[level]) & 0xFFF, 0x400, 0, 0);
     }
     func_80030150(&fixed, &v);
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0            = 3;
@@ -5671,7 +5671,7 @@ void func_8010BC84(STAGE_OBJ *wp, sint32 index)
 
     func_80030058(&fixed, (wp->rotation.y + D_8011BD9C[rand() & 7]) & 0xFFF, 0x400, 0, 0);
     func_80030150(&fixed, &v);
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0            = 3;
@@ -5701,7 +5701,7 @@ void func_8010BE04(STAGE_OBJ *wp)
     STCOM_SVECTOR rot;
     ST17_SHOT *shot;
 
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0            = 1;

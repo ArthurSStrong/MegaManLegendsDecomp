@@ -99,7 +99,7 @@ void stcom13_func_01D8(STCOM13_WORK *wp)
     }
     if (ctl->timer_36 == 0 && wp->value_80 > 0x800000 && !(wp->flags_6 & 0x80))
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
     if (ctl->damage_A != 0)
     {
@@ -139,7 +139,7 @@ void stcom13_func_01D8(STCOM13_WORK *wp)
 
 void stcom13_func_045C(STCOM13_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom13_func_047C(STCOM13_WORK *wp)

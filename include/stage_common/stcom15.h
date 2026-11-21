@@ -47,7 +47,7 @@ typedef struct
     STCOM15_SHOT *shot_4C;   // 374
 } STCOM15_CTL;
 
-// The 0x3C0-byte work slot stcom15 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom15 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00
@@ -127,7 +127,7 @@ sint32 func_8003648C(void *track, void *wp);
 void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 sint32 Sce_flag_test(sint32 flag);
 
-STCOM15_SHOT *func_80031518(void);
+STCOM15_SHOT *Open_SHL_WORK(void);
 
 sint32 stcom15_func_1D40(STCOM15_WORK *wp);
 void stcom15_func_1E0C(STCOM15_WORK *wp);

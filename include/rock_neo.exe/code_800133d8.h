@@ -61,7 +61,7 @@ extern uint8 *D_8008CB64[];
 extern uint32 Moji_flag;
 
 void func_80013420(void);
-void func_800155A4(void);
+void Game_task(void);
 void func_80015428(CODE800133D8_STATE *wp);
 void func_80017C30(sint32 arg);
 void func_8002E7A8(sint32 arg);
@@ -74,7 +74,7 @@ void func_80014394(void);
 void func_80013F60(CODE800133D8_STATE *wp);
 void func_80013F8C(CODE800133D8_STATE *wp);
 void func_800175D8(void);
-void func_80016FD4(void);
+void Em_work_move(void);
 void func_80038370(uint32 *arg0, uint32 *arg1);
 void func_800175FC(void);
 void func_80028DE0(void);

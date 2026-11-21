@@ -924,7 +924,7 @@ void func_80101B2C(STAGE_ROOM *wp)
         fx->x_1C    = 0x50;
         fx->y_1E    = 0x40;
     }
-    ev = func_800316BC();
+    ev = Open_EVE_WORK();
     if (ev != NULL)
     {
         ev->flags_0 = 1;
@@ -934,7 +934,7 @@ void func_80101B2C(STAGE_ROOM *wp)
     }
     for (i = 0; i < 4; i++)
     {
-        ev = func_800316BC();
+        ev = Open_EVE_WORK();
         if (ev != NULL)
         {
             ev->flags_0   = 1;
@@ -1311,7 +1311,7 @@ void func_80102914(STAGE_OBJ *wp)
 
 void func_80102970(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80102990(STAGE_OBJ *wp)

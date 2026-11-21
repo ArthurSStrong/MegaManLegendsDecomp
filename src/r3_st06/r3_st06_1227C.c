@@ -947,7 +947,7 @@ void func_80113EA0(ST06_OBJ *wp)
 
 void func_801140DC(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801140FC(STAGE_ACTOR *wp)
@@ -1051,7 +1051,7 @@ void func_801142A8(ST06_OBJ *wp)
 
 void func_80114430(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80114450(STAGE_OBJ *wp)
@@ -1317,7 +1317,7 @@ void func_80114DC4(ST06_BEAM *wp)
 void func_80114EE4(STAGE_OBJ *wp)
 {
     wp->u_C.b.byte_C = 1;
-    func_80031824(wp);
+    Close_EM_WORK(wp);
     Sound_key_off_voice(0x12);
 }
 
@@ -1341,7 +1341,7 @@ void func_80114FA8(ST06_BEAM *wp, uint8 index)
 {
     ST06_10C *part;
 
-    part = (ST06_10C *)func_80031518();
+    part = (ST06_10C *)Open_SHL_WORK();
     if (part != NULL)
     {
         part->flags_0     = 1;

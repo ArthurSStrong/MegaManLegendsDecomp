@@ -90,7 +90,7 @@ void Sce_update(void)
     {
         if (D_800C356C == 0)
         {
-            D_80088FA8[Game_work.routine_50]();
+            D_80088FA8[Game_work.stage_no]();
         }
     }
     if (wp->routine_0 != 0)
@@ -360,7 +360,7 @@ void Sce_slot_close_all(void)
                     }
                     else
                     {
-                        func_80031824(slot);
+                        Close_EM_WORK(slot);
                     }
                     break;
                 case 0x60:
@@ -399,7 +399,7 @@ void Sce_slot_close(sint8 index)
                 }
                 else
                 {
-                    func_80031824(slot);
+                    Close_EM_WORK(slot);
                 }
                 break;
             case 0x60:
@@ -596,7 +596,7 @@ SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos)
     switch (type)
     {
         case 0x20:
-            wp = func_80031418();
+            wp = Open_EM_WORK();
             break;
         case 0x40:
             wp = func_80031498();
@@ -615,7 +615,7 @@ SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos)
             }
             break;
         case 0x60:
-            wp = func_80031518();
+            wp = Open_SHL_WORK();
             break;
         default:
             goto end;
@@ -900,8 +900,8 @@ sint32 Sce_stage_load(void)
     sint32 cur;
     sint32 next;
 
-    routine = SCENE_GAME_FIXED.routine_50;
-    sub     = SCENE_GAME_FIXED.routine_51;
+    routine = SCENE_GAME_FIXED.stage_no;
+    sub     = SCENE_GAME_FIXED.area_no;
     func_8001F740();
     id = D_800896D4[routine];
     func_80019F94(id);
@@ -926,7 +926,7 @@ sint32 Sce_stage_load(void)
     D_80089714[routine]();
     func_8001D928(SCENE_GAME_FIXED.flags_82 & 1);
     gw->value_62++;
-    if ((uint32)((uint8)gw->routine_50 - 5) >= 2 && gw->routine_50 != 0xF)
+    if ((uint32)((uint8)gw->stage_no - 5) >= 2 && gw->stage_no != 0xF)
     {
         gw->flag_65 = 1;
         gw->flag_64 = 1;
@@ -948,8 +948,8 @@ sint32 Sce_room_load(void)
     sint32 sub;
     sint32 cd;
 
-    routine = SCENE_GAME_FIXED.routine_50;
-    sub     = SCENE_GAME_FIXED.routine_51;
+    routine = SCENE_GAME_FIXED.stage_no;
+    sub     = SCENE_GAME_FIXED.area_no;
     func_8001F740();
     gw = &Game_work;
     pw = (uint8 *)&Player_work;
@@ -1065,8 +1065,8 @@ void func_8001F6C4(void)
 
 void func_8001F740(void)
 {
-    func_8001F798(Game_work.routine_50);
-    D_8008980C[Game_work.routine_50]();
+    func_8001F798(Game_work.stage_no);
+    D_8008980C[Game_work.stage_no]();
 }
 
 void func_8001F798(sint32 arg)

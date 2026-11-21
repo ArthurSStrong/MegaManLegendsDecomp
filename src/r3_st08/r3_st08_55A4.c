@@ -211,7 +211,7 @@ void func_80105D54(ST08_ACTOR *wp)
     {
         Sound_call2(0x160, &wp->position);
         STAGE_SCENE_WORD(0x10)++;
-        obj = func_80031518();
+        obj = Open_SHL_WORK();
         if (obj != NULL)
         {
             obj->flags_0 = 1;
@@ -308,7 +308,7 @@ void func_801060C0(ST08_ACTOR *wp)
     wp->position_fixed.z = wp->position.z << 16;
     if (wp->position.y < -0x257)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return;
     }
     if (wp->velocity.v.x > 0)
@@ -414,13 +414,13 @@ void func_80106428(ST08_ACTOR *wp)
         {
             if (wp->position.x < -0x2BB)
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 return;
             }
         }
         else if (wp->position.x >= 0x2BC)
         {
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             return;
         }
         wp->position_fixed.x = wp->position.x << 16;
@@ -466,7 +466,7 @@ void func_80106714(STAGE_OBJ *wp)
 {
     if (STAGE_SCENE_BYTE(4) == 0xB)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
     else
     {

@@ -201,7 +201,7 @@ void func_8011006C(ST03_PROP *wp)
 
 void func_80110128(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80110148(ST03_PROP *wp)

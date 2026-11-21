@@ -520,5 +520,5 @@ void stcom28_func_0D40(STCOM28_WORK *wp)
 
 void stcom28_func_0E40(STCOM28_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }

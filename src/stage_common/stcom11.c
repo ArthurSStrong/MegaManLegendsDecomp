@@ -87,7 +87,7 @@ void stcom11_func_003C(STCOM11_WORK *wp)
     }
     if (func_80049C24(wp))
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     wp->sprite.hit_14 = 0;
     Sound_call2(0x1AF, &wp->position);
@@ -102,7 +102,7 @@ void stcom11_func_0308(STCOM11_WORK *wp)
     wp->position_prev       = wp->position;
     if (--wp->routine_3 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {
@@ -164,7 +164,7 @@ void stcom11_func_0564(STCOM11_WORK *wp)
     wp->position_prev       = wp->position;
     if (--wp->routine_3 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {
@@ -223,7 +223,7 @@ void stcom11_func_077C(STCOM11_WORK *wp)
     wp->position_prev       = wp->position;
     if (--wp->routine_3 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {
@@ -275,5 +275,5 @@ void stcom11_func_077C(STCOM11_WORK *wp)
 
 void stcom11_func_0994(STCOM11_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }

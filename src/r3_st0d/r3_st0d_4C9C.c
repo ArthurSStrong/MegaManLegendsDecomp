@@ -112,7 +112,7 @@ void func_80104C9C(ST0D_ACTOR *wp, uint16 *bob)
                     }
                 }
                 func_80052528(wp);
-                func_800318D8(wp);
+                Close_SHL_WORK(wp);
             }
             else
             {

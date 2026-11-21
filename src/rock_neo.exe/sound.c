@@ -149,7 +149,7 @@ void func_80019B14(sint32 arg)
 
     if (arg == 0)
     {
-        idx = Game_work.routine_51;
+        idx = Game_work.area_no;
     }
     else
     {
@@ -196,8 +196,8 @@ void func_80019C20(void)
         }
         else
         {
-            tbl = D_80082320[Game_work.routine_50];
-            if (tbl[(sint8)Game_work.routine_51] != v)
+            tbl = D_80082320[Game_work.stage_no];
+            if (tbl[(sint8)Game_work.area_no] != v)
             {
                 diff = 1;
             }
@@ -217,17 +217,17 @@ void func_80019D18(void)
     sint32 id;
     sint32 ok;
 
-    fn = D_800823A0[GAME_WORK_PTR->routine_50];
+    fn = D_800823A0[GAME_WORK_PTR->stage_no];
     if (fn != 0)
     {
         fn(0);
     }
-    tbl = D_80082320[GAME_WORK_PTR->routine_50];
+    tbl = D_80082320[GAME_WORK_PTR->stage_no];
     id  = 0;
     ok  = 0;
     if (tbl != 0)
     {
-        id = tbl[(sint8)GAME_WORK_PTR->routine_51];
+        id = tbl[(sint8)GAME_WORK_PTR->area_no];
         ok = id != 0xFFFF;
     }
     if (ok)
@@ -297,7 +297,7 @@ void func_80019FB4(void)
 {
     SOUND_FUNC func;
 
-    func = D_800823A0[Game_work.routine_50];
+    func = D_800823A0[Game_work.stage_no];
     D_80098958 |= 0x800;
     if (func != 0)
     {

@@ -135,7 +135,7 @@ void func_80100D48(STAGE_ROOM *wp);
 
 void func_80100E48(STAGE_ROOM *wp);
 
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 sint32 func_80036294(sint32 arg);
 extern STAGE_OBJ_FUNC D_80113ACC[];
 extern STAGE_SLOT_FUNC D_801140C0[];
@@ -379,7 +379,7 @@ typedef void (*ST08_ACTOR_FUNC)(ST08_ACTOR *wp);
 #define ST08_SP_ROT_Z (*(sint16 *)0x1F80012C)
 void func_80105B9C(ST08_ACTOR *wp, ST08_HIT *hit);
 
-// A 0x10C-byte slot of ROCK_NEO's pool at D_8009CF88 (32 of them), as func_80110434 reads it.
+// A 0x10C-byte slot of ROCK_NEO's pool at Shl_work_tbl (32 of them), as func_80110434 reads it.
 typedef struct
 {
     sint8 flags_0;          // 00
@@ -390,7 +390,7 @@ typedef struct
     uint8 reserved0D[0xFF]; // 0D
 } ST08_SLOT10C;
 
-extern ST08_SLOT10C D_8009CF88[];
+extern ST08_SLOT10C Shl_work_tbl[];
 extern ST08_PAIR D_8011422C[]; // by Game_work +0x150
 void func_801100C0(sint16 x, sint16 y, sint16 z, sint16 angle);
 uint8 func_80110314(ST08_RANK *tbl, uint32 score);

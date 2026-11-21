@@ -84,7 +84,7 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
         if (wp->hit_C4 & stcom23_D_0000[wp->variant_3].hit_mask_24)
         {
             stcom23_D_0144[stcom23_D_0000[wp->variant_3].type_1C](wp);
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
         }
     }
     wp->fixed_prev    = wp->position_fixed.v;
@@ -134,7 +134,7 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
     {
     destroyed:
         stcom23_D_0144[stcom23_D_0000[wp->variant_3].type_1C](wp);
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     stcom23_func_0954(wp);

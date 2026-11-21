@@ -47,7 +47,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
     sint32 life;
 
     ctl = &wp->ctl;
-    if ((((ST09_PAIR_CTL *)&wp->ctl)->part_34 = func_80031518()) != NULL)
+    if ((((ST09_PAIR_CTL *)&wp->ctl)->part_34 = Open_SHL_WORK()) != NULL)
     {
         ((ST09_PAIR_CTL *)&wp->ctl)->part_34->flags_0      = 0x25;
         ((ST09_PAIR_CTL *)&wp->ctl)->part_34->kind_2       = 0xA;
@@ -61,7 +61,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
     {
         func_8003187C(wp);
     }
-    if ((((ST09_PAIR_CTL *)ctl)->part_38 = func_80031518()) != NULL)
+    if ((((ST09_PAIR_CTL *)ctl)->part_38 = Open_SHL_WORK()) != NULL)
     {
         ((ST09_PAIR_CTL *)ctl)->part_38->flags_0      = 0x25;
         ((ST09_PAIR_CTL *)ctl)->part_38->kind_2       = 0xA;
@@ -80,7 +80,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
     else
     {
         func_8003187C(wp);
-        func_800318D8(((ST09_PAIR_CTL *)ctl)->part_34);
+        Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_34);
     }
     wp->rotation.x          = 0;
     wp->rotation.z          = 0;
@@ -252,8 +252,8 @@ void func_801101D4(STAGE_STCOM15_WORK_4E0 *wp)
 void func_801103D0(ST09_PAIR_OBJ *wp)
 {
     func_8003187C(wp);
-    func_800318D8(wp->child_514);
-    func_800318D8(wp->child_518);
+    Close_SHL_WORK(wp->child_514);
+    Close_SHL_WORK(wp->child_518);
 }
 
 void func_80110410(STAGE_STCOM15_WORK_4E0 *wp)
@@ -926,8 +926,8 @@ void func_80111650(STAGE_STCOM15_WORK_4E0 *wp)
             {
                 func_8005D6E8(wp);
                 func_8003187C(wp);
-                func_800318D8(((ST09_PAIR_CTL *)ctl)->part_34);
-                func_800318D8(((ST09_PAIR_CTL *)ctl)->part_38);
+                Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_34);
+                Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_38);
                 func_80047228(wp, &wp->joints_180[0], wp->variant_3);
             }
             break;

@@ -1596,7 +1596,7 @@ void func_80039E50(void);
 
 void func_8010214C(sint8 index);
 
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 
 void func_8003A264(void);
 

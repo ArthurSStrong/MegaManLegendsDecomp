@@ -125,8 +125,8 @@ void func_80100B98(STAGE_ROOM *wp)
             if ((wp->reserved09[1] & 1) && wp->reserved09[2] == 0)
             {
                 func_8003187C(wp->child_28);
-                func_80031824(wp->child_2C);
-                func_80031824(wp->child_30);
+                Close_EM_WORK(wp->child_2C);
+                Close_EM_WORK(wp->child_30);
             }
             func_8003697C();
             func_8001D494(0, 1, 0);

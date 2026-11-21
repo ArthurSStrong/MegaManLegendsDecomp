@@ -387,7 +387,7 @@ void func_8012B484(STAGE_OBJ50 *wp, sint32 x, sint32 z, uint8 variant, uint8 fla
 {
     ST05_PROP *obj;
 
-    obj = (ST05_PROP *)func_80031518();
+    obj = (ST05_PROP *)Open_SHL_WORK();
     if (obj != NULL)
     {
         obj->flags_0    = 1;

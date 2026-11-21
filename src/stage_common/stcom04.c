@@ -375,7 +375,7 @@ uint8 stcom04_func_0A84(STCOM04_WORK *wp, uint32 *hit)
     func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, 0);
     if (func_80048DAC(&wp->position) != 0)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return 1;
     }
     *hit = func_8004B414(wp);
@@ -423,7 +423,7 @@ void stcom04_func_0C88(STCOM04_WORK *wp)
     hit = func_80048E6C(wp) - 2000;
     if (wp->position.y < hit)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
     wp->velocity.y -= 0x10;
     if (!stcom04_func_0A84(wp, &hit))

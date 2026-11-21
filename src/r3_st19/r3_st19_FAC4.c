@@ -845,8 +845,8 @@ void func_80111634(STAGE_ROOM *wp)
     switch (wp->frame_10)
     {
         case 0:
-            func_80031824(wp->child_2C);
-            func_80031824(wp->child_30);
+            Close_EM_WORK(wp->child_2C);
+            Close_EM_WORK(wp->child_30);
             STAGE_PL.pos_438.z   = -0xD02;
             STAGE_PL.value_448   = 1;
             STAGE_PL.fixed_428.z = STAGE_PL.pos_438.x << 16;

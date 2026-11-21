@@ -254,7 +254,7 @@ void func_80117490(ST05_ACTOR *wp)
 
 void func_801175C8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801175E8(STAGE_OBJ *wp)
@@ -1365,7 +1365,7 @@ void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     spawned = 0;
     func_80030058(&dir, wp->rotation.y, 0x600, 0, 0);
     func_80030150(&dir, &step);
-    fx = (ST05_SPRAY *)func_80031518();
+    fx = (ST05_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
     {
         fx->flags_0 = 3;
@@ -1387,7 +1387,7 @@ void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
         fx->accel.x      = 0;
         spawned          = 1;
     }
-    fx = (ST05_SPRAY *)func_80031518();
+    fx = (ST05_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
     {
         fx->flags_0 = 3;
@@ -1745,7 +1745,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
             if (ctl->timer_4 == 4)
             {
                 wp->flags_0 &= ~2;
-                piece = func_80031418();
+                piece = Open_EM_WORK();
                 if (piece != NULL)
                 {
                     piece->flags_0               = 1;
@@ -1814,7 +1814,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
 
 void func_8011A7C8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8011A7E8(ST05_ACTOR *wp)
@@ -2924,7 +2924,7 @@ void func_8011C9B0(ST05_BOSS *wp)
 
     ctl  = &wp->ctl;
     pl   = &ST05_PL;
-    shot = (ST05_SPRAY *)func_80031518();
+    shot = (ST05_SPRAY *)Open_SHL_WORK();
     if (shot == NULL)
     {
         return;
@@ -3044,7 +3044,7 @@ void func_8011CE1C(ST05_BOSS *wp)
     sint32 c;
     uint16 r;
 
-    obj = func_80031518();
+    obj = Open_SHL_WORK();
     if (obj != NULL)
     {
         obj->flags_0       = 3;
@@ -3515,9 +3515,9 @@ void func_8011DE74(ST05_HOLDER *wp)
     func_800322A8(wp, D_80131A74[wp->u_C.b.byte_D * 2 - 1], 0);
     for (i = 0; i < 16; i++)
     {
-        if ((D_8009F108[i].flags_0 & 1) && D_8009F108[i].kind_2 == 0x2A)
+        if ((Em_work_tbl[i].flags_0 & 1) && Em_work_tbl[i].kind_2 == 0x2A)
         {
-            wp->target_520 = &D_8009F108[i];
+            wp->target_520 = &Em_work_tbl[i];
         }
     }
     wp->routine_1 = 0;

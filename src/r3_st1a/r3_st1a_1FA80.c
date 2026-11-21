@@ -54,6 +54,6 @@ void func_8011FC74(STAGE_OBJ *wp)
 {
     if (wp->u_C.b.byte_C == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }

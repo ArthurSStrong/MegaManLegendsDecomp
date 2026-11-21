@@ -224,7 +224,7 @@ typedef struct
     uint8 index_6;  // 1DE: the next shot's direction (0..15)
 } ST1D_SHOT;
 
-// The 0x10C-byte shot func_8010C9AC fires (func_80031518).
+// The 0x10C-byte shot func_8010C9AC fires (Open_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -445,7 +445,7 @@ extern sint32 D_801149E0[];
 extern STAGE_SLOT_FUNC D_80114A68[];
 extern STAGE_SLOT_FUNC D_80114A74[];
 extern STAGE_SLOT_FUNC D_80114A94[];
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 extern STAGE_SLOT_FUNC D_80114AA8[];
 extern uint16 D_80114AB4[];
 extern uint16 D_80114AB6[];

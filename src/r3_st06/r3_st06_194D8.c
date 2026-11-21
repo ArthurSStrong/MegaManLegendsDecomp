@@ -18,7 +18,7 @@ void func_80119514(STAGE_OBJ *wp)
             wp->routine_1++;
             for (i = 0; i < 7; i++)
             {
-                crab = (ST06_CRAB *)func_80031418();
+                crab = (ST06_CRAB *)Open_EM_WORK();
                 if (crab != NULL)
                 {
                     start                       = &D_80125924[i];
@@ -179,7 +179,7 @@ void func_801197D0(STAGE_OBJ *wp)
                 }
                 if (i >= 3)
                 {
-                    func_80031824(D_8012BAAC[i]);
+                    Close_EM_WORK(D_8012BAAC[i]);
                 }
                 D_8012BAA0 &= ~(1 << i);
             }
@@ -216,7 +216,7 @@ void func_80119B78(ST06_CRAB *wp, sint16 slot, uint8 variant)
 {
     ST06_CRAB *part;
 
-    part = (ST06_CRAB *)func_80031418();
+    part = (ST06_CRAB *)Open_EM_WORK();
     if (part != NULL)
     {
         D_8012BAAC[slot] = part;

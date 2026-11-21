@@ -8,14 +8,14 @@ ST0A_GRID_OBJ *func_80108334(STAGE_OBJ *owner, uint8 rows, STCOM_SVECTOR *origin
     ST0A_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0A_GRID_OBJ *)func_80031418();
+    wp = (ST0A_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
     }
     if (rows == 0 || rows > 6)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return NULL;
     }
     grid        = &wp->grid;
@@ -56,7 +56,7 @@ ST0A_GRID_OBJ *func_80108478(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
     ST0A_CELL *cell;
     uint8 i;
     uint8 j;
-    wp = (ST0A_GRID_OBJ *)func_80031418();
+    wp = (ST0A_GRID_OBJ *)Open_EM_WORK();
     if (wp == NULL)
     {
         return NULL;
@@ -88,7 +88,7 @@ ST0A_GRID_OBJ *func_80108478(STAGE_OBJ *owner, sint8 variant, STCOM_SVECTOR *ori
             grid->value_10 = 0x2E404040;
             break;
         default:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             return NULL;
     }
     grid->mask_1     = 0x3F;

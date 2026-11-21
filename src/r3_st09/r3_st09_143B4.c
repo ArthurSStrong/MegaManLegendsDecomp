@@ -117,7 +117,7 @@ void func_801144E8(ST09_PART *wp)
 
 void func_801149F0(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80114A10(void)
@@ -609,7 +609,7 @@ void func_80115A0C(ST09_SLIDER *wp)
 
 void func_80115BD0(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80115BF0(ST09_SLIDER *wp)

@@ -363,13 +363,13 @@ void stcom09_func_0A64(STCOM09_WORK *wp)
 #else
         func_80047148(wp, &wp->position, effect);
 #endif
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
 }
 
 void stcom09_func_0ADC(STCOM09_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 uint8 stcom09_func_0AFC(STCOM09_WORK *wp)
@@ -466,7 +466,7 @@ uint8 stcom09_func_0D28(STCOM09_WORK *wp)
 {
     STCOM09_SHOT *shot;
 
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0   = 3;

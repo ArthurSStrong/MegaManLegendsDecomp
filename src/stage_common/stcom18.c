@@ -132,7 +132,7 @@ void stcom18_func_0260(STCOM18_WORK *wp)
     else
     {
         wp->flags_0 = 0;
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     if (wp->hit_BC & 0x2000000)
     {
@@ -173,7 +173,7 @@ void stcom18_func_04C8(STCOM18_WORK *wp)
         }
     }
     wp->flags_0 = 0;
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom18_func_0534(STCOM18_WORK *wp, STCOM_EFFECT *effect)

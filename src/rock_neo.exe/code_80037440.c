@@ -20,9 +20,9 @@ sint32 func_80037440(void)
     ((sint32 *)D_8009856C)[3] = 0;
     for (i = 0; i < 16; i++)
     {
-        if (D_800BFB20[i].flags & 1)
+        if (Pl_shl_work_tbl[i].flags & 1)
         {
-            kind = D_800BFB20[i].kind - 0x80;
+            kind = Pl_shl_work_tbl[i].kind - 0x80;
             if (kind < 16)
             {
                 D_8009856C[kind]++;

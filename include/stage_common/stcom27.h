@@ -24,7 +24,7 @@ typedef struct
     uint8 reserved40[0x38]; // 388
 } STCOM27_CTL;
 
-// The 0x3C0-byte work slot stcom27 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom27 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

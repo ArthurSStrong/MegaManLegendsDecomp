@@ -96,7 +96,7 @@ void func_8010BAD0(STAGE_OBJ *wp)
         case 2:
             if (wp->value_A7 == -1)
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             func_80032488(wp);
             break;
@@ -169,7 +169,7 @@ void func_8010BD0C(ST05_ACTOR *wp)
 
 void func_8010BE44(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010BE64(ST05_ACTOR *wp)
@@ -427,7 +427,7 @@ void func_8010C37C(ST05_GUARD *wp)
 
 void func_8010C644(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010C664(ST05_ACTOR *wp)
@@ -688,7 +688,7 @@ void func_8010CA98(ST05_GUARD *wp)
     wp->scale.v.pad = 0x190C;
     if (wp->value_80 > 0x800000 && !(wp->flags_6 & 0x80))
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
 }
 

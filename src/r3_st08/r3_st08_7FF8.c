@@ -7,7 +7,7 @@ STAGE_ACTOR *func_80107FF8(void)
     STAGE_ACTOR *wp;
     sint32 i;
 
-    wp = D_8009F108;
+    wp = Em_work_tbl;
     for (i = 0; i < 0x10; i++, wp++)
     {
         if (wp->flags_0 != 0 && wp->kind_2 == 0x50)
@@ -164,7 +164,7 @@ void func_80108540(STAGE_OBJ *wp)
 
 void func_8010857C(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010859C(STAGE_OBJ *wp)

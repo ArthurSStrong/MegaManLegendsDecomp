@@ -36,7 +36,7 @@ typedef struct
     uint8 reserved28[4]; // 28
 } STCOM23_PARAM;
 
-// The 0x10C-byte work slot (freed through func_800318D8) of a homing missile with a smoke
+// The 0x10C-byte work slot (freed through Close_SHL_WORK) of a homing missile with a smoke
 // trail.
 typedef struct
 {

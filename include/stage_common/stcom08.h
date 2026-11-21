@@ -7,7 +7,7 @@
 // A scratchpad frame counter (ROCK_NEO's CODE456_FRAME).
 #define STCOM08_FRAME (*(uint16 *)0x1F800002)
 
-// The 0x3C0-byte work slot stcom08 runs on (freed through ROCK_NEO's func_80031824): something
+// The 0x3C0-byte work slot stcom08 runs on (freed through ROCK_NEO's Close_EM_WORK): something
 // that drifts near its home position at a wobbling height above the ground.
 typedef struct
 {

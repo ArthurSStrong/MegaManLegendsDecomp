@@ -231,7 +231,7 @@ sint32 func_8002D404(sint32 id, sint32 a1, sint32 a2, sint32 a3);
 void func_8002D320(void *model, uint32 idx, sint32 delta);
 uint32 func_8003AC24(uint32 key);
 // Allocates a 0x24-byte event slot; NULL when none is free.
-void *func_800316BC(void);
+void *Open_EVE_WORK(void);
 
 // Palette slots in a work slot: eight bytes apart, from +0x186.
 typedef struct
@@ -391,7 +391,7 @@ typedef struct
     sint32 color_40;     // 40
 } STAGE_LIGHT;
 
-// A 0x24-byte event slot (func_800316BC; freed through Close_EVE_WORK).
+// A 0x24-byte event slot (Open_EVE_WORK; freed through Close_EVE_WORK).
 typedef struct
 {
     uint8 flags_0;         // 00
@@ -679,7 +679,7 @@ struct STAGE_ROOM
     STAGE_ROOM2_FUNC *tbl_A4; // A4: [0] is also read as a byte (0xFF: no script)
 };
 
-// A 0x10C-byte work slot (func_80031518).
+// A 0x10C-byte work slot (Open_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -712,7 +712,7 @@ typedef struct
 } STAGE_10C;
 
 // ROCK_NEO.EXE's slot allocators (NULL when none is free).
-STAGE_10C *func_80031518(void);
+STAGE_10C *Open_SHL_WORK(void);
 
 // ROCK_NEO.EXE's sound work: +6 is the music volume.
 typedef struct
@@ -902,7 +902,7 @@ typedef struct
 
 void func_8002F9EC(void *wp, sint32 arg);
 // Allocates a 0x3C0-byte work slot; NULL when none is free.
-STAGE_OBJ *func_80031418(void);
+STAGE_OBJ *Open_EM_WORK(void);
 // The scratchpad's copy of the current room's map bounds (0x1F800040): STAGE_MAP_X0..STAGE_MAP_H
 // as one struct. The room setups write it this way (the struct keeps retail's store order).
 typedef struct
@@ -1360,7 +1360,7 @@ typedef struct
 // The cells at their fixed address: GCC adds the index before the base, as retail does.
 #define STAGE_CELLS ((STAGE_CELL *)0x8015C008)
 
-// A 0x10C-byte slot (func_80031518) that keeps its direction at +0x64: the pieces the r3_st09 and
+// A 0x10C-byte slot (Open_SHL_WORK) that keeps its direction at +0x64: the pieces the r3_st09 and
 // r3_st1d actors spawn (kind 9).
 typedef struct
 {
@@ -1461,7 +1461,7 @@ typedef struct
 // A scratchpad halfword the r3_st09 and r3_st1d actors set before func_8003346C.
 #define STAGE_SP_13A (*(uint16 *)0x1F80013A)
 
-// A 0x10C-byte slot (func_80031518) of a prop that turns and talks: r3_st03's func_80112098 and its
+// A 0x10C-byte slot (Open_SHL_WORK) of a prop that turns and talks: r3_st03's func_80112098 and its
 // copies in r3_st05 and r3_st0e.
 typedef struct
 {

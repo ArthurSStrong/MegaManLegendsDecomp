@@ -54,7 +54,7 @@ typedef struct
 typedef struct
 {
     uint8 reserved00[0xC];
-    uint32 timer_0c;
+    uint32 play_time;
     uint8 reserved10[4];
     uint32 timer_14;
     uint8 reserved18[4];

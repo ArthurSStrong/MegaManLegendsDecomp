@@ -117,7 +117,7 @@ typedef struct
     uint8 routine_0;
     uint8 routine_1;
     uint8 reserved02[0xA];
-    uint32 timer_0c; // frame counter (60 per second)
+    uint32 play_time; // frames played (30 per second)
     uint8 reserved10[0xC];
     sint32 value_1C;
     uint8 reserved20[0x30];
@@ -233,7 +233,7 @@ void Sound_call(sint32 sound, ...);
 void func_8003B140(void);
 void func_80017C30(sint32 arg);
 void Sound_fade_start(sint32 arg);
-void func_80016D64(void);
+void Sound_fade_wait(void);
 void func_8001B33C(void);
 void func_8001B314(void);
 void func_80019C20(void);

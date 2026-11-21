@@ -207,7 +207,7 @@ extern SHL_GAME Game_work;
 #define SHL_FRAME (*(uint16 *)0x1F800002)
 
 // Effect slot (ROCK_NEO's CODE456_WORK, seen from the SHL modules): func_80031618 returns a
-// free one from the 64-slot table D_800A3B40.
+// free one from the 64-slot table Effect_work_tbl.
 typedef struct
 {
     sint8 routine_0; // 00
@@ -236,7 +236,7 @@ typedef struct
     uint8 reserved44[4];
 } SHL_FX;
 
-extern SHL_FX D_800A3B40[64];
+extern SHL_FX Effect_work_tbl[64];
 
 // ROCK_NEO.EXE functions, as the SHL modules call them. The object routines are generic (players,
 // enemies, effects), so they take any object.
@@ -247,7 +247,7 @@ void *func_80036294(sint32 id);
 void *func_80031618(void); // a free effect slot (SHL_FX, or a module's own view)
 SHL_WORK *func_80031598(void);
 void func_80031930(void *obj);
-void func_800318D8(void *obj);
+void Close_SHL_WORK(void *obj);
 void func_8002F9C4(void *obj, void *arg);
 void func_80033F04(SVECTOR *out, SVECTOR *dir, SVECTOR *cur, sint32 a3, sint32 a4);
 void func_80030150(SHL_FIXED *fpos, SVECTOR *pos);

@@ -63,10 +63,10 @@ typedef struct
 typedef void (*C80027678_FUNC)(void *work, sint32 flags);
 
 extern C80027678_FUNC D_800898D0[];
-extern C80027678_SLOT48 D_800A3B40[0x40];
+extern C80027678_SLOT48 Effect_work_tbl[0x40];
 extern C80027678_SLOT50 D_800BF118[0x20];
-extern C80027678_SLOT10C D_800BFB20[0x10];
-extern C80027678_SLOT10C D_8009CF88[0x20];
+extern C80027678_SLOT10C Pl_shl_work_tbl[0x10];
+extern C80027678_SLOT10C Shl_work_tbl[0x20];
 extern C80027678_ENT12 D_800ACE00[];
 extern C80027678_UVAL12 D_800ACE08[];
 extern C80027678_VAL12 D_800ACE0A[];
@@ -162,7 +162,7 @@ typedef struct
     uint8 reserved07[0x3B9];
 } C80027678_REC3C0;
 extern C80027678_REC5A4 D_800C3580[];
-extern C80027678_REC3C0 D_8009F108[];
+extern C80027678_REC3C0 Em_work_tbl[];
 
 extern uint32 D_80098824;
 extern sint32 D_800D9BFC;

@@ -258,7 +258,7 @@ void func_80104BE4(ST00_ACTOR_B *wp)
                 fx->variant_3       = 0x41;
                 fx->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80047148(wp, &wp->value_180);
             Sound_call2(0xA1, &wp->value_180);
         }
@@ -267,7 +267,7 @@ void func_80104BE4(ST00_ACTOR_B *wp)
 
 void func_80104DC8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80104DE8(ST00_ACTOR *wp)
@@ -972,7 +972,7 @@ void func_80106584(ST00_ACTOR_B *wp)
 
 void func_801066B8(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801066D8(ST00_ACTOR *wp)

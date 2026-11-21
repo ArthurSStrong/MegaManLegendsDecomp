@@ -43,13 +43,13 @@ void func_80120968(ST06_10C *wp)
     }
     if (!(parts->mask_10 & (1 << wp->variant_3)))
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }
 
 void func_80120A0C(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80120A2C(ST06_10C_B *wp, sint16 scale)
@@ -105,7 +105,7 @@ void func_80120AAC(ST06_10C_B *wp)
                 {
                     if (D_8012B91C[wp->value_C].turn_2 == 0)
                     {
-                        func_800318D8(wp);
+                        Close_SHL_WORK(wp);
                         break;
                     }
                     wp->value_C++;

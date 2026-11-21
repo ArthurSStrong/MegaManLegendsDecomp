@@ -80,7 +80,7 @@ void func_801079BC(ST0E_VIEW *wp)
 
 void func_80107B94(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80107BB4(ST0E_10C *wp)
@@ -245,7 +245,7 @@ void func_80107DE0(ST0E_VIEW *wp)
 
 void func_80108084(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801080A4(void)

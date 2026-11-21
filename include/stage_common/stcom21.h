@@ -51,7 +51,7 @@ struct STCOM21_WORK
 
 typedef void (*STCOM21_FUNC)(STCOM21_WORK *wp);
 
-// A 0x3C0-byte work slot (func_80031418) as stcom21_func_1908 sets it up.
+// A 0x3C0-byte work slot (Open_EM_WORK) as stcom21_func_1908 sets it up.
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -108,7 +108,7 @@ void Sce_flag_off(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 STCOM21_WORK *func_80031734(void);
 void func_80031A4C(STCOM21_WORK *wp);
-STCOM21_OBJ *func_80031418(void);
+STCOM21_OBJ *Open_EM_WORK(void);
 sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
                      sint32 target_angle, sint32 target_range);
 sint32 func_8004324C(STCOM_PL_WORK *pl);

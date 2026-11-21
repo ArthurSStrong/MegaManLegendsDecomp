@@ -100,8 +100,8 @@ typedef struct
 } ST1B_STCOM01_CTL;
 
 // From r3_st03 (STCOM01_WORK).
-// The work slot stcom01's routines run on. Freed through ROCK_NEO.EXE's func_80031824, so it is
-// one of the 0x3C0-byte slots at D_8009F108 there (GAME_WORK_3C0 in ROCK_NEO's game.h, which
+// The work slot stcom01's routines run on. Freed through ROCK_NEO.EXE's Close_EM_WORK, so it is
+// one of the 0x3C0-byte slots at Em_work_tbl there (GAME_WORK_3C0 in ROCK_NEO's game.h, which
 // names other fields; the two views aren't reconciled yet). Only the fields used so far.
 typedef struct ST1B_STCOM01_WORK
 {
@@ -160,7 +160,7 @@ typedef struct
     sint32 radius_C;    // D8
 } ST1B_ORBIT;
 
-// A 0x10C-byte slot (func_80031518) whose model runs round a circle (func_8010AF9C).
+// A 0x10C-byte slot (Open_SHL_WORK) whose model runs round a circle (func_8010AF9C).
 typedef struct
 {
     uint8 flags_0;                          // 00

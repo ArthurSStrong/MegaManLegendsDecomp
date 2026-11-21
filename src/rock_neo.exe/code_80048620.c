@@ -4616,7 +4616,7 @@ void func_80052528(sint32 key)
             func_80052644(key, &players->link);
         }
     }
-    objs3c0 = D_8009F108;
+    objs3c0 = Em_work_tbl;
     mask    = D_800987E8;
     for (i = 0; i < 16; i++, objs3c0++)
     {
@@ -4634,7 +4634,7 @@ void func_80052528(sint32 key)
             func_80052644(key, &objs5a4->link);
         }
     }
-    objs10c = D_8009CF88;
+    objs10c = Shl_work_tbl;
     mask    = D_800987CC;
     for (i = 0; i < 32; i++, objs10c++)
     {

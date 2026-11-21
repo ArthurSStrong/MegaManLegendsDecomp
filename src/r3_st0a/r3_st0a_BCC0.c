@@ -400,11 +400,11 @@ void func_8010CB1C(ST0A_EM *wp)
     }
     if (ext->obj_80[0] != NULL)
     {
-        func_800318D8(ext->obj_80[0]);
+        Close_SHL_WORK(ext->obj_80[0]);
     }
     if (ext->obj_80[1] != NULL)
     {
-        func_800318D8(ext->obj_80[1]);
+        Close_SHL_WORK(ext->obj_80[1]);
     }
     func_8003187C(wp);
 }
@@ -666,7 +666,7 @@ void func_8010D2F4(ST0A_EM *wp)
         case 3:
             if (--ext->timer_4 < 0)
             {
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0          = 1;
@@ -778,7 +778,7 @@ void func_8010D6C0(ST0A_EM *wp)
             {
                 for (i = 0; i < 4; i++)
                 {
-                    obj = (STAGE_OBJ *)func_80031518();
+                    obj = (STAGE_OBJ *)Open_SHL_WORK();
                     if (obj != NULL)
                     {
                         ext->pos_68    = wp->position;
@@ -1423,7 +1423,7 @@ sint32 func_8010EE60(ST0A_EM *wp, sint32 index)
     ST0A_EM_EXT *ext;
 
     ext = &wp->ext;
-    obj = (STAGE_OBJ *)func_80031518();
+    obj = (STAGE_OBJ *)Open_SHL_WORK();
     if (obj != NULL)
     {
         ext->obj_80[index >> 3] = obj;

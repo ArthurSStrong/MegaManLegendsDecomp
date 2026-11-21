@@ -64,7 +64,7 @@ void func_8010058C(STAGE_ROOM *wp)
             if (Sce_flag_test(0x26) == 0)
             {
                 Sce_slot_open_list(D_80114EB8);
-                obj = func_800316BC();
+                obj = Open_EVE_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0   = 1;
@@ -96,7 +96,7 @@ void func_8010058C(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            obj = func_800316BC();
+            obj = Open_EVE_WORK();
             if (obj != NULL)
             {
                 obj->flags_0   = 1;

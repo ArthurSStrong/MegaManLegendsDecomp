@@ -2015,7 +2015,7 @@ typedef struct
     STCOM_SVECTOR box_38;     // 38
 } ST0B_PATH;
 
-// A 0x10C-byte slot (func_80031518) that follows a path, carrying the player (func_80111D44).
+// A 0x10C-byte slot (Open_SHL_WORK) that follows a path, carrying the player (func_80111D44).
 typedef struct
 {
     sint8 flags_0;                          // 00
@@ -2385,7 +2385,7 @@ typedef struct
     uint8 reserved360[0x60];  // 360
 } ST0B_BOAT;
 
-// A 0x10C-byte slot (func_80031518) of the spray a boat throws up (kind 1, type 0x24).
+// A 0x10C-byte slot (Open_SHL_WORK) of the spray a boat throws up (kind 1, type 0x24).
 typedef struct
 {
     uint8 flags_0;                     // 00

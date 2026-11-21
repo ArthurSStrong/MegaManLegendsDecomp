@@ -10,7 +10,7 @@ void func_80103760(STAGE_EV *wp)
     base = Game_work.value_50 != 2 ? 5 : 0;
     for (i = 0; i < 5; i++)
     {
-        ep = func_800316BC();
+        ep = Open_EVE_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;

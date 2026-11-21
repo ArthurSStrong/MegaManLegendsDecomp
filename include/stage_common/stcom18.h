@@ -11,7 +11,7 @@ typedef struct
     uint8 b;
 } STCOM18_PAIR;
 
-// The 0x10C-byte work slot of a flame (freed through ROCK_NEO's func_800318D8).
+// The 0x10C-byte work slot of a flame (freed through ROCK_NEO's Close_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

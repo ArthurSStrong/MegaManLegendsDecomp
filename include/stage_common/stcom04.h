@@ -15,7 +15,7 @@ typedef struct
     STCOM_SVECTOR rot_speed; // 360: added to the rotation each frame
 } STCOM04_CTL;
 
-// The 0x3C0-byte work slot stcom04 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom04 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

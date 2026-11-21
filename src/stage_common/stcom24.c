@@ -222,7 +222,7 @@ void stcom24_func_07E4(STCOM24_WORK *wp)
 
     if (wp->flags_A7 < 0 && wp->ctl.timer_8 == 0)
     {
-        shot = func_80031518();
+        shot = Open_SHL_WORK();
         if (shot != NULL)
         {
             shot->flags_0          = 1;
@@ -669,7 +669,7 @@ void stcom24_func_1434(STCOM24_WORK *wp)
 #else
     func_80047148(wp, wp->joints_180, effect);
 #endif
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 // The body hit box: -1 when it is knocked back (or killed), 1 when it is hurt, else 0.

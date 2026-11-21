@@ -83,7 +83,7 @@ void func_8010C7E8(ST03_ACTOR *wp)
 
 void func_8010C934(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010C954(STAGE_OBJ *wp)
@@ -324,7 +324,7 @@ void func_8010CD68(ST03_ACTOR *wp)
             }
             break;
         case 10:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             break;
     }
     func_80051B68(wp, 1, -1, 0);
@@ -438,7 +438,7 @@ void func_8010D268(ST03_ACTOR *wp)
 
 void func_8010D3C4(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010D3E4(ST03_ACTOR *wp)
@@ -704,7 +704,7 @@ void func_8010DAE8(ST03_ACTOR *wp)
 
 void func_8010DC34(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010DC54(STAGE_OBJ *wp)

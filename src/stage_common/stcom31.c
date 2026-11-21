@@ -79,7 +79,7 @@ void stcom31_func_01F8(STCOM31_WORK *wp)
 
 void stcom31_func_02A8(STCOM31_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 // Waits.

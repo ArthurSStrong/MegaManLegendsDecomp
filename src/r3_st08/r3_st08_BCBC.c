@@ -63,7 +63,7 @@ void func_8010BECC(ST08_10C *wp)
         Sound_call2(0x160, &wp->position);
         if (++STAGE_SCENE_WORD(0x10) % 5 == 0)
         {
-            obj = func_80031418();
+            obj = Open_EM_WORK();
             if (obj != NULL)
             {
                 obj->flags_0   = 1;
@@ -73,7 +73,7 @@ void func_8010BECC(ST08_10C *wp)
         }
         else
         {
-            shot = func_80031518();
+            shot = Open_SHL_WORK();
             if (shot != NULL)
             {
                 shot->flags_0 = 1;
@@ -159,7 +159,7 @@ void func_8010C268(ST08_10C *wp)
     wp->position_fixed.z = wp->position.z << 16;
     if (wp->position.y < -0x257)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     func_8010BCBC(wp, 0x200);
@@ -170,7 +170,7 @@ void func_8010C37C(STAGE_10C *wp)
 {
     if (STAGE_SCENE_BYTE(4) == 0xB)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {
@@ -207,7 +207,7 @@ void func_8010C544(ST08_10C *wp, sint32 angle)
     ST08_10C *obj;
     sint32 dir;
 
-    obj = (ST08_10C *)func_80031518();
+    obj = (ST08_10C *)Open_SHL_WORK();
     if (obj != NULL)
     {
         obj->flags_0  = 1;
@@ -314,7 +314,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
                 owner->value_48 += 30;
                 MojiTaskExec2(4, 0x2C);
             }
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
             return;
         }
         wp->value_D++;

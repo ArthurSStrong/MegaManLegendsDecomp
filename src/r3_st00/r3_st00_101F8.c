@@ -118,7 +118,7 @@ void func_8011032C(ST00_PART *wp)
 
 void func_80110834(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80110854(void)

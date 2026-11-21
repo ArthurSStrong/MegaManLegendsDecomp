@@ -218,7 +218,7 @@ void func_801009B0(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 0x78)
     {
-        D_800A2D0B = 1;
+        Eve_work_tbl[3] = 1;
     }
     if (wp->frame_10 == 0xD2)
     {
@@ -268,19 +268,19 @@ void func_80100A94(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        ev            = func_800316BC();
+        ev            = Open_EVE_WORK();
         ev->flags_0   = 1;
         ev->kind_2    = 3;
         ev->value_4   = 0;
         ev->variant_3 = 2;
         ev->value_5   = 0;
-        ev            = func_800316BC();
+        ev            = Open_EVE_WORK();
         ev->flags_0   = 1;
         ev->kind_2    = 3;
         ev->value_4   = 0;
         ev->variant_3 = 3;
         ev->value_5   = 0;
-        ev            = func_800316BC();
+        ev            = Open_EVE_WORK();
         ev->flags_0   = 1;
         ev->kind_2    = 4;
         ev->value_4   = 0;

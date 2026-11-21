@@ -93,7 +93,7 @@ void func_801055F0(ST04_ACTOR *wp)
 
 void func_80105794(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801057B4(ST04_ACTOR *wp)
@@ -376,7 +376,7 @@ void func_80105C08(ST04_ACTOR *wp)
             }
             break;
         case 26:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             break;
     }
 }
@@ -547,7 +547,7 @@ void func_801061D8(ST04_ACTOR *wp)
                 func_80039820();
                 func_80042314(pl);
                 pl->flags_0 |= 2;
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             break;
     }
@@ -748,7 +748,7 @@ void func_80106B28(ST04_ACTOR *wp)
 
 void func_80106BCC(STAGE_FX *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80106BEC(ST04_ACTOR *wp)
@@ -1291,7 +1291,7 @@ void func_80107990(ST04_ACTOR *wp)
             }
             break;
         case 26:
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             break;
     }
 }

@@ -25,7 +25,7 @@ typedef struct
     sint16 step_3E;        // 10A: rotation.x step while charging
 } STCOM28_CTL;
 
-// The 0x10C-byte work slot stcom28 runs on (freed through ROCK_NEO's func_800318D8).
+// The 0x10C-byte work slot stcom28 runs on (freed through ROCK_NEO's Close_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

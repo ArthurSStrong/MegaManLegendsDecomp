@@ -58,7 +58,7 @@ void func_8010FF58(ST05_ACTOR *wp)
     D_8013132C[wp->routine_1](wp);
     if (wp->ctl2.flags_0 & 1)
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         *(uint16 *)&wp->routine_2 = 0;
         wp->ctl2.flags_0 &= ~1;
     }
@@ -81,7 +81,7 @@ void func_8010FF58(ST05_ACTOR *wp)
 
 void func_801100BC(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801100DC(STAGE_OBJ *wp)

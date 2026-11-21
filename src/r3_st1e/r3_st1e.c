@@ -674,7 +674,7 @@ void func_80101078(STAGE_ROOM *wp)
     {
         Sce_slot_open(entry);
     }
-    ep = func_800316BC();
+    ep = Open_EVE_WORK();
     if (ep != NULL)
     {
         ep->flags_0 = 1;
@@ -926,7 +926,7 @@ STAGE_10C *func_80101930(sint32 *pos, sint16 angle, sint16 speed, uint8 variant)
 {
     STAGE_10C *op;
 
-    op = func_80031518();
+    op = Open_SHL_WORK();
     if (op != NULL)
     {
         op->kind_2    = 0x38;
@@ -1081,7 +1081,7 @@ void func_80101E3C(STAGE_OBJ *wp)
 
 void func_80101EA4(STAGE_EFFECT *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80101EC4(STAGE_OBJ *wp)

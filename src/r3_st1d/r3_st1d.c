@@ -180,7 +180,7 @@ void func_80100720(ST1D_VIEW *wp)
     wp->value_42A = 0xA00;
     wp->value_438 = 0; // stored twice
     wp->u_64.h[0] = 0;
-    obj           = func_80031418();
+    obj           = Open_EM_WORK();
     if (obj != NULL)
     {
         wp->value_439           = obj->value_1;
@@ -358,13 +358,13 @@ void func_80100E58(ST1D_VIEW *wp)
     count3  = 0;
     for (i = 0; i < 16; i++)
     {
-        if (D_8009F108[i].flags_0 != 0)
+        if (Em_work_tbl[i].flags_0 != 0)
         {
-            if (D_8009F108[i].kind_2 == 0x37)
+            if (Em_work_tbl[i].kind_2 == 0x37)
             {
                 count37++;
             }
-            if (D_8009F108[i].kind_2 == 3)
+            if (Em_work_tbl[i].kind_2 == 3)
             {
                 count3++;
             }
@@ -1094,13 +1094,13 @@ void func_80102070(ST1D_VIEW *wp)
     {
         for (i = 0; i < 16; i++)
         {
-            if (D_8009F108[i].flags_0 != 0)
+            if (Em_work_tbl[i].flags_0 != 0)
             {
-                if (D_8009F108[i].kind_2 == 0x37)
+                if (Em_work_tbl[i].kind_2 == 0x37)
                 {
                     count37++;
                 }
-                if (D_8009F108[i].kind_2 == 3)
+                if (Em_work_tbl[i].kind_2 == 3)
                 {
                     count3++;
                 }
@@ -1116,7 +1116,7 @@ void func_80102070(ST1D_VIEW *wp)
             {
                 if (spark->rand_52.h & 1)
                 {
-                    obj = func_80031418();
+                    obj = Open_EM_WORK();
                     if (obj != NULL)
                     {
                         obj->flags_0      = 1;
@@ -1150,7 +1150,7 @@ void func_80102070(ST1D_VIEW *wp)
                 }
                 else
                 {
-                    obj = func_80031418();
+                    obj = Open_EM_WORK();
                     if (obj != NULL)
                     {
                         obj->flags_0      = 1;
@@ -1185,7 +1185,7 @@ void func_80102070(ST1D_VIEW *wp)
             }
             else if (count37 < count3)
             {
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0      = 1;
@@ -1219,7 +1219,7 @@ void func_80102070(ST1D_VIEW *wp)
             }
             else
             {
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0      = 1;
@@ -1723,7 +1723,7 @@ void func_801033E4(ST1D_VIEW *wp)
                 ext->effect_50->variant_3       = 0x41;
                 ext->effect_50->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80031988(ext->u_44.fx[0]);
             func_80031988(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
@@ -1777,7 +1777,7 @@ void func_801036B0(ST1D_VIEW *wp)
                 ext->effect_50->variant_3       = 0x41;
                 ext->effect_50->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80031988(ext->u_44.fx[0]);
             func_80031988(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
@@ -1789,7 +1789,7 @@ void func_801036B0(ST1D_VIEW *wp)
 
 void func_80103870(ST1D_VIEW *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
     func_80031988(wp->ext.u_44.fx[0]);
     func_80031988(wp->ext.u_44.fx[1]);
 }
@@ -1916,7 +1916,7 @@ void func_80103920(ST1D_VIEW *wp)
                 func_80031DCC(&wp->position_fixed, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x18,
                               &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x300))
             {
-                ext->piece_54 = (STAGE_PIECE *)func_80031518();
+                ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
                 if (ext->piece_54 != NULL)
                 {
                     ext->piece_54->flags_0        = 1;
@@ -2535,7 +2535,7 @@ void func_80104C7C(ST1D_VIEW *wp)
                                   0x300))
                 {
                     ext->flags_0 &= ~0x200;
-                    ext->piece_54 = (STAGE_PIECE *)func_80031518();
+                    ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
                     if (ext->piece_54 != NULL)
                     {
                         ext->piece_54->flags_0        = 1;

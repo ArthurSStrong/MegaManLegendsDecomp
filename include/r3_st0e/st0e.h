@@ -393,7 +393,7 @@ typedef struct
     uint8 reservedC[0x44]; // C8
 } ST0E_PROP_CTL;
 
-// A 0x10C-byte slot (func_80031518) of a prop drawn as a model, laid out as stcom31's vehicle
+// A 0x10C-byte slot (Open_SHL_WORK) of a prop drawn as a model, laid out as stcom31's vehicle
 // (STCOM31_WORK); STAGE_PROP describes the same slot with the velocity as words.
 typedef struct ST0E_PROP ST0E_PROP;
 typedef void (*ST0E_PROP_FUNC)(ST0E_PROP *wp);

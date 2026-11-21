@@ -522,7 +522,7 @@ void func_8011285C(ST0B_ACTOR *wp, uint16 *bob)
                     }
                 }
                 func_80052528(wp);
-                func_800318D8(wp);
+                Close_SHL_WORK(wp);
             }
             else
             {
@@ -632,7 +632,7 @@ void func_80112F18(ST0B_TRAIL5 *wp)
     if (--wp->routine_3 == 0)
     {
         func_8011325C((STAGE_OBJ *)wp);
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     if (wp->routine_3 < 0x9D)
@@ -654,7 +654,7 @@ void func_80113120(ST0B_10C *wp)
         wp->value_7C != 0 || (uint32)wp->value_80 <= 0xFFFF)
     {
         func_8011325C((STAGE_OBJ *)wp);
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     wp->value_34                    = wp->position_fixed.v.x;

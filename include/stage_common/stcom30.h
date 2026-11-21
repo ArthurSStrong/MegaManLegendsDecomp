@@ -22,7 +22,7 @@ typedef struct
     STCOM_SVECTOR pos_C; // 0C
 } STCOM30_SPAWN;
 
-// A work slot as stcom30 sets it up (func_80031418, func_80031518).
+// A work slot as stcom30 sets it up (Open_EM_WORK, Open_SHL_WORK).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -83,8 +83,8 @@ void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
 sint32 Sce_flag_test(sint32 flag);
 void Sce_flag_off(sint32 flag);
 void func_80031A4C(STCOM30_WORK *wp);
-STCOM30_OBJ *func_80031418(void);
-STCOM30_OBJ *func_80031518(void);
+STCOM30_OBJ *Open_EM_WORK(void);
+STCOM30_OBJ *Open_SHL_WORK(void);
 STCOM30_OBJ50 *func_80031734(void);
 
 #endif // STCOM30_H

@@ -116,7 +116,7 @@ void func_80110150(STAGE_OBJ *wp)
     drops = set->drops;
     for (i = 0; i < set->count_4; i++, drops++)
     {
-        ep = (ST08_10C *)func_80031518();
+        ep = (ST08_10C *)Open_SHL_WORK();
         if (ep != NULL)
         {
             ep->flags_0    = 1;
@@ -201,7 +201,7 @@ uint8 func_80110434(STAGE_OBJ50 *wp)
     {
         return 1;
     }
-    for (i = 0, p = D_8009CF88; i < 0x20; i++, p++)
+    for (i = 0, p = Shl_work_tbl; i < 0x20; i++, p++)
     {
         if (p->flags_0 != 0 && p->kind_2 == 0x26 && p->value_C != 0)
         {

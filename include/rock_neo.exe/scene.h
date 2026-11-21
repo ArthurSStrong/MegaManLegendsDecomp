@@ -94,8 +94,8 @@ typedef struct
 typedef struct
 {
     uint8 reserved00[0x50];
-    sint8 routine_50;
-    sint8 routine_51;
+    sint8 stage_no;
+    sint8 area_no;
     uint8 reserved52;
     uint8 flags_53;
     uint8 reserved54[6];
@@ -268,9 +268,9 @@ typedef struct
 } SCENE_CAM;
 
 extern SCENE_CAM D_800BC730;
-SCENE_SLOT *func_80031418(void);
+SCENE_SLOT *Open_EM_WORK(void);
 SCENE_SLOT *func_80031498(void);
-SCENE_SLOT *func_80031518(void);
+SCENE_SLOT *Open_SHL_WORK(void);
 SCENE_SLOT *func_80031734(void);
 extern uint8 D_800BC733;
 extern uint8 D_800BC739;
@@ -291,7 +291,7 @@ typedef void (*SCENE_SLOT_FUNC)(SCENE_SLOT *slot);
 #define SCENE_TBL_60 (*(SCENE_SLOT_FUNC **)0x1F800060)
 #define SCENE_TBL_6C (*(SCENE_SLOT_FUNC **)0x1F80006C)
 uint32 func_8002FE74(uint8 id);
-void func_80031824(SCENE_SLOT *slot);
+void Close_EM_WORK(SCENE_SLOT *slot);
 
 extern uint16 D_800896D4[];
 extern SCENE_FUNC D_80089714[];
@@ -321,7 +321,7 @@ void func_80036A1C(void);
 typedef void (*SCENE_CAM_FUNC)(sint32 *pos, sint32 *target);
 
 // Game_work through its fixed address (same view type). The stage-load helpers read
-// routine_50/51 and value_6A this way, so GCC keeps each access on its own lui and does
+// stage_no/area_no and value_6A this way, so GCC keeps each access on its own lui and does
 // not fold them into the &Game_work register the rest of the function uses.
 #define SCENE_GAME_FIXED (*(SCENE_GAME_VIEW *)0x800C1B10)
 

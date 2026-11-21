@@ -2154,7 +2154,7 @@ void func_80110F18(ST06_CRAB *wp)
             }
             break;
         case 2:
-            part = func_80031418();
+            part = Open_EM_WORK();
             if (part != NULL)
             {
                 part->flags_0               = 1;
@@ -2568,7 +2568,7 @@ void func_80111C4C(ST06_CRAB *wp)
 {
     ST06_SHOT *shot;
 
-    shot = (ST06_SHOT *)func_80031518();
+    shot = (ST06_SHOT *)Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0          = 1;

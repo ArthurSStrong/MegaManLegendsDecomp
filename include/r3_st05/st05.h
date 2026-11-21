@@ -548,7 +548,7 @@ extern STAGE_SLOT_FUNC D_8012DC30[];
 // Used by functions still in assembly (types from their accesses).
 extern uint8 D_800987B5;
 extern sint32 D_800989FC;
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 extern uint8 D_800A395A;
 extern uint8 D_800A395B;
 extern sint32 D_800A3964;
@@ -805,7 +805,7 @@ void Sce_flag_off(sint32 flag);
 extern STAGE_FACE16 D_80137E00;
 extern sint16 *D_8012F43C[];
 extern sint16 *D_8012F448[];
-extern STAGE_FX D_800A3B40[];
+extern STAGE_FX Effect_work_tbl[];
 sint32 func_80048E18(void *arg);
 void func_80105E2C(sint8 index);
 uint8 func_80107D68(void);
@@ -1293,7 +1293,7 @@ typedef struct
     STAGE_OBJ *part_44;         // 36C
     sint32 joint_48;            // 370: the joint func_80111898 turns
     STCOM_EFFECT *fx_4C;        // 374
-    struct ST05_PROP_B *obj_50; // 378: a func_80031518 slot
+    struct ST05_PROP_B *obj_50; // 378: a Open_SHL_WORK slot
     ST05_PL_VIEW *pl_54;        // 37C: the player (func_801134E0)
     sint32 value_58[2];         // 380
 } ST05_WAGON_CTL;
@@ -1728,7 +1728,7 @@ typedef struct
     uint8 reservedC[0x44]; // C8
 } ST05_PROP_CTL;
 
-// A 0x10C-byte slot (func_80031518) of a prop drawn as a model, laid out as stcom31's vehicle
+// A 0x10C-byte slot (Open_SHL_WORK) of a prop drawn as a model, laid out as stcom31's vehicle
 // (STCOM31_WORK); STAGE_PROP describes the same slot with the velocity as words.
 typedef struct ST05_PROP_B ST05_PROP_B;
 
@@ -1818,7 +1818,7 @@ typedef struct
 
 void func_80127190(ST05_EVENT *wp);
 
-// A 0x10C-byte slot (func_80031518) a villager carries above its head and then throws.
+// A 0x10C-byte slot (Open_SHL_WORK) a villager carries above its head and then throws.
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -2095,7 +2095,7 @@ void func_80119718(ST05_BOAT *wp, ST05_BOAT_CTL *ctl);
 void func_80119A90(ST05_BOAT *wp, ST05_BOAT_CTL *ctl);
 void func_80119BE0(ST05_BOAT *wp, ST05_BOAT_CTL *ctl);
 
-// A 0x10C-byte slot (func_80031518) of kind 1: the spray a boat throws up (type 0x24) and the boss's
+// A 0x10C-byte slot (Open_SHL_WORK) of kind 1: the spray a boat throws up (type 0x24) and the boss's
 // shots (types 0 and 1, func_8011C9B0).
 typedef struct
 {

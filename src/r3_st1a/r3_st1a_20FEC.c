@@ -36,7 +36,7 @@ void func_801210B8(ST1A_PIECES *wp)
     wp->value_F = (f < 0x40) ? f + 8 : 0x40;
     if (wp->value_E != 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     v = func_80121710(wp);
@@ -395,7 +395,7 @@ void func_80121ED4(ST1A_DEBRIS *wp)
 
     if (--wp->routine_2 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     do
     {
@@ -464,7 +464,7 @@ void func_801220D0(ST1A_SHOT *wp)
 
     if (func_80048EA4(&wp->position, NULL, 0, 0xFFFF) < -0x11)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     wp->position_fixed_prev = wp->position_fixed.v;
@@ -648,7 +648,7 @@ void func_801226E4(ST1A_DART *wp)
     wp->position_prev       = wp->position;
     if (!(wp->routine_2 & 7))
     {
-        slot = func_80031518();
+        slot = Open_SHL_WORK();
         if (slot != NULL)
         {
             slot->flags_0     = 1;
@@ -743,7 +743,7 @@ void func_80122A24(ST1A_10C *wp)
             }
             for (i = 0; i < count; i++)
             {
-                shot = (ST1A_SHOT *)func_80031518();
+                shot = (ST1A_SHOT *)Open_SHL_WORK();
                 if (shot != NULL)
                 {
                     shot->flags_0    = 1;
@@ -759,7 +759,7 @@ void func_80122A24(ST1A_10C *wp)
     }
     else if (--wp->routine_2 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     c            = wp->routine_2 << 3;
     wp->color_B4 = 0x2000000 | c | (c << 8) | (c << 16);
@@ -825,7 +825,7 @@ void func_80122D44(STAGE_10C *wp)
     a = wp->routine_3;
     if (a <= 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     wp->color_B4 = 0x2000000 | (a << 16) | (a << 8) | a;
@@ -837,7 +837,7 @@ void func_80122DA4(STAGE_OBJ *wp)
     wp->routine_2 += 8;
     if ((uint8)wp->routine_3 >= 0xF0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }
 
@@ -853,7 +853,7 @@ void func_80122DEC(STAGE_PROP *wp)
     i = wp->routine_2;
     if (n == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     rest = n - i;
@@ -863,7 +863,7 @@ void func_80122DEC(STAGE_PROP *wp)
                   (wp->position_prev.pad * rest + wp->position.pad * i) / n);
     if (++wp->routine_2 > wp->routine_3)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }
 
@@ -878,7 +878,7 @@ void func_80122FA0(STAGE_PROP *wp)
     i = wp->routine_2;
     if (n == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         return;
     }
     rest = n - i;
@@ -888,7 +888,7 @@ void func_80122FA0(STAGE_PROP *wp)
                   (wp->position_prev.pad * rest + wp->position.pad * i) / n);
     if (++wp->routine_2 > wp->routine_3)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }
 
@@ -1022,7 +1022,7 @@ void func_80123260(ST1A_COPY *wp)
 
 void func_8012367C(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_8012369C(void)

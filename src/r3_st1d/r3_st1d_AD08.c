@@ -215,7 +215,7 @@ void func_8010AF10(ST1D_ARM *wp)
 
 void func_8010B5B4(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010B5D4(ST1D_ARM *wp)
@@ -467,7 +467,7 @@ void func_8010BAEC(ST1D_VIEW *wp)
 
 void func_8010BE74(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010BE94(ST1D_VIEW *wp)
@@ -952,7 +952,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind)
     dist   = SquareRoot0(wp->value_80);
     ctl    = ST1D_CTL_OF(wp);
     pl     = &STAGE_PL;
-    obj    = (ST1D_SHOT_OBJ *)func_80031518();
+    obj    = (ST1D_SHOT_OBJ *)Open_SHL_WORK();
     shot   = (ST1D_SHOT *)&wp->value_1D8;
     if (obj != NULL)
     {
@@ -1062,7 +1062,7 @@ void func_8010CDE4(ST1D_VIEW *wp)
     func_800322A8(wp, 0, 0);
     for (i = 0; i < 2; i++)
     {
-        child = func_80031418();
+        child = Open_EM_WORK();
         if (child != NULL)
         {
             if (i == 0)
@@ -1132,7 +1132,7 @@ void func_8010CF78(ST1D_VIEW *wp)
 
 void func_8010D084(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010D0A4(STCOM16_WORK *wp)
@@ -1511,7 +1511,7 @@ void func_8010D424(STCOM16_WORK *wp)
 
 void func_8010DD38(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010DD58(STCOM16_WORK *wp)

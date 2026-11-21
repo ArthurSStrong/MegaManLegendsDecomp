@@ -75,11 +75,11 @@ extern CODE14_FUNC D_80082104[];
 extern sint16 **D_800820E0[];
 extern uint32 D_800979FC[];
 
-void func_80031824(GAME_WORK_3C0 *wp);
+void Close_EM_WORK(GAME_WORK_3C0 *wp);
 void func_8002F9C4(CODE14_WORK *wp, sint32 arg);
 void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script);
 void func_80014BCC(CODE14_WORK *wp, CODE14_SCRIPT *script);
-CODE14_WORK *func_80031418(void);
+CODE14_WORK *Open_EM_WORK(void);
 void func_8002FEA4(CODE14_WORK *wp, sint16 x, sint16 y, sint16 z);
 void func_800322A8(CODE14_WORK *wp, uint8 anim, sint32 arg);
 void func_80032488(CODE14_WORK *wp);

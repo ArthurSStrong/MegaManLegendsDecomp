@@ -360,7 +360,7 @@ void func_80105798(STAGE_OBJ *wp)
 void func_801057C4(STAGE_OBJ *wp)
 {
     D_80110504--;
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801057F8(ST0E_PROP *wp)
@@ -443,7 +443,7 @@ void func_80105AB0(ST0E_PROP *wp)
 
 void func_80105B40(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80105B60(ST0E_PROP *wp)
@@ -587,7 +587,7 @@ void func_80105FA0(STAGE_OBJ *wp)
 {
     if (wp->routine_2 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
         Sce_flag_on(0x611);
         wp->routine_2++;
     }

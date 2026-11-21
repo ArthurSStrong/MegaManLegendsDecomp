@@ -120,7 +120,7 @@ typedef struct
     sint32 radius_C;    // D8
 } ST12_ORBIT;
 
-// A 0x10C-byte slot (func_80031518) whose model runs round a circle (func_801050E8).
+// A 0x10C-byte slot (Open_SHL_WORK) whose model runs round a circle (func_801050E8).
 typedef struct
 {
     uint8 flags_0;                          // 00

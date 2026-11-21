@@ -54,7 +54,7 @@ typedef struct
     sint32 radius_C;    // D8
 } ST0D_ORBIT;
 
-// A 0x10C-byte slot (func_80031518) whose model runs round a circle (func_801050E8).
+// A 0x10C-byte slot (Open_SHL_WORK) whose model runs round a circle (func_801050E8).
 typedef struct
 {
     uint8 flags_0;                          // 00
@@ -126,7 +126,7 @@ typedef struct
 } ST0D_FLAMES;
 
 // From r3_st0a (ST0A_GRID_OBJ).
-// A work slot (func_80031418) that carries a ST0D_GRID6 at +0x88 (func_80108468, func_801085AC).
+// A work slot (Open_EM_WORK) that carries a ST0D_GRID6 at +0x88 (func_80108468, func_801085AC).
 typedef struct
 {
     uint8 flags_0;       // 00
@@ -206,7 +206,7 @@ struct ST0D_STCOM21_WORK
      (mw)->words[4] = 0x1000, (mw)->words[5] = 0, (mw)->words[6] = 0, (mw)->words[7] = 0)
 
 // From r3_st05 (STCOM21_OBJ).
-// A 0x3C0-byte work slot (func_80031418) as func_8010AA54 sets it up.
+// A 0x3C0-byte work slot (Open_EM_WORK) as func_8010AA54 sets it up.
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -430,7 +430,7 @@ typedef struct
     STCOM_SVECTOR box_38;    // 38
 } ST0D_PATH;
 
-// A 0x10C-byte slot (func_80031518) that follows a path, carrying the player (func_80104184).
+// A 0x10C-byte slot (Open_SHL_WORK) that follows a path, carrying the player (func_80104184).
 typedef struct
 {
     sint8 flags_0;                          // 00

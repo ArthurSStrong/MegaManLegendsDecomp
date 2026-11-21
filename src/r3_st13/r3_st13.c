@@ -626,7 +626,7 @@ void func_80101614(ST13_ACTOR *wp)
             func_80101704(wp);
             break;
         case 1:
-            obj = func_80031518();
+            obj = Open_SHL_WORK();
             if (obj != NULL)
             {
                 obj->flags_0            = 1;
@@ -924,6 +924,6 @@ void func_80101F30(STAGE_OBJ *wp)
 {
     if (wp->u_C.b.byte_C == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
 }

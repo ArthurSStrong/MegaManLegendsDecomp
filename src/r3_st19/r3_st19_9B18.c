@@ -127,7 +127,7 @@ void func_80109D78(STCOM18_WORK *wp)
     else
     {
         wp->flags_0 = 0;
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     if (wp->hit_BC & 0x2000000)
     {
@@ -169,7 +169,7 @@ void func_80109FE0(STAGE_OBJ *wp)
         }
     }
     wp->flags_0 = 0;
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_8010A04C(STAGE_OBJ *wp, STAGE_FX *fx)
@@ -280,7 +280,7 @@ void func_8010A298(ST19_10C_B *wp)
     }
     if (--wp->routine_3 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {
@@ -332,7 +332,7 @@ void func_8010A6D8(ST19_10C_B *wp)
     wp->count_CC++;
     if (wp->routine_3 == 0)
     {
-        func_800318D8(wp);
+        Close_SHL_WORK(wp);
     }
     else
     {

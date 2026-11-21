@@ -140,7 +140,7 @@ typedef struct
     sint8 room; // 4
 } ST14_BOX;
 
-// A 0x10C-byte slot (func_80031518) with a rotation at +0x64 (the pieces func_8010D8FC spawns).
+// A 0x10C-byte slot (Open_SHL_WORK) with a rotation at +0x64 (the pieces func_8010D8FC spawns).
 typedef struct
 {
     uint8 flags_0;                     // 00

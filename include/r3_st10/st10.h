@@ -79,7 +79,7 @@ typedef struct
     uint8 reserved388[0x38];                // 388
 } ST10_ACTOR;
 
-// A 0x10C-byte slot (func_80031518) of a turning model with a hit box (D_801148CC).
+// A 0x10C-byte slot (Open_SHL_WORK) of a turning model with a hit box (D_801148CC).
 typedef struct ST10_PROP ST10_PROP;
 typedef void (*ST10_PROP_FUNC)(ST10_PROP *wp);
 

@@ -4083,7 +4083,7 @@ typedef struct
 
 extern ST1A_PAIR16 D_80138E10[][4];
 
-// A 0x10C-byte slot (func_80031518) that flies along a halfword velocity until it drops below
+// A 0x10C-byte slot (Open_SHL_WORK) that flies along a halfword velocity until it drops below
 // the floor (func_801220D0).
 typedef struct
 {

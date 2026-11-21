@@ -182,7 +182,7 @@ void stcom17_func_021C(STCOM17_WORK *wp)
 
 void stcom17_func_0510(STCOM17_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom17_func_0530(STCOM17_WORK *wp)
@@ -448,7 +448,7 @@ void stcom17_func_0BE4(STCOM17_WORK *wp)
         {
             func_80032304(wp, wp->anim_AC, 0);
             wp->anim_prev_AD = wp->anim_AC;
-            shot             = func_80031518();
+            shot             = Open_SHL_WORK();
             if (shot != NULL)
             {
                 Sound_call2(0xDD, &wp->position);
@@ -732,7 +732,7 @@ void stcom17_func_1470(STCOM17_WORK *wp)
                     i = 1;
                     do
                     {
-                        shot = func_80031518();
+                        shot = Open_SHL_WORK();
                         if (shot != NULL)
                         {
                             Sound_call2(0xEB, &wp->position);
@@ -916,7 +916,7 @@ void stcom17_func_1990(STCOM17_GUN_WORK *wp)
 
 void stcom17_func_1A9C(STCOM17_GUN_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom17_func_1ABC(STCOM17_GUN_WORK *wp)
@@ -987,7 +987,7 @@ void stcom17_func_1C60(STCOM17_GUN_WORK *wp)
                               func_80031BEC(&wp->position, &pl->position,
                                             (wp->rotation.y + wp->ctl.rot_18.v.y) & 0xFFF, 16)) &
                              0xFFF;
-        shot               = func_80031518();
+        shot               = Open_SHL_WORK();
         if (shot != NULL)
         {
             Sound_call2(0x148, &wp->position);

@@ -529,5 +529,5 @@ void stcom27_func_0EAC(STCOM27_WORK *wp)
 
 void stcom27_func_0EDC(STCOM27_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }

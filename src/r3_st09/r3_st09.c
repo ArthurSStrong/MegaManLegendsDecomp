@@ -486,7 +486,7 @@ void func_801012B4(ST09_VIEW *wp)
                 ext->effect_50->variant_3       = 0x41;
                 ext->effect_50->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80031988(ext->u_44.fx[0]);
             func_80031988(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
@@ -540,7 +540,7 @@ void func_80101580(ST09_VIEW *wp)
                 ext->effect_50->variant_3       = 0x41;
                 ext->effect_50->sprite.position = wp->position;
             }
-            func_80031824(wp);
+            Close_EM_WORK(wp);
             func_80031988(ext->u_44.fx[0]);
             func_80031988(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
@@ -552,7 +552,7 @@ void func_80101580(ST09_VIEW *wp)
 
 void func_80101740(ST09_VIEW *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
     func_80031988(wp->ext.u_44.fx[0]);
     func_80031988(wp->ext.u_44.fx[1]);
 }
@@ -679,7 +679,7 @@ void func_801017F0(ST09_VIEW *wp)
                 func_80031DCC(&wp->position_fixed, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x18,
                               &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x300))
             {
-                ext->piece_54 = (STAGE_PIECE *)func_80031518();
+                ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
                 if (ext->piece_54 != NULL)
                 {
                     ext->piece_54->flags_0        = 1;
@@ -1299,7 +1299,7 @@ void func_80102B4C(ST09_VIEW *wp)
                                   0x300))
                 {
                     ext->flags_0 &= ~0x200;
-                    ext->piece_54 = (STAGE_PIECE *)func_80031518();
+                    ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
                     if (ext->piece_54 != NULL)
                     {
                         ext->piece_54->flags_0        = 1;

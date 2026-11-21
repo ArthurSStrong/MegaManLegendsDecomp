@@ -119,7 +119,7 @@ void stcom05_func_029C(STCOM05_WORK *wp)
 
 void stcom05_func_0464(STCOM05_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom05_func_0484(STCOM05_WORK *wp)
@@ -646,5 +646,5 @@ void stcom05_func_12D0(STCOM05_WORK *wp)
 
 void stcom05_func_138C(STCOM05_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }

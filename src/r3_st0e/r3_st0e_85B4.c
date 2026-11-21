@@ -130,7 +130,7 @@ void func_80108980(ST0E_VIEW *wp)
 void func_80108A44(ST0E_VIEW *wp)
 {
     STAGE_OBJ *obj;
-    obj = func_80031418();
+    obj = Open_EM_WORK();
     if (obj != NULL)
     {
         obj->flags_0          = 1;
@@ -170,7 +170,7 @@ void func_80108AE4(ST0E_VIEW *wp)
 
 void func_80108C94(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80108CB4(ST0E_10C *wp)
@@ -295,5 +295,5 @@ void func_80108E00(ST0E_ITEM *wp)
 
 void func_80109038(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }

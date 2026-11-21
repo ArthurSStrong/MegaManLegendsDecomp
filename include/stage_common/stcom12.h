@@ -28,7 +28,7 @@ typedef struct
     STCOM_SVECTOR home_24; // 36C: where it started
 } STCOM12_CTL;
 
-// The 0x3C0-byte work slot stcom12 runs on (freed through ROCK_NEO's func_80031824): a creature
+// The 0x3C0-byte work slot stcom12 runs on (freed through ROCK_NEO's Close_EM_WORK): a creature
 // that wanders near its home, flees from the player and can be picked up.
 typedef struct
 {

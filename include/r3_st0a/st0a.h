@@ -159,7 +159,7 @@ typedef struct
     ST0A_CELL cell_14[6][8]; // 14
 } ST0A_GRID6;
 
-// A work slot (func_80031418) that carries a ST0A_GRID6 at +0x88 (func_80108334, func_80108478).
+// A work slot (Open_EM_WORK) that carries a ST0A_GRID6 at +0x88 (func_80108334, func_80108478).
 typedef struct
 {
     uint8 flags_0;           // 00

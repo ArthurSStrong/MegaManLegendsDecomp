@@ -333,7 +333,7 @@ void func_80109A60(STAGE_OBJ50 *wp)
 
     for (i = 0; i < 3; i++)
     {
-        obj = func_80031418();
+        obj = Open_EM_WORK();
         if (obj != NULL)
         {
             obj->flags_0            = 1;

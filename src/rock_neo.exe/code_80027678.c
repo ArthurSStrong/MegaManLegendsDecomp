@@ -569,7 +569,7 @@ void func_80028DE0(void)
         while (i != 0)
         {
             i--;
-            b = &D_8009F108[i];
+            b = &Em_work_tbl[i];
             if (C80027678_ROOM == 0x17)
             {
                 if (b->flags & b->mask & 2)
@@ -818,7 +818,7 @@ void func_80029A38(void)
 
     for (i = 0; i < 16; i++)
     {
-        p = &D_800BFB20[i];
+        p = &Pl_shl_work_tbl[i];
         f = p->flags;
         if (f & p->mask & 2)
         {
@@ -827,7 +827,7 @@ void func_80029A38(void)
     }
     for (i = 0; i < 32; i++)
     {
-        p = &D_8009CF88[i];
+        p = &Shl_work_tbl[i];
         f = p->flags;
         if (f & p->mask & 2)
         {
@@ -844,7 +844,7 @@ void func_80029B10(void)
 
     for (i = 0; i < 64; i++)
     {
-        p = &D_800A3B40[i];
+        p = &Effect_work_tbl[i];
         f = p->flags;
         if (f & p->mask & 2)
         {

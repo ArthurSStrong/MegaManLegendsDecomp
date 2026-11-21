@@ -635,7 +635,7 @@ void func_80117290(ST06_CRAB *wp)
             case 4:
                 func_8003187C(wp);
                 func_8005D6E8(wp);
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0            = 1;
@@ -876,7 +876,7 @@ void func_80117BF0(ST06_CRAB *wp)
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if ((turn < 0 ? -turn : turn) < 0x40 && wp->value_A7 < 0)
             {
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     body->child_84    = obj;
@@ -1291,7 +1291,7 @@ sint32 func_801189B4(ST06_CRAB *wp)
     body = &wp->body;
     for (i = 0; i < 6; i++)
     {
-        shot = (ST06_HOMER *)func_80031518();
+        shot = (ST06_HOMER *)Open_SHL_WORK();
         if (shot != NULL)
         {
             shot->flags_0           = 1;

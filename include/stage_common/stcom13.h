@@ -22,7 +22,7 @@ typedef struct
     uint16 timer_36;       // 37E: frames before it may vanish off screen
 } STCOM13_CTL;
 
-// The 0x3C0-byte work slot stcom13 runs on (freed through ROCK_NEO's func_80031824): an enemy
+// The 0x3C0-byte work slot stcom13 runs on (freed through ROCK_NEO's Close_EM_WORK): an enemy
 // that can be stunned and knocked about, dropping effects from its joints.
 typedef struct
 {

@@ -300,7 +300,7 @@ void func_80030150(); // signature differs between callers; see code_8002e7a8.h
 void func_800176DC(void *src, void *dst, sint32 count);
 
 // Player_work by its fixed address: GCC 2.7 rebuilds a literal address with lui at
-// each access instead of keeping the symbol's address in a register (func_80016528).
+// each access instead of keeping the symbol's address in a register (Game_auto_map).
 #define PLAYER_WORK_PTR ((PL_WORK *)0x800B51B0)
 
 // 3x3 rotation plus translation, PsyQ MATRIX layout.

@@ -68,7 +68,7 @@ void func_80111D50(void)
 {
     STAGE_OBJ *wp;
 
-    wp = func_80031418();
+    wp = Open_EM_WORK();
     if (wp != NULL)
     {
         wp->flags_0            = 1;

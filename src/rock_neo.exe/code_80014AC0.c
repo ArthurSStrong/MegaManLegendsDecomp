@@ -270,7 +270,7 @@ void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
 
 void func_800153CC(GAME_WORK_3C0 *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_800153EC(CODE14_WORK *wp)
@@ -290,7 +290,7 @@ void func_80015428(CODE800133D8_STATE *wp)
             {
                 for (i = 0; i < 16; i++)
                 {
-                    entry = func_80031418();
+                    entry = Open_EM_WORK();
                     if (entry != NULL)
                     {
                         entry->flags                   = 1;

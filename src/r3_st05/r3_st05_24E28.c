@@ -135,7 +135,7 @@ void func_80125354(STAGE_OBJ *wp)
 
 void func_80125390(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_801253B0(STAGE_OBJ *wp)
@@ -353,7 +353,7 @@ void func_80125880(ST05_PROP *wp)
 void func_80125C54(STAGE_OBJ *wp)
 {
     func_80052528(wp);
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80125C84(void)
@@ -835,7 +835,7 @@ void func_80126D98(STAGE_SHOT *wp)
     {
         if (wp->type_3 & 0x40)
         {
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
         }
         else
         {
@@ -859,7 +859,7 @@ void func_80126D98(STAGE_SHOT *wp)
     {
         if (wp->type_3 & 0x40)
         {
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
         }
         else
         {

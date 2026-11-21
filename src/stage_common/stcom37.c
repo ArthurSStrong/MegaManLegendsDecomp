@@ -9,7 +9,7 @@
 // Routines of a villager: freed, standing, and talking (animation 8 while a message runs).
 void stcom37_func_0000(STCOM37_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom37_func_0020(STCOM37_WORK *wp)

@@ -239,7 +239,7 @@ void func_801006A8(STAGE_WORK *wp)
         case 3:
             if (--wp->timer_C <= 0)
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             break;
     }

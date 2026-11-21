@@ -95,7 +95,7 @@ void func_8011B00C(ST06_EVENT *wp)
         slot->value_C   = 0;
         wp->slot_1C     = slot;
     }
-    shot = (ST06_SHOT *)func_80031518();
+    shot = (ST06_SHOT *)Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0   = 1;

@@ -54,7 +54,7 @@ typedef struct
     uint8 reserved4E[0x2A];    // 396
 } STCOM16_CTL;
 
-// The 0x3C0-byte work slot stcom16 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom16 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00

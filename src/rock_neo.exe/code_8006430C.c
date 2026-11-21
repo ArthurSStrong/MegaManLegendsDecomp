@@ -563,7 +563,7 @@ void func_80065064(void)
     save->gw_14       = gw->timer_14;
     save->gw_18       = MEM_H(gw, 0x18);
     save->gw_1a       = MEM_H(gw, 0x1A);
-    save->gw_0c       = gw->timer_0c;
+    save->gw_0c       = gw->play_time;
     save->gw_1c[0]    = gw->words_1c[0];
     save->gw_1c[1]    = gw->words_1c[1];
     save->gw_1c[2]    = gw->words_1c[2];
@@ -681,7 +681,7 @@ void func_80065AA8(void)
     *(uint32 *)((uint8 *)&Game_work + 0x14) = D_800B5EDC;
     *(uint16 *)((uint8 *)&Game_work + 0x18) = D_800B5EE0;
     *(uint16 *)((uint8 *)&Game_work + 0x1A) = D_800B5EE2;
-    Game_work.timer_0c                      = D_800B5F30;
+    Game_work.play_time                      = D_800B5F30;
     Game_work.words_1c[0]                   = D_800B5F34;
     Game_work.words_1c[1]                   = D_800B5F38;
     Game_work.words_1c[2]                   = D_800B5F3C;
@@ -857,7 +857,7 @@ void func_800664BC(void)
     Game_work.flags_79     = -1;
     Game_work.flags_7a     = -1;
     Game_work.flag_5a      = 1;
-    Game_work.timer_0c     = 0;
+    Game_work.play_time     = 0;
     Game_work.words_1c[0]  = 0;
     Game_work.words_1c[1]  = 0;
     Game_work.words_1c[2]  = 0;
@@ -1540,7 +1540,7 @@ void func_800679B8(void)
     uint32 hour;
     uint32 digit;
 
-    sec        = Game_work.timer_0c / 30;
+    sec        = Game_work.play_time / 30;
     min        = sec / 60;
     digit      = sec % 10;
     D_80097FDB = D_8008D028[digit];

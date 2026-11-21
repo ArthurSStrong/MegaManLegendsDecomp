@@ -209,7 +209,7 @@ void stcom10_func_05F4(STCOM10_WORK *wp)
         switch (spawn->kind_1)
         {
             case 0x20:
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj == NULL)
                 {
                     break;
@@ -255,7 +255,7 @@ void stcom10_func_05F4(STCOM10_WORK *wp)
                 pair++;
                 break;
             case 0x60:
-                obj = func_80031518();
+                obj = Open_SHL_WORK();
                 if (obj == NULL)
                 {
                     break;

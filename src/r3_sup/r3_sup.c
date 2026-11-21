@@ -1470,7 +1470,7 @@ void func_801DB800(void)
             D_801DC208.routine_3++;
             break;
         case 1:
-            func_80016D64();
+            Sound_fade_wait();
             func_8001B33C();
             func_8001B314();
             D_80098958 |= 0x800;

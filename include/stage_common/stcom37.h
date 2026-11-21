@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// A 0x3C0-byte work slot (freed through ROCK_NEO's func_80031824): only the fields used here.
+// A 0x3C0-byte work slot (freed through ROCK_NEO's Close_EM_WORK): only the fields used here.
 typedef struct
 {
     uint8 flags_0;          // 00

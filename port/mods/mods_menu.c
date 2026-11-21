@@ -246,8 +246,8 @@ static int page = -1; // -1: the mod list; else the mod's index
 static int cursor;    // the list's line, or the page's (0 on/off, 1.. settings or its own page)
 
 // The game's pause menu (the sub-screen) is up: Game_work.routine_0 == 4 (Game_main_tbl's
-// sub-screen state, entered on Start in the field: game.c func_800158F0) and routine_1 == 2
-// (the sub-screen running; 0/1 open it, 3/4 close it: func_80015FE8).
+// sub-screen state, entered on Start in the field: game.c Game_play) and routine_1 == 2
+// (the sub-screen running; 0/1 open it, 3/4 close it: Game_sub_screen).
 static int game_paused(void)
 {
     return MODS_PEEK8(MODS_GAME_WORK + 0) == 4 && MODS_PEEK8(MODS_GAME_WORK + 1) == 2;

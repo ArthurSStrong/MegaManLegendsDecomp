@@ -251,7 +251,7 @@ void stcom20_func_06E8(STCOM20_WORK *wp)
 
 void stcom20_func_07F8(STCOM20_WORK *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void stcom20_func_0818(STCOM20_WORK *wp)

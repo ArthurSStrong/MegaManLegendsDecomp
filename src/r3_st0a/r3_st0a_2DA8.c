@@ -760,7 +760,7 @@ void func_80104154(ST0A_EN *wp)
                 break;
             case 1:
             case 2:
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 break;
         }
         *(uint16 *)&wp->routine_2 = 0;
@@ -792,7 +792,7 @@ void func_80104154(ST0A_EN *wp)
 
 void func_801043B8(ST0A_EN *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801043D8(ST0A_EN *wp)
@@ -822,7 +822,7 @@ void func_801043F8(ST0A_EN *wp)
             wp->routine_2++;
             ctl->timer_4 = 0xA;
             ctl->timer_6 = 0;
-            ctl->held_3C = (ST0A_HELD *)func_80031518();
+            ctl->held_3C = (ST0A_HELD *)Open_SHL_WORK();
             if (ctl->held_3C != NULL)
             {
                 ctl->held_3C->flags_0   = 1;
@@ -933,7 +933,7 @@ void func_80104740(ST0A_EN *wp)
                 wp->routine_2++;
                 if (ctl->flags_0 & 0x20)
                 {
-                    func_800318D8(ctl->held_3C);
+                    Close_SHL_WORK(ctl->held_3C);
                     ctl->flags_0 &= ~0x20;
                     ctl->owner_40->u_E.b.byte_F |= 4;
                 }

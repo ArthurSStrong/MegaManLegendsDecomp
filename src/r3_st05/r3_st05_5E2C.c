@@ -388,7 +388,7 @@ void func_80106934(STAGE_ROOM *wp)
                 D_800A395C = 1;
                 func_80039820();
                 wp->routine_4++;
-                func_80031824(wp->child_24);
+                Close_EM_WORK(wp->child_24);
                 Obj_work_flag_change(0x56, 0xA);
                 func_8001E3F0(0xF);
                 func_80039820();
@@ -1000,7 +1000,7 @@ void func_80107CEC(void)
 
     for (i = 0; i < 2; i++)
     {
-        op = func_80031418();
+        op = Open_EM_WORK();
         if (op != NULL)
         {
             op->flags_0      = 1;
@@ -1146,7 +1146,7 @@ void func_80107FF0(ST05_VILLAGER *wp)
     wp->variant_3 &= 0xF;
     if (wp->timer_C != 0)
     {
-        ctl->other_38 = (ST05_HELD *)func_80031518();
+        ctl->other_38 = (ST05_HELD *)Open_SHL_WORK();
         if (ctl->other_38 != NULL)
         {
             ctl->other_38->flags_0          = 1;
@@ -1181,7 +1181,7 @@ void func_80108324(ST05_VILLAGER *wp)
         switch (wp->routine_1)
         {
             case 8:
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 break;
             case 5:
             case 6:
@@ -1264,7 +1264,7 @@ void func_80108590(ST05_OBJ *wp)
     {
         wp->value_380->routine_0 = 0;
     }
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_801085CC(ST05_VILLAGER *wp)
@@ -2196,7 +2196,7 @@ void func_80109F84(ST05_VILLAGER *wp)
     {
         case 0:
             wp->value_D      = 0;
-            wp->ctl.other_38 = (ST05_HELD *)func_80031518();
+            wp->ctl.other_38 = (ST05_HELD *)Open_SHL_WORK();
             if (wp->ctl.other_38 == NULL)
             {
                 wp->routine_1             = 0xF;

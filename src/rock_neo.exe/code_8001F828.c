@@ -2314,10 +2314,10 @@ void func_800238B4(void)
     GTE_SET_MATRIX(0x1F800008);
     for (i = 0; i < 32; i++)
     {
-        if (D_8009CF88[i].kind_2 == 0x33 && (D_8009CF88[i].flags_0 & 1) &&
-            D_8009CF88[i].sub_3 == 0xFE)
+        if (Shl_work_tbl[i].kind_2 == 0x33 && (Shl_work_tbl[i].flags_0 & 1) &&
+            Shl_work_tbl[i].sub_3 == 0xFE)
         {
-            pos = D_8009CF88[i].pos_ac;
+            pos = Shl_work_tbl[i].pos_ac;
             GTE_LDV0(&pos);
             GTE_NOP2();
             GTE_RTPS();
@@ -2325,7 +2325,7 @@ void func_800238B4(void)
             GTE_SWC2(7, &otz);
             if (otz > 0)
             {
-                func_800272D0(sxy[0], sxy[1], D_8009CF88[i].w_a * 2, D_8009CF88[i].h_b * 2);
+                func_800272D0(sxy[0], sxy[1], Shl_work_tbl[i].w_a * 2, Shl_work_tbl[i].h_b * 2);
             }
         }
     }

@@ -731,8 +731,8 @@ void func_8010208C(STAGE_ROOM *wp)
         func_80017C30(2);
         func_8003187C(wp->child_28);
         func_8003187C(wp->child_2C);
-        func_80031824(wp->child_34);
-        func_80031824(wp->child_38);
+        Close_EM_WORK(wp->child_34);
+        Close_EM_WORK(wp->child_38);
         child             = wp->child_30;
         child->rotation.y = 0x65E;
         child->routine_1  = 7;

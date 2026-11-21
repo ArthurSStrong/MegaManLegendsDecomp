@@ -378,7 +378,7 @@ void stcom16_func_0370(STCOM16_WORK *wp)
 
 void stcom16_func_0C84(STCOM16_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom16_func_0CA4(STCOM16_WORK *wp)

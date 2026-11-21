@@ -29,7 +29,7 @@ void func_80103DC4(STAGE_ROOM_WORK *wp)
 
     if (func_80042238(&Player_work))
     {
-        obj = func_80031418();
+        obj = Open_EM_WORK();
         if (obj != NULL)
         {
             obj->flags_0            = 1;
@@ -204,7 +204,7 @@ void func_80104364(ST03_ROOM_WORK *wp)
 
     if (func_80042238(&Player_work))
     {
-        obj = D_8009F108;
+        obj = Em_work_tbl;
         for (i = 0; i < 0x10; i++, obj++)
         {
             if (obj->flags_0 != 0 && obj->kind_2 == 9 && obj->value_4 == 2)
@@ -290,7 +290,7 @@ void func_801044A4(ST03_ROOM_WORK *wp)
             }
             else if (wp->child_24->position.x >= 0x12D)
             {
-                func_80031824(wp->child_24);
+                Close_EM_WORK(wp->child_24);
             }
             if (wp->child_24->flags_0 == 0)
             {
@@ -329,7 +329,7 @@ void func_80104778(STAGE_ROOM_WORK *wp)
                 pl->rot_440.z   = 0;
                 pl->flags_0 |= 2;
                 STAGE_PL_BYTE(0xBD) |= 0x10;
-                func_80031824(wp->child_24);
+                Close_EM_WORK(wp->child_24);
                 D_800A395C = 1;
                 func_80039820();
             }
@@ -582,7 +582,7 @@ void func_80104FB4(STAGE_ROOM_WORK *wp)
     }
 }
 
-// `child` also carries child_28 to func_80031824: reusing the local gives retail's registers.
+// `child` also carries child_28 to Close_EM_WORK: reusing the local gives retail's registers.
 void func_80104FF4(STAGE_ROOM_WORK *wp)
 {
     STAGE_WORK *child;
@@ -623,7 +623,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             D_800A395C = 1;
             func_80039820();
             child = wp->child_28;
-            func_80031824(child);
+            Close_EM_WORK(child);
             child            = wp->child_24;
             child->routine_0 = 8;
             Sce_flag_on(0x52A);
@@ -748,7 +748,7 @@ void func_80105360(ST03_ACTOR *wp)
     wp->variant_3 &= 0xF;
     if (wp->timer_C != 0)
     {
-        ctl->other_38 = (ST03_HELD *)func_80031518();
+        ctl->other_38 = (ST03_HELD *)Open_SHL_WORK();
         if (ctl->other_38 != NULL)
         {
             ctl->other_38->flags_0          = 1;
@@ -783,7 +783,7 @@ void func_80105694(ST03_ACTOR *wp)
         switch (wp->routine_1)
         {
             case 8:
-                func_80031824(wp);
+                Close_EM_WORK(wp);
                 break;
             case 5:
             case 6:
@@ -866,7 +866,7 @@ void func_80105900(ST03_OBJ *wp)
     {
         wp->value_380->routine_0 = 0;
     }
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010593C(ST03_ACTOR *wp)
@@ -1795,7 +1795,7 @@ void func_801072F4(ST03_ACTOR *wp)
     {
         case 0:
             wp->value_D      = 0;
-            wp->ctl.other_38 = (ST03_HELD *)func_80031518();
+            wp->ctl.other_38 = (ST03_HELD *)Open_SHL_WORK();
             if (wp->ctl.other_38 == NULL)
             {
                 wp->routine_1             = 0xF;

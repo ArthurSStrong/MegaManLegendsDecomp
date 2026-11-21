@@ -151,7 +151,7 @@ uint8 func_800D8E8C(SHL_WORK *wp)
     range = D_800D90CC[wp->value_f];
     for (i = 0; i < 32; i++)
     {
-        obj = &D_8009CF88[i];
+        obj = &Shl_work_tbl[i];
         if (obj->flag_0 == 0)
         {
             continue;

@@ -802,7 +802,7 @@ void func_80101D94(void)
 {
     STAGE_EVENT *ep;
 
-    ep = func_800316BC();
+    ep = Open_EVE_WORK();
     if (ep != NULL)
     {
         ep->flags_0 = 1;

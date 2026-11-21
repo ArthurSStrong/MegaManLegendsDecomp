@@ -202,7 +202,7 @@ void func_80100E68(ST10_PL *wp)
                 effect->variant_3         = 0x41;
                 effect->sprite.position   = obj->position;
                 effect->sprite.position.y = obj->position.y - 0x64;
-                func_800318D8(obj);
+                Close_SHL_WORK(obj);
                 wp->routine_D++;
             }
             break;
@@ -281,7 +281,7 @@ void func_801011B8(STAGE_ROOM *wp)
             func_8001D494(0, 1, 0);
             D_800A395C = 1;
             func_80039820();
-            func_800318D8(wp->child_24);
+            Close_SHL_WORK(wp->child_24);
             wp->routine_4++;
             break;
         case 11:

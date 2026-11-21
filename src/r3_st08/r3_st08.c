@@ -607,7 +607,7 @@ void func_80101604(STAGE_ROOM *wp)
     }
     if (STAGE_SCENE_WORD(0xC) % 300 == 0)
     {
-        obj = func_80031418();
+        obj = Open_EM_WORK();
         if (obj != NULL)
         {
             obj->flags_0   = 1;
@@ -640,7 +640,7 @@ void func_80101798(void)
 
     for (i = 0; i < 2; i++)
     {
-        obj = func_80031418();
+        obj = Open_EM_WORK();
         if (obj != NULL)
         {
             obj->flags_0   = 1;
@@ -648,7 +648,7 @@ void func_80101798(void)
             obj->variant_3 = i;
         }
     }
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0 = 1;
@@ -1205,7 +1205,7 @@ void func_80102498(STAGE_ROOM *wp)
         case 10:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80031824(other);
+                Close_EM_WORK(other);
                 cam->pos_10             = -0x52E << 16;
                 cam->pos_14             = -0x271 << 16;
                 cam->pos_18             = 0x6A1 << 16;
@@ -1250,7 +1250,7 @@ void func_80102498(STAGE_ROOM *wp)
         case 13:
             if (actor->position.x >= -0x7CF)
             {
-                func_80031824(actor);
+                Close_EM_WORK(actor);
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
@@ -1281,8 +1281,8 @@ void func_80102A24(STAGE_ROOM *wp)
                 ST08_PL->pos_438.z   = 0x692;
                 ST08_PL->fixed_428.x = -0x514 << 16;
                 ST08_PL->fixed_428.z = 0x692 << 16;
-                func_80031824(wp->child_24);
-                func_80031824(wp->child_28);
+                Close_EM_WORK(wp->child_24);
+                Close_EM_WORK(wp->child_28);
             }
             ST08_PL->rot_440.y = 0x400;
             wp->routine_5++;

@@ -179,7 +179,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
             ctl->effect_40->variant_3       = 0x41;
             ctl->effect_40->sprite.position = wp->position;
         }
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         func_80047228(wp, &wp->joints_180[0], ctl->level_6);
         Sound_call2(0xA1, &wp->joints_180[0]);
     }
@@ -187,7 +187,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
 
 void stcom15_func_05F8(STCOM15_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom15_func_0618(STCOM15_WORK *wp)
@@ -410,7 +410,7 @@ void stcom15_func_0A30(STCOM15_WORK *wp)
         case 5:
             if (wp->variant_3 & 0x20)
             {
-                func_80031824(wp);
+                Close_EM_WORK(wp);
             }
             if (--ctl->timer_4 < 0)
             {
@@ -956,7 +956,7 @@ void stcom15_func_1E0C(STCOM15_WORK *wp)
     STCOM15_CTL *ctl;
 
     ctl             = &wp->ctl;
-    wp->ctl.shot_4C = func_80031518();
+    wp->ctl.shot_4C = Open_SHL_WORK();
     if (wp->ctl.shot_4C != NULL)
     {
         wp->ctl.shot_4C->flags_0 = 1;

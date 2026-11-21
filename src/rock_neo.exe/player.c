@@ -3190,7 +3190,7 @@ sint32 func_800411DC(PL_WORK *pl)
     *(sint16 *)0x1F800102 = rcos(pl->rotation.y);
     if ((pad & pl->value136) && pl->value74 == 0)
     {
-        for (p3c0 = D_8009F108, i = 0; i < 16; i++, p3c0++)
+        for (p3c0 = Em_work_tbl, i = 0; i < 16; i++, p3c0++)
         {
             if ((p3c0->flags & 3) == 3 && ((PL_TARGET *)p3c0)->bounds != NULL)
             {
@@ -3216,7 +3216,7 @@ sint32 func_800411DC(PL_WORK *pl)
                 }
             }
         }
-        for (p10c = D_8009CF88, i = 0; i < 32; i++, p10c++)
+        for (p10c = Shl_work_tbl, i = 0; i < 32; i++, p10c++)
         {
             if ((p10c->flags & 3) == 3 && p10c->kind < 0x80 && ((PL_TARGET *)p10c)->bounds != NULL)
             {

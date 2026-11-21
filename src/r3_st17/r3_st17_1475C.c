@@ -10,7 +10,7 @@ void func_8011475C(STAGE_OBJ *wp)
     base = (Game_work.value_50 != 2) ? 5 : 0;
     for (i = 0; i < 5; i++)
     {
-        ep = func_800316BC();
+        ep = Open_EVE_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;
@@ -618,7 +618,7 @@ void func_80115C24(STAGE_OBJ *wp)
     uint8 v;
 
     ST17_GAME.value_5E = D_80098844[10]->life_8 << 5;
-    op_48              = (ST17_SLOT *)func_80031418();
+    op_48              = (ST17_SLOT *)Open_EM_WORK();
     if (op_48 != NULL)
     {
         one               = 1;
@@ -670,7 +670,7 @@ void func_80115C24(STAGE_OBJ *wp)
     func_8005D844(0, 0, D_80098844[10]->value_A);
     if (wp->variant_3 == 0)
     {
-        op_4C = (ST17_SLOT *)func_80031418();
+        op_4C = (ST17_SLOT *)Open_EM_WORK();
         if (op_4C != NULL)
         {
             op_4C->position.x = 0;
@@ -747,7 +747,7 @@ void func_8011606C(STAGE_OBJ *wp)
     i = 0;
     do
     {
-        op = func_80031418();
+        op = Open_EM_WORK();
         if (op != NULL)
         {
             op->flags_0      = 1;
@@ -1315,7 +1315,7 @@ void func_801170D4(STAGE_ROOM *wp)
             func_80117BEC(5, 0);
             D_800BBA90[0].flags_0      = 3;
             ST17_MODEL_TBL[0].value_2F = 6;
-            func_80031824(wp->child_24);
+            Close_EM_WORK(wp->child_24);
             func_8003187C(wp->child_28);
             STAGE_PL.value_448   = 0x80;
             STAGE_PL.pos_438.x   = -0x1A4;
@@ -1416,7 +1416,7 @@ void func_80117420(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[0].flags_0 = 0;
         func_80117BEC(2, 1);
         STAGE_MODEL_TBL[1].flags_0 = 3;
-        func_80031824(wp->child_28);
+        Close_EM_WORK(wp->child_28);
         Sce_slot_open(D_8012123C);
     }
 }
@@ -1430,7 +1430,7 @@ void func_8011748C(STAGE_ROOM *wp)
             func_80117BEC(3, 0);
             D_800BBA90[0].flags_0      = 3;
             ST17_MODEL_TBL[0].value_2F = 6;
-            func_80031824(wp->child_24);
+            Close_EM_WORK(wp->child_24);
             Sce_slot_open(&D_801212F0[0]);
             Sce_slot_open(&D_801212F0[1]);
             func_80117A40(0, 1);
@@ -1458,7 +1458,7 @@ void func_801175B4(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[1].flags_0 = 3;
         ST17_MODEL_TBL[1].value_2F = 2;
         func_8003187C(wp->child_24);
-        func_80031824(wp->child_28);
+        Close_EM_WORK(wp->child_28);
         Sce_slot_open(D_8012123C);
         func_80117A40(0, 3);
     }
@@ -1470,7 +1470,7 @@ void func_80117648(STAGE_ROOM *wp)
     {
         STAGE_MODEL_TBL[0].flags_0 = 0;
         STAGE_MODEL_TBL[1].flags_0 = 0;
-        func_80031824(wp->child_24);
+        Close_EM_WORK(wp->child_24);
         Sce_slot_open(D_80121278);
         func_80117A40(0, 2);
     }
@@ -1549,7 +1549,7 @@ void func_801178EC(STAGE_ROOM *wp)
         STAGE_MODEL_TBL[1].flags_0 = 0;
         wp->child_28->routine_1    = 4;
         wp->child_28->routine_2    = 0;
-        func_80031824(wp->child_24);
+        Close_EM_WORK(wp->child_24);
     }
 }
 
@@ -1573,10 +1573,10 @@ void func_801179C0(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031824(wp->child_28);
-        func_80031824(wp->child_2C);
-        func_80031824(wp->child_30);
-        func_80031824(wp->child_34);
+        Close_EM_WORK(wp->child_28);
+        Close_EM_WORK(wp->child_2C);
+        Close_EM_WORK(wp->child_30);
+        Close_EM_WORK(wp->child_34);
         temp_v0               = wp->child_24;
         temp_v0->routine_1    = 6;
         temp_v0->u_C.b.byte_D = (uint8)temp_v0->u_C.b.byte_D + 1;
@@ -1954,7 +1954,7 @@ void func_80118578(STAGE_ROOM *wp)
     }
     else if (wp->frame_10 == 1)
     {
-        ep = func_800316BC();
+        ep = Open_EVE_WORK();
         if (ep != NULL)
         {
             ep->flags_0 = 1;
@@ -1986,7 +1986,7 @@ void func_8011865C(STAGE_ROOM *wp)
             wp->child_28->routine_0 = 4;
             wp->child_24->flags_0 |= 2;
             func_8003187C(wp->child_2C);
-            func_80031824(wp->child_30);
+            Close_EM_WORK(wp->child_30);
             wp->child_2C = NULL;
             wp->child_30 = NULL;
             func_8011896C(D_800C3558, 3);
@@ -2389,7 +2389,7 @@ void func_801192C4(STAGE_ROOM *wp)
     }
     else if (wp->frame_10 == 1)
     {
-        ep = func_800316BC();
+        ep = Open_EVE_WORK();
         if (ep != NULL)
         {
             ep->flags_0 = 1;
@@ -2413,7 +2413,7 @@ void func_80119398(STAGE_ROOM *wp)
         other = wp->child_28;
         other->flags_0 |= 2;
         func_8003187C(wp->child_2C);
-        func_80031824(wp->child_30);
+        Close_EM_WORK(wp->child_30);
         wp->child_2C = NULL;
         wp->child_30 = NULL;
         func_80119838(D_800C3558, 3);

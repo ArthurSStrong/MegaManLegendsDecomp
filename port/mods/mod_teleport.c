@@ -7,14 +7,14 @@
 // A teleport goes through the same path as a door. Leaving a room by a door, func_80050C2C
 // (code_80048620.c) fills the room-entry request D_800C3558 (GAME_ENTRY_WORK: arrival x/y/z,
 // facing, stage, room, fades) with flags14 = 2 and starts the next room's music
-// (func_8001F6C4). The field state, func_800158F0 (Game_main_tbl[3], game.c) in its state 2,
+// (func_8001F6C4). The field state, Game_play (Game_main_tbl[3], game.c) in its state 2,
 // sees the request, fades out, and at state 6 reloads: Game_work.routine_0 = 1 (the stage
 // loader) for another stage, 2 for another room of the same stage. The loaders place
-// Mega Man with func_80015EE8 and set Game_work's stage and room (+0x50, +0x51).
+// Mega Man with player_entry_set and set Game_work's stage and room (+0x50, +0x51).
 //
 // From the panel: choosing a destination closes the game's pause menu the way Start does on its
 // top screen (the sub-screen's state word D_800A38F0 = 8, func_80060DB8: returns 1, and
-// func_80015FE8 takes the field back) and closes the panel. The mod hooks func_800158F0; once
+// Game_sub_screen takes the field back) and closes the panel. The mod hooks Game_play; once
 // the field is back in its normal state 2 with no request, no cutscene and no fade, it writes
 // the request and calls the music function exactly as a door does, then lets the state run.
 // Nothing is saved: the memory card is untouched.
@@ -30,7 +30,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define FUNC_FIELD    0x800158F0u // void func_800158F0(GAME_WORK *wp): Game_main_tbl[3]
+#define FUNC_FIELD    0x800158F0u // void Game_play(GAME_WORK *wp): Game_main_tbl[3]
 #define FUNC_MUSIC    0x8001F6C4u // void func_8001F6C4(void): the next room's music (exits)
 #define ENTRY         0x800C3558u // D_800C3558, GAME_ENTRY_WORK (include/rock_neo.exe/game.h)
 #define SUB_WORK      0x800A38F0u // D_800A38F0, the sub-screen's SUB_WORK (sub_scrn.h)

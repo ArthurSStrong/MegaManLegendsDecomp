@@ -3,7 +3,7 @@
 #include "cd.h"
 #include "code_800133d8.h"
 
-void func_800155A4(void)
+void Game_task(void)
 {
     GAME_WORK *wp;
 
@@ -14,13 +14,13 @@ void func_800155A4(void)
     {
         Game_main_tbl[(sint8)wp->routine_0](wp);
         func_80031AA4();
-        func_80016BC0();
-        func_80016BF4();
+        play_time_count();
+        soft_reset_check();
         Thread_wait(1);
     }
 }
 
-void func_80015634(GAME_WORK *wp)
+void Game_init(GAME_WORK *wp)
 {
     sint32 mode;
     sint32 i;
@@ -62,7 +62,7 @@ void func_80015634(GAME_WORK *wp)
     Sce_flag_on(0x3C7);
 }
 
-void func_80015734(GAME_WORK *wp)
+void Game_stage_load(GAME_WORK *wp)
 {
     GAME_ENTRY_WORK *entry;
 
@@ -80,15 +80,15 @@ void func_80015734(GAME_WORK *wp)
             }
             break;
         case 1:
-            func_80016D64();
+            Sound_fade_wait();
             break;
     }
     if (entry->flags15 == 0)
     {
-        wp->routine_50 = entry->stage;
-        wp->routine_51 = entry->room;
-        wp->flags_52   = wp->flags_53;
-        func_80015EE8(&Player_work, entry, 1);
+        wp->stage_no = entry->stage;
+        wp->area_no = entry->room;
+        wp->sce_no   = wp->flags_53;
+        player_entry_set(&Player_work, entry, 1);
     }
     Sce_stage_load();
     wp->routine_0 = 2;
@@ -96,7 +96,7 @@ void func_80015734(GAME_WORK *wp)
     wp->flags_82 &= 0xFE;
 }
 
-void func_80015840(GAME_WORK *wp)
+void Game_room_load(GAME_WORK *wp)
 {
     GAME_ENTRY_WORK *entry;
 
@@ -106,11 +106,11 @@ void func_80015840(GAME_WORK *wp)
         case 0:
             if (D_800C356D == 0)
             {
-                wp->routine_51 = D_800C356F;
-                wp->flags_52   = wp->flags_53;
-                func_80015EE8(&Player_work, entry, 1);
+                wp->area_no = D_800C356F;
+                wp->sce_no   = wp->flags_53;
+                player_entry_set(&Player_work, entry, 1);
             }
-            func_80016D64();
+            Sound_fade_wait();
             // fall through
         case 1:
             func_80038648();
@@ -122,7 +122,7 @@ void func_80015840(GAME_WORK *wp)
     }
 }
 
-void func_800158F0(GAME_WORK *wp)
+void Game_play(GAME_WORK *wp)
 {
     GAME_ENTRY_WORK *entry;
     PL_WORK *player;
@@ -146,14 +146,14 @@ void func_800158F0(GAME_WORK *wp)
                     func_80017C30(entry->fade_in);
                     wp->routine_1++;
                 }
-                func_80015DB4();
+                game_update();
                 D_800A3A00 = D_800A39F0;
                 func_80019D18();
             }
             break;
         case 1:
-            func_80015DB4();
-            func_80016D0C(wp);
+            game_update();
+            fade_wait_next(wp);
             break;
         case 2:
             if (entry->flags14 != 0)
@@ -176,9 +176,9 @@ void func_800158F0(GAME_WORK *wp)
                     {
                         func_8002F420(0x1FE, NULL);
                     }
-                    wp->routine_51 = entry->room;
-                    wp->flags_52   = wp->flags_53;
-                    func_80015EE8(player, entry, 0);
+                    wp->area_no = entry->room;
+                    wp->sce_no   = wp->flags_53;
+                    player_entry_set(player, entry, 0);
                     Sce_room_load();
                     entry->flags14 = 0;
                 }
@@ -203,14 +203,14 @@ void func_800158F0(GAME_WORK *wp)
                         *(uint32 *)&wp->routine_0 = 7;
                         break;
                     }
-                    if (wp->routine_50 >= 3 && wp->routine_50 != 26)
+                    if (wp->stage_no >= 3 && wp->stage_no != 26)
                     {
                         *(uint32 *)&wp->routine_0 = 8;
                         break;
                     }
                 }
             }
-            func_80015DB4();
+            game_update();
             if (wp->flags_81 != 0)
             {
                 if (wp->flags_81 == 1)
@@ -225,7 +225,7 @@ void func_800158F0(GAME_WORK *wp)
             }
             break;
         case 3:
-            func_80015DB4();
+            game_update();
             func_80019C20();
             if (entry->fade_out == 255)
             {
@@ -246,18 +246,18 @@ void func_800158F0(GAME_WORK *wp)
             func_80017C30(entry->fade_out);
             break;
         case 4:
-            func_80015DB4();
-            func_80016D38(wp);
+            game_update();
+            fade_wait_next2(wp);
             break;
         case 5:
-            func_80015DB4();
+            game_update();
             entry->flags14++;
             wp->routine_1++;
             break;
         case 6:
             if (entry->flags14 == 3)
             {
-                if (wp->routine_50 != entry->stage)
+                if (wp->stage_no != entry->stage)
                 {
                     wp->routine_0 = 1;
                     wp->routine_1 = 1;
@@ -274,37 +274,37 @@ void func_800158F0(GAME_WORK *wp)
             }
             else
             {
-                func_80015DB4();
+                game_update();
             }
             break;
         case 7:
-            func_80015DB4();
+            game_update();
             wp->routine_0 = 9;
             wp->routine_1 = 0;
             break;
     }
 }
 
-void func_80015DB4(void)
+void game_update(void)
 {
     sint32 index;
     CODE800133D8_LINK *link;
 
     func_800175D8();
     func_800679B8();
-    func_80017478();
+    eve_work_move();
     func_8003C07C();
     func_8003606C();
     func_8005C2B8();
     func_80017094();
-    func_80016FD4();
-    func_80017210();
-    func_800172F4();
+    Em_work_move();
+    shl_work_move();
+    effect_stage_move();
     func_80017528();
     func_80051BE4();
     func_8003C2D8();
-    func_80017154();
-    func_800173B4();
+    pl_shl_work_move();
+    effect_common_move();
     func_80038894();
     func_8003450C();
     func_80037F60();
@@ -320,7 +320,7 @@ void func_80015DB4(void)
     setaddr(&link->tag, &D_800A4D40[index][0x1000] - 1);
 }
 
-void func_80015EE8(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset)
+void player_entry_set(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset)
 {
     wp->position.x = wp->position_prev.x = entry->x;
     wp->position.y = wp->position_prev.y = entry->y;
@@ -341,7 +341,7 @@ void func_80015EE8(PL_WORK *wp, GAME_ENTRY_WORK *entry, sint32 reset)
     }
 }
 
-void func_80015FE8(GAME_WORK *wp)
+void Game_sub_screen(GAME_WORK *wp)
 {
     PL_WORK *player;
 
@@ -392,7 +392,7 @@ void func_80015FE8(GAME_WORK *wp)
     }
 }
 
-void func_80016160(GAME_WORK *wp)
+void Game_support(GAME_WORK *wp)
 {
     PL_WORK *player;
     sint32 sound;
@@ -405,9 +405,9 @@ void func_80016160(GAME_WORK *wp)
             player->flags_bd |= 0x40;
             if (Sound_fade_flags == 0)
             {
-                if (*(uint16 *)&Game_work.routine_50 == 0x603 ||
-                    *(uint16 *)&Game_work.routine_50 == 0xB13 ||
-                    *(uint16 *)&Game_work.routine_50 == 0x61B)
+                if (*(uint16 *)&Game_work.stage_no == 0x603 ||
+                    *(uint16 *)&Game_work.stage_no == 0xB13 ||
+                    *(uint16 *)&Game_work.stage_no == 0x61B)
                 {
                     sound = 0xCF;
                 }
@@ -420,12 +420,12 @@ void func_80016160(GAME_WORK *wp)
                 Sound_fade_start(0x10);
                 wp->routine_1++;
             }
-            func_80015DB4();
+            game_update();
             break;
         case 1:
             if (D_80098810 == 0)
             {
-                func_80015DB4();
+                game_update();
             }
             else
             {
@@ -439,9 +439,9 @@ void func_80016160(GAME_WORK *wp)
                 func_8001B314();
                 MojiTaskKill();
                 func_80063EF0();
-                if (*(uint16 *)&Game_work.routine_50 == 0x603 ||
-                    *(uint16 *)&Game_work.routine_50 == 0xB13 ||
-                    *(uint16 *)&Game_work.routine_50 == 0x61B)
+                if (*(uint16 *)&Game_work.stage_no == 0x603 ||
+                    *(uint16 *)&Game_work.stage_no == 0xB13 ||
+                    *(uint16 *)&Game_work.stage_no == 0x61B)
                 {
                     sound = 0xCF;
                 }
@@ -476,7 +476,7 @@ void func_80016160(GAME_WORK *wp)
                 if (result > 0)
                 {
                     func_8001D7AC(0x17);
-                    func_80016434(result);
+                    support_warp_set(result);
                     Sound_fade_start(0x10);
                     func_80017C30(0x15);
                     wp->routine_1++;
@@ -518,7 +518,7 @@ void func_80016160(GAME_WORK *wp)
     }
 }
 
-void func_80016434(sint32 mode)
+void support_warp_set(sint32 mode)
 {
     if (mode == 2)
     {
@@ -536,7 +536,7 @@ void func_80016434(sint32 mode)
     }
 }
 
-void func_800164B4(GAME_WORK *wp)
+void Game_mem_card(GAME_WORK *wp)
 {
     switch ((sint8)wp->routine_1)
     {
@@ -548,10 +548,10 @@ void func_800164B4(GAME_WORK *wp)
             wp->routine_1 = 2;
             break;
     }
-    func_80015DB4();
+    game_update();
 }
 
-void func_80016528(GAME_WORK *wp)
+void Game_auto_map(GAME_WORK *wp)
 {
     switch ((sint8)wp->routine_1)
     {
@@ -581,7 +581,7 @@ void func_80016528(GAME_WORK *wp)
     }
 }
 
-void func_8001663C(GAME_WORK *wp)
+void Game_map_screen(GAME_WORK *wp)
 {
     PL_WORK *player;
 
@@ -596,7 +596,7 @@ void func_8001663C(GAME_WORK *wp)
             Sound_key_off_voice(0x10);
             Sound_key_off_voice(0x16);
             Sound_key_off_voice(0x17);
-            Cd_read_comb((sint8)wp->flags_52 < 9 ? 0x21 : 0x23);
+            Cd_read_comb((sint8)wp->sce_no < 9 ? 0x21 : 0x23);
             wp->routine_1++;
             break;
         case 1:
@@ -630,21 +630,21 @@ void func_8001663C(GAME_WORK *wp)
     }
 }
 
-void func_80016798(GAME_WORK *wp)
+void Game_over(GAME_WORK *wp)
 {
     switch ((sint8)wp->routine_1)
     {
         case 0:
             GAME_SCRATCH_MODE = 4;
-            func_80015DB4();
+            game_update();
             func_8001D7AC(0x19);
             func_80017C30(11);
             wp->work08.transition_aperture = 120;
             wp->routine_1++;
             break;
         case 1:
-            func_80015DB4();
-            func_80016E90();
+            game_update();
+            shutter_draw();
             if ((wp->work08.transition_aperture -= 2) < 0)
             {
                 wp->work08.transition_aperture = 0;
@@ -672,11 +672,11 @@ void func_80016798(GAME_WORK *wp)
             func_80017C30(2);
             break;
         case 3:
-            func_80016DAC();
-            func_80016D0C(wp);
+            game_over_draw();
+            fade_wait_next(wp);
             break;
         case 4:
-            func_80016DAC();
+            game_over_draw();
             if ((D_800C0C2A & 8) || func_8001A0A8(0) == 0)
             {
                 wp->routine_1++;
@@ -685,7 +685,7 @@ void func_80016798(GAME_WORK *wp)
             }
             break;
         case 5:
-            func_80016DAC();
+            game_over_draw();
         wait:
             if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
@@ -700,21 +700,22 @@ void func_80016798(GAME_WORK *wp)
     }
 }
 
-void func_800169AC(GAME_WORK *wp)
+// Same as Game_over except the first fade (15, not 11).
+void Game_over2(GAME_WORK *wp)
 {
     switch ((sint8)wp->routine_1)
     {
         case 0:
             GAME_SCRATCH_MODE = 4;
-            func_80015DB4();
+            game_update();
             func_8001D7AC(0x19);
             func_80017C30(15);
             wp->work08.transition_aperture = 120;
             wp->routine_1++;
             break;
         case 1:
-            func_80015DB4();
-            func_80016E90();
+            game_update();
+            shutter_draw();
             if ((wp->work08.transition_aperture -= 2) < 0)
             {
                 wp->work08.transition_aperture = 0;
@@ -742,11 +743,11 @@ void func_800169AC(GAME_WORK *wp)
             func_80017C30(2);
             break;
         case 3:
-            func_80016DAC();
-            func_80016D0C(wp);
+            game_over_draw();
+            fade_wait_next(wp);
             break;
         case 4:
-            func_80016DAC();
+            game_over_draw();
             if ((D_800C0C2A & 8) || func_8001A0A8(0) == 0)
             {
                 wp->routine_1++;
@@ -755,7 +756,7 @@ void func_800169AC(GAME_WORK *wp)
             }
             break;
         case 5:
-            func_80016DAC();
+            game_over_draw();
         wait:
             if (D_80098A72 == 0 && Sound_fade_flags == 0)
             {
@@ -770,15 +771,15 @@ void func_800169AC(GAME_WORK *wp)
     }
 }
 
-void func_80016BC0(void)
+void play_time_count(void)
 {
-    if (++Game_work.timer_0c > GAME_TIMER_MAX)
+    if (++Game_work.play_time > GAME_TIMER_MAX)
     {
-        Game_work.timer_0c = GAME_TIMER_MAX;
+        Game_work.play_time = GAME_TIMER_MAX;
     }
 }
 
-void func_80016BF4(void)
+void soft_reset_check(void)
 {
     if ((sint8)Game_work.routine_0 >= 3 && (sint8)Game_work.routine_0 != 6 && D_80098910 == 0)
     {
@@ -808,7 +809,7 @@ void func_80016BF4(void)
     }
 }
 
-void func_80016D0C(GAME_WORK *wp)
+void fade_wait_next(GAME_WORK *wp)
 {
     if (D_80098A72 == 0)
     {
@@ -816,7 +817,8 @@ void func_80016D0C(GAME_WORK *wp)
     }
 }
 
-void func_80016D38(GAME_WORK *wp)
+// Same code as fade_wait_next.
+void fade_wait_next2(GAME_WORK *wp)
 {
     if (D_80098A72 == 0)
     {
@@ -824,7 +826,7 @@ void func_80016D38(GAME_WORK *wp)
     }
 }
 
-void func_80016D64(void)
+void Sound_fade_wait(void)
 {
     while (Sound_fade_flags != 0)
     {
@@ -833,7 +835,7 @@ void func_80016D64(void)
     func_8001B314();
 }
 
-void func_80016DAC(void)
+void game_over_draw(void)
 {
     POLY_FT4 *p;
 
@@ -864,7 +866,7 @@ void func_80016DAC(void)
     AddPrim(&D_80098934->tag78, p);
 }
 
-void func_80016E90(void)
+void shutter_draw(void)
 {
     POLY_FT4 *packet;
     POLY_F4 *p;
@@ -903,13 +905,13 @@ void func_80016E90(void)
     *CODE800133D8_PACKET_PTR = packet;
 }
 
-void func_80016FD4(void)
+void Em_work_move(void)
 {
-    for (D_80098820 = D_8009F108; (uint32)D_80098820 < (uint32)&D_8009F108[16]; D_80098820++)
+    for (D_80098820 = Em_work_tbl; (uint32)D_80098820 < (uint32)&Em_work_tbl[16]; D_80098820++)
     {
         if (D_80098820->flags & D_80098820->active & 1)
         {
-            GAME_TABLE_3C0[D_80098820->kind][D_80098820->routine](D_80098820);
+            Enemy_move_ptr[D_80098820->kind][D_80098820->id2](D_80098820);
         }
     }
 }
@@ -920,14 +922,14 @@ void func_80017094(void)
     {
         if (D_800989D0->flags & D_800989D0->active & 1)
         {
-            GAME_TABLE_5A4[D_800989D0->kind][D_800989D0->routine](D_800989D0);
+            GAME_TABLE_5A4[D_800989D0->kind][D_800989D0->id2](D_800989D0);
         }
     }
 }
 
-void func_80017154(void)
+void pl_shl_work_move(void)
 {
-    for (D_800988F8 = D_800BFB20; (uint32)D_800988F8 < (uint32)&D_800BFB20[16]; D_800988F8++)
+    for (D_800988F8 = Pl_shl_work_tbl; (uint32)D_800988F8 < (uint32)&Pl_shl_work_tbl[16]; D_800988F8++)
     {
         if (D_800988F8->flags & D_800988F8->active & 1)
         {
@@ -936,9 +938,9 @@ void func_80017154(void)
     }
 }
 
-void func_80017210(void)
+void shl_work_move(void)
 {
-    for (D_800988F8 = D_8009CF88; (uint32)D_800988F8 < (uint32)&D_8009CF88[32]; D_800988F8++)
+    for (D_800988F8 = Shl_work_tbl; (uint32)D_800988F8 < (uint32)&Shl_work_tbl[32]; D_800988F8++)
     {
         if (D_800988F8->flags & D_800988F8->active & 1)
         {
@@ -954,9 +956,9 @@ void func_80017210(void)
     }
 }
 
-void func_800172F4(void)
+void effect_stage_move(void)
 {
-    for (D_800988E4 = D_800A3B40; (uint32)D_800988E4 < (uint32)&D_800A3B40[64]; D_800988E4++)
+    for (D_800988E4 = Effect_work_tbl; (uint32)D_800988E4 < (uint32)&Effect_work_tbl[64]; D_800988E4++)
     {
         if (D_800988E4->flags & D_800988E4->active & 1)
         {
@@ -968,9 +970,9 @@ void func_800172F4(void)
     }
 }
 
-void func_800173B4(void)
+void effect_common_move(void)
 {
-    for (D_800988E4 = D_800A3B40; (uint32)D_800988E4 < (uint32)&D_800A3B40[64]; D_800988E4++)
+    for (D_800988E4 = Effect_work_tbl; (uint32)D_800988E4 < (uint32)&Effect_work_tbl[64]; D_800988E4++)
     {
         if (D_800988E4->flags & D_800988E4->active & 1)
         {
@@ -982,9 +984,9 @@ void func_800173B4(void)
     }
 }
 
-void func_80017478(void)
+void eve_work_move(void)
 {
-    for (D_800988F0 = D_800A2D08; (uint32)D_800988F0 < (uint32)&D_800A2D08[16]; D_800988F0++)
+    for (D_800988F0 = Eve_work_tbl; (uint32)D_800988F0 < (uint32)&Eve_work_tbl[16]; D_800988F0++)
     {
         if (D_800988F0->flags & D_800988F0->active & 1)
         {

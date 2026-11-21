@@ -943,8 +943,8 @@ void func_8005DC10(sint32 arg0)
             {
                 return;
             }
-            if (D_8008D19C[i].stage == Game_work.routine_50 &&
-                D_8008D19C[i].room == (sint8)Game_work.routine_51)
+            if (D_8008D19C[i].stage == Game_work.stage_no &&
+                D_8008D19C[i].room == (sint8)Game_work.area_no)
             {
                 D_80098004 = 3;
                 D_8009878C = arg0;

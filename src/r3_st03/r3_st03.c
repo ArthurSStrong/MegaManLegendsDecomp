@@ -328,7 +328,7 @@ void func_80100BF8(STAGE_ROOM *wp)
             {
                 if (ST03_SCENE_OBJ_0->flags_0 != 0)
                 {
-                    func_80031824(ST03_SCENE_OBJ_0);
+                    Close_EM_WORK(ST03_SCENE_OBJ_0);
                 }
                 Sce_event_start(0x61);
                 Sce_flag_on(0x46);
@@ -396,7 +396,7 @@ void func_80101064(STAGE_ROOM *wp)
     STAGE_OBJ *obj;
     if (wp->routine_4 == 0)
     {
-        obj = func_80031418();
+        obj = Open_EM_WORK();
         if (obj != NULL)
         {
             obj->flags_0 = 1;

@@ -8,7 +8,7 @@ void Map_screen_init(void)
 {
     *(uint32 *)&Map_screen_work.routine_0 = 0;
     *(uint32 *)&Map_screen_work.mode_4    = 0;
-    if ((sint8)Game_work.flags_52 < 9)
+    if ((sint8)Game_work.sce_no < 9)
     {
         Map_screen_work.mode_4 = 0;
     }
@@ -110,14 +110,14 @@ void map_cursor_set(void)
     sint32 u;
 
     gw = &Game_work;
-    switch (gw->routine_50)
+    switch (gw->stage_no)
     {
         case 3:
         case 27:
             n = 3;
-            if ((sint8)gw->routine_51 < 3)
+            if ((sint8)gw->area_no < 3)
             {
-                n = (sint8)gw->routine_51;
+                n = (sint8)gw->area_no;
             }
             break;
         case 15:
@@ -133,7 +133,7 @@ void map_cursor_set(void)
         case 29:
             return;
         default:
-            n = gw->routine_50;
+            n = gw->stage_no;
             break;
     }
     x                        = D_8008DB34[n].x;

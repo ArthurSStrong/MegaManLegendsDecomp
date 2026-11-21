@@ -709,7 +709,7 @@ sint32 func_80049C54(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32
 sint32 func_80048EA4(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);
 void func_80104C9C(ST13_SPARK *wp);
 
-// A 0x10C-byte slot (func_80031518) as func_80112348 fires it: STAGE_PIECE with two more words.
+// A 0x10C-byte slot (Open_SHL_WORK) as func_80112348 fires it: STAGE_PIECE with two more words.
 typedef struct
 {
     uint8 flags_0;                     // 00

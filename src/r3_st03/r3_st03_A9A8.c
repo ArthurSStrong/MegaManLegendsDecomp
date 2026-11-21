@@ -342,7 +342,7 @@ void func_8010AFC0(ST03_ACTOR *wp)
     }
     if (Sce_flag_test(0x1A))
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
     }
     func_80051B68(wp, 1, -1, 0);
 }

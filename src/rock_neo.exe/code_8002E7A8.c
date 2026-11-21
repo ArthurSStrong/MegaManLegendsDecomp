@@ -47,20 +47,20 @@ void func_8002E7A8(sint32 mode)
         }
     }
     id = 0x10;
-    func_800177CC(D_800BFB20, (uint8 *)D_800BFB20 + 0x10BC);
+    func_800177CC(Pl_shl_work_tbl, (uint8 *)Pl_shl_work_tbl + 0x10BC);
     D_800989F0 = 0;
     D_80098A60 = 0;
     for (i = 0; i < 16; i++)
     {
-        D_800BFB20[i].reserved01 = id | i;
+        Pl_shl_work_tbl[i].reserved01 = id | i;
     }
     id = 0x20;
-    func_800177CC(D_8009F108, (uint8 *)D_8009F108 + 0x3BFC);
+    func_800177CC(Em_work_tbl, (uint8 *)Em_work_tbl + 0x3BFC);
     D_800987E8 = 0;
     D_8009880C = 0;
     for (i = 0; i < 16; i++)
     {
-        D_8009F108[i].reserved01 = id | i;
+        Em_work_tbl[i].reserved01 = id | i;
     }
     id = 0x40;
     func_800177CC(D_800C3580, (uint8 *)D_800C3580 + 0x168C);
@@ -71,30 +71,30 @@ void func_8002E7A8(sint32 mode)
         D_800C3580[i].reserved01 = id | i;
     }
     id = 0x60;
-    func_800177CC(D_8009CF88, (uint8 *)D_8009CF88 + 0x217C);
+    func_800177CC(Shl_work_tbl, (uint8 *)Shl_work_tbl + 0x217C);
     D_800987CC = 0;
     D_80098808 = 0;
     for (i = 0; i < 32; i++)
     {
-        D_8009CF88[i].reserved01 = id | i;
+        Shl_work_tbl[i].reserved01 = id | i;
     }
     id = 0x80;
-    func_800177CC(D_800A3B40, (uint8 *)D_800A3B40 + 0x11FC);
+    func_800177CC(Effect_work_tbl, (uint8 *)Effect_work_tbl + 0x11FC);
     D_80098838 = 0;
     D_8009883C = 0;
     D_800988C8 = 0;
     D_800988CC = 0;
     for (i = 0; i < 64; i++)
     {
-        D_800A3B40[i].reserved01 = id | i;
+        Effect_work_tbl[i].reserved01 = id | i;
     }
     id = 0xC0;
-    func_800177CC(D_800A2D08, (uint8 *)D_800A2D08 + 0x23C);
+    func_800177CC(Eve_work_tbl, (uint8 *)Eve_work_tbl + 0x23C);
     D_800987EC = 0;
     D_80098818 = 0;
     for (i = 0; i < 16; i++)
     {
-        D_800A2D08[i].reserved01 = id | i;
+        Eve_work_tbl[i].reserved01 = id | i;
     }
     id = 0xE0;
     func_800177CC(D_800BF118, (uint8 *)D_800BF118 + 0x9FC);
@@ -144,7 +144,7 @@ void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player)
                 }
                 break;
             case 0x20:
-                o = (SPAWN_SLOT *)func_80031418();
+                o = (SPAWN_SLOT *)Open_EM_WORK();
                 goto fill_slot;
             case 0x40:
                 o = (SPAWN_SLOT *)func_80031498();
@@ -155,9 +155,9 @@ void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player)
                 // register that loop.c doesn't hoist (retail rebuilds it each time).
                 if (e->w2.b.id_2 != 0x11 || (SPAWN_GAME.mark_78.flag != 0 &&
                                              ((sint32)(SPAWN_GAME.mark_78.word << 8) >> 16) ==
-                                                 *(sint16 *)&Game_work.routine_50))
+                                                 *(sint16 *)&Game_work.stage_no))
                 {
-                    o = (SPAWN_SLOT *)func_80031518();
+                    o = (SPAWN_SLOT *)Open_SHL_WORK();
                 fill_slot:
                     if (o != NULL)
                     {
@@ -180,7 +180,7 @@ void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player)
                 fx = (SPAWN_FX *)func_80031618();
                 goto fill_fx;
             case 0xC0:
-                lk = (SPAWN_LINK *)func_800316BC();
+                lk = (SPAWN_LINK *)Open_EVE_WORK();
                 if (lk != NULL)
                 {
                     lk->flags_0 = e->flags_0;
@@ -248,7 +248,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 2)
     {
-        s3c0 = D_8009F108;
+        s3c0 = Em_work_tbl;
         bits = D_800987E8;
         for (i = 0; i < 16; i++, s3c0++)
         {
@@ -257,7 +257,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 if (flags & 0x80)
                 {
                     func_80052528(s3c0);
-                    func_80031824(s3c0);
+                    Close_EM_WORK(s3c0);
                 }
                 else
                 {
@@ -288,7 +288,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 8)
     {
-        s10c = D_800BFB20;
+        s10c = Pl_shl_work_tbl;
         bits = D_800989F0;
         for (i = 0; i < 16; i++, s10c++)
         {
@@ -308,7 +308,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 16)
     {
-        s10c = D_8009CF88;
+        s10c = Shl_work_tbl;
         bits = D_800987CC;
         for (i = 0; i < 32; i++, s10c++)
         {
@@ -317,7 +317,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 if (flags & 0x80)
                 {
                     func_80052528(s10c);
-                    func_800318D8(s10c);
+                    Close_SHL_WORK(s10c);
                 }
                 else
                 {
@@ -328,7 +328,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 0x20)
     {
-        s48 = D_800A3B40;
+        s48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
             bits = (&D_80098838)[i];
@@ -350,7 +350,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 0x40)
     {
-        s48 = D_800A3B40;
+        s48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
             bits = (&D_80098838)[i];
@@ -372,7 +372,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 128)
     {
-        s24  = D_800A2D08;
+        s24  = Eve_work_tbl;
         bits = D_800987EC;
         for (i = 0; i < 16; i++, s24++)
         {
@@ -478,7 +478,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
 
     if (flag & 2)
     {
-        slot3c0 = D_8009F108;
+        slot3c0 = Em_work_tbl;
         mask    = D_800987E8;
         for (i = 0; i < 16; i++, slot3c0++)
         {
@@ -493,7 +493,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 }
                 else
                 {
-                    func_80031824(slot3c0);
+                    Close_EM_WORK(slot3c0);
                 }
             }
         }
@@ -522,7 +522,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     }
     if (flag & 8)
     {
-        slot10c = D_800BFB20;
+        slot10c = Pl_shl_work_tbl;
         mask    = D_800989F0;
         for (i = 0; i < 16; i++, slot10c++)
         {
@@ -544,7 +544,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     }
     if (flag & 16)
     {
-        slot10c = D_8009CF88;
+        slot10c = Shl_work_tbl;
         mask    = D_800987CC;
         for (i = 0; i < 32; i++, slot10c++)
         {
@@ -559,14 +559,14 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 }
                 else
                 {
-                    func_800318D8(slot10c);
+                    Close_SHL_WORK(slot10c);
                 }
             }
         }
     }
     if (flag & 32)
     {
-        slot48 = D_800A3B40;
+        slot48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
             mask = (&D_80098838)[i];
@@ -591,7 +591,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     }
     if (flag & 64)
     {
-        slot48 = D_800A3B40;
+        slot48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
             mask = (&D_80098838)[i];
@@ -616,7 +616,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     }
     if (flag & 128)
     {
-        slot24 = D_800A2D08;
+        slot24 = Eve_work_tbl;
         mask   = D_800987EC;
         for (i = 0; i < 16; i++, slot24++)
         {
@@ -761,14 +761,14 @@ void func_8002FBF4(void)
     GAME_WORK_48 *p48;
     GAME_WORK_50 *p50;
 
-    p3c0 = D_8009F108;
+    p3c0 = Em_work_tbl;
     mask = D_800987E8;
     for (i = 0; i < 16; i++)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p3c0)->link_88 <= 0x8018FFFF)
         {
             func_80052528(p3c0);
-            func_80031824(p3c0);
+            Close_EM_WORK(p3c0);
         }
         p3c0++;
     }
@@ -783,7 +783,7 @@ void func_8002FBF4(void)
         }
         p5a4++;
     }
-    p10c = D_800BFB20;
+    p10c = Pl_shl_work_tbl;
     mask = D_800989F0;
     for (i = 0; i < 16; i++)
     {
@@ -794,18 +794,18 @@ void func_8002FBF4(void)
         }
         p10c++;
     }
-    p10c = D_8009CF88;
+    p10c = Shl_work_tbl;
     mask = D_800987CC;
     for (i = 0; i < 32; i++)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p10c)->link_88 <= 0x8018FFFF)
         {
             func_80052528(p10c);
-            func_800318D8(p10c);
+            Close_SHL_WORK(p10c);
         }
         p10c++;
     }
-    p48 = D_800A3B40;
+    p48 = Effect_work_tbl;
     for (i = 0; i < 2; i++)
     {
         mask = (&D_80098838)[i];
@@ -1392,7 +1392,7 @@ void func_80031324(SPAWN_OWNER *owner, SPAWN_CHILD *child, sint16 index)
     owner->slots_f8[index].byte_1 = -1;
 }
 
-GAME_WORK_3C0 *func_80031418(void)
+GAME_WORK_3C0 *Open_EM_WORK(void)
 {
     sint32 i;
     GAME_WORK_3C0 *wp;
@@ -1402,7 +1402,7 @@ GAME_WORK_3C0 *func_80031418(void)
     mask = D_800987E8;
     for (i = 0; i < 16; i++)
     {
-        wp = &D_8009F108[i];
+        wp = &Em_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
@@ -1452,7 +1452,7 @@ GAME_WORK_5A4 *func_80031498(void)
     return NULL;
 }
 
-GAME_WORK_10C *func_80031518(void)
+GAME_WORK_10C *Open_SHL_WORK(void)
 {
     sint32 i;
     GAME_WORK_10C *wp;
@@ -1462,7 +1462,7 @@ GAME_WORK_10C *func_80031518(void)
     mask = D_800987CC;
     for (i = 0; i < 32; i++)
     {
-        wp = &D_8009CF88[i];
+        wp = &Shl_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
@@ -1492,7 +1492,7 @@ GAME_WORK_10C *func_80031598(void)
     mask = D_800989F0;
     for (i = 0; i < 16; i++)
     {
-        wp = &D_800BFB20[i];
+        wp = &Pl_shl_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
@@ -1529,7 +1529,7 @@ struct CODE456_WORK *func_80031618(void)
             if (((sint32)bits << j) >= 0)
             {
                 (&D_80098838)[i] |= 0x80000000 >> j;
-                wp                          = &D_800A3B40[j + (i << 5)];
+                wp                          = &Effect_work_tbl[j + (i << 5)];
                 slot                        = (SLOT_INIT *)wp;
                 slot->half_2                = 0;
                 *(sint32 *)&slot->routine_4 = 0;
@@ -1544,7 +1544,7 @@ struct CODE456_WORK *func_80031618(void)
     return NULL;
 }
 
-GAME_WORK_24 *func_800316BC(void)
+GAME_WORK_24 *Open_EVE_WORK(void)
 {
     sint32 i;
     GAME_WORK_24 *wp;
@@ -1554,7 +1554,7 @@ GAME_WORK_24 *func_800316BC(void)
     mask = D_800987EC;
     for (i = 0; i < 16; i++)
     {
-        wp = &D_800A2D08[i];
+        wp = &Eve_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
@@ -1624,9 +1624,9 @@ GAME_WORK_50 *func_800317AC(sint32 index)
     return NULL;
 }
 
-void func_80031824(GAME_WORK_3C0 *wp)
+void Close_EM_WORK(GAME_WORK_3C0 *wp)
 {
-    D_8009880C |= 0x80000000 >> (((uint32)wp - (uint32)D_8009F108) / sizeof(*wp));
+    D_8009880C |= 0x80000000 >> (((uint32)wp - (uint32)Em_work_tbl) / sizeof(*wp));
     D_8009880C &= D_800987E8;
     wp->flags = 0;
 }
@@ -1638,16 +1638,16 @@ void func_8003187C(GAME_WORK_5A4 *wp)
     wp->flags = 0;
 }
 
-void func_800318D8(GAME_WORK_10C *wp)
+void Close_SHL_WORK(GAME_WORK_10C *wp)
 {
-    D_80098808 |= 0x80000000 >> (((uint32)wp - (uint32)D_8009CF88) / sizeof(*wp));
+    D_80098808 |= 0x80000000 >> (((uint32)wp - (uint32)Shl_work_tbl) / sizeof(*wp));
     D_80098808 &= D_800987CC;
     wp->flags = 0;
 }
 
 void func_80031930(GAME_WORK_10C *wp)
 {
-    D_80098A60 |= 0x80000000 >> (((uint32)wp - (uint32)D_800BFB20) / sizeof(*wp));
+    D_80098A60 |= 0x80000000 >> (((uint32)wp - (uint32)Pl_shl_work_tbl) / sizeof(*wp));
     D_80098A60 &= D_800989F0;
     wp->flags = 0;
 }
@@ -1656,7 +1656,7 @@ void func_80031988(GAME_WORK_48 *wp)
 {
     uint32 i;
 
-    i = ((uint32)wp - (uint32)D_800A3B40) / sizeof(*wp);
+    i = ((uint32)wp - (uint32)Effect_work_tbl) / sizeof(*wp);
     (&D_800988C8)[i >> 5] |= 0x80000000 >> (i & 0x1F);
     (&D_800988C8)[i >> 5] &= (&D_80098838)[i >> 5];
     wp->flags = 0;
@@ -1664,7 +1664,7 @@ void func_80031988(GAME_WORK_48 *wp)
 
 void Close_EVE_WORK(GAME_WORK_24 *wp)
 {
-    D_80098818 |= 0x80000000 >> (((uint32)wp - (uint32)D_800A2D08) / sizeof(*wp));
+    D_80098818 |= 0x80000000 >> (((uint32)wp - (uint32)Eve_work_tbl) / sizeof(*wp));
     D_80098818 &= D_800987EC;
     wp->flags = 0;
 }
@@ -3499,7 +3499,7 @@ void *func_80035C90(SEEK_PLAYER *pl, sint32 arc, uint32 max_dist, sint32 min_dot
     hit = -1;
     for (i = 0; i < 16; i++)
     {
-        slot = (SEEK_SLOT *)&D_8009F108[i];
+        slot = (SEEK_SLOT *)&Em_work_tbl[i];
         if ((slot->flags_0 & 3) && max_dist >= slot->dist_80)
         {
             other   = slot->pos_14;
@@ -3572,7 +3572,7 @@ void func_8003606C(void)
         pos = Player_slots[p].pos_14;
         for (i = 0; i < 0x10;)
         {
-            e = (DIST_SLOT *)&D_8009F108[i++];
+            e = (DIST_SLOT *)&Em_work_tbl[i++];
             if (e->flags_0 | 1)
             {
                 dx = (e->x_14 - pos.vx) >> 1;
@@ -3608,7 +3608,7 @@ void func_8003606C(void)
         }
         for (i = 0; i < 0x20;)
         {
-            e = (DIST_SLOT *)&D_8009CF88[i++];
+            e = (DIST_SLOT *)&Shl_work_tbl[i++];
             if (e->flags_0 | 1)
             {
                 dx = (e->x_14 - pos.vx) >> 1;
@@ -3634,17 +3634,17 @@ void *func_80036294(uint8 id)
         case 0:
             return (uint8 *)&Player_work + (id & 0xF) * 0x5F4;
         case 0x10:
-            return &D_800BFB20[id & 0xF];
+            return &Pl_shl_work_tbl[id & 0xF];
         case 0x20:
-            return &D_8009F108[id & 0x1F];
+            return &Em_work_tbl[id & 0x1F];
         case 0x40:
             return &D_800C3580[id & 0x1F];
         case 0x60:
-            return &D_8009CF88[id & 0x1F];
+            return &Shl_work_tbl[id & 0x1F];
         case 0x80:
-            return &D_800A3B40[id & 0x3F];
+            return &Effect_work_tbl[id & 0x3F];
         case 0xC0:
-            return &D_800A2D08[id & 0x1F];
+            return &Eve_work_tbl[id & 0x1F];
         case 0xE0:
             return &D_800BF118[id & 0x1F];
         default:

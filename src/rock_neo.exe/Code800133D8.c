@@ -22,7 +22,7 @@ void func_80013420(void)
     wp                                       = &Code800133D8_work;
     CODE800133D8_SCRATCH_MODE                = 2;
     *(uint32 *)&Code800133D8_work.menu_index = 0;
-    Game_work.flags_52                       = 0;
+    Game_work.sce_no                       = 0;
     Game_work.flags_53                       = 0;
     Game_work.flags_82                       = 0;
     func_8005C258();
@@ -54,23 +54,23 @@ void func_80013420(void)
     }
 }
 
-// Each arm sets both routine bytes; cross-jumping merges the shared routine_51 store after
+// Each arm sets both routine bytes; cross-jumping merges the shared area_no store after
 // scheduling, which keeps retail's order (one shared store after the join is scheduled earlier).
 void func_80013578(CODE800133D8_STATE *wp)
 {
     wp->routine_3 ^= 1;
     if (wp->routine_3 != 0)
     {
-        Game_work.routine_50 = 1;
-        Game_work.routine_51 = 0;
+        Game_work.stage_no = 1;
+        Game_work.area_no = 0;
     }
     else
     {
-        Game_work.routine_50 = 7;
-        Game_work.routine_51 = 0;
+        Game_work.stage_no = 7;
+        Game_work.area_no = 0;
     }
     Game_work.flags_82 = -128;
-    func_80012F78(func_800155A4);
+    func_80012F78(Game_task);
 }
 
 void func_800135DC(CODE800133D8_STATE *wp)
@@ -147,7 +147,7 @@ void func_800137D4(void)
 
     func_800175D8();
     func_80015428(&Code800133D8_work);
-    func_80016FD4();
+    Em_work_move();
     func_80038370(D_800979DC, D_800979EC);
     func_800175FC();
     func_80028DE0();
@@ -182,8 +182,8 @@ void func_8001389C(CODE800133D8_STATE *wp)
             MojiTaskKill();
             wp->timer = 900;
             wp->routine_1++;
-            gp->routine_50 = 0;
-            gp->routine_51 = 0;
+            gp->stage_no = 0;
+            gp->area_no = 0;
             func_80013FB8();
             func_8001456C(wp->menu_index);
             break;
@@ -280,7 +280,7 @@ void func_8001389C(CODE800133D8_STATE *wp)
             func_8001456C(wp->menu_index);
             MojiTaskKill();
             Game_work.flags_82 = 0;
-            func_80012F78(func_800155A4);
+            func_80012F78(Game_task);
             break;
     }
 }
@@ -320,7 +320,7 @@ void func_80013CA0(CODE800133D8_STATE *wp)
             {
                 func_80017C30(22);
                 Sub_screen_back_ground_set();
-                func_80012F78(func_800155A4);
+                func_80012F78(Game_task);
             }
             else
             {

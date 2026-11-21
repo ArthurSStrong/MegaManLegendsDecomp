@@ -212,7 +212,7 @@ void func_80103400(STAGE_OBJ *wp)
 
 void func_8010343C(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_8010345C(STAGE_OBJ *wp)

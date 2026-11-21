@@ -102,7 +102,7 @@ extern uint8 D_8010622C[];
 extern uint8 D_80106448[];
 extern STAGE_ROOM2_FUNC D_80106354[];
 extern STAGE_ROOM2_FUNC D_801065E4[];
-extern STAGE_FX D_800A3B40[]; // ROCK_NEO's effect slots
+extern STAGE_FX Effect_work_tbl[]; // ROCK_NEO's effect slots
 extern STAGE_OBJ_FUNC D_8010663C[];
 extern STAGE_OBJ_FUNC D_801066A0[];
 extern STAGE_OBJ_FUNC D_801066D0[];

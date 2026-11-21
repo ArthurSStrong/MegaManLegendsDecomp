@@ -20,7 +20,7 @@ typedef struct
     {
         uint8 bytes[0x10];
         uint32 words[4];
-    } slot_14;              // 14: the blocks' slot numbers in D_8009CF88
+    } slot_14;              // 14: the blocks' slot numbers in Shl_work_tbl
     uint8 reserved24[0x2C]; // 24
 } STCOM26_WORK;
 
@@ -41,9 +41,9 @@ void stcom26_func_0DAC(STCOM25_WORK *wp);
 
 // ROCK_NEO.EXE.
 // The 0x10C-byte work slots.
-extern STCOM25_WORK D_8009CF88[];
+extern STCOM25_WORK Shl_work_tbl[];
 // Allocates a 0x10C-byte work slot; NULL when none is free.
-STCOM25_WORK *func_80031518(void);
+STCOM25_WORK *Open_SHL_WORK(void);
 // Frees a 0x50-byte work slot.
 void func_80031A4C(STCOM26_WORK *wp);
 

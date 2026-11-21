@@ -41,7 +41,7 @@ MOD_HOOKS = (
     "func_8003F5D8",  # standing: the skate button check (skate_quick_start)
     "func_8003C88C",  # the player's routine (skate_quick_start)
     "func_8003FDA8",  # skating: the action check (skate_shoot)
-    "func_800158F0",  # the field mode (teleport)
+    "Game_play",  # the field mode (teleport)
 )
 LIBRARY_SYMBOLS = (
     "InterruptCallback", "DMACallback", "OpenEvent", "EnableEvent", "CloseEvent",

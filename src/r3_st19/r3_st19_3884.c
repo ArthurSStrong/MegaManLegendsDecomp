@@ -170,7 +170,7 @@ void func_80103B3C(ST19_OBJ *wp)
 
 void func_80104104(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 // The one-pass do/while (0) loops weight wp's and value_85's references for retail's registers.
@@ -207,7 +207,7 @@ void func_80104124(ST19_OBJ *wp)
                   func_80031DCC(&wp->position_fixed.v, wp->rotation.y, 0x400, &pl->position_fixed,
                                 pl->rotation.y, 0x800) != 0)))
             {
-                held = (ST19_HELD *)func_80031518();
+                held = (ST19_HELD *)Open_SHL_WORK();
                 if (held != NULL)
                 {
                     spin->held_48   = held;
@@ -404,7 +404,7 @@ void func_801046A0(ST19_OBJ *wp)
         {
             if (spin->life_64[i] > 0)
             {
-                shell = (ST19_SHELL *)func_80031518();
+                shell = (ST19_SHELL *)Open_SHL_WORK();
                 if (shell != NULL)
                 {
                     shell->flags_0   = 3;
@@ -594,7 +594,7 @@ void func_80104E94(ST19_OBJ *wp)
     Sound_call2(0x1B4, &wp->position);
     if (wp->value_34D & 1)
     {
-        func_800318D8((void *)wp->value_310);
+        Close_SHL_WORK((void *)wp->value_310);
     }
 }
 
@@ -822,7 +822,7 @@ void func_8010556C(ST19_OBJ *wp)
     wp->anim_prev_AD = 3;
     func_80032304(wp, wp->anim_AC, 0);
     func_8003346C(wp);
-    child = func_80031418();
+    child = Open_EM_WORK();
     if (child != NULL)
     {
         child->flags_0            = 1;
@@ -975,7 +975,7 @@ void func_80105818(ST19_TURRET *wp)
 
 void func_80105E10(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80105E30(ST19_TURRET *wp)
@@ -1068,7 +1068,7 @@ void func_8010601C(ST19_TURRET *wp)
     {
         joint = 7;
     }
-    shell = (ST19_SHELL *)func_80031518();
+    shell = (ST19_SHELL *)Open_SHL_WORK();
     if (shell != NULL)
     {
         target = &pl->position;
@@ -1214,7 +1214,7 @@ void func_801064A0(ST19_TURRET *wp)
         Sound_call2(0x1B2, &wp->position);
         for (i = 0; i < 2; i++)
         {
-            shell = func_80031518();
+            shell = Open_SHL_WORK();
             if (shell != NULL)
             {
                 shell->variant_3          = 5;
@@ -1401,7 +1401,7 @@ void func_80106ADC(ST19_TURRET *wp)
             Sound_call2(0x1B2, &wp->position);
             for (i = 0; i < 2; i++)
             {
-                shell = func_80031518();
+                shell = Open_SHL_WORK();
                 if (shell != NULL)
                 {
                     shell->variant_3          = 5;
@@ -1969,7 +1969,7 @@ void func_80107DD4(ST19_OBJ *wp)
 
 void func_80108018(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80108038(STAGE_OBJ *wp)

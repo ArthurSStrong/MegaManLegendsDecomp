@@ -66,7 +66,7 @@ void func_80112190(STAGE_PROP *wp)
 
 void func_80112220(STAGE_OBJ *wp)
 {
-    func_800318D8(wp);
+    Close_SHL_WORK(wp);
 }
 
 void func_80112240(STAGE_PROP *wp)

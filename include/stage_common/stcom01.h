@@ -24,8 +24,8 @@ typedef struct
     uint16 range_20;     // 368: how near the player must come (stcom01_func_01FC)
 } STCOM01_CTL;
 
-// The work slot stcom01's routines run on. Freed through ROCK_NEO.EXE's func_80031824, so it is
-// one of the 0x3C0-byte slots at D_8009F108 there (GAME_WORK_3C0 in ROCK_NEO's game.h, which
+// The work slot stcom01's routines run on. Freed through ROCK_NEO.EXE's Close_EM_WORK, so it is
+// one of the 0x3C0-byte slots at Em_work_tbl there (GAME_WORK_3C0 in ROCK_NEO's game.h, which
 // names other fields; the two views aren't reconciled yet). Only the fields used so far.
 typedef struct STCOM01_WORK
 {

@@ -322,7 +322,7 @@ void func_80100D10(STAGE_ROOM *wp)
     {
         func_8003187C(wp->child_24);
         func_8003187C(wp->child_28);
-        func_80031824(wp->child_2C);
+        Close_EM_WORK(wp->child_2C);
         func_80101070(0, 2);
     }
 }
@@ -380,10 +380,10 @@ void func_80100E8C(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         func_8003187C(wp->child_28);
-        func_80031824(wp->child_2C);
-        func_80031824(wp->child_30);
-        func_80031824(wp->child_34);
-        func_80031824(wp->child_38);
+        Close_EM_WORK(wp->child_2C);
+        Close_EM_WORK(wp->child_30);
+        Close_EM_WORK(wp->child_34);
+        Close_EM_WORK(wp->child_38);
         func_80101070(0, 0);
         wp->routine_6 = 0;
     }
@@ -772,7 +772,7 @@ void func_80101914(STAGE_ROOM *wp)
     {
         func_8003187C(wp->child_24);
         func_8003187C(wp->child_28);
-        func_80031824(wp->child_3C);
+        Close_EM_WORK(wp->child_3C);
         Sce_slot_open(&D_80119D14[3]);
         wp->child_24->routine_1 = 2;
         func_80101E2C(5);
@@ -837,10 +837,10 @@ void func_801019B0(STAGE_ROOM *wp)
                 Sce_script_next();
                 for (i = 0; i < 4; i++)
                 {
-                    func_80031824((&wp->child_24)[i]);
+                    Close_EM_WORK((&wp->child_24)[i]);
                 }
-                func_80031824(wp->child_3C);
-                func_800318D8(wp->child_38);
+                Close_EM_WORK(wp->child_3C);
+                Close_SHL_WORK(wp->child_38);
                 Sce_slot_open(D_80119D14);
                 func_80101E2C(1);
             }
@@ -893,9 +893,9 @@ void func_80101CC8(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_80031824(wp->child_3C);
-        func_800318D8(wp->child_38);
-        func_80031824(wp->child_24);
+        Close_EM_WORK(wp->child_3C);
+        Close_SHL_WORK(wp->child_38);
+        Close_EM_WORK(wp->child_24);
         Sce_slot_open(&D_80119D14[0]);
         Sce_slot_open(&D_80119D14[1]);
         func_80101E2C(1);
@@ -2188,7 +2188,7 @@ void func_801045F8(ST0B_OBJ *wp)
             ctl->flags_0 |= 0x2000;
             break;
     }
-    child = func_80031418();
+    child = Open_EM_WORK();
     if (child != NULL)
     {
         ctl->child_D0         = child;
@@ -2469,7 +2469,7 @@ void func_80105118(ST0B_OBJ *wp)
 void func_801053B0(ST0B_OBJ *wp)
 {
     func_8003187C(wp);
-    func_80031824(wp->value_450);
+    Close_EM_WORK(wp->value_450);
 }
 
 void func_801053E4(STAGE_OBJ *wp)
@@ -2829,7 +2829,7 @@ void func_80105DF4(ST0B_OBJ *wp)
                                          (wp->rotation.y + act->angle_4 + 0x800) & 0xFFF, 0x800);
                     if (act->timer_2 == 0 && (uint16)(turn + 0x9F) < 0x7F)
                     {
-                        shell = (ST0B_SHELL *)func_80031518();
+                        shell = (ST0B_SHELL *)Open_SHL_WORK();
                         if (shell != NULL)
                         {
                             act->timer_2            = 0x14;
@@ -2946,7 +2946,7 @@ void func_80106278(ST0B_OBJ *wp)
             if (func_80031EF0(&ctl->child_D0->position, (wp->rotation.y + 0x800) & 0xFFF, 0x400,
                               &pl->position, pl->rotation.y, 0x800) != 0)
             {
-                ctl->slot_60 = (ST0B_10C *)func_80031518();
+                ctl->slot_60 = (ST0B_10C *)Open_SHL_WORK();
                 if (ctl->slot_60 != NULL)
                 {
                     shot                 = ctl->slot_60;
@@ -3029,7 +3029,7 @@ sint32 func_80106550(ST0B_OBJ *wp)
                     if (++ctl->count_DE >= D_8009884C[wp->kind_2]->value_C)
                     {
                         ctl->count_DE = 0;
-                        func_800318D8(ctl->slot_60);
+                        Close_SHL_WORK(ctl->slot_60);
                         ctl->flags_0 &= ~0x800;
                     }
                 }
@@ -3175,7 +3175,7 @@ sint32 func_80106B08(ST0B_OBJ *wp, sint32 side)
     ST0B_10C *fx;
     ST0B_CTL *ctl;
 
-    fx  = (ST0B_10C *)func_80031518();
+    fx  = (ST0B_10C *)Open_SHL_WORK();
     ctl = (ST0B_CTL *)&wp->value_380;
     if (fx != NULL)
     {

@@ -133,7 +133,7 @@ void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
                 {
                     Sce_flag_off(0x60C);
                 }
-                obj = func_80031418();
+                obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
                     obj->flags_0          = spawn->flags_0;
@@ -173,7 +173,7 @@ void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
                 }
                 if (!skip)
                 {
-                    obj = func_80031518();
+                    obj = Open_SHL_WORK();
                     if (obj != NULL)
                     {
                         obj->flags_0          = spawn->flags_0;
@@ -229,7 +229,7 @@ void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
     {
         if (spawn->kind_1 == 0x20)
         {
-            obj = func_80031418();
+            obj = Open_EM_WORK();
             if (obj != NULL)
             {
                 obj->flags_0          = spawn->flags_0;

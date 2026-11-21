@@ -34,7 +34,7 @@ typedef struct
     uint16 timer_36;       // 37E: frames before it may vanish off screen
 } ST09_STCOM13_CTL;
 
-// The 0x3C0-byte work slot stcom13 runs on (freed through ROCK_NEO's func_80031824): an enemy
+// The 0x3C0-byte work slot stcom13 runs on (freed through ROCK_NEO's Close_EM_WORK): an enemy
 // that can be stunned and knocked about, dropping effects from its joints.
 typedef struct
 {
@@ -1058,7 +1058,7 @@ extern uint32 *D_800BE6D8[];
 #define ST09_OBJ_PART(wp) ((STAGE_PART_S *)((uint8 *)(wp) + 0x100))
 
 extern ST09_TALK_AREA D_8011DF64;
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 extern uint32 D_800987E8;        // ROCK_NEO: allocation mask of the 0x3C0 slots
 
 void func_801080B8(ST09_ACTOR *wp);

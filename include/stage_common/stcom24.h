@@ -35,7 +35,7 @@ typedef struct
     uint8 reserved58[0x20]; // 3A0
 } STCOM24_CTL;
 
-// The 0x3C0-byte work slot stcom24 runs on (freed through ROCK_NEO's func_80031824).
+// The 0x3C0-byte work slot stcom24 runs on (freed through ROCK_NEO's Close_EM_WORK).
 typedef struct
 {
     uint8 flags_0;                          // 00
@@ -131,7 +131,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos);
 #else
 void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
-STCOM24_SHOT *func_80031518(void);
+STCOM24_SHOT *Open_SHL_WORK(void);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

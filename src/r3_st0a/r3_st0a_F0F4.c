@@ -279,7 +279,7 @@ void func_8010F774(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, STAGE_FACE *face)
             wp->routine_0++;
             break;
         case 7:
-            func_80031824(((ST0A_GRID_HOLDER *)face)->grid_14);
+            Close_EM_WORK(((ST0A_GRID_HOLDER *)face)->grid_14);
             wp->routine_0++;
             break;
         case 8: // done (retail's jump table has the entry)

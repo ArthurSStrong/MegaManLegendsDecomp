@@ -770,11 +770,11 @@ void func_8010DA94(STAGE_OBJ *wp, ST17_BOSS *ext)
         {
             if (ext->arm_4 != NULL)
             {
-                func_800318D8(ext->arm_4);
+                Close_SHL_WORK(ext->arm_4);
             }
             if (ext->arm_8 != NULL)
             {
-                func_800318D8(ext->arm_8);
+                Close_SHL_WORK(ext->arm_8);
             }
             ext->flags_14 |= 1;
         }
@@ -1394,7 +1394,7 @@ void func_8010EE0C(STAGE_OBJ *wp, ST17_BOSS *ext, sint32 index)
     }
     if (ext->timer_130[part] == 0xFF)
     {
-        shot = func_80031518();
+        shot = Open_SHL_WORK();
         if (shot != NULL)
         {
             shot->flags_0   = 1;
@@ -1437,7 +1437,7 @@ void func_8010EFC8(STAGE_OBJ *wp, ST17_BOSS *ext, sint32 index)
 {
     ST17_SHOT *shot;
 
-    shot = func_80031518();
+    shot = Open_SHL_WORK();
     if (shot != NULL)
     {
         shot->flags_0    = 1;
@@ -1461,7 +1461,7 @@ void func_8010F0D8(STAGE_OBJ *wp, ST17_BOSS *ext)
 
     ext->arm_4 = NULL;
     ext->arm_8 = NULL;
-    arm        = func_80031518();
+    arm        = Open_SHL_WORK();
     if (arm != NULL)
     {
         ext->arm_4              = arm;
@@ -1477,7 +1477,7 @@ void func_8010F0D8(STAGE_OBJ *wp, ST17_BOSS *ext)
         arm->position_fixed.v.y = arm->position.y << 16;
         arm->position_fixed.v.z = arm->position.z << 16;
     }
-    arm = func_80031518();
+    arm = Open_SHL_WORK();
     if (arm != NULL)
     {
         ext->arm_8              = arm;

@@ -688,7 +688,8 @@ void func_8010DD2C(STAGE_OBJ *wp);
 
 void func_801175C4(STAGE_OBJ *wp);
 
-extern uint8 D_800A2D0B;
+// ROCK_NEO's EVE_WORK pool, seen as bytes: func_801009B0 sets byte 3 (type) of slot 0.
+extern uint8 Eve_work_tbl[];
 void func_801009B0(STAGE_ROOM *wp);
 
 extern STAGE_OBJ_FUNC D_8011C72C[];
@@ -2080,7 +2081,7 @@ typedef struct
 
 extern ST00_PAL_RANGE D_8011CF38[];
 
-extern STAGE_ACTOR D_8009F108[]; // ROCK_NEO's 0x3C0-byte slots
+extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 
 // stcom15's control block as the paired object uses it (func_8010A448): its two parts at +0x34.
 typedef struct
@@ -2163,7 +2164,7 @@ extern uint16 D_801225EC[25];   // its vertices' heights
 
 void func_8002D27C(void *model, sint32 id, ST00_UV8 *uv);
 
-// A 0x10C-byte slot (func_80031518) as func_8010B1C0 fires it: STAGE_PIECE with two more words.
+// A 0x10C-byte slot (Open_SHL_WORK) as func_8010B1C0 fires it: STAGE_PIECE with two more words.
 typedef struct
 {
     uint8 flags_0;                     // 00

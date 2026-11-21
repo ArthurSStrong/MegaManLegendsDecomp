@@ -408,7 +408,7 @@ extern uint8 D_80097C90[];
 // 32-byte block copy inside the hand-written asm_fastmem.s (0x800176DC, not in the registry yet)
 void func_800176DC(void *src, void *dst, sint32 count);
 
-// The 0x10C-byte pool at 0x8009CF88 (game.h's D_8009CF88, GAME_WORK_10C[32]; game.h cannot be
+// The 0x10C-byte pool at 0x8009CF88 (game.h's Shl_work_tbl, GAME_WORK_10C[32]; game.h cannot be
 // included beside scene.h here).
 typedef struct
 {
@@ -423,7 +423,7 @@ typedef struct
     C8001F828_SVEC pos_ac;
     uint8 reservedB4[0x10C - 0xB4];
 } C8001F828_POOL_SLOT;
-extern C8001F828_POOL_SLOT D_8009CF88[32];
+extern C8001F828_POOL_SLOT Shl_work_tbl[32];
 #define C8001F828_TIME_START (*(sint32 *)0x800D9BE4)
 #define C8001F828_TIME_A     (*(sint32 *)0x800D9BE8)
 #define C8001F828_TIME_B     (*(sint32 *)0x800D9BEC)

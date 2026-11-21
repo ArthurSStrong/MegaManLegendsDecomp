@@ -150,7 +150,7 @@ typedef struct
 // The control block at +0x348 of ST03_ACTOR.
 typedef struct ST03_ACTOR ST03_ACTOR;
 
-// A 0x10C-byte slot (func_80031518) a villager carries above its head and then throws.
+// A 0x10C-byte slot (Open_SHL_WORK) a villager carries above its head and then throws.
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -704,7 +704,7 @@ extern uint8 D_80117424[];
 extern uint8 D_80117430[];
 extern ST03_SPARK *D_8011CA70[4]; // the four spark emitters (func_80101918)
 extern sint16 D_8011CA84;
-extern ST03_ACTOR D_8009F108[]; // ROCK_NEO: the 0x3C0-byte work slots
+extern ST03_ACTOR Em_work_tbl[]; // ROCK_NEO: the 0x3C0-byte work slots
 extern ST03_CAM D_800BC730;
 extern uint8 D_8011CA88;
 extern ST03_KIND **D_80098844;

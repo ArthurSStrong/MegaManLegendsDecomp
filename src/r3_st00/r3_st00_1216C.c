@@ -1259,7 +1259,7 @@ void func_80114AAC(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000) || Sce_flag_test(0x622))
                 {
-                    for (i = 0, obj = D_8009F108; i < 16; obj++, i++)
+                    for (i = 0, obj = Em_work_tbl; i < 16; obj++, i++)
                     {
                         if (obj->flags_0 & 1)
                         {

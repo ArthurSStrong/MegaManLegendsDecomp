@@ -100,7 +100,7 @@ void stcom08_func_0248(STCOM08_WORK *wp)
 
 void stcom08_func_0328(STCOM08_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom08_func_0348(STCOM08_WORK *wp)
@@ -111,7 +111,7 @@ void stcom08_func_0348(STCOM08_WORK *wp)
     func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, 0);
     if (func_80048DAC(&wp->position))
     {
-        func_80031824(wp);
+        Close_EM_WORK(wp);
         return;
     }
     ground = func_80048E6C(wp);

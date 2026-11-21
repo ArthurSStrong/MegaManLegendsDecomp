@@ -126,7 +126,7 @@ void stcom01_func_01FC(STCOM01_WORK *wp)
 
 void stcom01_func_03B8(STCOM01_WORK *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void stcom01_func_03D8(STCOM01_WORK *wp)

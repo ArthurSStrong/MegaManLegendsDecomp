@@ -288,7 +288,7 @@ void func_80106810(ST1B_ACTOR *wp)
 
 void func_80106A34(STAGE_OBJ *wp)
 {
-    func_80031824(wp);
+    Close_EM_WORK(wp);
 }
 
 void func_80106A54(STAGE_OBJ *wp)

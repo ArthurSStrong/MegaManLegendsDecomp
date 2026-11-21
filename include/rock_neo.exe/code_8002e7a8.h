@@ -461,7 +461,7 @@ extern sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4
 void func_800358E8(void);
 void func_8002F884(SYNC_POS_WORK *wp, uint16 *delta);
 void func_8002F928(MOVE_WORK *wp, uint16 *delta);
-void func_80031824(GAME_WORK_3C0 *wp);
+void Close_EM_WORK(GAME_WORK_3C0 *wp);
 void Close_EVE_WORK(GAME_WORK_24 *wp);
 void func_80036470(BYTE_WORK *wp);
 void func_80036A78(sint32 arg);
@@ -517,7 +517,7 @@ typedef struct
 extern void func_80052528(void *wp);
 void func_8002FBF4(void);
 void func_8003187C(GAME_WORK_5A4 *wp);
-void func_800318D8(GAME_WORK_10C *wp);
+void Close_SHL_WORK(GAME_WORK_10C *wp);
 void func_80031930(GAME_WORK_10C *wp);
 void func_80031988(GAME_WORK_48 *wp);
 void func_80031A4C(GAME_WORK_50 *wp);
@@ -581,7 +581,7 @@ typedef struct
     uint8 reserved1C[0x5A4 - 0x1C];
 } SEEK_SLOT_5A4;
 
-extern SEEK_SLOT_3C0 Seek_3c0[16] __asm__("D_8009F108");
+extern SEEK_SLOT_3C0 Seek_3c0[16] __asm__("Em_work_tbl");
 extern SEEK_SLOT_5A4 Seek_5a4[4] __asm__("D_800C3580");
 
 extern sint32 rsin(sint32 angle);
@@ -970,10 +970,10 @@ extern void OuterProduct12(VEC32_PAD_WORK *a, VEC32_PAD_WORK *b, VEC32_PAD_WORK 
 // Object-slot allocators defined later in code_8002E7A8.c, declared so earlier callers see
 // pointer returns (GCC 2.7 accepted the implicit declarations; other compilers don't).
 #include "rock_neo.exe/game.h"
-GAME_WORK_3C0 *func_80031418(void);
+GAME_WORK_3C0 *Open_EM_WORK(void);
 GAME_WORK_5A4 *func_80031498(void);
-GAME_WORK_10C *func_80031518(void);
-GAME_WORK_24 *func_800316BC(void);
+GAME_WORK_10C *Open_SHL_WORK(void);
+GAME_WORK_24 *Open_EVE_WORK(void);
 GAME_WORK_50 *func_80031734(void);
 
 #endif

@@ -105,7 +105,7 @@ void func_8010A9E8(ST0C_SHOT *wp)
     {
         if (wp->type_3 & 0x40)
         {
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
         }
         else
         {
@@ -129,7 +129,7 @@ void func_8010A9E8(ST0C_SHOT *wp)
     {
         if (wp->type_3 & 0x40)
         {
-            func_800318D8(wp);
+            Close_SHL_WORK(wp);
         }
         else
         {

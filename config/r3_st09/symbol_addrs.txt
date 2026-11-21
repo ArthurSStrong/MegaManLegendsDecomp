@@ -279,4 +279,4 @@ stcom33_D_000A = 0x8011E3EA;
 stcom33_D_003C = 0x8011E41C;
 // ROCK_NEO's 0x3C0-byte work slots: retail only reaches D_8009F120 (their position.z), the C
 // names the table.
-D_8009F108 = 0x8009F108; // absolute:True
+Em_work_tbl = 0x8009F108; // absolute:True
