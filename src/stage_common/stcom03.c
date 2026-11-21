@@ -99,7 +99,7 @@ void stcom03_func_02CC(STCOM03_WORK *wp)
 {
     if (--wp->routine_3 == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     else
     {
@@ -155,7 +155,7 @@ void stcom03_func_0414(STCOM03_WORK *wp)
 
     if (wp->size_24 <= 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     else
     {
@@ -168,7 +168,7 @@ void stcom03_func_0468(STCOM03_WORK *wp)
 {
     if (wp->routine_1 == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     else
     {

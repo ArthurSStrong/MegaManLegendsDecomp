@@ -116,7 +116,7 @@ Done for every file in the table. The layout and what it rests on:
 - **`main`'s piece** (`0x80097864`–`0x800979DC`) holds the exception handler's strings, as
   `char` arrays, up to 28 bytes. Under `-G32`, a literal that size would also land in `.sdata`.
   It also holds `D_80097864`, a 24-byte object reached through `$gp`. Its `.sbss` static
-  `D_80098158` is also where 2MBYTE.OBJ's startup starts clearing the BSS, so it's made global.
+  `Thread_change_entry` is also where 2MBYTE.OBJ's startup starts clearing the BSS, so it's made global.
 - **`code_8004324C`'s piece** (`0x80097DA0`–`0x80097DDB`) has no `$gp` variable: its four shot
   tables are only read indexed or by address. It's placed by file order: in the asm stretch
   `0x80097D74`–`0x80097DE3` each variable has one user file, in link order (`code_8003AC24`,
@@ -168,7 +168,7 @@ address.
   blocks. Files with no switch statements or string literals have no rodata and can't be seen this way.
 - **Rodata block -> file** (users from `jlabel` targets and `%hi` references):
   `800` rows 1 (`D_80010000`, `D_80010040`) and 2 (3 jump tables); `8B4` row 3; `938` row 4; `9E4` rows 6
-  (`func_80017C30`), 8 (`0xA44`–`0xAAF`: `cd_cmd_read_comb`'s 3 tables, **confirmed**) and 9 (the path strings, reached via `.data` table
+  (`Fade_start`), 8 (`0xA44`–`0xAAF`: `cd_cmd_read_comb`'s 3 tables, **confirmed**) and 9 (the path strings, reached via `.data` table
   `D_800893BC`); `10C0` row 10; `1294` row 13; `1330` row 15; `136C` row 18; `14D0` row 19;
   `1514` row 21; `1530` row 22; `156C` rows 23, 25, 26, 27; `1BD8` rows 29 and 30.
 - **Padding is not a boundary marker here.** Functions are packed back to back; the only extra `nop`s
@@ -208,11 +208,11 @@ piece of evidence.
 | # | Start | Offset | End | Size | Name | Conf. | Single | Evidence |
 |---|---|---|---|---|---|---|---|---|
 | 1 | `0x80011C90` | `0x2490` | `0x800133D8` | 0x1748 | `main` | high | no | Start of the Capcom range; ChrisNonyminus `main` 0x2490; names `main`, `Vsync_handler`; rodata block `800` part 1 (`D_80010000` pointer table, `D_80010040` format string) used by `exception_handler`/`debug_mem_dump`; PCopen/PCread dev leftovers inside. |
-| 2 | `0x800133D8` | `0x3BD8` | `0x80014AC0` | 0x16E8 | `code_800133D8` | medium | no | ChrisNonyminus `code_800133D8` 0x3BD8; zero local links cross the gap; block `800` jump tables (`func_800136B8`, `_8001389C`, `_80013CA0`) start right after the 0x70 bytes main needs. Cannot be proven from rodata alone (block `800` is one splat block). |
-| 3 | `0x80014AC0` | `0x52C0` | `0x800155A4` | 0xAE4 | `code_80014AC0` | medium | no | Rodata block `8B4` (users `script_exec`, `_800150E0`) needs a new file; `func_8001456C` is only called from file 2 and `func_80014AC0` calls `func_800150E0` (file 3), so the gap is one of two candidates. First user of `.data` 0x800820E0. |
+| 2 | `0x800133D8` | `0x3BD8` | `0x80014AC0` | 0x16E8 | `code_800133D8` | medium | no | ChrisNonyminus `code_800133D8` 0x3BD8; zero local links cross the gap; block `800` jump tables (`Title_logo`, `_8001389C`, `_80013CA0`) start right after the 0x70 bytes main needs. Cannot be proven from rodata alone (block `800` is one splat block). |
+| 3 | `0x80014AC0` | `0x52C0` | `0x800155A4` | 0xAE4 | `code_80014AC0` | medium | no | Rodata block `8B4` (users `script_exec`, `_800150E0`) needs a new file; `title_menu_draw` is only called from file 2 and `func_80014AC0` calls `func_800150E0` (file 3), so the gap is one of two candidates. First user of `.data` 0x800820E0. |
 | 4 | `0x800155A4` | `0x5DA4` | `0x800175D8` | 0x2034 | `game` | medium | no | ChrisNonyminus `game` 0x5DA4; sole minimum-cost gap in the block `8B4`/`938` window; `Game_task` calls `play_time_count`/`_80016BF4` and the helpers `_80016D0C`..`_80017528` are called from `_80015DB4` and the jump-table functions; rodata block `938` (6 jump tables). |
 | 5 | `0x800175D8` | `0x7DD8` | `0x8001786C` | 0x294 | `asm_fastmem` | medium | yes | Hand-written assembly (yaml: `HAND-WRITTEN ASSEMBLY`) (no stack frames, swaps `sp` with a scratchpad stack, word-copy/clear loops, `break 1,6`). The only extra `nop` padding in the whole range follows `_800175D8`, `_800175FC`, `_80017668`. Single kind of evidence (code style); end at 0x8001786C is the first function that saves `s` registers (compiler output). |
-| 6 | `0x8001786C` | `0x806C` | `0x800198C0` | 0x2054 | `code_8001786C` | low | yes | End of the asm file + window of rodata blocks `938` and `9E4` (the `9E4` jump table user `func_80017C30` must be in a different file than block `938`). Start inside 0x8001786C..0x80017C30 is a guess (all gaps cost 0); may begin as late as 0x80017C30. |
+| 6 | `0x8001786C` | `0x806C` | `0x800198C0` | 0x2054 | `code_8001786C` | low | yes | End of the asm file + window of rodata blocks `938` and `9E4` (the `9E4` jump table user `Fade_start` must be in a different file than block `938`). Start inside 0x8001786C..0x80017C30 is a guess (all gaps cost 0); may begin as late as 0x80017C30. |
 | 7 | `0x800198C0` | `0xA0C0` | `0x8001B3E4` | 0x1B24 | `sound` | high | no | ChrisNonyminus `sound` 0xA0C0; `.data` 0x8008222A is first used exactly at 0x800198C0 (a new data cluster, ten tiny functions each with its own variable); `Sound_call`/`Sound_call2` 0x8001A008/50; gap cost 0. Tail 0x8001B2F0..0x8001B3E4 is three thin libsnd/libspu wrappers (see notes below). |
 | 8 | `0x8001B3E4` | `0xBBE4` | `0x8001D854` | 0x2470 | `cd` | **confirmed** | no | ChrisNonyminus `cd` 0xBBE4; `Cd_init` calls `CdInit` and is called only by init; `Cd_read_comb`, `Cd_read_sync2`; the shim's CD module ([rock_neo.md](rock_neo.md), "Shared code") spans it. In C (`src/rock_neo.exe/cd.c`) and matching, with its rodata at `0xA44`–`0xAAF` (`cd_cmd_read_comb`'s three jump tables, inside block `9E4`). |
 | 9 | `0x8001D854` | `0xE054` | `0x8001F828` | 0x1FD4 | `scene` | medium | no | ChrisNonyminus `scene` 0xE054; `Sce_flag_test/on/off` at 0x8001DA58..; the stage-file path strings at the end of rodata block `9E4` are reached through the `.data` table `D_800893BC`, used by `Sce_stage_load`/`_3C8`/`_6C4` (this file). |

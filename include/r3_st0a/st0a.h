@@ -396,7 +396,7 @@ typedef struct
     uint8 reserved7E[0x2E];     // 7E
     STCOM_SVECTOR model_pos_AC; // AC
     uint8 reservedB4[0x10];     // B4
-    uint32 col_C4;              // C4: hit accumulator (func_8003430C, func_800341BC)
+    uint32 col_C4;              // C4: hit accumulator (func_8003430C, Set_Atari)
     uint8 reservedC8[0x44];     // C8
 } ST0A_SHOT;
 
@@ -515,7 +515,7 @@ typedef struct
     sint32 rise_4;  // 4
 } ST0A_SPARK_ARGS;
 
-// A hit point the enemy reports to func_800341BC: where, and what it hit.
+// A hit point the enemy reports to Set_Atari: where, and what it hit.
 typedef struct
 {
     STCOM_SVECTOR pos_0; // 0
@@ -533,7 +533,7 @@ typedef struct
     sint16 value_A;             // 0A
     ST0A_EM_HIT hit_C;          // 0C
     uint8 reserved1C[8];        // 1C
-    uint8 track_24[0x10];       // 24: func_80036478
+    uint8 track_24[0x10];       // 24: Search_Player_Init
     uint8 *uv_34;               // 34: a face's texture coordinates (func_8002D22C)
     sint16 *vtx_38;             // 38: vertices (func_8002D2DC)
     sint16 *vtx_3C;             // 3C
@@ -748,7 +748,7 @@ typedef struct
     uint32 hit_14;         // 33C: damage in the low 24 bits, kind bits above
     uint32 value_18;       // 340
     STCOM_SVECTOR from_1C; // 344
-    uint8 track_24[0x10];  // 34C: func_80036478
+    uint8 track_24[0x10];  // 34C: Search_Player_Init
     STCOM_SVECTOR home_34; // 35C: where it started
     ST0A_HELD *held_3C;    // 364
     STAGE_OBJ *owner_40;   // 368: func_80036294's object
@@ -818,7 +818,7 @@ typedef struct
 
 extern ST0A_EN_KIND **D_80098844;
 void *func_80036294(sint32 kind);
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 
 extern STAGE_SLOT_FUNC *D_801146A8[];
 extern STAGE_SLOT_FUNC *D_801147E8[];
@@ -981,12 +981,12 @@ void func_8005D4C0(void);
 void func_80111788(ST0A_PIECE *wp);
 void func_80111864(ST0A_PIECE *wp);
 void func_801118B4(ST0A_PIECE *wp);
-// A scratchpad halfword func_8003346C reads: the enemy's turn.
+// A scratchpad halfword EM_World_Pos_Calc reads: the enemy's turn.
 #define ST0A_SP_182 (*(uint16 *)0x1F800182)
 void func_80052528(void *wp);
 void func_8005D6E8(void *wp);
 // Declared returning int here: retail narrows the result at each use (rock_neo.h).
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 sint32 func_8010EBE8(ST0A_EM *wp);
 sint32 func_8010EF3C(ST0A_EM *wp);
 sint16 *func_8002D2DC(void *model, sint32 id);

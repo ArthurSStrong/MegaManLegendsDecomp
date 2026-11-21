@@ -14,7 +14,7 @@ void stcom09_func_0000(STCOM09_WORK *wp)
     stcom09_D_0000[wp->index_3](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0xC, 0x200, 0);
+        Model_Shadow_Trans(wp, 0xC, 0x200, 0);
     }
 }
 
@@ -26,11 +26,11 @@ void stcom09_func_00CC(STCOM09_WORK *wp)
     wp->rotation.z = 0;
     wp->turn_64    = 0x40;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]   = 0x2000200;
     wp->scale.words[1]   = 0x200;
     wp->scale.v.pad      = 0x4210;
-    wp->position.y       = func_80048E6C(wp);
+    wp->position.y       = Scr_height_check(wp);
     wp->position_fixed.y = wp->position.y << 16;
     wp->data_78          = stcom09_D_0028;
     wp->data_10          = stcom09_D_001C;
@@ -46,7 +46,7 @@ void stcom09_func_00CC(STCOM09_WORK *wp)
     wp->hit.ofs_14       = 0;
     wp->hit.value_4      = 0x8880000;
     wp->hit.timer_2      = 0;
-    func_80036478(wp->track_328, 0, -0x60);
+    Search_Player_Init(wp->track_328, 0, -0x60);
     stcom09_func_0C48(&ofs, wp->rotation.y, wp->hit.ofs_10, wp->hit.ofs_12, wp->hit.ofs_14);
     wp->hit.pos_8 = ofs;
     wp->hit.pos_8.x += wp->position.x;
@@ -73,11 +73,11 @@ void stcom09_func_0268(STCOM09_WORK *wp)
         case 1:
             if (stcom09_func_0AFC(wp))
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
             }
             else
             {
-                func_800322A8(wp, 2, 0x10);
+                EM_Char_Set(wp, 2, 0x10);
                 hit->flags_0 |= 2;
             }
             wp->routine_0++;
@@ -114,7 +114,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
         case 5:
             if (!(hit->flags_0 & 2))
             {
-                func_800322A8(wp, 1, 0);
+                EM_Char_Set(wp, 1, 0);
                 Sound_call2(0x103, &wp->position);
             }
             else
@@ -171,7 +171,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             }
             if (!(hit->flags_0 & 2))
             {
-                func_800322A8(wp, 2, 0);
+                EM_Char_Set(wp, 2, 0);
                 Sound_call2(0x104, &wp->position);
             }
             else
@@ -186,7 +186,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             {
                 wp->routine_0++;
             }
-            func_80032488(wp);
+            EM_Char_Move(wp);
             break;
         case 10:
             Obj_work_flag_change(0x3FE, 2);
@@ -198,7 +198,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             break;
     }
     func_80051B68(wp, 1, 0, 0);
-    func_800341BC(&wp->position, 0x28, 0, 0x8000, wp->value_1, &hit->hit_18, 0x4000000, 0, 0x80);
+    Set_Atari(&wp->position, 0x28, 0, 0x8000, wp->value_1, &hit->hit_18, 0x4000000, 0, 0x80);
     hit->hit_18 = 0;
 }
 
@@ -211,7 +211,7 @@ void stcom09_func_06A0(STCOM09_WORK *wp)
     wp->scale.v.pad  = 0x4210;
     if (wp->routine_0 != 0)
     {
-        if (func_8003648C(wp->track_328, wp))
+        if (Search_Player(wp->track_328, wp))
         {
             hit->flags_0 |= 1;
         }
@@ -227,12 +227,12 @@ void stcom09_func_06A0(STCOM09_WORK *wp)
     }
     else
     {
-        func_800341BC(&hit->pos_8, hit->size_16, 0, 0x8000, wp->value_1, &hit->hit_18, hit->value_4,
+        Set_Atari(&hit->pos_8, hit->size_16, 0, 0x8000, wp->value_1, &hit->hit_18, hit->value_4,
                       0, 0);
     }
     if (wp->anim_prev_AD == wp->anim_AC)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     hit->hit_18 = 0;
 }
@@ -248,7 +248,7 @@ void stcom09_func_07B8(STCOM09_WORK *wp)
     {
         case 0:
             stcom09_func_00CC(wp);
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             wp->routine_1++;
             break;
         case 1:
@@ -269,7 +269,7 @@ void stcom09_func_07B8(STCOM09_WORK *wp)
             break;
         case 3:
             MojiTaskExec(4, D_8008CE74, -1);
-            func_800322A8(wp, 1, 0);
+            EM_Char_Set(wp, 1, 0);
             Sound_call2(0x103, &wp->position);
             wp->routine_1++;
             // fall through
@@ -351,7 +351,7 @@ void stcom09_func_0A64(STCOM09_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0         = 5;
@@ -472,7 +472,7 @@ uint8 stcom09_func_0D28(STCOM09_WORK *wp)
         shot->flags_0   = 3;
         shot->kind_2    = 6;
         shot->variant_3 = 0;
-        func_8002FEA4(wp, 0x6E, 0, 0);
+        Obj_pos_set(wp, 0x6E, 0, 0);
         wp->position.y -= 60;
         shot->position         = wp->position;
         shot->position_fixed.x = shot->position.x << 16;

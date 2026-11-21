@@ -899,7 +899,7 @@ typedef struct
     uint8 flags_141;          // 141
     uint16 frame_142;         // 142
     sint32 count_144;         // 144
-    uint8 track_148[0x10];    // 148: func_80036478
+    uint8 track_148[0x10];    // 148: Search_Player_Init
     uint8 reserved158[0x8C];  // 158
 } ST17_BOSS;
 
@@ -1036,7 +1036,7 @@ typedef struct
     sint16 value_24;      // 24
     uint8 reserved26[2];  // 26
     ST17_HIT hit_28;      // 28
-    uint8 track_30[0x10]; // 30: func_80036478/func_8003648C
+    uint8 track_30[0x10]; // 30: Search_Player_Init/Search_Player
 } ST17_PART28;
 
 typedef void (*ST17_PART28_FUNC)(STAGE_OBJ *wp, ST17_PART28 *part);
@@ -1049,7 +1049,7 @@ void func_80104498(STAGE_OBJ *wp, ST17_PART28 *part);
 void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part);
 void func_801036EC(STAGE_OBJ *wp, ST17_PART28 *part);
 void func_801037B4(STAGE_OBJ *wp, ST17_PART28 *part);
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 
 void func_8010483C(STAGE_OBJ *wp, ST17_PART28 *part);
 void func_801033E4(STAGE_OBJ *wp, ST17_PART28 *part);
@@ -1098,7 +1098,7 @@ typedef struct
     uint32 col_c8; // C8
 } ST17_SHL;
 
-// The shot's effect slot from func_80031618 (r3_shl02's SHL_FX).
+// The shot's effect slot from Open_EFFECT_WORK (r3_shl02's SHL_FX).
 typedef struct
 {
     sint8 routine_0; // 00

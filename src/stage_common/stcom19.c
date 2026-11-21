@@ -232,7 +232,7 @@ void stcom19_func_0640(void)
                                 wp->flags_0 = 5;
                                 wp->kind_2  = 0x2F;
                                 wp->value_3 = list[k].spawn_E[i] >> 4;
-                                func_8002F9C4(wp, &wp->value_3);
+                                Model_work_init(wp, &wp->value_3);
                                 wp->dir_C           = list[k].spawn_E[i] & 0xF;
                                 wp->value_D         = count;
                                 pos                 = STCOM19_CELL_TBL[cell].pos;

@@ -92,7 +92,7 @@ void func_8010B6D8(ST0C_WHEEL *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 4;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->value_10 = 0;
         wp->color_40 = 0x808080;
         wp->routine_0++;

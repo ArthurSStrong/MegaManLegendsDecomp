@@ -248,7 +248,7 @@ void func_8005C8A4(CODE5C_REPEAT *wp)
     sint32 limit;
 
     pl     = &Player_work;
-    target = func_80037604(pl, 1);
+    target = Player_weapon_bullet_calc(pl, 1);
     limit  = (pl->parts[Player_work.value171].selected != 7) ? 0x11 : 0;
     if (Player_work.value171 == 1)
     {
@@ -894,7 +894,7 @@ sint32 func_8005DAEC(sint32 arg0)
     sint16 cur;
 
     pl     = &Player_work;
-    target = func_80037604(pl, Player_work.part_index);
+    target = Player_weapon_bullet_calc(pl, Player_work.part_index);
     if (target == 0x7FFF)
     {
         return 1;

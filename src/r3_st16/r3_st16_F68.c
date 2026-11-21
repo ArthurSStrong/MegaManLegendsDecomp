@@ -25,7 +25,7 @@ void func_80100F68(STAGE_WORK *wp)
             wp->u_E.angle -= 6;
             if (wp->u_E.angle < -0x12BF)
             {
-                func_80017C30(0xB);
+                Fade_start(0xB);
                 wp->routine_2++;
             }
             break;
@@ -64,7 +64,7 @@ void func_801010D4(STAGE_WORK *wp)
     {
         case 0:
             wp->flags_0 |= 2;
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
             wp->scale.words[0] = 0x2000200;
             wp->scale.words[1] = 0x200;
             wp->value_78       = 0;
@@ -79,28 +79,28 @@ void func_801010D4(STAGE_WORK *wp)
             D_80103B04[wp->routine_1](wp);
             break;
     }
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
 }
 
 void func_801011B4(STAGE_WORK *wp)
 {
     if (wp->routine_2 == 0)
     {
-        func_800322A8(wp, 1, 0);
+        EM_Char_Set(wp, 1, 0);
         wp->routine_2++;
     }
     func_80033A28(wp);
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
 }
 
 void func_80101210(STAGE_WORK *wp)
 {
     if (wp->routine_2 == 0)
     {
-        func_800322A8(wp, 1, 0);
+        EM_Char_Set(wp, 1, 0);
         wp->routine_2++;
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_80101264(STAGE_OBJ *wp)
@@ -119,7 +119,7 @@ void func_801012A0(STAGE_OBJ *wp)
     face                    = &wp->u_4E0.face;
     if (wp->routine_0 == 0)
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
         wp->scale.words[0] = 0x2000200;
         wp->scale.words[1] = 0x200;
         wp->scale.v.pad    = 0x4210;
@@ -247,8 +247,8 @@ void func_801016B0(STAGE_OBJ *wp)
             if (STAGE_SCENE_BYTE(9) == STAGE_SCENE_BYTE(8) && STAGE_SCENE_WORD(0x10) == 8)
             {
                 wp->u_C.b.byte_C = 1;
-                func_8002F9C4(wp, &wp->u_C.b.byte_C);
-                func_800322A8(wp, 1, 0);
+                Model_work_init(wp, &wp->u_C.b.byte_C);
+                EM_Char_Set(wp, 1, 0);
                 wp->rotation.z = 0;
                 wp->routine_1++;
             }
@@ -256,8 +256,8 @@ void func_801016B0(STAGE_OBJ *wp)
         else
         {
             wp->u_C.b.byte_C = 0;
-            func_8002F9C4(wp, &wp->u_C.b.byte_C);
-            func_800322A8(wp, 0, 0);
+            Model_work_init(wp, &wp->u_C.b.byte_C);
+            EM_Char_Set(wp, 0, 0);
         }
     }
 }
@@ -270,8 +270,8 @@ void func_80101770(STAGE_FX *wp)
 void func_80101790(STAGE_WORK *wp)
 {
     D_80103BB8[wp->routine_0](wp);
-    func_80030150(&wp->position_fixed.v, &wp->position);
-    func_80032538(wp);
+    Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
+    EM_Char_Move2(wp);
     func_800334C4(wp);
 }
 
@@ -337,7 +337,7 @@ void func_80101804(STAGE_OBJ *wp)
                 wp->routine_2++;
                 if (STAGE_GAME_VALUE_52 != 7 || Sce_flag_test(0x21) == 0)
                 {
-                    func_80017C30(0xB);
+                    Fade_start(0xB);
                 }
             }
             break;
@@ -345,7 +345,7 @@ void func_80101804(STAGE_OBJ *wp)
             wp->position.y -= 2;
             wp->position.x += 0x18;
             wp->rotation.z -= 0x10;
-            func_8002FEA4(wp, 0x900, -0xFA, 0);
+            Obj_pos_set(wp, 0x900, -0xFA, 0);
             if (--wp->u_C.timer == 0)
             {
                 D_8010E054->routine_0 = 2;
@@ -392,32 +392,32 @@ void func_80101B88(STAGE_OBJ *wp)
         wp->value_10       = 0;
         wp->scale.v.pad    = 0x4210;
         wp->flags_0 |= 2;
-        func_8002F9C4(wp, NULL);
-        func_800322A8(wp, 0, 0);
+        Model_work_init(wp, NULL);
+        EM_Char_Set(wp, 0, 0);
         wp->rotation.y = 0x800;
         wp->routine_0++;
     }
     D_80103BC4[wp->routine_1](wp);
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_80101C4C(STAGE_OBJ *wp)
 {
     if (wp->routine_2 == 0)
     {
-        func_800322A8(wp, 1, 0);
+        EM_Char_Set(wp, 1, 0);
         wp->routine_2++;
     }
     if (STAGE_SCENE_BYTE(8) == 1)
     {
         if (STAGE_SCENE_BYTE(9) == STAGE_SCENE_BYTE(8))
         {
-            func_80032488(wp);
+            EM_Char_Move(wp);
         }
         else
         {
             func_80033A28(wp);
-            func_8003346C(wp);
+            EM_World_Pos_Calc(wp);
         }
     }
 }
@@ -442,7 +442,7 @@ void func_80101D24(STAGE_OBJ *wp)
     face                    = &wp->u_4E0.face;
     if (wp->routine_0 == 0)
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
         wp->scale.words[0] = 0x2000200;
         wp->scale.words[1] = 0x200;
         wp->scale.v.pad    = 0x4210;
@@ -584,8 +584,8 @@ void func_80102190(STAGE_OBJ *wp)
             if (STAGE_SCENE_BYTE(9) == STAGE_SCENE_BYTE(8))
             {
                 wp->u_C.b.byte_C = 1;
-                func_8002F9C4(wp, &wp->u_C.b.byte_C);
-                func_800322A8(wp, 1, 0);
+                Model_work_init(wp, &wp->u_C.b.byte_C);
+                EM_Char_Set(wp, 1, 0);
                 wp->rotation.z = 0;
                 wp->routine_1++;
             }
@@ -593,8 +593,8 @@ void func_80102190(STAGE_OBJ *wp)
         else
         {
             wp->u_C.b.byte_C = 0;
-            func_8002F9C4(wp, &wp->u_C.b.byte_C);
-            func_800322A8(wp, 0, 0);
+            Model_work_init(wp, &wp->u_C.b.byte_C);
+            EM_Char_Set(wp, 0, 0);
         }
     }
 }
@@ -607,8 +607,8 @@ void func_8010223C(STAGE_FX *wp)
 void func_8010225C(STAGE_WORK *wp)
 {
     D_80103C64[wp->routine_0](wp);
-    func_80030150(&wp->position_fixed.v, &wp->position);
-    func_80032538(wp);
+    Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
+    EM_Char_Move2(wp);
     func_800334C4(wp);
 }
 
@@ -623,7 +623,7 @@ void func_801022C0(STAGE_FX *wp)
     wp->x_2C.half[0] = (wp->x_2C.half[0] + (wp->z_34.value >> 16)) & 0xFFF;
     if (wp->x_2C.half[1] < 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     v.x = (rcos(wp->x_2C.half[0]) * wp->x_2C.half[1]) >> 12;
@@ -701,7 +701,7 @@ void func_801024B8(STAGE_FX *wp)
     wp->v_23 = D_80103C70[wp->h_26].v;
     if (++wp->frame_E == 4)
     {
-        ep = (STAGE_FX *)func_80031618();
+        ep = (STAGE_FX *)Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0        = 1;
@@ -806,7 +806,7 @@ void func_8010291C(STAGE_FX *wp)
     frame = ++wp->type_F;
     if (frame == 8)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     wp->color_18 = D_80103C90[frame];
@@ -849,7 +849,7 @@ void func_801029F8(STAGE_FX *wp)
     STAGE_MATRIX_IDENTITY_SCALAR(m.w);
     RotMatrixY((sint16)rot, &m.m);
     ApplyMatrixSV(&m.m, &v, &out);
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -875,7 +875,7 @@ void func_801029F8(STAGE_FX *wp)
         ep->z_20     = out.z + (parent->position_fixed.v.z >> 16);
         ep->color_18 = 0x2E808080;
     }
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -939,7 +939,7 @@ void func_80102C98(STAGE_FX *wp)
 {
     if (wp->routine_0 == 2)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     else
     {
@@ -952,7 +952,7 @@ STAGE_FX *func_80102CF4(STAGE_OBJ *parent, sint16 angle, sint16 radius, sint16 h
 {
     STAGE_FX *ep;
 
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0             = 1;

@@ -5,7 +5,7 @@ void func_8011E75C(ST06_BOAT *wp)
 {
     wp->color_B4 = 0x808080;
     D_8012B7CC[wp->routine_0](wp, &wp->ctl_CC);
-    func_800341BC(&wp->position, 0x200, 0, 0x8000, wp->value_1, &wp->ctl_CC.hit_10, 0x4880000, 0,
+    Set_Atari(&wp->position, 0x200, 0, 0x8000, wp->value_1, &wp->ctl_CC.hit_10, 0x4880000, 0,
                   0x80);
     wp->ctl_CC.hit_10 = 0;
 }
@@ -27,7 +27,7 @@ void func_8011E7E8(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
             wp->rotation.z = 0;
             wp->flags_0 |= 6;
             wp->position_AC = wp->position;
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
             wp->color_B4     = 0x808080;
             wp->data_78      = D_8012B7D8;
             wp->sway_D       = 0;
@@ -58,7 +58,7 @@ void func_8011E7E8(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
     wp->position_fixed.z = wp->position.z << 16;
     func_8011F1B4(wp);
     wp->position_AC = wp->position;
-    func_8002C8CC(wp, 0x12C, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x12C, 0x200, 0);
 }
 
 #ifdef __wasm32__
@@ -188,7 +188,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
             if (wp->timer_C % 5 == 0)
             {
                 mask = 0xF;
-                fx   = func_80031618();
+                fx   = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     rnd           = rand();
@@ -198,7 +198,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
                     fx->variant_3 = 0x41;
                     fx->value_D   = 1;
                     func_80030058(&fixed, wp->rotation.y, -0x2000, 0, 0);
-                    func_80030150(&fixed, &pos);
+                    Obj_pos_adj_round(&fixed, &pos);
                     if (!(rnd & 1))
                     {
                         pos.x += (rnd >> 2) & 0xF;
@@ -221,7 +221,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
             }
             break;
         case 2:
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0   = 1;
@@ -232,7 +232,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
                 fx->value_D   = 0;
                 fx->value_F   = 0xC;
                 func_80030058(&fixed, wp->rotation.y, -0x2000, 0, 0);
-                func_80030150(&fixed, &pos);
+                Obj_pos_adj_round(&fixed, &pos);
                 fx->sprite.pos_8[0] = wp->position.x + pos.x;
                 fx->sprite.pos_8[1] = wp->position.y;
                 fx->sprite.pos_8[2] = wp->position.z + pos.z;
@@ -270,7 +270,7 @@ void func_8011F2EC(ST06_10C *wp)
     wp->position       = obj->position;
     wp->position_fixed = obj->position_fixed;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->color_B4 = 0x808080;
     wp->value_78 = 0;
     STAGE_MATRIX_IDENTITY(wp->matrix_8C.w);

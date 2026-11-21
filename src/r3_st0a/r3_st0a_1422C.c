@@ -42,7 +42,7 @@ void func_80114268(ST0A_EV *wp)
             }
             break;
         case 3:
-            func_80017C30(0xE);
+            Fade_start(0xE);
             Sound_fade_start(0x10);
             wp->routine_0++;
             // fall through
@@ -57,7 +57,7 @@ void func_80114268(ST0A_EV *wp)
             }
             break;
         case 5:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sce_flag_on(0x10);
                 Close_EVE_WORK(wp);
@@ -102,12 +102,12 @@ void func_801143F8(ST0A_EV *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80017C30(0xA);
+                Fade_start(0xA);
                 wp->routine_0++;
             }
             break;
         case 4:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_0++;
             }

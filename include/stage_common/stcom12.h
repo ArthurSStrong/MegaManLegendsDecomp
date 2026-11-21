@@ -89,7 +89,7 @@ extern uint16 stcom12_D_0038[];           // scale by param_E
 extern STCOM_FIXED_VECTOR stcom12_E_0000; // another object's data: where the player is put
 
 // ROCK_NEO.EXE.
-sint16 func_80031D5C(sint32 goal, sint32 rot, sint32 speed);
+sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 void func_8001E3F0(sint32 arg);
 
@@ -100,7 +100,7 @@ void stcom12_func_0E9C(STCOM12_WORK *wp, uint32 hit);
 void stcom12_func_0F28(STCOM12_WORK *wp, uint32 hit);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM12_H

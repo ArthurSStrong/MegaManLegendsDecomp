@@ -8,18 +8,18 @@
 
 typedef void (*SYSTEM_STATE_FUNC)(sint8 *state);
 
-extern THREAD_FUNC D_80098158;
-extern sint32 D_800979D8;
+extern THREAD_FUNC Thread_change_entry;
+extern sint32 Thread_change_flag;
 extern long D_800988D8;
 extern sint8 D_80098B1C;
 extern sint8 D_80098B1D;
 extern SYSTEM_STATE_FUNC D_80080894[];
 
-long func_8001246C(void);
+long exception_viewer(void);
 
 void Thread_wait(sint32 arg);
-void func_80012E10(sint32 index, THREAD_FUNC entry);
-void func_80012F78(THREAD_FUNC entry);
+void Thread_open(sint32 index, THREAD_FUNC entry);
+void Thread_change(THREAD_FUNC entry);
 void Moji_init(void);
 
 #endif // SYSTEM_H

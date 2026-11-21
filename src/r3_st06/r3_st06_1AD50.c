@@ -105,7 +105,7 @@ void func_8011B00C(ST06_EVENT *wp)
     }
     for (i = 0; i < 6; i++)
     {
-        fx = func_80031618();
+        fx = Open_EFFECT_WORK();
         if (fx != NULL)
         {
             D_8012BB20[i] = fx;
@@ -194,7 +194,7 @@ void func_8011B3E0(STAGE_EVENT *wp)
 
     for (i = 0; i < 6; i++)
     {
-        func_80031988(D_8012BB20[i]);
+        Close_EFFECT_WORK(D_8012BB20[i]);
     }
     Close_EVE_WORK(wp);
 }

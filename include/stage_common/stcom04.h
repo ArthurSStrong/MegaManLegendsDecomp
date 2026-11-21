@@ -75,7 +75,7 @@ extern STCOM_FIXED_VECTOR stcom04_E_0000; // another object's data: position for
 
 // ROCK_NEO.EXE: steps the angle `rot` toward `goal` by at most `speed`; returns the step (0 when
 // there). Its result isn't sign-extended here (see rock_neo.h).
-sint32 func_80031D5C(sint32 goal, sint32 rot, sint32 speed);
+sint32 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 
 void stcom04_func_00CC(STCOM04_WORK *wp);
 void stcom04_func_0748(STCOM04_WORK *wp, sint32 hit);
@@ -87,7 +87,7 @@ void stcom04_func_0A10(STCOM04_WORK *wp, sint32 hit);
 uint8 stcom04_func_0A84(STCOM04_WORK *wp, uint32 *hit);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM04_H

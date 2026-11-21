@@ -130,9 +130,9 @@ typedef struct
 } PL_WORK10C;
 
 extern uint32 D_8009888C;
-extern uint32 D_800987E8;
+extern uint32 Em_work_used;
 extern uint32 D_80098B20;
-extern uint32 D_800987CC;
+extern uint32 Shl_work_used;
 extern PL_WORK3C0 Em_work_tbl[];
 extern PL_WORK5A4 D_800C3580[];
 extern PL_WORK10C Shl_work_tbl[];
@@ -205,7 +205,7 @@ void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR 
                    PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5);
 sint32 func_80052B04(sint32 a0, PL_FIXED_VECTOR *a1, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
                      sint32 a4, sint32 slide);
-void func_80030150(PL_FIXED_VECTOR *fixed, PL_SHORT_VECTOR *pos);
+void Obj_pos_adj_round(PL_FIXED_VECTOR *fixed, PL_SHORT_VECTOR *pos);
 void func_800536B0(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index);
 sint32 func_80048CEC(sint32 index);
 sint32 func_80048BEC(PL_SHORT_VECTOR *pos);

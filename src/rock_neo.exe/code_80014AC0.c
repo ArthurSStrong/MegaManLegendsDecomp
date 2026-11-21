@@ -4,7 +4,7 @@
 void func_80014AC0(CODE14_WORK *wp, CODE14_SCRIPT *script)
 {
     wp->flags |= 2;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     *(uint32 *)&wp->scale.x        = 0x04000400;
     *(uint32 *)&wp->scale.z        = 0x42100400;
     wp->table78                    = D_800979FC;
@@ -201,7 +201,7 @@ void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
     }
     else
     {
-        func_8002FEA4(wp, (sint16)wp->velocity_x, (sint16)wp->velocity_y, (sint16)z);
+        Obj_pos_set(wp, (sint16)wp->velocity_x, (sint16)wp->velocity_y, (sint16)z);
     }
     wp->rotation.y += script->turn;
     wp->scale.x += script->scale_x;
@@ -260,11 +260,11 @@ void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
     }
     if (wp->anim_prev != wp->anim)
     {
-        func_800322A8(wp, wp->anim, 0);
+        EM_Char_Set(wp, wp->anim, 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -286,7 +286,7 @@ void func_80015428(CODE800133D8_STATE *wp)
     switch ((sint16)wp->value0a)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 for (i = 0; i < 16; i++)
                 {
@@ -321,7 +321,7 @@ void func_80015428(CODE800133D8_STATE *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0 && ((uint32)(wp->routine_0 - 4) < 2 || (sint8)wp->routine_0 == 6))
+            if (Fade_busy == 0 && ((uint32)(wp->routine_0 - 4) < 2 || (sint8)wp->routine_0 == 6))
             {
                 wp->value0a = 0;
             }

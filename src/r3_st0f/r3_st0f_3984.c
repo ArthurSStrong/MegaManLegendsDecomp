@@ -9,11 +9,11 @@ void func_80103984(ST0F_OBJ *wp)
     D_801060F4[wp->routine_0](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->routine_2 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
@@ -42,14 +42,14 @@ void func_80103A74(ST0F_OBJ *wp)
             }
             break;
         case 2:
-            turn = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, wp->value_64);
+            turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->value_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
                 if (func_8003A13C() == 0)
                 {
                     func_80063BC8(&wp->position, 3, 0, func_80103E08());
-                    func_800322A8(wp, 8, 0);
+                    EM_Char_Set(wp, 8, 0);
                     wp->routine_2 = 0;
                     wp->routine_1++;
                 }
@@ -63,7 +63,7 @@ void func_80103A74(ST0F_OBJ *wp)
             }
             break;
         case 4:
-            turn           = func_80031D5C(ctl->angle_0, wp->rotation.y, wp->value_64);
+            turn           = Muku_angle(ctl->angle_0, wp->rotation.y, wp->value_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
@@ -86,18 +86,18 @@ void func_80103C28(ST0F_OBJ *wp)
     wp->rotation.x = 0;
     wp->flags_0 |= 2;
     wp->ctl.angle_0 = wp->rotation.y;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]   = 0x2000200;
     wp->scale.words[1]   = 0x200;
     wp->scale.v.pad      = 0x4210;
     wp->value_78         = 0;
-    wp->position.y       = func_80048E6C(wp);
+    wp->position.y       = Scr_height_check(wp);
     wp->position_fixed.y = wp->position.y << 16;
     wp->value_6E         = 0;
     wp->value_B0         = 0;
     wp->value_B2         = 0;
     wp->data_10          = D_801060F8;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->routine_2 = 0;
 }
 
@@ -109,14 +109,14 @@ sint32 func_80103CD8(ST0F_OBJ *wp)
     if (pl->target_184 == wp)
     {
         wp->value_64 =
-            STCOM_ABS(func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+            STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
         pl->target_184 = NULL;
         pl->flags_0 &= ~2;
         pl->flags_bd |= 0x40;
         D_801061A0.x = wp->value_180.x;
         D_801061A0.y = wp->value_180.y - 0x20;
         D_801061A0.z = wp->value_180.z;
-        func_80039FAC(&D_801061A0, 0x100, func_80031198(&pl->position, &wp->position) + 0x800,
+        func_80039FAC(&D_801061A0, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
                       D_800A396C);
         return 1;
     }
@@ -155,11 +155,11 @@ void func_80103E70(ST0F_OBJ *wp)
     D_8010612C[wp->variant_3](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->routine_1 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {

@@ -8,12 +8,12 @@
 
 sint32 stcom20_func_0000(STCOM20_WORK *wp)
 {
-    return func_8003648C(wp->ctl.track_0, wp) != 0;
+    return Search_Player(wp->ctl.track_0, wp) != 0;
 }
 
 sint32 stcom20_func_0024(STCOM20_WORK *wp)
 {
-    return func_8003648C(wp->ctl.track_0, wp) == 0;
+    return Search_Player(wp->ctl.track_0, wp) == 0;
 }
 
 void stcom20_func_0048(STCOM20_WORK *wp)
@@ -22,7 +22,7 @@ void stcom20_func_0048(STCOM20_WORK *wp)
     sint16 y;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->data_78            = stcom20_D_0000;
     wp->value_74           = 1;
     wp->param_C            = 0;
@@ -31,11 +31,11 @@ void stcom20_func_0048(STCOM20_WORK *wp)
     ctl                    = &wp->ctl;
     wp->color_B4           = 0x808080;
     wp->ctl.scale_18.value = 0x2000000;
-    func_80036478(ctl->track_0, 1, -0x60);
+    Search_Player_Init(ctl->track_0, 1, -0x60);
     wp->ctl.value_20  = 0;
     wp->ctl.hit_1C    = 0;
     wp->ctl.angle_10  = rand() & 0xFFF;
-    y                 = func_80048E6C(wp);
+    y                 = Scr_height_check(wp);
     wp->ctl.ground_12 = y;
     if (y - 0x82 < wp->position.y)
     {
@@ -75,7 +75,7 @@ void stcom20_func_0148(STCOM20_WORK *wp)
     func_8002FFC4(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
     if (func_8004B414(wp) == 0)
     {
-        y = func_80048E6C(wp);
+        y = Scr_height_check(wp);
         d = y - ctl->ground_12;
         if (STCOM_ABS(d) > 10)
         {
@@ -94,7 +94,7 @@ void stcom20_func_0148(STCOM20_WORK *wp)
         }
         wp->position_fixed.y =
             ((ctl->ground_12 + ctl->height_14) << 16) + rsin(ctl->angle_10) * 400;
-        func_80030150(&wp->position_fixed, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     }
 }
 
@@ -147,7 +147,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
     pos.y          = wp->position_fixed.y >> 16;
     pos.z          = wp->position_fixed.z >> 16;
     wp->angle_66 =
-        (wp->angle_66 + func_80031BEC(&wp->position, &pl->position, wp->angle_66, 0x20)) & 0xFFF;
+        (wp->angle_66 + Muku(&wp->position, &pl->position, wp->angle_66, 0x20)) & 0xFFF;
     wp->velocity.v.x += 5;
     if (wp->velocity.v.x > 0xA0)
     {
@@ -157,7 +157,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
     hit = func_8004B414(wp);
     if (hit == 0)
     {
-        y = func_80048E6C(wp);
+        y = Scr_height_check(wp);
         if (y != ctl->ground_12)
         {
             d = y - ctl->ground_12;
@@ -178,7 +178,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
             }
             wp->position_fixed.y = (ctl->ground_12 + ctl->height_14) << 16;
             wp->position_fixed.y += rsin(ctl->angle_10) * 400;
-            func_80030150(&wp->position_fixed, &wp->position);
+            Obj_pos_adj_round(&wp->position_fixed, &wp->position);
         }
     }
     else
@@ -203,7 +203,7 @@ void stcom20_func_05FC(STCOM20_WORK *wp)
     wp->ctl.scale_18.value += 0x330000;
     if (wp->ctl.scale_18.value > 0x2FFFFFF)
     {
-        effect = func_80031618();
+        effect = Open_EFFECT_WORK();
         if (effect != NULL)
         {
             effect->flags_0         = 5;
@@ -244,7 +244,7 @@ void stcom20_func_06E8(STCOM20_WORK *wp)
         }
     }
     stcom20_D_000C[wp->routine_1](wp);
-    func_800341BC(&wp->position, 0x20, 0, 0x8000, wp->value_1, &ctl->hit_1C, 0x4080000, 0x800000,
+    Set_Atari(&wp->position, 0x20, 0, 0x8000, wp->value_1, &ctl->hit_1C, 0x4080000, 0x800000,
                   0);
     ctl->hit_1C = 0;
 }

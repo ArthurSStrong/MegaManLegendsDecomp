@@ -48,16 +48,16 @@ void func_8002E7A8(sint32 mode)
     }
     id = 0x10;
     func_800177CC(Pl_shl_work_tbl, (uint8 *)Pl_shl_work_tbl + 0x10BC);
-    D_800989F0 = 0;
-    D_80098A60 = 0;
+    Pl_shl_work_used = 0;
+    Pl_shl_work_closing = 0;
     for (i = 0; i < 16; i++)
     {
         Pl_shl_work_tbl[i].reserved01 = id | i;
     }
     id = 0x20;
     func_800177CC(Em_work_tbl, (uint8 *)Em_work_tbl + 0x3BFC);
-    D_800987E8 = 0;
-    D_8009880C = 0;
+    Em_work_used = 0;
+    Em_work_closing = 0;
     for (i = 0; i < 16; i++)
     {
         Em_work_tbl[i].reserved01 = id | i;
@@ -72,17 +72,17 @@ void func_8002E7A8(sint32 mode)
     }
     id = 0x60;
     func_800177CC(Shl_work_tbl, (uint8 *)Shl_work_tbl + 0x217C);
-    D_800987CC = 0;
-    D_80098808 = 0;
+    Shl_work_used = 0;
+    Shl_work_closing = 0;
     for (i = 0; i < 32; i++)
     {
         Shl_work_tbl[i].reserved01 = id | i;
     }
     id = 0x80;
     func_800177CC(Effect_work_tbl, (uint8 *)Effect_work_tbl + 0x11FC);
-    D_80098838 = 0;
+    Effect_work_used = 0;
     D_8009883C = 0;
-    D_800988C8 = 0;
+    Effect_work_closing = 0;
     D_800988CC = 0;
     for (i = 0; i < 64; i++)
     {
@@ -90,8 +90,8 @@ void func_8002E7A8(sint32 mode)
     }
     id = 0xC0;
     func_800177CC(Eve_work_tbl, (uint8 *)Eve_work_tbl + 0x23C);
-    D_800987EC = 0;
-    D_80098818 = 0;
+    Eve_work_used = 0;
+    Eve_work_closing = 0;
     for (i = 0; i < 16; i++)
     {
         Eve_work_tbl[i].reserved01 = id | i;
@@ -177,7 +177,7 @@ void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player)
                 }
                 break;
             case 0x80:
-                fx = (SPAWN_FX *)func_80031618();
+                fx = (SPAWN_FX *)Open_EFFECT_WORK();
                 goto fill_fx;
             case 0xC0:
                 lk = (SPAWN_LINK *)Open_EVE_WORK();
@@ -249,7 +249,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     if (mask & 2)
     {
         s3c0 = Em_work_tbl;
-        bits = D_800987E8;
+        bits = Em_work_used;
         for (i = 0; i < 16; i++, s3c0++)
         {
             if ((sint32)(bits << i) < 0)
@@ -289,7 +289,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     if (mask & 8)
     {
         s10c = Pl_shl_work_tbl;
-        bits = D_800989F0;
+        bits = Pl_shl_work_used;
         for (i = 0; i < 16; i++, s10c++)
         {
             if ((sint32)(bits << i) < 0)
@@ -297,7 +297,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 if (flags & 0x80)
                 {
                     func_80052528(s10c);
-                    func_80031930(s10c);
+                    Close_PL_SHL_WORK(s10c);
                 }
                 else
                 {
@@ -309,7 +309,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     if (mask & 16)
     {
         s10c = Shl_work_tbl;
-        bits = D_800987CC;
+        bits = Shl_work_used;
         for (i = 0; i < 32; i++, s10c++)
         {
             if ((sint32)(bits << i) < 0 || (s10c->flags & 3))
@@ -331,14 +331,14 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
         s48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
-            bits = (&D_80098838)[i];
+            bits = (&Effect_work_used)[i];
             for (j = 0; j < 32; j++, s48++)
             {
                 if ((sint32)(bits << j) < 0 && s48->kind >= 0x80)
                 {
                     if (flags & 0x80)
                     {
-                        func_80031988(s48);
+                        Close_EFFECT_WORK(s48);
                     }
                     else
                     {
@@ -353,14 +353,14 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
         s48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
-            bits = (&D_80098838)[i];
+            bits = (&Effect_work_used)[i];
             for (j = 0; j < 32; j++, s48++)
             {
                 if ((sint32)(bits << j) < 0 && s48->kind < 0x80)
                 {
                     if (flags & 0x80)
                     {
-                        func_80031988(s48);
+                        Close_EFFECT_WORK(s48);
                     }
                     else
                     {
@@ -373,7 +373,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     if (mask & 128)
     {
         s24  = Eve_work_tbl;
-        bits = D_800987EC;
+        bits = Eve_work_used;
         for (i = 0; i < 16; i++, s24++)
         {
             if ((sint32)(bits << i) < 0)
@@ -479,7 +479,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     if (flag & 2)
     {
         slot3c0 = Em_work_tbl;
-        mask    = D_800987E8;
+        mask    = Em_work_used;
         for (i = 0; i < 16; i++, slot3c0++)
         {
             if ((sint32)(mask << i) < 0)
@@ -523,7 +523,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     if (flag & 8)
     {
         slot10c = Pl_shl_work_tbl;
-        mask    = D_800989F0;
+        mask    = Pl_shl_work_used;
         for (i = 0; i < 16; i++, slot10c++)
         {
             if ((sint32)(mask << i) < 0)
@@ -537,7 +537,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 }
                 else
                 {
-                    func_80031930(slot10c);
+                    Close_PL_SHL_WORK(slot10c);
                 }
             }
         }
@@ -545,7 +545,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     if (flag & 16)
     {
         slot10c = Shl_work_tbl;
-        mask    = D_800987CC;
+        mask    = Shl_work_used;
         for (i = 0; i < 32; i++, slot10c++)
         {
             if ((sint32)(mask << i) < 0)
@@ -569,7 +569,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
         slot48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
-            mask = (&D_80098838)[i];
+            mask = (&Effect_work_used)[i];
             for (j = 0; j < 32; j++, slot48++)
             {
                 if ((sint32)(mask << j) < 0 && slot48->kind >= 0x80)
@@ -583,7 +583,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                     }
                     else
                     {
-                        func_80031988(slot48);
+                        Close_EFFECT_WORK(slot48);
                     }
                 }
             }
@@ -594,7 +594,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
         slot48 = Effect_work_tbl;
         for (i = 0; i < 2; i++)
         {
-            mask = (&D_80098838)[i];
+            mask = (&Effect_work_used)[i];
             for (j = 0; j < 32; j++, slot48++)
             {
                 if ((sint32)(mask << j) < 0 && slot48->kind < 0x80)
@@ -608,7 +608,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                     }
                     else
                     {
-                        func_80031988(slot48);
+                        Close_EFFECT_WORK(slot48);
                     }
                 }
             }
@@ -617,7 +617,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     if (flag & 128)
     {
         slot24 = Eve_work_tbl;
-        mask   = D_800987EC;
+        mask   = Eve_work_used;
         for (i = 0; i < 16; i++, slot24++)
         {
             if ((sint32)(mask << i) < 0)
@@ -692,7 +692,7 @@ void func_8002F998(POS_WORK *wp, uint16 *delta)
     wp->y_18 += delta[2];
 }
 
-void func_8002F9C4(void *wp, sint32 arg)
+void Model_work_init(void *wp, sint32 arg)
 {
     func_8002FA38((RES_OWNER *)wp, (sint32 *)0x8016C000, (uint8 *)arg);
 }
@@ -750,7 +750,7 @@ sint32 func_8002FA38(RES_OWNER *wp, sint32 *dir, uint8 *key)
     return 0;
 }
 
-void func_8002FBF4(void)
+void Work_stage_close(void)
 {
     sint32 i;
     sint32 j;
@@ -762,7 +762,7 @@ void func_8002FBF4(void)
     GAME_WORK_50 *p50;
 
     p3c0 = Em_work_tbl;
-    mask = D_800987E8;
+    mask = Em_work_used;
     for (i = 0; i < 16; i++)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p3c0)->link_88 <= 0x8018FFFF)
@@ -784,18 +784,18 @@ void func_8002FBF4(void)
         p5a4++;
     }
     p10c = Pl_shl_work_tbl;
-    mask = D_800989F0;
+    mask = Pl_shl_work_used;
     for (i = 0; i < 16; i++)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p10c)->link_88 <= 0x8018FFFF)
         {
             func_80052528(p10c);
-            func_80031930(p10c);
+            Close_PL_SHL_WORK(p10c);
         }
         p10c++;
     }
     p10c = Shl_work_tbl;
-    mask = D_800987CC;
+    mask = Shl_work_used;
     for (i = 0; i < 32; i++)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p10c)->link_88 <= 0x8018FFFF)
@@ -808,12 +808,12 @@ void func_8002FBF4(void)
     p48 = Effect_work_tbl;
     for (i = 0; i < 2; i++)
     {
-        mask = (&D_80098838)[i];
+        mask = (&Effect_work_used)[i];
         for (j = 0; j < 32; j++)
         {
             if ((sint32)(mask << j) < 0 && ((LINK14_VIEW *)p48)->link_14 <= 0x8018FFFF)
             {
-                func_80031988(p48);
+                Close_EFFECT_WORK(p48);
             }
             p48++;
         }
@@ -848,7 +848,7 @@ uint32 func_8002FE74(uint32 val)
     return val;
 }
 
-void func_8002FEA4(FIXED_POS_WORK *wp, sint16 x, sint16 y, sint16 z)
+void Obj_pos_set(FIXED_POS_WORK *wp, sint16 x, sint16 y, sint16 z)
 {
 #ifdef __wasm32__
     // func_80030058 copies four words, including the vector's padding word.
@@ -861,7 +861,7 @@ void func_8002FEA4(FIXED_POS_WORK *wp, sint16 x, sint16 y, sint16 z)
     wp->fixed_1c[0] += delta[0];
     wp->fixed_1c[1] += delta[1];
     wp->fixed_1c[2] += delta[2];
-    func_80030150(wp->fixed_1c, wp->pos_14);
+    Obj_pos_adj_round(wp->fixed_1c, wp->pos_14);
 }
 
 void func_8002FF34(FIXED_POS_BIG *wp, sint16 x, sint16 y, sint16 z)
@@ -877,7 +877,7 @@ void func_8002FF34(FIXED_POS_BIG *wp, sint16 x, sint16 y, sint16 z)
     wp->fixed_428[0] += delta[0];
     wp->fixed_428[1] += delta[1];
     wp->fixed_428[2] += delta[2];
-    func_80030150(wp->fixed_428, wp->pos_438);
+    Obj_pos_adj_round(wp->fixed_428, wp->pos_438);
 }
 
 void func_8002FFC4(sint16 *out, sint32 *fixed, sint32 angle, sint16 x, sint16 y, sint16 z)
@@ -893,7 +893,7 @@ void func_8002FFC4(sint16 *out, sint32 *fixed, sint32 angle, sint16 x, sint16 y,
     fixed[0] += delta[0];
     fixed[1] += delta[1];
     fixed[2] += delta[2];
-    func_80030150(fixed, out);
+    Obj_pos_adj_round(fixed, out);
 }
 
 sint32 *func_80030058(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z)
@@ -925,7 +925,7 @@ sint32 *func_80030058(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z)
     return out;
 }
 
-void func_80030150(sint32 *in, sint16 *out)
+void Obj_pos_adj_round(sint32 *in, sint16 *out)
 {
     out[0] = (in[0] >> 16) + ((in[0] >> 15) & 1);
     out[1] = (in[1] >> 16) + ((in[1] >> 15) & 1);
@@ -946,7 +946,7 @@ void func_800301A8(MATRIX *m, sint32 *wp, sint32 *base)
     wp[2] = base[2] + out[2];
 }
 
-sint32 func_80030254(DELTA14_WORK *a, DELTA14_WORK *b)
+sint32 Obj_distance(DELTA14_WORK *a, DELTA14_WORK *b)
 {
     sint16 d[3];
 
@@ -956,7 +956,7 @@ sint32 func_80030254(DELTA14_WORK *a, DELTA14_WORK *b)
     return SquareRoot0(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
 }
 
-sint32 func_800302E4(DELTA0_WORK *a, DELTA0_WORK *b)
+sint32 Calc_distance(DELTA0_WORK *a, DELTA0_WORK *b)
 {
     sint16 d[3];
 
@@ -966,7 +966,7 @@ sint32 func_800302E4(DELTA0_WORK *a, DELTA0_WORK *b)
     return SquareRoot0(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
 }
 
-sint32 func_80030374(sint16 *a, sint16 *b)
+sint32 Calc_distance_xz(sint16 *a, sint16 *b)
 {
     sint32 d[4];
 
@@ -975,7 +975,7 @@ sint32 func_80030374(sint16 *a, sint16 *b)
     return SquareRoot0(d[0] * d[0] + d[2] * d[2]);
 }
 
-sint32 func_800303CC(sint16 *a, sint16 *b)
+sint32 Calc_distance_xz_sq(sint16 *a, sint16 *b)
 {
     sint32 d[3];
 
@@ -1160,19 +1160,19 @@ sint32 func_8003081C(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 angle
 
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3)
 {
-    func_80030968(a0, a1, a2, a3, 0x100);
+    Obj_arc_vel_set(a0, a1, a2, a3, 0x100);
 }
 
-void func_80030968(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4)
+void Obj_arc_vel_set(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4)
 {
-    func_800309E0((uint8 *)wp + 0x14, (uint8 *)other + 0xC4, (uint8 *)wp + 0x44,
+    calc_arc_vel((uint8 *)wp + 0x14, (uint8 *)other + 0xC4, (uint8 *)wp + 0x44,
                   (uint8 *)other + 0xCA, a2, a3, a4);
     *(sint16 *)((uint8 *)wp + 0x50) = 0;
     *(sint16 *)((uint8 *)wp + 0x4C) = 0;
     *(sint16 *)((uint8 *)wp + 0x4E) = a4;
 }
 
-void func_800309E0(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
+void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
                    sint16 f, sint16 g)
 {
     sint32 delta[3];
@@ -1224,10 +1224,10 @@ sint16 func_80030CB8(void *a0, sint32 a1, sint16 a2, sint16 a3)
 
 sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4)
 {
-    return (sint16)func_80030D30((uint8 *)a0 + 0x14, (uint8 *)a1 + 0xC4, a2, a3, a4);
+    return (sint16)Calc_arc_angle((uint8 *)a0 + 0x14, (uint8 *)a1 + 0xC4, a2, a3, a4);
 }
 
-sint16 func_80030D30(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 e)
+sint16 Calc_arc_angle(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 e)
 {
     sint32 delta[3];
     SVECTOR unused; // never used; it sets the frame size
@@ -1272,7 +1272,7 @@ sint16 func_80030D30(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 
     return angle;
 }
 
-void func_80030EE8(MOVER_WORK *wp, SHORT3_WORK *target, sint16 speed)
+void Obj_target_vel_set(MOVER_WORK *wp, SHORT3_WORK *target, sint16 speed)
 {
     sint32 d[3];
     sint32 v[3];
@@ -1304,7 +1304,7 @@ void func_80030EE8(MOVER_WORK *wp, SHORT3_WORK *target, sint16 speed)
     wp->v50 = 0;
 }
 
-sint32 func_800310CC(VEC32_WORK *a, VEC32_WORK *b)
+sint32 Calc_degree(VEC32_WORK *a, VEC32_WORK *b)
 {
     sint32 dx;
     sint32 dz;
@@ -1331,7 +1331,7 @@ sint32 func_800310CC(VEC32_WORK *a, VEC32_WORK *b)
     return angle;
 }
 
-sint32 func_80031198(SHORT3_WORK *a, SHORT3_WORK *b)
+sint32 Calc_degree2(SHORT3_WORK *a, SHORT3_WORK *b)
 {
     sint32 dx;
     sint32 dz;
@@ -1363,7 +1363,7 @@ sint32 func_80031268(sint16 *a, sint16 *b)
     return ratan2(b[0] - a[0], b[2] - a[2]) + 0x800;
 }
 
-sint32 func_8003129C(SVECTOR *a, SVECTOR *b)
+sint32 Calc_elevation(SVECTOR *a, SVECTOR *b)
 {
     sint32 dx;
     sint32 dz;
@@ -1399,14 +1399,14 @@ GAME_WORK_3C0 *Open_EM_WORK(void)
     SLOT_INIT *slot;
     uint32 mask;
 
-    mask = D_800987E8;
+    mask = Em_work_used;
     for (i = 0; i < 16; i++)
     {
         wp = &Em_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
-            D_800987E8 |= 0x80000000 >> i;
+            Em_work_used |= 0x80000000 >> i;
             slot->word_10 = 0;
             slot->word_78 = 0;
             // Cast stores, unlike field stores, can't be scheduled above the mask update
@@ -1459,14 +1459,14 @@ GAME_WORK_10C *Open_SHL_WORK(void)
     SLOT_INIT *slot;
     uint32 mask;
 
-    mask = D_800987CC;
+    mask = Shl_work_used;
     for (i = 0; i < 32; i++)
     {
         wp = &Shl_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
-            D_800987CC |= 0x80000000 >> i;
+            Shl_work_used |= 0x80000000 >> i;
             slot->word_10 = 0;
             slot->word_78 = 0;
             // Cast stores, unlike field stores, can't be scheduled above the mask update
@@ -1482,21 +1482,21 @@ GAME_WORK_10C *Open_SHL_WORK(void)
     return NULL;
 }
 
-GAME_WORK_10C *func_80031598(void)
+GAME_WORK_10C *Open_PL_SHL_WORK(void)
 {
     sint32 i;
     GAME_WORK_10C *wp;
     SLOT_INIT *slot;
     uint32 mask;
 
-    mask = D_800989F0;
+    mask = Pl_shl_work_used;
     for (i = 0; i < 16; i++)
     {
         wp = &Pl_shl_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
-            D_800989F0 |= 0x80000000 >> i;
+            Pl_shl_work_used |= 0x80000000 >> i;
             slot->word_10 = 0;
             slot->word_78 = 0;
             // Cast stores, unlike field stores, can't be scheduled above the mask update
@@ -1513,7 +1513,7 @@ GAME_WORK_10C *func_80031598(void)
 }
 
 // player.h declares the result as struct CODE456_WORK *
-struct CODE456_WORK *func_80031618(void)
+struct CODE456_WORK *Open_EFFECT_WORK(void)
 {
     sint32 i;
     sint32 j;
@@ -1523,12 +1523,12 @@ struct CODE456_WORK *func_80031618(void)
 
     for (i = 0; i < 2; i++)
     {
-        bits = (&D_80098838)[i];
+        bits = (&Effect_work_used)[i];
         for (j = 0; j < 0x20; j++)
         {
             if (((sint32)bits << j) >= 0)
             {
-                (&D_80098838)[i] |= 0x80000000 >> j;
+                (&Effect_work_used)[i] |= 0x80000000 >> j;
                 wp                          = &Effect_work_tbl[j + (i << 5)];
                 slot                        = (SLOT_INIT *)wp;
                 slot->half_2                = 0;
@@ -1551,14 +1551,14 @@ GAME_WORK_24 *Open_EVE_WORK(void)
     SLOT_INIT *slot;
     uint32 mask;
 
-    mask = D_800987EC;
+    mask = Eve_work_used;
     for (i = 0; i < 16; i++)
     {
         wp = &Eve_work_tbl[i];
         if (((sint32)mask << i) >= 0)
         {
             slot = (SLOT_INIT *)wp;
-            D_800987EC |= 0x80000000 >> i;
+            Eve_work_used |= 0x80000000 >> i;
             slot->word_10 = 0;
             // Cast stores, unlike field stores, can't be scheduled above the mask update
             *(uint16 *)&slot->half_2    = 0;
@@ -1626,8 +1626,8 @@ GAME_WORK_50 *func_800317AC(sint32 index)
 
 void Close_EM_WORK(GAME_WORK_3C0 *wp)
 {
-    D_8009880C |= 0x80000000 >> (((uint32)wp - (uint32)Em_work_tbl) / sizeof(*wp));
-    D_8009880C &= D_800987E8;
+    Em_work_closing |= 0x80000000 >> (((uint32)wp - (uint32)Em_work_tbl) / sizeof(*wp));
+    Em_work_closing &= Em_work_used;
     wp->flags = 0;
 }
 
@@ -1640,32 +1640,32 @@ void func_8003187C(GAME_WORK_5A4 *wp)
 
 void Close_SHL_WORK(GAME_WORK_10C *wp)
 {
-    D_80098808 |= 0x80000000 >> (((uint32)wp - (uint32)Shl_work_tbl) / sizeof(*wp));
-    D_80098808 &= D_800987CC;
+    Shl_work_closing |= 0x80000000 >> (((uint32)wp - (uint32)Shl_work_tbl) / sizeof(*wp));
+    Shl_work_closing &= Shl_work_used;
     wp->flags = 0;
 }
 
-void func_80031930(GAME_WORK_10C *wp)
+void Close_PL_SHL_WORK(GAME_WORK_10C *wp)
 {
-    D_80098A60 |= 0x80000000 >> (((uint32)wp - (uint32)Pl_shl_work_tbl) / sizeof(*wp));
-    D_80098A60 &= D_800989F0;
+    Pl_shl_work_closing |= 0x80000000 >> (((uint32)wp - (uint32)Pl_shl_work_tbl) / sizeof(*wp));
+    Pl_shl_work_closing &= Pl_shl_work_used;
     wp->flags = 0;
 }
 
-void func_80031988(GAME_WORK_48 *wp)
+void Close_EFFECT_WORK(GAME_WORK_48 *wp)
 {
     uint32 i;
 
     i = ((uint32)wp - (uint32)Effect_work_tbl) / sizeof(*wp);
-    (&D_800988C8)[i >> 5] |= 0x80000000 >> (i & 0x1F);
-    (&D_800988C8)[i >> 5] &= (&D_80098838)[i >> 5];
+    (&Effect_work_closing)[i >> 5] |= 0x80000000 >> (i & 0x1F);
+    (&Effect_work_closing)[i >> 5] &= (&Effect_work_used)[i >> 5];
     wp->flags = 0;
 }
 
 void Close_EVE_WORK(GAME_WORK_24 *wp)
 {
-    D_80098818 |= 0x80000000 >> (((uint32)wp - (uint32)Eve_work_tbl) / sizeof(*wp));
-    D_80098818 &= D_800987EC;
+    Eve_work_closing |= 0x80000000 >> (((uint32)wp - (uint32)Eve_work_tbl) / sizeof(*wp));
+    Eve_work_closing &= Eve_work_used;
     wp->flags = 0;
 }
 
@@ -1676,7 +1676,7 @@ void func_80031A4C(GAME_WORK_50 *wp)
     wp->flags = 0;
 }
 
-void func_80031AA4(void)
+void Work_close_apply(void)
 {
     uint32 a;
     uint32 b;
@@ -1687,40 +1687,40 @@ void func_80031AA4(void)
     uint32 g;
     uint32 h;
 
-    a          = D_80098A60;
-    b          = D_8009880C;
+    a          = Pl_shl_work_closing;
+    b          = Em_work_closing;
     c          = D_80098B64;
-    d          = D_80098808;
-    e          = D_800988C8;
+    d          = Shl_work_closing;
+    e          = Effect_work_closing;
     f          = D_800988CC;
-    g          = D_80098818;
+    g          = Eve_work_closing;
     h          = D_80098A4C;
-    D_80098A60 = 0;
-    D_8009880C = 0;
+    Pl_shl_work_closing = 0;
+    Em_work_closing = 0;
     D_80098B64 = 0;
-    D_80098808 = 0;
-    D_800988C8 = 0;
+    Shl_work_closing = 0;
+    Effect_work_closing = 0;
     D_800988CC = 0;
-    D_80098818 = 0;
+    Eve_work_closing = 0;
     D_80098A4C = 0;
-    D_800989F0 &= ~a;
-    D_800987E8 &= ~b;
+    Pl_shl_work_used &= ~a;
+    Em_work_used &= ~b;
     D_80098B20 &= ~c;
-    D_800987CC &= ~d;
-    D_80098838 &= ~e;
+    Shl_work_used &= ~d;
+    Effect_work_used &= ~e;
     D_8009883C &= ~f;
-    D_800987EC &= ~g;
+    Eve_work_used &= ~g;
     D_800989CC &= ~h;
 }
 
-sint16 func_80031BEC(SHORT3_WORK *a, SHORT3_WORK *b, sint32 c, sint32 d)
+sint16 Muku(SHORT3_WORK *a, SHORT3_WORK *b, sint32 c, sint32 d)
 {
     uint32 v;
     uint32 u;
     sint16 r;
 
     r = d;
-    v = (func_80031198(a, b) - (sint16)c) & 0xFFF;
+    v = (Calc_degree2(a, b) - (sint16)c) & 0xFFF;
     if (v < 0x800 && v < (uint32)((sint16)d << 1))
     {
         r = v;
@@ -1736,14 +1736,14 @@ sint16 func_80031BEC(SHORT3_WORK *a, SHORT3_WORK *b, sint32 c, sint32 d)
     return -r;
 }
 
-sint16 func_80031CA4(SVECTOR *a, SVECTOR *b, sint32 c, sint32 d)
+sint16 Muku_elevation(SVECTOR *a, SVECTOR *b, sint32 c, sint32 d)
 {
     uint32 v;
     uint32 u;
     sint16 r;
 
     r = d;
-    v = (func_8003129C(a, b) - (sint16)c) & 0xFFF;
+    v = (Calc_elevation(a, b) - (sint16)c) & 0xFFF;
     if (v < 0x800 && v < (uint32)((sint16)d << 1))
     {
         r = v;
@@ -1759,7 +1759,7 @@ sint16 func_80031CA4(SVECTOR *a, SVECTOR *b, sint32 c, sint32 d)
     return -r;
 }
 
-sint16 func_80031D5C(sint32 a, sint32 b, sint32 limit)
+sint16 Muku_angle(sint32 a, sint32 b, sint32 limit)
 {
     sint16 r;
     sint16 t;
@@ -1788,13 +1788,13 @@ sint16 func_80031D5C(sint32 a, sint32 b, sint32 limit)
     return r;
 }
 
-sint32 func_80031DCC(VEC32_WORK *wp, sint32 a, sint32 b, VEC32_WORK *target, sint32 d, sint32 e)
+sint32 Angle_ck(VEC32_WORK *wp, sint32 a, sint32 b, VEC32_WORK *target, sint32 d, sint32 e)
 {
     sint32 angle;
     sint32 lo;
     sint32 hi;
 
-    angle = func_800310CC(wp, target);
+    angle = Calc_degree(wp, target);
     d -= 0x800;
     hi = (e + (angle - d)) & 0xFFF;
     lo = (b + (angle - a)) & 0xFFF;
@@ -1814,7 +1814,7 @@ sint32 func_80031E60(VEC32_WORK *wp, sint32 a, sint32 b, VEC32_WORK *target, sin
     sint32 lo;
     sint32 hi;
 
-    angle = func_800310CC(wp, target);
+    angle = Calc_degree(wp, target);
     hi    = (e + (angle - d)) & 0xFFF;
     lo    = (b + (angle - a)) & 0xFFF;
     if (((sint16)b << 1) >= lo)
@@ -1833,7 +1833,7 @@ sint32 func_80031EF0(SHORT3_WORK *wp, sint32 a, sint32 b, SHORT3_WORK *target, s
     sint32 lo;
     sint32 hi;
 
-    angle = func_80031198(wp, target);
+    angle = Calc_degree2(wp, target);
     d -= 0x800;
     hi = (e + (angle - d)) & 0xFFF;
     lo = (b + (angle - a)) & 0xFFF;
@@ -1859,11 +1859,11 @@ sint32 func_80031F84(SHORT3_WORK *a, SHORT3_WORK *b, sint16 angle, uint16 mode)
     result = 0;
     if (!(((uint16 *)b)[3] & 1))
     {
-        t = func_80031198(b, &D_80097CF4);
+        t = Calc_degree2(b, &D_80097CF4);
     }
     else
     {
-        t = func_80031198(a, b);
+        t = Calc_degree2(a, b);
     }
     if (mode == 0)
     {
@@ -1994,7 +1994,7 @@ void func_800321C8(PL_WORK *pl, sint32 a1, sint32 id, sint32 index)
     wp->word_100 = steps[index].w0.word;
 }
 
-void func_800322A8(ENEMY_WORK *wp, sint32 a1, sint32 a2)
+void EM_Char_Set(ENEMY_WORK *wp, sint32 a1, sint32 a2)
 {
     uint32 *tbl;
 
@@ -2004,10 +2004,10 @@ void func_800322A8(ENEMY_WORK *wp, sint32 a1, sint32 a2)
     wp->ent_98   = tbl + a2 * 2;
     wp->word_A4  = *wp->ent_98;
     func_80033A28(wp);
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
 }
 
-void func_80032304(ENEMY_WORK *wp, sint32 a1, sint32 a2)
+void EM_Char_Set2(ENEMY_WORK *wp, sint32 a1, sint32 a2)
 {
     uint32 *tbl;
 
@@ -2089,7 +2089,7 @@ void func_800323FC(PL_WORK *pl, sint32 arg, sint32 unused_arg)
     }
 }
 
-void func_80032488(STEP_OWNER2 *wp)
+void EM_Char_Move(STEP_OWNER2 *wp)
 {
     STEP_WORK *step;
     STEP_WORK *next;
@@ -2120,10 +2120,10 @@ void func_80032488(STEP_OWNER2 *wp)
         }
     }
     func_80033A28(wp);
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
 }
 
-void func_80032538(STEP_OWNER2 *wp)
+void EM_Char_Move2(STEP_OWNER2 *wp)
 {
     STEP_WORK *step;
     STEP_WORK *next;
@@ -2486,7 +2486,7 @@ void func_8003340C(MATRIX *m)
     D_80098A80++;
 }
 
-void func_8003346C(void *wp)
+void EM_World_Pos_Calc(void *wp)
 {
     SVECTOR rot;
     MATRIX m;
@@ -2797,7 +2797,7 @@ SVECTOR *func_80033F04(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 
 }
 
 // Hit-queue push.
-sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
+sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      uint32 flags, sint32 arg7, sint32 arg8)
 {
     QUEUE_ENTRY *entry;
@@ -2838,7 +2838,7 @@ sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id
     return 1;
 }
 
-// Two-entry hit-queue push (cf. func_800341BC). code_8004324c.h declares a different prototype.
+// Two-entry hit-queue push (cf. Set_Atari). code_8004324c.h declares a different prototype.
 sint32 func_8003430C(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint32 arg5,
                      sint32 arg6, sint32 id, MASK_WORK *tbl, sint32 flags, sint32 arg9,
                      sint32 arg10)
@@ -3294,7 +3294,7 @@ void func_80035724(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint
     sint32 id;
     sint32 slot;
 
-    fx = func_80031598();
+    fx = Open_PL_SHL_WORK();
     if (fx != NULL)
     {
         fx->flag_3 = 0;
@@ -3657,7 +3657,7 @@ void func_80036470(BYTE_WORK *wp)
     wp->byte_7 = 0;
 }
 
-void func_80036478(BYTE_WORK *wp, uint8 arg1, uint32 arg2)
+void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2)
 {
     wp->byte_6 = arg1;
     wp->byte_F = arg2 >> 4;
@@ -3665,7 +3665,7 @@ void func_80036478(BYTE_WORK *wp, uint8 arg1, uint32 arg2)
 }
 
 // Returns the tracker's result: stage callers test it.
-sint32 func_8003648C(TRACK_WORK *a0, ANGLE_WORK *a1)
+sint32 Search_Player(TRACK_WORK *a0, ANGLE_WORK *a1)
 {
     return func_800364B0(a0, (TRACK_TARGET *)a1, a1->angle_56);
 }

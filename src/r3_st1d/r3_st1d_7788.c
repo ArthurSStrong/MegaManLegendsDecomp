@@ -17,15 +17,15 @@ void func_80107788(ST1D_VIEW *wp)
     wp->ext.u_2.h           = rand();
     D_80114C7C[wp->routine_0](wp);
     func_80017684(&wp->ext.u_34, (void *)0x1F800120, 6);
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if ((wp->flags_0 & 1) && (ext->flags_0 & 4))
     {
         ext->pos_C = wp->vec_180[1];
-        func_800341BC(&ext->pos_C, 0x50, 0, 0x8000, wp->value_1, &ext->value_14,
+        Set_Atari(&ext->pos_C, 0x50, 0, 0x8000, wp->value_1, &ext->value_14,
                       ext->value_8 | 0x4880000, 0x800000, 0);
     }
     if ((wp->flags_0 & 1) && !((uint8)wp->value_F & 0x40))
@@ -49,7 +49,7 @@ void func_80107788(ST1D_VIEW *wp)
             *D_8011A6B8    = wp->position_fixed;
             rot            = wp->rotation.y;
             wp->rotation.y = (ext->u_44.h[1] + rot) & 0xFFF;
-            func_8002FEA4(wp, D_80114CA0[i], -0x8A0, 0);
+            Obj_pos_set(wp, D_80114CA0[i], -0x8A0, 0);
             ((STAGE_FX **)&ext->effect_50)[i]->x_1C = wp->position.x;
             ((STAGE_FX **)&ext->effect_50)[i]->y_1E = wp->position.y;
             ((STAGE_FX **)&ext->effect_50)[i]->z_20 = wp->position.z;
@@ -76,7 +76,7 @@ void func_80107AF0(ST1D_VIEW *wp)
     {
         for (i = 0; i < 4; i++)
         {
-            fx                                 = (STAGE_OBJ *)func_80031618();
+            fx                                 = (STAGE_OBJ *)Open_EFFECT_WORK();
             ((STAGE_OBJ **)&ext->effect_50)[i] = fx;
             if (fx != NULL)
             {
@@ -92,7 +92,7 @@ void func_80107AF0(ST1D_VIEW *wp)
                 while (i == 0)
                 {
                     i--;
-                    func_80031988(((STAGE_OBJ **)&ext->effect_50)[i]);
+                    Close_EFFECT_WORK(((STAGE_OBJ **)&ext->effect_50)[i]);
                 }
                 return;
             }
@@ -134,7 +134,7 @@ void func_80107AF0(ST1D_VIEW *wp)
             Close_EM_WORK(wp);
             for (i = 0; i < 4; i++)
             {
-                func_80031988(((STAGE_OBJ **)&ext->effect_50)[i]);
+                Close_EFFECT_WORK(((STAGE_OBJ **)&ext->effect_50)[i]);
             }
             return;
         }
@@ -145,7 +145,7 @@ void func_80107AF0(ST1D_VIEW *wp)
     wp->u_48.w[0]  = 0;
     wp->u_64.w[0]  = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_158            = 0x02000200;
     wp->u_15C.w[0]           = 0x200;
     ext->u_34.w              = 0;
@@ -165,7 +165,7 @@ void func_80107AF0(ST1D_VIEW *wp)
     wp->value_6E             = life;
     wp->value_B0             = life;
     wp->value_B2             = life;
-    ground                   = func_80048E6C(wp);
+    ground                   = Scr_height_check(wp);
     wp->position.y           = ground;
     wp->position_fixed.y     = ground << 16;
     wp->routine_0            = 1;
@@ -206,13 +206,13 @@ void func_80107F58(ST1D_VIEW *wp)
     Close_EM_WORK(wp);
     if (!((uint8)wp->value_F & 0x40))
     {
-        func_80031988(wp->ext.effect_50);
-        func_80031988(wp->ext.piece_54);
+        Close_EFFECT_WORK(wp->ext.effect_50);
+        Close_EFFECT_WORK(wp->ext.piece_54);
         if (!((uint8)wp->value_F & 2))
         {
             Close_EM_WORK(wp->ext.u_4C.p);
-            func_80031988(wp->ext.u_58.obj);
-            func_80031988(wp->ext.u_5C.p);
+            Close_EFFECT_WORK(wp->ext.u_58.obj);
+            Close_EFFECT_WORK(wp->ext.u_5C.p);
         }
     }
 }
@@ -223,7 +223,7 @@ void func_80107FE4(ST1D_VIEW *wp)
 
     wp->ext.value_8      = 0;
     wp->ext.u_44.h[1]    = (wp->ext.u_44.h[1] + 0x40) & 0xFFF;
-    temp_v0              = func_80048E6C(wp);
+    temp_v0              = Scr_height_check(wp);
     wp->position.y       = temp_v0;
     wp->position_fixed.y = temp_v0 << 0x10;
 }
@@ -274,7 +274,7 @@ void func_8010802C(ST1D_VIEW *wp)
             }
             break;
     }
-    y                    = func_80048E6C(wp);
+    y                    = Scr_height_check(wp);
     wp->position.y       = y;
     wp->position_fixed.y = y << 16;
 }
@@ -290,7 +290,7 @@ void func_801081D0(ST1D_VIEW *wp)
             wp->routine_2 = 1;
             wp->u_44.h[1] = -30;
             wp->value_4E  = 3;
-            effect        = func_80031618();
+            effect        = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0         = 5;
@@ -309,7 +309,7 @@ void func_801081D0(ST1D_VIEW *wp)
                 wp->routine_2 = 2;
                 wp->flags_0 &= ~2;
                 wp->value_F |= 4;
-                effect = func_80031618();
+                effect = Open_EFFECT_WORK();
                 if (effect != NULL)
                 {
                     effect->flags_0         = 5;
@@ -329,7 +329,7 @@ void func_801081D0(ST1D_VIEW *wp)
             }
             else
             {
-                func_8002FEA4(wp, 0, wp->u_44.h[1] << 4, 0);
+                Obj_pos_set(wp, 0, wp->u_44.h[1] << 4, 0);
                 wp->u_44.h[1] += wp->value_4E;
                 func_8004B414(wp);
                 break;
@@ -341,8 +341,8 @@ void func_801081D0(ST1D_VIEW *wp)
                 if (wp->value_F & 2)
                 {
                     Close_EM_WORK(wp);
-                    func_80031988(ext->effect_50);
-                    func_80031988(ext->piece_54);
+                    Close_EFFECT_WORK(ext->effect_50);
+                    Close_EFFECT_WORK(ext->piece_54);
                 }
             }
             else

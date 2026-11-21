@@ -18,7 +18,7 @@ void func_8010A010(STAGE_OBJ50 *wp)
         wp->pos_38.pad = 0;
         wp->value_44   = flag;
     }
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -45,7 +45,7 @@ void func_8010A0C0(STAGE_OBJ50 *wp)
         func_80051B68(wp, 7, 0, 0);
         pos = wp->pos_38;
         pos.y -= 0x2D;
-        func_800341BC(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+        Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
         wp->value_48 = 0;
     }
 }
@@ -54,7 +54,7 @@ void func_8010A190(STAGE_OBJ50 *wp)
 {
     STAGE_OBJ50 *ep;
 
-    ep = (STAGE_OBJ50 *)func_80031618();
+    ep = (STAGE_OBJ50 *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 5;
@@ -224,9 +224,9 @@ void func_8010A670(STAGE_OBJ50 *wp)
         ep->routine_1 = 0;
         ep->routine_3 = 0;
         ep->value_44  = (sint32)wp;
-        func_8002F9C4(ep, &ep->variant_3);
+        Model_work_init(ep, &ep->variant_3);
         wp->variant_3 = 1;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->matrix.words[0] = 0x1000;
         wp->matrix.words[1] = 0;
         wp->matrix.words[2] = 0x1000;
@@ -279,7 +279,7 @@ void func_8010A7D4(ST0D_STCOM21_WORK *wp)
                 chest->routine_1  = 0;
                 chest->y_48.value = 0;
                 chest->speed_4C   = 0;
-                func_8002F9C4(chest, &chest->variant_3);
+                Model_work_init(chest, &chest->variant_3);
                 ST0D_STCOM21_IDENTITY(&chest->matrix);
                 RotMatrixX(0, &chest->matrix.m);
                 RotMatrixY(chest->value_B << 6, &chest->matrix.m);
@@ -352,7 +352,7 @@ void func_8010AB1C(STAGE_OBJ50 *wp)
     D_8011248C[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
-    func_800341BC(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
     wp->value_48 = 0;
 }
 
@@ -365,7 +365,7 @@ void func_8010ABDC(STAGE_OBJ50 *wp)
     flag           = wp->pos_38.pad;
     wp->pos_38.pad = 0;
     wp->value_44   = flag;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -458,7 +458,7 @@ void func_8010AEAC(STAGE_OBJ50 *wp)
 {
     STAGE_OBJ50 *ep;
 
-    ep = (STAGE_OBJ50 *)func_80031618();
+    ep = (STAGE_OBJ50 *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 5;
@@ -569,7 +569,7 @@ void func_8010B08C(ST0D_FLAMES *wp)
 
 void func_8010B27C(STAGE_OBJ *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 // len is a sint16: as a sint32 it swaps s1/s2 with frame's extension. The position words are

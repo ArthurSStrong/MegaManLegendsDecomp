@@ -3,19 +3,19 @@
 #include "system.h"
 #include "psyq/libgpu.h"
 
-void func_800133D8(void)
+void Title_start(void)
 {
     *(uint32 *)&Code800133D8_work                = 0;
     *(uint32 *)((uint8 *)&Code800133D8_work + 4) = 0;
     *(uint32 *)((uint8 *)&Code800133D8_work + 8) = 0;
-    func_80012F78(func_80013420);
+    Thread_change(Title_task);
 }
 
 void func_80013418(void)
 {
 }
 
-void func_80013420(void)
+void Title_task(void)
 {
     CODE800133D8_STATE *wp;
 
@@ -28,7 +28,7 @@ void func_80013420(void)
     func_8005C258();
     Cd_read_comb(20);
     Sce_cd_read_wait(1);
-    func_80019FB4();
+    Sound_bgm_tbl_set();
     MojiTaskKill();
     func_80063BA8();
     func_80063EF0();
@@ -38,7 +38,7 @@ void func_80013420(void)
         if ((sint8)wp->routine_0 == 2 && (D_800C0C2A & 0x4008))
         {
             Sound_call(0x82, 1, 0);
-            if (D_80098A72 > 0 || (D_80098A72 == 0 && D_80098A70 == 0))
+            if (Fade_busy > 0 || (Fade_busy == 0 && D_80098A70 == 0))
             {
                 wp->routine_1 = 1;
             }
@@ -49,14 +49,14 @@ void func_80013420(void)
             wp->routine_0 = 4;
         }
         Code800133D8_main_tbl[(sint8)wp->routine_0](wp);
-        func_80031AA4();
+        Work_close_apply();
         Thread_wait(1);
     }
 }
 
 // Each arm sets both routine bytes; cross-jumping merges the shared area_no store after
 // scheduling, which keeps retail's order (one shared store after the join is scheduled earlier).
-void func_80013578(CODE800133D8_STATE *wp)
+void Title_demo(CODE800133D8_STATE *wp)
 {
     wp->routine_3 ^= 1;
     if (wp->routine_3 != 0)
@@ -70,15 +70,15 @@ void func_80013578(CODE800133D8_STATE *wp)
         Game_work.area_no = 0;
     }
     Game_work.flags_82 = -128;
-    func_80012F78(Game_task);
+    Thread_change(Game_task);
 }
 
-void func_800135DC(CODE800133D8_STATE *wp)
+void Title_init(CODE800133D8_STATE *wp)
 {
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 D_80098810 = 1;
                 D_80098864 = 0;
@@ -94,53 +94,53 @@ void func_800135DC(CODE800133D8_STATE *wp)
             D_80098810  = 0;
             wp->value0a = 0;
             func_80015428(wp);
-            func_80017C30(2);
+            Fade_start(2);
             wp->routine_0 = 2;
             wp->routine_1 = 1;
             break;
     }
 }
 
-void func_800136B8(CODE800133D8_STATE *wp)
+void Title_logo(CODE800133D8_STATE *wp)
 {
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            if (D_80098A72 != 0)
+            if (Fade_busy != 0)
             {
                 break;
             }
-            func_80017C30(2);
+            Fade_start(2);
             wp->routine_1++;
             // fall through
         case 1:
             MojiTaskKill();
             wp->timer = 900;
             wp->routine_1++;
-            func_80013FB8();
+            title_logo_draw();
             break;
         case 2:
-            func_80013FB8();
-            func_80013F60(wp);
+            title_logo_draw();
+            title_fade_wait_next(wp);
             break;
         case 3:
-            func_80013FB8();
+            title_logo_draw();
             func_80014394();
             if (--wp->timer == 0)
             {
                 wp->routine_1++;
-                func_80017C30(10);
+                Fade_start(10);
             }
             break;
         case 4:
             MojiTaskKill();
-            func_80013FB8();
-            func_80013F8C(wp);
+            title_logo_draw();
+            title_fade_wait_routine(wp);
             break;
     }
 }
 
-void func_800137D4(void)
+void title_obj_update(void)
 {
     sint32 index;
     CODE800133D8_LINK *link;
@@ -157,13 +157,13 @@ void func_800137D4(void)
     setaddr(&link->tag, &D_800A4D40[index][0x1000] - 1);
 }
 
-void func_80013890(CODE800133D8_STATE *wp)
+void Title_restart(CODE800133D8_STATE *wp)
 {
     wp->routine_0 = 0;
     wp->routine_1 = 0;
 }
 
-void func_8001389C(CODE800133D8_STATE *wp)
+void Title_menu(CODE800133D8_STATE *wp)
 {
     GAME_WORK *gp;
 
@@ -171,11 +171,11 @@ void func_8001389C(CODE800133D8_STATE *wp)
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            if (D_80098A72 != 0)
+            if (Fade_busy != 0)
             {
                 break;
             }
-            func_80017C30(1);
+            Fade_start(1);
             wp->routine_1++;
             // fall through
         case 1:
@@ -184,17 +184,17 @@ void func_8001389C(CODE800133D8_STATE *wp)
             wp->routine_1++;
             gp->stage_no = 0;
             gp->area_no = 0;
-            func_80013FB8();
-            func_8001456C(wp->menu_index);
+            title_logo_draw();
+            title_menu_draw(wp->menu_index);
             break;
         case 2:
-            func_80013FB8();
-            func_8001456C(wp->menu_index);
-            func_80013F60(wp);
+            title_logo_draw();
+            title_menu_draw(wp->menu_index);
+            title_fade_wait_next(wp);
             break;
         case 3:
-            func_80013FB8();
-            func_8001456C(wp->menu_index);
+            title_logo_draw();
+            title_menu_draw(wp->menu_index);
             if ((D_800C0C2A & 0x10) && wp->menu_index > 0)
             {
                 Sound_call(0x81, 1, 0);
@@ -236,19 +236,19 @@ void func_8001389C(CODE800133D8_STATE *wp)
                 {
                     case 0:
                         wp->routine_1 += 2;
-                        func_80017C30(22);
+                        Fade_start(22);
                         Sound_call(0xA6, 0, 0);
                         break;
                     case 1:
                         wp->routine_0 = 5;
                         wp->routine_1 = 0;
-                        func_80017C30(9);
+                        Fade_start(9);
                         Sound_call(0xA7, 0, 0);
                         break;
                     case 2:
                         wp->routine_0 = 6;
                         wp->routine_1 = 0;
-                        func_80017C30(9);
+                        Fade_start(9);
                         Sound_call(0xA8, 0, 0);
                         break;
                     case 3:
@@ -276,27 +276,27 @@ void func_8001389C(CODE800133D8_STATE *wp)
             }
             break;
         case 5:
-            func_80013FB8();
-            func_8001456C(wp->menu_index);
+            title_logo_draw();
+            title_menu_draw(wp->menu_index);
             MojiTaskKill();
             Game_work.flags_82 = 0;
-            func_80012F78(Game_task);
+            Thread_change(Game_task);
             break;
     }
 }
 
-void func_80013CA0(CODE800133D8_STATE *wp)
+void Title_continue(CODE800133D8_STATE *wp)
 {
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            if (D_80098A72 != 0)
+            if (Fade_busy != 0)
             {
-                func_80013FB8();
-                func_8001456C(wp->menu_index);
+                title_logo_draw();
+                title_menu_draw(wp->menu_index);
                 break;
             }
-            func_80017C30(1);
+            Fade_start(1);
             wp->routine_1++;
             // fall through
         case 1:
@@ -308,24 +308,24 @@ void func_80013CA0(CODE800133D8_STATE *wp)
             D_800C0C2A = 0;
             D_800C0C26 = 0;
             func_800665FC(0);
-            func_800137D4();
-            func_80013F60(wp);
+            title_obj_update();
+            title_fade_wait_next(wp);
             break;
         case 3:
             wp->routine_1 += func_800665FC(0);
-            func_800137D4();
+            title_obj_update();
             break;
         case 4:
             if (Game_work.flags_82 == 1)
             {
-                func_80017C30(22);
+                Fade_start(22);
                 Sub_screen_back_ground_set();
-                func_80012F78(Game_task);
+                Thread_change(Game_task);
             }
             else
             {
-                func_80017C30(9);
-                func_800137D4();
+                Fade_start(9);
+                title_obj_update();
                 wp->routine_0 = 4;
                 wp->routine_1 = 0;
             }
@@ -339,13 +339,13 @@ void func_80013E0C(CODE800133D8_STATE *wp)
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            if (D_80098A72 != 0)
+            if (Fade_busy != 0)
             {
-                func_80013FB8();
-                func_8001456C(wp->menu_index);
+                title_logo_draw();
+                title_menu_draw(wp->menu_index);
                 break;
             }
-            func_80017C30(1);
+            Fade_start(1);
             wp->routine_1++;
             // fall through
         case 1:
@@ -353,7 +353,7 @@ void func_80013E0C(CODE800133D8_STATE *wp)
             MojiTaskExec(0, D_8008CB64[0], -1);
             wp->timer = 900;
             wp->routine_1++;
-            func_800137D4();
+            title_obj_update();
             break;
         case 2:
             if ((Moji_flag & 0x40000000) || (D_800C0C2A & 8))
@@ -362,34 +362,34 @@ void func_80013E0C(CODE800133D8_STATE *wp)
                 {
                     Sound_call(0x83, 1, 0);
                 }
-                func_80017C30(9);
+                Fade_start(9);
                 wp->routine_0 = 4;
                 wp->routine_1 = 0;
             }
-            func_800137D4();
+            title_obj_update();
             break;
     }
     Sub_screen_back_ground_set();
 }
 
-void func_80013F60(CODE800133D8_STATE *wp)
+void title_fade_wait_next(CODE800133D8_STATE *wp)
 {
-    if (D_80098A72 == 0)
+    if (Fade_busy == 0)
     {
         wp->routine_1++;
     }
 }
 
-void func_80013F8C(CODE800133D8_STATE *wp)
+void title_fade_wait_routine(CODE800133D8_STATE *wp)
 {
-    if (D_80098A72 == 0)
+    if (Fade_busy == 0)
     {
         wp->routine_1 = 0;
         wp->routine_0++;
     }
 }
 
-void func_80013FB8(void)
+void title_logo_draw(void)
 {
     POLY_FT4 *prim;
 
@@ -521,7 +521,7 @@ void func_80013FB8(void)
     AddPrim(&D_80098934->tag8c, prim);
     prim++;
     *CODE800133D8_PACKET_PTR = prim;
-    func_800137D4();
+    title_obj_update();
 }
 
 void func_80014394(void)
@@ -584,7 +584,7 @@ void func_80014394(void)
 
 // The menu-cursor clut x is set to clut + 1 before the test and scaled in each arm, which gives
 // retail's per-arm sll (a ternary or a single scaled if/else shares one shift).
-void func_8001456C(sint32 arg0)
+void title_menu_draw(sint32 arg0)
 {
     sint32 clut;
     sint32 clut_x;

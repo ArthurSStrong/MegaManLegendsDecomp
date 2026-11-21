@@ -78,7 +78,7 @@ void stcom18_func_009C(STCOM18_WORK *wp)
     wp->data_10  = NULL;
     wp->value_78 = 0;
     wp->hit_BC   = 0;
-    func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+    Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                   wp->kind_E | 0x8000000, 0, 0x80);
     if (func_80049C24(wp))
     {
@@ -124,7 +124,7 @@ void stcom18_func_0260(STCOM18_WORK *wp)
         wp->position_fixed.x += wp->velocity.v.x << 8;
         wp->position_fixed.y += wp->velocity.v.y << 8;
         wp->position_fixed.z += wp->velocity.v.z << 8;
-        func_80030150(&wp->position_fixed, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed, &wp->position);
         wp->sprite.pos_8[0] = wp->position.x;
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
@@ -141,7 +141,7 @@ void stcom18_func_0260(STCOM18_WORK *wp)
     }
     else
     {
-        func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+        Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                       wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
         hit        = func_80049C24(wp);
@@ -160,7 +160,7 @@ void stcom18_func_04C8(STCOM18_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         if (wp->flags_F & 1)

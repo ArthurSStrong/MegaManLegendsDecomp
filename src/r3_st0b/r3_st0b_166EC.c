@@ -37,7 +37,7 @@ void func_80116728(ST0B_EVENT *wp)
         {
             wp->variant_3 = 1;
             Sce_flag_on(0x1C);
-            func_80017C30(2);
+            Fade_start(2);
         }
         else
         {
@@ -383,11 +383,11 @@ void func_801170A8(ST0B_EVENT *wp)
             break;
         case 2:
             Sound_fade_start(0x10);
-            func_80017C30(0xA);
+            Fade_start(0xA);
             wp->routine_2++;
             break;
         case 3:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 func_8005D87C();
                 wp->routine_2++;
@@ -510,12 +510,12 @@ void func_80117300(ST0B_EVENT *wp)
             if (!(Moji_flag & 0x800000))
             {
                 Sound_fade_start(0x10);
-                func_80017C30(0xA);
+                Fade_start(0xA);
                 wp->routine_2++;
             }
             break;
         case 5:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 func_8005D87C();
                 wp->routine_2++;
@@ -616,12 +616,12 @@ void func_8011754C(ST0B_EVENT *wp)
             {
                 Sound_fade_start(0x10);
                 Sound_call(0x101, 0, 0);
-                func_80017C30(0xA);
+                Fade_start(0xA);
                 wp->routine_2++;
             }
             break;
         case 6:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 D_80120368->routine_0 = 2;
                 func_8005D87C();
@@ -1122,7 +1122,7 @@ void func_801185D4(ST0B_WHEEL *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 4;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->value_10 = 0;
         wp->color_40 = 0x808080;
         wp->routine_0++;
@@ -1224,8 +1224,8 @@ void func_80118824(ST0B_OBJ *wp)
 void func_80118854(STAGE_PL_SCRIPT *wp)
 {
     D_80120314[wp->routine_C](wp);
-    func_80030150(&wp->fixed_428, &wp->pos_438);
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->fixed_428, &wp->pos_438);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
 }
 
 void func_801188B4(STAGE_ROOM *wp)
@@ -1278,7 +1278,7 @@ void func_80118978(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 5)
     {
-        fx = (STAGE_FX *)func_80031618();
+        fx = (STAGE_FX *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0 = 1;
@@ -1437,9 +1437,9 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
+            if (Fade_busy == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
-                func_80017C30(0xA);
+                Fade_start(0xA);
                 wp->routine_4++;
             }
             // fall through
@@ -1455,7 +1455,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
             }
             Sce_camera_script_exec();
             Sce_script_update();
-            if (wp->routine_4 == 5 && D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (wp->routine_4 == 5 && Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 if (STAGE_GAME.value_50 == 0xB)
                 {

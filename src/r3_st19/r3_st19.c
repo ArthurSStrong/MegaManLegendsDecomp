@@ -80,11 +80,11 @@ void func_80100820(STAGE_ROOM *wp)
             break;
         case 1:
             Sound_fade_start(0x10);
-            func_80017C30(0xD);
+            Fade_start(0xD);
             wp->routine_4++;
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Sce_event_start(0x42);
                 wp->routine_4++;

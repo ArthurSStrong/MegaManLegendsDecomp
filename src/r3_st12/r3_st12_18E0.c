@@ -66,7 +66,7 @@ void func_801019EC(ST12_OBJ50 *wp)
     {
         case 0:
             variant = wp->variant_3;
-            func_8002F9C4(wp, &variant);
+            Model_work_init(wp, &variant);
             wp->color_40 = 0x808080;
             wp->routine_0++;
             break;

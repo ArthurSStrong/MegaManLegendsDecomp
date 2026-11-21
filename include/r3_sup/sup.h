@@ -187,7 +187,7 @@ extern SUP_PLAYER Player_work;
 extern SUP_GAME Game_work;
 extern sint32 Moji_flag;
 extern uint8 Sound_fade_flags;
-extern sint16 D_80098A72;
+extern sint16 Fade_busy;
 // Joy1, as this module reads it.
 typedef struct
 {
@@ -199,7 +199,7 @@ typedef struct
 
 extern SUP_PAD Joy1;
 extern uint16 D_8008D8EC[]; // prices: [(kind * 5 + part) * 4 + level]
-extern uint32 D_80098958;
+extern uint32 Sound_flags;
 extern uint8 D_800C356E;
 extern uint8 D_800C356F;
 extern uint32 D_800A4D40[][0x1000];
@@ -247,23 +247,23 @@ void Sce_flag_on(uint32 flag);
 sint32 func_800665FC(sint32 arg);
 void Sound_call(sint32 sound, ...);
 void func_8001B314(void);
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void Sound_fade_wait(void);
-void func_80017C30(sint32 arg);
+void Fade_start(sint32 arg);
 void Sound_fade_start(sint32 arg);
-void func_80019C20(void);
+void Sound_bgm_change_check(void);
 void Sce_stage_load(void);
 void Sce_room_load(void);
 void Sce_pl_parts_load(void);
 void func_8002FA10(void *obj, void *arg);
 void func_80037594(void);
-void func_8002F9C4(void *obj, void *arg);
+void Model_work_init(void *obj, void *arg);
 
 void func_800177CC(void *start, void *end);
 void func_80023728(void *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80028F90(void *rec);
-void func_800322A8(void *obj, sint32 anim, sint32 arg);
-void func_80032488(void *obj);
+void EM_Char_Set(void *obj, sint32 anim, sint32 arg);
+void EM_Char_Move(void *obj);
 void Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_8002A160(void *obj, uint32 flags);
 

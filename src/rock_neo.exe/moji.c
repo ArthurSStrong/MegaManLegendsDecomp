@@ -1057,13 +1057,13 @@ sint32 Moji_cmd_camera(MOJI_WORK *wp)
         if (Scene_work == 0)
         {
             func_80039FAC(vec, get_le16(wp->pos_6C + 3),
-                          func_80031198(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                          Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
                           D_800A396C + get_le16(wp->pos_6C + 7));
         }
         else
         {
             func_80039FFC(vec, get_le16(wp->pos_6C + 3),
-                          func_80031198(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                          Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
                           D_800A396C + get_le16(wp->pos_6C + 7));
         }
         wp->flags_0 |= 0x10000;

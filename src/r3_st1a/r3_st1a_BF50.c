@@ -55,22 +55,22 @@ void func_8010BF50(ST1A_NPC *wp)
     func_8010C254(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, face->timer_0);
+        EM_Char_Set(wp, wp->anim_AC, face->timer_0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x24, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x24, 0x200, 0);
     }
 }
 
 void func_8010C1C8(ST1A_NPC *wp, STAGE_FACE *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x42100200;
     wp->value_78       = 0;
@@ -107,15 +107,15 @@ void func_8010C2B0(ST1A_NPC *wp)
     D_80131DC8[wp->variant_3](wp, &Scene_work, &wp->face_348);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face_348.timer_0);
+        EM_Char_Set(wp, wp->anim_AC, wp->face_348.timer_0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, D_80131DFC[wp->variant_3], 0x200, 0);
+        Model_Shadow_Trans(wp, D_80131DFC[wp->variant_3], 0x200, 0);
     }
 }
 
@@ -123,7 +123,7 @@ void func_8010C3CC(ST1A_NPC *wp, STAGE_FACE *face)
 {
     wp->flags_0 |= 2;
     wp->kind_2 = D_80131DDC[wp->variant_3];
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->kind_2         = 0x30;
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x42100200;

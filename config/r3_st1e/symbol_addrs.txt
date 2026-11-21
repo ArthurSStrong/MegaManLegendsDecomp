@@ -15,3 +15,12 @@ stcom02_D_0110 = 0x80105BB0;
 // Stage-unique data split into its own tables
 D_80105BFC = 0x80105BFC;
 D_80105C08 = 0x80105C08;
+
+// Capcom names (tcrf: EM09_49.C, em1c)
+StXX_em26_49_move = 0x80101554; // type:func
+StXX_em2d_49_move = 0x80101600; // type:func
+StXX_em34_49_move = 0x801016EC; // type:func
+StXX_em38_49_move = 0x80101798; // type:func
+StXX_em5c_49_move = 0x80101844; // type:func
+StXX_set_shl38 = 0x80101930; // type:func
+StXX_shl38_move = 0x801019C0; // type:func

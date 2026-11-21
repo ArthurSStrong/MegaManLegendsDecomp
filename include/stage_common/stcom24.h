@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// A hit record filled by func_800341BC.
+// A hit record filled by Set_Atari.
 typedef struct
 {
     uint32 hit_0;         // 00: damage in the low 24 bits, kind bits above
@@ -30,7 +30,7 @@ typedef struct
     STCOM_SVECTOR pos_18;   // 360: the hit boxes' center
     STCOM24_HIT body_20;    // 368
     STCOM24_HIT claw_30;    // 378
-    uint8 track_40[0x10];   // 388: func_80036478/func_8003648C
+    uint8 track_40[0x10];   // 388: Search_Player_Init/Search_Player
     STCOM_SVECTOR home_50;  // 398: where it started
     uint8 reserved58[0x20]; // 3A0
 } STCOM24_CTL;
@@ -123,8 +123,8 @@ sint8 stcom24_func_15E8(STCOM24_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern STCOM24_KIND **D_80098844;
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
@@ -134,7 +134,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 STCOM24_SHOT *Open_SHL_WORK(void);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM24_H

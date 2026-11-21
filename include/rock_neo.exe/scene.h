@@ -171,7 +171,7 @@ void func_800179FC(void);
 #else
 void func_800179FC(sint32 arg, sint16 *value);
 #endif
-void func_8002FBF4(void);
+void Work_stage_close(void);
 void Cd_read_comb(sint32 arg);
 extern SCENE_SLOT *D_800ACD40[];
 extern SCENE_FUNC D_80088FA8[];
@@ -300,7 +300,7 @@ void func_8001F740(void);
 void func_80019F94(uint16 arg);
 void func_800177CC(void *a, void *b);
 void func_8001D928(sint32 arg);
-void func_8003A3B4(void);
+void Light_stage_init(void);
 void func_8003AD14(void);
 void func_80017944(void);
 extern uint8 *D_80098B60;

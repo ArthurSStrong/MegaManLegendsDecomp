@@ -32,7 +32,7 @@ void func_800D8840(SHL0D_WORK *wp)
     wp->beam.scale_c8 = D_800D9288[level];
     func_800D8AB8(wp);
     wp->color_b4 = 0x02808080;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     for (i = 0; i < 16; i++)
     {
         wp->beam.hit[i] = 0;
@@ -73,7 +73,7 @@ void func_800D8988(SHL0D_WORK *wp)
     {
     end:
         Sound_call2(0x137, &wp->pos);
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     if (Player_work.timer_562 != 0x7FFF)
@@ -205,7 +205,7 @@ sint32 func_800D9010(SHL0D_WORK *wp)
         {
             if ((SHL_FRAME & 3) == 0)
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx)
                 {
                     fx->routine_0 = 1;

@@ -90,7 +90,7 @@ void func_800D8854(SHL_WORK *wp)
     wp->old_fpos                     = wp->fpos;
     wp->old_pos                      = wp->pos;
     wp->draw.mdl.color_b4            = 0x02808080;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->timer_b = func_80037634(&Player_work, 2);
     wp->routine_0++;
     func_800D8F08(wp, 0);
@@ -108,7 +108,7 @@ void func_800D8C4C(SHL_WORK *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         func_800D8F08(wp, 1);
         return;
@@ -132,7 +132,7 @@ void func_800D8C4C(SHL_WORK *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         return;
     }
@@ -173,7 +173,7 @@ void func_800D8F08(SHL_WORK *wp, sint32 arg)
 {
     SHL_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 1;

@@ -402,7 +402,7 @@ extern sint16 D_801079E4[];
 extern sint16 D_80107A26[];
 extern sint16 D_80107A6C[];
 
-// func_8002F9C4 as func_80103704 and func_80103F08 call it: with a third argument (0).
+// Model_work_init as func_80103704 and func_80103F08 call it: with a third argument (0).
 typedef void (*ST02_INIT3_FUNC)(void *wp, uint8 *variant, sint32 arg);
 extern sint16 D_801074B4[]; // the vertical shake, by frame & 3
 extern sint16 D_801074BC[]; // the horizontal shake, by frame & 1

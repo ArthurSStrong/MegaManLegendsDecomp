@@ -605,7 +605,7 @@ void func_80101CB0(STAGE_ROOM *wp)
         case 2:
             if (--wp->timer_C == 0)
             {
-                func_80017C30(2);
+                Fade_start(2);
                 wp->routine_4++;
             }
             break;
@@ -614,9 +614,9 @@ void func_80101CB0(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
+            if (Fade_busy == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
-                func_80017C30(0xA);
+                Fade_start(0xA);
                 wp->routine_4++;
             }
             // fall through
@@ -624,7 +624,7 @@ void func_80101CB0(STAGE_ROOM *wp)
             func_80101C70(wp);
             Sce_camera_script_exec();
             Sce_script_update();
-            if (wp->routine_4 == 5 && D_80098A72 == 0)
+            if (wp->routine_4 == 5 && Fade_busy == 0)
             {
                 func_8001D494(0, 1, 0);
                 D_800A395C = 1;
@@ -718,7 +718,7 @@ void func_80101FBC(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 0xAF)
     {
-        func_80017C30(0xA);
+        Fade_start(0xA);
     }
 }
 
@@ -728,7 +728,7 @@ void func_8010208C(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80017C30(2);
+        Fade_start(2);
         func_8003187C(wp->child_28);
         func_8003187C(wp->child_2C);
         Close_EM_WORK(wp->child_34);
@@ -810,7 +810,7 @@ void func_801022D4(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            func_80017C30(0xA);
+            Fade_start(0xA);
             wp->routine_4++;
             break;
         case 1:
@@ -832,7 +832,7 @@ void func_801022D4(STAGE_ROOM *wp)
         case 3:
             if (--wp->timer_C == 0)
             {
-                func_80017C30(2);
+                Fade_start(2);
                 wp->routine_4++;
             }
             break;
@@ -841,9 +841,9 @@ void func_801022D4(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 5:
-            if (D_80098A72 == 0 && *(uint8 *)wp->tbl_A4 == 0xFF)
+            if (Fade_busy == 0 && *(uint8 *)wp->tbl_A4 == 0xFF)
             {
-                func_80017C30(0xB);
+                Fade_start(0xB);
                 wp->routine_4++;
             }
             // fall through
@@ -851,7 +851,7 @@ void func_801022D4(STAGE_ROOM *wp)
             func_80102294(wp);
             Sce_camera_script_exec();
             Sce_script_update();
-            if (wp->routine_4 == 6 && D_80098A72 == 0)
+            if (wp->routine_4 == 6 && Fade_busy == 0)
             {
                 D_800C356C  = 2;
                 D_800C356E  = 0x1E;

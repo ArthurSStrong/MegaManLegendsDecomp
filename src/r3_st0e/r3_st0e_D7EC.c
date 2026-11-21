@@ -65,7 +65,7 @@ void func_8010D944(ST0E_GLOW *wp)
 
 void func_8010D9D8(STAGE_OBJ *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_8010D9F8(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos)
@@ -80,7 +80,7 @@ void func_8010D9F8(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *po
     step  = 0x1000 / count;
     for (i = 0; i < count; i++)
     {
-        fx = (ST0E_GLOW *)func_80031618();
+        fx = (ST0E_GLOW *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0   = 1;
@@ -128,7 +128,7 @@ void func_8010DC00(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *po
     step  = (to - from) / count;
     for (i = 0; i < count; i++)
     {
-        fx = (ST0E_GLOW *)func_80031618();
+        fx = (ST0E_GLOW *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0   = 1;

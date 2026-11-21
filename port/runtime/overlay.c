@@ -437,7 +437,7 @@ static void set_reg_sized(greg_t *g, int reg, int size, uint32_t v)
 }
 
 // ALU instructions with a memory operand (GCC compares and updates fields in place:
-// `cmp %ax,(%edx,%ecx,2)` in func_80019C20, `andb $0xfd,(%eax)` in st1b func_80101724).
+// `cmp %ax,(%edx,%ecx,2)` in Sound_bgm_change_check, `andb $0xfd,(%eax)` in st1b func_80101724).
 // Covers add/or/adc/sbb/and/sub/xor/cmp in their m,r / r,m / m,imm forms, test m,r and m,imm,
 // and inc/dec/not/neg m. Updates the destination (unless cmp/test) and the flags.
 // Returns the instruction length, or -1 for a form it doesn't know.

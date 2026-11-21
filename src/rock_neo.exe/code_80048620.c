@@ -269,7 +269,7 @@ sint32 func_80048E18(PL_SHORT_VECTOR *pos)
     return 0;
 }
 
-sint32 func_80048E6C(PL_WORK *pl)
+sint32 Scr_height_check(PL_WORK *pl)
 {
     return func_80048EA4(&pl->position, pl->info78, pl->position.y - pl->position_prev.y,
                          pl->value01);
@@ -4594,7 +4594,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
             pl->value_c0 = 0;
         }
     }
-    func_80030150(&pl->position_fixed, &pl->position);
+    Obj_pos_adj_round(&pl->position_fixed, &pl->position);
     return result;
 }
 
@@ -4617,7 +4617,7 @@ void func_80052528(sint32 key)
         }
     }
     objs3c0 = Em_work_tbl;
-    mask    = D_800987E8;
+    mask    = Em_work_used;
     for (i = 0; i < 16; i++, objs3c0++)
     {
         if ((sint32)(mask << i) < 0)
@@ -4635,7 +4635,7 @@ void func_80052528(sint32 key)
         }
     }
     objs10c = Shl_work_tbl;
-    mask    = D_800987CC;
+    mask    = Shl_work_used;
     for (i = 0; i < 32; i++, objs10c++)
     {
         if ((sint32)(mask << i) < 0)
@@ -4680,13 +4680,13 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
         rot.vz       = -CODE486_SOLID_AT(key)->rot.vz;
         RotMatrix(&rot, &mtx);
         func_800301A8(&mtx, &D_80098AC0, pos);
-        func_80030150(&D_80098AC0, CODE486_SP_POS_C0);
+        Obj_pos_adj_round(&D_80098AC0, CODE486_SP_POS_C0);
     }
     else
     {
         *(PL_BYTES8 *)CODE486_SP_POS_C0 = *(PL_BYTES8 *)&pl->position;
     }
-    func_80030150(pos, CODE486_SP_POS_E0);
+    Obj_pos_adj_round(pos, CODE486_SP_POS_E0);
     area = *CODE486_SOLID_AT(key)->areas;
     while (area->hits != NULL)
     {
@@ -4768,7 +4768,7 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
             {
                 pl->position_fixed.y = cur.y;
             }
-            func_80030150(&pl->position_fixed, &pl->position);
+            Obj_pos_adj_round(&pl->position_fixed, &pl->position);
         }
     }
     return result;
@@ -4809,9 +4809,9 @@ sint32 func_80052B04(sint32 key, PL_FIXED_VECTOR *now, PL_FIXED_VECTOR *cur, PL_
         func_800301A8(&mtx, old, now);
         func_800301A8(&mtx, cur, now);
     }
-    func_80030150(now, CODE486_SP_POS_E0);
-    func_80030150(old, CODE486_SP_POS_C8);
-    func_80030150(cur, CODE486_SP_POS_C0);
+    Obj_pos_adj_round(now, CODE486_SP_POS_E0);
+    Obj_pos_adj_round(old, CODE486_SP_POS_C8);
+    Obj_pos_adj_round(cur, CODE486_SP_POS_C0);
     start               = *CODE486_SP_POS_C0;
     CODE486_SP_PUSH[0]  = 0;
     CODE486_SP_PUSH[1]  = 0;
@@ -4974,7 +4974,7 @@ void func_80053158(PL_WORK *pl, uint32 arg)
         pl->position_fixed.x = pos.x + org.x - piv.x;
         pl->position_fixed.y = pos.y + org.y - piv.y;
         pl->position_fixed.z = pos.z + org.z - piv.z;
-        func_80030150(&pl->position_fixed, &pl->position);
+        Obj_pos_adj_round(&pl->position_fixed, &pl->position);
         pl->rotation.y += CODE486_PLAT_AT(arg).rot.vec.y - CODE486_PLAT_AT(arg).rot_inv.y;
     }
 }
@@ -5009,7 +5009,7 @@ void func_8005331C(PL_WORK *pl, uint32 arg)
         pl->position_saved_fixed.x = pos.x + org.x - piv.x;
         pl->position_saved_fixed.y = pos.y + org.y - piv.y;
         pl->position_saved_fixed.z = pos.z + org.z - piv.z;
-        func_80030150(&pl->position_saved_fixed, &pl->position_saved);
+        Obj_pos_adj_round(&pl->position_saved_fixed, &pl->position_saved);
         pl->rotation_saved.y += CODE486_PLAT_AT(arg).rot.vec.y - CODE486_PLAT_AT(arg).rot_inv.y;
     }
 }

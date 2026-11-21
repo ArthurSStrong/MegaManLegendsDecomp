@@ -121,7 +121,7 @@ typedef struct
 #define setPolyF4(p)      (setlen(p, 5), setcode(p, 0x28))
 #define setSprt(p)        (setlen(p, 4), setcode(p, 0x64))
 
-// Colour setter (PsyQ's setRGB0; matched in func_80017B24).
+// Colour setter (PsyQ's setRGB0; matched in Fade_draw).
 #define setRGB0(p, _r0, _g0, _b0) (p)->r0 = (_r0), (p)->g0 = (_g0), (p)->b0 = (_b0)
 
 // Texture page: which 64x256 block of VRAM to texture from, and how.

@@ -2,7 +2,7 @@
 #include "st0a.h"
 
 #ifdef __wasm32__
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 #endif
 
 void func_8010BCC0(ST0A_VIEW *wp)
@@ -15,7 +15,7 @@ void func_8010BCC0(ST0A_VIEW *wp)
     {
         case 0:
             wp->flags_0 |= 0x42;
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
             wp->value_158  = 0x02800280;
             wp->u_15C.w[0] = 0x280;
             wp->u_15C.h[1] = 0x4210;
@@ -42,11 +42,11 @@ void func_8010BCC0(ST0A_VIEW *wp)
     }
     if (wp->u_AC.b[0] != wp->u_AC.b[1])
     {
-        func_800322A8(wp, wp->u_AC.b[0], 0);
+        EM_Char_Set(wp, wp->u_AC.b[0], 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -74,7 +74,7 @@ void func_8010BECC(ST0A_EM *wp)
 
     ext = &wp->ext;
     wp->flags_0 |= 0x42;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x2800280;
     wp->scale.words[1] = 0x280;
     wp->scale.v.pad    = 0;
@@ -113,7 +113,7 @@ void func_8010BECC(ST0A_EM *wp)
         ext->hit_88[i].hit_8   = 0;
         ext->hit_88[i].value_C = 0;
     }
-    func_80036478(ext->track_24, 0, -0x320);
+    Search_Player_Init(ext->track_24, 0, -0x320);
     ext->angle_42 = 0xC00;
     ext->value_44 = (wp->rotation.y + 0xC00) & 0xFFF;
     ext->value_46 = ext->value_F4 = D_8009884C[wp->kind_2]->value_E << 5;
@@ -128,7 +128,7 @@ void func_8010BECC(ST0A_EM *wp)
     wp->routine_0                 = 1;
     wp->routine_1                 = 0;
     *(uint16 *)&wp->routine_2     = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     func_8010C0A0(wp);
 }
 
@@ -240,14 +240,14 @@ void func_8010C0A0(ST0A_EM *wp)
     }
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_80032304(wp, wp->anim_AC, 0);
+        EM_Char_Set2(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032538(wp);
+        EM_Char_Move2(wp);
     }
     ST0A_SP_182 = ext->angle_42;
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
     if (ext->obj_80[0] != NULL)
     {
         func_8010ED90(wp, 3);
@@ -282,7 +282,7 @@ void func_8010C0A0(ST0A_EM *wp)
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x200, 0x200, 1);
+        Model_Shadow_Trans(wp, 0x200, 0x200, 1);
         func_80051B68(wp, 1, 0, D_8009884C[wp->kind_2]->value_C | 0x1000000);
     }
     if (ext->flags_0 & 0x200)
@@ -298,7 +298,7 @@ void func_8010C0A0(ST0A_EM *wp)
             ext->fpos_70.y   = ext->hit_C.pos_0.y << 16;
             ext->fpos_70.z   = ext->hit_C.pos_0.z << 16;
             func_8002FFC4(&ext->hit_C.pos_0, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200, 0);
-            func_800341BC(&ext->hit_C.pos_0, 0x20, 0, 0x8000, wp->value_1, &ext->hit_C.hit_8,
+            Set_Atari(&ext->hit_C.pos_0, 0x20, 0, 0x8000, wp->value_1, &ext->hit_C.hit_8,
                           0x4080000, 0, 0x80);
         }
         if (ext->flags_0 & 0x800)
@@ -312,7 +312,7 @@ void func_8010C0A0(ST0A_EM *wp)
                 func_8002FFC4(&ext->hit_C.pos_0, &ext->fpos_70,
                               (wp->rotation.y + ext->angle_42) & 0xFFF, D_80116260[i].x << 4,
                               D_80116260[i].y << 4, D_80116260[i].z << 4);
-                func_800341BC(&ext->hit_C.pos_0, 0x40, 0, 0x8000, wp->value_1,
+                Set_Atari(&ext->hit_C.pos_0, 0x40, 0, 0x8000, wp->value_1,
                               &ext->hit_88[i].hit_8, D_8009884C[wp->kind_2]->value_D | 0x4080000, 0,
                               0x80);
                 if (!(ext->flags_0 & 0x1000) && i < 2)
@@ -320,7 +320,7 @@ void func_8010C0A0(ST0A_EM *wp)
                     if (ext->flags_0 & 0x8000)
                     {
                         ext->flags_0 &= ~0x8000;
-                        fx = func_80031618();
+                        fx = Open_EFFECT_WORK();
                         if (fx != NULL)
                         {
                             fx->flags_0         = 5;
@@ -340,13 +340,13 @@ void func_8010C0A0(ST0A_EM *wp)
         if (ext->flags_0 & 0x20)
         {
             ext->hit_58.pos_0 = wp->joint_180[8];
-            func_800341BC(&ext->hit_58.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_58.hit_8,
+            Set_Atari(&ext->hit_58.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_58.hit_8,
                           D_8009884C[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
         }
         if (ext->flags_0 & 0x40)
         {
             ext->hit_48.pos_0 = wp->joint_180[3];
-            func_800341BC(&ext->hit_48.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_48.hit_8,
+            Set_Atari(&ext->hit_48.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_48.hit_8,
                           D_8009884C[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
         }
     }
@@ -446,7 +446,7 @@ void func_8010CBBC(ST0A_EM *wp)
             {
                 if (ST0A_ABS(STAGE_PL.position.y - wp->position.y) < 0x200)
                 {
-                    angle = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x80);
+                    angle = Muku(&wp->position, &pl->position, wp->rotation.y, 0x80);
                     if (ST0A_ABS(angle) < 0x80 && wp->dist_80 < 0x200000)
                     {
                         wp->byte_D = 2;
@@ -460,7 +460,7 @@ void func_8010CBBC(ST0A_EM *wp)
                 }
                 else
                 {
-                    angle = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x600);
+                    angle = Muku(&wp->position, &pl->position, wp->rotation.y, 0x600);
                     if (ST0A_ABS(angle) < 0x600)
                     {
                         wp->byte_D = 1;
@@ -490,7 +490,7 @@ void func_8010CE0C(ST0A_EM *wp)
             wp->routine_2++;
             break;
         case 1:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (wp->value_A7 < 0)
@@ -501,7 +501,7 @@ void func_8010CE0C(ST0A_EM *wp)
             }
             break;
         case 2:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (ext->obj_80[0] == NULL)
@@ -542,13 +542,13 @@ void func_8010CFE8(ST0A_EM *wp)
 
     center = D_80116248;
     // One loop level around the two copies (a macro body?): it keeps GCC from reusing the
-    // copy's destination address for the call after func_80031198.
+    // copy's destination address for the call after Calc_degree2.
     do
     {
         wp->ext.pos_68  = *center;
         wp->ext.fpos_70 = D_80116250;
     } while (0);
-    angle = wp->value_64 + func_80031198(center, &wp->position);
+    angle = wp->value_64 + Calc_degree2(center, &wp->position);
     func_8002FFC4(&wp->ext.pos_68, &wp->ext.fpos_70, angle & 0xFFF, 0x5000, 0, 0);
     wp->position         = wp->ext.pos_68;
     wp->position_fixed.v = wp->ext.fpos_70;
@@ -629,7 +629,7 @@ void func_8010D2F4(ST0A_EM *wp)
             wp->anim_AC = 0;
             wp->routine_2++;
             ext->timer_4    = 0xF;
-            ext->pos_68.pad = (uint32)ST0A_ABS(func_80031BEC(&pl->position, &wp->position,
+            ext->pos_68.pad = (uint32)ST0A_ABS(Muku(&pl->position, &wp->position,
                                                              wp->rotation.y, 0x200)) >>
                               4;
             ext->flags_0 |= 0x2000;
@@ -643,7 +643,7 @@ void func_8010D2F4(ST0A_EM *wp)
             }
             if (pl->value_76 == 0 || pl->value_C0 != wp)
             {
-                step = func_80031BEC(&pl->position, &wp->position, wp->rotation.y, ext->pos_68.pad);
+                step = Muku(&pl->position, &wp->position, wp->rotation.y, ext->pos_68.pad);
                 wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
                 ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             }
@@ -739,7 +739,7 @@ void func_8010D6C0(ST0A_EM *wp)
             wp->anim_AC = 0;
             wp->routine_2++;
             ext->timer_4    = 0xF;
-            ext->pos_68.pad = (uint32)ST0A_ABS(func_80031BEC(&pl->position, &wp->position,
+            ext->pos_68.pad = (uint32)ST0A_ABS(Muku(&pl->position, &wp->position,
                                                              wp->rotation.y, 0x200)) >>
                               4;
             ext->flags_0 |= 0x2000;
@@ -753,7 +753,7 @@ void func_8010D6C0(ST0A_EM *wp)
             }
             if (pl->value_76 == 0 || pl->value_C0 != wp)
             {
-                step = func_80031BEC(&pl->position, &wp->position, wp->rotation.y, ext->pos_68.pad);
+                step = Muku(&pl->position, &wp->position, wp->rotation.y, ext->pos_68.pad);
                 wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
                 ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             }
@@ -946,13 +946,13 @@ void func_8010DD20(ST0A_EM *wp)
             fpos         = &ext->fpos_70;
             func_8002FFC4(pos, fpos, (wp->rotation.y + ext->angle_42) & 0xFFF, 0x800, 0, 0);
             self           = &wp->position;
-            step           = func_80031BEC(self, pos, wp->rotation.y, 0x20);
+            step           = Muku(self, pos, wp->rotation.y, 0x20);
             center         = D_80116248;
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             ext->pos_68    = *center;
             ext->fpos_70   = D_80116250;
-            angle          = wp->value_64 + func_80031198(center, self);
+            angle          = wp->value_64 + Calc_degree2(center, self);
             func_8002FFC4(pos, fpos, angle & 0xFFF, 0x5000, 0, 0);
             ext->flags_F2 |= 1;
             ext->angle_42        = (angle + wp->value_66 - wp->rotation.y) & 0xFFF;
@@ -975,7 +975,7 @@ void func_8010DD20(ST0A_EM *wp)
             {
                 if (ST0A_ABS(STAGE_PL.position.y - wp->position.y) < 0x200)
                 {
-                    step = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x80);
+                    step = Muku(&wp->position, &pl->position, wp->rotation.y, 0x80);
                     if (ST0A_ABS(step) < 0x80 && wp->dist_80 < 0x200000)
                     {
                         wp->byte_D = 2;
@@ -989,7 +989,7 @@ void func_8010DD20(ST0A_EM *wp)
                 }
                 else
                 {
-                    step = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x600);
+                    step = Muku(&wp->position, &pl->position, wp->rotation.y, 0x600);
                     if (ST0A_ABS(step) < 0x600)
                     {
                         wp->byte_D = 1;
@@ -1016,7 +1016,7 @@ void func_8010E164(ST0A_EM *wp)
     {
         case 0:
             wp->routine_2++;
-            if (func_80031DCC(&wp->position_fixed, (wp->rotation.y + 0x400) & 0xFFF, 0x400,
+            if (Angle_ck(&wp->position_fixed, (wp->rotation.y + 0x400) & 0xFFF, 0x400,
                               &pl->position_fixed, STAGE_PL.rotation.y, 0x800))
             {
                 wp->anim_AC = 6;
@@ -1070,7 +1070,7 @@ void func_8010E254(ST0A_EM *wp)
                 func_8002FFC4(pos, fpos, wp->rotation.y, 0xD00, -(wp->ext.value_6 << 9), 0);
                 func_8002FFC4(pos, fpos, wp->ext.value_6 << 9, D_80116290[wp->routine_3 * 4],
                               D_80116292[wp->routine_3 * 4], 0);
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0         = 5;
@@ -1152,7 +1152,7 @@ void func_8010E590(ST0A_EM *wp)
             wp->routine_2++;
             break;
         case 1:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (wp->value_A7 < 0)
@@ -1183,7 +1183,7 @@ void func_8010E590(ST0A_EM *wp)
             }
             break;
         case 2:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (ext->obj_80[0]->u_C.b.byte_C != 0 && ext->obj_80[1]->u_C.b.byte_C != 0)
@@ -1193,7 +1193,7 @@ void func_8010E590(ST0A_EM *wp)
             }
             break;
         case 3:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (ext->obj_80[0]->u_C.b.byte_C != 0)
@@ -1203,7 +1203,7 @@ void func_8010E590(ST0A_EM *wp)
             }
             break;
         case 4:
-            step           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x10);
+            step           = Muku(&wp->position, &pl->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             ext->angle_42  = (ext->angle_42 - step) & 0xFFF;
             if (ext->obj_80[1]->u_C.b.byte_C != 0)
@@ -1247,7 +1247,7 @@ sint32 func_8010E8A0(ST0A_EM *wp)
     ext = &wp->ext;
     pl  = &STAGE_PL;
     if ((STAGE_PL.value_76 != 0 && STAGE_PL.value_C0 == wp) ||
-        func_80031DCC(&wp->position_fixed, wp->ext.value_44, 0x400, &pl->position_fixed,
+        Angle_ck(&wp->position_fixed, wp->ext.value_44, 0x400, &pl->position_fixed,
                       STAGE_PL.rotation.y, 0x800))
     {
         ext->flags_0 &= ~0x80;
@@ -1326,7 +1326,7 @@ sint32 func_8010EB40(void)
         obj->position_fixed.x = 0xEB000000;
         obj->position_fixed.y = 0xFFFF0000;
         obj->position_fixed.z = 0x1A000000;
-        func_80030150(&obj->position_fixed, &obj->position);
+        Obj_pos_adj_round(&obj->position_fixed, &obj->position);
         obj->value_B0 = 0;
         obj->value_6E = 0;
         func_8005D620(obj, 0, 0, 0x50, 0x208080);

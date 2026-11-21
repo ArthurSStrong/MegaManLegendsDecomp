@@ -191,7 +191,7 @@ typedef struct
     uint8 reserved20[8];  // 348
     union
     {
-        uint8 track[0x10]; // func_80036478
+        uint8 track[0x10]; // Search_Player_Init
         sint32 w[4];
     } u_28;                 // 350
     sint16 value_38;        // 360
@@ -557,13 +557,13 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 // func_80047148 as func_8010C9CC calls it: without the effect (retail passes whatever a2 holds).
 void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
-// func_8002FEA4 as func_8010CDB0 calls it: without a prototype, so an int result is set in v0.
-sint32 func_8002FEA4_int(void *wp, sint32 x, sint32 y, sint32 z) __asm__("func_8002FEA4");
+// Obj_pos_set as func_8010CDB0 calls it: without a prototype, so an int result is set in v0.
+sint32 func_8002FEA4_int(void *wp, sint32 x, sint32 y, sint32 z) __asm__("Obj_pos_set");
 sint32 func_80048EA4(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
 STAGE_OBJ *func_80031498(void);
 void Sce_script_timer_clear(void);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 void func_8005D4D4(void);
 void func_8005D4E8(void);
 void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
@@ -572,7 +572,7 @@ void func_8003697C(void);
 void func_8005D6E8(void *wp);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void func_80036470(void *track);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 
 #endif

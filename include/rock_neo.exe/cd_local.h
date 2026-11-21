@@ -147,7 +147,7 @@ extern RECT D_8009BE48[];
 extern uint16 D_800AD168[]; // shadow copy of the texture pages
 extern uint32 D_80098868;   // shadow rows touched
 
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void func_80017684(void *src, void *dst, sint32 count);
 void func_800176A4(void *src, void *dst, sint32 count);
 void func_800176DC(void *src, void *dst, sint32 count);

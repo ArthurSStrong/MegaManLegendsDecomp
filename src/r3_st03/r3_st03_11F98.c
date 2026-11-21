@@ -34,7 +34,7 @@ void func_80112098(STAGE_PROP *wp)
     wp->value_70    = 0;
     wp->value_74    = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->flags_BC = 0;
     wp->u_C0.w   = 0;
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);

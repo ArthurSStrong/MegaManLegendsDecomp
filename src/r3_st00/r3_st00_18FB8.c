@@ -108,7 +108,7 @@ void func_801193D4(STCOM02_WORK *wp)
     wp->dst_18                  = &D_800AD168[wp->script_1C->lo + (wp->script_1C->hi << 8)];
     if (func_8011974C(wp))
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     wp->routine_0 = 1;
 }
@@ -120,7 +120,7 @@ void func_80119470(STCOM02_WORK *wp)
     step = wp->step_20;
     if (wp->count_C < ++wp->frame_D && func_8011974C(wp) != 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     if (wp->index_3 == 1 && step->lo == 0x70)
     {
@@ -134,7 +134,7 @@ void func_80119518(STCOM02_WORK *wp)
 {
     if (wp->count_C < ++wp->frame_D && func_8011974C(wp) != 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     func_80119580(wp);
 }

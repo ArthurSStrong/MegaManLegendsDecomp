@@ -128,7 +128,7 @@ typedef struct
     sint32 value_360;          // 360
     uint8 reserved364[0x6];    // 364
     uint16 value_36A;          // 36A
-    uint8 track_36C[0x10];     // 36C: func_80036478
+    uint8 track_36C[0x10];     // 36C: Search_Player_Init
     sint32 value_37C;          // 37C
     sint32 value_380;          // 380
     sint32 value_384;          // 384
@@ -1386,7 +1386,7 @@ typedef struct
 
 void func_80112BDC(ST00_MATRIX_OBJ *wp);
 
-// A scratchpad halfword func_8010A68C sets before func_8003346C.
+// A scratchpad halfword func_8010A68C sets before EM_World_Pos_Calc.
 #define ST00_SP_13C (*(uint16 *)0x1F80013C)
 
 void func_801182C0(STAGE_FX *wp);
@@ -1398,11 +1398,11 @@ extern STAGE_STCOM15_FUNC_4E0 D_8011C178[];
 void func_8010A68C(STAGE_STCOM15_WORK_4E0 *wp);
 void func_8010AD08(STAGE_STCOM15_WORK_4E0 *wp);
 void func_8010B8CC(STAGE_STCOM15_WORK_4E0 *wp);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_8010BDF0(STAGE_STCOM15_WORK_4E0 *wp);
 sint32 func_8010C294(STAGE_STCOM15_WORK_4E0 *wp);
 
-// A 0x48-byte effect slot (func_80031618) of kind 9 placed at a point in 16.16 (func_8011877C):
+// A 0x48-byte effect slot (Open_EFFECT_WORK) of kind 9 placed at a point in 16.16 (func_8011877C):
 // an emitter (func_80118960) and the puffs it spawns (func_80118648, func_80118814).
 struct ST00_POINT_FX
 {
@@ -1646,7 +1646,7 @@ void func_80036470(void *track);
 
 STAGE_OBJ *func_80036294(sint32 id);
 
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
 // A ROCK_NEO record per object kind (D_80098844).
 typedef struct
@@ -1737,7 +1737,7 @@ typedef struct
 void func_80110D24(ST00_PART *wp);
 
 // What the box keeps in its matrix's translation (as STCOM22_CTL): flags, a random value and
-// its hit bits (func_800341BC).
+// its hit bits (Set_Atari).
 typedef struct
 {
     uint16 flags_0; // 2C: 2 hittable, 4 registers its hit box, 8 resets the color
@@ -1799,7 +1799,7 @@ typedef struct
     uint32 hit_14;           // 35C: damage in the low 24 bits, kind bits above
     sint32 value_18;         // 360
     STCOM_SVECTOR target_1C; // 364: the attacker's position (pad bit 0: from the player?)
-    uint8 track_24[0x10];    // 36C (func_80036478)
+    uint8 track_24[0x10];    // 36C (Search_Player_Init)
     union
     {
         STCOM_SVECTOR target;
@@ -1864,15 +1864,15 @@ typedef void (*ST00_ACTOR_FUNC_B)(ST00_ACTOR_B *wp);
 
 extern ST00_ACTOR_FUNC_B D_8011C00C[];
 
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80105DEC(ST00_ACTOR_B *wp);
 extern ST00_ACTOR_FUNC_B D_8011BF38[];
 void func_80104BE4(ST00_ACTOR_B *wp);
 
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 void func_80104E64(STAGE_STCOM15_WORK_348 *wp);
 
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 void func_801050E8(STAGE_STCOM15_WORK_348 *wp);
 
@@ -1941,8 +1941,8 @@ void Sce_flag_off(sint32 flag);
 void func_8005D7C0(void);
 void func_8005D9EC(void);
 
-// func_80048E6C as func_801150CC calls it: the int result compared unnarrowed.
-sint32 func_80048E6C_int(void *wp) __asm__("func_80048E6C");
+// Scr_height_check as func_801150CC calls it: the int result compared unnarrowed.
+sint32 func_80048E6C_int(void *wp) __asm__("Scr_height_check");
 
 sint32 func_8010A448(STAGE_STCOM15_WORK_4E0 *wp);
 extern STAGE_STCOM15_FUNC_4E0 D_8011C068[];
@@ -2184,7 +2184,7 @@ typedef struct
 
 extern STAGE_STCOM15_FUNC_4E0 D_8011C184[]; // routine_1 handlers (func_8010A9C8)
 
-// The hit records of r3_st00's two targets (func_801161D4, by variant_3 & 1): func_800341BC's
+// The hit records of r3_st00's two targets (func_801161D4, by variant_3 & 1): Set_Atari's
 // hit bits and where the hit came from.
 typedef union
 {

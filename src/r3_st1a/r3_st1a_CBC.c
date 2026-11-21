@@ -44,7 +44,7 @@ void func_80100CD4(STAGE_ROOM *wp)
             {
                 Sce_flag_on(0x6C);
                 Sound_fade_start(0x10);
-                func_80017C30(0xE);
+                Fade_start(0xE);
                 Sce_event_start(0x46);
                 wp->routine_4 = 0xFF;
             }
@@ -127,7 +127,7 @@ void func_80100FC4(STAGE_ROOM *wp)
             wp->tbl_A4[1](wp);
             if (!(wp->reserved09[1] & 0x80) && (wp->reserved09[1] & 1))
             {
-                func_80017C30(8);
+                Fade_start(8);
                 wp->routine_4 = 2;
                 wp->routine_5 = 0;
             }
@@ -159,7 +159,7 @@ void func_801010E8(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Obj_work_flag_change(0x156, 0x80);
                 STAGE_PL.routine_0   = 3;
@@ -283,7 +283,7 @@ void func_801014A4(ST1A_ROOM *wp)
     {
         for (i = 0; i < 0x20; i++)
         {
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0   = 1;
@@ -480,7 +480,7 @@ void func_80101954(ST1A_ROOM *wp)
         for (i = 0; i < 4; i++)
         {
             obj = wp->child[i + 14];
-            ep  = func_80031618();
+            ep  = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -489,7 +489,7 @@ void func_80101954(ST1A_ROOM *wp)
                 ep->value_C   = obj->value_1;
                 ep->value_D   = 0;
             }
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -499,7 +499,7 @@ void func_80101954(ST1A_ROOM *wp)
                 ep->value_D   = i;
                 ep->timer_E   = 0;
             }
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -532,7 +532,7 @@ void func_80101AC0(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             child         = wp->child_24;
@@ -563,7 +563,7 @@ void func_80101B78(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             child         = wp->child_24;
@@ -690,7 +690,7 @@ void func_80101E54(ST1A_ROOM *wp)
         for (i = 0; i < 4; i++)
         {
             obj = wp->child[i + 3];
-            ep  = func_80031618();
+            ep  = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -699,7 +699,7 @@ void func_80101E54(ST1A_ROOM *wp)
                 ep->value_C   = obj->value_1;
                 ep->value_D   = 0;
             }
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -709,7 +709,7 @@ void func_80101E54(ST1A_ROOM *wp)
                 ep->value_D   = i;
                 ep->timer_E   = 0;
             }
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -879,7 +879,7 @@ void func_80102290(STAGE_OBJ *wp)
 {
     if (wp->value_10 == 0xDC)
     {
-        func_80017C30(0xA);
+        Fade_start(0xA);
         wp->routine_2 |= 0x80;
     }
 }
@@ -1011,7 +1011,7 @@ void func_8010282C(ST1A_ROOM_FX *wp, uint8 variant)
 {
     STAGE_FX *ep;
 
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -1211,7 +1211,7 @@ void func_80102DD8(ST1A_ROOM_FX *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031988(wp->fx_A0);
+        Close_EFFECT_WORK(wp->fx_A0);
         func_8010282C(wp, 1);
         wp->child_28->rotation.y = 0x80;
         D_800BBA90[0].flags_0    = 0;
@@ -1242,7 +1242,7 @@ void func_80102E8C(ST1A_ROOM_FX *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031988(wp->fx_A0);
+        Close_EFFECT_WORK(wp->fx_A0);
         func_8010282C(wp, 2);
         wp->child_28->rotation.y = 0x800;
         obj                      = Sce_slot_open(&D_8012F7CC);
@@ -1263,7 +1263,7 @@ void func_80102F20(ST1A_ROOM_FX *wp)
     {
         Close_EM_WORK(wp->child_28);
         func_80031A4C(wp->child_2C);
-        func_80031988(wp->fx_A0);
+        Close_EFFECT_WORK(wp->fx_A0);
         func_8010282C(wp, 3);
         obj                 = Sce_slot_open(&D_8012F7E0);
         obj->routine_1      = 1;
@@ -1287,7 +1287,7 @@ void func_80102FEC(ST1A_ROOM_FX *wp)
     if (wp->frame_10 == 0)
     {
         func_80031A4C(wp->child_28);
-        func_80031988(wp->fx_A0);
+        Close_EFFECT_WORK(wp->fx_A0);
         obj                 = Sce_slot_open(&D_8012F7F4);
         obj->routine_1      = 2;
         obj->value_48.value = 0;
@@ -1341,7 +1341,7 @@ void func_8010317C(STAGE_ROOM *wp)
     }
     else if (wp->frame_10 == 0x78)
     {
-        func_80017C30(8);
+        Fade_start(8);
     }
 }
 
@@ -1361,7 +1361,7 @@ void func_801031C8(STAGE_ROOM *wp)
             wp->child_24->flags_0 |= 2;
             wp->child_24->routine_1  = 0;
             wp->child_24->position.y = -0x15;
-            func_80017C30(2);
+            Fade_start(2);
             break;
         case 1:
             STAGE_PL.routine_0   = 3;
@@ -1480,7 +1480,7 @@ void func_8010358C(STAGE_ROOM *wp)
             if (flags == 1)
             {
                 D_801396FC |= 2;
-                func_80017C30(8);
+                Fade_start(8);
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
@@ -1501,7 +1501,7 @@ void func_8010358C(STAGE_ROOM *wp)
                 wp->tbl_A4[1](wp);
                 if ((D_801396FC & 0x81) == 1)
                 {
-                    func_80017C30(8);
+                    Fade_start(8);
                     wp->routine_5 = 0;
                     wp->routine_4++;
                 }
@@ -1524,7 +1524,7 @@ void func_801036F4(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 STAGE_PL.routine_0    = 3;
                 STAGE_PL.routine_1    = 1;
@@ -1581,7 +1581,7 @@ void func_801036F4(STAGE_ROOM *wp)
             func_80039820();
             if (D_801396FC != 0)
             {
-                func_80017C30(0);
+                Fade_start(0);
             }
             D_800C356C = -1;
             D_800C3570 = 0xFF;
@@ -1699,12 +1699,12 @@ void func_80103CB8(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 1:
-            func_80017C30(0xF);
+            Fade_start(0xF);
             D_80139710 |= 0x80;
             wp->routine_6++;
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8003187C(wp->child_24);
                 Obj_work_flag_change(0x60, 0x80);
@@ -1721,7 +1721,7 @@ void func_80103CB8(STAGE_ROOM *wp)
                 {
                     obj   = (ST1A_JOINTS_OBJ *)wp->child_24;
                     joint = (rnd >> 2) % 14;
-                    ep    = func_80031618();
+                    ep    = Open_EFFECT_WORK();
                     if (ep != NULL)
                     {
                         ep->flags_0         = 5;
@@ -1756,7 +1756,7 @@ void func_80103CB8(STAGE_ROOM *wp)
         case 6:
             if (Sce_cd_reading() != 0)
             {
-                func_80017C30(7);
+                Fade_start(7);
                 Sce_script_next();
                 wp->routine_6 = 0;
             }
@@ -1810,7 +1810,7 @@ void func_80103ECC(ST1A_ROOM_FX *wp)
             wp->routine_6++;
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_801039DC(4);
                 wp->routine_5++;
@@ -1841,7 +1841,7 @@ void func_80103ECC(ST1A_ROOM_FX *wp)
     }
     else if (wp->frame_10 == 0x5A)
     {
-        func_80031988(wp->fx_A0);
+        Close_EFFECT_WORK(wp->fx_A0);
     }
 }
 
@@ -1879,8 +1879,8 @@ void func_801042B0(ST1A_ROOM_FX *wp)
     }
     else if (wp->frame_10 == 0x40)
     {
-        func_80031988(wp->fx_9C);
-        func_80031988(wp->fx_98);
+        Close_EFFECT_WORK(wp->fx_9C);
+        Close_EFFECT_WORK(wp->fx_98);
     }
 }
 
@@ -2202,7 +2202,7 @@ void func_80104CE8(STAGE_ROOM *wp)
             if (flags == 1)
             {
                 D_80139710 |= 2;
-                func_80017C30(8);
+                Fade_start(8);
                 Obj_work_flag_change(0x17E, 0x80);
                 wp->routine_5 = 0;
                 wp->routine_4++;
@@ -2224,7 +2224,7 @@ void func_80104CE8(STAGE_ROOM *wp)
                 wp->tbl_A4[1](wp);
                 if ((D_80139710 & 0x81) == 1)
                 {
-                    func_80017C30(8);
+                    Fade_start(8);
                     Obj_work_flag_change(0x17E, 0x80);
                     wp->routine_5 = 0;
                     wp->routine_4++;
@@ -2249,7 +2249,7 @@ void func_80104EC8(ST1A_ROOM_A0 *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 STAGE_PL.routine_0   = 3;
                 STAGE_PL.routine_1   = 1;
@@ -2301,7 +2301,7 @@ void func_80104EC8(ST1A_ROOM_A0 *wp)
             func_80039820();
             if (D_80139710 != 0)
             {
-                func_80017C30(0);
+                Fade_start(0);
             }
             pos.x = -0x100;
             pos.y = 0;
@@ -2357,7 +2357,7 @@ void func_80105278(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sce_file_read(0xC0, 1, 1);
                 func_8005D7C0();
@@ -2401,7 +2401,7 @@ void func_80105278(STAGE_ROOM *wp)
             }
             break;
         case 4:
-            func_80017C30(6);
+            Fade_start(6);
             func_8010702C();
             Sce_camera_script_exec();
             Sce_script_update();
@@ -2436,7 +2436,7 @@ void func_80105488(STAGE_ROOM *wp)
             wp->tbl_A4[1](wp);
             if (!(wp->reserved09[1] & 0x80) && (wp->reserved09[1] & 1))
             {
-                func_80017C30(8);
+                Fade_start(8);
                 wp->routine_4 = 2;
                 wp->routine_5 = 0;
             }
@@ -2456,7 +2456,7 @@ void func_80105598(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Obj_work_flag_change(0x156, 0x80);
                 func_80042314(&Player_work);
@@ -2493,7 +2493,7 @@ void func_801056D4(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->reserved09[1] &= 0x7F;
                 wp->routine_6++;
@@ -3259,7 +3259,7 @@ void func_80106E1C(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 0x5A)
     {
-        func_80017C30(0xA);
+        Fade_start(0xA);
         wp->reserved09[1] |= 0x80;
     }
     if (wp->frame_10 >= 0x5A && Sound_work_view.volume_4 > 0)

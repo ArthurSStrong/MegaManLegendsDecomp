@@ -27,7 +27,7 @@ void func_801053F0(ST14_SPLASH *wp)
     grow->speed_6 = D_80115A24[wp->variant_3][0];
     grow->accel_8 = D_80115A3C[wp->variant_3][0];
     grow->size_A  = 0;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     rot.x = 0;
     rot.y = ((wp->value_C << 10) & 0x800) - 0x400;
     rot.z = 0;
@@ -65,7 +65,7 @@ void func_80105578(ST14_SPLASH *wp)
         wp->color_40 = 0x2000000 | (gray << 16) | (gray << 8) | gray;
         if (wp->u_18.s.grow.speed_0 < 0)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             return;
         }
         scale.x = scale.y = scale.z = wp->u_18.s.grow.size_4;
@@ -86,7 +86,7 @@ void func_80105578(ST14_SPLASH *wp)
                 {
                     wp->u_18.s.grow.accel_2 = wp->u_18.s.grow.size_A / 2;
                 }
-                effect = func_80031618();
+                effect = Open_EFFECT_WORK();
                 if (effect != NULL)
                 {
                     effect->flags_0         = 5;
@@ -123,7 +123,7 @@ void func_80105578(ST14_SPLASH *wp)
         scale.z = grow->size_A * 2;
         if (grow->size_A < 0 || wp->alpha_A == 0)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             return;
         }
     }
@@ -136,5 +136,5 @@ void func_80105578(ST14_SPLASH *wp)
 
 void func_8010583C(ST14_SPLASH *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }

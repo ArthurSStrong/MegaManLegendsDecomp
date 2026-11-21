@@ -35,7 +35,7 @@
 #define ENTRY         0x800C3558u // D_800C3558, GAME_ENTRY_WORK (include/rock_neo.exe/game.h)
 #define SUB_WORK      0x800A38F0u // D_800A38F0, the sub-screen's SUB_WORK (sub_scrn.h)
 #define SCENE_WORK    0x800C4C48u // Scene_work: non-zero during a cutscene
-#define FADE_BUSY     0x80098A72u // D_80098A72: a screen fade is running
+#define FADE_BUSY     0x80098A72u // Fade_busy: a screen fade is running
 #define PL_POSITION   (MODS_PLAYER_WORK + 0x14) // PL_WORK.position x, y, z
 #define PL_ROTATION_Y (MODS_PLAYER_WORK + 0x56) // PL_WORK.rotation.y
 

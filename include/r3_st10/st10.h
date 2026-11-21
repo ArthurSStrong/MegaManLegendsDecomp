@@ -292,7 +292,7 @@ typedef struct
     uint8 reserved7E[0x2E];     // 7E
     STCOM_SVECTOR model_pos_AC; // AC
     uint8 reservedB4[0x10];     // B4
-    uint32 col_C4;              // C4: hit accumulator (func_8003430C, func_800341BC)
+    uint32 col_C4;              // C4: hit accumulator (func_8003430C, Set_Atari)
     uint8 reservedC8[0x44];     // C8
 } ST10_SHOT;
 
@@ -418,7 +418,7 @@ void func_80100894(STAGE_ROOM *wp);
 void func_801008E8(STAGE_ROOM *wp);
 void func_80104D48(STAGE_OBJ *wp);
 void func_80105068(STAGE_OBJ *wp);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_80100A28(STAGE_ROOM *wp);
 void func_80100A44(STAGE_ROOM *wp);
 void func_80100A90(STAGE_ROOM *wp);

@@ -16,6 +16,6 @@ extern STCOM14_FUNC stcom14_D_0000[]; // handlers by variant_3 while value_D is 
 extern STCOM14_FUNC stcom14_D_0010[]; // handlers by variant_3 otherwise
 
 // ROCK_NEO.EXE: frees a 0x48-byte work slot.
-void func_80031988(STCOM_EFFECT *wp);
+void Close_EFFECT_WORK(STCOM_EFFECT *wp);
 
 #endif // STCOM14_H

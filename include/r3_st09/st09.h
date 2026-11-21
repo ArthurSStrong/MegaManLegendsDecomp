@@ -684,7 +684,7 @@ void func_801076FC(ST09_VIEW *wp);
 void func_8011A440(STAGE_EV *wp);
 void func_80101E84(ST09_VIEW *wp);
 
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 // A ROCK_NEO record per object kind (D_80098844).
 typedef struct
@@ -699,15 +699,15 @@ typedef struct
 
 extern ST09_KIND **D_80098844;
 void *func_80036294(sint32 id); // the spawned slot with this id; callers use their own view
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 // The scale vector r3_st09's stcom15 enemies keep in their block's +0x34 (ScaleMatrix).
 #define ST09_STCOM15_SCALE(ctl) (*(STCOM_FIXED_VECTOR *)&(ctl)->timer_34)
-sint16 func_80048E6C(void *wp);
+sint16 Scr_height_check(void *wp);
 
 sint32 func_801031E8(ST09_VIEW *wp);
 void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 sint32 func_80103170(ST09_VIEW *wp);
 
@@ -774,7 +774,7 @@ void func_80117300(ST09_EVENT *wp);
 void func_80117354(ST09_EVENT *wp);
 
 // What the box keeps in its matrix's translation (as STCOM22_CTL): flags, a random value and
-// its hit bits (func_800341BC).
+// its hit bits (Set_Atari).
 typedef struct
 {
     uint16 flags_0; // 2C: 2 hittable, 4 registers its hit box, 8 resets the color
@@ -928,7 +928,7 @@ typedef struct
     uint32 hit_14;           // 35C: damage in the low 24 bits, kind bits above
     sint32 value_18;         // 360
     STCOM_SVECTOR target_1C; // 364: the attacker's position (pad bit 0: from the player?)
-    uint8 track_24[0x10];    // 36C (func_80036478)
+    uint8 track_24[0x10];    // 36C (Search_Player_Init)
     union
     {
         STCOM_SVECTOR target; // an NPC's walk target (func_80107D28)
@@ -996,7 +996,7 @@ void func_80106424(ST09_ACTOR *wp);
 void func_80107D28(ST09_ACTOR *wp);
 void func_80107E54(ST09_ACTOR *wp);
 void func_80108A8C(ST09_ACTOR *wp);
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80109C94(ST09_ACTOR *wp);
 extern ST09_ACTOR_FUNC D_8011DF94[];
 extern ST09_ACTOR_FUNC D_8011DF40[];
@@ -1019,7 +1019,7 @@ typedef struct
     uint8 life_8;  // life / 32
     uint8 limit_9; // damage that stuns it (times 4)
     uint8 reserved0A[5];
-    uint8 value_F; // func_80036478's second argument
+    uint8 value_F; // Search_Player_Init's second argument
 } ST09_KIND_REC;
 
 extern ST09_KIND_REC **D_8009884C;
@@ -1059,7 +1059,7 @@ extern uint32 *D_800BE6D8[];
 
 extern ST09_TALK_AREA D_8011DF64;
 extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
-extern uint32 D_800987E8;        // ROCK_NEO: allocation mask of the 0x3C0 slots
+extern uint32 Em_work_used;        // ROCK_NEO: allocation mask of the 0x3C0 slots
 
 void func_801080B8(ST09_ACTOR *wp);
 

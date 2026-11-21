@@ -19,13 +19,13 @@ void func_801228EC(ST05_PROP_B *wp)
     ScaleMatrix(m, &scale);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x32 - (wp->rotation.v.z >> 6), 0x2C0 - (wp->rotation.v.z >> 4) * 3, 0);
+        Model_Shadow_Trans(wp, 0x32 - (wp->rotation.v.z >> 6), 0x2C0 - (wp->rotation.v.z >> 4) * 3, 0);
     }
     if ((wp->flags_0 & 1) && (wp->ctl.flags_0 & 2))
     {
         wp->position.y -= 0x20;
         wp->position_fixed.y = wp->position.y << 16;
-        func_800341BC(&wp->position, 0x20, 0, 0x8000, wp->value_1, &wp->ctl.hit_8, 0x4880000, 0,
+        Set_Atari(&wp->position, 0x20, 0, 0x8000, wp->value_1, &wp->ctl.hit_8, 0x4880000, 0,
                       0x80);
         wp->position.y += 0x20;
         wp->position_fixed.y = wp->position.y << 16;
@@ -49,7 +49,7 @@ void func_80122A9C(ST05_PROP_B *wp)
     wp->rotation.v.z      = 0;
     wp->flags_0 |= 6;
     wp->rotation.v.y = (wp->param_C << 9) & 0xE00;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     m                           = &wp->matrix;
     wp->ctl.flags_0             = 0;
     *(uint32 *)&wp->ctl.timer_4 = 0;
@@ -175,7 +175,7 @@ void func_80122E88(ST05_PROP_B *wp)
             wp->position_fixed.x += wp->velocity.v.x << 8;
             wp->position_fixed.y += wp->velocity.v.y << 8;
             wp->position_fixed.z += wp->velocity.v.z << 8;
-            func_80030150(&wp->position_fixed, &wp->position);
+            Obj_pos_adj_round(&wp->position_fixed, &wp->position);
             if (func_8004B414(wp) & 0x1000)
             {
                 if (wp->spin_64.h[1] == 0)

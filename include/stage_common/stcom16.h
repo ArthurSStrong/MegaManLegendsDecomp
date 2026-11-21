@@ -33,7 +33,7 @@ typedef struct
     uint8 reserved7; // 1DF
 } STCOM16_STUN;
 
-// The hit block at +0x348 of the work slot (registered through func_800341BC).
+// The hit block at +0x348 of the work slot (registered through Set_Atari).
 typedef struct
 {
     STCOM_SVECTOR pos_0;       // 348: the hit box's center
@@ -135,10 +135,10 @@ extern STCOM16_FUNC stcom16_D_0098[]; // routine_2 handlers (stcom16_func_2434)
 // ROCK_NEO.EXE.
 extern STCOM16_KIND **D_80098844;
 void func_8003354C(void *wp);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
@@ -157,7 +157,7 @@ void stcom16_func_1790(STCOM16_WORK *wp);
 void stcom16_func_27E8(STCOM16_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint32 func_80048E6C(void *wp);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Scr_height_check(void *wp);
 
 #endif // STCOM16_H

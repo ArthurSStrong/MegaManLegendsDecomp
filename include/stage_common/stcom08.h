@@ -57,7 +57,7 @@ void stcom08_func_0348(STCOM08_WORK *wp);
 void stcom08_func_0424(STCOM08_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM08_H

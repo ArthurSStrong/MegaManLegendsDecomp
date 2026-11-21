@@ -90,7 +90,7 @@ void func_801076F8(ST11_SHL *wp)
     wp->old_pos            = wp->pos;
     wp->color_b4           = 0x02808080;
     wp->kind_2             = 0x82;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
     wp->timer_b = func_80037634(&Player_work, 2);
     wp->routine_0++;
@@ -109,7 +109,7 @@ void func_80107B00(STAGE_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         func_80107DBC(wp, 1);
         return;
@@ -133,7 +133,7 @@ void func_80107B00(STAGE_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         return;
     }
@@ -174,7 +174,7 @@ void func_80107DBC(STAGE_SHOT *wp, sint32 arg)
 {
     STAGE_SHOT_FX *fx;
 
-    fx = (STAGE_SHOT_FX *)func_80031618();
+    fx = (STAGE_SHOT_FX *)Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 1;

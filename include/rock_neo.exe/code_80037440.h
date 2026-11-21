@@ -60,7 +60,7 @@ typedef struct
     uint32 size;
 } CODE374_OBJ;
 
-// Effect record from func_80031618 (fields this file sets).
+// Effect record from Open_EFFECT_WORK (fields this file sets).
 typedef struct
 {
     uint8 kind_0;

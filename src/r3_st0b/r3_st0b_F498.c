@@ -73,7 +73,7 @@ void func_8010F534(STCOM18_WORK *wp)
     wp->data_10  = NULL;
     wp->value_78 = 0;
     wp->hit_BC   = 0;
-    func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+    Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                   wp->kind_E | 0x8000000, 0, 0x80);
     if (func_80049C24(wp))
     {
@@ -119,7 +119,7 @@ void func_8010F6F8(STCOM18_WORK *wp)
         wp->position_fixed.x += wp->velocity.v.x << 8;
         wp->position_fixed.y += wp->velocity.v.y << 8;
         wp->position_fixed.z += wp->velocity.v.z << 8;
-        func_80030150(&wp->position_fixed, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed, &wp->position);
         wp->sprite.pos_8[0] = wp->position.x;
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
@@ -136,7 +136,7 @@ void func_8010F6F8(STCOM18_WORK *wp)
     }
     else
     {
-        func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+        Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                       wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
         hit        = func_80049C24(wp);
@@ -156,7 +156,7 @@ void func_8010F960(STAGE_OBJ *wp)
 {
     STAGE_FX *fx;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         if (wp->u_E.b.byte_F & 1)
@@ -293,7 +293,7 @@ void func_8010FC18(ST0B_10C_B *wp)
         wp->position_fixed.v.x += wp->value_44.half[0] << 8;
         wp->position_fixed.v.y += wp->value_44.half[1] << 8;
         wp->position_fixed.v.z += wp->value_48.half[0] << 8;
-        func_80030150(&wp->position_fixed.v, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
         func_801101EC(wp);
         wp->trail_D4[5]     = wp->trail_D4[4];
         wp->trail_D4[4]     = wp->trail_D4[3];
@@ -307,7 +307,7 @@ void func_8010FC18(ST0B_10C_B *wp)
     }
     if (wp->flags_0 & 1)
     {
-        func_800341BC(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
+        Set_Atari(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
                       D_8011B640[wp->byte_D] | 0x49000000, 0, 0x80);
     }
     wp->sprite.hit_14 = 0;

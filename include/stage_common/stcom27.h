@@ -7,8 +7,8 @@
 // The block at +0x348 of the work slot.
 typedef struct
 {
-    uint8 track_0[0x10];    // 348: func_80036478/func_8003648C
-    sint32 sees_10;         // 358: nonzero while it sees the player (func_8003648C)
+    uint8 track_0[0x10];    // 348: Search_Player_Init/Search_Player
+    sint32 sees_10;         // 358: nonzero while it sees the player (Search_Player)
     sint32 flags_14;        // 35C: 1 hit a wall, 2 on the ground, 4 at a ledge
     STCOM_SVECTOR pos_18;   // 360: the hit box's center
     uint32 hit_20;          // 368: damage in the low 24 bits, kind bits above
@@ -103,10 +103,10 @@ void stcom27_func_0EAC(STCOM27_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern STCOM27_KIND **D_80098844;
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
@@ -116,7 +116,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint32 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Scr_height_check(void *wp);
 
 #endif // STCOM27_H

@@ -26,7 +26,7 @@ typedef struct
     uint16 reserved6;
 } STCOM34_KIND;
 
-// The 0x48-byte effect slot (freed through ROCK_NEO's func_80031988).
+// The 0x48-byte effect slot (freed through ROCK_NEO's Close_EFFECT_WORK).
 typedef struct
 {
     uint8 flags_0;             // 00
@@ -80,7 +80,7 @@ void stcom34_func_04CC(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade);
 // ROCK_NEO.EXE.
 STCOM34_OWNER *func_80036294(sint32 id);
 STCOM34_LINE *func_8002D4B8(void);
-void func_80031988(STCOM34_WORK *wp);
+void Close_EFFECT_WORK(STCOM34_WORK *wp);
 
 // The scratchpad's frame counter.
 #define STCOM34_FRAME (*(uint16 *)0x1F800002)

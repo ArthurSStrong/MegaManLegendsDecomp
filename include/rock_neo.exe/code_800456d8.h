@@ -219,9 +219,9 @@ extern CODE456_FUNC D_8008A6A8[];
 extern uint16 D_80097EC0[][4];
 extern uint8 D_80097EE8[];
 
-void func_80031988(void *wp);
+void Close_EFFECT_WORK(void *wp);
 uint32 func_8002FE74(uint8 id);
-void func_8002F9C4(void *wp, uint8 *arg);
+void Model_work_init(void *wp, uint8 *arg);
 void Money_add(uint32 id, sint32 arg1, sint32 arg2);
 void func_80043340(uint32 id, sint32 arg1);
 sint32 func_80048EA4(void *snd, CODE456_REC12 *rec, sint32 arg2, sint32 arg3);
@@ -245,12 +245,12 @@ uint32 *func_8002D4B8(void);
 sint32 func_8004920C(void *pos);
 uint8 func_800482A8(void *wp);
 void func_80047DD8(CODE456_SPARK *wp);
-sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
+sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      uint32 flags, sint32 arg7, sint32 arg8);
 sint32 rand(void);
 sint32 rcos(sint32 angle);
 sint32 rsin(sint32 angle);
-CODE456_WORK *func_80031618(void);
+CODE456_WORK *Open_EFFECT_WORK(void);
 void RotMatrixY(sint32 angle, CODE456_MTX *m);
 void RotMatrix(CODE456_SVECTOR *r, CODE456_MTX *m);
 void ScaleMatrix(CODE456_MTX *m, CODE456_VECTOR *v);

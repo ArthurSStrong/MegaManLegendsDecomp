@@ -44,7 +44,7 @@ void func_800D8854(SHL08_WORK *wp)
     wp->old_pos                 = wp->pos;
     wp->trail[3] = wp->trail[2] = wp->trail[1] = wp->trail[0] = wp->pos;
     wp->mdl.color_b4                                          = 0x808080;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     if (wp->type_3 >= 0x80 && (wp->target.w.w0 | wp->target.w.w1) == 0)
     {
         func_800354E0(wp->bit_d);
@@ -66,7 +66,7 @@ void func_800D8AE0(SHL08_WORK *wp)
 
     if (func_80037694(wp, 0x20) || wp->hit_7c)
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         if (wp->type_3 >= 0x80)
         {
             func_800354E0(wp->bit_d);
@@ -116,7 +116,7 @@ void func_800D8AE0(SHL08_WORK *wp)
     }
     else
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         if (wp->type_3 >= 0x80)
         {
             func_800354E0(wp->bit_d);
@@ -152,7 +152,7 @@ void func_800D8F0C(SHL08_WORK *wp)
 {
     SHL_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 5;

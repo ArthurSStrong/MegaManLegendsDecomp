@@ -11,7 +11,7 @@ void func_801208EC(ST06_10C *wp)
     STCOM_MATRIX rot;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->matrix_8C.w[0]      = 0x200;
     wp->matrix_8C.w[2]      = 0x200;
     wp->matrix_8C.w[4]      = 0x200;
@@ -82,7 +82,7 @@ void func_80120AAC(ST06_10C_B *wp)
             func_80120A2C(wp, 0x200);
             wp->kind_2    = 4;
             wp->variant_3 = 8;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             wp->kind_2 = 0x29;
             wp->routine_0++;
             break;
@@ -116,8 +116,8 @@ void func_80120AAC(ST06_10C_B *wp)
                 wp->rotation.v.y += D_8012B91C[wp->value_C - 1].turn_2;
                 wp->value_D--;
             }
-            func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
-            wp->position.y       = func_80048E6C(wp);
+            Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
+            wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             func_80120A2C(wp, 0x200);
             break;

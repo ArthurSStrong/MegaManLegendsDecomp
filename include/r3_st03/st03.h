@@ -182,7 +182,7 @@ typedef struct
     uint32 hit_14;          // 14: damage in the low 24 bits, kind bits above
     uint32 value_18;        // 18
     STCOM_SVECTOR from_1C;  // 1C: where the hit came from (pad bit 0: use it)
-    uint8 track_24[0x10];   // 24: func_80036478's record
+    uint8 track_24[0x10];   // 24: Search_Player_Init's record
     uint32 range_34;        // 34
     ST03_HELD *other_38;    // 38: the slot it carries
     uint8 reserved3C[4];    // 3C
@@ -728,7 +728,7 @@ void func_8001D974(void);
 void func_80063BA8(void);
 void func_8001B314(void);
 void Sce_script_timer_clear(void);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
 sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
@@ -775,7 +775,7 @@ void func_8010DC54(STAGE_OBJ *wp);
 void func_8010E014(ST03_OBJ *wp);
 void func_8010E0A8(STAGE_ACTOR *wp);
 sint32 func_8010E3A8(ST03_ACTOR *wp);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_8010FA58(STAGE_SPARK *wp);
 void func_8010FAE4(STAGE_SPARK *wp);
 void func_8010FB18(STAGE_OBJ *wp);

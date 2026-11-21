@@ -226,7 +226,7 @@ extern CODE5C_OFS9 D_80098044; // {-1, -1, -1, 0, 0, 0, 1, 1, 1}
 extern uint8 D_800BBD9C;
 extern sint32 D_800BC9B8[0x280];
 
-sint32 func_80037604(PL_WORK *wp, sint32 index);
+sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 index);
 // Hand-written 32-byte block copy in asm_fastmem.s.
 void func_800176DC(void *src, void *dst, sint32 blocks);
 void func_800177CC(void *start, void *end);

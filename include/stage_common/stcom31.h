@@ -80,6 +80,6 @@ extern uint8 stcom31_E_0020;           // the last waypoint
 sint32 Sce_flag_test(sint32 flag);
 
 // ROCK_NEO.EXE (see rock_neo.h): the step is used unnarrowed here.
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 #endif // STCOM31_H

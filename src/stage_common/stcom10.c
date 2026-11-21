@@ -77,7 +77,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                         {
                             case 0x20:
                                 obj_3C0 = func_80036294(pair->flag);
-                                mask    = (D_800987E8 ^ stcom10_E_0004) & stcom10_E_0004;
+                                mask    = (Em_work_used ^ stcom10_E_0004) & stcom10_E_0004;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
                                 {
@@ -105,7 +105,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 break;
                             case 0x60:
                                 obj_10C = func_80036294(pair->flag);
-                                mask    = (D_800987CC ^ stcom10_E_0008) & stcom10_E_0008;
+                                mask    = (Shl_work_used ^ stcom10_E_0008) & stcom10_E_0008;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
                                 {
@@ -145,7 +145,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                 switch (func_8002FE74(pair->flag))
                 {
                     case 0x20:
-                        mask = (D_800987E8 ^ stcom10_E_0004) & stcom10_E_0004;
+                        mask = (Em_work_used ^ stcom10_E_0004) & stcom10_E_0004;
                         dx   = pair->flag & 0x1F;
                         if (mask & (0x80000000 >> dx))
                         {
@@ -161,7 +161,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                         }
                         break;
                     case 0x60:
-                        mask = (D_800987CC ^ stcom10_E_0008) & stcom10_E_0008;
+                        mask = (Shl_work_used ^ stcom10_E_0008) & stcom10_E_0008;
                         dx   = pair->flag & 0x1F;
                         if (mask & (0x80000000 >> dx))
                         {
@@ -180,9 +180,9 @@ void stcom10_func_0134(STCOM10_WORK *wp)
             }
         }
     }
-    stcom10_E_0004 = D_800987E8;
+    stcom10_E_0004 = Em_work_used;
     stcom10_E_0000 = D_80098B20;
-    stcom10_E_0008 = D_800987CC;
+    stcom10_E_0008 = Shl_work_used;
     stcom10_E_000C = D_800989CC;
 }
 

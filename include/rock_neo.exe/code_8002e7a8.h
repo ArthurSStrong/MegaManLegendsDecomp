@@ -320,7 +320,7 @@ typedef struct
     sint16 vel_x_44, vel_y_46, vel_z_48, vel_w_4a, v4c, v4e, v50;
 } MOVER_WORK;
 
-// Effect record handed out by func_80031598.
+// Effect record handed out by Open_PL_SHL_WORK.
 typedef struct
 {
     uint8 flags_0;
@@ -386,11 +386,11 @@ typedef struct
 #define FOG_B    (*(uint16 *)0x1F800076)
 
 extern uint32 D_80098798;
-extern uint32 D_80098818, D_800987EC, D_8009880C, D_800987E8;
-extern uint32 D_80098808, D_800987CC, D_80098A60, D_800989F0;
+extern uint32 Eve_work_closing, Eve_work_used, Em_work_closing, Em_work_used;
+extern uint32 Shl_work_closing, Shl_work_used, Pl_shl_work_closing, Pl_shl_work_used;
 extern uint32 D_80098A4C, D_800989CC, D_80098B64, D_80098B20;
 // Two-word masks, indexed as (&D_x)[i]: retail reaches word 0 like a scalar
-extern uint32 D_800988C8, D_80098838;
+extern uint32 Effect_work_closing, Effect_work_used;
 extern uint32 D_800988CC, D_8009883C;
 typedef struct
 {
@@ -446,15 +446,15 @@ extern sint32 SquareRoot0(sint32 v);
 extern void SetFogNear(sint32 a, sint32 b);
 extern void SetFarColor(sint32 r, sint32 g, sint32 b);
 extern void func_80033A28(void *wp);
-extern sint16 func_80030D30(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 e);
-extern void func_80032304(ENEMY_WORK *wp, sint32 a1, sint32 a2);
-extern void func_8003346C(void *wp);
+extern sint16 Calc_arc_angle(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 e);
+extern void EM_Char_Set2(ENEMY_WORK *wp, sint32 a1, sint32 a2);
+extern void EM_World_Pos_Calc(void *wp);
 
 extern sint32 ratan2(sint32 x, sint32 y);
 extern uint32 func_80030628(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
                             sint16 angle);
-extern void func_80030968(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4);
-extern void func_800309E0(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
+extern void Obj_arc_vel_set(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4);
+extern void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
                           sint16 f, sint16 g);
 extern sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4);
 
@@ -466,20 +466,20 @@ void Close_EVE_WORK(GAME_WORK_24 *wp);
 void func_80036470(BYTE_WORK *wp);
 void func_80036A78(sint32 arg);
 void func_8002F3A8(BYTE_WORK *wp, uint32 flags);
-void func_80036478(BYTE_WORK *wp, uint8 arg1, uint32 arg2);
+void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2);
 void func_8002F9EC(void *wp, sint32 arg);
 uint32 func_80030604(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3);
-void func_8002F9C4(void *wp, sint32 arg);
+void Model_work_init(void *wp, sint32 arg);
 void func_8002FA10(void *wp, sint32 arg);
 void func_800354E0(sint32 bit);
 void func_8002F998(POS_WORK *wp, uint16 *delta);
 uint32 func_8002FE74(uint32 val);
-sint32 func_80031198(SHORT3_WORK *a, SHORT3_WORK *b);
+sint32 Calc_degree2(SHORT3_WORK *a, SHORT3_WORK *b);
 extern SHORT3_WORK D_80097CF4;
 void func_800329D4(void *wp, sint32 arg);
 extern void ApplyMatrixLV(MATRIX *m, sint32 *v0, sint32 *v1);
 void func_80031324(SPAWN_OWNER *owner, SPAWN_CHILD *child, sint16 index);
-void func_80030150(sint32 *in, sint16 *out);
+void Obj_pos_adj_round(sint32 *in, sint16 *out);
 extern void RotMatrixY(sint32 angle, MATRIX *m);
 extern void SetRotMatrix(MATRIX *m);
 extern void SetTransMatrix(MATRIX *m);
@@ -495,7 +495,7 @@ typedef struct
 } VEC4_WORK;
 
 sint32 *func_80030058(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z);
-sint32 func_800310CC(VEC32_WORK *a, VEC32_WORK *b);
+sint32 Calc_degree(VEC32_WORK *a, VEC32_WORK *b);
 extern sint32 catan(sint32 v);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
 sint32 func_80031268(sint16 *a, sint16 *b);
@@ -515,11 +515,11 @@ typedef struct
 } LINK14_VIEW;
 
 extern void func_80052528(void *wp);
-void func_8002FBF4(void);
+void Work_stage_close(void);
 void func_8003187C(GAME_WORK_5A4 *wp);
 void Close_SHL_WORK(GAME_WORK_10C *wp);
-void func_80031930(GAME_WORK_10C *wp);
-void func_80031988(GAME_WORK_48 *wp);
+void Close_PL_SHL_WORK(GAME_WORK_10C *wp);
+void Close_EFFECT_WORK(GAME_WORK_48 *wp);
 void func_80031A4C(GAME_WORK_50 *wp);
 
 // Player_work seen as the array of two player slots (stride 0x5F4), tag byte at +1.
@@ -795,7 +795,7 @@ extern void func_8005D4C0(void);
 extern SVECTOR *func_80033F04(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
 extern sint32 func_80049C54(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);
 sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle);
-sint32 func_8003648C(TRACK_WORK *a0, ANGLE_WORK *a1);
+sint32 Search_Player(TRACK_WORK *a0, ANGLE_WORK *a1);
 
 // Matrix stack: func_800333A0 resets it, func_800333B4 pushes, func_8003340C pops.
 extern MATRIX D_800BC728[];

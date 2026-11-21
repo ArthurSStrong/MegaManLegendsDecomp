@@ -38,11 +38,11 @@ void stcom22_func_0078(STCOM22_WORK *wp)
     ctl = &wp->matrix.f.ctl;
     if (Game_work.value_50 == 0xE)
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     else
     {
-        func_8002F9C4(wp, (uint8 *)&wp->value_C);
+        Model_work_init(wp, (uint8 *)&wp->value_C);
     }
     wp->value_B = wp->value_D;
     if (Game_work.value_50 == 0xE || Game_work.value_50 == 0x14 || STCOM_STAGE_ROOM == 0x13)
@@ -317,7 +317,7 @@ void stcom22_func_0864(STCOM22_WORK *wp)
         }
         else
         {
-            func_80017C30(10);
+            Fade_start(10);
             wp->routine_1 = 3;
         }
         return;
@@ -478,7 +478,7 @@ void stcom22_func_0E50(STCOM22_WORK *wp)
     // Never used; it reserves retail's frame.
     sint32 unused;
 
-    if (D_800C356C == 2 && D_80098A72 == 0)
+    if (D_800C356C == 2 && Fade_busy == 0)
     {
         D_800C356C++;
         func_80042314(&Player_work);
@@ -510,7 +510,7 @@ void stcom22_func_0F3C(STCOM22_WORK *wp)
     wp->matrix.f.ctl.rot.y = 0;
     wp->matrix.f.ctl.rot.z = 0;
     RotMatrixYXZ(&wp->matrix.f.ctl.rot, &wp->matrix.m);
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->color_40  = 0x2C808080;
@@ -534,7 +534,7 @@ void stcom22_func_1030(STCOM22_WORK *wp)
         wp->routine_1 = 1;
         wp->variant_3 = 2;
         Sound_call2(0x113, &wp->pos_38);
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->value_D = 0x1E;
     }
     func_80051B68(wp, 5, -1, 0);
@@ -637,7 +637,7 @@ void stcom22_func_14A8(STCOM22_WORK *wp)
     wp->matrix.f.ctl.rot.x = 0;
     wp->matrix.f.ctl.rot.y = 0;
     wp->matrix.f.ctl.rot.z = 0;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->routine_0 = 1;
     wp->color_40  = 0x2C808080;
     wp->value_D   = 0x28;
@@ -671,12 +671,12 @@ void stcom22_func_15C4(STCOM22_WORK *wp)
     STCOM_SVECTOR pos;
 
     pl = &Player_work;
-    if (func_800302E4(&pl->position, &wp->pos_38) < 0x384)
+    if (Calc_distance(&pl->position, &wp->pos_38) < 0x384)
     {
         fixed.x = wp->pos_38.x << 16;
         fixed.y = wp->pos_38.y << 16;
         fixed.z = wp->pos_38.z << 16;
-        if (func_80031DCC(&fixed, wp->matrix.f.ctl.rot.y + 0x400, 0x100, &pl->position_fixed,
+        if (Angle_ck(&fixed, wp->matrix.f.ctl.rot.y + 0x400, 0x100, &pl->position_fixed,
                           Player_work.rotation.y, 0x800))
         {
             wp->routine_1 = 1;
@@ -743,7 +743,7 @@ void stcom22_func_17E0(STCOM22_WORK *wp)
 {
     wp->flags_0 |= 6;
     STCOM22_IDENTITY(&wp->matrix);
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->routine_0          = 1;
     wp->routine_1          = 0;
     wp->routine_2          = 0;
@@ -764,7 +764,7 @@ void stcom22_func_1864(STCOM22_WORK *wp)
     pos = wp->pos_38;
     pos.y -= 0x28;
     pos.z -= 0x80;
-    func_800341BC(&pos, 0x3C, 0, 0xC000, wp->index_1, hit, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x3C, 0, 0xC000, wp->index_1, hit, 0x4000000, 0, 0x80);
     stcom22_D_00A0[wp->routine_1](wp);
     wp->u_48.hit = 0;
 }
@@ -864,11 +864,11 @@ void stcom22_func_1B28(STCOM22_WORK *wp)
     ctl = &wp->matrix.f.ctl;
     if (Game_work.value_50 == 0xE)
     {
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     else
     {
-        func_8002F9C4(wp, (uint8 *)&wp->value_C);
+        Model_work_init(wp, (uint8 *)&wp->value_C);
     }
     wp->color_40  = 0x2E808080;
     wp->routine_0 = 1;
@@ -914,7 +914,7 @@ void stcom22_func_1C5C(STCOM22_WORK *wp)
 
     pos = wp->pos_38;
     pos.y -= 0x96;
-    func_800341BC(&pos, 0x96, 0, 0x8000, wp->index_1, &wp->matrix.f.ctl.rot, 0x4000001, 0, 0x80);
+    Set_Atari(&pos, 0x96, 0, 0x8000, wp->index_1, &wp->matrix.f.ctl.rot, 0x4000001, 0, 0x80);
     pl  = &Player_work;
     ctl = &wp->matrix.f.ctl;
     if (wp->routine_2 == 0 && Sce_flag_test(Game_work.value_50 == 0xE ? 0x608 : 0x605))
@@ -953,7 +953,7 @@ void stcom22_func_1C5C(STCOM22_WORK *wp)
                         Sce_flag_on(0x27);
                     }
                     wp->u_48.gate->routine_0 = 2;
-                    func_80017C30(8);
+                    Fade_start(8);
                 }
             }
             else

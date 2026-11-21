@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The hit block at +0x308 of the work slot (registered through func_800341BC).
+// The hit block at +0x308 of the work slot (registered through Set_Atari).
 typedef struct
 {
     uint16 flags_0;      // 308
@@ -114,8 +114,8 @@ extern uint8 stcom09_D_0028[];        // data_78
 extern STCOM09_KIND **D_80098844;
 extern uint8 *D_8008CE74; // a message script
 STCOM09_SHOT *Open_SHL_WORK(void);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
 #else
@@ -136,6 +136,6 @@ void stcom09_func_0BE0(STCOM09_WORK *wp);
 uint8 stcom09_func_0D28(STCOM09_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80048E6C(void *wp);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM09_H

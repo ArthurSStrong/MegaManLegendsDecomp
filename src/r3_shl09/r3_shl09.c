@@ -28,7 +28,7 @@ void func_800D8884(SHL_WORK *wp)
     wp->old_fpos          = wp->fpos;
     wp->old_pos           = wp->pos;
     wp->draw.mdl.color_b4 = 0x02808080;
-    func_8002F9C4(wp, &wp->type_3);
+    Model_work_init(wp, &wp->type_3);
     func_800D8F50(wp);
     Sound_call2(0x12E, &wp->pos);
     wp->value_f   = 0xD;
@@ -40,7 +40,7 @@ void func_800D896C(SHL_WORK *wp)
 {
     if (--wp->value_f == 0)
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     if (wp->value_f == 9)
@@ -91,7 +91,7 @@ void func_800D8A98(SHL_WORK *wp)
     wp->old_fpos          = wp->fpos;
     wp->old_pos           = wp->pos;
     wp->draw.mdl.color_b4 = 0x02808080;
-    func_8002F9C4(wp, &wp->type_3);
+    Model_work_init(wp, &wp->type_3);
     func_800D9398(wp);
     wp->value_e   = 4;
     wp->value_f   = func_80037634(&Player_work, 9) / 50;
@@ -136,7 +136,7 @@ void func_800D8D68(SHL_WORK *wp)
     ScaleMatrix(&wp->draw.mdl.mtx_8c, &v);
     if (--wp->value_e == 0)
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
     }
 }
 
@@ -165,7 +165,7 @@ void func_800D8EDC(SHL_WORK *wp)
     wp->draw.spr.scale_97 = D_800D9724[wp->bit_d].scale_97;
     if (wp->bit_d >= 6)
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
     }
 }
 
@@ -260,7 +260,7 @@ void func_800D942C(SHL_WORK *wp)
 {
     SHL_WORK *np;
 
-    np = func_80031598();
+    np = Open_PL_SHL_WORK();
     if (np)
     {
         np->flags_0 = 1;
@@ -282,7 +282,7 @@ void func_800D947C(SHL_WORK *wp)
     v.vx = (p.vx << 16) + (d.vx << 8);
     v.vy = (p.vy << 16) + (d.vy << 8);
     v.vz = (p.vz << 16) + (d.vz << 8);
-    np   = func_80031598();
+    np   = Open_PL_SHL_WORK();
     if (np)
     {
         np->flags_0       = 1;

@@ -20,11 +20,11 @@ void stcom01_func_003C(STCOM01_WORK *wp)
     wp->flags_0 |= 2;
     if (wp->variant_3 != 0)
     {
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     else
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     if (wp->kind_2 == 0x26)
     {
@@ -73,7 +73,7 @@ void stcom01_func_003C(STCOM01_WORK *wp)
     wp->routine_2  = 0;
     wp->routine_3  = 0;
     wp->routine_1  = wp->param_D & 7;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     stcom01_func_01FC(wp);
 }
 
@@ -98,20 +98,20 @@ void stcom01_func_01FC(STCOM01_WORK *wp)
         stcom01_D_0568[wp->routine_1](wp);
         if (!(wp->param_D & 0x20))
         {
-            wp->position.y       = func_80048E6C(wp);
+            wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
         }
         if (wp->anim_prev_AD != wp->anim_AC)
         {
-            func_800322A8(wp, wp->anim_AC, 0);
+            EM_Char_Set(wp, wp->anim_AC, 0);
         }
         else
         {
-            func_80032488(wp);
+            EM_Char_Move(wp);
         }
         if (wp->flags_0 & 2)
         {
-            func_8002C8CC(wp, param->a, param->b, param->c);
+            Model_Shadow_Trans(wp, param->a, param->b, param->c);
         }
         if (ctl->flags & 2)
         {
@@ -253,7 +253,7 @@ void stcom01_func_0610(STCOM01_WORK *wp)
 
 void stcom01_func_0774(STCOM01_WORK *wp)
 {
-    func_8002FEA4(wp, wp->velocity.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.x, 0, 0);
     if (--wp->ctl.value_16 == 0)
     {
         if (wp->ctl.value_14 != 0)
@@ -290,7 +290,7 @@ void stcom01_func_0880(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031D5C(wp->rot_goal_64, wp->rotation.y, 0x40);
+    step = Muku_angle(wp->rot_goal_64, wp->rotation.y, 0x40);
     if (step == 0)
     {
         wp->routine_2    = 1;
@@ -304,7 +304,7 @@ void stcom01_func_08FC(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031D5C(wp->rot_goal_64, wp->rotation.y, 0x40);
+    step = Muku_angle(wp->rot_goal_64, wp->rotation.y, 0x40);
     if (step == 0)
     {
         wp->ctl.timer = 0x14;
@@ -361,7 +361,7 @@ void stcom01_func_0AC4(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step           = func_80031D5C(wp->rot_goal_64, wp->rotation.y, 0x40);
+    step           = Muku_angle(wp->rot_goal_64, wp->rotation.y, 0x40);
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
     if (step == 0)
     {
@@ -494,7 +494,7 @@ void stcom01_func_0E44(STCOM01_WORK *wp)
         wp->position_fixed.y = wp->position.y << 16;
         wp->position_fixed.z = wp->position.z << 16;
     }
-    func_8002FEA4(wp, wp->velocity.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.x, 0, 0);
     if (--ctl->value_18 == 0)
     {
         wp->rot_goal_64 = (wp->rotation.y + 0x800) & 0xFFF;
@@ -519,7 +519,7 @@ void stcom01_func_1018(STCOM01_WORK *wp)
     sint16 step;
 
     ctl  = &wp->ctl;
-    step = func_80031D5C(wp->rot_goal_64, wp->rotation.y, (sint8)wp->param_F);
+    step = Muku_angle(wp->rot_goal_64, wp->rotation.y, (sint8)wp->param_F);
     if ((ctl->value_1A == 0 && step < 0) || (ctl->value_1A != 0 && step > 0))
     {
         step = -step;
@@ -543,7 +543,7 @@ void stcom01_func_1018(STCOM01_WORK *wp)
         return;
     }
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
-    func_8002FEA4(wp, wp->velocity.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.x, 0, 0);
 }
 
 void stcom01_func_1148(STCOM01_WORK *wp)
@@ -558,7 +558,7 @@ void stcom01_func_1170(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031D5C(wp->ctl.value_1C, wp->rotation.y, wp->ctl.timer);
+    step = Muku_angle(wp->ctl.value_1C, wp->rotation.y, wp->ctl.timer);
     if (step == 0)
     {
         if (wp->ctl.value_16 != 0)
@@ -689,7 +689,7 @@ void stcom01_func_1564(STCOM01_WORK *wp)
         wp->routine_2 = 1;
         return;
     }
-    func_8002FEA4(wp, wp->velocity.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.x, 0, 0);
     if (ctl->pos_C.x + ctl->value_14 < wp->position.x)
     {
         wp->position.x  = ctl->pos_C.x + ctl->value_14;
@@ -754,7 +754,7 @@ void stcom01_func_172C(STCOM01_WORK *wp)
         {
             wp->routine_2 = 1;
         }
-        func_8002FEA4(wp, wp->velocity.x, 0, 0);
+        Obj_pos_set(wp, wp->velocity.x, 0, 0);
         wp->rotation.y = (wp->rotation.y + 0x80) & 0xFFF;
     }
 }
@@ -763,7 +763,7 @@ void stcom01_func_17D4(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031D5C(wp->rot_goal_64, wp->rotation.y, 0x40);
+    step = Muku_angle(wp->rot_goal_64, wp->rotation.y, 0x40);
     if (step == 0)
     {
         wp->routine_2 = wp->ctl.value_1E;
@@ -794,7 +794,7 @@ void stcom01_func_18C4(STCOM01_WORK *wp)
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = stcom01_func_28C8(wp->kind_2);
     ctl->turn =
-        STCOM_ABS(func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     func_80063BC8(&wp->position, 0, 0, wp->param_C);
 }
 
@@ -808,7 +808,7 @@ void stcom01_func_19B0(STCOM01_WORK *wp)
     if (!(wp->param_D & 0x40))
     {
         wp->rotation.y = (wp->rotation.y +
-                          func_80031BEC(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
+                          Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
                          0xFFF;
         if (Moji_flag & 0x200000)
         {
@@ -826,7 +826,7 @@ void stcom01_func_19B0(STCOM01_WORK *wp)
 
 void stcom01_func_1A84(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                      wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (wp->state_A7 < 0)
@@ -873,7 +873,7 @@ void stcom01_func_1BAC(STCOM01_WORK *wp)
     sint16 step;
 
     ctl  = &wp->ctl;
-    step = func_80031D5C(ctl->value_4, wp->rotation.y, ctl->turn);
+    step = Muku_angle(ctl->value_4, wp->rotation.y, ctl->turn);
     if (step == 0 || (wp->param_D & 0x80) || stcom01_func_1B28(wp))
     {
         wp->anim_AC = ctl->value_2;
@@ -901,7 +901,7 @@ void stcom01_func_1CAC(STCOM01_WORK *wp)
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = stcom01_func_28C8(wp->kind_2);
     ctl->turn =
-        STCOM_ABS(func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     func_80063BC8(&wp->position, 0, 0, wp->param_C);
 }
 
@@ -915,7 +915,7 @@ void stcom01_func_1D98(STCOM01_WORK *wp)
     if (!(wp->param_D & 0x40))
     {
         wp->rotation.y = (wp->rotation.y +
-                          func_80031BEC(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
+                          Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
                          0xFFF;
         if (Moji_flag & 0x200000)
         {
@@ -937,7 +937,7 @@ void stcom01_func_1E6C(STCOM01_WORK *wp)
     sint16 step;
 
     ctl  = &wp->ctl;
-    step = func_80031D5C(ctl->value_4, wp->rotation.y, ctl->turn);
+    step = Muku_angle(ctl->value_4, wp->rotation.y, ctl->turn);
     if (step == 0 || (wp->param_D & 0x80) || stcom01_func_1B28(wp))
     {
         wp->anim_AC = ctl->value_2;
@@ -969,13 +969,13 @@ void stcom01_func_1F6C(STCOM01_WORK *wp)
     {
         wp->anim_AC = stcom01_func_28C8(wp->kind_2);
         ctl->turn =
-            STCOM_ABS(func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+            STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
         ctl->routine++;
         param = wp->param_C;
     }
     else
     {
-        ctl->turn = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x20) > 0;
+        ctl->turn = Muku(&wp->position, &pl->position, wp->rotation.y, 0x20) > 0;
         if (ctl->turn)
         {
             wp->anim_AC = 3;
@@ -1044,9 +1044,9 @@ void stcom01_func_21B0(STCOM01_WORK *wp)
     v.x = wp->position.x;
     v.y = wp->position.y - 0x30;
     v.z = wp->position.z;
-    func_80039FAC(&v, 0x100, func_80031198(&pos, &pl->position), D_800A396C + 0x6C);
+    func_80039FAC(&v, 0x100, Calc_degree2(&pos, &pl->position), D_800A396C + 0x6C);
     wp->anim_AC = stcom01_func_28C8(wp->kind_2);
-    ctl->turn = STCOM_ABS(func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+    ctl->turn = STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
     ctl->routine++;
 }
 
@@ -1061,13 +1061,13 @@ void stcom01_func_2310(STCOM01_WORK *wp)
         wp->ctl.routine++;
     }
     wp->rotation.y = (wp->rotation.y +
-                      func_80031BEC(&wp->position, &pl->position, wp->rotation.y, wp->ctl.turn)) &
+                      Muku(&wp->position, &pl->position, wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
 }
 
 void stcom01_func_2398(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                      wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (D_800987B0[0] == 0)
@@ -1099,7 +1099,7 @@ void stcom01_func_24A8(STCOM01_WORK *wp)
     sint16 step;
 
     pl   = &Player_work;
-    step = func_80031D5C(wp->ctl.value_4, wp->rotation.y, wp->ctl.turn);
+    step = Muku_angle(wp->ctl.value_4, wp->rotation.y, wp->ctl.turn);
     if (step == 0 || (wp->param_D & 0x80))
     {
         if (func_8003A13C() == 0)
@@ -1130,13 +1130,13 @@ void stcom01_func_25B8(STCOM01_WORK *wp)
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = 8;
     ctl->turn =
-        STCOM_ABS(func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     func_80063BC8(&wp->position, 0, 0, wp->param_C);
 }
 
 void stcom01_func_26A0(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                      wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (D_800987B0[0] == 0)
@@ -1151,7 +1151,7 @@ void stcom01_func_2720(STCOM01_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031D5C(wp->ctl.value_4, wp->rotation.y, wp->ctl.turn);
+    step = Muku_angle(wp->ctl.value_4, wp->rotation.y, wp->ctl.turn);
     if (wp->state_A7 < 0 && step == 0)
     {
         wp->anim_AC = stcom01_func_28C8(wp->kind_2);

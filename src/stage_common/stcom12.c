@@ -18,7 +18,7 @@ void stcom12_func_0000(STCOM12_WORK *wp)
     ctl = &wp->ctl;
     if (wp->routine_3 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
@@ -26,7 +26,7 @@ void stcom12_func_0000(STCOM12_WORK *wp)
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->routine_0 != 7)
     {
@@ -49,12 +49,12 @@ void stcom12_func_0164(STCOM12_WORK *wp)
     wp->rotation.z = 0;
     wp->turn_64    = 0x40;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     scale           = stcom12_D_0038[wp->param_E];
     wp->scale.v.pad = 0x4210;
     wp->data_78     = stcom12_D_002C;
     wp->scale.v.x = wp->scale.v.y = wp->scale.v.z = scale;
-    wp->position.y                                = func_80048E6C(wp);
+    wp->position.y                                = Scr_height_check(wp);
     wp->position_fixed.y                          = wp->position.y << 16;
     wp->ctl.home_24                               = wp->position;
     wp->data_10                                   = stcom12_D_0020;
@@ -79,15 +79,15 @@ void stcom12_func_0164(STCOM12_WORK *wp)
     {
         case 0:
         default:
-            func_800322A8(wp, 1, 0);
+            EM_Char_Set(wp, 1, 0);
             wp->routine_0 = 1;
             break;
         case 1:
-            func_800322A8(wp, 3, 0);
+            EM_Char_Set(wp, 3, 0);
             wp->routine_0 = 3;
             break;
         case 2:
-            func_800322A8(wp, 2, 0);
+            EM_Char_Set(wp, 2, 0);
             wp->routine_0 = 7;
             wp->flags_0 &= ~2;
             break;
@@ -119,7 +119,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
         wp->routine_1 = 0;
         return;
     }
-    ctl->dist_8 = func_80030254(&Player_work, wp);
+    ctl->dist_8 = Obj_distance(&Player_work, wp);
     switch (wp->routine_1)
     {
         case 0:
@@ -136,7 +136,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
                 wp->velocity.x = 0x80;
                 if (wp->anim_AC != 2)
                 {
-                    func_800322A8(wp, 2, 0);
+                    EM_Char_Set(wp, 2, 0);
                 }
             }
             else
@@ -144,19 +144,19 @@ void stcom12_func_0304(STCOM12_WORK *wp)
                 wp->velocity.x = 0x40;
                 if (wp->anim_AC != 1)
                 {
-                    func_800322A8(wp, 1, 0);
+                    EM_Char_Set(wp, 1, 0);
                 }
             }
-            func_8002FEA4(wp, wp->velocity.x, 0, 0);
+            Obj_pos_set(wp, wp->velocity.x, 0, 0);
             hit = func_8004B414(wp);
             stcom12_func_0E9C(wp, hit);
             if (wp->param_D != 0 &&
-                wp->param_D < (func_800302E4(&wp->position, &ctl->home_24) >> 7))
+                wp->param_D < (Calc_distance(&wp->position, &ctl->home_24) >> 7))
             {
                 wp->velocity.x = 0x80;
                 if (wp->anim_AC != 2)
                 {
-                    func_800322A8(wp, 2, 0);
+                    EM_Char_Set(wp, 2, 0);
                 }
                 ctl->timer_4  = wp->param_D << 2;
                 wp->routine_1 = 10;
@@ -182,7 +182,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
         case 2:
             if (wp->state_A7 < 0)
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 wp->velocity.x = 0;
                 wp->velocity.y = 0;
                 wp->routine_1++;
@@ -195,7 +195,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             }
             break;
         case 10:
-            step = func_80031BEC(&wp->position, &ctl->home_24, wp->rotation.y, wp->turn_64);
+            step = Muku(&wp->position, &ctl->home_24, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             if (step == 0)
             {
@@ -209,7 +209,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             }
             // fall through
         case 15:
-            func_8002FEA4(wp, wp->velocity.x, 0, 0);
+            Obj_pos_set(wp, wp->velocity.x, 0, 0);
             stcom12_func_0E9C(wp, func_8004B414(wp));
             if (--ctl->timer_4 == 0)
             {
@@ -217,7 +217,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             }
             break;
         case 20:
-            step           = func_80031D5C(ctl->goal_2, wp->rotation.y, wp->turn_64);
+            step           = Muku_angle(ctl->goal_2, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             if (step == 0)
             {
@@ -231,14 +231,14 @@ void stcom12_func_0660(STCOM12_WORK *wp)
 {
     uint32 dist;
 
-    dist           = func_80030254(&Player_work, wp);
+    dist           = Obj_distance(&Player_work, wp);
     wp->ctl.dist_8 = dist;
     switch (wp->routine_1)
     {
         case 0:
             if (dist < 300)
             {
-                func_800322A8(wp, 4, 0);
+                EM_Char_Set(wp, 4, 0);
                 wp->routine_3 = 0;
                 wp->routine_1++;
             }
@@ -246,7 +246,7 @@ void stcom12_func_0660(STCOM12_WORK *wp)
         case 1:
             if (wp->state_A7 < 0)
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 wp->routine_0 = 1;
                 wp->routine_1 = 0;
                 wp->routine_3 = 0;
@@ -267,7 +267,7 @@ void stcom12_func_0710(STCOM12_WORK *wp)
         case 0:
             if (wp->anim_AC != 3)
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 wp->routine_3 = 0;
                 wp->routine_1++;
             }
@@ -347,7 +347,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
             wp->velocity.x = wp->velocity.y = 0x200;
             ctl->decel_1C                   = 0x18;
             ctl->value_1E = ctl->value_20 = 0;
-            func_800322A8(wp, 4, 0);
+            EM_Char_Set(wp, 4, 0);
             wp->routine_3 = 0;
             wp->routine_1++;
             // fall through
@@ -358,12 +358,12 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
                 wp->position_fixed = wp->position_fixed_prev;
                 if (wp->anim_AC != 0)
                 {
-                    func_800322A8(wp, 0, 0);
+                    EM_Char_Set(wp, 0, 0);
                     wp->routine_3 = 0;
                 }
                 break;
             }
-            func_8002FEA4(wp, wp->velocity.x, 0, 0);
+            Obj_pos_set(wp, wp->velocity.x, 0, 0);
             hit = func_8004B414(wp);
             if (hit)
             {
@@ -379,7 +379,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
                 wp->velocity.x = (wp->velocity.x >= 0) ? wp->velocity.x - ctl->decel_1C
                                                        : wp->velocity.x + ctl->decel_1C;
             }
-            if (func_800302E4(&wp->position, &ctl->home_24) > 0x1000)
+            if (Calc_distance(&wp->position, &ctl->home_24) > 0x1000)
             {
                 wp->position       = wp->position_prev;
                 wp->position_fixed = wp->position_fixed_prev;
@@ -387,7 +387,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
             stcom12_func_0E9C(wp, hit);
             if (wp->state_A7 < 0)
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 wp->velocity.x = wp->velocity.y = wp->velocity.z = 0;
                 wp->routine_0                                    = 1;
                 wp->routine_1                                    = 0;
@@ -420,7 +420,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
             wp->routine_1++;
             // fall through
         case 2:
-            if (D_80098A72 != 0)
+            if (Fade_busy != 0)
             {
                 break;
             }
@@ -441,7 +441,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
             }
             // fall through
         case 4:
-            func_8002FEA4(wp, wp->velocity.x, 0, 0);
+            Obj_pos_set(wp, wp->velocity.x, 0, 0);
             stcom12_func_0E9C(wp, func_8004B414(wp));
             if (D_800987B0[0] != 0)
             {
@@ -495,7 +495,7 @@ sint32 stcom12_func_0DE4(STCOM12_WORK *wp)
         stcom12_E_0000.y = target->value_180.y - 0x20;
         stcom12_E_0000.z = target->value_180.z;
         func_80039FAC(&stcom12_E_0000, 0x100,
-                      func_80031198(&pl->position, &target->position) + 0x800, D_800A396C);
+                      Calc_degree2(&pl->position, &target->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
@@ -505,7 +505,7 @@ void stcom12_func_0E9C(STCOM12_WORK *wp, uint32 hit)
 {
     sint16 ground;
 
-    ground = func_80048E6C(wp);
+    ground = Scr_height_check(wp);
     if (hit & 0x1000)
     {
         wp->position.y = ground;
@@ -556,12 +556,12 @@ uint8 stcom12_func_0F98(STCOM12_WORK *wp)
         wp->position_fixed = wp->position_fixed_prev;
         if (wp->anim_AC != 0)
         {
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             wp->routine_3 = 0;
         }
         else if (++wp->routine_3 > 60)
         {
-            func_800322A8(wp, 1, 0);
+            EM_Char_Set(wp, 1, 0);
             wp->routine_1  = 20;
             wp->ctl.goal_2 = (wp->rotation.y + 0x800) & 0xFFF;
         }

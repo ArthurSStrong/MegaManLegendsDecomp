@@ -46,13 +46,13 @@ void func_80107428(ST0A_VIEW *wp)
             }
             break;
     }
-    func_8002FEA4(wp, (sint16)(wp->u_44.h[0] << 4), (sint16)(-wp->u_44.h[1] << 4), 0);
+    Obj_pos_set(wp, (sint16)(wp->u_44.h[0] << 4), (sint16)(-wp->u_44.h[1] << 4), 0);
     if (wp->u_AC.b[0] != wp->u_AC.b[1])
     {
-        func_800322A8(wp, wp->u_AC.b[0], 0);
+        EM_Char_Set(wp, wp->u_AC.b[0], 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }

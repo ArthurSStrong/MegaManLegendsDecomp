@@ -10,7 +10,7 @@ void func_80126224(ST1A_50 *wp)
 void func_80126288(STAGE_FX *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_40 = 0x808080;
     if (wp->variant_3 == 0)
     {
@@ -516,7 +516,7 @@ void func_801273A0(ST1A_50 *wp)
 void func_8012742C(STAGE_FX *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_40  = 0x808080;
     wp->frame_E   = 0x20;
     wp->routine_0 = 1;
@@ -652,14 +652,14 @@ void func_801278C0(STAGE_OBJ50 *wp)
     wp->kind_2    = 0x16;
     wp->variant_3 = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->kind_2    = 0x37;
     wp->variant_3 = 2;
     wp->color_40  = 0x2808080;
     func_801280DC(wp);
     for (i = 0; i < 12; i++)
     {
-        ep = (STAGE_OBJ50 *)func_80031618();
+        ep = (STAGE_OBJ50 *)Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;
@@ -680,7 +680,7 @@ void func_801279E8(STAGE_OBJ *wp)
     wp->kind_2    = 0x16;
     wp->variant_3 = 1;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->kind_2                  = 0x37;
     wp->variant_3               = 3;
     wp->position_fixed_prev.pad = 0x2C808080;
@@ -903,7 +903,7 @@ void func_80127F3C(STAGE_OBJ50 *wp)
 void func_8012800C(STAGE_FX *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_40  = 0x808080;
     wp->frame_E   = 0x20;
     wp->routine_0 = 1;
@@ -957,7 +957,7 @@ void func_8012814C(ST1A_50 *wp)
     {
         case 0:
             wp->flags_0 |= 6;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             wp->color_40 = 0x808080;
             wp->routine_0++;
             // fall through
@@ -1004,7 +1004,7 @@ void func_80128310(STAGE_FX *wp)
 {
     wp->kind_2 = 0x29;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->value_C   = 0;
     wp->kind_2    = 0x3B;
     wp->value_40  = 0x808080;

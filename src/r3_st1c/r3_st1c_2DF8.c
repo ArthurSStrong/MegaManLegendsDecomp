@@ -19,7 +19,7 @@ uint8 func_80102DF8(void)
 void func_80102E3C(ST1C_OBJ *wp)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_64               = 0;
     wp->rotation_prev.v.x      = 0;
     wp->rotation.v.x           = 0;
@@ -37,7 +37,7 @@ void func_80102E3C(ST1C_OBJ *wp)
     wp->position_fixed.x = wp->position_fixed_prev.x = wp->position.x << 16;
     wp->position_fixed.z = wp->position_fixed_prev.z = wp->position.z << 16;
     wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->data_78 = NULL;
     wp->data_10 = D_80104460;
     wp->routine_0++;
@@ -82,7 +82,7 @@ void func_80102FD0(ST1C_OBJ *wp)
             if (func_8003A13C() == 0)
             {
                 func_80063BC8(&wp->position, 1, 0, 1);
-                func_800322A8(wp, 8, 0);
+                EM_Char_Set(wp, 8, 0);
                 done = 1;
                 wp->routine_2++;
             }
@@ -99,7 +99,7 @@ void func_80102FD0(ST1C_OBJ *wp)
             if (func_8003A13C() == 0)
             {
                 Player_work.flags_bd &= ~0x40;
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 Sce_flag_on(0x40);
                 done          = 1;
                 wp->routine_2 = 0;
@@ -109,7 +109,7 @@ void func_80102FD0(ST1C_OBJ *wp)
     }
     if (done == 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -142,7 +142,7 @@ void func_80103178(ST1C_OBJ *wp)
                 }
                 else
                 {
-                    func_800322A8(wp, 0xB, 0);
+                    EM_Char_Set(wp, 0xB, 0);
                     wp->timer_C = 0x1E;
                     wp->routine_2++;
                 }
@@ -152,14 +152,14 @@ void func_80103178(ST1C_OBJ *wp)
             if (--wp->timer_C == 0)
             {
                 wp->timer_C = 0xF;
-                func_800322A8(wp, 0xC, 0);
+                EM_Char_Set(wp, 0xC, 0);
                 wp->routine_2++;
             }
             break;
         case 3:
             if (--wp->timer_C == 0)
             {
-                func_800322A8(wp, 8, 0);
+                EM_Char_Set(wp, 8, 0);
                 slot = func_80102DF8();
                 if (slot == 0xFF)
                 {
@@ -191,7 +191,7 @@ void func_80103178(ST1C_OBJ *wp)
             if (func_8003A13C() == 0)
             {
                 pl->flags_bd &= ~0x40;
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 Sce_flag_on(0x40);
                 done          = 1;
                 wp->routine_1 = 0;
@@ -201,7 +201,7 @@ void func_80103178(ST1C_OBJ *wp)
     }
     if (done == 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -220,7 +220,7 @@ void func_8010345C(STAGE_OBJ *wp)
     D_80104478[wp->routine_0](wp);
     if ((uint8)wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x3C, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
     }
 }
 
@@ -236,7 +236,7 @@ void func_801034C8(ST1C_OBJ50 *wp)
         case 0:
             wp->flags_0 |= 6;
             wp->variant_3 = D_801044C4[wp->index_C];
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             if (wp->index_C == 5)
             {
                 wp->color_40 = 0x2808080;

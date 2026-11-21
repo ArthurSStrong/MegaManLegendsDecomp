@@ -37,7 +37,7 @@ HOST_IMPORTS = (*RETAIL_IMPORTS, "port_vblank_idle", "port_spin_pause")
 # address, from an overlay) reaches the host, which runs the mod's hook or the original.
 MOD_HOOKS = (
     "func_8003D1E0",  # the skates' routine (fast_skates)
-    "func_8002FEA4",  # a step of movement (fast_skates)
+    "Obj_pos_set",  # a step of movement (fast_skates)
     "func_8003F5D8",  # standing: the skate button check (skate_quick_start)
     "func_8003C88C",  # the player's routine (skate_quick_start)
     "func_8003FDA8",  # skating: the action check (skate_shoot)

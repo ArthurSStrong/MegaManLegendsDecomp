@@ -20,20 +20,20 @@ void stcom15_func_0000(STCOM15_WORK *wp)
     ctl = &wp->ctl;
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_800322A8(wp, wp->anim_AC, 0);
+        EM_Char_Set(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if ((wp->flags_0 & 1) && (ctl->flags_0 & 4))
     {
         ctl->pos_C = wp->joints_180[0];
-        func_800341BC(&ctl->pos_C, 0x50, 0, 0x8000, wp->value_1, &ctl->hit_14,
+        Set_Atari(&ctl->pos_C, 0x50, 0, 0x8000, wp->value_1, &ctl->hit_14,
                       ctl->value_8 | 0x4880000, 0x800000, 0);
     }
     ctl->hit_14 = 0;
@@ -50,7 +50,7 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
     wp->velocity.words[0]   = 0;
     wp->velocity.words[1]   = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x200;
     ctl                = &wp->ctl;
@@ -70,7 +70,7 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
     *(uint32 *)&ctl->value_8 = 0;
     ctl->hit_14              = 0;
     ctl->value_18            = 0;
-    func_80036478(ctl->track_24, D_80098844[wp->kind_2][ctl->level_6].track_F, -0x60);
+    Search_Player_Init(ctl->track_24, D_80098844[wp->kind_2][ctl->level_6].track_F, -0x60);
     ctl->timer_34  = 0;
     ctl->timer_36  = 0;
     ctl->timer_38  = 4;
@@ -89,16 +89,16 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
         *(uint16 *)&wp->routine_2 = 0;
         wp->position.y += 0x20;
         wp->position_fixed.y = wp->position.y << 16;
-        func_800322A8(wp, 0xC, 0);
+        EM_Char_Set(wp, 0xC, 0);
     }
     else
     {
-        wp->position.y            = func_80048E6C(wp);
+        wp->position.y            = Scr_height_check(wp);
         wp->position_fixed.y      = wp->position.y << 16;
         wp->routine_0             = 1;
         wp->routine_1             = 0;
         *(uint16 *)&wp->routine_2 = 0;
-        func_800322A8(wp, 0, 0);
+        EM_Char_Set(wp, 0, 0);
     }
     wp->scale.v.pad = 0x4210;
 }
@@ -108,7 +108,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
     STCOM15_CTL *ctl;
 
     ctl = &wp->ctl;
-    if (!(wp->variant_3 & 0x20) && func_8003648C(ctl->track_24, wp))
+    if (!(wp->variant_3 & 0x20) && Search_Player(ctl->track_24, wp))
     {
         wp->ctl.flags_0 |= 0x10;
     }
@@ -171,7 +171,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
     }
     if ((ctl->flags_0 & 0x40) && --ctl->timer_38 < 0)
     {
-        ctl->effect_40 = func_80031618();
+        ctl->effect_40 = Open_EFFECT_WORK();
         if (ctl->effect_40 != NULL)
         {
             ctl->effect_40->flags_0         = 5;
@@ -243,7 +243,7 @@ void stcom15_func_0748(STCOM15_WORK *wp)
         case 0:
             wp->routine_2 = 1;
             wp->anim_AC   = 1;
-            wp->turn_66   = (uint32)STCOM_ABS(func_80031BEC(&wp->position, &Player_work.position,
+            wp->turn_66   = (uint32)STCOM_ABS(Muku(&wp->position, &Player_work.position,
                                                             wp->rotation.y, 0x800)) >>
                             3;
             ctl->timer_4  = 8;
@@ -255,7 +255,7 @@ void stcom15_func_0748(STCOM15_WORK *wp)
                 ctl->flags_0 |= 1;
             }
             ctl->turn_44 =
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, wp->turn_66);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y, wp->turn_66);
             wp->rotation.y = (wp->rotation.y + ctl->turn_44) & 0xFFF;
             break;
     }
@@ -279,9 +279,9 @@ void stcom15_func_0874(STCOM15_WORK *wp)
                 Sound_call2(0xB0, &wp->position);
             }
             wp->rotation.y = (wp->rotation.y + wp->turn_66) & 0xFFF;
-            func_8002FEA4(wp, 0x34, 0, 0);
+            Obj_pos_set(wp, 0x34, 0, 0);
             ctl->hit_48          = func_8004B414(wp);
-            wp->position.y       = func_80048E6C(wp);
+            wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
             {
@@ -384,12 +384,12 @@ void stcom15_func_0A30(STCOM15_WORK *wp)
                     *(uint16 *)&wp->routine_2 = 0;
                     break;
                 }
-                ctl->turn_44   = func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y,
+                ctl->turn_44   = Muku(&wp->position, &Player_work.position, wp->rotation.y,
                                                wp->turn_64);
                 wp->rotation.y = (wp->rotation.y + ctl->turn_44) & 0xFFF;
-                func_8002FEA4(wp, 0x300, 0, 0);
+                Obj_pos_set(wp, 0x300, 0, 0);
                 ctl->hit_48          = func_8004B414(wp);
-                wp->position.y       = func_80048E6C(wp);
+                wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
                 {
@@ -450,9 +450,9 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
             }
             else
             {
-                func_8002FEA4(wp, -0x70, 0, 0);
+                Obj_pos_set(wp, -0x70, 0, 0);
                 func_8004B414(wp);
-                wp->position.y       = func_80048E6C(wp);
+                wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
                 {
@@ -479,9 +479,9 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
             }
             else
             {
-                func_8002FEA4(wp, -ctl->timer_4 * 32, 0, 0);
+                Obj_pos_set(wp, -ctl->timer_4 * 32, 0, 0);
                 func_8004B414(wp);
-                wp->position.y       = func_80048E6C(wp);
+                wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
                 {
@@ -499,9 +499,9 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
             }
             else
             {
-                func_8002FEA4(wp, 0xE0, 0, 0);
+                Obj_pos_set(wp, 0xE0, 0, 0);
                 func_8004B414(wp);
-                wp->position.y       = func_80048E6C(wp);
+                wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
                 {
@@ -556,7 +556,7 @@ void stcom15_func_0FE0(STCOM15_WORK *wp)
                 if (ctl->timer_4 < 100)
                 {
                     wp->position_fixed.x += wp->velocity.v.x << 16;
-                    if (wp->position.y != func_80048E6C(wp))
+                    if (wp->position.y != Scr_height_check(wp))
                     {
                         wp->position_fixed.y += wp->velocity.v.y << 16;
                         wp->velocity.v.y += wp->accel.y;
@@ -566,7 +566,7 @@ void stcom15_func_0FE0(STCOM15_WORK *wp)
                         wp->velocity.v.y = 0x20;
                     }
                     wp->position_fixed.z += wp->velocity.v.z << 16;
-                    func_80030150(&wp->position_fixed, &wp->position);
+                    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
                 }
                 ctl->hit_48 = func_8004B414(wp);
                 if (ctl->hit_48 != 0)
@@ -630,7 +630,7 @@ void stcom15_func_12E8(STCOM15_WORK *wp)
             }
             // fall through
         case 2:
-            func_8002FEA4(wp, 0, wp->velocity.v.y << 7, 0);
+            Obj_pos_set(wp, 0, wp->velocity.v.y << 7, 0);
             if ((func_8004B414(wp) & 0x1000) && ctl->timer_4 < 0)
             {
                 ctl->flags_0 |= 1;
@@ -667,7 +667,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
         case 2:
             ctl->timer_4--;
             wp->velocity.v.y = (stcom15_D_0044[wp->routine_3 + 1] - ctl->timer_4) << 3;
-            func_8002FEA4(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
+            Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
             ctl->hit_48 = func_8004B414(wp);
             if (ctl->hit_48 != 0)
             {
@@ -708,7 +708,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
             else
             {
                 wp->ctl.turn_44 =
-                    func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
+                    Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
                 wp->rotation.y = (wp->rotation.y + wp->ctl.turn_44) & 0xFFF;
             }
             break;
@@ -755,7 +755,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
         case 2:
             ctl->timer_4--;
             wp->velocity.v.y = (ctl->steps_3C[wp->routine_3 + 1] - ctl->timer_4) << 3;
-            func_8002FEA4(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
+            Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
             ctl->hit_48 = func_8004B414(wp);
             if (ctl->hit_48 != 0)
             {
@@ -803,7 +803,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
             else
             {
                 wp->ctl.turn_44 =
-                    func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
+                    Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
                 wp->rotation.y = (wp->rotation.y + wp->ctl.turn_44) & 0xFFF;
             }
             break;
@@ -814,7 +814,7 @@ void stcom15_func_18EC(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
-    wp->ctl.angle_46 = func_80031198(&Player_work.position, &wp->position) - Player_work.rotation.y;
+    wp->ctl.angle_46 = Calc_degree2(&Player_work.position, &wp->position) - Player_work.rotation.y;
     ctl              = &wp->ctl;
     switch (wp->routine_2)
     {
@@ -832,15 +832,15 @@ void stcom15_func_18EC(STCOM15_WORK *wp)
                 break;
             }
             ctl->turn_44 =
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x20);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x20);
             wp->rotation.y = (wp->rotation.y + ctl->turn_44) & 0xFFF;
-            func_8002FEA4(wp, 0x34, 0, 0);
+            Obj_pos_set(wp, 0x34, 0, 0);
             ctl->hit_48 = func_8004B414(wp);
             if (wp->value_A6 == 1)
             {
                 Sound_call2(0xB0, &wp->position);
             }
-            wp->position.y       = func_80048E6C(wp);
+            wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
             {
@@ -900,11 +900,11 @@ void stcom15_func_1B90(STCOM15_WORK *wp)
                 ctl->flags_0 |= 1;
             }
             ctl->turn_44 =
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x20);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x20);
             wp->rotation.y = (wp->rotation.y + ctl->turn_44) & 0xFFF;
-            func_8002FEA4(wp, 0x34, 0, 0);
+            Obj_pos_set(wp, 0x34, 0, 0);
             ctl->hit_48          = func_8004B414(wp);
-            wp->position.y       = func_80048E6C(wp);
+            wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 32)
             {
@@ -978,7 +978,7 @@ void stcom15_func_1E0C(STCOM15_WORK *wp)
         ctl->shot_4C->position_fixed.x = wp->position_fixed.x;
         ctl->shot_4C->position_fixed.z = wp->position_fixed.z;
         ctl->shot_4C->angle_64         = wp->rotation.y;
-        func_80030150(&ctl->shot_4C->position_fixed, &ctl->shot_4C->position);
+        Obj_pos_adj_round(&ctl->shot_4C->position_fixed, &ctl->shot_4C->position);
         func_8002FFC4(&ctl->shot_4C->position, &ctl->shot_4C->position_fixed,
                       ctl->shot_4C->angle_64, 0x6E0, 0, 0);
     }
@@ -1027,7 +1027,7 @@ sint32 stcom15_func_1F44(STCOM15_WORK *wp)
                     Sound_call2(0xA2, &wp->position);
                     if (ctl->target_1C.pad & 1)
                     {
-                        ctl->turn_44 = func_80031198(&wp->position, &ctl->target_1C);
+                        ctl->turn_44 = Calc_degree2(&wp->position, &ctl->target_1C);
                         if (((wp->rotation.y - ctl->turn_44 + 0x400) & 0xFFF) < 0x800)
                         {
                             wp->routine_1  = 7;
@@ -1041,7 +1041,7 @@ sint32 stcom15_func_1F44(STCOM15_WORK *wp)
                     }
                     else
                     {
-                        ctl->turn_44 = func_80031198(&stcom15_D_006C, &ctl->target_1C);
+                        ctl->turn_44 = Calc_degree2(&stcom15_D_006C, &ctl->target_1C);
                         if (((ctl->turn_44 - wp->rotation.y + 0x400) & 0xFFF) < 0x800)
                         {
                             wp->routine_1  = 8;

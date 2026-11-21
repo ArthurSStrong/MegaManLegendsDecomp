@@ -324,7 +324,7 @@ typedef struct
     uint8 reserved7E[0x2E];     // 7E
     STCOM_SVECTOR model_pos_AC; // AC
     uint8 reservedB4[0x10];     // B4
-    uint32 col_C4;              // C4: hit accumulator (func_8003430C, func_800341BC)
+    uint32 col_C4;              // C4: hit accumulator (func_8003430C, Set_Atari)
     uint8 reservedC8[0x44];     // C8
 } ST0C_SHOT;
 

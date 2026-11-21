@@ -85,7 +85,7 @@ void func_80100C10(STAGE_ROOM *wp)
                 STAGE_PL.fixed_428.y = -0x10000;
                 STAGE_PL.fixed_428.z = -0x1230000;
                 STAGE_PL.flags_bd |= 0x10;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 STAGE_PL.value_442 = 0x800;
                 STAGE_PL.value_440 = 0;
                 STAGE_PL.value_444 = 0;
@@ -161,7 +161,7 @@ void func_80100E68(ST10_PL *wp)
             wp->fixed_428.z = wp->pos_438.z << 16;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 MojiTaskExec2(0, 6);
                 wp->routine_D++;
@@ -194,7 +194,7 @@ void func_80100E68(ST10_PL *wp)
             }
             break;
         case 7:
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0           = 5;
@@ -216,8 +216,8 @@ void func_80100E68(ST10_PL *wp)
 void func_80101068(ST10_PL *wp)
 {
     D_801101E0[wp->routine_C](wp);
-    func_80030150(&wp->fixed_428, &wp->pos_438);
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->fixed_428, &wp->pos_438);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
 }
 
 void func_801010C8(STAGE_ROOM *wp)

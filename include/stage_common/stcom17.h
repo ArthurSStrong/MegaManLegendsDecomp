@@ -213,16 +213,16 @@ extern STCOM17_GUN_FUNC stcom17_D_0040[]; // routine_1 handlers (stcom17_func_19
 extern STCOM17_KIND **D_80098844;
 extern uint8 Scene_work; // nonzero while a scene runs
 STCOM17_SHOT *Open_SHL_WORK(void);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_8002F9EC(void *wp, sint32 arg);
-void func_80032304(void *wp, sint32 anim, sint32 arg);
-void func_8003346C(void *wp);
+void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
+void EM_World_Pos_Calc(void *wp);
 uint32 func_80030628(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
                      sint32 angle);
 sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
-void func_80030EE8(void *wp, STCOM_SVECTOR *target, sint32 speed);
+void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
 #else
@@ -230,9 +230,9 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void func_80052528(void *wp);
 sint32 func_800364B0(void *track, void *wp, sint32 angle);
-sint16 func_80030D30(STCOM_SVECTOR *from, STCOM_SVECTOR *to, sint32 speed, sint32 arg3,
+sint16 Calc_arc_angle(STCOM_SVECTOR *from, STCOM_SVECTOR *to, sint32 speed, sint32 arg3,
                      sint32 arg4);
-void func_80030968(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
+void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
 sint32 SquareRoot0(sint32 v);
 // Hand-written: copies `count` words.
 void func_80017684(void *src, void *dst, sint32 count);
@@ -249,7 +249,7 @@ void stcom17_func_2378(STCOM17_GUN_WORK *wp, sint32 angle, sint32 goal);
 void stcom17_func_23BC(STCOM17_GUN_WORK *wp, sint32 angle, sint32 goal);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint32 func_80048E6C(void *wp);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Scr_height_check(void *wp);
 
 #endif // STCOM17_H

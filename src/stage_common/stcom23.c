@@ -45,7 +45,7 @@ void stcom23_func_003C(STCOM23_WORK *wp)
     wp->accel.y          = (v.y * speed) >> 4;
     wp->accel.z          = (v.z * speed) >> 4;
     wp->kind_2           = stcom23_D_0000[wp->variant_3].kind_0;
-    func_8002F9C4(wp, &stcom23_D_0000[wp->variant_3].variant_1);
+    Model_work_init(wp, &stcom23_D_0000[wp->variant_3].variant_1);
     wp->draw_pos.x         = wp->position.x;
     wp->draw_pos.y         = wp->position.y;
     wp->draw_pos.z         = wp->position.z;
@@ -186,7 +186,7 @@ void stcom23_func_0934(STCOM23_WORK *wp)
 // Registers the hit box.
 void stcom23_func_0954(STCOM23_WORK *wp)
 {
-    func_800341BC(&wp->position, stcom23_D_0000[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
+    Set_Atari(&wp->position, stcom23_D_0000[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
                   &wp->hit_C4, stcom23_D_0000[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
     wp->hit_C4 = 0;
 }
@@ -214,7 +214,7 @@ void stcom23_func_0AAC(STCOM23_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0           = 5;

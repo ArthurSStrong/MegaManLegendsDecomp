@@ -169,19 +169,19 @@ void func_80019B14(sint32 arg)
     }
 }
 
-void func_80019C20(void)
+void Sound_bgm_change_check(void)
 {
     uint16 *tbl;
     uint16 v;
     SOUND_FUNC fn;
     sint32 diff;
 
-    fn = D_800823A0[D_800C356E];
+    fn = Bgm_set_tbl[D_800C356E];
     if (fn != 0)
     {
         fn(1);
     }
-    tbl  = D_80082320[D_800C356E];
+    tbl  = Bgm_tbl[D_800C356E];
     diff = 0;
     if (tbl == 0)
     {
@@ -196,7 +196,7 @@ void func_80019C20(void)
         }
         else
         {
-            tbl = D_80082320[Game_work.stage_no];
+            tbl = Bgm_tbl[Game_work.stage_no];
             if (tbl[(sint8)Game_work.area_no] != v)
             {
                 diff = 1;
@@ -206,23 +206,23 @@ void func_80019C20(void)
     if (diff)
     {
         Sound_fade_start(0x10);
-        D_80098958 |= 0x800;
+        Sound_flags |= 0x800;
     }
 }
 
-void func_80019D18(void)
+void Sound_bgm_start(void)
 {
     uint16 *tbl;
     SOUND_FUNC fn;
     sint32 id;
     sint32 ok;
 
-    fn = D_800823A0[GAME_WORK_PTR->stage_no];
+    fn = Bgm_set_tbl[GAME_WORK_PTR->stage_no];
     if (fn != 0)
     {
         fn(0);
     }
-    tbl = D_80082320[GAME_WORK_PTR->stage_no];
+    tbl = Bgm_tbl[GAME_WORK_PTR->stage_no];
     id  = 0;
     ok  = 0;
     if (tbl != 0)
@@ -236,14 +236,14 @@ void func_80019D18(void)
     }
     else
     {
-        func_8001B33C();
+        Sound_seq_stop_all();
     }
-    D_80098958 &= ~0x800;
+    Sound_flags &= ~0x800;
 }
 
 // Store order found by search; neither field order nor source order of the
 // assignments reproduces retail's early 0x7F in v1.
-void func_80019DE0(void)
+void Sound_init(void)
 {
     SOUND_SPU_ENV env;
     sint32 i;
@@ -252,8 +252,8 @@ void func_80019DE0(void)
     SsSetTableSize(D_800C1010, 4, 4);
     SsSetTickMode(1);
     Sound_fade_flags       = 0;
-    D_80098938       = D_800BE4F8;
-    D_80098958       = 0;
+    Sound_call_ptr       = Sound_call_buf;
+    Sound_flags       = 0;
     Sound_work.unk04 = 0x7F;
     Sound_work.unk08 = 0x40;
     Sound_work.unk0A = 0x64;
@@ -285,7 +285,7 @@ void func_80019DE0(void)
     env.value     = 0;
     SpuSetEnv(&env);
     SsStart();
-    D_80098958 |= 1;
+    Sound_flags |= 1;
 }
 
 void func_80019F94(sint32 index)
@@ -293,12 +293,12 @@ void func_80019F94(sint32 index)
     Sound_work.unk1C = (uint8 *)&D_800821F8[index];
 }
 
-void func_80019FB4(void)
+void Sound_bgm_tbl_set(void)
 {
     SOUND_FUNC func;
 
-    func = D_800823A0[Game_work.stage_no];
-    D_80098958 |= 0x800;
+    func = Bgm_set_tbl[Game_work.stage_no];
+    Sound_flags |= 0x800;
     if (func != 0)
     {
         func(0);
@@ -309,13 +309,13 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2)
 {
     SOUND_CALL *call;
 
-    if (D_80098938 != D_800BE6D8)
+    if (Sound_call_ptr != D_800BE6D8)
     {
-        D_80098938->kind      = 0;
-        D_80098938->id        = id;
-        D_80098938->args.arg1 = arg1;
-        D_80098938->args.arg2 = arg2;
-        D_80098938++;
+        Sound_call_ptr->kind      = 0;
+        Sound_call_ptr->id        = id;
+        Sound_call_ptr->args.arg1 = arg1;
+        Sound_call_ptr->args.arg2 = arg2;
+        Sound_call_ptr++;
     }
 }
 
@@ -323,18 +323,18 @@ void Sound_call2(sint16 id, SOUND_ARGS *args)
 {
     SOUND_CALL *call;
 
-    if (D_80098938 != D_800BE6D8)
+    if (Sound_call_ptr != D_800BE6D8)
     {
-        D_80098938->kind = 1;
-        call             = D_80098938;
+        Sound_call_ptr->kind = 1;
+        call             = Sound_call_ptr;
         call->id         = id;
         call->args.arg1  = args->arg1;
         call->args.arg2  = args->arg2;
-        D_80098938       = ++call;
+        Sound_call_ptr       = ++call;
     }
 }
 
-sint32 func_8001A0A8(sint32 i)
+sint32 Sound_seq_end_check(sint32 i)
 {
     sint32 r;
 
@@ -346,34 +346,34 @@ sint32 func_8001A0A8(sint32 i)
     return r;
 }
 
-void func_8001A110(void)
+void Sound_update(void)
 {
     sint32 i;
     SOUND_CALL *call;
     SOUND_INFO *info;
 
-    if (D_80098958 != 0)
+    if (Sound_flags != 0)
     {
-        func_8001AEF0();
+        sound_volume_update();
         for (i = 0; i < 4; i++)
         {
-            D_80098AFD[i][0] = func_8001A0A8(i);
+            D_80098AFD[i][0] = Sound_seq_end_check(i);
         }
-        call = D_800BE4F8;
-        if (D_80098938 != call)
+        call = Sound_call_buf;
+        if (Sound_call_ptr != call)
         {
             do
             {
-                info = &D_8008241C[call->id];
-                D_80082C64[info->flags >> 6](call);
+                info = &Sound_info_tbl[call->id];
+                Sound_play_tbl[info->flags >> 6](call);
                 call++;
-            } while (call != D_80098938);
+            } while (call != Sound_call_ptr);
         }
-        D_80098938 = D_800BE4F8;
+        Sound_call_ptr = Sound_call_buf;
     }
 }
 
-sint32 func_8001A1FC(sint32 id)
+sint32 sound_vab_find(sint32 id)
 {
     sint32 i;
 
@@ -387,7 +387,7 @@ sint32 func_8001A1FC(sint32 id)
     return -1;
 }
 
-sint32 func_8001A238(sint32 id)
+sint32 sound_seq_find(sint32 id)
 {
     sint32 i;
 
@@ -401,7 +401,7 @@ sint32 func_8001A238(sint32 id)
     return -1;
 }
 
-void func_8001A274(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint16 dist)
+void sound_pan_calc(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint16 dist)
 {
     uint16 l;
     uint16 r;
@@ -489,7 +489,7 @@ void func_8001A274(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint
     *right = (*right * Sound_work.unk10) / 127;
 }
 
-sint32 func_8001A63C(sint32 n)
+sint32 sound_pitch_calc(sint32 n)
 {
     sint32 f;
     sint32 a;
@@ -512,35 +512,35 @@ sint32 func_8001A63C(sint32 n)
 
 // Interpolates between two pitch steps. Accumulating into lo (set twice) keeps it out of
 // sched1's birthing-insn preference, so lo is saved before n + 1 is formed, as in retail.
-sint32 func_8001A6DC(sint32 n, sint32 frac)
+sint32 sound_pitch_fine(sint32 n, sint32 frac)
 {
     sint32 lo;
     sint32 hi;
 
-    lo = func_8001A63C(n);
-    hi = func_8001A63C(n + 1);
+    lo = sound_pitch_calc(n);
+    hi = sound_pitch_calc(n + 1);
     lo += ((hi - lo) * frac) / 128;
     return lo;
 }
 
-void func_8001A744(sint32 vab, SOUND_VOICE *voice, SOUND_TONE *tone, SOUND_POS *pos)
+void sound_se_key_on(sint32 vab, SOUND_VOICE *voice, SOUND_TONE *tone, SOUND_POS *pos)
 {
     SOUND_VOICE_ATTR attr;
     sint32 slot;
 
     slot = voice->voice_3 & 0x1F;
-    func_8001A274(pos, tone->pan_2, &attr.volume_l, &attr.volume_r, SOUND_DIST_TBL[slot]);
+    sound_pan_calc(pos, tone->pan_2, &attr.volume_l, &attr.volume_r, SOUND_DIST_TBL[slot]);
     attr.voice       = 1 << slot;
     attr.mask        = 0x60093;
     attr.addr        = SsUtGetVagAddr((sint16)vab, tone->vag_16);
-    attr.pitch       = func_8001A6DC(tone->note_6 - tone->note_4, tone->frac_5);
+    attr.pitch       = sound_pitch_fine(tone->note_6 - tone->note_4, tone->frac_5);
     attr.adsr1       = tone->adsr1_10;
     attr.adsr2       = tone->adsr2_12;
     D_80098B48[slot] = voice->priority_2 & 0xF;
     SpuSetKeyOnWithAttr(&attr);
 }
 
-sint32 func_8001A834(SOUND_VOICE *voice, SOUND_POS *pos)
+sint32 sound_se_voice_check(SOUND_VOICE *voice, SOUND_POS *pos)
 {
     sint32 slot;
     sint32 status;
@@ -574,7 +574,7 @@ sint32 func_8001A834(SOUND_VOICE *voice, SOUND_POS *pos)
     return 1;
 }
 
-void func_8001A968(SOUND_POS *call)
+void Sound_se_play(SOUND_POS *call)
 {
     SOUND_INFO *info;
     sint32 slot;
@@ -584,8 +584,8 @@ void func_8001A968(SOUND_POS *call)
     uint16 vab;
     uint8 range;
 
-    info = &D_8008241C[((SOUND_CALL *)call)->id];
-    slot = func_8001A1FC(info->flags & 0x3F);
+    info = &Sound_info_tbl[((SOUND_CALL *)call)->id];
+    slot = sound_vab_find(info->flags & 0x3F);
     if (slot == -1)
     {
         return;
@@ -598,9 +598,9 @@ void func_8001A968(SOUND_POS *call)
     vab   = GAME_WORK_SLOT_VAB(slot);
     while (count >= 0 && voice < 0x18)
     {
-        if (func_8001A834((SOUND_VOICE *)info, call))
+        if (sound_se_voice_check((SOUND_VOICE *)info, call))
         {
-            func_8001A744(vab, (SOUND_VOICE *)info, tone, call);
+            sound_se_key_on(vab, (SOUND_VOICE *)info, tone, call);
         }
         tone++;
         count--;
@@ -608,7 +608,7 @@ void func_8001A968(SOUND_POS *call)
     }
 }
 
-void func_8001AA8C(SOUND_CALL *call)
+void Sound_seq_play(SOUND_CALL *call)
 {
     SOUND_INFO *info;
     SOUND_SEQ *seq;
@@ -616,13 +616,13 @@ void func_8001AA8C(SOUND_CALL *call)
     sint32 idx;
     SOUND_WORK *sw;
 
-    info = &D_8008241C[call->id];
-    slot = func_8001A1FC(info->flags & 0x3F);
+    info = &Sound_info_tbl[call->id];
+    slot = sound_vab_find(info->flags & 0x3F);
     if (slot == -1)
     {
         return;
     }
-    idx = func_8001A238(info->byte_1 & 0x7F);
+    idx = sound_seq_find(info->byte_1 & 0x7F);
     if (idx == -1)
     {
         return;
@@ -668,7 +668,7 @@ void func_8001AA8C(SOUND_CALL *call)
     }
 }
 
-void func_8001AC58(SOUND_CALL *call)
+void Sound_sep_play(SOUND_CALL *call)
 {
     SOUND_INFO *info;
     SOUND_SEQ *seq;
@@ -678,13 +678,13 @@ void func_8001AC58(SOUND_CALL *call)
     uint8 sep;
 
     sw   = &Sound_work;
-    info = &D_8008241C[call->id];
-    slot = func_8001A1FC(info->flags & 0x3F);
+    info = &Sound_info_tbl[call->id];
+    slot = sound_vab_find(info->flags & 0x3F);
     if (slot == -1)
     {
         return;
     }
-    idx = func_8001A238(info->byte_1 & 0x7F);
+    idx = sound_seq_find(info->byte_1 & 0x7F);
     if (idx == -1)
     {
         return;
@@ -733,7 +733,7 @@ void func_8001AC58(SOUND_CALL *call)
     }
 }
 
-sint32 func_8001AE6C(sint32 flags, uint16 *p)
+sint32 sound_fade_step(sint32 flags, uint16 *p)
 {
     sint32 r;
 
@@ -765,7 +765,7 @@ sint32 func_8001AE6C(sint32 flags, uint16 *p)
 
 // The table base in a local lets loop.c treat tbl[i] as an induction variable (retail strength-
 // reduces it after hoisting the -1); indexing D_80098AFC directly leaves the base unhoisted.
-void func_8001AEF0(void)
+void sound_volume_update(void)
 {
     sint32 i;
     sint16 *ph;
@@ -776,20 +776,20 @@ void func_8001AEF0(void)
     uint8(*tbl)[8];
 
     sw = &Sound_work;
-    if (!func_8001AE6C(Sound_fade_flags & 3, (uint16 *)&sw->unk0C))
+    if (!sound_fade_step(Sound_fade_flags & 3, (uint16 *)&sw->unk0C))
     {
         Sound_fade_flags &= 0xFC;
     }
-    if (!func_8001AE6C((Sound_fade_flags & 0xC) >> 2, (uint16 *)&sw->unk10))
+    if (!sound_fade_step((Sound_fade_flags & 0xC) >> 2, (uint16 *)&sw->unk10))
     {
         Sound_fade_flags &= 0xF3;
     }
-    if (!func_8001AE6C((Sound_fade_flags & 0x30) >> 4, (uint16 *)&sw->unk12))
+    if (!sound_fade_step((Sound_fade_flags & 0x30) >> 4, (uint16 *)&sw->unk12))
     {
         Sound_fade_flags &= 0xCF;
     }
-    D_80098958 |= 0x400;
-    if (!func_8001AE6C(Sound_fade_flags >> 6, (uint16 *)&sw->unk0E))
+    Sound_flags |= 0x400;
+    if (!sound_fade_step(Sound_fade_flags >> 6, (uint16 *)&sw->unk0E))
     {
         if (Sound_fade_flags & 0x40)
         {
@@ -845,7 +845,7 @@ void func_8001AEF0(void)
             }
         }
     }
-    D_80098958 &= ~0x400;
+    Sound_flags &= ~0x400;
     if (sw->unk18 != sw->unk19)
     {
         func_80070974(0);
@@ -889,7 +889,7 @@ void func_8001B314(void)
     SpuSetKey(0, 0xFF8000);
 }
 
-void func_8001B33C(void)
+void Sound_seq_stop_all(void)
 {
     sint32 i;
     sint16 *ph;

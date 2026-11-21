@@ -9,8 +9,8 @@
 #include "psyq/libapi.h"
 
 // Small data reached through $gp
-THREAD_FUNC D_80098158;
-sint32 D_800979D8;
+THREAD_FUNC Thread_change_entry;
+sint32 Thread_change_flag;
 sint32 D_80097864;
 long D_800988D8;
 uint8 D_80098A8C;
@@ -20,10 +20,10 @@ void main(void)
 {
     if (D_80097864 == 0)
     {
-        func_80012938();
+        exception_init();
     }
-    func_80011F04();
-    func_80012E10(0, func_800131FC);
+    System_init();
+    Thread_open(0, main_task);
     while (1)
     {
         while (Vsync_count < SCRATCH_VSYNC_WAIT)
@@ -54,14 +54,14 @@ void main(void)
         ClearOTagR(D_8009BF88[SCRATCH_BUFFER_INDEX], 0x200);
         ClearOTagR(D_8009AE48[SCRATCH_BUFFER_INDEX], 0x200);
         SCRATCH_SCREEN_WORD = D_800806EC[D_80098864][SCRATCH_BUFFER_INDEX];
-        func_80012C80();
-        func_8001A110();
+        thread_exec();
+        Sound_update();
         func_8001C95C();
         func_800203A8();
         Moji_update();
         func_80064060();
         DrawSync(0);
-        func_80017B24();
+        Fade_draw();
         func_800178FC();
         if (D_80097864 != 0)
         {
@@ -71,7 +71,7 @@ void main(void)
     }
 }
 
-void func_80011F04(void)
+void System_init(void)
 {
     sint32 angle;
 
@@ -91,10 +91,10 @@ void func_80011F04(void)
     *(uint32 *)Joy2.unk34 = 0x4001;
     StartPAD();
     func_8006479C();
-    func_80019DE0();
+    Sound_init();
     ChangeClearPAD(0);
-    func_800120A8();
-    func_80012BC4();
+    Disp_env_set();
+    thread_init();
     D_80098934           = (CODE800133D8_LINK *)D_800C0C48;
     D_800D9B00           = 0;
     SCRATCH_BUFFER_INDEX = 0;
@@ -110,7 +110,7 @@ void func_80011F04(void)
     func_8002037C();
 }
 
-void func_800120A8(void)
+void Disp_env_set(void)
 {
     SetDefDrawEnv(&Joy1.disp_env[0].draw, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
     SetDefDispEnv(&Joy1.disp_env[0].disp, 0, DISPLAY_BUFFER_Y, DISPLAY_WIDTH, DISPLAY_HEIGHT);
@@ -224,7 +224,7 @@ void func_80012424(void)
 // The exception code is written out at each use: loop.c then hoists its shift and mask out of
 // the outer loop, and those two extra moves lower its threshold enough that the D_800979A4
 // address of the last five calls stays inside the loop (in s0) as in retail.
-long func_8001246C(void)
+long exception_viewer(void)
 {
     char *names[16] = {
         D_8009787C, D_80097880, D_80097884, D_8009788C, D_80097894, D_8009789C,
@@ -340,10 +340,10 @@ long func_8001246C(void)
     }
 }
 
-void func_80012938(void)
+void exception_init(void)
 {
     func_8007FF70();
-    D_800988D8 = OpenEvent(SYSTEM_EVENT_CLASS, EvSpTRAP, EvMdINTR, func_8001246C);
+    D_800988D8 = OpenEvent(SYSTEM_EVENT_CLASS, EvSpTRAP, EvMdINTR, exception_viewer);
     EnableEvent(D_800988D8);
     func_8007FF80();
 }
@@ -448,7 +448,7 @@ void func_80012A5C(DEBUG_MEMORY_ROW *rows, uint32 mode)
 
 // The context store comes before the stack and gp stores: those struct stores make CSE forget the
 // stored context, so it is reloaded for the sr store as in retail.
-void func_80012BC4(void)
+void thread_init(void)
 {
     sint32 i;
     uint32 gp;
@@ -474,7 +474,7 @@ void func_80012BC4(void)
     Thread_current = THREAD_WORK_TABLE;
 }
 
-void func_80012C80(void)
+void thread_exec(void)
 {
     Thread_current = THREAD_WORK_TABLE;
     do
@@ -502,13 +502,13 @@ void func_80012C80(void)
                     VSyncCallback(Vsync_handler);
                     (*THREAD_CURRENT_PTR)->unk70 = 0;
                 }
-                if (D_800979D8)
+                if (Thread_change_flag)
                 {
-                    D_800979D8 = 0;
+                    Thread_change_flag = 0;
                     func_8007FF70();
                     CloseTh((*THREAD_CURRENT_PTR)->handle);
                     (*THREAD_CURRENT_PTR)->handle =
-                        OpenTh(D_80098158, (*THREAD_CURRENT_PTR)->stack, (*THREAD_CURRENT_PTR)->gp);
+                        OpenTh(Thread_change_entry, (*THREAD_CURRENT_PTR)->stack, (*THREAD_CURRENT_PTR)->gp);
                     func_8007FF80();
                 }
                 break;
@@ -516,7 +516,7 @@ void func_80012C80(void)
     } while (++*THREAD_CURRENT_PTR < &THREAD_WORK_TABLE[THREAD_SLOT_COUNT]);
 }
 
-void func_80012E10(sint32 index, THREAD_FUNC entry)
+void Thread_open(sint32 index, THREAD_FUNC entry)
 {
     THREAD_WORK *thread;
 
@@ -535,7 +535,7 @@ void Thread_wait(sint32 arg)
     ChangeTh(THREAD_MAIN_HANDLE);
 }
 
-void func_80012ECC(void)
+void Thread_exit(void)
 {
     (*THREAD_CURRENT_PTR)->state = 0;
     func_8007FF70();
@@ -544,7 +544,7 @@ void func_80012ECC(void)
     ChangeTh(THREAD_MAIN_HANDLE);
 }
 
-void func_80012F24(sint32 index)
+void Thread_close(sint32 index)
 {
     THREAD_WORK_TABLE[index].state = 0;
     func_8007FF70();
@@ -552,24 +552,24 @@ void func_80012F24(sint32 index)
     func_8007FF80();
 }
 
-void func_80012F78(THREAD_FUNC entry)
+void Thread_change(THREAD_FUNC entry)
 {
-    D_80098158 = entry;
-    D_800979D8 = 1;
+    Thread_change_entry = entry;
+    Thread_change_flag = 1;
     ChangeTh(THREAD_MAIN_HANDLE);
 }
 
-void func_80012FA4(sint32 index)
+void Thread_suspend(sint32 index)
 {
     THREAD_WORK_TABLE[index].state |= THREAD_FLAG_SUSPENDED;
 }
 
-void func_80012FC8(sint32 index)
+void Thread_resume(sint32 index)
 {
     THREAD_WORK_TABLE[index].state &= ~THREAD_FLAG_SUSPENDED;
 }
 
-void func_80012FEC(sint32 index, char *name)
+void Thread_load(sint32 index, char *name)
 {
     uint8 header[THREAD_FILE_HEADER_SIZE];
     sint32 handle;
@@ -588,10 +588,10 @@ void func_80012FEC(sint32 index, char *name)
     } while (size == THREAD_FILE_CHUNK_SIZE);
     func_8007699C(handle);
     FlushCache();
-    func_80012E10(index, THREAD_WORK_TABLE[index].entry);
+    Thread_open(index, THREAD_WORK_TABLE[index].entry);
 }
 
-void func_800130D0(char *name)
+void Thread_load_change(char *name)
 {
     uint8 header[THREAD_FILE_HEADER_SIZE];
     sint32 handle;
@@ -610,7 +610,7 @@ void func_800130D0(char *name)
     } while (size == THREAD_FILE_CHUNK_SIZE);
     func_8007699C(handle);
     FlushCache();
-    func_80012F78(Thread_current->entry);
+    Thread_change(Thread_current->entry);
 }
 
 void func_8001319C(void)
@@ -627,7 +627,7 @@ void func_8001319C(void)
     }
 }
 
-void func_800131FC(void)
+void main_task(void)
 {
     D_80098B1C = 0;
     D_80098B1D = 0;

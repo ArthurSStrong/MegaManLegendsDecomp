@@ -207,25 +207,25 @@ extern sint32 D_80098004;
 extern uint8 D_800C0C24;
 extern uint8 Scene_work;
 extern GAME_WORK_3C0 Em_work_tbl[16];
-extern GAME_WORK_3C0 *D_80098820;
+extern GAME_WORK_3C0 *Em_work_cur;
 extern GAME_WORK_5A4 D_800C3580[4];
 extern GAME_WORK_5A4 *D_800989D0;
 extern GAME_WORK_10C Pl_shl_work_tbl[16];
 extern GAME_WORK_10C Shl_work_tbl[32];
-extern GAME_WORK_10C *D_800988F8;
+extern GAME_WORK_10C *Shl_work_cur;
 extern GAME_FUNC_10C D_80089820[];
 extern GAME_WORK_48 Effect_work_tbl[64];
-extern GAME_WORK_48 *D_800988E4;
+extern GAME_WORK_48 *Effect_work_cur;
 extern GAME_FUNC_48 D_80089858[];
 extern GAME_WORK_24 Eve_work_tbl[16];
-extern GAME_WORK_24 *D_800988F0;
+extern GAME_WORK_24 *Eve_work_cur;
 extern GAME_WORK_50 D_800BF118[32];
 extern GAME_WORK_50 *D_80098924;
 
 extern GAME_FUNC Game_main_tbl[];
 extern GAME_WORK Game_work;
 extern GAME_ENTRY_WORK D_800C3558;
-extern sint16 D_80098A72;
+extern sint16 Fade_busy;
 extern uint8 Sound_fade_flags;
 extern uint16 D_80098910;
 extern sint16 D_800C3560;
@@ -241,7 +241,7 @@ extern uint8 D_800C3570;
 sint32 func_800665FC(sint32 arg);
 void game_update(void);
 void func_8001B314(void);
-void func_80031AA4(void);
+void Work_close_apply(void);
 void play_time_count(void);
 void soft_reset_check(void);
 
@@ -269,9 +269,9 @@ void func_80065AA8(void);
 void func_800664BC(void);
 void func_8002E7A8(sint32 mode);
 void func_80063BA8(void);
-void func_80019FB4(void);
+void Sound_bgm_tbl_set(void);
 
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void func_800665E8(void);
 void Sce_flag_off(sint32 flag);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
@@ -314,14 +314,14 @@ void Map_screen_init(void);
 sint32 Map_screen_task(void);
 
 void Sound_fade_start(sint32 arg);
-sint32 func_8001A0A8(sint32 arg);
+sint32 Sound_seq_end_check(sint32 arg);
 void game_over_draw(void);
 void shutter_draw(void);
 void fade_wait_next(GAME_WORK *wp);
 void fade_wait_next2(GAME_WORK *wp);
 void support_warp_set(sint32 mode);
-void func_80019D18(void);
-void func_8003A744(void);
+void Sound_bgm_start(void);
+void Light_player_set(void);
 void func_801D8130(void);
 sint32 func_801D816C(void);
 
@@ -330,11 +330,11 @@ void func_80063C30(void);
 void func_80039D38(GAME_DELTA *delta);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void func_8002F420(sint32 flag, GAME_DELTA *delta);
-void func_80019C20(void);
+void Sound_bgm_change_check(void);
 void func_8003B140(void);
 
 // Game_work by its fixed address: GCC 2.7 rebuilds a literal address with lui at each
-// access instead of keeping the symbol's address in a register (func_80019D18).
+// access instead of keeping the symbol's address in a register (Sound_bgm_start).
 #define GAME_WORK_PTR ((GAME_WORK *)0x800C1B10)
 
 #endif

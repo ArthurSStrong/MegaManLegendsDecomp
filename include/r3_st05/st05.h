@@ -17,7 +17,7 @@ typedef struct
     uint8 reservedE[2];  // E
 } ST05_FALL;
 
-// A hit record of r3_st05's large actor (ST05_OBJ +0x450): func_800341BC's result first.
+// A hit record of r3_st05's large actor (ST05_OBJ +0x450): Set_Atari's result first.
 typedef struct
 {
     sint32 hit_0;       // 0
@@ -791,7 +791,7 @@ void func_80052528(void *wp);
 
 extern STAGE_REC D_80137E18[];
 
-void func_8002FBF4(void *wp);
+void Work_stage_close(void *wp);
 
 extern sint16 *D_80131C64[];
 extern sint16 *D_80131C80[];
@@ -821,7 +821,7 @@ sint32 func_80048C60(STCOM_SVECTOR *pos);
 
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
 void func_8003187C(void *wp);
-sint32 func_8001A0A8(sint32 arg);
+sint32 Sound_seq_end_check(sint32 arg);
 void stcom36_func_0028(sint8 room);
 void func_801267B0(STAGE_OBJ *wp, uint8 kind);
 void func_80106B28(void);
@@ -919,7 +919,7 @@ typedef struct
     uint16 value_18;        // 18
     uint16 value_1A;        // 1A
     STCOM_SVECTOR from_1C;  // 1C
-    uint8 track_24[0x10];   // 24: func_80036478's record
+    uint8 track_24[0x10];   // 24: Search_Player_Init's record
     sint16 sparks_34;       // 34: spark bursts so far (func_8010CA98)
 } ST05_GUARD_CTL;
 
@@ -999,7 +999,7 @@ void func_80127054(STAGE_SHOT *wp, sint32 arg);
 sint32 SquareRoot0(sint32 v);
 sint32 func_80118D74(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 extern STCOM_FIXED_VECTOR D_80137F68;
 sint32 func_801171D0(ST05_ACTOR *wp);
 
@@ -1103,7 +1103,7 @@ typedef struct
     STCOM_SVECTOR hit_pos_C; // 314
     sint32 hit_14;           // 31C
     uint8 reserved18[0xC];   // 320
-    uint8 track_24[0x10];    // 32C: func_8003648C
+    uint8 track_24[0x10];    // 32C: Search_Player
     STAGE_OBJ *part_34;      // 33C
     ST05_NODE *node_38;      // 340: the node it walks from
     ST05_NODE *node_3C;      // 344: the node it walks to
@@ -1281,7 +1281,7 @@ typedef struct
     uint16 value_8;             // 330: or'ed into the hit attributes
     sint16 timer_A;             // 332
     STCOM_SVECTOR hit_pos_C;    // 334
-    sint32 value_14;            // 33C: func_800341BC's result
+    sint32 value_14;            // 33C: Set_Atari's result
     sint32 value_18;            // 340
     uint8 reserved1C[8];        // 344
     uint8 track_24[0x10];       // 34C: func_800364B0
@@ -1405,7 +1405,7 @@ sint32 func_800364B0(void *track, void *wp, sint32 angle);
 
 typedef void (*ST05_WALKER_FUNC)(ST05_WALKER *wp);
 
-extern ST05_WALKER_FUNC D_801313DC[];
+extern ST05_WALKER_FUNC em1c_move00_tbl[];
 extern ST05_WALKER_FUNC D_801313F8[];
 extern ST05_WALKER_FUNC D_80131424[];
 extern ST05_WALKER_FUNC D_80131430[];
@@ -1415,8 +1415,8 @@ sint32 func_80116254(ST05_WALKER *wp);
 sint32 func_80116380(ST05_WALKER *wp);
 void func_80116528(ST05_WALKER *wp);
 void func_80036470(void *track);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_80048E6C(void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Scr_height_check(void *wp);
 
 // A ROCK_NEO record per kind (D_80098844), as the walker reads it.
 typedef struct
@@ -1435,7 +1435,7 @@ extern ST05_KIND **D_80098844;
 extern ST05_KIND **D_8009884C; // the boss's kinds (func_8011D830 reads life_A[0])
 
 // The walkers' shared state outside the module.
-extern STAGE_10C *D_80138094;
+extern STAGE_10C *Mixer_key;
 extern STAGE_OBJ *D_801380A0[]; // each variant's part
 extern STAGE_OBJ *D_801380A4;   // D_801380A0[1]
 
@@ -1724,7 +1724,7 @@ typedef struct
     uint16 random_2;       // BE: rand() each frame
     sint16 timer_4;        // C0
     uint16 reserved6;      // C2
-    sint32 hit_8;          // C4: func_800341BC's result
+    sint32 hit_8;          // C4: Set_Atari's result
     uint8 reservedC[0x44]; // C8
 } ST05_PROP_CTL;
 
@@ -1851,7 +1851,7 @@ typedef struct
     uint32 hit_14;          // 14: damage in the low 24 bits, kind bits above
     uint32 value_18;        // 18
     STCOM_SVECTOR from_1C;  // 1C: where the hit came from (pad bit 0: use it)
-    uint8 track_24[0x10];   // 24: func_80036478's record
+    uint8 track_24[0x10];   // 24: Search_Player_Init's record
     uint32 range_34;        // 34
     ST05_HELD *other_38;    // 38: the slot it carries
     uint8 reserved3C[4];    // 3C
@@ -2025,9 +2025,9 @@ typedef struct
     sint16 rise_16;       // 16: how fast it sinks (func_8011A194)
     sint32 hit_18;        // 18: func_8004B414's result
     sint32 ground_1C;     // 1C: 1 on the ground
-    sint32 hit_20;        // 20: func_800341BC's record
+    sint32 hit_20;        // 20: Set_Atari's record
     sint32 value_24;      // 24
-    uint8 track_28[0x10]; // 28: func_80036478/func_8003648C
+    uint8 track_28[0x10]; // 28: Search_Player_Init/Search_Player
 } ST05_BOAT_CTL;
 
 // A 0x3C0-byte work slot of the boats (D_801318F4's routines).
@@ -2117,7 +2117,7 @@ typedef struct
 
 void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl);
 
-// The scratchpad angles func_8003346C tilts a model by: x and z.
+// The scratchpad angles EM_World_Pos_Calc tilts a model by: x and z.
 #define ST05_SP_TILT ((STCOM_SVECTOR *)0x1F800128)
 
 // The same scratchpad angles as an array by joint (func_80111898): its model's draw reads them.
@@ -2166,8 +2166,8 @@ typedef struct
     sint16 timer_A;            // 44A
     uint8 reservedC[4];        // 44C
     ST05_HIT hit_10[9];        // 450: cleared each frame
-    uint8 track_A0[0x10];      // 4E0: func_80036478
-    STCOM_SVECTOR hit_pos_B0;  // 4F0: func_800341BC's point
+    uint8 track_A0[0x10];      // 4E0: Search_Player_Init
+    STCOM_SVECTOR hit_pos_B0;  // 4F0: Set_Atari's point
     STCOM_SVECTOR home_B8;     // 4F8: pad is the heading
     STCOM_SVECTOR target_C0;   // 500: pad is the angle from it to the player
     STCOM_SVECTOR size_C8;     // 508: func_80030418's box
@@ -2438,7 +2438,7 @@ void func_8005C24C(sint32 arg);
 
 void func_8001E3F0(sint32 arg);
 
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 
 extern ST05_GUARD_FUNC D_80130B48[];
 
@@ -2446,7 +2446,7 @@ sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32
 
 sint32 func_8010D1A8(ST05_GUARD *wp);
 
-sint32 func_80031CA4(STCOM_SVECTOR *a, STCOM_SVECTOR *b, sint32 c, sint32 d);
+sint32 Muku_elevation(STCOM_SVECTOR *a, STCOM_SVECTOR *b, sint32 c, sint32 d);
 
 void func_8012B948(STAGE_OBJ50 *wp);
 
@@ -2477,7 +2477,7 @@ typedef struct
 
 void func_80112284(STAGE_OBJ *wp);
 
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 
 STCOM_MATRIX *MulMatrix0(STCOM_MATRIX *m0, STCOM_MATRIX *m1, STCOM_MATRIX *out);

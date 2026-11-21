@@ -46,11 +46,11 @@ void func_8010022C(STAGE_ROOM_WORK *wp)
     switch (wp->routine_4)
     {
         case 0:
-            func_80017C30(8);
+            Fade_start(8);
             wp->routine_4++;
             // fall through
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Sce_event_start(0x47);
                 D_80098A8C = 0;
@@ -145,7 +145,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             }
             break;
         case 1:
-            func_8001B33C();
+            Sound_seq_stop_all();
             func_8001D58C(0x2000001E);
             wp->routine_4++;
             break;
@@ -163,14 +163,14 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             }
             break;
         case 4:
-            func_80017C30(2);
+            Fade_start(2);
             func_80100400(wp);
             wp->routine_4++;
             // fall through
         case 5:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
+            if (Fade_busy == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
-                func_80017C30(10);
+                Fade_start(10);
                 wp->routine_4 = 10;
             }
             // fall through
@@ -178,7 +178,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             func_8010045C(wp);
             Sce_camera_script_exec();
             Sce_script_update();
-            if (wp->routine_4 == 10 && D_80098A72 == 0)
+            if (wp->routine_4 == 10 && Fade_busy == 0)
             {
                 Obj_work_flag_change(0x56, 0x80);
                 func_8001D494(0, 1, 0);
@@ -189,7 +189,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
                 wp->flags_0 = 0;
                 Code800133D8_work[0].routine_0++;
                 Code800133D8_work[0].routine_1 = 0;
-                func_80012F78(D_80013420);
+                Thread_change(Title_task);
             }
             break;
     }
@@ -249,7 +249,7 @@ void func_8010080C(STAGE_WORK *wp)
 {
     if (wp->routine_0 == 0)
     {
-        func_8002F9C4(wp, 0);
+        Model_work_init(wp, 0);
         wp->scale.words[0] = 0x200020;
         wp->scale.words[1] = 0x20;
         wp->scale.v.pad    = 0x4210;
@@ -260,7 +260,7 @@ void func_8010080C(STAGE_WORK *wp)
         wp->routine_0++;
     }
     D_80100F8C[wp->routine_1](wp);
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
 }
 
 void func_801008C0(STAGE_WORK *wp)

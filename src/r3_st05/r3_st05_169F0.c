@@ -13,11 +13,11 @@ void func_80116A2C(ST05_VILLAGER *wp)
     ctl = &wp->ctl;
     if (wp->variant_3 != 0)
     {
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     else
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     wp->scale.words[0]       = 0x021A021A;
     wp->scale.words[1]       = 0x21A;
@@ -40,7 +40,7 @@ void func_80116A2C(ST05_VILLAGER *wp)
     wp->routine_0             = 1;
     wp->routine_1             = 0;
     *(uint16 *)&wp->routine_2 = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     func_80116B70(wp);
 }
 
@@ -61,17 +61,17 @@ void func_80116B70(ST05_VILLAGER *wp)
     }
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_80032304(wp, wp->anim_AC, 0);
+        EM_Char_Set2(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032538(wp);
+        EM_Char_Move2(wp);
     }
     *(uint16 *)0x1F800132 = wp->ctl.timer_A;
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     func_80051B68(wp, 3, -1, 0);
 }

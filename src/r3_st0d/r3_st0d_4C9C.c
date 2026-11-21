@@ -41,7 +41,7 @@ void func_80104C9C(ST0D_ACTOR *wp, uint16 *bob)
                 {
                     if (Sce_flag_test(flag))
                     {
-                        func_80017C30(10);
+                        Fade_start(10);
                         wp->routine_1 = 3;
                     }
                     else
@@ -59,7 +59,7 @@ void func_80104C9C(ST0D_ACTOR *wp, uint16 *bob)
             {
                 if (Sce_flag_test(flag))
                 {
-                    func_80017C30(10);
+                    Fade_start(10);
                     wp->routine_1 = 3;
                 }
                 else
@@ -74,7 +74,7 @@ void func_80104C9C(ST0D_ACTOR *wp, uint16 *bob)
             }
             break;
         case 3:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_1++;
             }
@@ -185,7 +185,7 @@ void func_801050E8(ST0D_ORBITER *wp)
         wp->position_AC = wp->position;
         if (wp->value_C == 0)
         {
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
         }
         else
         {

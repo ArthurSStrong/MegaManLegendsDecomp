@@ -228,7 +228,7 @@ sint32 func_80040E00(PL_WORK *pl, sint32 a1, sint16 a2, sint16 a3);
 void func_80040E9C(PL_WORK *pl, sint16 arg);
 sint32 func_80040FA8(PL_WORK *pl);
 void func_80040178(PL_WORK *pl);
-sint32 func_80048E6C(PL_WORK *pl);
+sint32 Scr_height_check(PL_WORK *pl);
 typedef void (*PL_FUNC)(PL_WORK *pl);
 
 extern PL_FUNC D_80089F94[];
@@ -239,7 +239,7 @@ void func_8003234C(); // signature differs between callers; see code_8002e7a8.h
 uint32 func_8004324C(PL_WORK *pl);
 sint32 func_8004B414(PL_WORK *pl);
 sint32 func_80042044(PL_WORK *pl, sint32 a1, sint32 a2);
-sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
+sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      uint32 flags, sint32 arg7, sint32 arg8);
 void func_8003C4EC(PL_WORK *pl);
 sint32 func_800411DC();
@@ -270,7 +270,7 @@ void func_800329D4(void *arg, sint32 unused);
 void func_800329D4(); // signature differs between callers; see code_8002e7a8.h
 #endif
 void func_800325D4(); // signature differs between callers; see code_8002e7a8.h
-void Model_Shadow_Trans(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
+void func_8002C794(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 extern uint8 D_80097D9C[];
 void func_80039A38(void *data);
 sint32 func_8004976C(PL_WORK *pl);
@@ -286,7 +286,7 @@ extern uint32 D_8009888C;
 extern PL_HEIGHT_INFO D_80097D90;
 extern uint8 D_800B5DB0[]; // same as cd_local.h
 // Generic effect allocator; CODE456_WORK is its full layout (code_800456d8.h).
-struct CODE456_WORK *func_80031618(void);
+struct CODE456_WORK *Open_EFFECT_WORK(void);
 void func_8003E068(PL_WORK *pl, sint32 index);
 void func_8005D528(void);
 void func_8003D124(PL_WORK *pl, sint32 dir);
@@ -295,7 +295,7 @@ sint32 func_80048EA4(); // signature differs between callers; see code_80048620.
 sint32 func_8005D8C4(sint32 arg);
 void Swing_Camera2(); // takes a CAM_DELTA pointer; see code_80037fb4.h
 void func_80042528(PL_WORK *pl, PL_EFFECT *fx, sint32 arg);
-void func_80030150(); // signature differs between callers; see code_8002e7a8.h
+void Obj_pos_adj_round(); // signature differs between callers; see code_8002e7a8.h
 // Hand-written copy entry in asm_fastmem.s; not in the symbol registry yet.
 void func_800176DC(void *src, void *dst, sint32 count);
 
@@ -321,7 +321,7 @@ typedef struct
 
 void RotMatrixYXZ();  // argument types differ between callers
 void func_800301A8(); // signature differs between callers; see code_8002e7a8.h
-sint32 func_80030374(sint16 *a, sint16 *b);
+sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 
 extern sint32 D_80097D08; // same as code_8002e7a8.h
 extern sint32 D_80098B18; // same as code_8005c258.h

@@ -18,11 +18,11 @@ void func_80104D84(ST10_ACTOR *wp)
     ctl = &wp->ctl;
     if (wp->variant_3 != 0)
     {
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     else
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     wp->scale.words[0]       = 0x02000200;
     wp->scale.words[1]       = 0x200;
@@ -44,7 +44,7 @@ void func_80104D84(ST10_ACTOR *wp)
     wp->routine_0             = 1;
     wp->routine_1             = 0;
     *(uint16 *)&wp->routine_2 = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     func_80104EC4(wp);
 }
 
@@ -77,15 +77,15 @@ void func_80104EC4(ST10_ACTOR *wp)
     }
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_800322A8(wp, wp->anim_AC, 0);
+        EM_Char_Set(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->flags_0 & 1)
     {
@@ -111,19 +111,19 @@ void func_80105088(ST10_ACTOR *wp)
         case 0:
             wp->routine_2++;
             wp->anim_AC = 0;
-            if (func_80031BEC(&wp->position, &ctl->target_C, wp->rotation.y, 0x800) < 0)
+            if (Muku(&wp->position, &ctl->target_C, wp->rotation.y, 0x800) < 0)
             {
-                step = -func_80031BEC(&wp->position, &ctl->target_C, wp->rotation.y, 0x800);
+                step = -Muku(&wp->position, &ctl->target_C, wp->rotation.y, 0x800);
             }
             else
             {
-                step = func_80031BEC(&wp->position, &ctl->target_C, wp->rotation.y, 0x800);
+                step = Muku(&wp->position, &ctl->target_C, wp->rotation.y, 0x800);
             }
             wp->turn_64  = (uint32)step >> 3;
             ctl->timer_4 = 0x1E;
             // fall through
         case 1:
-            step = func_80031BEC(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64);
+            step = Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             if ((sint16)step == 0)
             {
@@ -148,20 +148,20 @@ void func_801051A0(ST10_ACTOR *wp)
         case 0:
             wp->routine_2++;
             wp->anim_AC = 0;
-            if (func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800) < 0)
+            if (Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) < 0)
             {
-                turn = -func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800);
+                turn = -Muku(&wp->position, &pl->position, wp->rotation.y, 0x800);
             }
             else
             {
-                turn = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x800);
+                turn = Muku(&wp->position, &pl->position, wp->rotation.y, 0x800);
             }
             turn >>= 3;
             wp->turn_64  = turn;
             ctl->timer_4 = (ctl->value_2 & 0x3F) + 8;
             break;
         case 1:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &pl->position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position,
                                                              wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             if (--wp->ctl.timer_4 < 0)
@@ -175,7 +175,7 @@ void func_801051A0(ST10_ACTOR *wp)
             }
             break;
         case 2:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &pl->position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position,
                                                              wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             if (wp->value_A7 < 0)

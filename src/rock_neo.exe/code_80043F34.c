@@ -62,7 +62,7 @@ void func_80043F70(CODE43_WORK *wp)
         wp->sound_flag_c = 0;
         st               = 2;
         func_800398E0(0x1E);
-        n = func_80031618();
+        n = Open_EFFECT_WORK();
         if (n != 0)
         {
             n->flags_0               = 5;
@@ -70,7 +70,7 @@ void func_80043F70(CODE43_WORK *wp)
             n->value_3               = 5;
             *(CODE43_B8 *)&n->pos_38 = *(CODE43_B8 *)&wp->pos_38;
         }
-        n = func_80031618();
+        n = Open_EFFECT_WORK();
         if (n != 0)
         {
             n->flags_0               = 0x45;
@@ -102,7 +102,7 @@ void func_80043F70(CODE43_WORK *wp)
         }
     }
     wp->value_2 = D_80097DE0[wp->sel_e];
-    func_8002F9C4(wp, &st);
+    Model_work_init(wp, &st);
     wp->value_2 = 0x80;
     wp->routine_8++;
     wp->timer_b = 0;
@@ -132,7 +132,7 @@ void func_800441CC(CODE43_WORK *wp)
         case 0:
             if (wp->value_3 & 0x40)
             {
-                func_800341BC(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xA000, wp->byte_1,
+                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xA000, wp->byte_1,
                               D_800986C0, add | 0x10000000, 0, 0x80);
             }
             else if (wp->value_3 == 6)
@@ -171,18 +171,18 @@ void func_800441CC(CODE43_WORK *wp)
                 }
                 else
                 {
-                    func_800341BC(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
+                    Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
                                   D_800986C0, 0x31000000, 0, 0x80);
                 }
             }
             else
             {
-                func_800341BC(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
+                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
                               D_800986C0, add | 0x10000000, 0, 0x80);
             }
             break;
         case 1:
-            func_800341BC(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0x4000, wp->byte_1, D_800986C0,
+            Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0x4000, wp->byte_1, D_800986C0,
                           add | 0x10000000, 0, 0x80);
             break;
         case 2:
@@ -382,7 +382,7 @@ void func_80044934(CODE43_WORK *wp)
 
 void func_8004493C(CODE43_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_8004495C(CODE43_WORK *wp)
@@ -393,7 +393,7 @@ void func_8004495C(CODE43_WORK *wp)
 void func_80044998(CODE43_WORK *wp)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->word_40 = 0x2808080;
     wp->word_44 = wp->u14.parent->inner_70->value_10;
     wp->routine_8++;
@@ -416,7 +416,7 @@ void func_80044A00(CODE43_WORK *wp)
 void func_80044A80(CODE43_WORK *wp)
 {
     wp->flags_0 = 0;
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_80044AA0(CODE43_WORK *wp)
@@ -462,7 +462,7 @@ void func_80044BA0(CODE43_WORK *wp)
         i = ++wp->index_a;
         if (i >= 6)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
         }
         else
         {
@@ -613,7 +613,7 @@ void func_80045038(CODE43_WORK *wp)
     if (--wp->timer_b == 0)
     {
         wp->flags_0 = 0;
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -652,7 +652,7 @@ void func_80045170(CODE43_WORK *wp)
         i = ++wp->index_a;
         if (i >= 6)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
         }
         else
         {
@@ -696,7 +696,7 @@ void func_80045338(CODE43_WORK *wp)
 {
     if (wp->word_40 == 0xFFFF)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     wp->value_22 = 0xA0;
@@ -754,7 +754,7 @@ void func_8004548C(CODE43_WORK *wp)
 
 void func_8004557C(CODE43_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_8004559C(CODE43_WORK *wp)

@@ -104,7 +104,7 @@ void stcom34_func_014C(STCOM34_WORK *wp)
 
 void stcom34_func_04AC(STCOM34_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 // Draws one spark: a line from a to b, its color scaled by `shade`.

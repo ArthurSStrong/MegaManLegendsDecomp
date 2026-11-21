@@ -21,7 +21,7 @@ STAGE_ACTOR *func_80107FF8(void)
 void func_80108040(ST08_ACTOR *wp)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->turn_64      = 0;
     wp->rotation.v.x = wp->rotation_prev.x = 0;
     wp->rotation.words[1]                  = 0;
@@ -41,7 +41,7 @@ void func_80108040(ST08_ACTOR *wp)
     wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
     wp->anim_358                                     = D_80113B1C[0].anim;
     wp->hold_359                                     = D_80113B1C[wp->index_35A].hold;
-    func_800322A8(wp, wp->anim_358, 0);
+    EM_Char_Set(wp, wp->anim_358, 0);
     wp->data_78                 = NULL;
     wp->data_10                 = D_80113B24;
     *(sint32 *)&wp->hit.flags_0 = 0;
@@ -78,12 +78,12 @@ void func_80108180(ST08_ACTOR *wp)
         }
         wp->anim_358 = D_80113B1C[wp->index_35A].anim;
         wp->hold_359 = D_80113B1C[wp->index_35A].hold;
-        func_800322A8(wp, wp->anim_358, 0);
+        EM_Char_Set(wp, wp->anim_358, 0);
     }
     else
     {
         wp->hold_359--;
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     func_80051B68(wp, 1, -1, 0);
 }
@@ -130,7 +130,7 @@ void func_801082F0(ST08_ACTOR *wp)
                 wp->index_35A = 0;
                 wp->anim_358  = D_80113B1C[0].anim;
                 wp->hold_359  = D_80113B1C[wp->index_35A].hold;
-                func_800322A8(wp, wp->anim_358, 0);
+                EM_Char_Set(wp, wp->anim_358, 0);
                 wp->routine_2 = 0;
                 wp->routine_1--;
             }
@@ -142,17 +142,17 @@ void func_801084C0(STAGE_ACTOR *wp)
 {
     if (wp->velocity.v.x != 0)
     {
-        func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
-        wp->position.y       = func_80048E6C(wp);
+        Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
+        wp->position.y       = Scr_height_check(wp);
         wp->position_fixed.y = wp->position.y << 16;
     }
     if (wp->value_E == 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
-        func_800322A8(wp, wp->value_D, 0);
+        EM_Char_Set(wp, wp->value_D, 0);
         wp->value_E = 0;
     }
 }
@@ -172,6 +172,6 @@ void func_8010859C(STAGE_OBJ *wp)
     D_80113B3C[wp->routine_0](wp);
     if ((uint8)wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x3C, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
     }
 }

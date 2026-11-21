@@ -15,7 +15,7 @@ void func_800456D8(CODE456_WORK *wp)
     {
         wp->routine_0 |= 2;
     }
-    func_8002F9C4(wp, &wp->flag_3);
+    Model_work_init(wp, &wp->flag_3);
     wp->routine_8++;
     Sound_call2(0x9B, &wp->snd_38.args);
     func_80045AB4(wp);
@@ -85,7 +85,7 @@ void func_8004594C(CODE456_WORK *wp)
 
 void func_80045980(CODE456_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_800459A0(CODE456_WORK *wp)
@@ -118,7 +118,7 @@ void func_800459C0(CODE456_WORK *wp)
 void func_80045A7C(CODE456_WORK *wp)
 {
     Sound_call2(0xCF, &wp->snd_38.args);
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_80045AB4(CODE456_WORK *wp)
@@ -187,7 +187,7 @@ void func_80045CE8(PL_SHORT_VECTOR *pos, uint32 num, uint32 weights, uint32 kind
     angle = rand() & 0xFFF;
     for (i = 0; i < count; i++, angle += step)
     {
-        wp = func_80031618();
+        wp = Open_EFFECT_WORK();
         if (wp == NULL)
         {
             continue;
@@ -341,7 +341,7 @@ void func_8004602C(CODE456_WORK *wp)
 void func_800461A4(CODE456_WORK *wp)
 {
     wp->routine_0 |= 2;
-    func_8002F9C4(wp, &wp->flag_3);
+    Model_work_init(wp, &wp->flag_3);
     wp->routine_8++;
     Sound_call2(0x9B, &wp->snd_38.args);
     if (wp->flag_3)
@@ -474,7 +474,7 @@ void func_800465C8(CODE456_WORK *wp)
 
 void func_8004674C(CODE456_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_8004676C(CODE456_WORK *wp)
@@ -507,7 +507,7 @@ void func_8004678C(CODE456_WORK *wp)
 void func_80046848(CODE456_WORK *wp)
 {
     Sound_call2(wp->flag_3 ? 0x9E : 0x9D, &wp->snd_38.args);
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_80046890(CODE456_WORK *wp)
@@ -594,7 +594,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
     angle = rand() & 0xFFF;
     for (i = 0; i < count; i++, angle += step)
     {
-        wp = func_80031618();
+        wp = Open_EFFECT_WORK();
         if (wp == NULL)
         {
             continue;
@@ -610,7 +610,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
         size = D_8008A5A8[kind][r & 0xF];
         if (size >= 5)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             continue;
         }
         wp->model_44             = D_8009A6C0[size];
@@ -642,7 +642,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
     angle = (angle + 0x800) & 0xFFF;
     for (i = 0; i < count; i++, angle += step)
     {
-        wp = func_80031618();
+        wp = Open_EFFECT_WORK();
         if (wp == NULL)
         {
             continue;
@@ -658,7 +658,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
         size           = D_8008A5A8[kind2][r & 0xF];
         if (size >= 5)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             continue;
         }
         wp->value_a              = size;
@@ -766,7 +766,7 @@ void func_80047318(CODE456_WORK *wp)
     D_8008A708[wp->routine_8](wp);
 }
 
-// Every path makes its own func_8002F9C4 call, the default's in each arm of its test.
+// Every path makes its own Model_work_init call, the default's in each arm of its test.
 // Cross-jumping then merges the calls into the default's last one and leaves each path its own
 // argument store (retail's separate "j; sw" blocks for the 0x80 path and cases 4, 5 and 6).
 void func_80047354(CODE456_BOX *wp)
@@ -848,14 +848,14 @@ void func_80047354(CODE456_BOX *wp)
     if (wp->flag_3 & 0x80)
     {
         arg = 0;
-        func_8002F9C4(wp, (uint8 *)&arg);
+        Model_work_init(wp, (uint8 *)&arg);
     }
     else if (wp->flag_3 & 0x20)
     {
         arg = 2;
-        func_8002F9C4(wp, (uint8 *)&arg);
+        Model_work_init(wp, (uint8 *)&arg);
         func_800398E0(0x1E);
-        child = (CODE456_BOX *)func_80031618();
+        child = (CODE456_BOX *)Open_EFFECT_WORK();
         if (child != NULL)
         {
             child->routine_0  = 5;
@@ -863,7 +863,7 @@ void func_80047354(CODE456_BOX *wp)
             child->flag_3     = 5;
             child->snd_38.pos = wp->snd_38.pos;
         }
-        child = (CODE456_BOX *)func_80031618();
+        child = (CODE456_BOX *)Open_EFFECT_WORK();
         if (child != NULL)
         {
             child->routine_0  = 5;
@@ -878,26 +878,26 @@ void func_80047354(CODE456_BOX *wp)
         {
             case 4:
                 arg = 4;
-                func_8002F9C4(wp, (uint8 *)&arg);
+                Model_work_init(wp, (uint8 *)&arg);
                 break;
             case 5:
                 arg = 5;
-                func_8002F9C4(wp, (uint8 *)&arg);
+                Model_work_init(wp, (uint8 *)&arg);
                 break;
             case 6:
                 arg = 6;
-                func_8002F9C4(wp, (uint8 *)&arg);
+                Model_work_init(wp, (uint8 *)&arg);
                 break;
             default:
                 if (func_8004920C(&wp->snd_38) - wp->snd_38.pos.y < 30)
                 {
                     arg = 0;
-                    func_8002F9C4(wp, (uint8 *)&arg);
+                    Model_work_init(wp, (uint8 *)&arg);
                 }
                 else
                 {
                     arg = 1;
-                    func_8002F9C4(wp, (uint8 *)&arg);
+                    Model_work_init(wp, (uint8 *)&arg);
                 }
                 break;
         }
@@ -916,17 +916,17 @@ void func_800476A4(CODE456_WORK *wp)
     D_8008A718[wp->routine_9](wp);
     if (wp->flag_3 & 0x40)
     {
-        func_800341BC(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xA000, wp->id_1, D_800986D8,
+        Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xA000, wp->id_1, D_800986D8,
                       0x10000008, 0, 0x80);
     }
     else if (wp->flag_3 == 6)
     {
-        func_800341BC(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
+        Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
                       0x30000000, 0, 0x80);
     }
     else
     {
-        func_800341BC(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
+        Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
                       0x10000008, 0, 0x80);
     }
 }
@@ -1100,7 +1100,7 @@ void func_80047BD0(void)
 
 void func_80047BD8(CODE456_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 sint32 func_80047BF8(CODE456_SVECTOR *a, CODE456_SVECTOR *b)
@@ -1137,7 +1137,7 @@ void func_80047CD8(CODE456_ANIM *wp)
         step = wp->step_9;
         if ((wp->timer_a = D_8008A6C8[step].timer_5) == 0)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
         }
         else
         {
@@ -1265,7 +1265,7 @@ void func_80048268(CODE456_WORK *wp)
 {
     Sound_call(0x8F, 0, 0);
     wp->routine_0 = 0;
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 uint8 func_800482A8(void *vp)
@@ -1365,7 +1365,7 @@ void func_80048484(CODE456_ANIM *wp)
 
 void func_800485C4(CODE456_WORK *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_800485E4(CODE456_WORK *wp)

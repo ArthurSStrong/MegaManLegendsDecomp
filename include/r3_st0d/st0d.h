@@ -99,7 +99,7 @@ typedef struct
     sint8 frame_1; // 1
 } ST0D_FLAME;
 
-// A 0x48-byte effect slot (func_80031618) of four flames that follow the slot whose id is in
+// A 0x48-byte effect slot (Open_EFFECT_WORK) of four flames that follow the slot whose id is in
 // value_C (func_8010B544, func_8010B9B8).
 typedef struct
 {
@@ -811,19 +811,19 @@ void func_80101548(sint32 mode, uint8 arg);
 void func_80104BE0(ST0D_ACTOR *wp, uint16 *bob);
 void func_8010964C(ST0D_BOBBER *wp, ST0D_BOB *bob);
 void func_80109714(ST0D_BOBBER *wp, ST0D_BOB *bob);
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 void func_8010B29C(ST0D_FLAMES *wp, sint16 angle, sint8 frame);
 void func_8010B6E8(ST0D_FLAMES *wp, sint32 angle, sint8 frame);
 void func_8010BB48(ST0D_FLAMES *wp, sint16 angle, sint8 frame);
 void func_80104800(ST0D_LIFT *wp, ST0D_PATH *path);
 void func_8010494C(ST0D_LIFT *wp, ST0D_PATH *path);
 ST0D_GRID_OBJ *func_80108468(STAGE_OBJ *owner, uint8 rows, STCOM_SVECTOR *origin);
-sint32 func_80030374(sint16 *a, sint16 *b);
+sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void Sce_script_timer_clear(void);
 void func_80107EF8(ST0D_VILLAGER *wp, ST0D_TALK *talk);
 void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk);
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_8010390C(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, STAGE_FACE *face);
 void func_80103CB8(STAGE_OBJ *wp, STAGE_FACE *face);
 void func_8010288C(STAGE_OBJ *wp, STAGE_FACE *face);

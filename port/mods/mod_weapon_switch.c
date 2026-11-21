@@ -33,7 +33,7 @@
 
 #define FUNC_OBJ_FLAG_CHANGE 0x8002EE90u // void Obj_work_flag_change(sint32 mask, sint32 flags)
 #define FUNC_REFILL          0x80037594u // void func_80037594(void): parts[+0x172] energy full
-#define FUNC_ENERGY_MAX      0x80037604u // sint32 func_80037604(PL_WORK *wp, sint32 id)
+#define FUNC_ENERGY_MAX      0x80037604u // sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 id)
 #define SCE_FLAG             0x800BE378u // Sce_flag[]
 #define SUB_WORK             0x800A38F0u // D_800A38F0, the sub-screen's state word
 #define FLAG_OWNED           0x4C0       // + id

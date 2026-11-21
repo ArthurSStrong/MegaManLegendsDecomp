@@ -62,7 +62,7 @@ void func_8010FC58(ST19_TRAIL *wp)
     func_8010FCD4(wp);
     if (STAGE_SCENE_BYTE(8) == D_8011835C[wp->value_C][1])
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -148,7 +148,7 @@ void func_8010FEC4(ST19_PROP *wp)
     wp->pos_38.z = rec->z;
     wp->color_40 = 0x808080;
     wp->kind_2   = 0x16;
-    func_8002F9C4(wp, rec->variant_E);
+    Model_work_init(wp, rec->variant_E);
     wp->kind_2 = 0x1B;
 }
 
@@ -167,7 +167,7 @@ void func_8010FFF8(STAGE_FX *wp)
 {
     if (STAGE_SCENE_BYTE(8) == D_80118370[wp->value_C][1])
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -192,7 +192,7 @@ void func_801100AC(ST19_FX *wp)
     {
         if (!(wp->routine_1 & 7))
         {
-            ep = (ST19_FX *)func_80031618();
+            ep = (ST19_FX *)Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 index         = wp->value_C + wp->variant_3 * 2;
@@ -219,7 +219,7 @@ void func_801100AC(ST19_FX *wp)
 
 void func_80110200(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80110220(ST19_FX *wp)
@@ -238,13 +238,13 @@ void func_80110220(ST19_FX *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
 void func_80110380(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_801103A0(STAGE_ROOM *wp)
@@ -296,7 +296,7 @@ void func_801103DC(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8001D58C(0x20000019);
                 wp->routine_5++;
@@ -328,7 +328,7 @@ void func_80110630(STAGE_ROOM *wp)
 {
     if (wp->routine_8 == 0xFF)
     {
-        func_80017C30(10);
+        Fade_start(10);
         wp->routine_4++;
         wp->routine_5 = 0;
     }
@@ -337,7 +337,7 @@ void func_80110630(STAGE_ROOM *wp)
         wp->tbl_A4[1](wp);
         if (Sce_skip_check() != 0 || wp->reserved09[1] == 1)
         {
-            func_80017C30(10);
+            Fade_start(10);
             wp->routine_4++;
             wp->routine_5 = 0;
         }
@@ -354,7 +354,7 @@ void func_801106C4(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8001D494(0, 1, 0);
                 Obj_work_flag_change(0x7E, 0x80);
@@ -406,7 +406,7 @@ void func_801106C4(STAGE_ROOM *wp)
             func_8003786C(0x27);
             func_80111D50();
             Sound_call(0x26, 0, 0);
-            func_80017C30(2);
+            Fade_start(2);
             wp->flags_0 = 0;
             break;
     }
@@ -744,7 +744,7 @@ void func_8011125C(STAGE_ROOM *wp)
             wp->child_30->routine_2 = 0;
             break;
         case 10:
-            fx = (STAGE_FX *)func_80031618();
+            fx = (STAGE_FX *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0 = 1;
@@ -756,7 +756,7 @@ void func_8011125C(STAGE_ROOM *wp)
                 fx->timer_D = 0;
                 fx->z_20    = 0x1D;
             }
-            fx = (STAGE_FX *)func_80031618();
+            fx = (STAGE_FX *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0 = 1;
@@ -856,7 +856,7 @@ void func_80111634(STAGE_ROOM *wp)
             STAGE_PL.value_448 = 0x30;
             break;
         case 0x55:
-            func_80017C30(0xE);
+            Fade_start(0xE);
             break;
     }
     D_800BC7D4[0] = D_80118E88[STAGE_FRAME & 3] << 17;
@@ -876,7 +876,7 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8001D494(0, 1, 0);
                 Obj_work_flag_change(0x5E, 0x80);
@@ -910,12 +910,12 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
                 func_8003786C(0x26);
                 func_8003786C(0x27);
                 func_80111DE4(0);
-                func_80017C30(6);
+                Fade_start(6);
                 wp->routine_5++;
             }
             break;
         case 3:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->frame_10 = 0;
                 wp->reserved09[1] &= 1;

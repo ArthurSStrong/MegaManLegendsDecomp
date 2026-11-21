@@ -76,12 +76,12 @@ extern sint16 **D_800820E0[];
 extern uint32 D_800979FC[];
 
 void Close_EM_WORK(GAME_WORK_3C0 *wp);
-void func_8002F9C4(CODE14_WORK *wp, sint32 arg);
+void Model_work_init(CODE14_WORK *wp, sint32 arg);
 void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script);
 void func_80014BCC(CODE14_WORK *wp, CODE14_SCRIPT *script);
 CODE14_WORK *Open_EM_WORK(void);
-void func_8002FEA4(CODE14_WORK *wp, sint16 x, sint16 y, sint16 z);
-void func_800322A8(CODE14_WORK *wp, uint8 anim, sint32 arg);
-void func_80032488(CODE14_WORK *wp);
+void Obj_pos_set(CODE14_WORK *wp, sint16 x, sint16 y, sint16 z);
+void EM_Char_Set(CODE14_WORK *wp, uint8 anim, sint32 arg);
+void EM_Char_Move(CODE14_WORK *wp);
 
 #endif

@@ -149,7 +149,7 @@ STCOM22_WORK *func_80031734(void);
 void func_80031A4C(STCOM22_WORK *wp);
 sint32 func_80048EA4(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
 void func_80052528(STCOM22_WORK *wp);
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range,
                      STCOM_FIXED_VECTOR *target, sint32 target_angle, sint32 target_range);
 sint32 func_80048D08(sint32 a0, STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);

@@ -216,7 +216,7 @@ void func_8010105C(STAGE_ROOM *wp)
         wp->child_24->u_C.b.byte_D = 0;
         wp->child_24->u_E.b.byte_F = 0;
     }
-    D_80137DA0->value_442 = func_80031198(&D_80137DA0->position, &wp->child_24->position);
+    D_80137DA0->value_442 = Calc_degree2(&D_80137DA0->position, &wp->child_24->position);
 }
 
 void func_801011A0(STAGE_ROOM *wp)
@@ -356,8 +356,8 @@ void func_80101420(STAGE_ROOM *wp)
             D_80137DA0->position_fixed.y = 0xFFFF0000;
             D_80137DA0->position_fixed.z = 0x12E30000;
             D_80137DA0->rotation.y       = 0x64;
-            func_80030150(&D_80137DA0->fixed_428, &D_80137DA0->pos_438);
-            func_80030150(&D_80137DA0->position_fixed, &D_80137DA0->position);
+            Obj_pos_adj_round(&D_80137DA0->fixed_428, &D_80137DA0->pos_438);
+            Obj_pos_adj_round(&D_80137DA0->position_fixed, &D_80137DA0->position);
             Player_work.routine_1++;
             D_80137DA0->flags_0 |= 2;
             cam.x = Player_work.position.x;
@@ -402,7 +402,7 @@ void func_801016F0(void)
         obj->u_E.b.byte_E       = 0;
         obj->u_E.b.byte_F       = 0;
         obj->position_fixed.v.z = 0x145F0000;
-        func_80030150(&obj->position_fixed.v, &obj->position);
+        Obj_pos_adj_round(&obj->position_fixed.v, &obj->position);
     }
     obj = Open_EM_WORK();
     if (obj != NULL)
@@ -418,7 +418,7 @@ void func_801016F0(void)
         obj->u_E.b.byte_E       = 0;
         obj->u_E.b.byte_F       = 0;
         obj->position_fixed.v.z = 0x145F0000;
-        func_80030150(&obj->position_fixed.v, &obj->position);
+        Obj_pos_adj_round(&obj->position_fixed.v, &obj->position);
     }
 }
 
@@ -571,15 +571,15 @@ void func_80101C24(STAGE_ROOM *wp)
                 if (wp->routine_7 == 0)
                 {
                     wp->routine_7 = 1;
-                    func_80017C30(0xA);
+                    Fade_start(0xA);
                     Sound_fade_start(0x40);
                 }
-                if (D_80098A72 != 0 || Sound_fade_flags != 0 || Cd_read_sync2() != 0)
+                if (Fade_busy != 0 || Sound_fade_flags != 0 || Cd_read_sync2() != 0)
                 {
                     break;
                 }
                 func_801028D0(1);
-                func_80017C30(2);
+                Fade_start(2);
             }
             else
             {
@@ -650,7 +650,7 @@ void func_80101ED0(STAGE_ROOM *wp)
     {
         *(uint16 *)&Player_work.routine_0 = 3;
         pl->flags_0 &= ~2;
-        func_8002FBF4(pl);
+        Work_stage_close(pl);
         Cd_read_comb(0x55);
     }
 }
@@ -1454,7 +1454,7 @@ void func_801032A0(STAGE_ROOM *wp)
             t                         = wp->frame_10 - 0x3C;
             child->position.x         = (t * 0x8C + (0x20 - t) * 0x400) / 32;
             child->position.z         = (t * 0x1C7B + (0x20 - t) * 0x2100) / 32;
-            child->position.y         = func_80048E6C(child) + (-(D_800BBCF8[t] << 9) >> 12);
+            child->position.y         = Scr_height_check(child) + (-(D_800BBCF8[t] << 9) >> 12);
             child->position_fixed.v.x = child->position.x << 16;
             child->position_fixed.v.y = child->position.y << 16;
             child->position_fixed.v.z = child->position.z << 16;
@@ -1469,7 +1469,7 @@ void func_801032A0(STAGE_ROOM *wp)
             t                         = wp->frame_10 - 0x5C;
             child->position.x         = (t * -0x1C0 + (0x14 - t) * 0x8C) / 20;
             child->position.z         = (t * 0x1978 + (0x14 - t) * 0x1C7B) / 20;
-            child->position.y         = func_80048E6C(child);
+            child->position.y         = Scr_height_check(child);
             child->position_fixed.v.x = child->position.x << 16;
             child->position_fixed.v.z = child->position.z << 16;
             child->position_fixed.v.y = child->position.y << 16;
@@ -1547,7 +1547,7 @@ void func_80103660(STAGE_ROOM *wp)
     {
         for (i = 0; i < 0x40; i++)
         {
-            func_80031988(&Effect_work_tbl[i]);
+            Close_EFFECT_WORK(&Effect_work_tbl[i]);
         }
         Sce_slot_open(D_8012EF28);
     }
@@ -1763,7 +1763,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0x3F80000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x1DA30000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->value_440 = 0;
                 pl->value_442 = 0x800;
                 pl->value_444 = 0;
@@ -1809,7 +1809,7 @@ void func_80103E68(STAGE_REC_S *rec)
             pl->fixed_428.x = 0x3F80000;
             pl->fixed_428.y = 0xFFFF0000;
             pl->fixed_428.z = 0x17EA0000;
-            func_80030150(&pl->fixed_428, &pl->pos_438);
+            Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
             pl->value_442 = 0x800;
             pl->value_448 = 1;
             rec->timer_8  = 0xA0;
@@ -1897,7 +1897,7 @@ void func_80104000(STAGE_REC_S *rec)
                 obj->position_fixed = src->position_fixed;
                 obj->position.y -= 0x18C;
                 obj->position_fixed.v.y = obj->position.y << 16;
-                obj->rotation.y         = func_80031198(&obj->position, &pl->position);
+                obj->rotation.y         = Calc_degree2(&obj->position, &pl->position);
                 rec->timer_8            = 0x10;
                 rec->step_2++;
             }
@@ -1976,7 +1976,7 @@ void func_80104250(STAGE_REC_S *rec)
                 obj->position_fixed = src->position_fixed;
                 obj->position.y -= 0x18C;
                 obj->position_fixed.v.y = obj->position.y << 16;
-                obj->rotation.y         = func_80031198(&obj->position, &pl->position);
+                obj->rotation.y         = Calc_degree2(&obj->position, &pl->position);
                 rec->timer_8            = 0x10;
                 rec->step_2++;
             }
@@ -2046,7 +2046,7 @@ void func_801044F4(STAGE_REC_S *rec)
                 obj->position_fixed = src->position_fixed;
                 obj->position.y -= 0x18C;
                 obj->position_fixed.v.y = obj->position.y << 16;
-                obj->rotation.y         = func_80031198(&obj->position, &pl->position);
+                obj->rotation.y         = Calc_degree2(&obj->position, &pl->position);
                 rec->timer_8            = 0x10;
                 rec->step_2++;
             }
@@ -2111,7 +2111,7 @@ void func_80104774(STAGE_REC_S *rec)
             pl->fixed_428.y = 0xFFFF0000;
             pl->fixed_428.z = 0xF9C10000;
             pl->flags_bd |= 0x10;
-            func_80030150(&pl->fixed_428, &pl->pos_438);
+            Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
             pl->value_442 = 0x800;
             pl->value_440 = 0;
             pl->value_444 = 0;
@@ -2151,7 +2151,7 @@ void func_80104774(STAGE_REC_S *rec)
             pl->fixed_428.x = 0x16020000;
             pl->fixed_428.y = 0xFFFF0000;
             pl->fixed_428.z = 0xFA610000;
-            func_80030150(&pl->fixed_428, &pl->pos_438);
+            Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
             pl->value_442 = 0x6D0;
             Sce_flag_on(0x60B);
             Sce_flag_on(0x60D);
@@ -2578,7 +2578,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
             pl->fixed_428.y = 0xFFFF0000;
             pl->fixed_428.z = 0xFA800000;
             pl->flags_bd |= 0x10;
-            func_80030150(&pl->fixed_428, &pl->pos_438);
+            Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
             pl->value_442 = 0x494;
             pl->value_440 = 0;
             pl->value_444 = 0;

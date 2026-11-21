@@ -22,11 +22,11 @@ void func_8010026C(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            func_80017C30(0xA);
+            Fade_start(0xA);
             wp->routine_4++;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Sce_flag_on(0x22D);
                 wp->routine_4++;
@@ -89,7 +89,7 @@ void func_801004B4(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 MojiTaskExec2(0, 0xA);
                 wp->routine_5++;
@@ -293,7 +293,7 @@ void func_80100B84(STAGE_ROOM *wp)
             if (!Sce_flag_test(0x70))
             {
                 Sce_flag_on(0x70);
-                func_80017C30(2);
+                Fade_start(2);
             }
             wp->routine_4 = 1;
             break;

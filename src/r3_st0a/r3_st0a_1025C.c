@@ -104,7 +104,7 @@ void func_80110438(ST0A_10C_B *wp)
         wp->position_fixed.v.x += wp->value_44.half[0] << 8;
         wp->position_fixed.v.y += wp->value_44.half[1] << 8;
         wp->position_fixed.v.z += wp->value_48.half[0] << 8;
-        func_80030150(&wp->position_fixed.v, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
         func_80110A0C(wp);
         wp->trail_D4[5]     = wp->trail_D4[4];
         wp->trail_D4[4]     = wp->trail_D4[3];
@@ -118,7 +118,7 @@ void func_80110438(ST0A_10C_B *wp)
     }
     if (wp->flags_0 & 1)
     {
-        func_800341BC(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
+        Set_Atari(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
                       D_801163F8[wp->byte_D] | 0x49000000, 0, 0x80);
     }
     wp->sprite.hit_14 = 0;
@@ -335,7 +335,7 @@ void func_80111118(ST0A_PIECE *wp)
     for (variant = 0; variant < 4; variant++)
     {
         wp->variant_3 = variant;
-        func_8002F9C4(wp, &variant);
+        Model_work_init(wp, &variant);
         wp->models_CC[variant] = model->model_0;
     }
     wp->position.pad = 0;
@@ -389,12 +389,12 @@ void func_801113CC(ST0A_PIECE *wp)
     STCOM_SVECTOR *pos;
 
     pos = &wp->position;
-    wp->rotation.y += func_80031BEC(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x40);
+    wp->rotation.y += Muku(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x40);
     if (--wp->timer_B == 0)
     {
         wp->routine_0++;
         wp->timer_B = (rand() & 0x1F) + 0x64;
-        wp->rotation.y += func_80031BEC(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x800);
+        wp->rotation.y += Muku(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x800);
     }
     if (++wp->routine_2 >= 3)
     {
@@ -412,7 +412,7 @@ void func_801114D0(ST0A_PIECE *wp)
     sint32 range;
 
     pos = &wp->position;
-    wp->rotation.y += func_80031BEC(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x20);
+    wp->rotation.y += Muku(pos, (STCOM_SVECTOR *)&STAGE_PL.value_3A8, wp->rotation.y & 0xFFF, 0x20);
     wp->vx = (uint32)(-rsin(wp->rotation.y) * 5) >> 2;
     wp->vy = 0;
     wp->vz = (uint32)(-rcos(wp->rotation.y) * 5) >> 2;
@@ -492,13 +492,13 @@ void func_80111788(ST0A_PIECE *wp)
 
 void func_80111864(ST0A_PIECE *wp)
 {
-    func_800341BC(&wp->position, 0x20, 0, 0x8000, wp->value_1, &wp->hit_C4, 0x4000005, 0, 0);
+    Set_Atari(&wp->position, 0x20, 0, 0x8000, wp->value_1, &wp->hit_C4, 0x4000005, 0, 0);
 }
 
 void func_801118B4(ST0A_PIECE *wp)
 {
     STCOM_EFFECT *effect;
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0         = 5;

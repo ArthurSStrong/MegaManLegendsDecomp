@@ -15,7 +15,7 @@ void stcom21_func_0000(STCOM21_WORK *wp)
     stcom21_D_0000[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x50;
-    func_800341BC(&pos, 0x64, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x64, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
     wp->y_48.value = 0;
 }
 
@@ -26,7 +26,7 @@ void stcom21_func_00C0(STCOM21_WORK *wp)
     sint32 flag;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY((wp->variant_3 & 3) << 10, &wp->matrix.m);
     wp->color_40   = 0x808080;
@@ -49,7 +49,7 @@ void stcom21_func_00C0(STCOM21_WORK *wp)
         {
             wp->value_C |= 2;
             wp->variant_3 += 4;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
         }
         else if (Sce_flag_test(flag + 2))
         {
@@ -376,7 +376,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             break;
         case 20:
             wp->variant_3 += 4;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             STCOM21_IDENTITY(&wp->matrix);
             RotMatrixY((wp->variant_3 & 3) << 10, &wp->matrix.m);
             wp->value_B = 0;
@@ -384,7 +384,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             Sound_call2(0xA4, &wp->pos_38);
             break;
         case 21:
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0         = 1;
@@ -429,7 +429,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             }
             break;
         case 30:
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0           = 5;
@@ -578,7 +578,7 @@ void stcom21_func_0EC4(STCOM21_WORK *wp)
         wp->u_44.flag  = wp->pos_38.pad;
         wp->pos_38.pad = 0;
     }
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY(wp->value_F << 6, &wp->matrix.m);
     wp->color_40   = 0x808080;
@@ -598,7 +598,7 @@ void stcom21_func_0F74(STCOM21_WORK *wp)
         func_80051B68(wp, 7, 0, 0);
         pos = wp->pos_38;
         pos.y -= 0x2D;
-        func_800341BC(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
+        Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
         wp->y_48.value = 0;
     }
 }
@@ -608,7 +608,7 @@ void stcom21_func_1044(STCOM21_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0           = 5;
@@ -775,9 +775,9 @@ void stcom21_func_1524(STCOM21_WORK *wp)
         lid->routine_1  = 0;
         lid->value_B    = 0;
         lid->u_44.chest = wp;
-        func_8002F9C4(lid, &lid->variant_3);
+        Model_work_init(lid, &lid->variant_3);
         wp->variant_3 = 1;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         STCOM21_IDENTITY(&wp->matrix);
         RotMatrixY(wp->value_F << 6, &wp->matrix.m);
         wp->routine_1 = 0;
@@ -824,7 +824,7 @@ void stcom21_func_1688(STCOM21_WORK *wp)
                 chest->routine_1  = 0;
                 chest->y_48.value = 0;
                 chest->speed_4C   = 0;
-                func_8002F9C4(chest, &chest->variant_3);
+                Model_work_init(chest, &chest->variant_3);
                 STCOM21_IDENTITY(&chest->matrix);
                 RotMatrixX(0, &chest->matrix.m);
                 RotMatrixY(chest->value_B << 6, &chest->matrix.m);
@@ -892,7 +892,7 @@ void stcom21_func_19D0(STCOM21_WORK *wp)
     stcom21_D_0078[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
-    func_800341BC(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
     wp->y_48.value = 0;
 }
 
@@ -904,7 +904,7 @@ void stcom21_func_1A90(STCOM21_WORK *wp)
     wp->flags_0 |= 6;
     wp->u_44.flag  = wp->pos_38.pad;
     wp->pos_38.pad = 0;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY(wp->value_F << 10, &wp->matrix.m);
     wp->color_40   = 0x808080;
@@ -991,7 +991,7 @@ void stcom21_func_1D60(STCOM21_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0           = 5;

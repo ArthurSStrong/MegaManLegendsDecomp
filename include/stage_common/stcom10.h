@@ -121,9 +121,9 @@ extern STCOM10_PAIR stcom10_E_0010[]; // the objects spawned in the area, ended 
 #define STCOM10_TABLE_50  (*(STCOM10_OBJ_FUNC **)0x1F80006C)
 
 // ROCK_NEO.EXE.
-extern uint32 D_800987E8; // allocation masks: 0x3C0 slots
+extern uint32 Em_work_used; // allocation masks: 0x3C0 slots
 extern uint32 D_80098B20; // 0x5A4
-extern uint32 D_800987CC; // 0x10C
+extern uint32 Shl_work_used; // 0x10C
 extern uint32 D_800989CC; // 0x50
 void Sce_flag_off(sint32 flag);
 sint32 Sce_flag_test(sint32 flag);

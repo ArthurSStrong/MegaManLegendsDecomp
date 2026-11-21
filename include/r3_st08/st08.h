@@ -158,7 +158,7 @@ void func_80100578(void);
 
 void Sce_camera_script_exec(void);
 void Sce_script_update(void);
-sint16 func_80048E6C(void *wp);
+sint16 Scr_height_check(void *wp);
 void func_80102158(STAGE_ROOM_WORK *wp);
 
 void func_80100690(STAGE_ROOM_WORK *wp);
@@ -320,7 +320,7 @@ extern void *D_801127DC[]; // exit list by room
 extern sint32 D_8011295C[];
 extern STCOM_SVECTOR D_80112974;
 
-// A hit block whose word at +8 receives func_800341BC's result.
+// A hit block whose word at +8 receives Set_Atari's result.
 typedef struct
 {
     uint16 flags_0;      // 0
@@ -374,7 +374,7 @@ typedef struct
 
 typedef void (*ST08_ACTOR_FUNC)(ST08_ACTOR *wp);
 
-// The scratchpad's copy of the rotation func_8003346C draws a model with.
+// The scratchpad's copy of the rotation EM_World_Pos_Calc draws a model with.
 #define ST08_SP_ROT_X (*(sint16 *)0x1F800128)
 #define ST08_SP_ROT_Z (*(sint16 *)0x1F80012C)
 void func_80105B9C(ST08_ACTOR *wp, ST08_HIT *hit);
@@ -545,7 +545,7 @@ extern uint8 D_80118598;
 void Moji_item_set(sint32 arg);
 void Moji_time_set(sint32 score);
 void func_8005C24C(sint32 arg);
-sint32 func_8001A0A8(sint32 arg);
+sint32 Sound_seq_end_check(sint32 arg);
 
 void func_80039E50(void);
 void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg3);

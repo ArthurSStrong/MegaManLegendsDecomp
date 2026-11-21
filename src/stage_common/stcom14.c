@@ -26,7 +26,7 @@ void stcom14_func_006C(STCOM_EFFECT *wp)
     {
         if (!(wp->routine_1 & 3))
         {
-            puff = func_80031618();
+            puff = Open_EFFECT_WORK();
             if (puff != NULL)
             {
                 puff->flags_0             = 3;
@@ -49,7 +49,7 @@ void stcom14_func_006C(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -80,7 +80,7 @@ void stcom14_func_0164(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -92,7 +92,7 @@ void stcom14_func_02A0(STCOM_EFFECT *wp)
     {
         if (!(wp->routine_1 & 0xF))
         {
-            puff = func_80031618();
+            puff = Open_EFFECT_WORK();
             if (puff != NULL)
             {
                 puff->flags_0             = 3;
@@ -115,7 +115,7 @@ void stcom14_func_02A0(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -146,7 +146,7 @@ void stcom14_func_03C4(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -158,7 +158,7 @@ void stcom14_func_0504(STCOM_EFFECT *wp)
     {
         if (!(wp->routine_1 & 7))
         {
-            puff = func_80031618();
+            puff = Open_EFFECT_WORK();
             if (puff != NULL)
             {
                 puff->flags_0             = 3;
@@ -195,7 +195,7 @@ void stcom14_func_062C(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -207,7 +207,7 @@ void stcom14_func_06DC(STCOM_EFFECT *wp)
     {
         if (!(wp->routine_1 & 3))
         {
-            puff = func_80031618();
+            puff = Open_EFFECT_WORK();
             if (puff != NULL)
             {
                 puff->flags_0             = 3;
@@ -231,7 +231,7 @@ void stcom14_func_06DC(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -248,6 +248,6 @@ void stcom14_func_0808(STCOM_EFFECT *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }

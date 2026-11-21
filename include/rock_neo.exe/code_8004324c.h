@@ -42,7 +42,7 @@ typedef struct
     CODE43_POS8 pos_418;
 } CODE43_TARGET;
 
-// Effect record returned by func_80031618.
+// Effect record returned by Open_EFFECT_WORK.
 typedef struct
 {
     uint8 flags_0;
@@ -182,8 +182,8 @@ extern CODE43_FUNC D_8008A0D8[];
 
 void Sound_call2(sint16 id, void *args);
 CODE43_TARGET *func_80036294(uint8 id);
-CODE43_FX *func_80031618(void);
-void func_80031930(CODE43_WORK *wp);
+CODE43_FX *Open_EFFECT_WORK(void);
+void Close_PL_SHL_WORK(CODE43_WORK *wp);
 void func_80051BAC(CODE43_WORK *wp);
 sint32 func_80037694(CODE43_WORK *wp, sint32 arg);
 void func_800354E0(sint32 bit);

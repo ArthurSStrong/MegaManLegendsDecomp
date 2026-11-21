@@ -60,19 +60,19 @@ extern uint16 D_800C0C2A;
 extern uint8 *D_8008CB64[];
 extern uint32 Moji_flag;
 
-void func_80013420(void);
+void Title_task(void);
 void Game_task(void);
 void func_80015428(CODE800133D8_STATE *wp);
-void func_80017C30(sint32 arg);
+void Fade_start(sint32 arg);
 void func_8002E7A8(sint32 arg);
 void func_8003697C(void);
 void func_8002CFA4(void);
 void func_800371A0(uint32 *arg0, uint32 *arg1);
 void MojiTaskKill(void);
-void func_80013FB8(void);
+void title_logo_draw(void);
 void func_80014394(void);
-void func_80013F60(CODE800133D8_STATE *wp);
-void func_80013F8C(CODE800133D8_STATE *wp);
+void title_fade_wait_next(CODE800133D8_STATE *wp);
+void title_fade_wait_routine(CODE800133D8_STATE *wp);
 void func_800175D8(void);
 void Em_work_move(void);
 void func_80038370(uint32 *arg0, uint32 *arg1);
@@ -82,11 +82,11 @@ void func_80028DE0(void);
 void func_8005C258(void);
 void Cd_read_comb(sint32 arg);
 void Sce_cd_read_wait(sint32 arg);
-void func_80019FB4(void);
+void Sound_bgm_tbl_set(void);
 void func_80063BA8(void);
 void func_80063EF0(void);
 void func_80017994(void);
-void func_80031AA4(void);
+void Work_close_apply(void);
 // Some sound commands use only the ID; other commands consume two payload words.
 #ifdef __wasm32__
 // WebAssembly calls require the callee's fixed parameter signature.
@@ -94,8 +94,8 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 #else
 void Sound_call(sint32 sound, ...);
 #endif
-void func_8001456C(sint32 index);
-void func_800137D4(void);
+void title_menu_draw(sint32 index);
+void title_obj_update(void);
 void Sub_screen_back_ground_set(void);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 

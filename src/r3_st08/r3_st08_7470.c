@@ -9,11 +9,11 @@ void func_80107470(STAGE_ACTOR *wp)
     D_80113AF4[wp->routine_0](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->routine_2 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
@@ -33,13 +33,13 @@ void func_80107560(STAGE_ACTOR *wp)
             wp->routine_1++;
             return;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 MojiTaskExec2(0, 3);
                 wp->routine_1++;
             }
         case 2:
-            func_8002FEA4(wp, 0x90, 0, 0);
+            Obj_pos_set(wp, 0x90, 0, 0);
             return;
     }
 }
@@ -52,18 +52,18 @@ void func_80107620(STAGE_ACTOR *wp)
     wp->rotation.z = 0;
     wp->turn_64    = 0x80;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->scale.words[0]   = 0x2000200;
     wp->scale.words[1]   = 0x200;
     wp->scale.v.pad      = 0x4210;
     wp->value_78         = 0;
-    y                    = func_80048E6C(wp);
+    y                    = Scr_height_check(wp);
     wp->position.y       = y;
     wp->position_fixed.y = y << 16;
     wp->value_6E         = 0;
     wp->value_B0         = 0;
     wp->value_B2         = 0;
-    func_800322A8(wp, 2, 0);
+    EM_Char_Set(wp, 2, 0);
     wp->routine_2 = 0;
 }
 
@@ -75,11 +75,11 @@ void func_801076BC(STAGE_ACTOR *wp)
     D_80113AF8[wp->routine_0](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     if (wp->routine_2 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
@@ -130,32 +130,32 @@ void func_801077AC(STAGE_ACTOR *wp)
             wp->routine_1++;
             // fall through
         case 3:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
-                func_800322A8(wp, 1, 0);
+                EM_Char_Set(wp, 1, 0);
                 wp->routine_2 = 0;
                 wp->routine_1++;
             }
             break;
         case 4:
-            turn           = func_80031BEC(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
+            turn           = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-            pl_turn        = func_80031BEC(&pl->position, &wp->position, pl->rotation.y, wp->turn_64);
+            pl_turn        = Muku(&pl->position, &wp->position, pl->rotation.y, wp->turn_64);
             pl->value_442  = (pl->rotation.y + pl_turn) & 0xFFF;
             if (turn + pl_turn == 0)
             {
                 MojiTaskExec2(0, 0x2A);
-                func_800322A8(wp, 2, 0);
+                EM_Char_Set(wp, 2, 0);
                 wp->routine_2 = 0;
                 wp->timer_C   = 0x28;
                 wp->routine_1++;
             }
             break;
         case 5:
-            func_8002FEA4(wp, 0x80, 0, 0);
+            Obj_pos_set(wp, 0x80, 0, 0);
             if (--wp->timer_C == 0)
             {
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
                 wp->routine_2 = 0;
                 wp->routine_1++;
             }
@@ -164,7 +164,7 @@ void func_801077AC(STAGE_ACTOR *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 MojiTaskExec2(0, 0x2B);
-                func_800322A8(wp, 8, 0);
+                EM_Char_Set(wp, 8, 0);
                 cam->pos_10 = 0;
                 cam->pos_14 = -0x64 << 16;
                 cam->pos_18 = 0;
@@ -207,17 +207,17 @@ void func_80107AE4(STAGE_ACTOR *wp)
     wp->rotation.z = 0;
     wp->turn_64    = 0x80;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]   = 0x02000200;
     wp->scale.words[1]   = 0x200;
     wp->scale.v.pad      = 0x4210;
     wp->value_78         = 0;
-    temp_v0              = func_80048E6C(wp);
+    temp_v0              = Scr_height_check(wp);
     wp->position.y       = temp_v0;
     wp->position_fixed.y = temp_v0 << 0x10;
     wp->value_6E         = 0;
     wp->value_B0         = 0;
     wp->value_B2         = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->routine_2 = 0;
 }

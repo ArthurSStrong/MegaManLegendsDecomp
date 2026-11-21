@@ -23,7 +23,7 @@ static void orig_8003D1E0(uint32_t a0)
 }
 static void orig_8002FEA4(uint32_t a0, uint32_t a1, uint32_t a2, uint32_t a3)
 {
-    w2c_rock__neo_func_8002FEA4_0x5Forig(INST, a0, a1, a2, a3);
+    w2c_rock__neo_Obj_pos_set_0x5Forig(INST, a0, a1, a2, a3);
 }
 static void orig_8003F5D8(uint32_t a0)
 {

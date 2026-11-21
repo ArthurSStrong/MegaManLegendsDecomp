@@ -140,16 +140,16 @@ void func_801D85D4(SUP_OBJ *op)
     op->fpos.vy = op->old_fpos.vy = op->pos.vy << 16;
     op->fpos.vz = op->old_fpos.vz = op->pos.vz << 16;
     op->rot.vy                    = -0x150;
-    func_8002F9C4(op, 0);
+    Model_work_init(op, 0);
     op->value_158 = 0x2000200;
     op->value_15c = 0x42100200;
-    func_800322A8(op, 1, 0);
+    EM_Char_Set(op, 1, 0);
     op->routine_0++;
 }
 
 void func_801D869C(SUP_OBJ *op)
 {
-    func_80032488(op);
+    EM_Char_Move(op);
 }
 
 void func_801D86BC(SUP_OBJ *op)
@@ -172,10 +172,10 @@ void func_801D8704(SUP_OBJ *op)
     op->fpos.vx = op->old_fpos.vx = op->pos.vx << 16;
     op->fpos.vy = op->old_fpos.vy = op->pos.vy << 16;
     op->fpos.vz = op->old_fpos.vz = op->pos.vz << 16;
-    func_8002F9C4(op, 0);
+    Model_work_init(op, 0);
     op->value_158 = 0x2000200;
     op->value_15c = 0x42100200;
-    func_800322A8(op, 0, 0);
+    EM_Char_Set(op, 0, 0);
     op->routine_0++;
     D_801DC208.anim_94 = 0;
 }
@@ -184,12 +184,12 @@ void func_801D87CC(SUP_OBJ *op)
 {
     if (D_801DC208.anim_94)
     {
-        func_800322A8(op, D_801DC208.anim_94, 0);
+        EM_Char_Set(op, D_801DC208.anim_94, 0);
         D_801DC208.anim_94 = 0;
     }
     else
     {
-        func_80032488(op);
+        EM_Char_Move(op);
     }
 }
 
@@ -1277,11 +1277,11 @@ void func_801DB2AC(void)
     switch (D_801DC208.routine_3)
     {
         case 0:
-            func_80017C30(9);
+            Fade_start(9);
             D_801DC208.routine_3++;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 D_801DC208.routine_3++;
                 D_801DC208.count_a1 = 0x3C;
@@ -1295,11 +1295,11 @@ void func_801DB2AC(void)
             break;
         case 3:
             D_801DC208.found_a2 = func_801DB43C();
-            func_80017C30(1);
+            Fade_start(1);
             D_801DC208.routine_3++;
             break;
         case 4:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 D_801DC208.routine_3++;
             }
@@ -1465,18 +1465,18 @@ void func_801DB800(void)
     switch (D_801DC208.routine_3)
     {
         case 0:
-            func_80017C30(0x17);
+            Fade_start(0x17);
             Sound_fade_start(0x10);
             D_801DC208.routine_3++;
             break;
         case 1:
             Sound_fade_wait();
-            func_8001B33C();
+            Sound_seq_stop_all();
             func_8001B314();
-            D_80098958 |= 0x800;
+            Sound_flags |= 0x800;
             D_800C356E = Game_work.area_50.b.stage;
             D_800C356F = Game_work.area_50.b.room;
-            func_80019C20();
+            Sound_bgm_change_check();
             Sce_stage_load();
             Sce_room_load();
             func_801DBC5C(D_801DC138[Game_work.area_50.b.stage]);

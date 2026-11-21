@@ -20,7 +20,7 @@ void func_80102104(ST0E_ACTOR *wp)
     wp->rotation.x = 0;
     wp->rotation.z = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
     life               = D_80098844[wp->kind_2]->life_8;
@@ -33,7 +33,7 @@ void func_80102104(ST0E_ACTOR *wp)
     wp->value_B2       = life;
     wp->data_10        = D_801102C8;
     wp->anim_AC        = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->velocity.v.y = 0;
     wp->velocity.v.x = 0;
     wp->velocity.v.z = 0;
@@ -51,7 +51,7 @@ void func_801021D4(ST0E_ACTOR *wp)
     pl = &STAGE_PL;
     if (wp->position.x > 0)
     {
-        fx = func_80031618();
+        fx = Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0         = 5;
@@ -79,10 +79,10 @@ void func_801021D4(ST0E_ACTOR *wp)
     {
         if (wp->routine_1 == 0)
         {
-            func_8002FEA4(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
+            Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->value_4E;
             func_8004B414(wp);
-            ground = func_80048E6C(wp);
+            ground = Scr_height_check(wp);
             if (ground - wp->position_prev.y < 0x10)
             {
                 wp->position.y       = ground;
@@ -94,18 +94,18 @@ void func_801021D4(ST0E_ACTOR *wp)
         }
         else
         {
-            func_8002FEA4(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
+            Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             func_8004B414(wp);
         }
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
     wp->data_78 = D_801102D4;
     func_80050C2C(wp);
     wp->data_78 = D_801102C8;
     func_80051B68(wp, 1, 0, 0);
     if (wp->routine_1 != 0)
     {
-        if (func_80048E6C(wp) != wp->position_prev.y)
+        if (Scr_height_check(wp) != wp->position_prev.y)
         {
             wp->velocity.v.y += 0xC;
         }

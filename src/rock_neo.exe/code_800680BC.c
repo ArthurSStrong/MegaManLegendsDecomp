@@ -538,7 +538,7 @@ void func_80068DAC(CODE68_WORK *wp)
             if (--wp->word_c == 0)
             {
                 wp->routine_4++;
-                func_80017C30(2);
+                Fade_start(2);
             }
             break;
         case 3:
@@ -546,9 +546,9 @@ void func_80068DAC(CODE68_WORK *wp)
             wp->routine_4++;
             // fall through
         case 4:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_a4 == 0xFF || Sce_skip_check() != 0))
+            if (Fade_busy == 0 && (*(uint8 *)wp->tbl_a4 == 0xFF || Sce_skip_check() != 0))
             {
-                func_80017C30(10);
+                Fade_start(10);
                 wp->routine_4++;
             }
             // fall through
@@ -565,7 +565,7 @@ void func_80068DAC(CODE68_WORK *wp)
             {
                 func_80068DA4();
             }
-            if (wp->routine_4 == 5 && D_80098A72 == 0)
+            if (wp->routine_4 == 5 && Fade_busy == 0)
             {
                 D_800C356C  = 2;
                 D_800C356E  = 0x1B;

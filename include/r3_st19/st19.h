@@ -129,7 +129,7 @@ typedef struct
     sint32 value_2F4;        // 2F4
     sint32 value_2F8;        // 2F8
     sint32 value_2FC;        // 2FC
-    uint8 track_300[0xC];    // 300: func_80036478
+    uint8 track_300[0xC];    // 300: Search_Player_Init
     uint16 value_30C;        // 30C
     uint16 value_30E;        // 30E
     sint32 value_310;        // 310
@@ -567,9 +567,9 @@ extern uint8 D_801171D8[][8];
 void Sce_slot_list_clear(void);
 void func_8001E4C4(uint8 *ids, uint8 *flags);
 
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 uint8 func_80108CAC(STCOM_SVECTOR a, STCOM_SVECTOR b, sint16 w, sint16 d);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 extern uint8 D_8011835C[][2];
 
@@ -893,7 +893,7 @@ typedef struct
     STCOM_SVECTOR rot_24;       // 30C: a shell's rotation (func_801064A0)
     ST19_WHEEL_HIT hit_2C;      // 314: the body's
     ST19_WHEEL_HIT hit_34[3];   // 31C: [0] and [1] the guns'
-    uint8 track_4C[0x10];       // 334: func_80036478
+    uint8 track_4C[0x10];       // 334: Search_Player_Init
     uint8 reserved5C[0xC];      // 344
     sint16 turn_68[4];          // 350: by gun
     sint16 life_70[4];          // 358: by gun
@@ -1002,9 +1002,9 @@ typedef struct
 } ST19_FOLLOWER;
 
 STAGE_OBJ *func_80036294(sint32 id);
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 uint8 func_80108CAC(STCOM_SVECTOR a, STCOM_SVECTOR b, sint16 w, sint16 d);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 void func_80111B1C(sint32 index, uint8 arg1);
 
@@ -1460,7 +1460,7 @@ typedef struct
 
 extern ST19_KIND **D_80098844;
 extern uint8 D_801179CC[];
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
 extern uint8 D_80117BF6[];
 extern uint8 D_80117C94[][0x38];
@@ -1552,7 +1552,7 @@ typedef struct
     uint8 reserved66[0xA6];            // 66
 } ST19_SHELL;
 
-void func_80030EE8(void *wp, STCOM_SVECTOR *target, sint32 speed);
+void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 
 extern STAGE_SCRIPT_ENTRY D_80118544[];
 extern uint8 D_8011856C[];
@@ -1650,9 +1650,9 @@ void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 // An ST19_OBJ's joint matrices from +0x1E8 (func_80104124).
 #define ST19_OBJ_MATRIX(wp) ((STAGE_MATRIX *)((uint8 *)(wp) + 0x1E8))
 
-sint32 func_80031CA4(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku_elevation(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 
 void func_80114668(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);

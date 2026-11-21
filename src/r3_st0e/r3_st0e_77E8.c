@@ -31,7 +31,7 @@ void func_801078A8(ST0E_VIEW *wp)
     wp->u_70.w[0]  = 0;
     wp->u_74.w[0]  = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     m = &wp->matrix_8C;
     RotMatrixYXZ(&wp->rotation, m);
     scale.x = 0x1000;
@@ -65,15 +65,15 @@ void func_801079BC(ST0E_VIEW *wp)
     ScaleMatrix(m, &scale);
     wp->vec_AC       = wp->position;
     wp->hit_CC.pos_0 = wp->position;
-    func_800341BC(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
+    Set_Atari(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
                   0x80);
     wp->hit_CC.pos_0 = wp->position;
     wp->hit_CC.pos_0.z += 0xB4;
-    func_800341BC(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
+    Set_Atari(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
                   0x80);
     wp->hit_CC.pos_0 = wp->position;
     wp->hit_CC.pos_0.z -= 0xB4;
-    func_800341BC(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
+    Set_Atari(hit, 0x78, 0, 0x8000, wp->value_1, &hit->flags_8, wp->u_70.b[3] | 0x05000000, 0,
                   0x80);
     wp->hit_CC.flags_8 = 0;
 }
@@ -124,7 +124,7 @@ void func_80107C94(ST0E_VIEW *wp)
     wp->u_70.w[0]  = 0;
     wp->u_74.w[0]  = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     m = &wp->matrix_8C;
     RotMatrixYXZ(&wp->rotation, m);
     scale.x = 0x1000;
@@ -232,12 +232,12 @@ void func_80107DE0(ST0E_VIEW *wp)
         ctl->hit.pos_0.x = wp->position.x;
         ctl->hit.pos_0.y = wp->position.y - 0x78;
         ctl->hit.pos_0.z = wp->position.z;
-        func_800341BC(&ctl->hit, 0x78, 0, 0x8000, wp->value_1, &ctl->hit.flags_8, 0x04080000,
+        Set_Atari(&ctl->hit, 0x78, 0, 0x8000, wp->value_1, &ctl->hit.flags_8, 0x04080000,
                       0x800000, 0x80);
         ctl->hit.pos_0.x = wp->position.x;
         ctl->hit.pos_0.y = wp->position.y - 0x168;
         ctl->hit.pos_0.z = wp->position.z;
-        func_800341BC(&ctl->hit, 0x78, 0, 0x8000, wp->value_1, &ctl->hit.flags_8, 0x04080000,
+        Set_Atari(&ctl->hit, 0x78, 0, 0x8000, wp->value_1, &ctl->hit.flags_8, 0x04080000,
                       0x800000, 0x80);
     }
     ctl->hit.flags_8 = 0;
@@ -265,7 +265,7 @@ void func_801080AC(ST0E_VIEW *wp)
     {
         wp->rotation.x = 0;
         wp->variant_3  = 8;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->routine_1 = 0;
         wp->value_FB  = 0;
         Sound_call2(0x107, &wp->position);
@@ -351,7 +351,7 @@ void func_8010834C(ST0E_10C *wp)
     wp->value_70    = 0;
     wp->value_74    = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->routine_0 = 1;
     wp->byte_D    = 0x28;
     wp->routine_1 = 0;
@@ -371,8 +371,8 @@ void func_80108448(STAGE_OBJ *wp)
     STCOM_SVECTOR pos;
 
     pl = &Player_work;
-    if ((sint32)func_80030254(pl, wp) < 0x384 &&
-        func_80031DCC(&wp->position_fixed.v, wp->rotation.y + 0x400, 0x100, &pl->position_fixed,
+    if ((sint32)Obj_distance(pl, wp) < 0x384 &&
+        Angle_ck(&wp->position_fixed.v, wp->rotation.y + 0x400, 0x100, &pl->position_fixed,
                       Player_work.rotation.y, 0x800))
     {
         wp->routine_1 = 1;

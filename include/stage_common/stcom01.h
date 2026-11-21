@@ -90,7 +90,7 @@ extern STCOM01_FUNC stcom01_D_0750[];   // ctl.routine handlers (stcom01_func_1C
 extern STCOM01_FUNC stcom01_D_075C[];   // ctl.routine handlers (stcom01_func_1F30)
 extern STCOM01_FUNC stcom01_D_0774[];   // ctl.routine handlers (stcom01_func_2174)
 extern STCOM01_FUNC stcom01_D_0788[];   // ctl.routine handlers (stcom01_func_257C)
-extern STCOM01_PARAM3 stcom01_D_0000[]; // by kind_2: func_8002C8CC's arguments
+extern STCOM01_PARAM3 stcom01_D_0000[]; // by kind_2: Model_Shadow_Trans's arguments
 extern uint8 stcom01_D_04E0[];          // speed by kind_2 (stcom01_func_2918)
 extern uint8 stcom01_D_059C[4][16];     // random wait times (stcom01_func_0414)
 extern uint8 stcom01_D_0608[];          // 4 x 16 random steps, row by param_D bits 4-5
@@ -106,7 +106,7 @@ extern uint8 stcom01_D_0730[16];        // random wait times (stcom01_func_133C)
 
 // ROCK_NEO.EXE: steps the angle `rot` toward `goal` by at most `speed`; returns the step (0 when
 // there). See rock_neo.h.
-sint16 func_80031D5C(sint32 goal, sint32 rot, sint32 speed);
+sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 
 sint32 stcom01_func_2828(uint8 kind);
 sint32 stcom01_func_28C8(uint8 kind);
@@ -118,7 +118,7 @@ sint32 stcom01_func_2918(STCOM01_WORK *wp, uint8 mode);
 uint8 stcom01_func_2968(STCOM01_WORK *wp, sint32 a1, sint32 a2);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM01_H

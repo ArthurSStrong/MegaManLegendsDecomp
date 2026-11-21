@@ -4,7 +4,7 @@
 #include "rock_neo.exe/scene.h"
 
 #ifdef __wasm32__
-void func_80031AA4(void);
+void Work_close_apply(void);
 void func_80051B40(void);
 void func_80033EBC(void);
 void func_800629E0(void);
@@ -920,7 +920,7 @@ sint32 Sce_stage_load(void)
             Cd_read_comb(next);
         }
         Sce_cd_read_wait(0);
-        func_8003A3B4();
+        Light_stage_init();
         func_8003AD14();
     }
     D_80089714[routine]();
@@ -964,7 +964,7 @@ sint32 Sce_room_load(void)
         Sce_pl_parts_load();
         Sce_cd_read_wait(0);
         Obj_work_flag_change(0x3FE, 0x80);
-        func_80031AA4();
+        Work_close_apply();
     }
     D_80089790[routine]();
     if (Scene_work.routine_0 == 0)
@@ -1010,7 +1010,7 @@ void Sce_file_read(sint16 arg0, sint32 arg1, sint32 arg2)
 {
     if (arg1 != 0)
     {
-        func_8002FBF4();
+        Work_stage_close();
     }
     if (arg2 != 0)
     {

@@ -8,8 +8,8 @@ void func_801083E4(ST04_ROCK *wp)
     D_8010CBB0[wp->routine_0](wp);
     wp->hit_BC[0] = 0;
     wp->pos_AC    = wp->position;
-    func_800341BC(&wp->position, 0x20, 0, 0x8000, wp->value_1, wp->hit_BC, 0x4000000, 0, 0x80);
-    func_8002C8CC(wp, 0x14, 0x200, 0);
+    Set_Atari(&wp->position, 0x20, 0, 0x8000, wp->value_1, wp->hit_BC, 0x4000000, 0, 0x80);
+    Model_Shadow_Trans(wp, 0x14, 0x200, 0);
 }
 
 void func_8010849C(ST04_ROCK *wp)
@@ -17,7 +17,7 @@ void func_8010849C(ST04_ROCK *wp)
     STCOM_FIXED_VECTOR scale;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->rotation.x      = 0x400;
     wp->rotation.z      = 0;
     wp->matrix.words[0] = 0x1000;
@@ -89,7 +89,7 @@ void func_801085EC(ST04_ROCK *wp)
         wp->routine_2    = 1;
         Sound_call2(0x138, &wp->position);
     }
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
 }
 
 // Retail's bounce branch starts with the velocity reload; GCC schedules the sound id and
@@ -174,5 +174,5 @@ void func_801088BC(ST04_ROCK *wp)
     wp->position_fixed.x += wp->velocity.v.x << 8;
     wp->position_fixed.y += wp->velocity.v.y << 8;
     wp->position_fixed.z += wp->velocity.v.z << 8;
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
 }

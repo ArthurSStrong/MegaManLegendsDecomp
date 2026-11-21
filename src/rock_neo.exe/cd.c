@@ -416,10 +416,10 @@ void func_8001BB4C(void)
                                     {
                                         D_800C5604.u.vab.load = 0;
                                     }
-                                    if (D_80098958 & 0x800)
+                                    if (Sound_flags & 0x800)
                                     {
                                         D_800C5604.u.vab.load = 1;
-                                        func_8001B33C();
+                                        Sound_seq_stop_all();
                                     }
                                 }
                                 if (D_800C5604.u.vab.load == 1)

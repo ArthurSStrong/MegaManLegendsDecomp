@@ -475,7 +475,7 @@ void func_80106D54(STAGE_OBJ *wp);
 void func_80106A54(STAGE_OBJ *wp);
 void func_80106E14(STAGE_ACTOR *wp);
 sint32 func_80107114(ST1B_ACTOR *wp);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_801087C4(STAGE_WORK *wp);
 void func_80108820(STAGE_WORK *wp);
 void func_8010887C(STAGE_OBJ *wp);

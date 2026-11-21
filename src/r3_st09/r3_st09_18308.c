@@ -82,7 +82,7 @@ void func_80118308(STAGE_PANEL_WORK *wp)
 void func_8011864C(STAGE_PANEL_WORK *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->value_3);
+    Model_work_init(wp, &wp->value_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -240,7 +240,7 @@ void func_80118B7C(ST09_BOX *wp)
     wp->matrix.words[6] = 0;
     wp->matrix.words[7] = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->color_40              = 0x808080;
     wp->matrix.f.ctl.flags_0  = 0xE;
     wp->routine_0             = 1;
@@ -281,7 +281,7 @@ void func_80118C3C(ST09_BOX *wp)
         if ((wp->flags_0 & 1) && (wp->matrix.f.ctl.flags_0 & 4))
         {
             wp->pos_38.y -= 0x80;
-            func_800341BC(&wp->pos_38, 0xA0, 0, D_8011E4F4[wp->variant_3 >> 4], wp->index_1,
+            Set_Atari(&wp->pos_38, 0xA0, 0, D_8011E4F4[wp->variant_3 >> 4], wp->index_1,
                           &wp->matrix.f.ctl.hit_4, D_8011E4EC[wp->variant_3 >> 4], 0, 0x80);
             wp->pos_38.y += 0x80;
         }
@@ -311,7 +311,7 @@ void func_80118DC0(ST09_BOX *wp)
             wp->color_40  = 0x808080;
             ctl->flags_0 &= ~8;
             func_80052528(wp);
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0         = 5;
@@ -614,7 +614,7 @@ void func_801196C0(void)
                                 wp->flags_0 = 5;
                                 wp->kind_2  = 0x21;
                                 wp->value_3 = i;
-                                func_8002F9C4(wp, &wp->value_3);
+                                Model_work_init(wp, &wp->value_3);
                                 wp->dir_C           = list[k].spawn_E[i];
                                 wp->value_D         = count;
                                 pos                 = STAGE_CELL_TBL[cell].pos;

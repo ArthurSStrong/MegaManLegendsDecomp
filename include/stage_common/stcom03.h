@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The 0x48-byte work slot stcom03 runs on (freed through ROCK_NEO's func_80031988): a screen
+// The 0x48-byte work slot stcom03 runs on (freed through ROCK_NEO's Close_EFFECT_WORK): a screen
 // effect drawn as a semi-transparent primitive whose color word (GPU code and RGB) fades.
 typedef struct
 {
@@ -33,6 +33,6 @@ typedef void (*STCOM03_FUNC)(STCOM03_WORK *wp);
 extern STCOM03_FUNC stcom03_D_0000[]; // routine_0 handlers (stcom03_func_0000)
 
 // ROCK_NEO.EXE: frees a 0x48-byte work slot.
-void func_80031988(STCOM03_WORK *wp);
+void Close_EFFECT_WORK(STCOM03_WORK *wp);
 
 #endif // STCOM03_H

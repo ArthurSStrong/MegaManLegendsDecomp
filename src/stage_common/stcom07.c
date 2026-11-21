@@ -15,7 +15,7 @@ void stcom07_func_0000(STCOM07_WORK *wp)
 void stcom07_func_003C(STCOM07_WORK *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->type_3);
+    Model_work_init(wp, &wp->type_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;

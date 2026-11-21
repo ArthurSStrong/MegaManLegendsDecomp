@@ -153,7 +153,7 @@ sint32 func_8003B2D4(sint32 row, sint32 bit);
 void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 extern uint8 D_80105900[][8];
-sint16 func_80048E6C(void *wp);
+sint16 Scr_height_check(void *wp);
 void Sce_flag_off(sint32 flag);
 extern ST0F_OBJ_FUNC D_801060F4[];
 extern ST0F_OBJ_FUNC D_8010612C[];
@@ -171,12 +171,12 @@ void func_80103E70(ST0F_OBJ *wp);
 extern uint8 D_80106144[];
 extern STCOM_FIXED_VECTOR D_801061A0; // position for func_80039FAC
 extern STCOM_FIXED_VECTOR D_801061B0; // position for func_80039FAC
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 sint32 func_80103CD8(ST0F_OBJ *wp);
 
 sint32 func_80104490(ST0F_OBJ *wp);
 sint32 func_801045C0(void);
-sint16 func_80031D5C(sint32 goal, sint32 rot, sint32 speed);
+sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 sint32 func_80103CD8(ST0F_OBJ *wp);
 void func_80103C28(ST0F_OBJ *wp);
 sint32 func_80103E08(void);

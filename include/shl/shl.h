@@ -180,9 +180,9 @@ typedef struct SHL_WORK
         SHL_SPRITE spr;
         SHL_MODEL mdl;
     } draw;          // 88
-    uint32 col_bc;   // BC: second hit accumulator (func_800341BC)
+    uint32 col_bc;   // BC: second hit accumulator (Set_Atari)
     uint32 col_c0;   // C0
-    uint32 col_c4;   // C4: hit accumulator (func_8003430C, func_800341BC)
+    uint32 col_c4;   // C4: hit accumulator (func_8003430C, Set_Atari)
     uint32 col_c8;   // C8
     sint32 value_cc; // CC
     sint32 value_d0; // D0
@@ -206,7 +206,7 @@ extern SHL_GAME Game_work;
 // Frame counter in the scratchpad.
 #define SHL_FRAME (*(uint16 *)0x1F800002)
 
-// Effect slot (ROCK_NEO's CODE456_WORK, seen from the SHL modules): func_80031618 returns a
+// Effect slot (ROCK_NEO's CODE456_WORK, seen from the SHL modules): Open_EFFECT_WORK returns a
 // free one from the 64-slot table Effect_work_tbl.
 typedef struct
 {
@@ -244,21 +244,21 @@ void Sound_call(sint32 sound, ...);
 void Sound_call2(sint16 id, void *pos);
 sint32 rand(void);
 void *func_80036294(sint32 id);
-void *func_80031618(void); // a free effect slot (SHL_FX, or a module's own view)
-SHL_WORK *func_80031598(void);
-void func_80031930(void *obj);
+void *Open_EFFECT_WORK(void); // a free effect slot (SHL_FX, or a module's own view)
+SHL_WORK *Open_PL_SHL_WORK(void);
+void Close_PL_SHL_WORK(void *obj);
 void Close_SHL_WORK(void *obj);
-void func_8002F9C4(void *obj, void *arg);
+void Model_work_init(void *obj, void *arg);
 void func_80033F04(SVECTOR *out, SVECTOR *dir, SVECTOR *cur, sint32 a3, sint32 a4);
-void func_80030150(SHL_FIXED *fpos, SVECTOR *pos);
-void func_8002C8CC(void *obj, sint32 a1, sint32 a2, sint32 a3);
+void Obj_pos_adj_round(SHL_FIXED *fpos, SVECTOR *pos);
+void Model_Shadow_Trans(void *obj, sint32 a1, sint32 a2, sint32 a3);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, SVECTOR *pos);
-sint32 func_800341BC(SVECTOR *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, uint32 *col,
+sint32 Set_Atari(SVECTOR *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, uint32 *col,
                      uint32 flags, sint32 arg7, sint32 arg8);
 sint32 func_8004B414(void *obj);
 void func_8004AC8C(SVECTOR *vel, sint32 flags);
 sint32 func_80048C60(SVECTOR *pos);
-sint32 func_80048E6C(void *obj);
+sint32 Scr_height_check(void *obj);
 sint32 func_80050C2C(void *obj);
 sint32 func_8004324C(SHL_PLAYER *pl);
 void func_800354E0(sint32 bit);

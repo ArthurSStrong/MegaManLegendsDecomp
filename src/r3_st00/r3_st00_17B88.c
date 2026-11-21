@@ -12,7 +12,7 @@ void func_80117B88(STAGE_FX *wp)
     wp->x_2C.half[0] = (wp->x_2C.half[0] + (wp->z_34.value >> 16)) & 0xFFF;
     if (wp->x_2C.half[1] < 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     v.x = (rcos(wp->x_2C.half[0]) * wp->x_2C.half[1]) >> 12;
@@ -91,7 +91,7 @@ void func_80117D80(STAGE_FX *wp)
     wp->v_23 = D_8011CE10[wp->h_26].v;
     if (++wp->frame_E == 4)
     {
-        ep = (STAGE_FX *)func_80031618();
+        ep = (STAGE_FX *)Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0        = 1;
@@ -194,7 +194,7 @@ void func_801181E4(STAGE_FX *wp)
     frame = ++wp->type_F;
     if (frame == 8)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     wp->color_18 = D_8011CE30[frame];
@@ -237,7 +237,7 @@ void func_801182C0(STAGE_FX *wp)
     STAGE_MATRIX_IDENTITY_SCALAR(m.w);
     RotMatrixY((sint16)rot, &m.m);
     ApplyMatrixSV(&m.m, &v, &out);
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -263,7 +263,7 @@ void func_801182C0(STAGE_FX *wp)
         ep->z_20     = out.z + (parent->position_fixed.v.z >> 16);
         ep->color_18 = 0x2E808080;
     }
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -323,7 +323,7 @@ void func_80118560(STAGE_OBJ *wp)
 {
     if (wp->routine_0 == 2)
     {
-        func_80031988((STCOM_EFFECT *)wp);
+        Close_EFFECT_WORK((STCOM_EFFECT *)wp);
         return;
     }
     D_8011CE50[wp->variant_3](wp);
@@ -333,7 +333,7 @@ STAGE_FX *func_801185BC(STAGE_OBJ *owner, sint32 x, sint32 y, sint32 z, uint8 va
 {
     STAGE_FX *fx;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0      = 1;
@@ -353,7 +353,7 @@ void func_80118648(STCOM_SVECTOR *pos, sint16 a1, sint16 a2, ST00_POINT_FX *owne
 {
     STAGE_FX *fx;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0   = 1;
@@ -383,7 +383,7 @@ void func_8011877C(STCOM_SVECTOR *pos, sint32 a1, sint32 a2)
 {
     ST00_POINT_FX *fx;
 
-    fx = (ST00_POINT_FX *)func_80031618();
+    fx = (ST00_POINT_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0    = 1;
@@ -411,7 +411,7 @@ void func_80118814(ST00_POINT_FX *wp)
     }
     if (--wp->value_E == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     wp->color_18 += 0xFFFEFEFF;
@@ -471,7 +471,7 @@ void func_80118960(ST00_POINT_FX *wp)
             wp->speed_34.value += 0x10000;
             if (wp->value_E == 0x1E)
             {
-                func_80031988(wp);
+                Close_EFFECT_WORK(wp);
             }
             break;
     }

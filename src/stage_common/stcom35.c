@@ -25,7 +25,7 @@ void stcom35_func_006C(STCOM_EFFECT *wp)
 
     if (!(wp->timer_B & 0xF))
     {
-        fx                  = func_80031618();
+        fx                  = Open_EFFECT_WORK();
         fx->flags_0         = 3;
         fx->kind_2          = wp->value_C;
         fx->variant_3       = wp->variant_3;
@@ -58,7 +58,7 @@ void stcom35_func_006C(STCOM_EFFECT *wp)
     }
     if (wp->timer_B >= 0x10)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     wp->timer_B++;
 }
@@ -93,5 +93,5 @@ void stcom35_func_0190(STCOM_EFFECT *wp)
 
 void stcom35_func_0264(STCOM_EFFECT *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }

@@ -132,7 +132,7 @@ extern sint16 D_800C3560;
 extern sint16 D_800C3562;
 extern sint16 D_800C3564;
 extern sint16 D_800C356A;
-extern sint16 D_80098A72;
+extern sint16 Fade_busy;
 
 void func_800680BC(sint32 arg);
 void func_80068508(CODE68_CHILD *child, sint32 index);
@@ -147,7 +147,7 @@ void Sce_slot_open(CODE68_ENTRY *entry);
 void func_80068CE0(CODE68_WORK *wp);
 void func_80068D64(CODE68_WORK *wp);
 void func_80068DA4(void);
-void func_80017C30(sint32 arg);
+void Fade_start(sint32 arg);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_8001D58C(uint32 arg);
 uint32 Sce_cd_reading(void);

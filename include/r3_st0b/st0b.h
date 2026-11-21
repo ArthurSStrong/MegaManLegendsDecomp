@@ -166,11 +166,11 @@ typedef struct
     STAGE_FACE face;                        // 4E0
 } ST0B_OBJ;
 
-// A hit box in ST0B_CTL, registered through func_800341BC (func_801048FC).
+// A hit box in ST0B_CTL, registered through Set_Atari (func_801048FC).
 typedef struct
 {
     STCOM_SVECTOR pos_0; // 00
-    uint32 hit_8;        // 08: func_800341BC's record
+    uint32 hit_8;        // 08: Set_Atari's record
     uint32 value_C;      // 0C
     sint16 size_10;      // 10
     sint16 size_12;      // 12
@@ -200,7 +200,7 @@ typedef struct
     uint8 index_E;               // 0E: the action slot being run
     uint8 toggle_F;              // 0F (+0x38F)
     ST0B_HITBOX hit_10[2];       // 10
-    uint8 track_38[0x10];        // 38: func_80036478
+    uint8 track_38[0x10];        // 38: Search_Player_Init
     STCOM_SVECTOR_W rot_48;      // 48 (+0x3C8)
     STCOM_FIXED_VECTOR scale_50; // 50 (+0x3D0)
     STAGE_OBJ *slot_60;          // 60 (+0x3E0)
@@ -664,7 +664,7 @@ extern void *D_801195EC[];
 extern uint8 D_8011960C[][0x28];
 extern uint8 D_8011974C[][8];
 
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_800364B0(void *track, void *target, sint32 angle);
 void Sce_slot_open_list(uint8 *list);
 
@@ -1239,7 +1239,7 @@ extern STAGE_SCRIPT_ENTRY D_801200D8[];
 void func_80118C34(STAGE_ROOM *wp);
 
 // The control block func_8010C060 and func_8010C1EC take with their slot: flags, an angle, a
-// bobbing counter, the last hit (func_8010BAFC) and a tracking block for func_800364B0/func_8003648C.
+// bobbing counter, the last hit (func_8010BAFC) and a tracking block for func_800364B0/Search_Player.
 typedef struct
 {
     uint8 reserved00[4];       // 00
@@ -1268,7 +1268,7 @@ typedef void (*ST0B_BOB2_FUNC)(STAGE_OBJ *wp, ST0B_BOB *bob);
 // The control block a bobbing object keeps at +0x308 (func_8010B4BC passes it to its routines).
 #define ST0B_OBJ_BOB(wp) ((ST0B_BOB *)((uint8 *)(wp) + 0x308))
 
-// A scratchpad vector func_8003346C reads (its y is a turn angle).
+// A scratchpad vector EM_World_Pos_Calc reads (its y is a turn angle).
 #define ST0B_SP_ROT ((STCOM_SVECTOR *)0x1F800140)
 
 void func_8010BE88(STAGE_OBJ *wp, ST0B_BOB *bob);
@@ -1687,7 +1687,7 @@ typedef struct
 
 void func_80110540(ST0B_10C_G *wp);
 
-// A 0x48-byte effect slot (func_80031618) that drifts and fades (func_80114E5C runs it through
+// A 0x48-byte effect slot (Open_EFFECT_WORK) that drifts and fades (func_80114E5C runs it through
 // D_8011BE20; func_80114FB4) and draws itself as a sprite packet.
 typedef struct
 {
@@ -1776,7 +1776,7 @@ typedef struct
     sint32 value_34;        // 34
     uint32 hit_38;          // 38: damage in the low 24 bits, kind bits above
     sint32 value_3C;        // 3C
-    uint8 track_40[0x10];   // 40: func_80036478
+    uint8 track_40[0x10];   // 40: Search_Player_Init
 } ST0B_HIT_B;
 
 void func_80036470(void *track);
@@ -2296,7 +2296,7 @@ typedef struct
     STCOM_SVECTOR box_38;     // 38
 } ST0B_PATH_D;
 
-sint32 func_80030374(sint16 *a, sint16 *b);
+sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void func_80112004(ST0B_LIFT *wp, ST0B_PATH_D *path);
 
@@ -2332,9 +2332,9 @@ typedef struct
         uint16 h[2];      // [1]: frames since it rose (func_8010D558)
     } u_18;               // 18
     sint32 ground_1C;     // 1C: 1 on the ground
-    sint32 hit_20;        // 20: func_800341BC's record
+    sint32 hit_20;        // 20: Set_Atari's record
     sint32 value_24;      // 24
-    uint8 track_28[0x10]; // 28: func_80036478/func_8003648C
+    uint8 track_28[0x10]; // 28: Search_Player_Init/Search_Player
 } ST0B_BOAT_CTL;
 
 typedef struct
@@ -2504,7 +2504,7 @@ typedef struct
     sint8 frame_1; // 1
 } ST0B_FLAME;
 
-// A 0x48-byte effect slot (func_80031618) of four flames that follow the slot whose id is in
+// A 0x48-byte effect slot (Open_EFFECT_WORK) of four flames that follow the slot whose id is in
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -2554,7 +2554,7 @@ extern ST0B_KIND **D_80098844;
 
 void func_8001D974(void);
 
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 // Where func_80117C50 places a spawned object: a position and a heading.
 typedef struct
@@ -2587,7 +2587,7 @@ void func_80117C50(STAGE_OBJ *owner, sint32 kind, sint32 index, ST0B_PLACE *plac
 extern ST0B_BOB2_FUNC D_8011B410[];
 void func_8010BBA0(STAGE_OBJ *wp, ST0B_BOB *bob);
 
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
 typedef void (*ST0B_HIT_B_FUNC)(STAGE_OBJ *wp, ST0B_HIT_B *ctl);
 
@@ -2605,11 +2605,11 @@ void Sce_script_timer_clear(void);
 #define ST0B_OBJ_HIT_B(wp)   ((ST0B_HIT_B *)((uint8 *)(wp) + 0x308))
 #define ST0B_OBJ_POS_180(wp) ((STCOM_SVECTOR *)((uint8 *)(wp) + 0x180))
 
-// A scratchpad vector func_8003346C reads (x and z: a tilt).
+// A scratchpad vector EM_World_Pos_Calc reads (x and z: a tilt).
 #define ST0B_SP_TILT ((STCOM_SVECTOR *)0x1F800128)
 
 extern ST0B_HIT_B_FUNC D_8011B43C[];
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 
 // ST0B_OBJ's joint points from +0x180, eight bytes apart: their pads are the palette slots'
 // colors (pal[i] is joint[i].pad).
@@ -2625,7 +2625,7 @@ typedef struct
     uint8 size_B;          // 0B: another hit box size / 32
     uint8 value_C;         // 0C
     uint8 value_D;         // 0D: a reload time
-    uint8 hit_E;           // 0E: or'd into func_800341BC's flags
+    uint8 hit_E;           // 0E: or'd into Set_Atari's flags
 } ST0B_KIND_B;
 
 extern ST0B_KIND_B **D_8009884C;
@@ -2658,7 +2658,7 @@ void func_801048FC(ST0B_OBJ *wp);
 
 sint32 func_80106550(ST0B_OBJ *wp);
 
-// A scratchpad block func_8003346C reads (func_801048FC sets two halfwords).
+// A scratchpad block EM_World_Pos_Calc reads (func_801048FC sets two halfwords).
 typedef struct
 {
     uint8 reserved0[2]; // 0 (0x1F800160)
@@ -2729,7 +2729,7 @@ void SetDrawMove(ST0B_DR_MOVE *p, RECT *rect, sint32 x, sint32 y);
 
 void func_8001B314(void);
 
-// A 0x48-byte effect slot (func_80031618) as func_80101FB4 sets it up: a spark at a point.
+// A 0x48-byte effect slot (Open_EFFECT_WORK) as func_80101FB4 sets it up: a spark at a point.
 typedef struct
 {
     uint8 flags_0;          // 00

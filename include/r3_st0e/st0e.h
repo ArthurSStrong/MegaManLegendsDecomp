@@ -11,7 +11,7 @@
 #define ST0E_ABS(x) ((x) >= 0 ? (x) : -(x))
 
 // The hit block at +0x368 of ST0E_ACTOR (+0x20 of its control block; registered through
-// func_800341BC) and three timers.
+// Set_Atari) and three timers.
 typedef struct
 {
     uint32 flags_0;        // 00
@@ -251,7 +251,7 @@ typedef struct
 
 typedef sint32 (*ST0E_TEST_FUNC)(STAGE_OBJ *wp);
 
-// A hit block registered through func_800341BC: where it is tested and the flags of what hit it.
+// A hit block registered through Set_Atari: where it is tested and the flags of what hit it.
 typedef struct
 {
     STCOM_SVECTOR pos_0; // 00
@@ -275,7 +275,7 @@ typedef struct
     uint8 value_2F;       // 2F: nonzero while it can be hit
 } ST0E_VIEW_CTL;
 
-// The hit block at +0xCC of ST0E_ITEM (registered through func_800341BC).
+// The hit block at +0xCC of ST0E_ITEM (registered through Set_Atari).
 typedef struct
 {
     STCOM_SVECTOR pos_0; // 00
@@ -389,7 +389,7 @@ typedef struct
     uint16 random_2;       // BE: rand() each frame
     sint16 timer_4;        // C0
     uint16 reserved6;      // C2
-    sint32 hit_8;          // C4: func_800341BC's result
+    sint32 hit_8;          // C4: Set_Atari's result
     uint8 reservedC[0x44]; // C8
 } ST0E_PROP_CTL;
 
@@ -801,7 +801,7 @@ extern sint16 D_800BBCF8[]; // ROCK_NEO.EXE: a sine table
 sint32 func_80048D08(sint32 a0, STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 void func_8010BD90(ST0E_LEVER *wp);
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 
 void func_8010D9F8(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos);
 void func_8010DC00(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos, sint32 from,

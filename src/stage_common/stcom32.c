@@ -23,7 +23,7 @@ void stcom32_func_004C(STCOM32_WORK *wp)
     if (wp->variant_3 == 0)
     {
         wp->flags_0 |= 4;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         m = &wp->u_14.model.matrix;
         STCOM32_IDENTITY(m);
         scale.x = scale.y = scale.z = 0x300;
@@ -96,7 +96,7 @@ void stcom32_func_02FC(STCOM32_WORK *wp)
             stcom32_func_0678(wp);
         }
     }
-    func_800341BC(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->hit_48, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->hit_48, 0x4000000, 0, 0x80);
 }
 
 // Picked up: the player holds it up while the message runs.

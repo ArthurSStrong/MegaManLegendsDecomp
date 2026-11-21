@@ -28,8 +28,8 @@ typedef struct
     sint16 value;
 } CODE178_FADE;
 
-// The fade work at D_80098A68, as one struct (its fields are also declared singly).
-#define CODE178_FADE_WORK (*(CODE178_FADE *)&D_80098A68)
+// The fade work at Fade_work, as one struct (its fields are also declared singly).
+#define CODE178_FADE_WORK (*(CODE178_FADE *)&Fade_work)
 
 typedef struct
 {
@@ -52,10 +52,10 @@ typedef struct
     u_long xy3;
 } CODE178_G4_WORDS;
 
-extern CODE178_FUNC D_80082140[];
+extern CODE178_FUNC Fade_task_tbl[];
 extern CODE178_FUNC D_800821BC[];
 extern uint8 D_800821E0[][4];
-extern sint8 D_80098A68;
+extern sint8 Fade_work;
 extern sint8 D_80098A69;
 extern sint8 D_80098A6A;
 extern sint8 D_80098A6B;
@@ -109,8 +109,8 @@ extern uint8 D_80082197[][4];
 void func_800196A0(void);
 sint32 rcos(sint32 angle);
 sint32 rsin(sint32 angle);
-void func_80012ECC(void);
-void func_80017E94(void);
+void Thread_exit(void);
+void fade_thread(void);
 void func_80019760(sint16 x, sint16 y, sint16 angle, sint16 scale);
 
 void func_800176A4(void *src, void *dst, sint32 count);

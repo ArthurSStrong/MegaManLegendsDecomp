@@ -684,7 +684,7 @@ typedef struct
     uint8 value_C;      // C
     uint8 value_D;      // D
     uint8 value_E;      // E
-    uint8 track_F;      // F: func_80036478's argument
+    uint8 track_F;      // F: Search_Player_Init's argument
 } ST1A_KIND;
 
 extern ST1A_KIND **D_8009884C;
@@ -2213,7 +2213,7 @@ struct ST1A_VIEW_F
     uint8 reserved43D[0x167]; // 43D
 };
 
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_80110E20(ST1A_VIEW_F *wp);
 
 // The slot a copy draws (func_80123A64): its parts' positions at +0x180, eight bytes apart (the
@@ -2777,7 +2777,7 @@ typedef struct
 
 void func_80116B78(ST1A_STCOM27_WORK *wp);
 
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 void func_80116C10(ST1A_STCOM27_WORK *wp);
 
 // From r3_st1a (ST1A_OBJ).
@@ -3192,7 +3192,7 @@ typedef struct
 #define ST1A_CTL_OF(wp) ((ST1A_CTL *)((uint8 *)&(wp)->ext + 0x20))
 
 extern STCOM16_KIND **D_80098844;
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80110090(ST1A_VIEW_H *wp);
 
 typedef struct ST1A_VIEW_I ST1A_VIEW_I;
@@ -3344,7 +3344,7 @@ struct ST1A_VIEW_I
     uint8 reserved43D[0x167]; // 43D
 };
 
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 extern STAGE_SLOT_FUNC D_80131F20[];
 void func_801101F4(ST1A_VIEW_I *wp);
 
@@ -3529,7 +3529,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 value_C;                          // 0C: nonzero: it watches the player (func_8003648C)
+    sint8 value_C;                          // 0C: nonzero: it watches the player (Search_Player)
     sint8 value_D;                          // 0D
     uint8 reserved0E[6];                    // 0E
     STCOM_SVECTOR position;                 // 14
@@ -3595,7 +3595,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 value_C;                          // 0C: nonzero: it watches the player (func_8003648C)
+    sint8 value_C;                          // 0C: nonzero: it watches the player (Search_Player)
     sint8 value_D;                          // 0D
     uint8 reserved0E[6];                    // 0E
     STCOM_SVECTOR position;                 // 14
@@ -3660,7 +3660,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 value_C;                          // 0C: nonzero: it watches the player (func_8003648C)
+    sint8 value_C;                          // 0C: nonzero: it watches the player (Search_Player)
     sint8 value_D;                          // 0D
     uint8 reserved0E[6];                    // 0E
     STCOM_SVECTOR position;                 // 14
@@ -3696,7 +3696,7 @@ typedef struct
 
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_801169B0(ST1A_STCOM27_WORK_D *wp);
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 void func_80116EBC(ST1A_STCOM27_WORK_D *wp);
 
@@ -4147,7 +4147,7 @@ extern STAGE_SLOT_FUNC D_80131F38[];
 void func_801110B4(ST1A_VIEW_H *wp, uint8 kind);
 void func_80110778(ST1A_VIEW_H *wp);
 
-sint32 func_80030374(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
+sint32 Calc_distance_xz(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 
@@ -4335,7 +4335,7 @@ sint32 func_80042208(void);
 
 sint32 func_8011BD08(ST1A_OBJ *wp, sint32 i);
 
-// A hit record in the boss's block (func_800341BC's): the damage in the low 24 bits, then the
+// A hit record in the boss's block (Set_Atari's): the damage in the low 24 bits, then the
 // kind bits.
 typedef struct
 {
@@ -4354,9 +4354,9 @@ typedef struct
     sint32 kind_E0;         // 520: the row of D_80133020 and D_80133040 (func_8011EAFC)
 } ST1A_HITS;
 
-void func_80030EE8(void *wp, STCOM_SVECTOR *target, sint32 speed);
+void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 
-void func_80030968(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
+void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
 
 // The boss's block at +0x440 of its slot as its setup writes it (func_80119320).
 typedef struct
@@ -4370,7 +4370,7 @@ typedef struct
     sint32 value_18;      // 458
     sint32 value_1C;      // 45C
     uint8 reserved20[8];  // 460
-    uint8 track_28[0x2A]; // 468: func_80036478's
+    uint8 track_28[0x2A]; // 468: Search_Player_Init's
     uint8 value_52;       // 492
     uint8 value_53;       // 493
     sint32 value_54;      // 494

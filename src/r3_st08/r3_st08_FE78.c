@@ -21,7 +21,7 @@ void func_8010FE78(STAGE_OBJ50 *wp)
     {
         case 0:
             wp->flags_0 |= 6;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             wp->color_40 = 0x808080;
             wp->routine_0++;
             // fall through
@@ -63,7 +63,7 @@ void func_8010FFB0(STAGE_OBJ50 *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 6;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         m            = &wp->matrix.m;
         wp->color_40 = 0x808080;
         rot.x        = 0;
@@ -229,7 +229,7 @@ void func_801104C8(STAGE_OBJ *wp)
             }
             return;
         case 1:
-            if ((D_80098A72 == 0) && (Sound_fade_flags == 0))
+            if ((Fade_busy == 0) && (Sound_fade_flags == 0))
             {
                 Sound_call(0x21, 1, 0);
                 MojiTaskExec2(0, 0xDU);
@@ -364,7 +364,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             }
             break;
         case 6:
-            if (!(Moji_flag & 0x8000000) && !func_8001A0A8(0))
+            if (!(Moji_flag & 0x8000000) && !Sound_seq_end_check(0))
             {
                 if (Moji_flag & 0xFF)
                 {
@@ -373,13 +373,13 @@ void func_801105AC(STAGE_OBJ50 *wp)
                 }
                 else
                 {
-                    func_80017C30(9);
+                    Fade_start(9);
                     wp->routine_1++;
                 }
             }
             break;
         case 7:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Obj_work_flag_change(0x18, 0x80);
                 wp->routine_1++;
@@ -388,11 +388,11 @@ void func_801105AC(STAGE_OBJ50 *wp)
         case 8:
             func_80110150((STAGE_OBJ *)wp);
             func_801100C0(0, -1, 0x300, 0);
-            func_80017C30(1);
+            Fade_start(1);
             wp->routine_1++;
             break;
         case 9:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_1 = 0;
             }
@@ -453,7 +453,7 @@ void func_80110C28(STAGE_OBJ50 *wp)
     STCOM_FIXED_VECTOR unused; // never used; it reserves retail's frame
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -477,5 +477,5 @@ void func_80110CC0(STAGE_OBJ50 *wp)
     {
         STCOM_PLAYER_WORK_PTR->target_184 = NULL;
     }
-    func_800341BC(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+    Set_Atari(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
 }

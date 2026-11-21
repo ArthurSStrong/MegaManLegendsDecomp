@@ -164,7 +164,7 @@ void func_8003C2D8(void)
         func_8003C4EC(&Player_work);
         if (Player_work.value449 == 0 && Player_work.value110 == 0)
         {
-            func_800341BC(&Player_work.table3a8[8], 0x20, 0, 0, Player_work.value01,
+            Set_Atari(&Player_work.table3a8[8], 0x20, 0, 0, Player_work.value01,
                           &Player_work.value188, 0x2000000, 0x800000, 0);
         }
     }
@@ -173,7 +173,7 @@ void func_8003C2D8(void)
         func_8003C4EC(&Player_work2);
         if (Player_work2.value449 == 0 && Player_work2.value110 == 0)
         {
-            func_800341BC(&Player_work2.table3a8[8], 0x20, 0, 0x2000, Player_work2.value01,
+            Set_Atari(&Player_work2.table3a8[8], 0x20, 0, 0x2000, Player_work2.value01,
                           &Player_work2.value188, 0x2000000, 0x800000, 0);
         }
     }
@@ -232,7 +232,7 @@ void func_8003C4EC(PL_WORK *pl)
     if ((uint32)(pl->kind - 1) < 2 && !(*(uint32 *)&pl->value74 & 0xFF00FF))
     {
         y     = pl->position.y;
-        floor = func_80048E6C(pl) - pl->info78->value0a;
+        floor = Scr_height_check(pl) - pl->info78->value0a;
         if (y < floor - 0x20)
         {
             if (pl->value75 == 0)
@@ -291,7 +291,7 @@ void func_8003C4EC(PL_WORK *pl)
     func_800325D4(pl);
     if (pl->routine_0 & 2)
     {
-        Model_Shadow_Trans(pl, 0x32, 0x2AB, 0);
+        func_8002C794(pl, 0x32, 0x2AB, 0);
     }
 }
 
@@ -739,7 +739,7 @@ void func_8003D1E0(PL_WORK *pl)
         case 1:
             if (pl->value128 & pad)
             {
-                fx = (PL_EFFECT *)func_80031618();
+                fx = (PL_EFFECT *)Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->routine_0 = 1;
@@ -749,7 +749,7 @@ void func_8003D1E0(PL_WORK *pl)
             }
             if (pl->value12a & pad)
             {
-                fx = (PL_EFFECT *)func_80031618();
+                fx = (PL_EFFECT *)Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->routine_0 = 1;
@@ -791,12 +791,12 @@ void func_8003D1E0(PL_WORK *pl)
                     mode        = func_80042044(pl, 0x20, 0x20);
                     pl->value44 = 0x280;
                     pl->value48 = 0x140;
-                    fx          = (PL_EFFECT *)func_80031618();
+                    fx          = (PL_EFFECT *)Open_EFFECT_WORK();
                     if (fx != NULL)
                     {
                         func_80042528(pl, fx, 1);
                     }
-                    fx = (PL_EFFECT *)func_80031618();
+                    fx = (PL_EFFECT *)Open_EFFECT_WORK();
                     if (fx != NULL)
                     {
                         func_80042528(pl, fx, 2);
@@ -888,7 +888,7 @@ void func_8003D1E0(PL_WORK *pl)
     {
         if (pl->value12a & trig)
         {
-            fx = (PL_EFFECT *)func_80031618();
+            fx = (PL_EFFECT *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->routine_0 = 1;
@@ -898,7 +898,7 @@ void func_8003D1E0(PL_WORK *pl)
         }
         if (pl->value128 & trig)
         {
-            fx = (PL_EFFECT *)func_80031618();
+            fx = (PL_EFFECT *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->routine_0 = 1;
@@ -1520,12 +1520,12 @@ void func_8003E4A8(PL_WORK *pl)
                     pl->position_fixed.y += 0x200000;
                     break;
             }
-            fx = (PL_EFFECT *)func_80031618();
+            fx = (PL_EFFECT *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 func_80042528(pl, fx, 0);
             }
-            func_80030150(&pl->position_fixed, &pl->position);
+            Obj_pos_adj_round(&pl->position_fixed, &pl->position);
             func_80041DDC(pl, 0x12, 0, 0);
             pl->value48 = 0;
             pl->value46 = 0;
@@ -1906,7 +1906,7 @@ void func_8003EEC0(PL_WORK *pl)
     {
         func_8003F188(pl, dir, 0);
     }
-    dir = func_8003129C(&pl->position, &target->position) - 0xC00;
+    dir = Calc_elevation(&pl->position, &target->position) - 0xC00;
     if (dir == pl->value108)
     {
         pl->value10e = 0;
@@ -2509,7 +2509,7 @@ void func_80040178(PL_WORK *pl)
     if (pl->value0a == 1)
     {
         y     = pl->position.y;
-        floor = func_80048E6C(pl) - 0x20;
+        floor = Scr_height_check(pl) - 0x20;
         if (floor - pl->info78->value0a < y)
         {
             pl->routine_1           = 7;
@@ -2889,7 +2889,7 @@ sint32 func_80040818(PL_WORK *pl)
         return 0;
     }
     y = pl->position.y;
-    h = func_80048E6C(pl) - 0x30;
+    h = Scr_height_check(pl) - 0x30;
     if (h - pl->info78->value0a < y)
     {
         return 0;
@@ -3302,7 +3302,7 @@ sint32 func_800414F0(PL_WORK *pl, PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *rot, PL
             hit[2] >= probe[2] - margin - ez && hit[2] <= probe[2] + margin - sz &&
             hit[1] >= probe[1] - box->y1 && hit[1] <= probe[1] - box->y0)
         {
-            return func_80030374(&pl->position.x, hit);
+            return Calc_distance_xz(&pl->position.x, hit);
         }
     }
     return 0;
@@ -3338,7 +3338,7 @@ void func_8004174C(PL_WORK *pl)
             {
                 if (from->pad != 0)
                 {
-                    dir = func_80031198(from, &pl->position);
+                    dir = Calc_degree2(from, &pl->position);
                 }
                 else
                 {
@@ -3566,7 +3566,7 @@ void func_80041DDC(PL_WORK *pl, uint8 id, sint16 arg2, uint8 flag)
 void func_80041E90(PL_WORK *pl, sint32 x, sint32 y, sint32 z)
 {
     pl->rotation.y -= pl->value116;
-    func_8002FEA4((CODE14_WORK *)pl, x, y, z);
+    Obj_pos_set((CODE14_WORK *)pl, x, y, z);
     pl->rotation.y += pl->value116;
 }
 

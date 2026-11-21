@@ -1755,6 +1755,33 @@ void func_8002C0C4(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
     }
 }
 
+void func_8002C794(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
+{
+    sint32 r;
+    uint32 n;
+
+    n = D_800987D8;
+    if (n < 0x40)
+    {
+        D_800ACE00[n].f0 = o->f14;
+        if (o->f76 != 0)
+        {
+            r                = o->f16;
+            D_800ACE00[n].f2 = r;
+        }
+        else
+        {
+            r                = Scr_height_check(o);
+            D_800ACE00[n].f2 = r;
+        }
+        D_800ACE00[n].f4 = o->f18;
+        D_800ACE00[n].f6 = ((o->f56 - o->f116) & 0xFFF) | ((a2 >> 6) << 12);
+        D_800ACE00[n].f8 = a1 | (a3 << 14);
+        D_800987D8++;
+        D_800ACE00[n].fA = r - o->f16;
+    }
+}
+
 void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
 {
     sint32 r;
@@ -1771,34 +1798,7 @@ void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
         }
         else
         {
-            r                = func_80048E6C(o);
-            D_800ACE00[n].f2 = r;
-        }
-        D_800ACE00[n].f4 = o->f18;
-        D_800ACE00[n].f6 = ((o->f56 - o->f116) & 0xFFF) | ((a2 >> 6) << 12);
-        D_800ACE00[n].f8 = a1 | (a3 << 14);
-        D_800987D8++;
-        D_800ACE00[n].fA = r - o->f16;
-    }
-}
-
-void func_8002C8CC(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
-{
-    sint32 r;
-    uint32 n;
-
-    n = D_800987D8;
-    if (n < 0x40)
-    {
-        D_800ACE00[n].f0 = o->f14;
-        if (o->f76 != 0)
-        {
-            r                = o->f16;
-            D_800ACE00[n].f2 = r;
-        }
-        else
-        {
-            r = func_80048E6C(o);
+            r = Scr_height_check(o);
             if (r < o->f16)
             {
                 r = o->f16;

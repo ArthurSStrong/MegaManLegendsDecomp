@@ -134,11 +134,11 @@ splat writes these to `build/rock_neo.exe/undefined_*_auto.txt`, which the link 
   `0x801F8xxx` area below it is thread data.
 - In C, `Thread_current` and `THREAD_TBL` (`0x801F8100`, 4 records of 0x80) are literal-address
   macros (`system.h`): the target builds them with `lui 0x801f` / `ori 0x8300` and accesses at offset
-  0, which only a constant gives. Using the `extern` symbol in `func_80012ECC` gives `%hi`/`%lo`.
+  0, which only a constant gives. Using the `extern` symbol in `Thread_exit` gives `%hi`/`%lo`.
 - `thread_dispatch` (`0x80012C80`) is the scheduler pass: for each record whose `flags` is 2, 4 or
   0x7F (or 1 with `wait` counted down to 0) it sets `flags` = 0x7F and `ChangeTh`s to it; when
   `unk70` is set it stops callbacks around the switch and restores `Vsync_handler` after. If the
-  thread called `func_80012F78(func)`, its thread is reopened at `func`.
+  thread called `Thread_change(func)`, its thread is reopened at `func`.
 - Thread records hold PsyQ's `EXEC` at `+0x14` (`exec.gp` at `+0x44` is OpenTh's gp):
   `Thread_open_file` (`0x80012FEC`) and `Thread_exec_file` (`0x800130D0`) load a PS-X EXE from
   the host PC (`PCopen`/`PCread`/`PCclose`, development leftovers) into it, then open the thread
@@ -190,7 +190,7 @@ Constants, types and variables: `include/cd.h` (shared with the shim). This sect
   Types (`CD_COMB_*`): -1 end; 0 bytes to an address; 1 backgrounds and object textures, CLUT plus tiles;
   3 tiles only; 4, 9 palettes, 10 one image in the header (10: 64 wide); 5 a VAB (header to the VAB
   header buffer and `SsVabOpenHeadSticky`, body with `SsVabTransBodyPartly`; slot 4 is skipped
-  if it already holds that bank, unless `D_80098958 & 0x800`); 7, 8 SEPs sound data, copied only when
+  if it already holds that bank, unless `Sound_flags & 0x800`); 7, 8 SEPs sound data, copied only when
   the number in `Sound_seq_tbl[i]` changes; 2 and 6 only set the state. **Very likely the format of
   the `CDDATA/DAT/*.BIN` archives** ([disc.md](disc.md), "Overlay chunk format"). 2, 4, 6, 7 never appear
 - **CLUT buffer.** Images with x < 0x140 (type 1 CLUTs) or < `CLUT_BUF_COLS` (types 4, 9, 10) go to
@@ -288,7 +288,7 @@ the player). `key_on_tone`'s first parameter is `uint16` (the caller zero-extend
   `uint32` cast with an `off` local; target also assigns `info`=s2, `tone`=s1, `voice`=s3.
 - `Sound_init`: all stores right, but the scheduler order differs: target emits `li v1,0x7f`
   before the first store and `li v0,0xf` before the `Sound_fade_flags` store, with the `Sound_fade_flags` /
-  `D_80098958` stores ahead of the `0x7F` stores; ours hoists the `0x7F` stores above them and
+  `Sound_flags` stores ahead of the `0x7F` stores; ours hoists the `0x7F` stores above them and
   loads `0xf` late. Source order of the stores makes no difference; a `vol` local is folded away.
   Also tried (consolidation pass): one chained assignment for the six `0x7F` stores (right order,
   same hoisting).
@@ -297,8 +297,8 @@ the player). `key_on_tone`'s first parameter is `uint16` (the caller zero-extend
 `extern DISP_ENV Disp_env[2]`: the extern symbol is needed, an absolute-address cast loses the shared
 base), `Pad_repeat_update`/`func_80012350` (auto-repeat; ROCK_NEO's `PAD_WORK` adds
 `rep_state[8]` at +0x38 and `rep_count[8]` at +0x40 to the shim's layout; `mask` is `sint32`), `Thread_open`
-(`OpenTh` from the thread record's `sp`/`gp`), `func_800131FC` (thread entry: dispatch through
-`D_80080894[D_80098B1C]`, then `Thread_wait(1)`). Parked: `func_80012BC4` (thread table init). The
+(`OpenTh` from the thread record's `sp`/`gp`), `main_task` (thread entry: dispatch through
+`D_80080894[D_80098B1C]`, then `Thread_wait(1)`). Parked: `thread_init` (thread table init). The
 table base `*(TCB **)0x110` must be written via a `TCB **kp = (TCB **)0x100` local (`kp[4]`) to get
 the `li t2,0x100` / `lw 0x10(t2)` split, and `gp` read into a local before the loop. Still different:
 target reloads `THREAD_TBL[i].tcb` from memory before storing `->reg[R_SR]` (ours reuses the register), and the
@@ -312,7 +312,7 @@ the rodata order differs: its 45-byte format string `D_80010040` comes out of `m
 0x30). A named `const char D_80010040[]` placed after that stub lands first too. Bank it with
 `exception_handler`, or once `D_80010000` is defined in C.
 
-Parked: `exception_handler` (`0x8001246C`, the exception handler that `func_80012938` installs with
+Parked: `exception_handler` (`0x8001246C`, the exception handler that `exception_init` installs with
 `OpenEvent`; never returns). It copies the current TCB (`TCB_CURRENT`, the `TCBH` entry that 0x108 points to),
 then each frame prints the exception name (`names[(cause >> 2) & 0xF]`, the initialized local whose
 copy is `D_80010000`), the break code (`*(u32 *)epc >> 6`: 0x1C00 = break 7, divide by zero; 0x1800
@@ -336,11 +336,11 @@ makes it longer (317).
 
 ## WORK_48 kinds
 
-A slot of the effect pool `Effect_work_tbl` (`func_80031618` / `func_80031988`) is an object whose kind is `id_2`: the
+A slot of the effect pool `Effect_work_tbl` (`Open_EFFECT_WORK` / `Close_EFFECT_WORK`) is an object whose kind is `id_2`: the
 pool update (game's `effect_stage_move`/`effect_common_move`) calls `handler[id_2]`, from the stage overlay's table (pointer at
 scratchpad `0x1F800064`) for ids below 0x80, and from `D_80089858 + id * 4` for 0x80-0x8A (11 ROCK_NEO kinds). As
 Capcom does with `EM_WORK` -> `MODEL_WORK`, each ROCK_NEO kind has its own full struct and its handlers take it; the
-shared code takes the generic `WORK_48`, and callers cast at the boundary (`func_80031988((WORK_48 *)wp)`).
+shared code takes the generic `WORK_48`, and callers cast at the boundary (`Close_EFFECT_WORK((WORK_48 *)wp)`).
 
 | Id | Struct | Handler | Family | Kind-specific bytes |
 |---|---|---|---|---|
@@ -380,7 +380,7 @@ no per-kind code for this pool yet.
 position, two bytes, two halfwords) is the same. Where `EFC` starts and that `free` follows it are inferred from that
 match and from `EFC_MODEL`'s size (0x30); Capcom's offsets for `SHL_WORK` aren't known.
 
-The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `func_80031598` / `func_80031930`, spawned by `func_80035724`),
+The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `Open_PL_SHL_WORK` / `Close_PL_SHL_WORK`, spawned by `func_80035724`),
 have their own struct, `PL_SHL_WORK`: same layout, with the sprite `EFC` and the free block written out, because a
 player's shot keeps its own bytes in both (the flight direction `dir_A4` in the EFC's kind bytes, `tgt_BC` and
 `owner_C4` in the free block). Its `id_2` is byte 0xB of the player's action record (`D_80089A8B`); the handlers are
@@ -401,7 +401,7 @@ player's shot keeps its own bytes in both (the flight direction `dir_A4` in the 
   variables can't overlap, the original had one buffer used for different things at different
   times (a union, or casts). Its real owner, and its name, are open until those users are decompiled.
 - Verify the .BIN archives against the comb format; the sound file next (Sound_work’s fields,
-  Sound_seq_stop_all and the two other sound wrappers, D_80098958’s bits); Clut_buf’s second copy and
+  Sound_seq_stop_all and the two other sound wrappers, Sound_flags’s bits); Clut_buf’s second copy and
   where the VRAM upload happens
 
 ### sound.c: seq/pan/update (Sound_seq_play, Sound_sep_play, calc_vol banked)
@@ -460,22 +460,22 @@ assembly. The sprite kinds that keep their position in `pos_1C` (`func_80045338`
 `func_8004548C`) are kind 0x85 (`W48_85_WORK`): acceleration at 0x28 and speed at 0x30, unlike the debris
 kinds 0x86/0x87, where 0x2C is the speed and 0x32 the acceleration (see "WORK_48 kinds").
 
-`code_8003A3B4`: GTE lighting. Banked `func_8003A3B4`: for each of the 0x800 `Stage_idx_tbl` entries
+`code_8003A3B4`: GTE lighting. Banked `Light_stage_init`: for each of the 0x800 `Stage_idx_tbl` entries
 with a `ptr`, finds the `Stage_hed_tbl` entry (the stage HED file, `HED_ENT` = {id, model}, loaded at
 `0x8013A000`) whose model has the same low 24 bits and copies `ptr->unk18[1]` into the entry's `val`,
-then calls `light_init` and `func_8003A538`. It was parked while the HED list was a `uint32 *` at
+then calls `light_init` and `light_model_set`. It was parked while the HED list was a `uint32 *` at
 `0x8013A004`; with the 8-byte struct the plain `Stage_hed_tbl[j].model` loop matched. `light_init`
-(banked) resets three light tables that `func_8003A538`/`func_8003A744` hand to `SetLightMatrix`,
-`SetColorMatrix` and `SetBackColor`: `SVECTOR D_80098870[3]` (light directions), `CVECTOR D_80098858[3]`
-(light colours, `<< 4` into the colour matrix's columns), `sint32 D_80098900[3]` (back colour). Each is a
+(banked) resets three light tables that `light_model_set`/`Light_player_set` hand to `SetLightMatrix`,
+`SetColorMatrix` and `SetBackColor`: `SVECTOR Light_dir[3]` (light directions), `CVECTOR Light_color[3]`
+(light colours, `<< 4` into the colour matrix's columns), `sint32 Light_ambient[3]` (back colour). Each is a
 pool common, tentative in `code_8003A3B4.c`; `$gp` reaches only element 0, other elements are `sym+off`,
 which splat labels separately (`D_80098872`, ...). Both (banked) then walk the six LOD words of
 `STG_MODEL`s (`stage.h`): each LOD's header word holds its header length in words - 1 (low byte) and a
-part count (bits 8-13), and each 8-byte part goes to `func_8003A918`. `func_8003A744` does this for
-`Support_stg[1]` (SUPPORT's STG at `0x801F6000`; record 0 has id `0xFFFFFFFF`), `func_8003A538` for every
+part count (bits 8-13), and each 8-byte part goes to `light_face_calc`. `Light_player_set` does this for
+`Support_stg[1]` (SUPPORT's STG at `0x801F6000`; record 0 has id `0xFFFFFFFF`), `light_model_set` for every
 model in the stage HED list. The target counts the LOD index 6..11 (the word index; map_blocks_draw also
 reads words 6-8), hence `lod[lod - STG_LOD_WORD]`; a 0..5 counter adds an instruction. Parked
-`func_8003A918` (`NON_MATCHING`): for each 16-byte face of `p[1]` (count in the top byte, address in the
+`light_face_calc` (`NON_MATCHING`): for each 16-byte face of `p[1]` (count in the top byte, address in the
 low 24 bits) unless bit 26 is set without bit 24, it unpacks three byte vertices (y = `-(uint8)`), takes
 the cross product (`OuterProduct0`), shifts it below 0x6883, `VectorNormal`s it and stores the
 `NormalColorCol` colour in the face's low 24 bits. The target evaluates the inner "larger magnitude of
@@ -499,7 +499,7 @@ rebuilds the base for the loop (local pointer, `e++`/flag pointer, index forms t
 
 `code_8002E7A8.c` (batch 3): banked `func_800331A0` (joint matrix/position update on the player, `PL_WORK.joint_mtx`/`joint_pos`: scratchpad
 matrix + `ApplyMatrix`/`RotMatrix`/`MulMatrix`/`ScaleMatrix`; the byte at `0x1F800074` is a shift count,
-also written as `Scratch_scale_shift`; needs an unused 8-byte local), `func_800341BC` and `func_8003430C`
+also written as `Scratch_scale_shift`; needs an unused 8-byte local), `Set_Atari` and `func_8003430C`
 (queue one/two `SLOT_REQ` entries in `D_800A2F48[0x40]`, count in `D_800988E0`, value in `D_800A32E0[n]`,
 then copy the vector or the midpoint into `D_800BE478[slot] + 0xBC` for each slot bit of
 `owner->mask_4 & D_80098798`; the register match needs a separate `mask` local and `i` used as the
@@ -513,7 +513,7 @@ clears it) banked with `psyq/inline_c.h`; its screen XY local is 8 bytes (frame 
 sits at the end of the body.
 
 `code_8002E7A8.c` (batch 4): banked `func_80036294` (id byte -> pointer into one of eight work pools,
-kind from `func_8002FE74`; `kind` must be `sint32` for the `slti` switch), `func_80030D30` (launch
+kind from `func_8002FE74`; `kind` must be `sint32` for the `slti` switch), `Calc_arc_angle` (launch
 angle from a delta, with an unused 8-byte `SVECTOR` local; `to->vy > from->vy` fixes the reg order),
 `func_80030418` and `func_80030628` (view-cone flags: same body, the first reads positions at 0xC4 and
 the angle at 0x56, the second takes positions at 0x14 and the angle as the 5th argument). Both need
@@ -522,7 +522,7 @@ which gives the shared `ori`; this probably also fixes parked `func_8003081C`. P
 (`NON_MATCHING`; binds a table entry (kind, id, sub) to an object): only the entry pointer / counter
 registers (a1/a2) are swapped. `func_80035508` stays assembly (GTE, same decision as above).
 
-`code_8002E7A8.c` (small functions): banked `func_8002FE74`, `func_80030150` (16.16 vector rounded to
+`code_8002E7A8.c` (small functions): banked `func_8002FE74`, `Obj_pos_adj_round` (16.16 vector rounded to
 `SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `func_80033EBC`, `func_8003697C`
 (scratchpad fog setup, `SetFogNear(D_800BC81C, 0x180)`). Parked `func_80036B00` (`NON_MATCHING`): copies
 `D_8009A370..74` into an `SVECTOR`; the target does load/store pair by pair, GCC hoists the later loads
@@ -533,9 +533,9 @@ first, and the else-branch test written `limit > 0x1000 - d`). Parked (`NON_MATC
 and the slot allocators `Open_EVE_WORK`, `func_80031734` (pool bitmask scan; only the store order
 differs: the target keeps the stores in source order around the mask update). A scratch test with the
 mask as a struct member (`MEM_IN_STRUCT_P`, so the store aliases the `wp->` stores) gave exactly the
-target order, so the mask words (`D_800987EC`, `D_800989CC`) may be members of a pool struct; a scalar
+target order, so the mask words (`Eve_work_used`, `D_800989CC`) may be members of a pool struct; a scalar
 `uint32` lets the scheduler hoist the `wp->` stores. The model-pool allocators `Open_EM_WORK`,
-`Open_SHL_WORK` and `func_80031598` are banked: they matched once `field_74` (a `sint8`, read with `lb`
+`Open_SHL_WORK` and `Open_PL_SHL_WORK` are banked: they matched once `field_74` (a `sint8`, read with `lb`
 everywhere) was cleared with one word store over 0x74-0x77, like their other multi-field clears.
 
 Banked `func_80031324` (initialises a child object from slot n of a parent: copies the 32-byte block at
@@ -544,17 +544,17 @@ field is `sint8` so the `-1` store is `li -1`) and `func_8003545C` (claims a fre
 24 slots, records it in owner+4 and stores the value in `D_800BE478[slot]`). Parked (`NON_MATCHING`):
 `func_80031498` (the `WORK_5A4` allocator: only its `field_2` halfword store is scheduled before the
 `D_80098B20` update, where its three matched twins keep source order),
-`func_80031CA4` (clamped angle step toward a target; target keeps the `limit` parameter in s2 and a copy
+`Muku_elevation` (clamped angle step toward a target; target keeps the `limit` parameter in s2 and a copy
 in s1, GCC merges them) and `func_80030058` (rotates an offset (x, y, z) by an angle into a VECTOR; same
-param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `func_80031DCC`, `func_80031E60`,
+param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `Angle_ck`, `func_80031E60`,
 `func_80031EF0` (two-sector angle test, 1 if within +-half1 of center1 and +-half2 of center2; target
 keeps the result in v0 and a copy of the angle in v1, GCC uses a scratch register), `Muku`
-(`func_80031CA4` on `Angle_xz_svector`, same s2/s1 issue), `func_8003081C` (GTE view-cone test:
+(`Muku_elevation` on `Angle_xz_svector`, same s2/s1 issue), `func_8003081C` (GTE view-cone test:
 RotMatrixY/RotTrans, returns 0x10 behind, 2 inside; target stores `m[0]` late and shares one `ori 2`
 between the x >= 0 / x < 0 paths) and `func_80031F84` (direction quantizer vs a base angle, returns
 angle | side << 16; only the prologue order differs).
 
-`code_8002E7A8.c` (batch 5): banked `func_80030CB8` (`func_80030CF0` with arc 0x100), `func_80030EE8`
+`code_8002E7A8.c` (batch 5): banked `func_80030CB8` (`func_80030CF0` with arc 0x100), `Obj_target_vel_set`
 (velocity (+0x44..0x4A) toward a target at speed `s`: `d * s << 8 / dist`, time = dist / s; the three stores
 must be written vx, vy, vz, time) and `func_80033F04` (rotates unit vector `a` toward `b`: two
 `OuterProduct12`, a scratchpad-like static matrix, `ApplyMatrix` twice, `VectorNormalS` of the closer result;
@@ -593,7 +593,7 @@ their own structs with the same leading layout: `SHL_WORK` (`pos`, `pos_l`, `old
 MODEL_WORK has the byte `idx_AC`). `SLOT_ENT`/`SLOT_VAL` merged into one `SLOT_ENT[4]` at `D_8009A300`
 (`func_800358F0` uses that base; the old labels `D_8009A306`/`310`/`31A`/... are fields of it).
 Retried with the new types (no new matches): `func_80036C50` (now two registers from matching),
-`func_8002FA38`, `func_80032538`, `func_80033A28`, `func_80035724`, `func_8003606C` (unchanged).
+`func_8002FA38`, `EM_Char_Move2`, `func_80033A28`, `func_80035724`, `func_8003606C` (unchanged).
 
 `code_8005C258.c` (small functions): banked `func_8005DCB4` (calls `func_8005DCDC`, `func_8005DE28`),
 `func_8005D9EC` (`Player_work+0x6E = +0xB0`, then `func_8005D9C4`), `func_8005D844` (arms slot
@@ -605,7 +605,7 @@ not fields of one struct (declared in `code_8005C258.h`). `func_8005C720`'s `wp`
 `D_800BBD78` (byte +4 indexes `D_8008D7B4`); it stays `uint8 *` until that object's layout is known.
 
 `code_800456D8.c`: banked `func_80045918`/`func_8004594C` (`WORK_48.timer_B` countdown, then `routine_8`
-+= 2 / += 1), `func_80045A7C` (`Sound_call2(0xCF, &wp->pos_38)` then `func_80031988`), `func_80047318`
++= 2 / += 1), `func_80045A7C` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `func_80047318`
 (`D_8008A708[wp->routine_8](wp)`). Parked `func_80045FE4` and `func_80046008` (identical, `NON_MATCHING`):
 the target is `func_8002FE74(wp->kind_1)` followed by `move v1,v0`; GCC drops the dead copy for a
 `void` function with a local, and a `return` form emits no move either (also tried `register`).
@@ -762,11 +762,11 @@ takes 0x28 bytes from the scratchpad pointer `Map_prim_ptr` (0x1F800070, Capcom'
 Banked `func_80068DAC(sw)` (0x80068DAC), the scene's main routine, a switch on `Scene_work.routine_4`:
 0 waits for `func_80042238(Player_work)`, clears bits 0-1 of `Player_work[0].unk00` and plays XA
 `0x2001000B`; 1 waits for `Sce_cd_reading`, sets `field_0C = 30`; 2 counts `field_0C` down, then
-`func_80017C30(2)`; 3 `event_scene_init` and falls through to 4 (ends when `D_80098A72 == 0` and the
-event table reached its 0xFF entry or `Sce_skip_check` says START skipped, `func_80017C30(10)`) and 5:
+`Fade_start(2)`; 3 `event_scene_init` and falls through to 4 (ends when `Fade_busy == 0` and the
+event table reached its 0xFF entry or `Sce_skip_check` says START skipped, `Fade_start(10)`) and 5:
 the per-frame work (`event_step_call`, `screen_tile_draw(field_68, 6C, 70, 74)` while `field_64`, the
 camera, `Sce_event_update`, the empty `func_80068DA4` at `timer_14 == 0x4680`, 5 minutes). In 5 with
-`D_80098A72 == 0` it sets the `D_800C3560`.. block for the next stage (0x1B, 6), clears `unk00`, pauses
+`Fade_busy == 0` it sets the `D_800C3560`.. block for the next stage (0x1B, 6), clears `unk00`, pauses
 the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`func_80042314`), `Sce_flag_select(0x2EB)`,
 `Sce_flag_on(0x55)`, `func_8001D974`. So `screen_tile_draw` takes `uint8` r, g, b (the caller loads
 the low bytes of the `uint32` fields with `lbu`), and the stores only match with `D_800C356C = 2`
@@ -956,11 +956,11 @@ Banked by `tools/twins.py` (byte-identical to a matched function; C copied, buil
 Named `Sce_cd_read_wait` -> `Sce_read_sync`: waits a frame at a time (`Thread_wait(1)`) until
 `Cd_read_sync2()` reports the CD queue empty. Same purpose as `Cd_read_sync`, different code (it calls
 `Cd_read_sync2` instead of comparing the queue pointers); its caller is in `code_800133D8`
-(`func_80013420`), which loads `a0 = 1` in the call's delay slot, so Capcom's version probably took an
+(`Title_task`), which loads `a0 = 1` in the call's delay slot, so Capcom's version probably took an
 argument it never used.
 
 Twins run (one of each all-assembly twin group, then `twins.py --apply`):
-- `func_80013F60` (`code_800133D8`; `routine_1++` of `D_80098AA8` unless `D_80098A72`) and its
+- `title_fade_wait_next` (`code_800133D8`; `routine_1++` of `D_80098AA8` unless `Fade_busy`) and its
   game.c copies `fade_wait_next`/`fade_wait_next2`, the same bytes on `Game_work` (`GAME_WORK.routine_0`/`_1`,
   `Game_task` runs `Game_main_tbl[routine_0]` on it). Written by hand, since the types differ.
 - `func_800666D8` (`code_8006430C`; runs `D_8008FD20[routine_1]` of its module state `D_80098910`,

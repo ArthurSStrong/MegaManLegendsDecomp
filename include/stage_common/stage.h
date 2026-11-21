@@ -201,7 +201,7 @@ extern STAGE_SUB_STATE Code800133D8_work[];
 extern uint8 D_80098A8C;
 extern uint8 D_800A395C;
 extern uint8 *D_800BC7F0;
-extern void D_80013420(void); // ROCK_NEO.EXE's func_80013420
+void Title_task(void); // ROCK_NEO.EXE
 
 void func_80022FD4(void *tbl);
 void func_8002EA50(void *spawn, sint32 spawn_player);
@@ -217,7 +217,7 @@ sint32 Sce_flag_test(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 extern uint8 *D_8008CE90;
 extern uint16 D_800C0C2A;
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void func_8001D58C(uint32 arg);
 uint32 Sce_cd_reading(void);
 uint32 Sce_skip_check(void);
@@ -226,7 +226,7 @@ void Sce_script_update(void);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_80039820(void);
-void func_80012F78(STAGE_THREAD_FUNC entry);
+void Thread_change(STAGE_THREAD_FUNC entry);
 sint32 func_8002D404(sint32 id, sint32 a1, sint32 a2, sint32 a3);
 void func_8002D320(void *model, uint32 idx, sint32 delta);
 uint32 func_8003AC24(uint32 key);
@@ -313,7 +313,7 @@ struct STAGE_WORK
 
 typedef void (*STAGE_FUNC)(STAGE_WORK *wp);
 
-// A 0x48-byte effect slot (func_80031618; freed through func_80031988).
+// A 0x48-byte effect slot (Open_EFFECT_WORK; freed through Close_EFFECT_WORK).
 typedef struct STAGE_EFFECT STAGE_EFFECT;
 
 struct STAGE_EFFECT
@@ -415,7 +415,7 @@ typedef struct
 } STAGE_UNPACK;
 
 // ROCK_NEO.EXE (the stcom headers declare some of these with their own types).
-void func_80031988(void *wp);
+void Close_EFFECT_WORK(void *wp);
 STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 STCOM_MATRIX *MulMatrix(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
@@ -727,10 +727,10 @@ extern uint8 Sound_fade_flags;
 void Cd_read_comb(sint32 id);
 sint32 Cd_read_sync2(void);
 void Sound_fade_start(sint32 arg);
-void func_80032304(void *wp, sint32 anim, sint32 arg);
+void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
 void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 void func_80033A28(void *wp);
-void func_8003346C(void *wp);
+void EM_World_Pos_Calc(void *wp);
 
 // Three shorts (a position in a table).
 typedef struct
@@ -1244,7 +1244,7 @@ typedef struct
     uint32 value_d4;        // D4
 } STAGE_SHOT;
 
-// An effect slot from func_80031618 as the shot routines fill it (the SHL modules' SHL_FX).
+// An effect slot from Open_EFFECT_WORK as the shot routines fill it (the SHL modules' SHL_FX).
 typedef struct
 {
     sint8 routine_0; // 00
@@ -1400,7 +1400,7 @@ typedef struct
     STCOM_SVECTOR from_1C; // 1C: where a hit came from (flags in pad)
     union
     {
-        uint8 track[0x10]; // func_80036478
+        uint8 track[0x10]; // Search_Player_Init
         sint32 w[4];
     } u_24; // 24
     union
@@ -1458,7 +1458,7 @@ typedef struct
     uint8 reserved8D[0xB];  // 8D
 } STAGE_ACTOR_EXT;
 
-// A scratchpad halfword the r3_st09 and r3_st1d actors set before func_8003346C.
+// A scratchpad halfword the r3_st09 and r3_st1d actors set before EM_World_Pos_Calc.
 #define STAGE_SP_13A (*(uint16 *)0x1F80013A)
 
 // A 0x10C-byte slot (Open_SHL_WORK) of a prop that turns and talks: r3_st03's func_80112098 and its

@@ -25,7 +25,7 @@ void func_8010E764(STAGE_SPARK *wp)
 
 void func_8010E798(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_8010E7B8(STAGE_OBJ *wp)
@@ -40,7 +40,7 @@ void func_8010E7F4(ST19_SPARK *wp)
 
     if (++wp->routine_3 == 8)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;
@@ -80,7 +80,7 @@ void func_8010E93C(STAGE_OBJ *wp)
         func_8010E7F4(wp);
         return;
     }
-    func_80031988((STCOM_EFFECT *)wp);
+    Close_EFFECT_WORK((STCOM_EFFECT *)wp);
 }
 
 ST19_SPARK *func_8010E99C(STCOM_SVECTOR *pos, sint32 width, sint32 type, sint32 count, sint32 rise,
@@ -89,7 +89,7 @@ ST19_SPARK *func_8010E99C(STCOM_SVECTOR *pos, sint32 width, sint32 type, sint32 
     ST19_SPARK *ep;
     sint32 i;
 
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;

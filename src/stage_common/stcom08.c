@@ -15,11 +15,11 @@ void stcom08_func_0000(STCOM08_WORK *wp)
     stcom08_D_0000[wp->routine_0](wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0xC, 0x200, 0);
+        Model_Shadow_Trans(wp, 0xC, 0x200, 0);
     }
     if (wp->routine_3 != 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
@@ -35,12 +35,12 @@ void stcom08_func_00F0(STCOM08_WORK *wp)
     wp->turn_64    = 0x80;
     wp->flags_0 |= 2;
     wp->rot_speed_66 = (rand() & 0xF) - 8;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]   = 0x1800180;
     wp->scale.words[1]   = 0x180;
     wp->scale.v.pad      = 0x4210;
     wp->value_78         = 0;
-    wp->position.y       = func_80048E6C(wp) - 100;
+    wp->position.y       = Scr_height_check(wp) - 100;
     wp->position_fixed.y = wp->position.y << 16;
     wp->home             = wp->position;
     wp->value_6E         = 0;
@@ -50,7 +50,7 @@ void stcom08_func_00F0(STCOM08_WORK *wp)
     wp->velocity.y       = 0;
     wp->velocity.z       = 0;
     wp->timer_34C        = (rand() & 0x7F) | 1;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->routine_0 = 1;
     wp->routine_3 = 0;
 }
@@ -68,7 +68,7 @@ void stcom08_func_01F0(STCOM08_WORK *wp)
 
 void stcom08_func_0248(STCOM08_WORK *wp)
 {
-    wp->dist_350 = func_800302E4(&wp->position, &wp->home) >> 7;
+    wp->dist_350 = Calc_distance(&wp->position, &wp->home) >> 7;
     switch (wp->routine_1)
     {
         case 0:
@@ -84,7 +84,7 @@ void stcom08_func_0248(STCOM08_WORK *wp)
             }
             break;
         case 1:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &wp->home,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &wp->home,
                                                              wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             if (wp->dist_350 < 2)
@@ -108,13 +108,13 @@ void stcom08_func_0348(STCOM08_WORK *wp)
     sint16 ground;
     uint16 wobble;
 
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, 0);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, 0);
     if (func_80048DAC(&wp->position))
     {
         Close_EM_WORK(wp);
         return;
     }
-    ground = func_80048E6C(wp);
+    ground = Scr_height_check(wp);
     wobble = stcom08_D_0010[STCOM08_FRAME & 7];
     if (wp->position.y > ground - 100)
     {

@@ -93,7 +93,7 @@ typedef struct
     uint8 reserved2C[8];    // 2C
 } STCOM_SPRITE;
 
-// A 0x48-byte effect slot from func_80031618 (only the fields used so far).
+// A 0x48-byte effect slot from Open_EFFECT_WORK (only the fields used so far).
 typedef struct
 {
     uint8 flags_0;       // 00
@@ -164,7 +164,7 @@ extern uint8 D_800C356E;
 extern uint8 D_800C356F;
 extern uint8 D_800C3570;
 extern uint8 D_800C3571;
-extern sint16 D_80098A72;
+extern sint16 Fade_busy;
 extern sint8 D_800987B0[]; // [0]: nonzero while the screen is fading
 extern uint32 Moji_flag;
 extern sint32 D_800A396C;
@@ -177,28 +177,28 @@ void MojiTaskKill(void);
 void MojiTaskExec2(sint32 a, sint32 b);
 sint32 func_8003A13C(void);
 sint32 func_80039E18(void);
-sint32 func_80031198(STCOM_SVECTOR *pos, STCOM_SVECTOR *target);
+sint32 Calc_degree2(STCOM_SVECTOR *pos, STCOM_SVECTOR *target);
 void func_80039FAC(STCOM_FIXED_VECTOR *pos, sint32 a1, sint32 angle, sint32 a3);
-// func_80031BEC (turns the angle `rot` at `pos` toward `target` by at most `speed`, returns the
+// Muku (turns the angle `rot` at `pos` toward `target` by at most `speed`, returns the
 // step) is declared by each file's header: stcom15 uses its result without narrowing (int), the
 // others as a sint16.
-// func_80048E6C (the ground height under a work slot) is declared by each file's header: ROCK_NEO
+// Scr_height_check (the ground height under a work slot) is declared by each file's header: ROCK_NEO
 // returns an int, and stcom15 compares the result unextended, but stcom04 and stcom12 narrow it
 // to sint16 at the call.
-// func_80031D5C (steps an angle toward a goal by at most a speed, returns the step) is declared
+// Muku_angle (steps an angle toward a goal by at most a speed, returns the step) is declared
 // by each file's header: its callers disagree on the return type (sint16 in stcom01, int in
 // stcom04, which retail evidently called without a sint16 prototype).
 // Rotates (x, y, z) by `angle` into `out`.
 STCOM_FIXED_VECTOR *func_80030058(STCOM_FIXED_VECTOR *out, sint32 angle, sint16 x, sint16 y,
                                   sint16 z);
-void func_8002F9C4(void *wp, uint8 *variant);
-void func_800322A8(void *wp, sint32 anim, sint32 arg);
-void func_80032488(void *wp);
-void func_8002C8CC(void *wp, sint32 a1, sint32 a2, sint32 a3);
+void Model_work_init(void *wp, uint8 *variant);
+void EM_Char_Set(void *wp, sint32 anim, sint32 arg);
+void EM_Char_Move(void *wp);
+void Model_Shadow_Trans(void *wp, sint32 a1, sint32 a2, sint32 a3);
 void func_80051B68(void *wp, sint32 a1, sint32 a2, sint32 a3);
 // Moves a work slot by (x, y, z) along its rotation. ROCK_NEO declares sint16 parameters, but
 // stcom13 passes velocity * 16 without narrowing, so the stage code saw int ones.
-void func_8002FEA4(void *wp, sint32 x, sint32 y, sint32 z);
+void Obj_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
 void func_80063BC8(void *pos, sint32 a1, sint32 a2, sint32 a3);
 // Frees a 0x24-byte event work slot.
 void Close_EVE_WORK(void *wp);
@@ -206,15 +206,15 @@ void Sound_call2(sint16 id, void *args);
 void Sce_flag_on(sint32 flag);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void Moji_param_exec(sint32 index, sint32 mode, sint32 value, sint32 id);
-void func_80017C30(sint32 arg);
-sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
+void Fade_start(sint32 arg);
+sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      sint32 arg6, sint32 arg7, sint32 arg8);
 void func_80051BAC(void *wp);
 // Allocates an effect record; NULL when none is free.
-STCOM_EFFECT *func_80031618(void);
+STCOM_EFFECT *Open_EFFECT_WORK(void);
 // Sets a 16.16 position from a short one.
-void func_80030150(STCOM_FIXED_VECTOR *fixed, STCOM_SVECTOR *pos);
-void func_80031930(void *wp);
+void Obj_pos_adj_round(STCOM_FIXED_VECTOR *fixed, STCOM_SVECTOR *pos);
+void Close_PL_SHL_WORK(void *wp);
 void func_8004AC8C(STCOM_SVECTOR *velocity, sint32 hit);
 // PsyQ libgte.
 sint32 rsin(sint32 a);
@@ -231,15 +231,15 @@ sint32 func_80049C24(void *wp);
 sint32 func_80037BB4(void *wp);
 void func_80037738(sint32 value, uint32 amount);
 // Distance between two positions.
-sint32 func_800302E4(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
+sint32 Calc_distance(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 // Frees a 0x10C-byte work slot.
 void Close_SHL_WORK(void *wp);
 // PsyQ libgte.
 STCOM_MATRIX *RotMatrixYXZ(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 STCOM_MATRIX *ScaleMatrix(STCOM_MATRIX *m, STCOM_FIXED_VECTOR *v);
 // Distance between two work slots' positions.
-uint32 func_80030254(void *a, void *b);
-void func_80032538(void *wp);
+uint32 Obj_distance(void *a, void *b);
+void EM_Char_Move2(void *wp);
 void func_800334C4(void *wp);
 sint32 func_80048DAC(STCOM_SVECTOR *pos);
 sint32 func_8004B414(void *wp);

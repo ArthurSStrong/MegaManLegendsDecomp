@@ -703,7 +703,7 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sound_call(0x19, 1, 0);
                 wp->routine_4 = 2;
@@ -853,11 +853,11 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
         case 9:
-            if (!(Moji_flag & 0x8000000) && !func_8001A0A8(0))
+            if (!(Moji_flag & 0x8000000) && !Sound_seq_end_check(0))
             {
                 if (!(Moji_flag & 0xFF))
                 {
-                    func_80017C30(9);
+                    Fade_start(9);
                     wp->routine_4 = 10;
                 }
                 else
@@ -868,18 +868,18 @@ void func_801018CC(STAGE_ROOM *wp)
             }
             break;
         case 10:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_4 = 0xB;
             }
             break;
         case 11:
             func_80101798();
-            func_80017C30(1);
+            Fade_start(1);
             wp->routine_4 = 0xC;
             break;
         case 12:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_4 = 3;
             }
@@ -960,7 +960,7 @@ void func_801020C4(STAGE_ROOM *wp)
         wp->tbl_A4[1](wp);
         if (Sce_skip_check())
         {
-            func_80017C30(0xA);
+            Fade_start(0xA);
             wp->routine_5 = 0;
             wp->routine_4++;
         }
@@ -980,7 +980,7 @@ void func_80102158(STAGE_ROOM_WORK *wp)
     {
         wp->tbl_A4[1](wp);
     }
-    if (D_80098A72 == 0)
+    if (Fade_busy == 0)
     {
         wp->routine_4++;
     }
@@ -999,7 +999,7 @@ void func_801021D8(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8003697C();
                 func_80042314(pl);
@@ -1038,11 +1038,11 @@ void func_80102328(STAGE_FX *wp)
     switch (temp_v1)
     {
         case 0:
-            func_80017C30(0xA);
+            Fade_start(0xA);
             wp->flags_6++;
             return;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Sce_script_next();
             }
@@ -1095,12 +1095,12 @@ void func_80102498(STAGE_ROOM *wp)
             vec.x = actor->position.x;
             vec.y = actor->position.y - 0x92;
             vec.z = actor->position.z;
-            func_80039FFC(&vec, 0xD4, func_80031198(&pos, &pl->position), 0);
+            func_80039FFC(&vec, 0xD4, Calc_degree2(&pos, &pl->position), 0);
             pl->flags_0 &= ~2;
             wp->routine_5++;
             break;
         case 1:
-            turn = func_80031BEC(&actor->position, &pl->pos_438, actor->rotation.v.y, 0x80);
+            turn = Muku(&actor->position, &pl->pos_438, actor->rotation.v.y, 0x80);
             actor->rotation.v.y += turn;
             if (!func_8003A13C() && turn == 0)
             {
@@ -1143,7 +1143,7 @@ void func_80102498(STAGE_ROOM *wp)
                 pl->flags_bd |= 0x10;
                 pl->fixed_428.x = pl->pos_438.x << 16;
                 pl->fixed_428.z = pl->pos_438.z << 16;
-                pl->rot_440.y   = func_80031198(&pl->pos_438, &actor->position);
+                pl->rot_440.y   = Calc_degree2(&pl->pos_438, &actor->position);
                 Sce_camera_start(0, 0, 0);
                 cam->pos_10  = -0x365 << 16;
                 cam->pos_14  = -0x2D1 << 16;
@@ -1192,7 +1192,7 @@ void func_80102498(STAGE_ROOM *wp)
             }
             break;
         case 9:
-            turn = func_80031BEC(&actor->position, &pl->pos_438, actor->rotation.v.y, 0x80);
+            turn = Muku(&actor->position, &pl->pos_438, actor->rotation.v.y, 0x80);
             actor->rotation.v.y += turn;
             if (turn == 0)
             {
@@ -1219,12 +1219,12 @@ void func_80102498(STAGE_ROOM *wp)
                 pos.x                   = -0xF9E;
                 pos.y                   = -0x2F0;
                 pos.z                   = -0x1E0;
-                actor->rotation.v.y     = func_80031198(&actor->position, &pos);
+                actor->rotation.v.y     = Calc_degree2(&actor->position, &pos);
                 actor->velocity.v.x     = 0x320;
                 actor->value_D          = 2;
                 actor->value_E          = 1;
                 pl->flags_bd |= 0x10;
-                pl->rot_440.y = func_80031198(&pl->pos_438, &actor->position);
+                pl->rot_440.y = Calc_degree2(&pl->pos_438, &actor->position);
                 wp->routine_5++;
             }
             break;
@@ -1237,7 +1237,7 @@ void func_80102498(STAGE_ROOM *wp)
             else
             {
                 pl->flags_bd |= 0x10;
-                pl->rot_440.y = func_80031198(&pl->pos_438, &actor->position);
+                pl->rot_440.y = Calc_degree2(&pl->pos_438, &actor->position);
             }
             break;
         case 12:

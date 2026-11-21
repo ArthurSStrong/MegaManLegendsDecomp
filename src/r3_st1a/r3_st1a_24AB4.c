@@ -10,7 +10,7 @@ void func_80124AB4(ST1A_50 *wp)
 void func_80124B18(ST1A_50 *wp, STAGE_SCENE_WORK *scene, STCOM_SVECTOR *rot)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->color_40  = 0x808080;
     rot->x        = 0;
     rot->y        = 0x1000;
@@ -396,7 +396,7 @@ void func_801255CC(ST1A_50 *wp)
 {
     STCOM_EFFECT *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0   = 1;
@@ -418,7 +418,7 @@ void func_80125628(ST1A_HAND50 *wp)
     {
         case 0:
             wp->flags_0 |= 6;
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             wp->color_40 = 0x808080;
             wp->routine_0++;
             // fall through

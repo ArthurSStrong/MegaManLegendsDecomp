@@ -69,8 +69,8 @@ extern STCOM20_FUNC stcom20_D_000C[]; // routine_1 handlers (stcom20_func_06E8)
 extern STCOM20_FUNC stcom20_D_0018[]; // routine_0 handlers (stcom20_func_0818)
 
 // ROCK_NEO.EXE.
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
-sint32 func_8003648C(void *track, void *wp);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
+sint32 Search_Player(void *track, void *wp);
 void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 sint32 Sce_point_angle(sint16 x0, sint16 z0, sint16 x1, sint16 z1);
 void func_8004AE88(sint16 *angle, sint32 hit);
@@ -87,7 +87,7 @@ sint32 stcom20_func_0000(STCOM20_WORK *wp);
 sint32 stcom20_func_0024(STCOM20_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint32 func_80048E6C(void *wp);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Scr_height_check(void *wp);
 
 #endif // STCOM20_H

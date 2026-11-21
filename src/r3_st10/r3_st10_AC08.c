@@ -27,7 +27,7 @@ void func_8010ACA4(ST10_PROP *wp)
     scale.z = 0x200;
     ScaleMatrix(&wp->matrix, &scale);
     wp->color_B4 = 0x808080;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->routine_2 = 0;
@@ -56,7 +56,7 @@ void func_8010AD74(ST10_PROP *wp)
     pos.y -= 0x50;
     pos.x += (rsin(angle) * 0) >> 12;
     pos.z += (rcos(angle) * 0) >> 12;
-    func_800341BC(&pos, 0x80, 0, 0x8000, wp->value_1, &wp->hit_BC, 0x8880000, 0, 0x80);
+    Set_Atari(&pos, 0x80, 0, 0x8000, wp->value_1, &wp->hit_BC, 0x8880000, 0, 0x80);
     wp->hit_BC = 0;
 }
 
@@ -66,7 +66,7 @@ void func_8010AE98(STAGE_OBJ *wp)
 
     if (wp->u_C.b.byte_C == 0)
     {
-        fx = (STAGE_FX *)func_80031618();
+        fx = (STAGE_FX *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0      = 1;
@@ -178,7 +178,7 @@ void func_8010AF9C(ST10_SHL *wp)
     wp->old_pos            = wp->pos;
     wp->color_b4           = 0x02808080;
     wp->kind_2             = 0x82;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
     wp->timer_b = func_80037634(&Player_work, 2);
     wp->routine_0++;
@@ -197,7 +197,7 @@ void func_8010B3A4(ST10_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         func_8010B660(wp, 1);
         return;
@@ -221,7 +221,7 @@ void func_8010B3A4(ST10_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         return;
     }
@@ -262,7 +262,7 @@ void func_8010B660(ST10_SHOT *wp, sint32 arg)
 {
     ST10_SHOT_FX *fx;
 
-    fx = (ST10_SHOT_FX *)func_80031618();
+    fx = (ST10_SHOT_FX *)Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 1;

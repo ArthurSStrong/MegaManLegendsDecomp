@@ -178,7 +178,7 @@ void func_80100880(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 0xB)
     {
-        fx = (STAGE_FX *)func_80031618();
+        fx = (STAGE_FX *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0 = 1;
@@ -374,7 +374,7 @@ void func_80100D88(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_8001B33C();
+            Sound_seq_stop_all();
             func_8001B314();
             func_8001D58C(0x20010015);
             wp->routine_4++;
@@ -393,7 +393,7 @@ void func_80100D88(STAGE_ROOM *wp)
             }
             break;
         case 4:
-            func_80017C30(3);
+            Fade_start(3);
             wp->routine_4++;
             // fall through
         case 5:
@@ -401,9 +401,9 @@ void func_80100D88(STAGE_ROOM *wp)
             wp->routine_4++;
             // fall through
         case 6:
-            if (D_80098A72 == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
+            if (Fade_busy == 0 && (*(uint8 *)wp->tbl_A4 == 0xFF || Sce_skip_check() != 0))
             {
-                func_80017C30(10);
+                Fade_start(10);
                 wp->routine_4 = 10;
             }
             // fall through
@@ -411,7 +411,7 @@ void func_80100D88(STAGE_ROOM *wp)
             func_80100D48((STAGE_ROOM_WORK *)wp);
             Sce_camera_script_exec();
             Sce_script_update();
-            if (wp->routine_4 == 10 && D_80098A72 == 0)
+            if (wp->routine_4 == 10 && Fade_busy == 0)
             {
                 D_800C356C      = 2;
                 D_800C356E      = 0x13;
@@ -428,7 +428,7 @@ void func_80100D88(STAGE_ROOM *wp)
                 pl->fixed_428.y = -0x61 << 16;
                 pl->fixed_428.z = 0xBF << 16;
                 pl->flags_0 |= 3;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->value_440 = 0;
                 pl->value_442 = 0x804;
                 pl->value_444 = 0;

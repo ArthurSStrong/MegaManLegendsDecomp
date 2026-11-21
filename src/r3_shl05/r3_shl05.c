@@ -12,15 +12,15 @@ void func_800D8804(SHL_WORK *wp)
     p.vz = wp->draw.spr.z_94;
     if (wp->index_c)
     {
-        func_800341BC(&p, 8, 0, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari(&p, 8, 0, 0x6000, wp->value_1, &wp->col_c4,
                       D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
     }
     else
     {
-        func_800341BC(&p, 8, 0, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari(&p, 8, 0, 0x4000, wp->value_1, &wp->col_c4,
                       D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
     }
-    func_8002C8CC(wp, 0x18, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x18, 0x200, 0);
     func_80051BAC(wp);
 }
 
@@ -60,11 +60,11 @@ void func_800D8928(SHL_WORK *wp)
     wp->hit_7c            = 0;
     wp->draw.spr.code_88  = 0x3D48000E;
     wp->draw.spr.color_8c = 0x2C808080;
-    func_80030150(&wp->fpos, &wp->pos);
+    Obj_pos_adj_round(&wp->fpos, &wp->pos);
     wp->old_fpos.w.x = wp->fpos.w.x - (wp->vel.vx << 10);
     wp->old_fpos.w.y = wp->fpos.w.y;
     wp->old_fpos.w.z = wp->fpos.w.z - (wp->vel.vz << 10);
-    func_80030150(&wp->old_fpos, &wp->old_pos);
+    Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
     wp->box_78            = &D_800D95B0;
     wp->draw.spr.scale_96 = D_800D95BC[0].scale_96;
     wp->draw.spr.scale_97 = D_800D95BC[0].scale_97;
@@ -94,25 +94,25 @@ void func_800D8B90(SHL_WORK *wp)
     if (func_80037694(wp, 0) || wp->hit_7c)
     {
         wp->draw.spr.value_9c = 0;
-        fx                    = func_80031618();
+        fx                    = Open_EFFECT_WORK();
         if (fx)
         {
             func_800D9450(wp, fx);
         }
         wp->flags_0 = 0;
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     wp->old_fpos          = wp->fpos;
     wp->old_pos           = wp->pos;
     wp->draw.spr.color_8c = 0x2C808080;
     func_800D935C(wp);
-    func_80030150(&wp->old_fpos, &wp->old_pos);
-    func_80030150(&wp->fpos, &wp->pos);
+    Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
+    Obj_pos_adj_round(&wp->fpos, &wp->pos);
     if ((Game_work.value_50 == 0x10 || Game_work.value_50 == 0x11) && wp->pos.vy >= -1)
     {
         wp->flags_0 = 0;
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     if (func_800D90B0(wp))
@@ -151,13 +151,13 @@ void func_800D8D60(SHL_WORK *wp)
     wp->draw.spr.x_90 = wp->pos.vx = wp->fpos.h.x;
     wp->draw.spr.y_92 = wp->pos.vy = wp->fpos.h.y;
     wp->draw.spr.z_94 = wp->pos.vz = wp->fpos.h.z;
-    fx                             = func_80031618();
+    fx                             = Open_EFFECT_WORK();
     if (fx)
     {
         func_800D9450(wp, fx);
     }
     wp->flags_0 = 0;
-    func_80031930(wp);
+    Close_PL_SHL_WORK(wp);
 }
 
 void func_800D8DF4(SHL_WORK *wp)
@@ -173,8 +173,8 @@ void func_800D8DF4(SHL_WORK *wp)
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
     func_800D935C(wp);
-    func_80030150(&wp->old_fpos, &wp->old_pos);
-    func_80030150(&wp->fpos, &wp->pos);
+    Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
+    Obj_pos_adj_round(&wp->fpos, &wp->pos);
     if ((Game_work.value_50 == 0x10 || Game_work.value_50 == 0x11) && wp->pos.vy >= -1)
     {
         goto remove;
@@ -218,21 +218,21 @@ void func_800D8DF4(SHL_WORK *wp)
         return;
     }
 end:
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         func_800D9450(wp, fx);
     }
 remove:
     wp->flags_0 = 0;
-    func_80031930(wp);
+    Close_PL_SHL_WORK(wp);
 }
 
 void func_800D8FEC(SHL_WORK *wp)
 {
     wp->draw.spr.code_88  = 0x3D48000E;
     wp->draw.spr.color_8c = 0x2C808080;
-    func_80030150(&wp->fpos, &wp->pos);
+    Obj_pos_adj_round(&wp->fpos, &wp->pos);
     wp->draw.spr.x_90     = wp->pos.vx;
     wp->draw.spr.y_92     = wp->pos.vy - 0x10;
     wp->draw.spr.z_94     = wp->pos.vz;
@@ -278,9 +278,9 @@ sint16 func_800D90B0(SHL_WORK *wp)
             }
             if (Game_work.value_50 == 11 && wp->pos.vy == -1)
             {
-                func_80031930(wp);
+                Close_PL_SHL_WORK(wp);
                 Sound_call2(0x102, &wp->pos);
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx)
                 {
                     fx->spr = wp->draw.spr;
@@ -290,7 +290,7 @@ sint16 func_800D90B0(SHL_WORK *wp)
             else
             {
                 Sound_call2(0x129, &wp->pos);
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx)
                 {
                     fx->routine_0 = 1;
@@ -306,7 +306,7 @@ sint16 func_800D90B0(SHL_WORK *wp)
             {
                 Sound_call2(0x129, &wp->pos);
             }
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx)
             {
                 fx->routine_0 = 1;

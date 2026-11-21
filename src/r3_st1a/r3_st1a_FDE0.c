@@ -9,7 +9,7 @@ void func_8010FDE0(ST1A_VIEW *wp)
             wp->flags_0 |= 2;
             wp->variant_3 = D_80131EFD[wp->value_C * 3];
             wp->kind_2    = D_80131EFC[wp->value_C * 3];
-            func_8002F9C4(wp, &wp->variant_3);
+            Model_work_init(wp, &wp->variant_3);
             wp->kind_2           = 0x49;
             wp->rotation.x       = 0;
             wp->u_64.w[0]        = 0;
@@ -23,7 +23,7 @@ void func_8010FDE0(ST1A_VIEW *wp)
             wp->position_fixed.x = wp->position_fixed_prev.x = wp->position.x << 16;
             wp->position_fixed.z = wp->position_fixed_prev.z = wp->position.z << 16;
             wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             if (wp->value_C == 4)
             {
                 wp->value_D   = 0x40;
@@ -38,18 +38,18 @@ void func_8010FDE0(ST1A_VIEW *wp)
             wp->position_fixed.x = wp->position_fixed_prev.x = wp->position.x << 16;
             wp->position_fixed.z = wp->position_fixed_prev.z = wp->position.z << 16;
             wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
-            func_80032488(wp);
-            func_8002C8CC(wp, D_80131EFE[wp->value_C * 3], 0x200, 0);
+            EM_Char_Move(wp);
+            Model_Shadow_Trans(wp, D_80131EFE[wp->value_C * 3], 0x200, 0);
             break;
         case 2:
             wp->value_D--;
-            func_8002FEA4(wp, 0x20, 0, 0);
+            Obj_pos_set(wp, 0x20, 0, 0);
             if (wp->value_D == 0)
             {
                 wp->routine_0 = 1;
             }
-            func_80032488(wp);
-            func_8002C8CC(wp, D_80131EFE[wp->value_C * 3], 0x200, 0);
+            EM_Char_Move(wp);
+            Model_Shadow_Trans(wp, D_80131EFE[wp->value_C * 3], 0x200, 0);
             break;
     }
 }
@@ -79,7 +79,7 @@ void func_80110090(ST1A_VIEW_H *wp)
     wp->rotation.z = 0;
     wp->flags_0 |= 2;
     wp->value_F = wp->variant_3 & 0xF;
-    func_8002F9C4(wp, &wp->value_F);
+    Model_work_init(wp, &wp->value_F);
     wp->value_158  = 0x02000200;
     wp->u_15C.w[0] = 0x200;
     ctl->hit_8     = 0;
@@ -95,7 +95,7 @@ void func_80110090(ST1A_VIEW_H *wp)
     ctl->value_66  = 0;
     stun->damage_0 = 0;
     wp->u_70.b[3]  = D_80098844[wp->kind_2]->value_A;
-    func_80036478(ctl->track_18, 7, -0x60);
+    Search_Player_Init(ctl->track_18, 7, -0x60);
     wp->value_B2 = wp->value_B0 = wp->value_6E = D_80098844[wp->kind_2]->life_8 << 5;
     wp->routine_1                              = 0;
     wp->routine_0                              = 1;
@@ -105,7 +105,7 @@ void func_80110090(ST1A_VIEW_H *wp)
     wp->data_78                                = D_80131F74;
     wp->u_44.h[0]                              = 0x140;
     wp->value_AD                               = 0;
-    func_800322A8(wp, wp->value_AC, 0);
+    EM_Char_Set(wp, wp->value_AC, 0);
     ctl->ground_60 = func_8004B414(wp);
     ctl->angle_64  = (wp->rotation.y + 0x800) & 0xFFF;
 }
@@ -118,7 +118,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
 
     ctl  = ST1A_CTL_OF(wp);
     stun = (STCOM16_STUN *)&wp->value_1D8;
-    if (func_8003648C(ctl->track_18, wp) == 0)
+    if (Search_Player(ctl->track_18, wp) == 0)
     {
         ctl->flags_6C &= ~0x10;
     }
@@ -141,7 +141,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
             wp->value_AC  = 9;
             wp->routine_1 = 5;
             wp->value_AD  = 9;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
             stun->damage_0 = 0;
             stun->timer_5  = 0;
         }
@@ -156,7 +156,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
                 wp->routine_1 = 4;
                 wp->routine_2 = 0;
                 wp->value_AD  = 9;
-                func_800322A8(wp, wp->value_AC, 0);
+                EM_Char_Set(wp, wp->value_AC, 0);
                 Sound_call2(0xA2, &wp->position);
             }
             else
@@ -169,7 +169,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
                     {
                         wp->value_AC = 1;
                         wp->value_AD = 1;
-                        func_800322A8(wp, wp->value_AC, 0);
+                        EM_Char_Set(wp, wp->value_AC, 0);
                     }
                 }
             }
@@ -182,13 +182,13 @@ void func_801101F4(ST1A_VIEW_I *wp)
         wp->routine_1 = 1;
     }
     D_80131F20[wp->routine_1](wp);
-    func_80032488(wp);
+    EM_Char_Move(wp);
     if (wp->value_A6 & 0x40)
     {
         Sound_call2(0x1BD, &wp->position);
     }
     ctl->ground_60       = func_8004B414(wp);
-    wp->position.y       = func_80048E6C(wp);
+    wp->position.y       = Scr_height_check(wp);
     wp->position_fixed.y = wp->position.y << 16;
     if ((ctl->flags_6C & 8) && wp->routine_1 != 1 && (ctl->ground_60 & 0xF00))
     {
@@ -204,14 +204,14 @@ void func_801101F4(ST1A_VIEW_I *wp)
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0xA0, 0x200, 0);
+        Model_Shadow_Trans(wp, 0xA0, 0x200, 0);
     }
     if (ctl->flags_6C & 8)
     {
         ctl->pos_0.x = wp->vec_180[0].x;
         ctl->pos_0.y = wp->vec_180[0].y - 0x2E;
         ctl->pos_0.z = wp->vec_180[0].z;
-        func_800341BC(&ctl->pos_0, 0xE0, 0, 0x8000, wp->value_1, &ctl->hit_8,
+        Set_Atari(&ctl->pos_0, 0xE0, 0, 0x8000, wp->value_1, &ctl->hit_8,
                       wp->u_70.b[3] | 0x04080000, 0, 0);
     }
 }
@@ -250,7 +250,7 @@ void func_8011059C(ST1A_VIEW_J *wp)
             {
                 wp->routine_2 = 0;
                 wp->value_AC  = 0;
-                func_800322A8(wp, 0, 0);
+                EM_Char_Set(wp, 0, 0);
             }
             stun->damage_0 = 0x78;
         }
@@ -263,7 +263,7 @@ void func_8011059C(ST1A_VIEW_J *wp)
             if (wp->value_AC != 1)
             {
                 wp->value_AC = 1;
-                func_800322A8(wp, 1, 0);
+                EM_Char_Set(wp, 1, 0);
                 wp->value_AD = wp->value_AC;
             }
             if (wp->routine_2 == 1)
@@ -274,7 +274,7 @@ void func_8011059C(ST1A_VIEW_J *wp)
             {
                 wp->rotation.y = (wp->rotation.y - 0x20) & 0xFFF;
             }
-            func_8002FEA4(wp, wp->u_44.h[0], 0, 0);
+            Obj_pos_set(wp, wp->u_44.h[0], 0, 0);
         }
     }
     if (ctl->flags_6C & 0x10)
@@ -311,13 +311,13 @@ void func_80110778(ST1A_VIEW_H *wp)
     {
         if (wp->routine_3 < 2)
         {
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &STAGE_PL.position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &STAGE_PL.position,
                                                              wp->rotation.y & 0xFFF, 0x20)) &
                              0xFFF;
         }
         if (wp->routine_3 == 0)
         {
-            func_8002FEA4(wp, wp->u_44.h[0], 0, 0);
+            Obj_pos_set(wp, wp->u_44.h[0], 0, 0);
         }
         if (wp->value_1D8 == 0)
         {
@@ -351,7 +351,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                 {
                     wp->value_AC = 1;
                     wp->value_AD = 1;
-                    func_800322A8(wp, wp->value_AC, 0);
+                    EM_Char_Set(wp, wp->value_AC, 0);
                     wp->value_1D8 = 0x2D;
                     wp->routine_3 = 0;
                 }
@@ -364,7 +364,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                     {
                         wp->value_AC = 4;
                         wp->value_AD = 4;
-                        func_800322A8(wp, wp->value_AC, 0);
+                        EM_Char_Set(wp, wp->value_AC, 0);
                         wp->value_E   = 1;
                         shot->count_2 = 0x18;
                     }
@@ -388,7 +388,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                     {
                         wp->value_AC = 5;
                         wp->value_AD = 5;
-                        func_800322A8(wp, wp->value_AC, 0);
+                        EM_Char_Set(wp, wp->value_AC, 0);
                         wp->value_E = 2;
                     }
                 }
@@ -396,7 +396,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                 {
                     wp->value_AC = 1;
                     wp->value_AD = 1;
-                    func_800322A8(wp, wp->value_AC, 0);
+                    EM_Char_Set(wp, wp->value_AC, 0);
                     shot->timer_0 = 0x2D;
                     wp->routine_3 = 0;
                 }
@@ -421,7 +421,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                     {
                         wp->value_AC = 7;
                         wp->value_AD = 7;
-                        func_800322A8(wp, wp->value_AC, 0);
+                        EM_Char_Set(wp, wp->value_AC, 0);
                         wp->value_E   = 1;
                         shot->count_2 = ((wp->variant_3 & 0xF) + 4) * 4 + 1;
                         shot->index_6 = 0;
@@ -472,7 +472,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                     {
                         wp->value_AC = 8;
                         wp->value_AD = 8;
-                        func_800322A8(wp, wp->value_AC, 0);
+                        EM_Char_Set(wp, wp->value_AC, 0);
                         wp->value_E = 2;
                     }
                 }
@@ -480,7 +480,7 @@ void func_80110778(ST1A_VIEW_H *wp)
                 {
                     wp->value_AC = 1;
                     wp->value_AD = 1;
-                    func_800322A8(wp, wp->value_AC, 0);
+                    EM_Char_Set(wp, wp->value_AC, 0);
                     shot->timer_0 = 0x2D;
                     wp->routine_3 = 0;
                 }
@@ -513,21 +513,21 @@ void func_80110C64(ST1A_VIEW *wp)
             wp->value_AC  = 2;
             wp->routine_3 = 1;
             wp->value_AD  = 2;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else if (n < 5)
         {
             wp->value_AC  = 3;
             wp->routine_3 = 2;
             wp->value_AD  = 3;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else
         {
             wp->value_AC  = 6;
             wp->routine_3 = 3;
             wp->value_AD  = 6;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
     }
 }
@@ -546,21 +546,21 @@ void func_80110CF4(ST1A_VIEW_D *wp)
             wp->value_AC  = 2;
             wp->routine_3 = 1;
             wp->value_AD  = 2;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else if ((n & 7) < 0xA)
         {
             wp->value_AC  = 3;
             wp->routine_3 = 2;
             wp->value_AD  = 3;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else
         {
             wp->value_AC  = 6;
             wp->routine_3 = 3;
             wp->value_AD  = 6;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
     }
 }
@@ -579,21 +579,21 @@ void func_80110D8C(ST1A_VIEW_E *wp)
             wp->value_AC  = 2;
             wp->routine_3 = 1;
             wp->value_AD  = 2;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else if (n < 6)
         {
             wp->value_AC  = 3;
             wp->routine_3 = 2;
             wp->value_AD  = 3;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         else
         {
             wp->value_AC  = 6;
             wp->routine_3 = 3;
             wp->value_AD  = 6;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
     }
 }
@@ -602,7 +602,7 @@ void func_80110E20(ST1A_VIEW_F *wp)
 {
     sint32 turn;
 
-    turn           = func_80031BEC(&wp->position, &STAGE_PL.position, wp->rotation.y & 0xFFF, 0x20);
+    turn           = Muku(&wp->position, &STAGE_PL.position, wp->rotation.y & 0xFFF, 0x20);
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
     if (wp->ext.value_8C & 0x10)
     {
@@ -629,7 +629,7 @@ void func_80110EB8(ST1A_VIEW *wp)
         {
             wp->value_AC = 1;
             wp->value_AD = 1;
-            func_800322A8(wp, wp->value_AC, 0);
+            EM_Char_Set(wp, wp->value_AC, 0);
         }
         wp->routine_1 = 2;
         wp->routine_3 = 0;
@@ -650,7 +650,7 @@ void func_80110F54(ST1A_VIEW_K *wp)
     {
         if (wp->value_1DD == 8)
         {
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0           = 5;
@@ -667,7 +667,7 @@ void func_80110F54(ST1A_VIEW_K *wp)
         else
         {
             joint = D_80131F44[wp->value_1DD].joint_0;
-            fx    = func_80031618();
+            fx    = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0           = 5;
@@ -768,7 +768,7 @@ void func_801110B4(ST1A_VIEW_H *wp, uint8 kind)
                 pl->value_C4.y = pl->value_3EA + 0x30;
             }
             pl->value_C4.z = slot->position.z + ((c * dist) >> 12);
-            func_80030EE8(slot, &pl->value_C4, 0x30);
+            Obj_target_vel_set(slot, &pl->value_C4, 0x30);
         }
         else
         {
@@ -783,7 +783,7 @@ void func_801110B4(ST1A_VIEW_H *wp, uint8 kind)
             pl->value_C4.x = slot->position.x + ((s * ((ctl->rand_6A & 0x3FF) + 0x80)) >> 12);
             pl->value_C4.y = slot->position.y;
             pl->value_C4.z = slot->position.z + ((c * ((ctl->rand_6A & 0x3FF) + 0x80)) >> 12);
-            func_80030968(slot, pl, 0x14, 0, 0xFF);
+            Obj_arc_vel_set(slot, pl, 0x14, 0, 0xFF);
         }
     }
 }
@@ -805,15 +805,15 @@ void func_8011146C(ST1A_TALKER3 *wp)
     func_80111C40(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face_348.value_2);
+        EM_Char_Set(wp, wp->anim_AC, wp->face_348.value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0 && (wp->flags_0 & 2))
     {
-        func_8002C8CC(wp, 0x26, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x26, 0x200, 0);
     }
 }
 
@@ -825,7 +825,7 @@ void func_80111C18(ST1A_TALKER3 *wp, ST1A_FACE *face, sint32 index);
 void func_801115A0(ST1A_TALKER3 *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x42100200;
     wp->value_78       = 0;
@@ -1076,7 +1076,7 @@ void func_80111D88(ST1A_TALKER3 *wp)
 {
     STCOM_EFFECT *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0           = 5;
@@ -1095,7 +1095,7 @@ void func_80111E44(ST1A_OBJ *wp)
     {
         case 0:
             wp->flags_0 |= 2;
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
             wp->scale.words[0]     = 0x02000200;
             wp->scale.words[1]     = 0x42100200;
             wp->rotation.x         = 0;
@@ -1108,13 +1108,13 @@ void func_80111E44(ST1A_OBJ *wp)
             wp->position_fixed.v.x = wp->position_fixed_prev.x = wp->position.x << 16;
             wp->position_fixed.v.z = wp->position_fixed_prev.z = wp->position.z << 16;
             wp->position_fixed.v.y = wp->position_fixed_prev.y = wp->position.y << 16;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             wp->routine_0++;
             // fall through
         case 1:
             func_80033A28(wp);
             *(uint16 *)0x1F80012C = wp->rotation.z;
-            func_8003346C(wp);
+            EM_World_Pos_Calc(wp);
             break;
     }
 }
@@ -1189,7 +1189,7 @@ void func_801124D0(ST1A_TALKER *wp, STAGE_FACE2 *face);
 void func_80112134(STAGE_OBJ *wp, STAGE_FACE2 *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x42100200;
     wp->value_78       = 0;
@@ -1202,11 +1202,11 @@ void func_801121AC(STAGE_OBJ *wp, STAGE_FACE2 *face)
     func_801120E4(wp);
     if (Scene_work.value_10 == 1)
     {
-        func_800322A8(wp, 0, 0);
+        EM_Char_Set(wp, 0, 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     switch (Scene_work.value_10)
     {
@@ -1226,7 +1226,7 @@ void func_801121AC(STAGE_OBJ *wp, STAGE_FACE2 *face)
 void func_80112284(STAGE_OBJ *wp, STAGE_FACE2 *face)
 {
     func_801120E4(wp);
-    func_80032488(wp);
+    EM_Char_Move(wp);
     switch (Scene_work.value_10)
     {
         case 1:
@@ -1267,8 +1267,8 @@ void func_801123AC(STAGE_OBJ *wp, STAGE_FACE2 *face)
         func_80111F60(face, 5);
         func_80111F40(face, 1);
     }
-    func_8002FEA4(wp, 0, wp->value_44.half[1], 0);
-    func_80032488(wp);
+    Obj_pos_set(wp, 0, wp->value_44.half[1], 0);
+    EM_Char_Move(wp);
 }
 
 void func_80112420(STAGE_OBJ *wp, STAGE_FACE2 *face)
@@ -1278,14 +1278,14 @@ void func_80112420(STAGE_OBJ *wp, STAGE_FACE2 *face)
         func_80111F60(face, 1);
         func_80111F40(face, 1);
     }
-    func_8002FEA4(wp, wp->value_44.half[0], wp->value_44.half[1], 0);
-    func_80032488(wp);
+    Obj_pos_set(wp, wp->value_44.half[0], wp->value_44.half[1], 0);
+    EM_Char_Move(wp);
 }
 
 void func_80112494(STAGE_OBJ *wp)
 {
-    func_8002FEA4(wp, (sint16)wp->value_44.words.fraction, wp->value_44.words.integer, 0);
-    func_80032488(wp);
+    Obj_pos_set(wp, (sint16)wp->value_44.words.fraction, wp->value_44.words.integer, 0);
+    EM_Char_Move(wp);
 }
 
 void func_801124D0(ST1A_TALKER *wp, STAGE_FACE2 *face)
@@ -1326,17 +1326,17 @@ void func_801125F8(ST1A_WATCHER *wp)
     func_801130D0(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face_348.speed_2);
+        EM_Char_Set(wp, wp->anim_AC, wp->face_348.speed_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
         if (face->mode_B == 1)
         {
-            func_8002C8CC(wp, 0x24, 0x200, 0);
+            Model_Shadow_Trans(wp, 0x24, 0x200, 0);
         }
         else if (face->mode_B == 2)
         {
@@ -1354,7 +1354,7 @@ void func_801130A8(void *wp, ST1A_EYES *face, sint32 index);
 void func_8011277C(ST1A_WATCHER *wp, STAGE_SCENE_WORK *scene, ST1A_EYES *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x42100200;
     wp->value_78       = 0;
@@ -1702,7 +1702,7 @@ void func_801131DC(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
             if (scene->u_8.byte[1] == 8)
             {
                 wp->flags_0 |= 2;
-                func_8002F9C4(wp, NULL);
+                Model_work_init(wp, NULL);
                 wp->scale.words[0] = 0x02000200;
                 wp->scale.words[1] = 0x200;
                 wp->scale.v.pad    = 0x4210;
@@ -1718,7 +1718,7 @@ void func_801131DC(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
                 wp->routine_2   = 0;
                 wp->routine_3   = 0;
                 wp->routine_0++;
-                func_800322A8(wp, wp->anim_AC, face->value_2);
+                EM_Char_Set(wp, wp->anim_AC, face->value_2);
             }
             break;
     }
@@ -1809,7 +1809,7 @@ void func_80113460(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
             }
             if (wp->value_A7 != -1)
             {
-                func_8002FEA4(wp, 0x2A, 0, 0);
+                Obj_pos_set(wp, 0x2A, 0, 0);
             }
             break;
         case 4:
@@ -2028,22 +2028,22 @@ void func_80113460(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
     func_801144C8(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, face->value_2);
+        EM_Char_Set(wp, wp->anim_AC, face->value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0)
     {
-        func_8002C8CC(wp, 0x32, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x32, 0x200, 0);
     }
 }
 
 void func_80113E04(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]       = 0x02000200;
     wp->scale.words[1]       = 0x200;
     wp->scale.v.pad          = 0x4210;
@@ -2061,7 +2061,7 @@ void func_80113E04(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
     wp->routine_2 = 0;
     wp->routine_3 = 0;
     wp->routine_0++;
-    func_800322A8(wp, wp->anim_AC, face->value_2);
+    EM_Char_Set(wp, wp->anim_AC, face->value_2);
 }
 
 void func_80113EE8(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
@@ -2224,20 +2224,20 @@ void func_80113EE8(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
             }
             break;
         case 14:
-            func_8002FEA4(wp, 0x200, 0, 0);
+            Obj_pos_set(wp, 0x200, 0, 0);
             if (wp->value_A7 == -1)
             {
                 wp->routine_1++;
             }
             break;
         case 15:
-            func_8002FEA4(wp, 0x200, 0, 0);
+            Obj_pos_set(wp, 0x200, 0, 0);
             wp->anim_AC   = 1;
             face->value_2 = 0;
             wp->routine_1++;
             break;
         case 16:
-            func_8002FEA4(wp, 0x200, 0, 0);
+            Obj_pos_set(wp, 0x200, 0, 0);
             if (wp->value_A4 == 3 || wp->value_A4 == 0xB)
             {
                 Sound_call2(0x91, &wp->position);
@@ -2253,15 +2253,15 @@ void func_80113EE8(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
     func_801144C8(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, face->value_2);
+        EM_Char_Set(wp, wp->anim_AC, face->value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0)
     {
-        func_8002C8CC(wp, 0x32, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x32, 0x200, 0);
     }
 }
 
@@ -2464,18 +2464,18 @@ void func_801146D8(ST1A_OBJ *wp)
     func_80114B70(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, face->value_2);
+        EM_Char_Set(wp, wp->anim_AC, face->value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
 void func_80114A7C(STAGE_OBJ *wp, STAGE_FACE *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x42100200;
     wp->anim_AC        = 1;
@@ -2555,22 +2555,22 @@ void func_80114CB8(ST1A_OBJ *wp)
     func_80115828(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face.value_2);
+        EM_Char_Set(wp, wp->anim_AC, wp->face.value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
 }
 
 void func_80114DD8(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0x4210;
@@ -2785,7 +2785,7 @@ void func_80114E90(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
             }
             else
             {
-                func_8002FEA4(wp, 0xA4, 0, 0);
+                Obj_pos_set(wp, 0xA4, 0, 0);
             }
             break;
         case 14:
@@ -2988,15 +2988,15 @@ void func_80115970(ST1A_OBJ *wp)
     func_801165FC(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face.value_2);
+        EM_Char_Set(wp, wp->anim_AC, wp->face.value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0)
     {
-        func_8002C8CC(wp, 0x40, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x40, 0x200, 0);
     }
 }
 
@@ -3008,7 +3008,7 @@ void func_801165D4(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_80115A90(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0x4210;
@@ -3193,7 +3193,7 @@ void func_80115B48(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
             if (wp->value_A4 >= 0x25)
             {
                 func_80030058(&fixed, 0xC00, 0xA4, 0, 0);
-                func_80030150(&fixed, &pos);
+                Obj_pos_adj_round(&fixed, &pos);
                 wp->position.x += pos.x;
                 wp->position.z += pos.z;
                 wp->position_fixed.v.x += fixed.x;
@@ -3225,12 +3225,12 @@ void func_80115B48(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
             {
                 wp->anim_AC        = 0xB;
                 talk->face.value_2 = 0x14;
-                func_8002FEA4(wp, 0x2E, 0, 0);
+                Obj_pos_set(wp, 0x2E, 0, 0);
                 wp->routine_1++;
             }
             break;
         case 14:
-            func_8002FEA4(wp, 0x2E, 0, 0);
+            Obj_pos_set(wp, 0x2E, 0, 0);
             if (wp->value_A4 == 0x27)
             {
                 wp->anim_AC        = 7;
@@ -3243,7 +3243,7 @@ void func_80115B48(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
         case 15:
             if (wp->value_A4 < 0x28)
             {
-                func_8002FEA4(wp, 0x2E, 0, 0);
+                Obj_pos_set(wp, 0x2E, 0, 0);
             }
             if (wp->value_A7 == -1)
             {
@@ -3303,7 +3303,7 @@ void func_80115B48(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_TALK *talk)
             }
             else
             {
-                func_8002FEA4(wp, 0xA4, 0, 0);
+                Obj_pos_set(wp, 0xA4, 0, 0);
             }
             break;
         case 19:
@@ -3447,8 +3447,8 @@ void func_80116780(ST1A_STCOM27_WORK_C *wp)
     wp->accel.y     = 0;
     wp->accel.x     = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, &wp->variant_3);
-    func_80036478(wp->ctl.track_0, 7, -0x60);
+    Model_work_init(wp, &wp->variant_3);
+    Search_Player_Init(wp->ctl.track_0, 7, -0x60);
     wp->data_78 = D_80132AE0;
     wp->life_6E = wp->life_max_B0 = D_8009884C[wp->kind_2]->life_8 << 4;
     wp->damage_B2                 = 0;
@@ -3458,7 +3458,7 @@ void func_80116780(ST1A_STCOM27_WORK_C *wp)
     wp->ctl.hit_20                = 0;
     wp->ctl.value_24              = 0;
     wp->ctl.kind_30               = 0;
-    func_800322A8(wp, 3, 0);
+    EM_Char_Set(wp, 3, 0);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->routine_2 = 0;
@@ -3483,7 +3483,7 @@ void func_80116874(ST1A_STCOM27_WORK_B *wp)
     }
     else
     {
-        ctl->sees_10 = func_8003648C(ctl->track_0, wp);
+        ctl->sees_10 = Search_Player(ctl->track_0, wp);
     }
     D_80132AEC[wp->routine_1](wp);
     if (wp->routine_0 != 2)
@@ -3492,7 +3492,7 @@ void func_80116874(ST1A_STCOM27_WORK_B *wp)
         func_80116B78(wp);
         if (wp->flags_0 & 2)
         {
-            func_8002C8CC(wp, 0x118, 0x200, 0);
+            Model_Shadow_Trans(wp, 0x118, 0x200, 0);
         }
     }
 }
@@ -3536,7 +3536,7 @@ void func_801169B0(ST1A_STCOM27_WORK_D *wp)
             }
             if (knock)
             {
-                func_800322A8(wp, 0xB, 0);
+                EM_Char_Set(wp, 0xB, 0);
                 wp->damage_B2 = 0;
                 ctl->kind_30  = 0;
                 dir           = func_80031F84(&wp->position, &ctl->from_28, wp->rotation.y, 0);
@@ -3552,7 +3552,7 @@ void func_801169B0(ST1A_STCOM27_WORK_D *wp)
                 wp->velocity.y = -0x100;
                 wp->accel.y    = 0x40;
                 wp->jump_74    = 1;
-                func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+                Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
                 wp->routine_1 = 6;
                 wp->routine_2 = 0;
                 wp->velocity.y += wp->accel.y;
@@ -3568,7 +3568,7 @@ void func_80116B78(ST1A_STCOM27_WORK *wp)
         wp->ctl.hit_20 = 0;
         wp->ctl.pos_18 = wp->position;
         wp->ctl.pos_18.y -= 0x80;
-        func_800341BC(&wp->ctl.pos_18, 0x80, 0, 0x8000, wp->index_1, &wp->ctl.hit_20,
+        Set_Atari(&wp->ctl.pos_18, 0x80, 0, 0x8000, wp->index_1, &wp->ctl.hit_20,
                       wp->ctl.kind_30 | 0x4080000, 0x800000, 0);
     }
 }
@@ -3585,7 +3585,7 @@ void func_80116C10(ST1A_STCOM27_WORK *wp)
     }
     if (wp->jump_74 == 0)
     {
-        ground = func_80048E6C(wp);
+        ground = Scr_height_check(wp);
         if (ground != wp->position_prev.y)
         {
             if (wp->jump_prev_75 == 0)
@@ -3629,12 +3629,12 @@ void func_80116D48(ST1A_VIEW_B *wp)
     }
     if (change)
     {
-        func_800322A8(wp, 4, 0);
+        EM_Char_Set(wp, 4, 0);
         wp->routine_2++;
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3646,7 +3646,7 @@ void func_80116DD0(ST1A_OBJ *wp)
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3664,12 +3664,12 @@ void func_80116E50(STAGE_OBJ *wp)
 {
     if (wp->value_A7 != 0)
     {
-        func_800322A8(wp, 2, 0);
+        EM_Char_Set(wp, 2, 0);
         wp->routine_2++;
         return;
     }
-    func_80032488(wp);
-    func_8002FEA4(wp, (sint16)wp->value_44.words.fraction, wp->value_44.words.integer,
+    EM_Char_Move(wp);
+    Obj_pos_set(wp, (sint16)wp->value_44.words.fraction, wp->value_44.words.integer,
                   (sint16)wp->value_48.words.fraction);
 }
 
@@ -3689,9 +3689,9 @@ void func_80116EBC(ST1A_STCOM27_WORK_D *wp)
     pl  = &Player_work;
     ctl = &wp->ctl;
     wp->rotation.y =
-        (wp->rotation.y + func_80031BEC(&wp->position, &pl->position, wp->rotation.y, 0x20)) &
+        (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, 0x20)) &
         0xFFF;
-    seen = func_80031DCC(&wp->position_fixed, wp->rotation.y, 0x400, &pl->position_fixed,
+    seen = Angle_ck(&wp->position_fixed, wp->rotation.y, 0x400, &pl->position_fixed,
                          pl->rotation.y, 0x800);
     if (wp->flags_6 & 0x80)
     {
@@ -3725,7 +3725,7 @@ void func_80116EBC(ST1A_STCOM27_WORK_D *wp)
         if (ctl->sees_10 == 0)
         {
             func_801177CC((ST1A_OBJ *)wp);
-            func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+            Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
             return;
         }
         ctl->timer_34 = 0x3C;
@@ -3747,7 +3747,7 @@ void func_80116EBC(ST1A_STCOM27_WORK_D *wp)
     {
         func_801176FC((STAGE_OBJ *)wp, 8);
     }
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     if (wp->value_A4 == 2)
     {
         Sound_call2(0x1B8, &wp->position);
@@ -3758,7 +3758,7 @@ void func_801170E0(STAGE_OBJ *wp)
 {
     sint32 step;
     wp->rotation.y = (wp->rotation.y +
-                      func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x40)) &
+                      Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x40)) &
                      0xFFF;
     if (wp->u_4E0.face16.eyes_10 != NULL && (wp->flags_6 & 0x80))
     {
@@ -3768,11 +3768,11 @@ void func_801170E0(STAGE_OBJ *wp)
             return;
         }
         func_801177AC((ST1A_OBJ_B *)wp);
-        func_8002FEA4(wp, wp->value_44.half[0], wp->value_44.half[1], wp->value_48.half[0]);
+        Obj_pos_set(wp, wp->value_44.half[0], wp->value_44.half[1], wp->value_48.half[0]);
         return;
     }
-    func_80032488(wp);
-    func_8002FEA4(wp, wp->value_44.half[0], wp->value_44.half[1], wp->value_48.half[0]);
+    EM_Char_Move(wp);
+    Obj_pos_set(wp, wp->value_44.half[0], wp->value_44.half[1], wp->value_48.half[0]);
     step = wp->value_A4 == 5;
     if (wp->value_A4 == 0x13)
     {
@@ -3827,11 +3827,11 @@ void func_801171E8(ST1A_ACTOR *wp)
 void func_801172D8(ST1A_ACTOR *wp)
 {
     wp->rotation.y = (wp->rotation.y +
-                      func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x80)) &
+                      Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80)) &
                      0xFFF;
     if (wp->value_A7 != 0)
     {
-        func_800322A8(wp, 5, 0);
+        EM_Char_Set(wp, 5, 0);
         wp->routine_2++;
         return;
     }
@@ -3847,8 +3847,8 @@ void func_801172D8(ST1A_ACTOR *wp)
     {
         wp->velocity.v.x = 0;
     }
-    func_80032488(wp);
-    func_8002FEA4(wp, wp->velocity.v.x, wp->velocity.v.y, wp->velocity.v.z);
+    EM_Char_Move(wp);
+    Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, wp->velocity.v.z);
 }
 
 void func_801173B0(ST1A_OBJ *wp)
@@ -3859,7 +3859,7 @@ void func_801173B0(ST1A_OBJ *wp)
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3877,7 +3877,7 @@ void func_80117430(ST1A_VIEW_C *wp)
 {
     if (wp->u_A4.b[3] != 0)
     {
-        func_800322A8(wp, 0xA, 0);
+        EM_Char_Set(wp, 0xA, 0);
         wp->value_510 = 0;
         if (rand() & 1)
         {
@@ -3891,8 +3891,8 @@ void func_80117430(ST1A_VIEW_C *wp)
     }
     else
     {
-        func_80032488(wp);
-        func_8002FEA4(wp, wp->value_44, wp->value_46, wp->value_48);
+        EM_Char_Move(wp);
+        Obj_pos_set(wp, wp->value_44, wp->value_46, wp->value_48);
     }
 }
 
@@ -3905,7 +3905,7 @@ void func_801174B8(ST1A_OBJ *wp)
     else
     {
         wp->rotation.y = (wp->rotation.y + wp->value_51A) & 0xFFF;
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3922,7 +3922,7 @@ void func_80117548(ST1A_STCOM27_WORK *wp)
         Sound_call2(0x1BC, &wp->position);
         if (wp->life_6E == 0)
         {
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0         = 5;
@@ -3941,16 +3941,16 @@ void func_80117548(ST1A_STCOM27_WORK *wp)
         }
         else
         {
-            func_800322A8(wp, 0xC, 0);
+            EM_Char_Set(wp, 0xC, 0);
             wp->routine_2++;
         }
     }
     else
     {
         wp->jump_74 = 1;
-        func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+        Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
         wp->velocity.y += wp->accel.y;
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3958,11 +3958,11 @@ void func_80117658(STAGE_OBJ *wp)
 {
     if (wp->value_A7 != 0)
     {
-        func_800322A8(wp, 0xDU, 0);
+        EM_Char_Set(wp, 0xDU, 0);
         wp->routine_2++;
         return;
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_801176B0(ST1A_OBJ *wp)
@@ -3974,7 +3974,7 @@ void func_801176B0(ST1A_OBJ *wp)
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -3982,18 +3982,18 @@ void func_801176FC(STAGE_OBJ *wp, sint32 anim)
 {
     if (wp->anim_prev_AD != anim)
     {
-        func_800322A8(wp, anim, wp->value_A4);
+        EM_Char_Set(wp, anim, wp->value_A4);
         wp->routine_2++;
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
 void func_80117758(ST1A_OBJ *wp)
 {
-    func_800322A8(wp, 0xF, 0);
+    EM_Char_Set(wp, 0xF, 0);
     wp->value_514        = 0x3C;
     wp->value_44.half[0] = 0x200;
     wp->value_44.half[1] = 0;
@@ -4010,7 +4010,7 @@ void func_801177AC(ST1A_OBJ *wp)
 
 void func_801177CC(ST1A_OBJ *wp)
 {
-    func_800322A8(wp, 1, 0);
+    EM_Char_Set(wp, 1, 0);
     wp->value_514        = 0x78;
     wp->value_44.half[0] = 0x100;
     wp->value_44.half[1] = 0;
@@ -4021,7 +4021,7 @@ void func_801177CC(ST1A_OBJ *wp)
 
 void func_80117820(STAGE_OBJ *wp)
 {
-    func_800322A8(wp, 6, 0);
+    EM_Char_Set(wp, 6, 0);
     wp->value_44.words.fraction = 0;
     wp->value_44.words.integer  = 0;
     wp->value_4C.words.integer  = 0;
@@ -4031,7 +4031,7 @@ void func_80117820(STAGE_OBJ *wp)
 
 void func_80117868(ST1A_OBJ *wp)
 {
-    func_800322A8(wp, 9, 0);
+    EM_Char_Set(wp, 9, 0);
     wp->value_510        = D_8009884C[wp->kind_2]->value_A | 0x1000000;
     wp->value_516        = 0x3C;
     wp->value_44.half[0] = 0x400;
@@ -4104,7 +4104,7 @@ void func_80117950(STAGE_OBJ *wp, STAGE_FACE2 *face)
 void func_80117AB4(STAGE_OBJ *wp, void *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0x4210;
@@ -4124,7 +4124,7 @@ void func_80117B58(STAGE_OBJ *wp, STAGE_FACE2 *face)
     {
         func_80117910(face, 0);
         func_80117930(face, 0);
-        func_800322A8(wp, 0x11, 0);
+        EM_Char_Set(wp, 0x11, 0);
         wp->routine_1++;
     }
 }
@@ -4134,11 +4134,11 @@ void func_80117BCC(STAGE_OBJ *wp, STAGE_FACE2 *face)
     switch (wp->routine_1)
     {
         case 0:
-            func_800322A8(wp, 0x11, 0);
+            EM_Char_Set(wp, 0x11, 0);
             wp->routine_1++;
             break;
         case 1:
-            func_80032488(wp);
+            EM_Char_Move(wp);
             wp->routine_1++;
             break;
         case 3:
@@ -4147,7 +4147,7 @@ void func_80117BCC(STAGE_OBJ *wp, STAGE_FACE2 *face)
             wp->routine_1++;
             // fall through
         case 4:
-            func_80032488(wp);
+            EM_Char_Move(wp);
             break;
         case 5:
             break;
@@ -4161,16 +4161,16 @@ void func_80117C8C(STAGE_OBJ *wp, STAGE_FACE2 *face)
         case 0:
             func_80117930(face, 1);
             func_80117910(face, 1);
-            func_800322A8(wp, 0x12, 0);
+            EM_Char_Set(wp, 0x12, 0);
             wp->routine_1++;
             break;
         case 1:
         case 3:
-            func_80032488(wp);
+            EM_Char_Move(wp);
             break;
         case 2:
             wp->rotation.y = 0;
-            func_800322A8(wp, 0x13, 0);
+            EM_Char_Set(wp, 0x13, 0);
             wp->routine_1++;
             break;
     }
@@ -4190,15 +4190,15 @@ void func_80117D98(STAGE_OBJ *wp, STAGE_FACE2 *face)
     switch (wp->routine_1)
     {
         case 0:
-            func_800322A8(wp, 0x14, 0);
+            EM_Char_Set(wp, 0x14, 0);
             wp->routine_1++;
             break;
         case 1:
         case 3:
-            func_80032488(wp);
+            EM_Char_Move(wp);
             break;
         case 2:
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             wp->routine_1++;
             break;
     }
@@ -4216,7 +4216,7 @@ void func_80117D98(STAGE_OBJ *wp, STAGE_FACE2 *face)
 
 void func_80117E8C(STAGE_OBJ *wp, STAGE_FACE2 *face)
 {
-    func_80032488(wp);
+    EM_Char_Move(wp);
     switch (Scene_work.value_10)
     {
         case 0:
@@ -4237,7 +4237,7 @@ void func_80117E8C(STAGE_OBJ *wp, STAGE_FACE2 *face)
 
 void func_80117F2C(STAGE_OBJ *wp, STAGE_FACE2 *face)
 {
-    func_80032488(wp);
+    EM_Char_Move(wp);
     switch (Scene_work.value_10)
     {
         case 0:
@@ -4267,7 +4267,7 @@ void func_80117F2C(STAGE_OBJ *wp, STAGE_FACE2 *face)
 
 void func_8011801C(STAGE_OBJ *wp)
 {
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_8011803C(STAGE_OBJ *wp, STAGE_FACE2 *face)
@@ -4275,11 +4275,11 @@ void func_8011803C(STAGE_OBJ *wp, STAGE_FACE2 *face)
     switch (wp->routine_1)
     {
         case 0:
-            func_800322A8(wp, 0x15, 0);
+            EM_Char_Set(wp, 0x15, 0);
             wp->routine_1++;
             break;
         case 1:
-            func_80032488(wp);
+            EM_Char_Move(wp);
             break;
         case 2:
             break;
@@ -4317,7 +4317,7 @@ void func_80118138(STAGE_OBJ *wp, STAGE_FACE2 *face)
         wp->rotation_prev           = wp->rotation;
         D_80132BD4[Scene_work.u_8.byte[1]](wp, face);
         func_80117950(wp, face);
-        func_8002C8CC(wp, 0x64, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x64, 0x200, 0);
     }
 }
 
@@ -4330,7 +4330,7 @@ void func_80118270(STAGE_OBJ *wp, STAGE_FACE2 *face)
 {
     func_80117AB4(wp, face);
     ST1A_FACE_SCRIPTS(face, 4, 7);
-    func_800322A8(wp, 0x16, 0);
+    EM_Char_Set(wp, 0x16, 0);
     wp->routine_0++;
 }
 
@@ -4353,7 +4353,7 @@ void func_801182DC(STAGE_OBJ *wp, STAGE_FACE2 *face)
                 break;
         }
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_801183A4(STAGE_OBJ *wp, STAGE_FACE2 *face)
@@ -4384,15 +4384,15 @@ void func_80118440(ST1A_OBJ *wp)
     func_80119114(wp, face);
     if (wp->anim_AC != wp->anim_prev_AD)
     {
-        func_800322A8(wp, wp->anim_AC, wp->face.value_2);
+        EM_Char_Set(wp, wp->anim_AC, wp->face.value_2);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (face->shadow_12 != 0)
     {
-        func_8002C8CC(wp, 0x80, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x80, 0x200, 0);
     }
 }
 
@@ -4404,7 +4404,7 @@ void func_801190EC(ST1A_OBJ *wp, ST1A_FACE *face, sint32 index);
 void func_80118560(ST1A_OBJ *wp, STAGE_SCENE_WORK *scene, ST1A_FACE *face)
 {
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
     wp->value_78       = 0;
@@ -4917,7 +4917,7 @@ void func_80119320(ST1A_OBJ *wp)
 
     bp = (ST1A_BOSS *)&wp->hit_440;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0;
@@ -4935,7 +4935,7 @@ void func_80119320(ST1A_OBJ *wp)
     bp->value_8        = 0;
     bp->value_18       = 0;
     bp->value_1C       = 0;
-    func_80036478(bp->track_28, 0, -0x60);
+    Search_Player_Init(bp->track_28, 0, -0x60);
     bp->value_C    = 0;
     bp->value_52   = 0;
     bp->value_53   = 0;
@@ -5001,7 +5001,7 @@ void func_80119320(ST1A_OBJ *wp)
     wp->routine_0                              = 1;
     wp->routine_1                              = 0;
     *(uint16 *)&wp->routine_2                  = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     func_8005D620(wp, 0, 0, 0x81, 0x805058);
     func_80119714(wp);
 }
@@ -5091,24 +5091,24 @@ void func_80119714(ST1A_OBJ *wp)
     {
         if (wp->anim_prev_AD != wp->anim_AC)
         {
-            func_800322A8(wp, wp->anim_AC, 0);
+            EM_Char_Set(wp, wp->anim_AC, 0);
         }
         else
         {
-            func_80032488(wp);
+            EM_Char_Move(wp);
         }
     }
     else
     {
         func_80033A28(wp);
-        func_8003346C(wp);
+        EM_World_Pos_Calc(wp);
     }
     wp->value_44.half[0] = (wp->position.x - wp->position_prev.x) << 4;
     wp->value_44.half[1] = (wp->position.y - wp->position_prev.y) << 4;
     wp->value_48.half[0] = (wp->position.z - wp->position_prev.z) << 4;
     if ((wp->flags_0 & 2) && wp->part_180[0].pad == 0x4210)
     {
-        func_8002C8CC(wp, 0x80, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x80, 0x200, 0);
     }
     if ((wp->flags_0 & 1) && (bp->hit_0.flags_0.half & 2))
     {
@@ -5126,7 +5126,7 @@ void func_80119714(ST1A_OBJ *wp)
         bp->hit_0.pos_10.x = wp->part_180[0].x + bp->fixed_40.x;
         bp->hit_0.pos_10.y = wp->part_180[0].y + bp->fixed_40.y;
         bp->hit_0.pos_10.z = wp->part_180[0].z + bp->fixed_40.z;
-        func_800341BC(&bp->hit_0.pos_10, 0x68, 0, 0x8000, wp->value_1, &bp->hit_0.value_18,
+        Set_Atari(&bp->hit_0.pos_10, 0x68, 0, 0x8000, wp->value_1, &bp->hit_0.value_18,
                       D_80132DF0[bp->value_52] | bp->hit_0.value_8, 0, 0);
     }
 }
@@ -5172,8 +5172,8 @@ void func_80119B18(ST1A_OBJ *wp)
             }
             // fall through
         case 1:
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(wp, 0,
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(wp, 0,
                           ((D_800BBCF8[bp->hit_0.value_4] << 8) >> 16) + wp->value_4C.words.integer,
                           0);
             if (bp->hit_0.value_4 == 0x3F)
@@ -5218,11 +5218,11 @@ void func_80119CA0(ST1A_OBJ *wp)
             }
             break;
         case 2:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                              wp->rotation.y, 0x100)) &
                              0xFFF;
-            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + func_80048E6C(wp));
-            func_8002FEA4(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
+            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + Scr_height_check(wp));
+            Obj_pos_set(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
                           0);
             if (--bp->hit_0.value_4 < 0)
             {
@@ -5238,11 +5238,11 @@ void func_80119CA0(ST1A_OBJ *wp)
             }
             break;
         case 3:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                              wp->rotation.y, 8)) &
                              0xFFF;
             wp->value_4C.words.integer = STAGE_PL.value_3AA + bp->value_50 - wp->position.y;
-            func_8002FEA4(
+            Obj_pos_set(
                 wp, wp->value_4C.half[0],
                 ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 22) + wp->value_4C.words.integer, 0);
             if (wp->value_4C.half[0] < 0x600)
@@ -5266,8 +5266,8 @@ void func_80119CA0(ST1A_OBJ *wp)
             }
             break;
         case 4:
-            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + func_80048E6C(wp));
-            func_8002FEA4(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
+            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + Scr_height_check(wp));
+            Obj_pos_set(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
                           0);
             if (--bp->hit_0.value_4 < 0)
             {
@@ -5291,7 +5291,7 @@ void func_8011A080(ST1A_OBJ *wp)
             wp->routine_2++;
             wp->anim_AC = 0xD;
             wp->value_64.words.integer =
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
             if (wp->value_64.words.integer < 0)
             {
                 turn = -0x40;
@@ -5314,8 +5314,8 @@ void func_8011A080(ST1A_OBJ *wp)
         case 1:
             wp->rotation.y = (wp->rotation.y + wp->value_64.words.integer) & 0xFFF;
             wp->value_64.words.integer += wp->value_64.half[0];
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 24) + wp->value_4C.words.integer,
                 0);
             for (i = 0; i < 16; i++)
@@ -5344,17 +5344,17 @@ void func_8011A080(ST1A_OBJ *wp)
             bp->fixed_40.x    = 0;
             wp->flags_0 |= 2;
             wp->routine_2++;
-            func_80030150(&bp->fixed_40, &bp->target_38);
+            Obj_pos_adj_round(&bp->fixed_40, &bp->target_38);
             func_8002FFC4(&bp->target_38, &bp->fixed_40,
-                          func_80031198(&bp->target_38, &wp->position_prev) & 0xFFF, 0x3000, 0, 0);
+                          Calc_degree2(&bp->target_38, &wp->position_prev) & 0xFFF, 0x3000, 0, 0);
             wp->position         = bp->target_38;
             wp->position_fixed.v = bp->fixed_40;
-            wp->rotation.y       = func_80031198(&wp->position, &Player_work.position) & 0xFFF;
+            wp->rotation.y       = Calc_degree2(&wp->position, &Player_work.position) & 0xFFF;
             Sound_call2(0x20B, &wp->position);
             // fall through
         case 3:
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 24) + wp->value_4C.words.integer,
                 0);
             for (i = 0; i < 16; i++)
@@ -5398,11 +5398,11 @@ void func_8011A488(ST1A_OBJ *wp)
             }
             break;
         case 1:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &Player_work.position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                              wp->rotation.y, 0x80)) &
                              0xFFF;
             wp->value_4C.words.integer = STAGE_PL.value_3AA + bp->value_50 - wp->position.y;
-            func_8002FEA4(
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 22) + wp->value_4C.words.integer,
                 0);
             bp->hit_0.value_4 = (bp->hit_0.value_4 + 2) & 0x3F;
@@ -5470,8 +5470,8 @@ void func_8011A488(ST1A_OBJ *wp)
             }
             break;
         case 4:
-            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + func_80048E6C(wp));
-            func_8002FEA4(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
+            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + Scr_height_check(wp));
+            Obj_pos_set(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
                           0);
             if (--bp->hit_0.value_4 < 0)
             {
@@ -5503,15 +5503,15 @@ void func_8011A8A8(ST1A_OBJ *wp)
             bp->value_52      = 0;
             break;
         case 1:
-            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + func_80048E6C(wp));
-            func_8002FEA4(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
+            wp->value_4C.words.integer = wp->position.y - (bp->value_50 + Scr_height_check(wp));
+            Obj_pos_set(wp, 0, (D_800BBD38[bp->hit_0.value_4] * wp->value_4C.words.integer) >> 12,
                           0);
             if (--bp->hit_0.value_4 < 0)
             {
                 wp->anim_AC = 0xD;
                 wp->routine_2++;
                 wp->value_64.words.integer =
-                    func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
+                    Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
                 if (wp->value_64.words.integer < 0)
                 {
                     turn = -0x40;
@@ -5532,8 +5532,8 @@ void func_8011A8A8(ST1A_OBJ *wp)
         case 2:
             wp->rotation.y = (wp->rotation.y + wp->value_64.words.integer) & 0xFFF;
             wp->value_64.words.integer += wp->value_64.half[0];
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 24) + wp->value_4C.words.integer,
                 0);
             for (i = 0; i < 16; i++)
@@ -5551,7 +5551,7 @@ void func_8011A8A8(ST1A_OBJ *wp)
                 wp->position_fixed.v.y = 0xFFBF0000;
                 wp->position_fixed.v.x = 0;
                 wp->position_fixed.v.z = 0x4000000;
-                func_80030150(&wp->position_fixed.v, &wp->position);
+                Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
                 Sound_call2(0x1DD, &wp->position);
             }
             break;
@@ -5562,7 +5562,7 @@ void func_8011A8A8(ST1A_OBJ *wp)
             }
             if (!(bp->hit_0.value_6 & 1))
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0         = 5;
@@ -5573,7 +5573,7 @@ void func_8011A8A8(ST1A_OBJ *wp)
                     fx->timer_E         = 0;
                     fx->sprite.position = wp->position;
                     fx->sprite.position.x += (rand() & 0xFF) - 0x80;
-                    fx->sprite.position.y = func_80048E6C(wp);
+                    fx->sprite.position.y = Scr_height_check(wp);
                     fx->sprite.position.z += (rand() & 0xFF) - 0x80;
                 }
             }
@@ -5586,10 +5586,10 @@ void func_8011A8A8(ST1A_OBJ *wp)
             wp->routine_2++;
             bp->hit_0.value_4 = 0x10;
             bp->value_50      = -0x100;
-            wp->rotation.y    = func_80031198(&wp->position, &Player_work.position) & 0xFFF;
+            wp->rotation.y    = Calc_degree2(&wp->position, &Player_work.position) & 0xFFF;
             wp->u_E.b.byte_F |= 4;
             wp->value_64.words.integer =
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800);
             if (wp->value_64.words.integer < 0)
             {
                 turn = -0x80;
@@ -5610,7 +5610,7 @@ void func_8011A8A8(ST1A_OBJ *wp)
             }
             if (!(bp->hit_0.value_6 & 3))
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0         = 5;
@@ -5621,14 +5621,14 @@ void func_8011A8A8(ST1A_OBJ *wp)
                     fx->timer_E         = 0;
                     fx->sprite.position = wp->position;
                     fx->sprite.position.x += (rand() & 0xFF) - 0x80;
-                    fx->sprite.position.y = func_80048E6C(wp);
+                    fx->sprite.position.y = Scr_height_check(wp);
                     fx->sprite.position.z += (rand() & 0xFF) - 0x80;
                 }
             }
             wp->rotation.y = (wp->rotation.y + wp->value_64.words.integer) & 0xFFF;
             wp->value_64.words.integer -= wp->value_64.half[0];
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 24) + wp->value_4C.words.integer,
                 0);
             for (i = 0; i < 16; i++)
@@ -5695,29 +5695,29 @@ void func_8011B000(ST1A_OBJ *wp)
                 bp->fixed_40.y = 0xFF3F0000;
                 bp->fixed_40.x = 0;
                 bp->fixed_40.z = 0x4000000;
-                func_80030150(&bp->fixed_40, &bp->target_38);
-                angle = func_80031198(&bp->target_38, &Player_work.position) & 0xFFF;
+                Obj_pos_adj_round(&bp->fixed_40, &bp->target_38);
+                angle = Calc_degree2(&bp->target_38, &Player_work.position) & 0xFFF;
                 func_8002FFC4(&bp->target_38, &bp->fixed_40, angle,
-                              (func_80030374(&bp->target_38, &Player_work.position) - 0x100) * 16,
+                              (Calc_distance_xz(&bp->target_38, &Player_work.position) - 0x100) * 16,
                               0, 0);
             }
             wp->rotation.y = (wp->rotation.y +
-                              func_80031BEC(&wp->position, &bp->target_38, wp->rotation.y, 0x800)) &
+                              Muku(&wp->position, &bp->target_38, wp->rotation.y, 0x800)) &
                              0xFFF;
             wp->value_4C.half[0] =
-                func_80030374(&wp->position, &bp->target_38) / (bp->hit_0.value_4 + 2);
+                Calc_distance_xz(&wp->position, &bp->target_38) / (bp->hit_0.value_4 + 2);
             Sound_call2(0x1D5, &wp->position);
             break;
         case 1:
             wp->value_4C.words.integer = (0x10 - bp->hit_0.value_4) << 2;
             bp->hit_0.value_4--;
-            func_8002FEA4(wp, wp->value_4C.half[0] * 16, wp->value_4C.words.integer * 16, 0);
+            Obj_pos_set(wp, wp->value_4C.half[0] * 16, wp->value_4C.words.integer * 16, 0);
             if (wp->value_A7 < 0 && wp->anim_AC != 4 && ++wp->anim_AC == 4)
             {
                 bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_C;
                 wp->value_492     = 1;
             }
-            ground = func_80048E6C(wp);
+            ground = Scr_height_check(wp);
             if (ground < wp->position.y)
             {
                 wp->position_fixed.v.y = ground << 16;
@@ -5727,7 +5727,7 @@ void func_8011B000(ST1A_OBJ *wp)
                 bp->hit_0.value_4 = 0;
                 bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
                 bp->value_52      = 0;
-                fx                = func_80031618();
+                fx                = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->kind_2            = 0x80;
@@ -5735,7 +5735,7 @@ void func_8011B000(ST1A_OBJ *wp)
                     fx->flags_0           = 5;
                     fx->value_F           = 2;
                     fx->sprite.position   = wp->position;
-                    fx->sprite.position.y = func_80048E6C(wp);
+                    fx->sprite.position.y = Scr_height_check(wp);
                     Sound_call2(0x1E0, &wp->position);
                     Sound_call2(0x1D6, &wp->position);
                 }
@@ -5744,7 +5744,7 @@ void func_8011B000(ST1A_OBJ *wp)
         case 2:
             if (!(bp->hit_0.value_4 & 3))
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0         = 5;
@@ -5755,7 +5755,7 @@ void func_8011B000(ST1A_OBJ *wp)
                     fx->timer_E         = 0;
                     fx->sprite.position = wp->position;
                     fx->sprite.position.x += (rand() & 0x1FF) - 0x100;
-                    fx->sprite.position.y = func_80048E6C(wp);
+                    fx->sprite.position.y = Scr_height_check(wp);
                     fx->sprite.position.z += (rand() & 0x1FF) - 0x100;
                     Swing_Camera2(0x1E, 0x800, 0xC00, &fx->sprite.position);
                 }
@@ -5803,7 +5803,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
             break;
         case 1:
             wp->value_4C.words.integer = STAGE_PL.value_3AA + bp->value_50 - wp->position.y;
-            func_8002FEA4(
+            Obj_pos_set(
                 wp, 0, ((D_800BBCF8[bp->hit_0.value_4] << 16) >> 22) + wp->value_4C.words.integer,
                 0);
             bp->hit_0.value_4 = (bp->hit_0.value_4 + 2) & 0x3F;
@@ -5825,7 +5825,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
                 wp->value_64.words.integer += 0x10;
             }
             wp->rotation.y =
-                (wp->rotation.y + func_80031BEC(&wp->part_180[5], &Player_work.position,
+                (wp->rotation.y + Muku(&wp->part_180[5], &Player_work.position,
                                                 wp->rotation.y, wp->value_64.words.integer)) &
                 0xFFF;
             if (bp->hit_0.value_6 == 0)
@@ -5854,7 +5854,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
                 wp->value_64.words.integer += 0x10;
             }
             wp->rotation.y =
-                (wp->rotation.y + func_80031BEC(&wp->part_180[5], &Player_work.position,
+                (wp->rotation.y + Muku(&wp->part_180[5], &Player_work.position,
                                                 wp->rotation.y, wp->value_64.words.integer)) &
                 0xFFF;
             if (bp->value_72[0] < 0)
@@ -5896,7 +5896,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
                 wp->value_64.words.integer += 0x10;
             }
             wp->rotation.y =
-                (wp->rotation.y + func_80031BEC(&wp->part_180[10], &Player_work.position,
+                (wp->rotation.y + Muku(&wp->part_180[10], &Player_work.position,
                                                 wp->rotation.y, wp->value_64.words.integer)) &
                 0xFFF;
             func_8011BDD8(wp, 1);
@@ -5919,7 +5919,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
                 wp->value_64.words.integer += 0x10;
             }
             wp->rotation.y =
-                (wp->rotation.y + func_80031BEC(&wp->part_180[10], &Player_work.position,
+                (wp->rotation.y + Muku(&wp->part_180[10], &Player_work.position,
                                                 wp->rotation.y, wp->value_64.words.integer)) &
                 0xFFF;
             if (bp->value_72[1] < 0)
@@ -6002,8 +6002,8 @@ void func_8011BA74(ST1A_OBJ *wp)
             Sound_fade_start(0x10);
             // fall through
         case 1:
-            wp->value_4C.words.integer = bp->value_50 + func_80048E6C(wp) - wp->position.y;
-            func_8002FEA4(wp, 0,
+            wp->value_4C.words.integer = bp->value_50 + Scr_height_check(wp) - wp->position.y;
+            Obj_pos_set(wp, 0,
                           ((D_800BBCF8[bp->hit_0.value_4] << 8) >> 16) + wp->value_4C.words.integer,
                           0);
             if (bp->hit_0.value_4 == 0x3F)
@@ -6045,7 +6045,7 @@ sint32 func_8011BC80(void)
         op->position_fixed.v.x = 0;
         op->position_fixed.v.z = 0x08FC0000;
         op->rotation.y         = 0;
-        func_80030150(&op->position_fixed.v, &op->position);
+        Obj_pos_adj_round(&op->position_fixed.v, &op->position);
         op->flags_6 |= 0x20;
         return 0;
     }
@@ -6297,7 +6297,7 @@ sint32 func_8011C260(ST1A_OBJ *wp)
 void func_8011C5C4(STAGE_OBJ *wp)
 {
     D_80132EE4[wp->routine_0](wp);
-    func_8002C8CC(wp, 0x100, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x100, 0x200, 0);
 }
 
 void func_8011C620(ST1A_OBJ *wp)
@@ -6305,7 +6305,7 @@ void func_8011C620(ST1A_OBJ *wp)
     ST1A_BLOCK *bp;
 
     wp->flags_0 |= 0x42;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     func_80033500(wp);
     bp = (ST1A_BLOCK *)&wp->hit_440;
     func_800177CC(bp, &wp->value_520);
@@ -6344,11 +6344,11 @@ void func_8011C620(ST1A_OBJ *wp)
     if (bp->value_98 > 0)
     {
         bp->value_98 = 0;
-        func_800322A8(wp, bp->value_9A, bp->value_9B);
+        EM_Char_Set(wp, bp->value_9A, bp->value_9B);
     }
     else if (bp->value_98 == 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
 }
 
@@ -6364,11 +6364,11 @@ void func_8011C790(ST1A_OBJ *wp)
     if (wp->value_4D8 > 0)
     {
         wp->value_4D8 = 0;
-        func_800322A8(wp, wp->value_4DA, wp->value_4DB);
+        EM_Char_Set(wp, wp->value_4DA, wp->value_4DB);
     }
     else if (wp->value_4D8 == 0)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     func_8011EAFC(wp, bp->value_9C);
 }
@@ -6409,7 +6409,7 @@ void func_8011C870(ST1A_OBJ *wp)
             first = bp->count_CE * 3;
             for (i = first; i < first + 3; i++)
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0         = 5;
@@ -6654,7 +6654,7 @@ void func_8011CE4C(ST1A_OBJ *wp)
             wp->routine_2++;
             break;
         case 1:
-            turn = func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+            turn = Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             if (turn != 0)
             {
                 wp->rotation.y += turn;
@@ -6672,7 +6672,7 @@ void func_8011CE4C(ST1A_OBJ *wp)
             break;
         case 2:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
             wp->position.y += (sint8)D_80132F10[wp->value_A4];
             wp->position_fixed.v.y = wp->position.y << 16;
             if (wp->value_A7 < 0)
@@ -6698,16 +6698,16 @@ void func_8011CE4C(ST1A_OBJ *wp)
         case 4:
             if (++aim->timer_C8 < 0xA)
             {
-                wp->rotation.y += func_80031BEC(&wp->position, &Player_work.position,
+                wp->rotation.y += Muku(&wp->position, &Player_work.position,
                                                 wp->rotation.y & 0xFFF, 0x20);
             }
-            func_8002FEA4(wp, 0x400, 0, 0);
+            Obj_pos_set(wp, 0x400, 0, 0);
             if (func_8011E9E8(&wp->position) == 0)
             {
                 Sound_call2(0x1ED, &wp->position);
                 wp->routine_2++;
             }
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0   = 5;
@@ -6743,7 +6743,7 @@ void func_8011CE4C(ST1A_OBJ *wp)
             target.x               = wp->position.x * 2;
             target.y               = wp->position.y;
             target.z               = wp->position.z * 2 - 0x400;
-            turn = func_80031BEC(&wp->position, &target, wp->rotation.y & 0xFFF, 0x80);
+            turn = Muku(&wp->position, &target, wp->rotation.y & 0xFFF, 0x80);
             if (wp->value_A7 < 0 && turn == 0 && wp->position.y == -0x33)
             {
                 aim->value_98 = 1;
@@ -6755,7 +6755,7 @@ void func_8011CE4C(ST1A_OBJ *wp)
             wp->rotation.y += turn;
             break;
         case 7:
-            func_8002FEA4(wp, -0x1E0, 0, 0);
+            Obj_pos_set(wp, -0x1E0, 0, 0);
             if (func_8011EAC0(&wp->position) != 0)
             {
                 wp->routine_2++;
@@ -6791,7 +6791,7 @@ void func_8011D240(ST1A_OBJ *wp)
             wp->routine_2++;
             break;
         case 2:
-            turn = func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+            turn = Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             if (turn != 0)
             {
                 wp->rotation.y += turn;
@@ -6809,7 +6809,7 @@ void func_8011D240(ST1A_OBJ *wp)
         case 3:
             if (wp->value_A4 >= 0x10)
             {
-                wp->rotation.y += func_80031BEC(&wp->position, &Player_work.position,
+                wp->rotation.y += Muku(&wp->position, &Player_work.position,
                                                 wp->rotation.y & 0xFFF, 0x80);
                 if (wp->value_A4 == 0x10)
                 {
@@ -6820,7 +6820,7 @@ void func_8011D240(ST1A_OBJ *wp)
                     SquareRoot0(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
                     aim->start_A8 = wp->position;
                     aim->timer_C0 = 0;
-                    aim->angle_C4 = wp->rotation.y + func_80031BEC(&wp->position, &aim->target_0,
+                    aim->angle_C4 = wp->rotation.y + Muku(&wp->position, &aim->target_0,
                                                                    wp->rotation.y & 0xFFF, 0x800);
                     break;
                 }
@@ -6886,7 +6886,7 @@ void func_8011D240(ST1A_OBJ *wp)
             wp->position.y += (sint8)D_80132F20[wp->value_A4];
             wp->position_fixed.v.y = wp->position.y << 16;
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             break;
         case 4:
             if (wp->value_A4 < 0x18)
@@ -6928,7 +6928,7 @@ void func_8011D240(ST1A_OBJ *wp)
                 aim->target_0.z = Player_work.position.z + ((vec.z * 25) >> 10);
             }
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             func_8011F150((STAGE_OBJ *)wp, 0);
             if (wp->value_A7 < 0)
             {
@@ -6943,7 +6943,7 @@ void func_8011D240(ST1A_OBJ *wp)
             aim->target_0.x = 0;
             aim->target_0.z = 0x400;
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             func_8011F150((STAGE_OBJ *)wp, 0);
             if (wp->value_A7 < 0)
             {
@@ -6986,7 +6986,7 @@ void func_8011DA38(ST1A_OBJ *wp)
             wp->routine_2++;
             break;
         case 1:
-            turn = func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+            turn = Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             if (turn != 0)
             {
                 wp->rotation.y += turn;
@@ -7000,7 +7000,7 @@ void func_8011DA38(ST1A_OBJ *wp)
             break;
         case 2:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
             wp->position.y += (sint8)D_80132F3C[wp->value_A4];
             wp->position_fixed.v.y = wp->position.y << 16;
             if (wp->value_A7 < 0)
@@ -7082,7 +7082,7 @@ void func_8011DCD8(ST1A_OBJ *wp)
             wp->routine_2++;
             break;
         case 1:
-            turn = func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+            turn = Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             if (turn != 0)
             {
                 wp->rotation.y += turn;
@@ -7105,7 +7105,7 @@ void func_8011DCD8(ST1A_OBJ *wp)
             break;
         case 2:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
             if (wp->value_A7 < 0)
             {
                 aim->value_98 = 1;
@@ -7159,13 +7159,13 @@ void func_8011DE9C(ST1A_OBJ *wp)
             wp->routine_2++;
             break;
         case 1:
-            i = func_80031BEC(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
+            i = Muku(&wp->position, &aim->target_0, wp->rotation.y & 0xFFF, 0x80);
             if (i != 0)
             {
                 wp->rotation.y += i;
                 break;
             }
-            aim->fx_D0 = func_80031618();
+            aim->fx_D0 = Open_EFFECT_WORK();
             if (aim->fx_D0 != NULL)
             {
                 aim->fx_D0->flags_0           = 5;
@@ -7191,7 +7191,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             i = rand() & 0x3F;
             for (n = 0; n < 2; n++)
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0           = 5;
@@ -7207,7 +7207,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             }
             if (aim->value_E0 != 0 && aim->count_CC == 0x50)
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0           = 5;
@@ -7239,7 +7239,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
                 }
                 if (wp->value_A4 == 0x30)
                 {
-                    fx = func_80031618();
+                    fx = Open_EFFECT_WORK();
                     if (fx != NULL)
                     {
                         fx->flags_0           = 5;
@@ -7272,7 +7272,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
                 }
             }
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
             wp->position.y += (sint8)D_80132F58[wp->value_A4];
             wp->position_fixed.v.y = wp->position.y << 16;
             if (wp->value_A7 < 0 && aim->count_CC >= 0x5B)
@@ -7308,10 +7308,10 @@ void func_8011DE9C(ST1A_OBJ *wp)
             }
             else if (wp->value_A4 == 8)
             {
-                func_80031988(aim->fx_D0);
+                Close_EFFECT_WORK(aim->fx_D0);
             }
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80);
             if (wp->value_A7 < 0)
             {
                 func_8011F208();
@@ -7323,7 +7323,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 4:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7337,7 +7337,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 5:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7351,7 +7351,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 6:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7365,7 +7365,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 7:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7379,7 +7379,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 8:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7393,7 +7393,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 9:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7407,7 +7407,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 11:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7421,7 +7421,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 12:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7435,7 +7435,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 13:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) -
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7449,7 +7449,7 @@ void func_8011DE9C(ST1A_OBJ *wp)
             break;
         case 14:
             wp->rotation.y +=
-                func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
+                Muku(&wp->position, &Player_work.position, wp->rotation.y & 0xFFF, 0x80) +
                 0x40;
             if (wp->value_A7 < 0)
             {
@@ -7551,7 +7551,7 @@ void func_8011EAFC(ST1A_OBJ *wp, sint32 arg)
         v.x += wp->part_180[D_80132F90[i].part_7].x;
         v.y += wp->part_180[D_80132F90[i].part_7].y;
         v.z += wp->part_180[D_80132F90[i].part_7].z;
-        func_800341BC(&v, D_80132F90[i].radius_6, 0, 0x8000, wp->value_1, &hits->hit_8[i],
+        Set_Atari(&v, D_80132F90[i].radius_6, 0, 0x8000, wp->value_1, &hits->hit_8[i],
                       D_80133020[hits->kind_E0][arg], 0, 0);
     }
     for (i = 8; i < 18; i++)
@@ -7561,7 +7561,7 @@ void func_8011EAFC(ST1A_OBJ *wp, sint32 arg)
         v.x += wp->part_180[D_80132F90[i].part_7].x;
         v.y += wp->part_180[D_80132F90[i].part_7].y;
         v.z += wp->part_180[D_80132F90[i].part_7].z;
-        func_800341BC(&v, D_80132F90[i].radius_6, 0, 0x8000, wp->value_1, &hits->hit_8[i],
+        Set_Atari(&v, D_80132F90[i].radius_6, 0, 0x8000, wp->value_1, &hits->hit_8[i],
                       D_80133040[hits->kind_E0][arg], 0, 0x80);
     }
 }
@@ -7842,13 +7842,13 @@ void func_8011F3E0(ST1A_OBJ *wp)
     {
         case 0:
             wp->flags_0 |= 2;
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
             wp->value_44.value = 0;
             wp->value_48.value = 0;
             wp->scale.words[0] = 0x02000200;
             wp->scale.words[1] = 0x42100200;
             wp->value_78       = 0;
-            func_800322A8(wp, 0x14, 0);
+            EM_Char_Set(wp, 0x14, 0);
             wp->u_C.b.byte_C = 0;
             wp->u_C.b.byte_D = 0;
             wp->u_E.b.byte_E = 0;
@@ -7858,15 +7858,15 @@ void func_8011F3E0(ST1A_OBJ *wp)
         case 1:
             if (wp->value_44.half[0] != 0)
             {
-                func_8002FEA4(wp, wp->value_44.half[0], 0, 0);
+                Obj_pos_set(wp, wp->value_44.half[0], 0, 0);
             }
             if (wp->u_C.b.byte_C == 0)
             {
-                func_80032488(wp);
+                EM_Char_Move(wp);
             }
             else
             {
-                func_800322A8(wp, wp->u_C.b.byte_D, 0);
+                EM_Char_Set(wp, wp->u_C.b.byte_D, 0);
                 wp->u_C.b.byte_C = 0;
             }
             break;

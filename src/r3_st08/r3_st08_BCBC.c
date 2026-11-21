@@ -18,7 +18,7 @@ void func_8010BD3C(ST08_10C *wp)
     STCOM_SVECTOR pos;
 
     pos = wp->position;
-    func_800341BC(&pos, 0x1E, 0, 0x8000, wp->value_1, &wp->hit_BC, 0xC800000, 0x800000, 0x80);
+    Set_Atari(&pos, 0x1E, 0, 0x8000, wp->value_1, &wp->hit_BC, 0xC800000, 0x800000, 0x80);
     wp->hit_BC = 0;
 }
 
@@ -44,7 +44,7 @@ void func_8010BDC0(ST08_10C *wp)
     wp->rotation_prev                                = wp->rotation.v;
     wp->color_B4                                     = 0x808080;
     func_8010BCBC(wp, 0x200);
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->hit_BC = 0;
     wp->routine_0++;
 }
@@ -81,7 +81,7 @@ void func_8010BECC(ST08_10C *wp)
             }
         }
         STAGE_SCENE_BYTE(0xB) = 0;
-        angle                 = func_80031198(&wp->position, &Player_work.position);
+        angle                 = Calc_degree2(&wp->position, &Player_work.position);
         wp->velocity.v.x      = (uint32)(rsin(angle) * 25) >> 11;
         wp->velocity.v.y      = -0x10;
         wp->velocity.v.z      = (uint32)(rcos(angle) * 15) >> 9;
@@ -101,7 +101,7 @@ void func_8010BECC(ST08_10C *wp)
     wp->position_fixed.y = wp->position.y << 16;
     func_8010BCBC(wp, 0x200);
     func_8010BD3C(wp);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 void func_8010C0E4(ST08_10C *wp)
@@ -143,7 +143,7 @@ void func_8010C0E4(ST08_10C *wp)
         func_8010BD3C(wp);
     }
     func_8010BCBC(wp, 0x200);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 void func_8010C268(ST08_10C *wp)
@@ -163,7 +163,7 @@ void func_8010C268(ST08_10C *wp)
         return;
     }
     func_8010BCBC(wp, 0x200);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 void func_8010C37C(STAGE_10C *wp)
@@ -196,7 +196,7 @@ void func_8010C4AC(ST08_10C *wp)
     STCOM_SVECTOR pos;
 
     pos = wp->position;
-    func_800341BC(&pos, 0x78 - wp->value_D * 0x1E, 0, 0x8000, wp->value_1, &wp->hit_BC, 0x4880000,
+    Set_Atari(&pos, 0x78 - wp->value_D * 0x1E, 0, 0x8000, wp->value_1, &wp->hit_BC, 0x4880000,
                   0x800000, 0x80);
     wp->hit_BC = 0;
 }
@@ -253,7 +253,7 @@ void func_8010C670(ST08_10C *wp)
     wp->data_78                                      = D_801140D0[wp->value_D];
     func_8010C3D8(wp);
     wp->variant_3 = wp->value_C * 4;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     func_8010C4AC(wp);
     wp->routine_0++;
 }
@@ -275,20 +275,20 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
             wp->variant_3 = wp->value_C * 4;
             wp->value_E   = 0;
         }
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     hit = wp->hit_BC;
     if (hit & 0x20000000)
     {
         wp->speed_CC     = (rand() & 3) * 10 + 300;
-        angle            = func_80031198(&wp->position, &Player_work.position);
+        angle            = Calc_degree2(&wp->position, &Player_work.position);
         wp->velocity.v.x = (uint32)(rsin(angle) * wp->speed_CC) >> 12;
         wp->velocity.v.z = (uint32)(rcos(angle) * wp->speed_CC) >> 12;
         wp->value_E      = 1;
     }
     else if (hit & 0x2000000)
     {
-        angle            = func_80031198(&wp->position, &Player_work.position);
+        angle            = Calc_degree2(&wp->position, &Player_work.position);
         wp->velocity.v.x = (uint32)(rsin(angle) * wp->speed_CC) >> 12;
         wp->velocity.v.z = (uint32)(rcos(angle) * wp->speed_CC) >> 12;
         wp->value_E      = 1;
@@ -320,7 +320,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
         wp->value_D++;
         wp->value_E      = 1;
         wp->data_78      = D_801140D0[wp->value_D];
-        angle            = func_80031198(&wp->position, &Player_work.position);
+        angle            = Calc_degree2(&wp->position, &Player_work.position);
         dir              = angle + 0x400;
         wp->velocity.v.x = (uint32)(rsin(dir) * wp->speed_CC) >> 12;
         wp->velocity.v.z = (uint32)(rcos(dir) * wp->speed_CC) >> 12;
@@ -328,7 +328,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
     }
     else if (hit & 0x4000000)
     {
-        angle            = func_80031198(&wp->position, &wp->value_C4);
+        angle            = Calc_degree2(&wp->position, &wp->value_C4);
         wp->velocity.v.x = (uint32)(rsin(angle) * wp->speed_CC) >> 12;
         wp->velocity.v.z = (uint32)(rcos(angle) * wp->speed_CC) >> 12;
         wp->value_E      = 1;
@@ -338,7 +338,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
     wp->position_fixed.x += wp->velocity.v.x << 12;
     wp->position_fixed.z += wp->velocity.v.z << 12;
     wp->position_fixed.y += wp->velocity.v.y << 12;
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     ground = func_8004B414(wp);
     if (ground != 0)
     {
@@ -347,7 +347,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
     }
     func_8010C3D8(wp);
     func_8010C4AC(wp);
-    func_8002C8CC(wp, 100 - wp->value_D * 20, 0x200, 0);
+    Model_Shadow_Trans(wp, 100 - wp->value_D * 20, 0x200, 0);
 }
 
 void func_8010CB24(STAGE_FX *wp)

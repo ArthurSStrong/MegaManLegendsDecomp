@@ -101,7 +101,7 @@ void func_800434F0(CODE43_WORK *wp)
     wp->pos_2c = func_80036294(wp->index_c)->pos_14;
     if (--wp->timer_b == 0)
     {
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
     }
     else if (func_80037694(wp, 0))
     {
@@ -118,7 +118,7 @@ void func_800434F0(CODE43_WORK *wp)
 void func_800435BC(CODE43_WORK *wp)
 {
     func_80036294(wp->index_c)->state_198 = 0;
-    func_80031930(wp);
+    Close_PL_SHL_WORK(wp);
 }
 
 void func_800435F8(CODE43_WORK *wp)
@@ -163,7 +163,7 @@ void func_80043740(CODE43_WORK *wp)
 {
     CODE43_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->flags_0 = 1;
@@ -248,7 +248,7 @@ void func_800437F8(CODE43_WORK *wp)
     Sound_call2(0x9A, &wp->pos_14);
 }
 
-// The first arm ends with its own copy of the timeout tail (func_80031930 and the
+// The first arm ends with its own copy of the timeout tail (Close_PL_SHL_WORK and the
 // func_800354E0 check); cross-jumping then merges the two func_80043E00 calls into one, as in
 // retail.
 void func_80043A8C(CODE43_WORK *wp)
@@ -271,7 +271,7 @@ void func_80043A8C(CODE43_WORK *wp)
         {
             func_80043E00(wp, 1);
         }
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         if (wp->value_3 >= 0x80)
         {
             func_800354E0(wp->bit_d);
@@ -337,7 +337,7 @@ void func_80043A8C(CODE43_WORK *wp)
             goto move;
         }
     }
-    func_80031930(wp);
+    Close_PL_SHL_WORK(wp);
     if (wp->value_3 >= 0x80)
     {
         func_800354E0(wp->bit_d);
@@ -355,7 +355,7 @@ void func_80043E00(CODE43_WORK *wp, sint32 value)
 {
     CODE43_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->flags_0 = 9;

@@ -12,7 +12,7 @@ void func_8010A5D0(ST03_ACTOR *wp)
 
     wp->flags_0 |= 2;
     ctl = &wp->ctl;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]       = 0x01D701D7;
     wp->scale.words[1]       = 0x1D7;
     wp->scale.v.pad          = 0x4210;
@@ -36,31 +36,31 @@ void func_8010A5D0(ST03_ACTOR *wp)
             wp->routine_0             = 1;
             wp->routine_1             = 0;
             *(uint16 *)&wp->routine_2 = 0;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             break;
         case 1:
             wp->routine_0             = 1;
             wp->routine_1             = 2;
             *(uint16 *)&wp->routine_2 = 0;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             break;
         case 2:
             wp->routine_0             = 1;
             wp->routine_1             = 3;
             *(uint16 *)&wp->routine_2 = 0;
-            func_800322A8(wp, 0x10, 0x1d);
+            EM_Char_Set(wp, 0x10, 0x1d);
             break;
         case 3:
             wp->routine_0             = 1;
             wp->routine_1             = 4;
             *(uint16 *)&wp->routine_2 = 0;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             break;
         case 4:
             wp->routine_0             = 1;
             wp->routine_1             = 5;
             *(uint16 *)&wp->routine_2 = 0;
-            func_800322A8(wp, 0, 0);
+            EM_Char_Set(wp, 0, 0);
             break;
     }
     func_8010A788(wp);
@@ -83,15 +83,15 @@ void func_8010A788(ST03_ACTOR *wp)
     }
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_800322A8(wp, wp->anim_AC, 0);
+        EM_Char_Set(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     func_80051B68(wp, 1, -1, 0);
 }

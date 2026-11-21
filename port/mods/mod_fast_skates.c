@@ -5,15 +5,15 @@
 // the skates owned (flags16b & 2), it sets a forward speed in value44 (0x340 cruising, 0x400 with
 // Up, 0x280 with Down; 0x300 when landing from a jump onto the skates) and a sideways one in
 // value48, and moves through func_80041E90(pl, x, y, z), which turns those local speeds into a
-// world step with func_8002FEA4(wp, x, y, z) (code_8002E7A8.c). Walking and running
-// (routine_1 2, value44 0x200), jumping, enemies and everything else reach func_8002FEA4 from
+// world step with Obj_pos_set(wp, x, y, z) (code_8002E7A8.c). Walking and running
+// (routine_1 2, value44 0x200), jumping, enemies and everything else reach Obj_pos_set from
 // other routines.
 //
-// The mod hooks func_8003D1E0 and func_8002FEA4: while the skates' routine runs for
+// The mod hooks func_8003D1E0 and Obj_pos_set: while the skates' routine runs for
 // Player_work, a step of Player_work has its x and z multiplied. The stored speeds are untouched
 // (the skates' own slowing down, value44 -= 0x28 a frame, works on them), so only the distance
 // covered on skates changes. (Not func_80041E90: the native build inlines it into the routine,
-// so a hook there would never see these calls; func_8002FEA4 is in another file and is a real
+// so a hook there would never see these calls; Obj_pos_set is in another file and is a real
 // call. docs/mods.md has the general rule.)
 #include "mods.h"
 
@@ -21,7 +21,7 @@
 #include <stdint.h>
 
 #define FUNC_PL_SKATE 0x8003D1E0u // void func_8003D1E0(PL_WORK *pl): routine_1 3, the skates
-#define FUNC_STEP     0x8002FEA4u // void func_8002FEA4(FIXED_POS_WORK *wp, sint16 x, y, z)
+#define FUNC_STEP     0x8002FEA4u // void Obj_pos_set(FIXED_POS_WORK *wp, sint16 x, y, z)
 
 typedef void (*SKATE_FN)(uint32_t pl);
 // The 16-bit speeds arrive as 32-bit words; passed on sign-extended.
@@ -51,7 +51,7 @@ static int32_t scale(int32_t v)
     int i = settings[0].value;
 
     v = v * numerators[i] / denominators[i];
-    // func_8002FEA4 takes 16-bit speeds.
+    // Obj_pos_set takes 16-bit speeds.
     return v > 0x7FFF ? 0x7FFF : v < -0x7FFF ? -0x7FFF : v;
 }
 

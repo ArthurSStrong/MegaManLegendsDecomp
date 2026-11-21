@@ -18,7 +18,7 @@ void func_8010BCDC(ST0E_LEVER *wp)
     wp->matrix.f.rot.y = 0;
     wp->matrix.f.rot.z = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->routine_2 = 0;
@@ -136,7 +136,7 @@ void func_8010BFB4(ST0E_PANEL *wp)
     wp->matrix_18.f.value_18 = 0x400;
     wp->matrix_18.f.lit_1C   = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->color_40 = 0x02808080;
     if (Sce_flag_test(0x62D))
     {

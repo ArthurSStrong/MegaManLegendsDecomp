@@ -25,7 +25,7 @@ void func_8010F724(STAGE_OBJ *wp)
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed.v;
     wp->rotation_prev       = wp->rotation;
-    func_80032538(wp);
+    EM_Char_Move2(wp);
     func_800334C4(wp);
 }
 
@@ -59,7 +59,7 @@ void func_8010F7DC(STAGE_OBJ *wp)
     wp->scale.words[0] = 0x0C000C00;
     wp->scale.words[1] = 0xC00;
     wp->scale.v.pad    = 0x4210;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
 }
 
 void func_8010F944(STAGE_OBJ *wp)
@@ -156,7 +156,7 @@ void func_8010FB1C(STCOM23_WORK *wp)
     wp->accel.y          = (v.y * speed) >> 4;
     wp->accel.z          = (v.z * speed) >> 4;
     wp->kind_2           = D_8011BF8C[wp->variant_3].kind_0;
-    func_8002F9C4(wp, &D_8011BF8C[wp->variant_3].variant_1);
+    Model_work_init(wp, &D_8011BF8C[wp->variant_3].variant_1);
     wp->draw_pos.x         = wp->position.x;
     wp->draw_pos.y         = wp->position.y;
     wp->draw_pos.z         = wp->position.z;
@@ -297,7 +297,7 @@ void func_80110414(STAGE_FX *wp)
 // Registers the hit box.
 void func_80110434(STCOM23_WORK *wp)
 {
-    func_800341BC(&wp->position, D_8011BF8C[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
+    Set_Atari(&wp->position, D_8011BF8C[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
                   &wp->hit_C4, D_8011BF8C[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
     wp->hit_C4 = 0;
 }
@@ -325,7 +325,7 @@ void func_8011058C(STCOM23_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         effect->flags_0           = 5;
@@ -433,7 +433,7 @@ void func_80110774(STCOM18_WORK *wp)
     wp->data_10  = NULL;
     wp->value_78 = 0;
     wp->hit_BC   = 0;
-    func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+    Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                   wp->kind_E | 0x8000000, 0, 0x80);
     if (func_80049C24(wp))
     {
@@ -479,7 +479,7 @@ void func_80110938(STCOM18_WORK *wp)
         wp->position_fixed.x += wp->velocity.v.x << 8;
         wp->position_fixed.y += wp->velocity.v.y << 8;
         wp->position_fixed.z += wp->velocity.v.z << 8;
-        func_80030150(&wp->position_fixed, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed, &wp->position);
         wp->sprite.pos_8[0] = wp->position.x;
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
@@ -496,7 +496,7 @@ void func_80110938(STCOM18_WORK *wp)
     }
     else
     {
-        func_800341BC(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
+        Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                       wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
         hit        = func_80049C24(wp);
@@ -515,7 +515,7 @@ void func_80110BA0(STAGE_10C *wp)
 {
     ST17_MARK *ep;
 
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         if (wp->value_F & 1)
@@ -652,7 +652,7 @@ void func_80110E58(ST17_10C_B *wp)
         wp->position_fixed.v.x += wp->value_44.half[0] << 8;
         wp->position_fixed.v.y += wp->value_44.half[1] << 8;
         wp->position_fixed.v.z += wp->value_48.half[0] << 8;
-        func_80030150(&wp->position_fixed.v, &wp->position);
+        Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
         func_8011142C((ST17_TRAIL *)wp);
         wp->trail_D4[5]     = wp->trail_D4[4];
         wp->trail_D4[4]     = wp->trail_D4[3];
@@ -666,7 +666,7 @@ void func_80110E58(ST17_10C_B *wp)
     }
     if (wp->flags_0 & 1)
     {
-        func_800341BC(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
+        Set_Atari(&wp->position, 0xC0, 0, 0xA000, wp->reserved01, &wp->sprite.hit_14,
                       D_8011C110[wp->byte_D] | 0x49000000, 0, 0x80);
     }
     wp->sprite.hit_14 = 0;
@@ -976,7 +976,7 @@ void func_80111E80(ST17_10C *wp, ST17_PART_D0 *part)
     switch (wp->routine_1)
     {
         case 0:
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 5;
@@ -1278,7 +1278,7 @@ void func_80112748(ST17_10C *wp, ST17_PART_D0 *part)
                 }
             }
         }
-        func_800341BC(&wp->position, 0x40, 0, 0x8000, wp->reserved01, &wp->value_BC,
+        Set_Atari(&wp->position, 0x40, 0, 0x8000, wp->reserved01, &wp->value_BC,
                       part->value_C | 0x04000000, 0, flag);
     }
     wp->value_BC = 0;
@@ -1377,7 +1377,7 @@ void func_801128C4(ST17_SHL *wp)
     wp->old_pos            = wp->pos;
     wp->color_b4           = 0x02808080;
     wp->kind_2             = 0x82;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
     wp->timer_b = func_80037634(&Player_work, 2);
     wp->routine_0++;
@@ -1396,7 +1396,7 @@ void func_80112CCC(ST17_SHL *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         func_80112F88(wp, 1);
         return;
@@ -1420,7 +1420,7 @@ void func_80112CCC(ST17_SHL *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         return;
     }
@@ -1461,7 +1461,7 @@ void func_80112F88(ST17_SHL *wp, sint32 arg)
 {
     ST17_SHL_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 1;
@@ -1527,7 +1527,7 @@ void func_801130C4(STAGE_FX *wp)
     }
     else
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1541,7 +1541,7 @@ void func_80113234(ST17_MARK *wp)
 
     if (wp->value_E % 5 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 5;
@@ -1569,7 +1569,7 @@ void func_80113234(ST17_MARK *wp)
     }
     if (++wp->value_E == 41)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1584,7 +1584,7 @@ void func_8011338C(ST17_MARK *wp)
 
     if (wp->value_E % 5 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 5;
@@ -1625,7 +1625,7 @@ void func_8011338C(ST17_MARK *wp)
     }
     if (++wp->value_E == 41)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1640,7 +1640,7 @@ void func_80113528(ST17_MARK *wp)
 
     if (wp->value_E % 5 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 5;
@@ -1681,7 +1681,7 @@ void func_80113528(ST17_MARK *wp)
     }
     if (++wp->value_E == 41)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1695,7 +1695,7 @@ void func_801136C4(ST17_MARK *wp)
 
     if (wp->value_E % 5 == 0)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 5;
@@ -1723,7 +1723,7 @@ void func_801136C4(ST17_MARK *wp)
     }
     if (++wp->value_E == 51)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1821,7 +1821,7 @@ void func_80113BA4(STAGE_FX *wp)
     wp->frame_E = temp_v0;
     if ((temp_v0 << 0x18) == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -1936,7 +1936,7 @@ void func_80113FBC(STAGE_FX *wp)
     func_80114060(wp);
     if (wp->type_F == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 

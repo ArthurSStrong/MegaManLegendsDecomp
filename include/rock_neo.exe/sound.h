@@ -15,33 +15,33 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 // CD/sound mixer state at 0x800AD140..0x800AD163 (0x24 bytes; 0x800AD164..67 is never accessed,
 // and 0x800AD168 starts an unrelated buffer). Widths and signedness are from the load/store
 // instructions. Most fields are touched through D_800AD1xx labels (see "Unknown" below); only
-// func_8001AEF0, func_8001AA8C and func_8001AC58 (sound.s) address them through Sound_work.
+// sound_volume_update, Sound_seq_play and Sound_sep_play (sound.s) address them through Sound_work.
 typedef struct
 {
     uint8 unk00[2]; // 0x00: never accessed
     uint16 flags;   // 0x02: bit 0 = mono (see Cd_set_volume); bit 15 set by Cd_stop/func_8001B7B4.
-    //       lhu/andi 0x8000 in func_8001AEF0, B644/B6FC/B89C/B7B4/CB7C, Cd_set_volume
-    sint16 unk04; // 0x04: lh (func_8001AEF0, master volume factor); init in func_80019DE0
-    sint16 unk06; // 0x06: lh (func_8001AEF0, serial volume factor); also read as lhu / saved and
-                  //       cleared by func_8001B7B4 (D_800AD146); init in func_80019DE0
-    sint16 unk08; // 0x08: lh (func_8001A274); init 0x40 in func_80019DE0
-    sint16 unk0A; // 0x0A: lh (func_8001AEF0); init 0x64 in func_80019DE0
+    //       lhu/andi 0x8000 in sound_volume_update, B644/B6FC/B89C/B7B4/CB7C, Cd_set_volume
+    sint16 unk04; // 0x04: lh (sound_volume_update, master volume factor); init in Sound_init
+    sint16 unk06; // 0x06: lh (sound_volume_update, serial volume factor); also read as lhu / saved and
+                  //       cleared by func_8001B7B4 (D_800AD146); init in Sound_init
+    sint16 unk08; // 0x08: lh (sound_pan_calc); init 0x40 in Sound_init
+    sint16 unk0A; // 0x0A: lh (sound_volume_update); init 0x64 in Sound_init
     sint16
-        unk0C; // 0x0C: lh; &unk0C passed to func_8001AE6C (read/written as 16-bit) by func_8001AEF0
+        unk0C; // 0x0C: lh; &unk0C passed to sound_fade_step (read/written as 16-bit) by sound_volume_update
     sint16
-        unk0E; // 0x0E: lh; &unk0E passed to func_8001AE6C by func_8001AEF0; also written by func_8001B89C
-    sint16 unk10; // 0x10: lh (func_8001A274); &unk10 passed to func_8001AE6C by func_8001AEF0
+        unk0E; // 0x0E: lh; &unk0E passed to sound_fade_step by sound_volume_update; also written by func_8001B89C
+    sint16 unk10; // 0x10: lh (sound_pan_calc); &unk10 passed to sound_fade_step by sound_volume_update
     sint16
-        unk12; // 0x12: lh; &unk12 passed to func_8001AE6C; set to 0x7F by func_8001AA8C/func_8001AC58
+        unk12; // 0x12: lh; &unk12 passed to sound_fade_step; set to 0x7F by Sound_seq_play/Sound_sep_play
     CdlATV atv;  // 0x14: CD audio volume (val0..val3, bytes), applied with CdMix; Cd_set_volume
-    sint8 unk18; // 0x18: lb/lbu (func_8001AEF0, compared with unk19); init in func_80019DE0
-    sint8 unk19; // 0x19: lb/sb (func_8001AEF0, copy of unk18); cleared in func_80019DE0
-    uint8 unk1A; // 0x1A: lbu/sb (func_8001AEF0 reverb state 0/1); cleared in func_80019DE0
-    uint8 unk1B; // 0x1B: lbu/sb (func_8001AEF0 countdown, set to 0x1E)
+    sint8 unk18; // 0x18: lb/lbu (sound_volume_update, compared with unk19); init in Sound_init
+    sint8 unk19; // 0x19: lb/sb (sound_volume_update, copy of unk18); cleared in Sound_init
+    uint8 unk1A; // 0x1A: lbu/sb (sound_volume_update reverb state 0/1); cleared in Sound_init
+    uint8 unk1B; // 0x1B: lbu/sb (sound_volume_update countdown, set to 0x1E)
     uint8
-        *unk1C; // 0x1C: lw (func_8001AEF0: pointer to 3-byte reverb entries); set by func_80019DE0
+        *unk1C; // 0x1C: lw (sound_volume_update: pointer to 3-byte reverb entries); set by Sound_init
                 //       (&D_800821F8) and func_80019F94
-    uint8 *unk20; // 0x20: lw/sw (func_8001AEF0: last applied unk1C); cleared in func_80019DE0
+    uint8 *unk20; // 0x20: lw/sw (sound_volume_update: last applied unk1C); cleared in Sound_init
 } SOUND_WORK;
 
 extern SOUND_WORK Sound_work; // 0x800AD140
@@ -93,12 +93,12 @@ extern uint16 D_800822B0[]; // table of 5 ends here; no symbol at its base 0x800
 extern uint16 D_800822F2;
 extern uint16 D_800822F4;
 extern SOUND_ENTRY D_80098AD0[];
-extern SOUND_CALL *D_80098938;
-extern uint32 D_80098958;
-extern SOUND_FUNC D_800823A0[];
+extern SOUND_CALL *Sound_call_ptr;
+extern uint32 Sound_flags;
+extern SOUND_FUNC Bgm_set_tbl[];
 
-extern uint16 *D_80082320[];
-extern void func_8001B33C(void);
+extern uint16 *Bgm_tbl[];
+extern void Sound_seq_stop_all(void);
 extern void Sound_fade_start(sint32 arg);
 typedef struct
 {
@@ -132,7 +132,7 @@ extern uint8 D_80098B48[];
 extern sint32 SpuGetKeyStatus(uint32 voice_bit);
 extern sint32 SquareRoot0(sint32 v);
 typedef void (*SOUND_CALL_FUNC)(SOUND_CALL *call);
-extern SOUND_CALL D_800BE4F8[];
+extern SOUND_CALL Sound_call_buf[];
 typedef struct
 {
     uint8 flags;
@@ -142,10 +142,10 @@ typedef struct
 } SOUND_INFO;
 #define GAME_WORK_SLOT_VAB(i) (*(uint16 *)((uint8 *)&Game_work + 0x1B8 + (i) * 8))
 #define SOUND_TONE_BASE       0x8014B820
-extern SOUND_INFO D_8008241C[];
-extern SOUND_CALL_FUNC D_80082C64[];
+extern SOUND_INFO Sound_info_tbl[];
+extern SOUND_CALL_FUNC Sound_play_tbl[];
 extern uint8 D_80098AFD[][8];
-extern void func_8001AEF0(void);
+extern void sound_volume_update(void);
 extern sint32 Sce_flag_test(sint32 flag);
 extern sint16 SsIsEos(sint16 vab_id, sint16 prog);
 extern sint16 D_8008222A[];
@@ -157,7 +157,7 @@ extern sint8 D_80098AFA[][8];
 extern uint8 D_80098AFC[][8];
 extern sint32 D_80082C70[];
 extern sint32 D_80082CA0[];
-extern sint32 func_8001A63C(sint32 n);
+extern sint32 sound_pitch_calc(sint32 n);
 extern void func_80070114(sint32 arg);
 extern void func_8007013C(sint32 arg0, sint32 arg1);
 extern void SsUtKeyOffV(sint16 voice);
@@ -180,7 +180,7 @@ typedef struct
     uint8 reserved3e[2];
 } SOUND_VOICE_ATTR;
 
-// Local view of a VAB tone entry used by func_8001A744
+// Local view of a VAB tone entry used by sound_se_key_on
 typedef struct
 {
     uint8 reserved00[2];
@@ -197,8 +197,8 @@ typedef struct
     uint8 reserved18[8];
 } SOUND_TONE; // 0x20 bytes
 
-extern sint32 func_8001A834(SOUND_VOICE *voice, SOUND_POS *pos);
-extern void func_8001A274(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint16 dist);
+extern sint32 sound_se_voice_check(SOUND_VOICE *voice, SOUND_POS *pos);
+extern void sound_pan_calc(SOUND_POS *pos, uint32 pan, uint16 *left, uint16 *right, sint16 dist);
 extern void SpuSetKeyOnWithAttr(SOUND_VOICE_ATTR *attr);
 extern sint32 SsUtGetVagAddr(sint16 vab, sint16 vag);
 
@@ -232,7 +232,7 @@ typedef struct
 extern sint32 D_80098AD4[][2];
 extern sint16 SsSepOpen(sint32 addr, sint16 vab, uint8 seq_num);
 extern void SsSepPlay(sint16 seq, uint8 sep, sint32 mode, sint32 loop);
-extern sint32 func_8001A238(sint32 id);
+extern sint32 sound_seq_find(sint32 id);
 extern sint16 SsSeqOpen(sint32 addr, sint16 vab);
 extern void SsSeqPlay(sint16 seq, sint32 mode, sint32 loop);
 extern void SsSeqClose(sint16 seq);
@@ -242,7 +242,7 @@ extern sint32 ccos(sint32 angle);
 extern sint32 Sce_point_angle(sint16 x0, sint16 z0, sint16 x1, sint16 z1);
 #define GAME_WORK_FLAG58 (*(sint8 *)((uint8 *)&Game_work + 0x58))
 
-extern sint32 func_8001AE6C(sint32 flags, uint16 *p);
+extern sint32 sound_fade_step(sint32 flags, uint16 *p);
 extern void SsSetMVol(sint16 voll, sint16 volr);
 extern void func_80075AA4(void);
 extern void func_80075AB8(void);

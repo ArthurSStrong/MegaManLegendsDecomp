@@ -110,7 +110,7 @@ void func_800179FC(void)
 // pointer arithmetic: combine folds those address pseudos away but leaves their reference
 // counts, so each gets an unused 8-byte stack slot (retail's 24-byte leaf frame), and the
 // changed RTL gives retail's index/mask register order.
-void func_80017B24(void)
+void Fade_draw(void)
 {
     if (CODE178_FADE_WORK.enabled != 0)
     {
@@ -124,12 +124,12 @@ void func_80017B24(void)
 // Each case is written out in full (retail's shared tails come from cross-jumping), and the
 // fade fields go through CODE178_FADE_WORK so the table reads stay after the stores. The tile
 // loop is written like func_8001326C's (main.c), which keeps the pointer unbiased.
-void func_80017C30(sint32 arg)
+void Fade_start(sint32 arg)
 {
     uint32 i;
     CODE178_TILE *tile;
 
-    if (D_80098A72 == 0)
+    if (Fade_busy == 0)
     {
         switch (arg)
         {
@@ -163,7 +163,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_1           = 0;
                 CODE178_FADE_WORK.routine_2           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             case 19:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -171,7 +171,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             case 20:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -179,7 +179,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             case 21:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -187,7 +187,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             case 22:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -195,7 +195,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             case 23:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -203,7 +203,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
             default:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -211,7 +211,7 @@ void func_80017C30(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                D_80098A72                            = -1;
+                Fade_busy                            = -1;
                 break;
         }
         for (i = 0; i < 2; i++)
@@ -226,21 +226,21 @@ void func_80017C30(sint32 arg)
             SetDrawMode(&D_80098A10[i], 0, 0,
                         GetTPage(2, 2 - (CODE178_FADE_WORK.routine_0 & 1), 0, 0), NULL);
         }
-        func_80012E10(2, func_80017E94);
+        Thread_open(2, fade_thread);
     }
 }
 
-void func_80017E94(void)
+void fade_thread(void)
 {
-    D_80082140[D_80098A68]();
+    Fade_task_tbl[Fade_work]();
 }
 
-void func_80017ED0(void)
+void Fade_color_task(void)
 {
     CODE178_FADE *wp;
 
-    wp = (CODE178_FADE *)&D_80098A68;
-    if (D_80098A72 > 0)
+    wp = (CODE178_FADE *)&Fade_work;
+    if (Fade_busy > 0)
     {
         D_80098A69 = 0;
         D_80098A76 = 255;
@@ -280,7 +280,7 @@ void func_80017ED0(void)
                         wp->enabled = 0;
                     }
                     wp->terminate = 0;
-                    func_80012ECC();
+                    Thread_exit();
                 }
                 else
                 {
@@ -292,7 +292,7 @@ void func_80017ED0(void)
     }
 }
 
-void func_80018050(void)
+void Fade_effect_task(void)
 {
     while (1)
     {
@@ -400,8 +400,8 @@ void func_800182D4(void)
             break;
         case 1:
             D_80098810 = 0;
-            D_80098A72 = 0;
-            func_80012ECC();
+            Fade_busy = 0;
+            Thread_exit();
             break;
     }
 }
@@ -440,8 +440,8 @@ void func_8001840C(void)
             break;
         case 1:
             D_80098810 = 0;
-            D_80098A72 = 0;
-            func_80012ECC();
+            Fade_busy = 0;
+            Thread_exit();
             break;
     }
 }
@@ -499,7 +499,7 @@ void func_80018534(void)
     if (++D_80098A6C >= 64)
     {
         D_80098A70 = 1;
-        D_80098A68 = 0;
+        Fade_work = 0;
         D_80098A6B = 0;
         D_80098A76 = 255;
         D_80098A6A++;

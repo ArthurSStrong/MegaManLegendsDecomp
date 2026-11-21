@@ -350,3 +350,9 @@ stcom36_E2_0000 = 0x80138038;
 stcom37_func_0000 = 0x80116CD0; // type:func
 stcom37_func_0020 = 0x80116CF0; // type:func
 stcom37_func_0040 = 0x80116D10; // type:func
+
+// Capcom names (tcrf: EM09_49.C, em1c)
+StXX_em1c_move = 0x801137AC; // type:func
+em1c_move_erase = 0x801145D0; // type:func
+em1c_move00_tbl = 0x801313DC;
+Mixer_key = 0x80138094;

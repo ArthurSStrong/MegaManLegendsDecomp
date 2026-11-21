@@ -5,7 +5,7 @@
 #include "stage_common/stage.h"
 #include "stage_common/stcom16.h"
 
-// A scratchpad halfword func_80111814 sets before func_8003346C.
+// A scratchpad halfword func_80111814 sets before EM_World_Pos_Calc.
 #define ST13_SP_13C (*(uint16 *)0x1F80013C)
 
 // From r3_st10 (ST10_ACTOR_CTL), itself from r3_st04.
@@ -120,7 +120,7 @@ typedef struct
     uint8 value_A;      // A: or'd into the hit box's kind bits
     uint8 value_B;      // B
     uint8 reservedC[3]; // C
-    uint8 track_F;      // F: func_80036478's argument
+    uint8 track_F;      // F: Search_Player_Init's argument
 } ST13_KIND;
 
 // A map position (x, z).
@@ -149,7 +149,7 @@ typedef struct
     sint16 wobble_1A;        // 42
 } ST13_SPARK_CTL;
 
-// A 0x48-byte effect slot (func_80031618) of a spark with a hit box (func_80104B68, func_80104C9C).
+// A 0x48-byte effect slot (Open_EFFECT_WORK) of a spark with a hit box (func_80104B68, func_80104C9C).
 typedef struct
 {
     uint8 flags_0;       // 00
@@ -211,7 +211,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 value_C;                          // 0C: nonzero: it watches the player (func_8003648C)
+    sint8 value_C;                          // 0C: nonzero: it watches the player (Search_Player)
     sint8 value_D;                          // 0D
     uint8 reserved0E[6];                    // 0E
     STCOM_SVECTOR position;                 // 14
@@ -654,9 +654,9 @@ void func_80107DA0(STAGE_OBJ *wp);
 void func_8010D3E8(STAGE_OBJ *wp);
 void func_8010E048(STAGE_OBJ *wp);
 void func_8003354C(void *wp);
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 func_80049448(void *wp);
-sint32 func_8003648C(void *track, void *wp);
+sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_80100DDC(ST13_STCOM27_WORK *wp);
 void func_80101B28(STAGE_OBJ *wp, sint32 anim);
@@ -666,13 +666,13 @@ void Sce_flag_off(sint32 flag);
 void func_801004D8(void);
 void func_80100FA4(ST13_STCOM27_WORK *wp);
 void func_8010103C(ST13_STCOM27_WORK *wp);
-sint32 func_80031DCC(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);
 void func_8010CAD4(STCOM16_WORK *wp);
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_8010EF4C(STCOM16_WORK *wp);
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 void func_8010D88C(STCOM16_WORK *wp);
 void func_8010D718(STCOM16_WORK *wp);
 void func_8010D928(STCOM16_WORK *wp);

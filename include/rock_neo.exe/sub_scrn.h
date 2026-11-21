@@ -204,12 +204,12 @@ void func_80063BA8(void);
 void func_80063EF0(void);
 void func_800665E8(void);
 void func_8001B314(void);
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
 void Sce_flag_off(uint32 flag);
 void Moji_item_set(sint32 value);
-void func_80013420(void);
-void func_80012F78(void (*entry)(void));
+void Title_task(void);
+void Thread_change(void (*entry)(void));
 void Pl00_shot_enable_off(SUB_PLAYER *wp);
 void Pl00_shot_enable_on(SUB_PLAYER *wp);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
@@ -231,12 +231,12 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 void Sound_call(sint32 sound, ...);
 #endif
 void func_8003B140(void);
-void func_80017C30(sint32 arg);
+void Fade_start(sint32 arg);
 void Sound_fade_start(sint32 arg);
 void Sound_fade_wait(void);
-void func_8001B33C(void);
+void Sound_seq_stop_all(void);
 void func_8001B314(void);
-void func_80019C20(void);
+void Sound_bgm_change_check(void);
 #ifdef __wasm32__
 sint32 Sce_stage_load(void);
 #else
@@ -247,7 +247,7 @@ sint32 Sce_room_load(void);
 #else
 void Sce_room_load(void);
 #endif
-extern uint32 D_80098958;
+extern uint32 Sound_flags;
 void Sub_screen_gauge_set(sint32 x, sint32 y, sint32 width, sint32 row);
 void Sub_screen_status_calc(SUB_WORK *wp, sint32 slot);
 extern uint8 D_8008D7E8[][5][4];
@@ -261,7 +261,7 @@ void func_8005EBA4(sint32 arg);
 void func_8005EBB4(sint32 arg);
 #define SUB_PLAYER_BYTE_4F4(slot, i) (*((sint8 *)&Player_work + 0x4F4 + (slot) * 8 + (i)))
 void Sub_screen_gauge_set2(sint32 x, sint32 y, sint32 width, sint32 flag);
-sint32 func_80037604(SUB_PLAYER *pl, sint32 slot);
+sint32 Player_weapon_bullet_calc(SUB_PLAYER *pl, sint32 slot);
 #define SUB_PLAYER_HALF_4FA(i) (*(sint16 *)((uint8 *)&Player_work + 0x4FA + (i) * 8))
 void Sub_screen_basic_param_set(void);
 SUB_PRIM *Sub_screen_status_param_set_sub(SUB_PRIM *prim, sint32 x, sint32 value, sint32 flags);

@@ -31,7 +31,7 @@ void stcom05_func_003C(STCOM05_WORK *wp)
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x104, 0x200, 1);
+        Model_Shadow_Trans(wp, 0x104, 0x200, 1);
     }
 }
 
@@ -49,7 +49,7 @@ void stcom05_func_0184(STCOM05_WORK *wp)
     wp->value_70          = 0;
     wp->value_74          = 0;
     wp->accel_4C          = 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->ctl.index_20 = 1;
     wp->ctl.value_1E = 0x140;
     RotMatrixYXZ(&wp->rotation, &wp->matrix);
@@ -130,7 +130,7 @@ void stcom05_func_0484(STCOM05_WORK *wp)
     }
     if (wp->routine_1 == 0)
     {
-        func_80017C30(10);
+        Fade_start(10);
         wp->routine_1++;
     }
     else if (wp->routine_1 == 1)
@@ -149,7 +149,7 @@ void stcom05_func_0484(STCOM05_WORK *wp)
         Game_work.value_7A = 1;
         wp->routine_1++;
     }
-    else if (D_800C356C == 2 && D_80098A72 == 0)
+    else if (D_800C356C == 2 && Fade_busy == 0)
     {
         D_800C356C++;
         func_80042314(&Player_work);
@@ -158,10 +158,10 @@ void stcom05_func_0484(STCOM05_WORK *wp)
 
 void stcom05_func_05B8(STCOM05_WORK *wp)
 {
-    wp->rotation.y  = func_80031198(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
+    wp->rotation.y  = Calc_degree2(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
     wp->routine_1   = 1;
     wp->ctl.dist_14 = wp->ctl.dist_10 =
-        func_800302E4(&stcom05_D_003C[wp->ctl.index_20 - 1], &stcom05_D_003C[wp->ctl.index_20]);
+        Calc_distance(&stcom05_D_003C[wp->ctl.index_20 - 1], &stcom05_D_003C[wp->ctl.index_20]);
 }
 
 void stcom05_func_0630(STCOM05_WORK *wp)
@@ -172,10 +172,10 @@ void stcom05_func_0630(STCOM05_WORK *wp)
     {
         wp->velocity.v.x += wp->accel_4C;
     }
-    func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
     stcom05_func_0E64(wp);
     wp->ctl.dist_14 = wp->ctl.dist_10;
-    wp->ctl.dist_10 = func_800302E4(&wp->position, &stcom05_D_003C[wp->ctl.index_20]);
+    wp->ctl.dist_10 = Calc_distance(&wp->position, &stcom05_D_003C[wp->ctl.index_20]);
     if (wp->ctl.dist_14 < wp->ctl.dist_10)
     {
         wp->ctl.index_20++;
@@ -189,7 +189,7 @@ void stcom05_func_0630(STCOM05_WORK *wp)
         {
             wp->routine_1 = 2;
             wp->ctl.rot_goal_18 =
-                func_80031198(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
+                Calc_degree2(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
             diff                = wp->rotation.y - wp->ctl.rot_goal_18;
             wp->ctl.rot_diff_1A = STCOM_ABS(diff) & 0xFFF;
             if (wp->ctl.rot_diff_1A >= 0x800)
@@ -259,9 +259,9 @@ void stcom05_func_0790(STCOM05_WORK *wp)
     {
         wp->velocity.v.x += wp->accel_4C;
     }
-    func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
+    Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
     stcom05_func_0E64(wp);
-    ctl->rot_goal_18 = func_80031198(&wp->position, &stcom05_D_003C[ctl->index_20]) & 0xFFF;
+    ctl->rot_goal_18 = Calc_degree2(&wp->position, &stcom05_D_003C[ctl->index_20]) & 0xFFF;
 }
 
 void stcom05_func_0938(STCOM05_WORK *wp)
@@ -406,7 +406,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                 }
                 wp->routine_2++;
                 MojiTaskExec2(0, 0x18);
-                ctl->dist_14 = ctl->dist_10 = func_800302E4(&stcom05_D_003C[ctl->index_20 - 1],
+                ctl->dist_14 = ctl->dist_10 = Calc_distance(&stcom05_D_003C[ctl->index_20 - 1],
                                                             &stcom05_D_003C[ctl->index_20 + 1]);
                 wp->velocity.v.x            = 0;
             }
@@ -435,7 +435,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
         case 13:
             if (wp->velocity.v.x > 0)
             {
-                func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
+                Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
                 wp->velocity.v.x -= wp->accel_4C;
             }
             else
@@ -476,11 +476,11 @@ void stcom05_func_0D44(STCOM05_WORK *wp)
     func_8002FFC4(&wp->position, &wp->position_fixed, wp->rotation.y + 0x800, wp->velocity.v.x, 0,
                   0);
     stcom05_func_0E64(wp);
-    ctl->dist_10 = func_800302E4(&wp->position, &stcom05_D_0044[ctl->index_20]);
+    ctl->dist_10 = Calc_distance(&wp->position, &stcom05_D_0044[ctl->index_20]);
     if (ctl->dist_10 < 0x25D)
     {
         ctl->dist_14 = ctl->dist_10 =
-            func_800302E4(&wp->position, &stcom05_D_0044[ctl->index_20 - 1]);
+            Calc_distance(&wp->position, &stcom05_D_0044[ctl->index_20 - 1]);
         wp->routine_1    = 3;
         ctl->timer_21    = 0x3C;
         ctl->value_1E    = 0x400;
@@ -543,7 +543,7 @@ void stcom05_func_0F78(STCOM05_WORK *wp)
     }
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x104, 0x200, 1);
+        Model_Shadow_Trans(wp, 0x104, 0x200, 1);
     }
 }
 
@@ -558,7 +558,7 @@ void stcom05_func_10C0(STCOM05_WORK *wp)
     wp->value_70          = 0;
     wp->value_74          = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->data_78 = stcom05_D_00B0;
     wp->data_10 = stcom05_D_00BC;
     if (wp->param_D != 0)

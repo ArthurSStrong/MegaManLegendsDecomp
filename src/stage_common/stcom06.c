@@ -26,17 +26,17 @@ void stcom06_func_0000(STCOM06_WORK *wp)
     {
         if (wp->routine_2 != 0)
         {
-            func_800341BC(&pos, 0x20, 0, 0x4000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
+            Set_Atari(&pos, 0x20, 0, 0x4000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
                           0x80);
         }
         else
         {
-            func_800341BC(&pos, 0x20, 0, 0x8000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
+            Set_Atari(&pos, 0x20, 0, 0x8000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
                           0x80);
         }
         func_80051BAC(wp);
     }
-    func_8002C8CC(wp, 0x3C, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
 }
 
 void stcom06_func_0128(STCOM06_WORK *wp)
@@ -57,11 +57,11 @@ void stcom06_func_0128(STCOM06_WORK *wp)
     wp->sprite.hit_14             = 0;
     wp->sprite.mode_0             = 0x3D48000E;
     wp->sprite.color_4.word       = 0x2C808080;
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     wp->position_fixed_prev.x = wp->position_fixed.x - (wp->velocity.v.x << 10);
     wp->position_fixed_prev.y = wp->position_fixed.y;
     wp->position_fixed_prev.z = wp->position_fixed.z - (wp->velocity.v.z << 10);
-    func_80030150(&wp->position_fixed_prev, &wp->position_prev);
+    Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
     wp->value_78 = 0;
     if (wp->type_3 & 0x80)
     {
@@ -109,7 +109,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
         if (hit & 0x1C000000)
         {
             wp->sprite.hit_14 = 0;
-            effect            = func_80031618();
+            effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 stcom06_func_0E10(wp, effect);
@@ -122,7 +122,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
     else if (hit & 0x1A000000)
     {
         wp->sprite.hit_14 = 0;
-        effect            = func_80031618();
+        effect            = Open_EFFECT_WORK();
         if (effect != NULL)
         {
             stcom06_func_0E10(wp, effect);
@@ -137,7 +137,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
         if (wp->value_7C != 0)
         {
             wp->sprite.hit_14 = 0;
-            effect            = func_80031618();
+            effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 stcom06_func_0E10(wp, effect);
@@ -165,8 +165,8 @@ void stcom06_func_0320(STCOM06_WORK *wp)
         wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
     }
     stcom06_func_0D1C(wp);
-    func_80030150(&wp->position_fixed_prev, &wp->position_prev);
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     if (stcom06_func_0A80(wp) != 0)
     {
         wp->routine_0 = 3;
@@ -208,7 +208,7 @@ void stcom06_func_0594(STCOM06_WORK *wp)
         wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
     }
     wp->sprite.value_10 = 0x20;
-    effect              = func_80031618();
+    effect              = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         stcom06_func_0E10(wp, effect);
@@ -242,7 +242,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
         if (hit & 0x1C000000)
         {
             wp->sprite.hit_14 = 0;
-            effect            = func_80031618();
+            effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 stcom06_func_0E10(wp, effect);
@@ -255,7 +255,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
     else if (hit & 0x1A000000)
     {
         wp->sprite.hit_14 = 0;
-        effect            = func_80031618();
+        effect            = Open_EFFECT_WORK();
         if (effect != NULL)
         {
             stcom06_func_0E10(wp, effect);
@@ -281,8 +281,8 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
     wp->position_fixed_prev = wp->position_fixed;
     wp->position_prev       = wp->position;
     stcom06_func_0D1C(wp);
-    func_80030150(&wp->position_fixed_prev, &wp->position_prev);
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     stcom06_func_0A80(wp);
     wp->sprite.pos_8[0] = wp->position.x;
     wp->sprite.pos_8[1] = wp->position.y - 0x10;
@@ -309,7 +309,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
         wp->timer_D++;
         return;
     }
-    effect = func_80031618();
+    effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
         stcom06_func_0E10(wp, effect);
@@ -326,7 +326,7 @@ void stcom06_func_0934(STCOM06_WORK *wp)
     wp->sprite.color_4.word = 0x2C808080;
     wp->value_7C            = 0;
     wp->value_76            = 0;
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     wp->sprite.pos_8[0]     = wp->position.x;
     wp->sprite.pos_8[1]     = wp->position.y - 0x10;
     wp->sprite.pos_8[2]     = wp->position.z;
@@ -376,9 +376,9 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
             }
             if (Game_work.value_50 == 0xB && wp->position.y == -1)
             {
-                func_80031930(wp);
+                Close_PL_SHL_WORK(wp);
                 Sound_call2(0x102, &wp->position);
-                effect = func_80031618();
+                effect = Open_EFFECT_WORK();
                 if (effect != NULL)
                 {
                     effect->sprite = wp->sprite;
@@ -388,7 +388,7 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
             else
             {
                 Sound_call2(0xB3, &wp->position);
-                effect = func_80031618();
+                effect = Open_EFFECT_WORK();
                 if (effect != NULL)
                 {
                     effect->flags_0   = 1;
@@ -404,7 +404,7 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
             {
                 Sound_call2(0xB3, &wp->position);
             }
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 effect->flags_0   = 1;

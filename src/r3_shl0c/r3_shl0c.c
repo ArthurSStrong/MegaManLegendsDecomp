@@ -45,7 +45,7 @@ void func_800D8840(SHL_WORK *wp)
     wp->old_fpos                     = wp->fpos;
     wp->old_pos                      = wp->pos;
     wp->draw.mdl.color_b4            = 0x02808080;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     func_800D8D74(wp);
     Sound_call2(0x134, &wp->pos);
     wp->routine_0++;
@@ -77,7 +77,7 @@ void func_800D8A88(SHL_WORK *wp)
     {
     end:
         Sound_call2(0x135, &wp->pos);
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     if (Player_work.timer_55a != 0x7FFF)
@@ -125,8 +125,8 @@ void func_800D8D74(SHL_WORK *wp)
     p.vx = (wp->fpos.w.x + (wp->vel.vx << 10)) >> 16;
     p.vy = (wp->fpos.w.y + (wp->vel.vy << 10)) >> 16;
     p.vz = (wp->fpos.w.z + (wp->vel.vz << 10)) >> 16;
-    func_800341BC(&p, D_800D90AC[wp->value_f], 0, 0, wp->value_1, &wp->col_c4, 0x2000001, 0, 0x80);
-    func_800341BC(&p, D_800D90AC[wp->value_f], 0, 0x4000, wp->value_1, &wp->col_bc, 0x28000001, 0,
+    Set_Atari(&p, D_800D90AC[wp->value_f], 0, 0, wp->value_1, &wp->col_c4, 0x2000001, 0, 0x80);
+    Set_Atari(&p, D_800D90AC[wp->value_f], 0, 0x4000, wp->value_1, &wp->col_bc, 0x28000001, 0,
                   0x80);
     wp->col_bc = 0;
     wp->col_c0 = 0;

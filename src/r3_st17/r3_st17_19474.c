@@ -26,13 +26,13 @@ void func_80119474(STAGE_ROOM *wp)
             if (wp->frame_10 == 80)
             {
                 wp->reserved09[1] |= 0x80;
-                func_80017C30(0xE);
+                Fade_start(0xE);
                 wp->routine_5 = 2;
                 wp->routine_6++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Obj_work_flag_change(4, 0x80);
                 wp->child_28 = NULL;
@@ -60,7 +60,7 @@ void func_80119474(STAGE_ROOM *wp)
             if (Sce_cd_reading() != 0)
             {
                 wp->routine_6 = 0;
-                func_80017C30(7);
+                Fade_start(7);
                 Sce_script_next();
             }
             break;
@@ -76,7 +76,7 @@ void func_8011961C(STAGE_ROOM *wp)
             wp->routine_6++;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_5 = 3;
                 wp->reserved09[1] &= 0x7F;
@@ -145,7 +145,7 @@ void func_80119778(STAGE_ROOM *wp)
     if (wp->frame_10 == 0xC8)
     {
         wp->reserved09[1] |= 0x80;
-        func_80017C30(0xA);
+        Fade_start(0xA);
     }
 }
 
@@ -349,12 +349,12 @@ void func_80119EB8(STAGE_ROOM *wp)
             if (wp->frame_10 == 170)
             {
                 D_80122B98 |= 0x80;
-                func_80017C30(0xF);
+                Fade_start(0xF);
                 wp->routine_6++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8003187C(wp->child_24);
                 wp->reserved09[1] = 30;
@@ -370,7 +370,7 @@ void func_80119EB8(STAGE_ROOM *wp)
             {
                 Sce_slot_open(&D_80122740[0]);
                 Sce_slot_open(&D_80122740[1]);
-                func_80017C30(7);
+                Fade_start(7);
                 wp->routine_6 = 0;
                 Sce_script_next();
             }
@@ -408,7 +408,7 @@ void func_8011A030(STAGE_ROOM *wp)
             STAGE_PL_BYTE(0x170) = 0;
             func_801198BC(0);
             func_801198F4(0);
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0 = 1;
@@ -416,7 +416,7 @@ void func_8011A030(STAGE_ROOM *wp)
             }
             for (i = 0; i < 9; i++)
             {
-                fx = func_80031618();
+                fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
                     fx->flags_0 = 1;
@@ -427,7 +427,7 @@ void func_8011A030(STAGE_ROOM *wp)
             wp->routine_6++;
             break;
         case 1:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 D_80122B98 &= ~0x80;
                 wp->routine_6++;
@@ -492,12 +492,12 @@ void func_8011A2FC(STAGE_ROOM *wp)
         case 1:
             if (func_80042238(pl) != 0)
             {
-                func_80017C30(1);
+                Fade_start(1);
                 wp->routine_5++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 D_80122B98 = 0;
                 func_8001D58C(0x20010005);

@@ -94,7 +94,7 @@ extern uint8 stcom13_D_0040[];        // joints to drop from when it dies
 
 // ROCK_NEO.EXE.
 extern STCOM13_KIND **D_80098844;
-void func_80036478(void *track, uint8 arg1, uint32 arg2);
+void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
@@ -102,7 +102,7 @@ void stcom13_func_01D8(STCOM13_WORK *wp);
 sint32 stcom13_func_0DA8(STCOM13_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
-sint16 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-sint16 func_80048E6C(void *wp);
+sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint16 Scr_height_check(void *wp);
 
 #endif // STCOM13_H

@@ -10,7 +10,7 @@
 typedef struct
 {
     STCOM_SVECTOR origin_0; // 00: where the shot started (func_80114988)
-    uint32 hit_8;           // 08: filled by func_800341BC
+    uint32 hit_8;           // 08: filled by Set_Atari
     sint32 value_C;         // 0C
     uint32 mask_10;         // 10
     uint32 lit_14;          // 14
@@ -206,7 +206,7 @@ typedef struct
     sint32 value_458;                       // 458
     sint32 value_45C;                       // 45C
     uint8 reserved460[0x8];                 // 460
-    uint8 track_468[0x10];                  // 468: func_80036478
+    uint8 track_468[0x10];                  // 468: Search_Player_Init
     uint8 reserved478[0x8];                 // 478
     sint32 value_480;                       // 480
     sint32 value_484;                       // 484
@@ -702,7 +702,7 @@ extern uint8 D_8012540C[];
 extern uint8 D_80125440[];
 extern uint8 D_80125458[];
 extern uint8 D_80125470[];
-// An animation and its argument for func_800322A8, by routine (func_80114798).
+// An animation and its argument for EM_Char_Set, by routine (func_80114798).
 typedef struct
 {
     uint8 anim_0;    // 0
@@ -912,7 +912,7 @@ typedef struct
     uint16 kind_334;                        // 334: or'd into the hit's kind bits
     uint8 reserved336[2];                   // 336
     STCOM_SVECTOR hit_pos_338;              // 338
-    uint32 hit_340;                         // 340: filled by func_800341BC
+    uint32 hit_340;                         // 340: filled by Set_Atari
     uint8 reserved344[4];                   // 344
     ST06_ACTOR_CTL ctl;                     // 348
     ST06_ACTOR_CTL ctl2;                    // 368
@@ -989,7 +989,7 @@ extern ST06_ACTOR_FUNC D_80125184[];
 void func_8010D1F8(ST06_ACTOR *wp);
 void func_8010DD0C(STAGE_OBJ *wp);
 
-sint32 func_80031BEC(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
+sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 extern STCOM_FIXED_VECTOR D_8012BA60;
 sint32 func_80112A60(ST06_ACTOR *wp);
 
@@ -1037,7 +1037,7 @@ void func_80113B34(ST06_ACTOR *wp);
 extern STCOM_FIXED_VECTOR D_8012BA40;
 sint32 func_8010F024(ST06_ACTOR *wp);
 
-sint32 func_80048E6C(void *wp);
+sint32 Scr_height_check(void *wp);
 
 void func_801134B8(ST06_ACTOR *wp);
 
@@ -1193,10 +1193,10 @@ typedef struct
     uint16 timer_C;                    // 44C
     uint16 timer_E;                    // 44E
     STCOM_SVECTOR hit_pos_10;          // 450
-    uint32 hit_18;                     // 458: filled by func_800341BC
+    uint32 hit_18;                     // 458: filled by Set_Atari
     sint32 value_1C;                   // 45C
     uint8 reserved20[8];               // 460
-    uint8 track_28[0x10];              // 468: func_80036478
+    uint8 track_28[0x10];              // 468: Search_Player_Init
     STCOM_SVECTOR_W probe_38;          // 478: a point ahead (func_80118708), or a rotation
     STCOM_FIXED_VECTOR probe_fixed_40; // 480: or a scale (func_801189B4)
     STCOM_SVECTOR target_50;           // 490: the point it turns to
@@ -1506,7 +1506,7 @@ typedef struct
     uint8 reserved6[2]; // 06
     sint32 life_8;      // 08
     sint32 life_prev_C; // 0C
-    sint32 hit_10;      // 10: from func_800341BC
+    sint32 hit_10;      // 10: from Set_Atari
 } ST06_BOAT_CTL;
 
 // A 0x10C-byte slot: the boat that bobs on the waves (func_8011E75C).
@@ -1644,9 +1644,9 @@ sint32 func_80118708(ST06_CRAB *wp);
 
 sint32 func_801187D4(ST06_CRAB *wp);
 
-sint32 func_80030374(sint16 *a, sint16 *b);
+sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 
-sint16 func_80031CA4(STCOM_SVECTOR *a, STCOM_SVECTOR *b, sint32 c, sint32 d);
+sint16 Muku_elevation(STCOM_SVECTOR *a, STCOM_SVECTOR *b, sint32 c, sint32 d);
 
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);
 

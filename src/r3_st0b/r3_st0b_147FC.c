@@ -28,7 +28,7 @@ void func_80114838(ST0B_SPLASH *wp)
                 wp->routine_0 = 4;
                 break;
         }
-        func_8002F9C4(wp, (uint8 *)&arg);
+        Model_work_init(wp, (uint8 *)&arg);
         wp->matrix.s.w[0]    = 0x1000;
         wp->matrix.s.w[1]    = 0;
         wp->matrix.s.w[2]    = 0x1000;
@@ -48,7 +48,7 @@ void func_80114838(ST0B_SPLASH *wp)
         wp->matrix.s.size[5] = 0;
         Sound_call2(0x14F, &wp->pos_38);
     }
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.s.w[0]    = 0x1000;
     wp->matrix.s.w[2]    = 0x1000;
     wp->matrix.s.w[4]    = 0x1000;
@@ -87,7 +87,7 @@ void func_80114A14(ST0B_SPLASH *wp)
     }
     if (size[5] < 0 || size[0] < 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     wp->matrix.s.w[0]    = 0x1000;
@@ -102,7 +102,7 @@ void func_80114A14(ST0B_SPLASH *wp)
 
 void func_80114B24(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 // Retail keeps the angle (routine_1 << 7) in a1 and copies it to a0 in a delay slot; GCC builds it
@@ -181,7 +181,7 @@ void func_80114C94(ST0B_SPLASH *wp)
         case 3:
             if (frame >= 0x20)
             {
-                func_80031988(wp);
+                Close_EFFECT_WORK(wp);
                 return;
             }
             wp->matrix.m.m[0][0] = wp->matrix.m.m[2][2] = 0x300;
@@ -201,7 +201,7 @@ void func_80114DAC(ST0B_RING *wp)
     level = --wp->routine_2;
     if (level == 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
         return;
     }
     c = level * 8;
@@ -216,7 +216,7 @@ void func_80114DAC(ST0B_RING *wp)
 
 void func_80114E3C(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80114E5C(ST0B_DRIFT *wp)
@@ -283,7 +283,7 @@ void func_80114FB4(ST0B_DRIFT *wp)
 
 void func_80115048(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80115068(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos)
@@ -298,7 +298,7 @@ void func_80115068(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *po
     step  = 0x1000 / count;
     for (i = 0; i < count; i++)
     {
-        fx = (ST0B_GLOW *)func_80031618();
+        fx = (ST0B_GLOW *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0   = 1;
@@ -346,7 +346,7 @@ void func_80115270(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *po
     step  = (end - angle) / count;
     for (i = 0; i < count; i++)
     {
-        fx = (ST0B_GLOW *)func_80031618();
+        fx = (ST0B_GLOW *)Open_EFFECT_WORK();
         if (fx != NULL)
         {
             fx->flags_0   = 1;
@@ -470,7 +470,7 @@ void func_80115570(ST0B_FLAMES *wp)
 
 void func_80115760(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 // len is a sint16: as a sint32 it swaps s1/s2 with frame's extension. The position words are
@@ -729,7 +729,7 @@ void func_80116228(STAGE_FX *wp)
         i = ++wp->routine_2;
         if (i >= 6)
         {
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             return;
         }
         wp->routine_3 = D_8011BE84[i];

@@ -11,7 +11,7 @@ void func_801132F8(ST03_MODEL *wp)
     STCOM_FIXED_VECTOR scale;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     STAGE_MATRIX_IDENTITY(wp->matrix.w);
     scale.x = scale.y = scale.z = 0x200;
     ScaleMatrix(&wp->matrix.m, &scale);

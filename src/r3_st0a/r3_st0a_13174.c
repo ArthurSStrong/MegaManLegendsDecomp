@@ -90,7 +90,7 @@ void func_801131C4(ST0A_SHL *wp)
     wp->old_pos            = wp->pos;
     wp->color_b4           = 0x02808080;
     wp->kind_2             = 0x82;
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
     wp->timer_b = func_80037634(&Player_work, 2);
     wp->routine_0++;
@@ -109,7 +109,7 @@ void func_801135CC(ST0A_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         func_80113888(wp, 1);
         return;
@@ -133,7 +133,7 @@ void func_801135CC(ST0A_SHOT *wp)
         }
         else
         {
-            func_80031930(wp);
+            Close_PL_SHL_WORK(wp);
         }
         return;
     }
@@ -174,7 +174,7 @@ void func_80113888(ST0A_SHOT *wp, sint32 arg)
 {
     ST0A_SHOT_FX *fx;
 
-    fx = (ST0A_SHOT_FX *)func_80031618();
+    fx = (ST0A_SHOT_FX *)Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 1;
@@ -232,7 +232,7 @@ void func_80113A14(STAGE_SPARK *wp)
 
 void func_80113A48(STAGE_OBJ *wp)
 {
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }
 
 void func_80113A68(STAGE_OBJ *wp)
@@ -247,7 +247,7 @@ void func_80113AA4(ST0A_SPARK *wp)
 
     if (++wp->routine_3 == 8)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;
@@ -287,7 +287,7 @@ void func_80113BEC(STAGE_OBJ *wp)
         func_80113AA4(wp);
         return;
     }
-    func_80031988((STCOM_EFFECT *)wp);
+    Close_EFFECT_WORK((STCOM_EFFECT *)wp);
 }
 
 ST0A_SPARK *func_80113C4C(STAGE_XYZ *pos, sint32 width, sint32 growth, sint16 count, sint32 rise,
@@ -296,7 +296,7 @@ ST0A_SPARK *func_80113C4C(STAGE_XYZ *pos, sint32 width, sint32 growth, sint16 co
     ST0A_SPARK *ep;
     sint32 i;
 
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;

@@ -7,7 +7,7 @@ void func_801055A4(ST08_ACTOR *wp)
     STAGE_OBJ50 *ep;
 
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->position.z        = 0x328;
     wp->position.x        = (wp->variant_3 ^ 1) << 8;
     hit                   = &wp->hit;
@@ -41,7 +41,7 @@ void func_801055A4(ST08_ACTOR *wp)
     wp->position_fixed.x = wp->position_fixed_prev.x = wp->position.x << 16;
     wp->position_fixed.z = wp->position_fixed_prev.z = wp->position.z << 16;
     wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     ep = (STAGE_OBJ50 *)func_80031734();
     if (ep != NULL)
     {
@@ -144,10 +144,10 @@ void func_80105718(ST08_ACTOR *wp)
     }
     pos = wp->position;
     pos.y -= 0x28;
-    func_800341BC(&pos, 0x4B, 0, 0x8000, wp->value_1, &hit->value_8, 0x4800000, 0, 0x80);
+    Set_Atari(&pos, 0x4B, 0, 0x8000, wp->value_1, &hit->value_8, 0x4800000, 0, 0x80);
     hit->value_8 = 0;
-    func_80032488(wp);
-    func_8002C8CC(wp, 0x50, 0x200, 0);
+    EM_Char_Move(wp);
+    Model_Shadow_Trans(wp, 0x50, 0x200, 0);
 }
 
 void func_80105B60(STAGE_OBJ *wp)
@@ -162,7 +162,7 @@ void func_80105B9C(ST08_ACTOR *wp, ST08_HIT *hit)
 
     pos = wp->position;
     pos.y -= 0x1E;
-    func_800341BC(&pos, 0x1E, 0, 0x8000, wp->value_1, &hit->value_8, 0xC800000, 0x800000, 0x80);
+    Set_Atari(&pos, 0x1E, 0, 0x8000, wp->value_1, &hit->value_8, 0xC800000, 0x800000, 0x80);
     hit->value_8 = 0;
 }
 
@@ -190,8 +190,8 @@ void func_80105C2C(ST08_ACTOR *wp)
     wp->scale.words[1]                               = 0x200;
     wp->scale.words[0]                               = 0x2000200;
     wp->scale.v.pad                                  = 0x4210;
-    func_8002F9C4(wp, &wp->variant_3);
-    func_800322A8(wp, 0, 0);
+    Model_work_init(wp, &wp->variant_3);
+    EM_Char_Set(wp, 0, 0);
     wp->hit.value_8 = 0;
     wp->routine_1++;
 }
@@ -217,7 +217,7 @@ void func_80105D54(ST08_ACTOR *wp)
             obj->flags_0 = 1;
             obj->kind_2  = 0x21;
         }
-        angle                 = func_80031198(&wp->position, &Player_work.position);
+        angle                 = Calc_degree2(&wp->position, &Player_work.position);
         STAGE_SCENE_BYTE(0xB) = 1;
         wp->velocity.v.x      = (uint32)(rsin(angle) * 25) >> 11;
         wp->velocity.v.y      = -0x10;
@@ -236,8 +236,8 @@ void func_80105D54(ST08_ACTOR *wp)
     wp->position_fixed.z = wp->position.z << 16;
     wp->position_fixed.y = wp->position.y << 16;
     func_80105B9C(wp, hit);
-    func_80032488(wp);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    EM_Char_Move(wp);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 // Retail computes &wp->hit early into a2 and the position into a1 (Sound_call2's argument); GCC swaps the two registers and adds a move.
@@ -288,11 +288,11 @@ void func_80105F1C(ST08_ACTOR *wp)
         func_80105B9C(wp, hit);
     }
     wp->rotation.v.z += 0x400;
-    func_80032538(wp);
+    EM_Char_Move2(wp);
     func_80033A28(wp);
     ST08_SP_ROT_Z = wp->rotation.v.z;
-    func_8003346C(wp);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    EM_World_Pos_Calc(wp);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 void func_801060C0(ST08_ACTOR *wp)
@@ -319,11 +319,11 @@ void func_801060C0(ST08_ACTOR *wp)
     {
         wp->rotation.v.x -= 0x400;
     }
-    func_80032538(wp);
+    EM_Char_Move2(wp);
     func_80033A28(wp);
     ST08_SP_ROT_X = wp->rotation.v.x;
-    func_8003346C(wp);
-    func_8002C8CC(wp, 0x28, 0x200, 0);
+    EM_World_Pos_Calc(wp);
+    Model_Shadow_Trans(wp, 0x28, 0x200, 0);
 }
 
 void func_80106218(STAGE_OBJ *wp)
@@ -338,7 +338,7 @@ void func_80106254(ST08_ACTOR *wp)
 
     wp->variant_3 = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->turn_64           = 0;
     wp->rotation.words[0] = 0;
     wp->rotation.words[1] = 0;
@@ -377,7 +377,7 @@ void func_80106254(ST08_ACTOR *wp)
     wp->position_prev                                = wp->position;
     wp->rotation_prev                                = wp->rotation.v;
     wp->scale.v.pad                                  = 0x4210;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     ep = (STAGE_OBJ50 *)func_80031734();
     if (ep != NULL)
     {
@@ -451,10 +451,10 @@ void func_80106428(ST08_ACTOR *wp)
     }
     pos = wp->position;
     pos.y -= 0x14;
-    func_800341BC(&pos, 0x4B, 0, 0x8000, wp->value_1, &hit->value_8, 0x4800000, 0, 0x80);
+    Set_Atari(&pos, 0x4B, 0, 0x8000, wp->value_1, &hit->value_8, 0x4800000, 0, 0x80);
     hit->value_8 = 0;
-    func_80032488(wp);
-    func_8002C8CC(wp, 0x50, 0x200, 0);
+    EM_Char_Move(wp);
+    Model_Shadow_Trans(wp, 0x50, 0x200, 0);
 }
 
 void func_801066D8(STAGE_OBJ *wp)

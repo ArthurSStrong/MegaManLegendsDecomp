@@ -46,7 +46,7 @@ void func_80129544(STAGE_FX *wp)
 
 void func_801295A0(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_801295C0(STAGE_OBJ *wp)
@@ -98,7 +98,7 @@ void func_80129670(STAGE_OBJ *wp)
 
 void func_801296F4(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80129714(STAGE_OBJ *wp)
@@ -174,7 +174,7 @@ void func_80129990(STAGE_FX *wp)
 
 void func_80129A04(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80129A24(STAGE_OBJ *wp)
@@ -209,7 +209,7 @@ void func_80129AE0(STAGE_OBJ *wp)
     }
     if (!(owner->flags_0 & 1))
     {
-        func_80031988((STCOM_EFFECT *)wp);
+        Close_EFFECT_WORK((STCOM_EFFECT *)wp);
     }
     if (owner->pos_38.y != 0)
     {
@@ -227,7 +227,7 @@ void func_80129B7C(STAGE_OBJ *wp)
     wp->routine_3 = temp_v0;
     if (!(temp_v0 & 0xFF))
     {
-        func_80031988((STCOM_EFFECT *)wp);
+        Close_EFFECT_WORK((STCOM_EFFECT *)wp);
     }
 }
 
@@ -284,7 +284,7 @@ void func_80129DCC(STAGE_OBJ *wp)
     }
     if (!(owner->flags_0 & 1))
     {
-        func_80031988((STCOM_EFFECT *)wp);
+        Close_EFFECT_WORK((STCOM_EFFECT *)wp);
     }
     if (owner->pos_38.y != 0)
     {
@@ -302,7 +302,7 @@ void func_80129E68(STAGE_OBJ *wp)
     wp->routine_3 = temp_v0;
     if (!(temp_v0 & 0xFF))
     {
-        func_80031988((STCOM_EFFECT *)wp);
+        Close_EFFECT_WORK((STCOM_EFFECT *)wp);
     }
 }
 
@@ -392,7 +392,7 @@ void func_8012A118(ST1A_LAMP *wp)
     {
         type += 2;
     }
-    func_8002F9C4(wp, (uint8 *)&type);
+    Model_work_init(wp, (uint8 *)&type);
     wp->routine_0++;
     wp->routine_3 = 0;
     if (wp->value_C != 0)
@@ -414,7 +414,7 @@ void func_8012A270(STAGE_OBJ50 *wp)
     {
         color = D_80138EE0[wp->value_E][wp->u_C.b.hi] + 0x20;
     }
-    func_800341BC(&wp->pos_38, wp->pos_38.pad / 2, 0, 0xA000, wp->index_1, D_801397DC,
+    Set_Atari(&wp->pos_38, wp->pos_38.pad / 2, 0, 0xA000, wp->index_1, D_801397DC,
                   color | 0x10000000, 0, 0x80);
 }
 
@@ -553,7 +553,7 @@ void func_8012A6CC(void)
 
 void func_8012A6D4(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_8012A6F4(STAGE_OBJ *wp)
@@ -613,7 +613,7 @@ void func_8012A824(STAGE_FX *wp)
 
 void func_8012A964(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 // retail builds xy_8 before the uv words (loads y, then x) and keeps the products in a2; ours a3
@@ -685,7 +685,7 @@ void func_8012ABE0(ST1A_PUFF *wp)
             wp->y_1E += wp->value_28;
             break;
         case 2:
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             break;
     }
 }
@@ -697,7 +697,7 @@ void func_8012AD08(ST1A_PUFF *wp)
 
     if (++wp->routine_3 == 8)
     {
-        ep = (ST1A_PUFF *)func_80031618();
+        ep = (ST1A_PUFF *)Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0    = 1;
@@ -767,7 +767,7 @@ void func_8012AE60(ST1A_PUFF *wp)
             ++*STAGE_PACKET_PTR;
             break;
         case 1:
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             break;
     }
 }
@@ -782,7 +782,7 @@ void func_8012B284(ST1A_PUFF *wp)
                 func_8012AD08(wp);
                 return;
             }
-            func_80031988(wp);
+            Close_EFFECT_WORK(wp);
             return;
         case 1:
             func_8012ABE0(wp);
@@ -799,7 +799,7 @@ STAGE_FX *func_8012B320(STCOM_SVECTOR *pos, sint32 frame, sint32 type, sint32 co
     ST1A_PUFF *ep;
     sint32 i;
 
-    ep = (ST1A_PUFF *)func_80031618();
+    ep = (ST1A_PUFF *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -836,7 +836,7 @@ STAGE_FX *func_8012B440(sint16 x, sint16 y, uint8 arg2, sint16 arg3, sint16 arg4
 {
     STAGE_FX *ep;
 
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0    = 1;

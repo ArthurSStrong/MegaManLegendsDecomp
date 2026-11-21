@@ -2,11 +2,11 @@
 #include "rock_neo.exe/code_8003a3b4.h"
 
 // Light state, reached through $gp
-LIGHT_CVEC D_80098858[3];
-LIGHT_SVEC D_80098870[3];
-LIGHT_VEC D_80098900;
+LIGHT_CVEC Light_color[3];
+LIGHT_SVEC Light_dir[3];
+LIGHT_VEC Light_ambient;
 
-void func_8003A3B4(void)
+void Light_stage_init(void)
 {
     sint32 i;
     sint32 off;
@@ -36,36 +36,36 @@ void func_8003A3B4(void)
             }
         }
     }
-    func_8003A480();
-    func_8003A538();
+    light_default_set();
+    light_model_set();
 }
 
-void func_8003A480(void)
+void light_default_set(void)
 {
-    D_80098870[0].vx = 0x93C;
-    D_80098870[0].vy = 0x93C;
-    D_80098870[0].vz = 0x93C;
-    D_80098870[1].vx = 0x93C;
-    D_80098870[1].vy = 0x93C;
-    D_80098870[1].vz = -0x93C;
-    D_80098858[0].r  = 0xA0;
-    D_80098858[0].g  = 0xA0;
-    D_80098858[0].b  = 0xA0;
-    D_80098858[1].r  = 0x60;
-    D_80098858[1].g  = 0x60;
-    D_80098858[1].b  = 0x60;
-    D_80098870[2].vx = 0;
-    D_80098870[2].vy = 0;
-    D_80098870[2].vz = 0;
-    D_80098858[2].r  = 0;
-    D_80098858[2].g  = 0;
-    D_80098858[2].b  = 0;
-    D_80098900.vx    = 0xA0;
-    D_80098900.vy    = 0xA0;
-    D_80098900.vz    = 0xA0;
+    Light_dir[0].vx = 0x93C;
+    Light_dir[0].vy = 0x93C;
+    Light_dir[0].vz = 0x93C;
+    Light_dir[1].vx = 0x93C;
+    Light_dir[1].vy = 0x93C;
+    Light_dir[1].vz = -0x93C;
+    Light_color[0].r  = 0xA0;
+    Light_color[0].g  = 0xA0;
+    Light_color[0].b  = 0xA0;
+    Light_color[1].r  = 0x60;
+    Light_color[1].g  = 0x60;
+    Light_color[1].b  = 0x60;
+    Light_dir[2].vx = 0;
+    Light_dir[2].vy = 0;
+    Light_dir[2].vz = 0;
+    Light_color[2].r  = 0;
+    Light_color[2].g  = 0;
+    Light_color[2].b  = 0;
+    Light_ambient.vx    = 0xA0;
+    Light_ambient.vy    = 0xA0;
+    Light_ambient.vz    = 0xA0;
 }
 
-void func_8003A538(void)
+void light_model_set(void)
 {
     LIGHT_MATRIX m;
     uint32 k;
@@ -76,26 +76,26 @@ void func_8003A538(void)
     uint32 n;
     uint32 w;
 
-    SetBackColor(D_80098900.vx, D_80098900.vy, D_80098900.vz);
-    m.m[0][0] = D_80098870[0].vx;
-    m.m[0][1] = D_80098870[0].vy;
-    m.m[0][2] = D_80098870[0].vz;
-    m.m[1][0] = D_80098870[1].vx;
-    m.m[1][1] = D_80098870[1].vy;
-    m.m[1][2] = D_80098870[1].vz;
-    m.m[2][0] = D_80098870[2].vx;
-    m.m[2][1] = D_80098870[2].vy;
-    m.m[2][2] = D_80098870[2].vz;
+    SetBackColor(Light_ambient.vx, Light_ambient.vy, Light_ambient.vz);
+    m.m[0][0] = Light_dir[0].vx;
+    m.m[0][1] = Light_dir[0].vy;
+    m.m[0][2] = Light_dir[0].vz;
+    m.m[1][0] = Light_dir[1].vx;
+    m.m[1][1] = Light_dir[1].vy;
+    m.m[1][2] = Light_dir[1].vz;
+    m.m[2][0] = Light_dir[2].vx;
+    m.m[2][1] = Light_dir[2].vy;
+    m.m[2][2] = Light_dir[2].vz;
     SetLightMatrix(&m);
-    m.m[0][0] = D_80098858[0].r << 4;
-    m.m[1][0] = D_80098858[0].g << 4;
-    m.m[2][0] = D_80098858[0].b << 4;
-    m.m[0][1] = D_80098858[1].r << 4;
-    m.m[1][1] = D_80098858[1].g << 4;
-    m.m[2][1] = D_80098858[1].b << 4;
-    m.m[0][2] = D_80098858[2].r << 4;
-    m.m[1][2] = D_80098858[2].g << 4;
-    m.m[2][2] = D_80098858[2].b << 4;
+    m.m[0][0] = Light_color[0].r << 4;
+    m.m[1][0] = Light_color[0].g << 4;
+    m.m[2][0] = Light_color[0].b << 4;
+    m.m[0][1] = Light_color[1].r << 4;
+    m.m[1][1] = Light_color[1].g << 4;
+    m.m[2][1] = Light_color[1].b << 4;
+    m.m[0][2] = Light_color[2].r << 4;
+    m.m[1][2] = Light_color[2].g << 4;
+    m.m[2][2] = Light_color[2].b << 4;
     SetColorMatrix(&m);
     for (k = 0; LIGHT_MODEL_TBL[k] != 0; k += 2)
     {
@@ -108,13 +108,13 @@ void func_8003A538(void)
             n   = (w & 0x3F00) >> 7;
             for (j = 0; j < n; j += 2)
             {
-                func_8003A918(&hdr[j]);
+                light_face_calc(&hdr[j]);
             }
         }
     }
 }
 
-void func_8003A744(void)
+void Light_player_set(void)
 {
     LIGHT_MATRIX m;
     uint32 *part;
@@ -124,26 +124,26 @@ void func_8003A744(void)
     uint32 n;
     uint32 w;
 
-    SetBackColor(D_80098900.vx, D_80098900.vy, D_80098900.vz);
-    m.m[0][0] = D_80098870[0].vx;
-    m.m[0][1] = D_80098870[0].vy;
-    m.m[0][2] = D_80098870[0].vz;
-    m.m[1][0] = D_80098870[1].vx;
-    m.m[1][1] = D_80098870[1].vy;
-    m.m[1][2] = D_80098870[1].vz;
-    m.m[2][0] = D_80098870[2].vx;
-    m.m[2][1] = D_80098870[2].vy;
-    m.m[2][2] = D_80098870[2].vz;
+    SetBackColor(Light_ambient.vx, Light_ambient.vy, Light_ambient.vz);
+    m.m[0][0] = Light_dir[0].vx;
+    m.m[0][1] = Light_dir[0].vy;
+    m.m[0][2] = Light_dir[0].vz;
+    m.m[1][0] = Light_dir[1].vx;
+    m.m[1][1] = Light_dir[1].vy;
+    m.m[1][2] = Light_dir[1].vz;
+    m.m[2][0] = Light_dir[2].vx;
+    m.m[2][1] = Light_dir[2].vy;
+    m.m[2][2] = Light_dir[2].vz;
     SetLightMatrix(&m);
-    m.m[0][0] = D_80098858[0].r << 4;
-    m.m[1][0] = D_80098858[0].g << 4;
-    m.m[2][0] = D_80098858[0].b << 4;
-    m.m[0][1] = D_80098858[1].r << 4;
-    m.m[1][1] = D_80098858[1].g << 4;
-    m.m[2][1] = D_80098858[1].b << 4;
-    m.m[0][2] = D_80098858[2].r << 4;
-    m.m[1][2] = D_80098858[2].g << 4;
-    m.m[2][2] = D_80098858[2].b << 4;
+    m.m[0][0] = Light_color[0].r << 4;
+    m.m[1][0] = Light_color[0].g << 4;
+    m.m[2][0] = Light_color[0].b << 4;
+    m.m[0][1] = Light_color[1].r << 4;
+    m.m[1][1] = Light_color[1].g << 4;
+    m.m[2][1] = Light_color[1].b << 4;
+    m.m[0][2] = Light_color[2].r << 4;
+    m.m[1][2] = Light_color[2].g << 4;
+    m.m[2][2] = Light_color[2].b << 4;
     SetColorMatrix(&m);
     part = LIGHT_PLAYER_PARTS;
     for (i = 6; i < 12; i++)
@@ -154,14 +154,14 @@ void func_8003A744(void)
         n   = (w & 0x3F00) >> 7;
         for (j = 0; j < n; j += 2)
         {
-            func_8003A918(&hdr[j]);
+            light_face_calc(&hdr[j]);
         }
     }
 }
 
 // Face normals of a model's quads: each vertex packs signed bytes (y negated), the normal
 // is scaled under 0x6883 before VectorNormal, and NormalColorCol gives the face colour.
-void func_8003A918(uint32 *prim)
+void light_face_calc(uint32 *prim)
 {
     LIGHT_SVEC v[3];
     LIGHT_CVEC col;

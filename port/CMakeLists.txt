@@ -53,7 +53,7 @@ set(M32 -m32)
 # symbols, so tools/gen_link.py can place each at its retail address. No loop bounds inferred from
 # array sizes (the game indexes past a row on purpose, e.g. func_8003B278), and no assumption
 # that a file static is untouched by calls (retail data and literal addresses reach them too).
-# Uninitialized locals start at zero: retail reads stack garbage in places (func_8003346C's
+# Uninitialized locals start at zero: retail reads stack garbage in places (EM_World_Pos_Calc's
 # MATRIX translation), and zero keeps this build and the 64-bit one (port/aot) in step.
 set(PLACE_CFLAGS -ffunction-sections -fdata-sections -fno-common)
 set(GAME_CFLAGS ${M32} -std=gnu89 -fpermissive -fno-pic -fno-strict-aliasing -fwrapv

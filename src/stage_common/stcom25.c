@@ -53,7 +53,7 @@ void stcom25_func_003C(STCOM25_WORK *wp)
     ScaleMatrix(m, &scale);
     wp->variant_3 = wp->ctl.start_4[wp->start_D].next[0];
     wp->color_B4  = 0x808080;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->ctl.value_1C = 0;
     wp->ctl.index_1A = 0;
     wp->routine_1    = 0;
@@ -104,7 +104,7 @@ void stcom25_func_046C(STCOM25_WORK *wp)
     stcom25_func_0A38(wp);
     if (stcom25_func_06E4(wp) == 0)
     {
-        func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
+        Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
         return;
     }
     wp->routine_1 = 2;
@@ -280,7 +280,7 @@ void stcom25_func_08AC(STCOM25_WORK *wp)
         wp->position_fixed.x += s;
         wp->position_fixed.z += sign * c;
     }
-    func_80030150(&wp->position_fixed, &wp->position);
+    Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     wp->rotation.y = (ctl->dir_C << 10) + sign * ctl->phase_12;
 }
 

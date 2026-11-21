@@ -124,9 +124,9 @@ typedef struct
     uint16 f116;
 } C80027678_MODEL_OBJ;
 
-sint32 func_80048E6C(C80027678_MODEL_OBJ *o);
-void func_8002C8CC(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
+sint32 Scr_height_check(C80027678_MODEL_OBJ *o);
 void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
+void func_8002C794(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
 void func_8002CA10(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3);
 typedef struct
 {

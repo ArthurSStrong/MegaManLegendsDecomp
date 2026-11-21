@@ -12,14 +12,14 @@ void func_80109B24(STAGE_SPIN *wp)
     STAGE_SPIN *child;
     uint32 i;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->color_40 = 0x2808080;
     wp->angle_4C = 0;
     if (wp->variant_3 == 0)
     {
         for (i = 0; i < 7; i++)
         {
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
                 D_80110D58[i]     = effect;
@@ -43,7 +43,7 @@ void func_80109B24(STAGE_SPIN *wp)
         child->pos_38.x  = wp->pos_38.x;
         child->pos_38.y  = wp->pos_38.y;
         child->pos_38.z  = wp->pos_38.z;
-        func_8002F9C4(child, &child->variant_3);
+        Model_work_init(child, &child->variant_3);
         child->color_40 = 0x2C808080;
         child->angle_4C = 0;
         child->routine_0++;
@@ -79,6 +79,6 @@ void func_80109D00(STAGE_SPIN *wp)
     }
     for (i = 0; i < 7; i++)
     {
-        func_80031988(D_80110D58[i]);
+        Close_EFFECT_WORK(D_80110D58[i]);
     }
 }

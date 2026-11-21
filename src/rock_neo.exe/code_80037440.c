@@ -78,7 +78,7 @@ sint32 func_800375D4(PL_WORK *wp, sint32 index)
     return D_80089EAC[index][wp->parts[index].current].value0;
 }
 
-sint32 func_80037604(PL_WORK *wp, sint32 index)
+sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 index)
 {
     return D_80089EAC[index][wp->parts[index].selected].value1;
 }
@@ -205,7 +205,7 @@ void func_80037890(sint32 mode, sint32 count, uint16 index)
     {
         for (i = 0; i < n1; i++)
         {
-            fx = (CODE374_FX *)func_80031618();
+            fx = (CODE374_FX *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->kind_0  = 5;
@@ -228,7 +228,7 @@ void func_80037890(sint32 mode, sint32 count, uint16 index)
     {
         for (i = 0; i < n2; i++)
         {
-            fx = (CODE374_FX *)func_80031618();
+            fx = (CODE374_FX *)Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->value_2 = 0x83;

@@ -907,7 +907,7 @@ void func_80101C1C(STAGE_ROOM *wp)
                 STAGE_PL.fixed_428.y     = -1 << 16;
                 STAGE_PL.fixed_428.z     = 0x130 << 16;
                 STAGE_PL.flags_bd       |= 0x10;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 STAGE_PL.value_440 = 0;
                 STAGE_PL.value_442 = 0;
                 STAGE_PL.value_444 = 0;

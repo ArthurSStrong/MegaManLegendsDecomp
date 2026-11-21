@@ -43,7 +43,7 @@ void stcom31_func_00F8(STCOM31_WORK *wp)
     wp->rotation.v.z      = 0;
     wp->flags_0 |= 4;
     wp->rotation.v.y = (wp->param_C << 9) & 0xE00;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     m                           = &wp->matrix;
     wp->ctl.flags_0             = 0;
     *(uint32 *)&wp->ctl.timer_4 = 0;
@@ -151,11 +151,11 @@ void stcom31_func_033C(STCOM31_WORK *wp)
             stcom31_E_0010[0].x = point->x;
             stcom31_E_0010[0].y = 0;
             stcom31_E_0010[0].z = point->z;
-            step             = func_80031BEC(&wp->position, stcom31_E_0010, wp->rotation.v.y, 0x20);
+            step             = Muku(&wp->position, stcom31_E_0010, wp->rotation.v.y, 0x20);
             wp->velocity.v.z = step * 4;
             wp->rotation.v.z = (uint16)(step << 3) >> 4;
             wp->rotation.v.y = (wp->rotation.v.y + step) & 0xFFF;
-            func_8002FEA4(wp, wp->velocity.v.x, 0, wp->velocity.v.z);
+            Obj_pos_set(wp, wp->velocity.v.x, 0, wp->velocity.v.z);
             dx = wp->position.x - (point->x - (point->width >> 1));
             dz = wp->position.z - (point->z - (point->depth >> 1));
             if ((uint32)dx < point->width && (uint32)dz < point->depth)
@@ -192,7 +192,7 @@ void stcom31_func_033C(STCOM31_WORK *wp)
     {
         for (i = 0; i < 4; i++)
         {
-            effect = func_80031618();
+            effect = Open_EFFECT_WORK();
             if (effect == NULL)
             {
                 break;

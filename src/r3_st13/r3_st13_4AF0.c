@@ -34,7 +34,7 @@ void func_80104B68(ST13_SPARK *wp)
     wp->u_1C.spr.u = D_80117644[wp->ctl.frame_19].u;
     wp->u_1C.spr.v = D_80117644[wp->ctl.frame_19].v;
     wp->w_24       = 0x20;
-    func_800341BC(&wp->u_1C.pos, 0x20, 0, 0xA000, wp->index_1, &wp->ctl.hit_8, 0x68000010, 0, 0x80);
+    Set_Atari(&wp->u_1C.pos, 0x20, 0, 0xA000, wp->index_1, &wp->ctl.hit_8, 0x68000010, 0, 0x80);
 }
 
 void func_80104C9C(ST13_SPARK *wp)
@@ -72,7 +72,7 @@ void func_80104C9C(ST13_SPARK *wp)
         {
             wp->u_1C.pos.y = pos.y;
         }
-        func_800341BC(&wp->u_1C.pos, wp->w_24, 0, 0xA000, wp->index_1, &ctl->hit_8, 0x68000010, 0,
+        Set_Atari(&wp->u_1C.pos, wp->w_24, 0, 0xA000, wp->index_1, &ctl->hit_8, 0x68000010, 0,
                       0x80);
         ctl->hit_8 = 0;
         if (--ctl->timer_6 != 0)
@@ -89,5 +89,5 @@ void func_80104F10(STAGE_FX *wp)
 
     owner = func_80036294(wp->value_C);
     owner->u_C.b.byte_C--;
-    func_80031988(wp);
+    Close_EFFECT_WORK(wp);
 }

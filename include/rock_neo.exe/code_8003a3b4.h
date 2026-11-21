@@ -31,9 +31,9 @@ typedef struct
 
 // Light state: directions, colours and back colour (defined in code_8003A3B4.c, built
 // with -G32 so they are reached through $gp).
-extern LIGHT_SVEC D_80098870[3];
-extern LIGHT_CVEC D_80098858[3];
-extern LIGHT_VEC D_80098900;
+extern LIGHT_SVEC Light_dir[3];
+extern LIGHT_CVEC Light_color[3];
+extern LIGHT_VEC Light_ambient;
 
 #define LIGHT_MODEL_TBL    ((uint32 *)0x8013A004)
 #define LIGHT_PLAYER_PARTS ((uint32 *)0x801F6030)
@@ -49,11 +49,11 @@ extern uint8 D_8015C006[];
 extern uint8 D_8015C008[];
 extern uint8 D_8013A004[];
 
-void func_8003A480(void);
-void func_8003A538(void);
-void func_8003A3B4(void);
-void func_8003A744(void);
-void func_8003A918(uint32 *prim);
+void light_default_set(void);
+void light_model_set(void);
+void Light_stage_init(void);
+void Light_player_set(void);
+void light_face_calc(uint32 *prim);
 
 int abs(int x);
 

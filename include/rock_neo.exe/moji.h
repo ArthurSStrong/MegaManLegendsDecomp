@@ -157,7 +157,7 @@ extern uint8 D_80097F6C[][6];
 extern uint8 D_80097F79[];
 extern uint8 D_80097F7A[];
 extern uint8 D_80097F7B[];
-sint32 func_80031198(MOJI_POS *pos, PL_SHORT_VECTOR *target);
+sint32 Calc_degree2(MOJI_POS *pos, PL_SHORT_VECTOR *target);
 void func_80039FAC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80039FFC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 sint32 func_8003A13C(void);

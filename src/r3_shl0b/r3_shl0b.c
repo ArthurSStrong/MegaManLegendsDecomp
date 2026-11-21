@@ -66,7 +66,7 @@ void func_800D8854(SHL_WORK *wp)
     {
         wp->draw.mdl.color_b4 = 0x808080;
     }
-    func_8002F9C4(wp, 0);
+    Model_work_init(wp, 0);
     func_800D8E64(wp, 0x4000);
     Sound_call2(0x132, &wp->pos);
     wp->routine_0 = 1;
@@ -79,7 +79,7 @@ void func_800D8AAC(SHL_WORK *wp)
     if (func_80037694(wp, 0) == 0x7FFF || wp->hit_7c || !func_80048C60(&wp->pos))
     {
         func_800D8EF4(wp);
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     wp->old_fpos = wp->fpos;
@@ -114,14 +114,14 @@ void func_800D8C1C(SHL_WORK *wp)
     if (func_80037694(wp, 0) == 0x7FFF)
     {
         func_800D8EF4(wp);
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
     func_80050C2C(wp);
     func_8004B414(wp);
-    wp->pos.vy          = func_80048E6C(wp);
+    wp->pos.vy          = Scr_height_check(wp);
     wp->fpos.w.y        = wp->pos.vy << 16;
     wp->draw.mdl.pos.vx = wp->pos.vx;
     wp->draw.mdl.pos.vy = wp->pos.vy;
@@ -147,7 +147,7 @@ void func_800D8D14(SHL_WORK *wp)
     wp->old_pos  = wp->pos;
     func_80050C2C(wp);
     func_8004B414(wp);
-    wp->pos.vy          = func_80048E6C(wp);
+    wp->pos.vy          = Scr_height_check(wp);
     wp->fpos.w.y        = wp->pos.vy << 16;
     wp->draw.mdl.pos.vx = wp->pos.vx;
     wp->draw.mdl.pos.vy = wp->pos.vy;
@@ -172,7 +172,7 @@ void func_800D8D14(SHL_WORK *wp)
     {
     end:
         func_800D8EF4(wp);
-        func_80031930(wp);
+        Close_PL_SHL_WORK(wp);
         return;
     }
     func_800D8E64(wp, 0x6000);
@@ -185,7 +185,7 @@ void func_800D8E64(SHL_WORK *wp, uint16 arg)
     p.vx = wp->pos.vx;
     p.vy = wp->pos.vy - 0x28;
     p.vz = wp->pos.vz;
-    func_800341BC(&p, 0x30, 0, arg, wp->value_1, &wp->col_c4, wp->value_d4 | 0x8000000, 0, 0x80);
+    Set_Atari(&p, 0x30, 0, arg, wp->value_1, &wp->col_c4, wp->value_d4 | 0x8000000, 0, 0x80);
     wp->col_bc = 0;
     wp->col_c0 = 0;
     wp->col_c4 = 0;
@@ -196,7 +196,7 @@ void func_800D8EF4(SHL_WORK *wp)
 {
     SHL_FX *fx;
 
-    fx = func_80031618();
+    fx = Open_EFFECT_WORK();
     if (fx)
     {
         fx->routine_0 = 5;

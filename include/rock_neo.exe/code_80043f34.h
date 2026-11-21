@@ -157,13 +157,13 @@ extern uint8 D_8008A26D[];
 extern uint8 D_8008A278[];
 extern uint8 D_8008A280[];
 
-void func_80031988(CODE43_WORK *wp);
+void Close_EFFECT_WORK(CODE43_WORK *wp);
 void RotMatrixY();
-sint32 func_800341BC(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
+sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      uint32 flags, sint32 arg7, sint32 arg8);
 sint32 func_80049C54(void *a, void *b, sint32 c, uint8 d);
-void func_8002F9C4(CODE43_WORK *wp, void *arg);
-CODE43_WORK *func_80031618(void);
+void Model_work_init(CODE43_WORK *wp, void *arg);
+CODE43_WORK *Open_EFFECT_WORK(void);
 void func_800398E0(sint32 arg);
 sint32 func_8004920C(void *pos);
 void Sound_call2(sint16 id, void *args);

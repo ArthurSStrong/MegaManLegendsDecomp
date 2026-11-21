@@ -18,7 +18,7 @@ void func_8010901C(STAGE_OBJ50 *wp)
         wp->pos_38.pad = 0;
         wp->value_44   = flag;
     }
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -45,7 +45,7 @@ void func_801090CC(STAGE_OBJ50 *wp)
         func_80051B68(wp, 7, 0, 0);
         pos = wp->pos_38;
         pos.y -= 0x2D;
-        func_800341BC(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+        Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
         wp->value_48 = 0;
     }
 }
@@ -54,7 +54,7 @@ void func_8010919C(STAGE_OBJ50 *wp)
 {
     STAGE_OBJ50 *ep;
 
-    ep = (STAGE_OBJ50 *)func_80031618();
+    ep = (STAGE_OBJ50 *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 5;
@@ -226,9 +226,9 @@ void func_8010967C(STAGE_OBJ50 *wp)
         ep->routine_1 = 0;
         ep->routine_3 = 0;
         ep->value_44  = (sint32)wp;
-        func_8002F9C4(ep, &ep->variant_3);
+        Model_work_init(ep, &ep->variant_3);
         wp->variant_3 = 1;
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
         wp->matrix.words[0] = 0x1000;
         wp->matrix.words[1] = 0;
         wp->matrix.words[2] = 0x1000;
@@ -282,7 +282,7 @@ void func_801097E0(STAGE_OBJ50 *wp)
                 chest->routine_1 = 0;
                 chest->value_48  = 0;
                 chest->value_4C  = 0;
-                func_8002F9C4(chest, &chest->variant_3);
+                Model_work_init(chest, &chest->variant_3);
                 STAGE_MATRIX_IDENTITY(chest->matrix.words);
                 RotMatrixX(0, &chest->matrix.m);
                 RotMatrixY(chest->routine_3 << 6, &chest->matrix.m);
@@ -356,7 +356,7 @@ void func_80109B28(STAGE_OBJ50 *wp)
     D_80111CC4[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
-    func_800341BC(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+    Set_Atari(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
     wp->value_48 = 0;
 }
 
@@ -369,7 +369,7 @@ void func_80109BE8(STAGE_OBJ50 *wp)
     flag           = wp->pos_38.pad;
     wp->pos_38.pad = 0;
     wp->value_44   = flag;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -462,7 +462,7 @@ void func_80109EB8(STAGE_OBJ50 *wp)
 {
     STAGE_OBJ50 *ep;
 
-    ep = (STAGE_OBJ50 *)func_80031618();
+    ep = (STAGE_OBJ50 *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 5;

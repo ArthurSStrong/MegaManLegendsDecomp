@@ -843,7 +843,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
             pl->fixed_428.y = 0xFFFF0000;
             pl->fixed_428.z = 0x05970000;
             pl->flags_BD |= 0x10;
-            func_80030150(&pl->fixed_428, &pl->pos_438);
+            Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
             pl->anim_448    = 0x30;
             pl->rot_440.x   = 0;
             pl->rot_440.y   = 0;
@@ -877,7 +877,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0xEE180000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x05970000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0x4E7;
                 wp->timer_C   = 0xF;
             }
@@ -972,7 +972,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
         pl->fixed_428.x = 0xEE180000;
         pl->fixed_428.y = 0xFFFF0000;
         pl->fixed_428.z = 0x05970000;
-        func_80030150(&pl->fixed_428, &pl->pos_438);
+        Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
         pl->rot_440.y = 0x4E7;
     }
 }
@@ -1009,11 +1009,11 @@ void func_80102224(STAGE_ROOM_WORK *wp)
                 break;
             }
             y = pl->position.y;
-            if (y != func_80048E6C(pl))
+            if (y != Scr_height_check(pl))
             {
                 break;
             }
-            turn = func_80031BEC(&pl->position, &D_801164DC, pl->rotation.y, 0x20);
+            turn = Muku(&pl->position, &D_801164DC, pl->rotation.y, 0x20);
             if ((sint16)turn == 0)
             {
                 pl->anim_448 = 0x30;
@@ -1037,7 +1037,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0xF6400000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x13C90000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y                        = 0x8C0;
                 D_8011CB34[2]->routine_1             = 1;
                 *(uint16 *)&D_8011CB34[2]->routine_2 = 0;
@@ -1109,7 +1109,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
         pl->fixed_428.x = 0xF6400000;
         pl->fixed_428.y = 0xFFFF0000;
         pl->fixed_428.z = 0x13C90000;
-        func_80030150(&pl->fixed_428, &pl->pos_438);
+        Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
     }
 }
 
@@ -1129,7 +1129,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             vec.x = obj->position.x;
             vec.y = obj->position.y - 0x50;
             vec.z = obj->position.z;
-            func_80039FFC(&vec, 0x12C, func_80031198(&pos, &pl->position) + 0x20,
+            func_80039FFC(&vec, 0x12C, Calc_degree2(&pos, &pl->position) + 0x20,
                           D_800A396C + 0x61);
             pl->flags_BD |= 0x40;
             pl->flags_0 &= ~2;
@@ -1159,7 +1159,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x048C0000;
                 pl->flags_BD |= 0x10;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0x82C;
                 pl->rot_440.x = 0;
                 pl->rot_440.z = 0;
@@ -1271,7 +1271,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0xF5D70000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x04540000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rotation.y = 0x6CC;
                 func_80103CC4(3);
                 func_80103CC4(4);
@@ -1338,7 +1338,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         pl->fixed_428.y = 0xFFFF0000;
         pl->fixed_428.z = 0x04540000;
         pl->flags_BD |= 0x10;
-        func_80030150(&pl->fixed_428, &pl->pos_438);
+        Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
         pl->rot_440.x = 0;
         pl->rot_440.y = 0x800;
         pl->rot_440.z = 0;
@@ -1363,7 +1363,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             vec.x   = spawned->position.x;
             vec.y   = spawned->position.y - 0x80;
             vec.z   = spawned->position.z;
-            func_80039FFC(&vec, 0x140, func_80031198(&pos, &pl->position), D_800A396C - 0x30);
+            func_80039FFC(&vec, 0x140, Calc_degree2(&pos, &pl->position), D_800A396C - 0x30);
             pl->flags_BD |= 0x40;
             pl->flags_0 &= ~2;
             wp->routine_6++;
@@ -1390,7 +1390,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.z = 0x50290000;
                 pl->flags_0 |= 2;
                 pl->flags_BD |= 0x10;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0xDE8;
                 pl->rot_440.x = 0;
                 pl->rot_440.z = 0;
@@ -1441,7 +1441,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x4F7C0000;
                 pl->flags_0 &= ~2;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0x9B2;
                 Sce_script_next();
                 Sound_call(0x150, 0, 0);
@@ -1531,7 +1531,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             break;
         case 15:
             spawned       = ST03_SPAWNED_0;
-            D_8011CA84    = func_80031BEC(&pl->pos_438, &spawned->position, pl->rot_440.y, 0x50);
+            D_8011CA84    = Muku(&pl->pos_438, &spawned->position, pl->rot_440.y, 0x50);
             pl->rot_440.y = (pl->rot_440.y + D_8011CA84) & 0xFFF;
             func_8002FF34(pl, 0x200, 0, 0);
             if (--wp->timer_C < 0)
@@ -1596,7 +1596,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
         pl->fixed_428.y = 0xFFFF0000;
         pl->fixed_428.z = 0x510A0000;
         pl->flags_BD |= 0x10;
-        func_80030150(&pl->fixed_428, &pl->pos_438);
+        Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
         pl->rot_440.x = 0;
         pl->rot_440.y = 0x800;
         pl->rot_440.z = 0;
@@ -1645,7 +1645,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0x1CDC0000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x50400000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 value         = 0x59C;
                 pl->rot_440.y = value;
                 value         = 0xA;
@@ -1655,7 +1655,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0x170B0000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x5E9F0000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 value         = 0x1D1;
                 pl->rot_440.y = value;
                 value         = 0xC;
@@ -1725,7 +1725,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             }
             break;
         case 6:
-            turn          = func_80031BEC(&pl->pos_438, &obj->position, pl->rot_440.y, 0x20);
+            turn          = Muku(&pl->pos_438, &obj->position, pl->rot_440.y, 0x20);
             pl->rot_440.y = (pl->rot_440.y + turn) & 0xFFF;
             if (turn == 0)
             {
@@ -1770,7 +1770,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0x1BDA0000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x50FD0000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0x315;
             }
             else
@@ -1778,7 +1778,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 pl->fixed_428.x = 0x16100000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x5D7D0000;
-                func_80030150(&pl->fixed_428, &pl->pos_438);
+                Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 pl->rot_440.y = 0xFCF;
             }
             pl->rot_440.x = 0;

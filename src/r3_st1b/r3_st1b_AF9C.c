@@ -31,7 +31,7 @@ void func_8010AF9C(ST1B_ORBITER *wp)
         wp->position_AC = wp->position;
         if (wp->value_C == 0)
         {
-            func_8002F9C4(wp, NULL);
+            Model_work_init(wp, NULL);
         }
         else
         {

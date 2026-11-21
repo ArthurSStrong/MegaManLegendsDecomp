@@ -13,7 +13,7 @@ void func_8012A96C(STAGE_OBJ50 *wp)
     sint32 y;
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[2] = 0x1000;
     wp->matrix.words[4] = 0x1000;
@@ -65,7 +65,7 @@ void func_8012AA30(STAGE_OBJ50 *wp)
         Sce_flag_on(0x670);
         return;
     }
-    func_800341BC(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+    Set_Atari(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
 }
 
 void func_8012AB24(ST05_PRIZE *wp)
@@ -108,7 +108,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             }
             break;
         case 4:
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0           = 5;
@@ -262,7 +262,7 @@ void func_8012B0B4(STAGE_OBJ50 *wp)
     STCOM_FIXED_VECTOR unused; // unused: reserves the frame's 0x10 extra bytes
 
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     STAGE_MATRIX_IDENTITY(wp->matrix.words);
     RotMatrixY(wp->value_F << 10, &wp->matrix.m);
     func_8012B44C(wp);
@@ -318,7 +318,7 @@ void func_8012B298(STAGE_OBJ50 *wp)
         wp->routine_1 = 0;
         wp->routine_0++;
     }
-    func_800341BC(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
+    Set_Atari(&wp->pos_38, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
     wp->value_48 = 0;
 }
 
@@ -633,7 +633,7 @@ void func_8012BBF8(STAGE_OBJ50 *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sound_work.volume_6 = 0x50;
                 Sound_call(0x1D, 1, 0);
@@ -680,12 +680,12 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
                     break;
                 }
                 wp->value_F = next;
-                func_80017C30(9);
+                Fade_start(9);
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Obj_work_flag_change(0x18, 0x80);
                 func_8012B680(wp);
@@ -693,7 +693,7 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
             }
             break;
         case 3:
-            func_80017C30(1);
+            Fade_start(1);
             func_8012B544(wp);
             wp->u_C.b.lo = 0;
             wp->value_48 = 0;
@@ -701,7 +701,7 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
             wp->routine_2++;
             break;
         case 4:
-            if (D_80098A72 == 0 && Sound_fade_flags == 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 msg = Game_work_90[wp->value_F].kind_0 + 0x4E;
                 MojiTaskExec2(0, wp->value_F * 4 + msg);
@@ -808,7 +808,7 @@ void func_8012C1F4(STAGE_OBJ *wp)
             }
             return;
         case 1:
-            if (!(Moji_flag & 0x08000000) && (func_8001A0A8(0) == 0))
+            if (!(Moji_flag & 0x08000000) && (Sound_seq_end_check(0) == 0))
             {
                 func_8012B8FC(wp);
             }
@@ -832,7 +832,7 @@ void func_8012C29C(STAGE_OBJ *wp)
             }
             return;
         case 1:
-            if (!(Moji_flag & 0x08000000) && (func_8001A0A8(0) == 0))
+            if (!(Moji_flag & 0x08000000) && (Sound_seq_end_check(0) == 0))
             {
                 func_8012B8FC(wp);
             }
@@ -880,7 +880,7 @@ void func_8012C344(STAGE_OBJ50 *wp)
             }
             break;
         case 3:
-            if (!(Moji_flag & 0x08000000) && func_8001A0A8(0) == 0)
+            if (!(Moji_flag & 0x08000000) && Sound_seq_end_check(0) == 0)
             {
                 func_8012B8FC((STAGE_OBJ *)wp);
             }
@@ -925,7 +925,7 @@ void func_8012C4F4(STAGE_OBJ *wp)
             }
             break;
         case 3:
-            if (!(Moji_flag & 0x08000000) && func_8001A0A8(0) == 0)
+            if (!(Moji_flag & 0x08000000) && Sound_seq_end_check(0) == 0)
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
                 func_8012B8FC(wp);
@@ -967,7 +967,7 @@ void func_8012C6A0(STAGE_OBJ50 *wp)
             }
             break;
         case 3:
-            if (!(Moji_flag & 0x08000000) && func_8001A0A8(0) == 0)
+            if (!(Moji_flag & 0x08000000) && Sound_seq_end_check(0) == 0)
             {
                 func_8012B8FC((STAGE_OBJ *)wp);
             }
@@ -1005,7 +1005,7 @@ void func_8012C830(STAGE_OBJ *wp)
             }
             break;
         case 3:
-            if (!(Moji_flag & 0x08000000) && func_8001A0A8(0) == 0)
+            if (!(Moji_flag & 0x08000000) && Sound_seq_end_check(0) == 0)
             {
                 func_8012B8FC(wp);
             }

@@ -74,7 +74,7 @@ void func_8011216C(ST00_STCOM19_WORK *wp)
 void func_801124B0(ST00_STCOM19_WORK *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->value_3);
+    Model_work_init(wp, &wp->value_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -222,7 +222,7 @@ void func_80112994(STAGE_OBJ *wp)
 void func_801129D4(ST00_STCOM19_WORK *wp)
 {
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->value_3);
+    Model_work_init(wp, &wp->value_3);
     wp->pos_38.x = D_8011C940[wp->value_3 * 3];
     wp->pos_38.y = D_8011C942[wp->value_3 * 3];
     wp->pos_38.z = D_8011C944[wp->value_3 * 3];
@@ -294,7 +294,7 @@ void func_80112BDC(ST00_MATRIX_OBJ *wp)
     }
     if (wp->variant_3 == 8)
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     STAGE_MATRIX_IDENTITY(wp->matrix_18.w);
     wp->routine_0++;
@@ -329,7 +329,7 @@ void func_80112D14(STAGE_MATRIX_OBJ *wp)
 
     if (wp->index_C != 0)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
     pl    = STAGE_SCENE_OBJ(0);
     rot.x = 0x400;
@@ -781,7 +781,7 @@ void func_80113C30(STAGE_MATRIX_OBJ *wp)
 {
     STAGE_FX *fx;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         fx->flags_0   = 1;
@@ -802,7 +802,7 @@ void func_80113C98(STAGE_MATRIX_OBJ *wp)
     STAGE_FX *fx;
     sint32 v;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         rand();
@@ -827,7 +827,7 @@ void func_80113D64(STAGE_MATRIX_OBJ *wp)
     STAGE_FX *fx;
     sint32 x;
 
-    fx = (STAGE_FX *)func_80031618();
+    fx = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {
         rand();
@@ -850,7 +850,7 @@ void func_80113E10(STAGE_MATRIX_OBJ *wp)
 {
     STAGE_FX *ep;
 
-    ep = (STAGE_FX *)func_80031618();
+    ep = (STAGE_FX *)Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -889,7 +889,7 @@ void func_80113F2C(ST00_TARGET *wp)
     hit = &wp->u_18.h.hit;
     STAGE_MATRIX_IDENTITY(wp->u_18.matrix.w);
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->color_40              = 0x808080;
     wp->u_18.h.hit.flags_0    = 0xE;
     wp->routine_0             = 1;
@@ -930,7 +930,7 @@ void func_80113FEC(ST00_BOX_B *wp)
         if ((wp->flags_0 & 1) && (wp->matrix.f.ctl.flags_0 & 4))
         {
             wp->pos_38.y -= 0x80;
-            func_800341BC(&wp->pos_38, 0xA0, 0, D_8011CB00[wp->variant_3 >> 4], wp->index_1,
+            Set_Atari(&wp->pos_38, 0xA0, 0, D_8011CB00[wp->variant_3 >> 4], wp->index_1,
                           &wp->matrix.f.ctl.hit_4, D_8011CAF8[wp->variant_3 >> 4], 0, 0x80);
             wp->pos_38.y += 0x80;
         }
@@ -960,7 +960,7 @@ void func_80114170(ST00_BOX_B *wp)
             wp->color_40  = 0x808080;
             ctl->flags_0 &= ~8;
             func_80052528(wp);
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0         = 5;
@@ -1645,7 +1645,7 @@ void func_80115848(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
                     if (func_801159F8(wp, box))
                     {
                         box->state_8 = 2;
-                        func_80017C30(10);
+                        Fade_start(10);
                     }
                 }
                 else
@@ -1654,7 +1654,7 @@ void func_80115848(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
                 }
                 break;
             case 2:
-                if (D_80098A72 == 0)
+                if (Fade_busy == 0)
                 {
                     box->state_8 = 3;
                     MojiTaskExec2(0, box->value_1);
@@ -1670,11 +1670,11 @@ void func_80115848(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
                     Cd_read_sync();
                     pl->value_170 = id;
                     Obj_work_flag_change(0x2FF, 10);
-                    func_80017C30(2);
+                    Fade_start(2);
                 }
                 break;
             case 4:
-                if (D_80098A72 == 0)
+                if (Fade_busy == 0)
                 {
                     pl->flags_bd &= ~0x40;
                     Sce_flag_on(0x608);
@@ -1706,7 +1706,7 @@ void func_80115A88(STAGE_PANEL_WORK *wp)
         return;
     }
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, &wp->value_3);
+    Model_work_init(wp, &wp->value_3);
     wp->matrix.words[0] = 0x1000;
     wp->matrix.words[1] = 0;
     wp->matrix.words[2] = 0x1000;
@@ -1848,7 +1848,7 @@ void func_80115EAC(ST00_POOL *wp)
             return;
         }
         i = 1;
-        func_8002F9C4(wp, (uint8 *)&i);
+        Model_work_init(wp, (uint8 *)&i);
         wp->color_40 = 0x02808080;
         wp->data_10  = D_8011CD20;
     }
@@ -1861,7 +1861,7 @@ void func_80115EAC(ST00_POOL *wp)
         }
         i             = 0;
         wp->routine_1 = 0;
-        func_8002F9C4(wp, (uint8 *)&i);
+        Model_work_init(wp, (uint8 *)&i);
         wp->color_40 = 0x808080;
         wp->data_10  = D_8011CD14;
     }
@@ -1975,7 +1975,7 @@ void func_801161D4(ST00_ORBIT *wp)
     }
     pos = wp->pos_38;
     pos.y -= 0x28;
-    func_800341BC(&pos, 0x50, 0, 0x8000, wp->index_1, &D_80122620[wp->variant_3 & 1].f.hit_0,
+    Set_Atari(&pos, 0x50, 0, 0x8000, wp->index_1, &D_80122620[wp->variant_3 & 1].f.hit_0,
                   0x4000000, 0x800000, 0);
     func_80051B68(wp, 5, -1, 0);
 }
@@ -2011,7 +2011,7 @@ void func_801164A8(ST00_ORBIT *wp)
         wp->routine_0++;
         for (i = 0; i < 3; i++)
         {
-            ep = func_80031618();
+            ep = Open_EFFECT_WORK();
             if (ep != NULL)
             {
                 ep->flags_0   = 1;
@@ -2043,7 +2043,7 @@ void func_8011668C(ST00_ORBIT *wp)
 {
     STCOM_EFFECT *ep;
 
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0           = 5;
@@ -2171,7 +2171,7 @@ void func_80116B28(STAGE_SPARK *wp)
 
 void func_80116B5C(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80116B7C(STAGE_OBJ *wp)
@@ -2186,7 +2186,7 @@ void func_80116BB8(ST00_SPARK *wp)
 
     if (++wp->routine_3 == 8)
     {
-        ep = func_80031618();
+        ep = Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 1;
@@ -2226,7 +2226,7 @@ void func_80116D00(STAGE_OBJ *wp)
         func_80116BB8(wp);
         return;
     }
-    func_80031988((STCOM_EFFECT *)wp);
+    Close_EFFECT_WORK((STCOM_EFFECT *)wp);
 }
 
 ST00_SPARK *func_80116D60(STCOM_SVECTOR *pos, sint32 width, sint32 type, sint32 count, sint32 rise,
@@ -2235,7 +2235,7 @@ ST00_SPARK *func_80116D60(STCOM_SVECTOR *pos, sint32 width, sint32 type, sint32 
     ST00_SPARK *ep;
     sint32 i;
 
-    ep = func_80031618();
+    ep = Open_EFFECT_WORK();
     if (ep != NULL)
     {
         ep->flags_0   = 1;
@@ -2283,7 +2283,7 @@ void func_80116ED4(STCOM_EFFECT *wp)
 
     if (!(wp->timer_B & 3))
     {
-        ep                  = func_80031618();
+        ep                  = Open_EFFECT_WORK();
         ep->flags_0         = 3;
         ep->kind_2          = 2;
         ep->value_C         = 2;
@@ -2319,7 +2319,7 @@ void func_80117094(STAGE_FX *wp)
 
     if ((wp->routine_3 & 7) == 0)
     {
-        ep            = (STAGE_FX *)func_80031618();
+        ep            = (STAGE_FX *)Open_EFFECT_WORK();
         ep->flags_0   = 3;
         ep->kind_2    = 2;
         ep->variant_3 = 1;
@@ -2347,7 +2347,7 @@ void func_80117094(STAGE_FX *wp)
     }
     if (++wp->routine_3 > 0x10)
     {
-        func_80031988(wp);
+        Close_EFFECT_WORK(wp);
     }
 }
 
@@ -2387,7 +2387,7 @@ void func_801171CC(STAGE_FX *wp)
 
 void func_801172DC(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_801172FC(ST00_OBJ *wp)
@@ -2408,7 +2408,7 @@ void func_80117368(STAGE_FX *wp)
 
     if ((wp->routine_1 & 3) == 0)
     {
-        fx = (STAGE_FX *)func_80031618();
+        fx = (STAGE_FX *)Open_EFFECT_WORK();
         if (fx == NULL)
         {
             return;
@@ -2473,7 +2473,7 @@ void func_801174CC(STAGE_FX *wp)
 
 void func_80117538(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80117558(ST00_OBJ *wp)
@@ -2520,7 +2520,7 @@ void func_80117640(STAGE_FX *wp)
 
 void func_80117720(STCOM_EFFECT *arg0)
 {
-    func_80031988(arg0);
+    Close_EFFECT_WORK(arg0);
 }
 
 void func_80117740(STAGE_FX *wp)
@@ -2530,7 +2530,7 @@ void func_80117740(STAGE_FX *wp)
 
     for (i = 0; i < 24; i++)
     {
-        ep = (STAGE_FX *)func_80031618();
+        ep = (STAGE_FX *)Open_EFFECT_WORK();
         if (ep != NULL)
         {
             ep->flags_0   = 3;

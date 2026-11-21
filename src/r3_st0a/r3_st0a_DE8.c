@@ -181,7 +181,7 @@ void func_801011B4(STAGE_ROOM *wp)
             {
                 wp->reserved09[2] = 0;
                 Sce_slot_open(D_801154CC);
-                func_80017C30(7);
+                Fade_start(7);
                 func_8001D58C(0x20000009);
                 wp->routine_5 = 0;
                 wp->routine_4++;
@@ -272,7 +272,7 @@ void func_801015D4(STAGE_OBJ *wp)
     {
         wp->flags_6 = 0;
     }
-    if ((wp->flags_6 == 0) && (D_80098A72 == 0))
+    if ((wp->flags_6 == 0) && (Fade_busy == 0))
     {
         wp->routine_2 &= 0x7F;
         wp->flags_6++;

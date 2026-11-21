@@ -132,7 +132,7 @@ sint32 func_8005ED9C(SUB_WORK *wp)
                         wp->routine_1 += 2;
                         break;
                     }
-                    if (func_80037604(pl, slot) == *(sint16 *)((uint8 *)pl + (slot << 3) + 0x4FA))
+                    if (Player_weapon_bullet_calc(pl, slot) == *(sint16 *)((uint8 *)pl + (slot << 3) + 0x4FA))
                     {
                         MojiTaskExec(0, (uint8 *)0x801F2000, 0x3A);
                         wp->routine_1 += 2;
@@ -601,17 +601,17 @@ void func_8005FBB4(SUB_SEL *wp)
                 func_8003B140();
                 gw->value_50 = gw->value_79;
                 gw->value_51 = gw->value_7A;
-                func_80017C30(0x17);
+                Fade_start(0x17);
                 Sound_fade_start(0x10);
                 wp->routine_2++;
             }
             break;
         case 4:
             Sound_fade_wait();
-            func_8001B33C();
+            Sound_seq_stop_all();
             func_8001B314();
-            D_80098958 |= 0x800;
-            func_80019C20();
+            Sound_flags |= 0x800;
+            Sound_bgm_change_check();
             Sce_stage_load();
             Sce_room_load();
             Game_work.routine_0 = 5;
@@ -1153,11 +1153,11 @@ sint32 func_80060C70(SUB_SEL *wp)
                     func_80063EF0();
                     func_800665E8();
                     func_8001B314();
-                    func_8001B33C();
+                    Sound_seq_stop_all();
                     func_8001D494(0, 1, 0);
                     Sce_flag_off(0x1FE);
                     Code800133D8_work.value_0 = 1;
-                    func_80012F78(func_80013420);
+                    Thread_change(Title_task);
                 }
             }
             break;
@@ -1753,7 +1753,7 @@ void Sub_screen_status_param_set(sint32 slot)
     p     = *(SUB_PRIM **)0x1F800070;
     cur   = SUB_PLAYER_HALF_4FA(slot);
     start = p;
-    max   = func_80037604(&Player_work, slot);
+    max   = Player_weapon_bullet_calc(&Player_work, slot);
     if (max < 0x7FFF)
     {
         p->tag  = 0x02000000;

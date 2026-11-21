@@ -201,7 +201,7 @@ void func_80100784(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 wp->routine_5++;
             }
@@ -210,13 +210,13 @@ void func_80100784(STAGE_ROOM *wp)
             break;
         case 3:
             func_8001D58C(0x2001000C);
-            func_80017C30(1);
+            Fade_start(1);
             Sce_camera_script_exec();
             Sce_script_update();
             wp->routine_5++;
             break;
         case 4:
-            if (Sce_cd_reading() && D_80098A72 == 0)
+            if (Sce_cd_reading() && Fade_busy == 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_8011510C;
@@ -239,7 +239,7 @@ void func_8010098C(STAGE_ROOM *wp)
 {
     if (wp->routine_8 == 0xFF)
     {
-        func_80017C30(10);
+        Fade_start(10);
         wp->routine_5 = 0;
         wp->routine_4++;
     }
@@ -249,7 +249,7 @@ void func_8010098C(STAGE_ROOM *wp)
         if (wp->reserved09[1] == 3)
         {
             wp->child_28->routine_0 = 2;
-            func_80017C30(8);
+            Fade_start(8);
             wp->routine_5 = 0;
             wp->routine_4++;
         }
@@ -259,7 +259,7 @@ void func_8010098C(STAGE_ROOM *wp)
             {
                 wp->child_28->routine_0 = 2;
             }
-            func_80017C30(8);
+            Fade_start(8);
             wp->routine_5 = 0;
             wp->routine_4++;
         }
@@ -270,7 +270,7 @@ void func_8010098C(STAGE_ROOM *wp)
 
 void func_80100A54(STAGE_ROOM *wp)
 {
-    if (D_80098A72 == 0)
+    if (Fade_busy == 0)
     {
         switch (wp->routine_5)
         {
@@ -293,7 +293,7 @@ void func_80100A54(STAGE_ROOM *wp)
                 func_8001E3F0(0xE);
                 Sound_fade_start(0x20);
                 wp->flags_0 = 0;
-                func_80017C30(2);
+                Fade_start(2);
                 break;
         }
     }
@@ -393,7 +393,7 @@ void func_80100D00(STAGE_ROOM *wp)
             }
             break;
         case 2:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 func_8001D58C(0x2000001B);
                 wp->routine_5++;
@@ -410,7 +410,7 @@ void func_80100D00(STAGE_ROOM *wp)
             Sce_script_update();
             break;
         case 4:
-            if (D_80098A72 == 0)
+            if (Fade_busy == 0)
             {
                 Sce_script_timer_clear();
                 D_800BC7F0    = D_801152B4;

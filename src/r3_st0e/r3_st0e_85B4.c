@@ -22,7 +22,7 @@ void func_80108610(ST0E_VIEW *wp)
     wp->u_4C.h[1]  = 0;
     wp->u_4C.h[0]  = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->value_78  = 0;
     wp->value_6E  = 0;
     wp->u_74.b[0] = 0;
@@ -52,7 +52,7 @@ void func_80108694(ST0E_VIEW *wp)
         wp->value_E8 = 0;
         wp->vec_E0   = wp->position;
         wp->vec_E0.y -= 0x80;
-        func_800341BC(&wp->vec_E0, 0x80, 0, 0x8000, wp->value_1, &wp->value_E8, 0x04080000, 0, 0);
+        Set_Atari(&wp->vec_E0, 0x80, 0, 0x8000, wp->value_1, &wp->value_E8, 0x04080000, 0, 0);
         wp->vec_AC = wp->position;
         RotMatrix(rot, &wp->matrix_8C);
         scale.x = 0x200;
@@ -61,7 +61,7 @@ void func_80108694(ST0E_VIEW *wp)
         ScaleMatrix(&wp->matrix_8C, &scale);
         if (wp->flags_0 & 2)
         {
-            func_8002C8CC(wp, 0x80, 0x200, 0);
+            Model_Shadow_Trans(wp, 0x80, 0x200, 0);
         }
     }
 }
@@ -79,7 +79,7 @@ void func_80108820(ST0E_VIEW *wp)
         wp->value_B4 = 0xFFFFFF;
         if (wp->value_6E >= D_80098928[wp->kind_2]->life_8 * 16)
         {
-            fx = func_80031618();
+            fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
                 fx->flags_0         = 5;
@@ -247,7 +247,7 @@ void func_80108E00(ST0E_ITEM *wp)
         wp->z_94   = wp->position.z;
         hit->pos_0 = wp->position;
         hit->pos_0.y -= 0x20;
-        func_800341BC(hit, 0x20, 0, 0xA000, wp->value_1, &hit->flags_8, 0x04080000, 0, 0x80);
+        Set_Atari(hit, 0x20, 0, 0xA000, wp->value_1, &hit->flags_8, 0x04080000, 0, 0x80);
         hit->flags_8 = 0;
         return;
     }

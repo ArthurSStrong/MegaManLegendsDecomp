@@ -16,7 +16,7 @@ void func_80127914(STAGE_MATRIX_OBJ *wp)
     scale.y = 0x200;
     scale.x = 0x200;
     ScaleMatrix(&wp->matrix_18.m, &scale);
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->color_40 = 0x808080;
     wp->routine_0++;
 }
@@ -48,7 +48,7 @@ void func_80127A0C(STAGE_OBJ50 *wp)
         D_80137FA4   = 0x400;
         D_80137FA0.x = 0x400;
         ScaleMatrix(&wp->matrix.m, &D_80137FA0);
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
         D_80137FB0    = 0;
         wp->color_40  = 0x808080;
         wp->value_E   = 0x10;

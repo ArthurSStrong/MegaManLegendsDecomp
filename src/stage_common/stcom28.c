@@ -23,8 +23,8 @@ void stcom28_func_003C(STCOM28_WORK *wp)
     wp->accel.y    = 0;
     wp->accel.x    = 0;
     wp->flags_0 |= 6;
-    func_8002F9C4(wp, NULL);
-    func_80036478(wp->ctl.track_C, 9, -0x60);
+    Model_work_init(wp, NULL);
+    Search_Player_Init(wp->ctl.track_C, 9, -0x60);
     wp->data_78       = stcom28_D_000C;
     wp->jump_74       = 0;
     wp->ctl.counter_0 = 0;
@@ -51,7 +51,7 @@ void stcom28_func_00E8(STCOM28_WORK *wp)
     wp->color_B4            = 0x808080;
     wp->jump_prev_75        = wp->jump_74;
     stcom28_func_038C(wp);
-    wp->ctl.sees_1C = func_8003648C(wp->ctl.track_C, wp);
+    wp->ctl.sees_1C = Search_Player(wp->ctl.track_C, wp);
     stcom28_D_0018[wp->routine_1](wp);
     if (wp->routine_0 != 2)
     {
@@ -71,7 +71,7 @@ void stcom28_func_00E8(STCOM28_WORK *wp)
         }
         if (wp->flags_0 & 2)
         {
-            func_8002C8CC(wp, 0x28, 0x200, 0);
+            Model_Shadow_Trans(wp, 0x28, 0x200, 0);
         }
     }
 }
@@ -137,7 +137,7 @@ void stcom28_func_038C(STCOM28_WORK *wp)
         wp->accel.y    = 0x80;
         ctl->timer_8   = 8;
         wp->jump_74    = 1;
-        func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+        Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
         wp->routine_1 = 6;
         wp->routine_2 = 0;
         wp->velocity.y += wp->accel.y;
@@ -161,7 +161,7 @@ void stcom28_func_0468(STCOM28_WORK *wp)
     }
     if (wp->jump_74 == 0)
     {
-        ground = func_80048E6C(wp);
+        ground = Scr_height_check(wp);
         if (ground != wp->position_prev.y)
         {
             if (wp->jump_prev_75 == 0)
@@ -187,7 +187,7 @@ void stcom28_func_0574(STCOM28_WORK *wp)
     wp->ctl.hit_2C = 0;
     wp->ctl.pos_24 = wp->position;
     wp->ctl.pos_24.y -= 0x28;
-    func_800341BC(&wp->ctl.pos_24, 0x28, 0, 0x8000, wp->index_1, &wp->ctl.hit_2C,
+    Set_Atari(&wp->ctl.pos_24, 0x28, 0, 0x8000, wp->index_1, &wp->ctl.hit_2C,
                   wp->ctl.kind_3C | 0x4080000, 0x800000, 0);
 }
 
@@ -240,7 +240,7 @@ void stcom28_func_0678(STCOM28_WORK *wp)
         }
         wp->rotation.y &= 0xFFF;
     }
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     stcom28_func_0344(wp);
 }
 
@@ -278,7 +278,7 @@ void stcom28_func_07F4(STCOM28_WORK *wp)
     wp->rotation.x = 0xE80;
     Sound_call2(0x15C, &wp->position);
     wp->jump_74 = 1;
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     wp->velocity.y += wp->accel.y;
     wp->ctl.kind_3C = D_80098928[wp->kind_2]->value_A;
     wp->routine_1   = 5;
@@ -370,7 +370,7 @@ void stcom28_func_0A14(STCOM28_WORK *wp)
 {
     sint16 step;
 
-    step = func_80031BEC(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
+    step = Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
     if (step != 0)
     {
         wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
@@ -403,8 +403,8 @@ void stcom28_func_0A88(STCOM28_WORK *wp)
     if (wp->ctl.timer_6 != 0)
     {
         wp->ctl.timer_6--;
-        func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
-        if (func_80031DCC(&wp->position_fixed, wp->rotation.y, 0x400, &pl->position_fixed,
+        Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+        if (Angle_ck(&wp->position_fixed, wp->rotation.y, 0x400, &pl->position_fixed,
                           Player_work.rotation.y, 0x800) != 0)
         {
             if (wp->value_80 <= 40000)
@@ -457,7 +457,7 @@ void stcom28_func_0BF0(STCOM28_WORK *wp)
         wp->routine_2++;
         return;
     }
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     wp->velocity.y += wp->accel.y;
 }
 
@@ -474,7 +474,7 @@ void stcom28_func_0CB8(STCOM28_WORK *wp)
         wp->routine_2   = 0;
         return;
     }
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     wp->velocity.y += wp->accel.y;
 }
 
@@ -496,7 +496,7 @@ void stcom28_func_0D40(STCOM28_WORK *wp)
     }
     if (burst)
     {
-        effect = func_80031618();
+        effect = Open_EFFECT_WORK();
         if (effect != NULL)
         {
             effect->flags_0         = 5;
@@ -514,7 +514,7 @@ void stcom28_func_0D40(STCOM28_WORK *wp)
         wp->routine_2 = 0;
         return;
     }
-    func_8002FEA4(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
+    Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     wp->velocity.y += wp->accel.y;
 }
 

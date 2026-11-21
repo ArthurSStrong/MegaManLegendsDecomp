@@ -22,7 +22,7 @@ int32_t Sce_point_angle(int16_t x0, int16_t y0, int16_t x1, int16_t y1); // scen
 uint32_t func_8003AC24(uint32_t key);                                  // code_8003AC24.c
 int16_t half_get(uint8_t *p);                                     // scene.c (file static)
 void Vsync_handler(void);                                              // main.c
-void func_800131FC(void);                                              // main.c
+void main_task(void);                                              // main.c
 void func_80017684(void *src, void *dst, int32_t count);               // asm_fastmem (native C)
 void func_800177CC(void *start, void *end);                            // asm_fastmem (native C)
 
@@ -30,7 +30,7 @@ void func_800177CC(void *start, void *end);                            // asm_fa
 extern int32_t D_800891F0[4];
 extern uint32_t D_8013A004;
 extern uint8_t Sce_flag[];
-extern uint32_t D_80098158;   // main.c defines it ($gp tentative definition): placed data
+extern uint32_t Thread_change_entry;   // main.c defines it ($gp tentative definition): placed data
 extern uint32_t D_80080894[]; // retail data: the main thread's state dispatch table
 
 // PsyQ routines run from the retail image (psyq_emulated.c).
@@ -229,13 +229,13 @@ static void test_placement(void)
           (void *)&Sce_flag_on);
     CHECK((uintptr_t)&Vsync_handler == 0x800123FC, "&Vsync_handler = %p (retail 0x800123FC)",
           (void *)&Vsync_handler);
-    CHECK((uintptr_t)&D_80098158 == 0x80098158, "C-defined D_80098158 at %p", (void *)&D_80098158);
+    CHECK((uintptr_t)&Thread_change_entry == 0x80098158, "C-defined Thread_change_entry at %p", (void *)&Thread_change_entry);
     CHECK(port_stub_find(D_80080894[0]) != NULL, "retail table D_80080894[0] = 0x%08X is %s",
           D_80080894[0],
           port_stub_find(D_80080894[0]) ? port_stub_find(D_80080894[0])->name : "unknown");
-    CHECK(port_stub_find((uint32_t)(uintptr_t)&func_800131FC) != NULL &&
-              port_stub_find((uint32_t)(uintptr_t)&func_800131FC)->missing == 0,
-          "func_800131FC has native code behind its retail address");
+    CHECK(port_stub_find((uint32_t)(uintptr_t)&main_task) != NULL &&
+              port_stub_find((uint32_t)(uintptr_t)&main_task)->missing == 0,
+          "main_task has native code behind its retail address");
     memset(tbl, 0, 0x10);
     tbl[0] = 0x11;
     tbl[1] = 0xAA;

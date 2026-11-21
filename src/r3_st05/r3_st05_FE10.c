@@ -15,11 +15,11 @@ void func_8010FE4C(ST05_ACTOR *wp)
     ctl = &wp->ctl2;
     if (wp->variant_3 != 0)
     {
-        func_8002F9C4(wp, &wp->variant_3);
+        Model_work_init(wp, &wp->variant_3);
     }
     else
     {
-        func_8002F9C4(wp, NULL);
+        Model_work_init(wp, NULL);
     }
     wp->scale.words[0]        = 0x02000200;
     wp->scale.words[1]        = 0x200;
@@ -43,7 +43,7 @@ void func_8010FE4C(ST05_ACTOR *wp)
     wp->routine_0             = 1;
     wp->routine_1             = 0;
     *(uint16 *)&wp->routine_2 = 0;
-    func_800322A8(wp, 2, 0);
+    EM_Char_Set(wp, 2, 0);
     func_8010FF58(wp);
 }
 
@@ -64,17 +64,17 @@ void func_8010FF58(ST05_ACTOR *wp)
     }
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_80032304(wp, wp->anim_AC, 0);
+        EM_Char_Set2(wp, wp->anim_AC, 0);
     }
     else
     {
-        func_80032538(wp);
+        EM_Char_Move2(wp);
     }
     *(uint16 *)0x1F800132 = wp->ctl2.timer_A;
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
     if (wp->flags_0 & 2)
     {
-        func_8002C8CC(wp, 0x30, 0x200, 0);
+        Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
     func_80051B68(wp, 1, -1, 0);
 }
@@ -171,7 +171,7 @@ void func_80110214(ST05_ACTOR *wp)
             ctl->timer_4 = 0x28;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y + func_80031BEC(&wp->position, &pl->position,
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position,
                                                              wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             if (--ctl->timer_4 == 0)
@@ -185,7 +185,7 @@ void func_80110214(ST05_ACTOR *wp)
             ctl->timer_4 = 0x14;
             break;
         case 3:
-            ctl->timer_A = (ctl->timer_A + func_80031BEC(&wp->position, &pl->position,
+            ctl->timer_A = (ctl->timer_A + Muku(&wp->position, &pl->position,
                                                          (wp->rotation.y + ctl->timer_A) & 0xFFF,
                                                          wp->turn_64)) &
                            0xFFF;
@@ -235,7 +235,7 @@ void func_801103D8(ST05_OBJ *wp)
     wp->position_fixed_prev = wp->position_fixed.v;
     wp->rotation_prev       = wp->rotation;
     D_80131344[wp->routine_0](wp, &Scene_work, &wp->fall_348);
-    func_8002C8CC(wp, 0x100, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x100, 0x200, 0);
 }
 
 void func_8011049C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
@@ -243,17 +243,17 @@ void func_8011049C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
     sint16 y;
 
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->scale.words[0]     = 0x02000200;
     wp->scale.words[1]     = 0x200;
     wp->scale.v.pad        = 0x4210;
     wp->value_78           = 0;
-    y                      = wp->position.y + func_80048E6C(wp) - 0x4C0;
+    y                      = wp->position.y + Scr_height_check(wp) - 0x4C0;
     wp->position.y         = y;
     wp->position_fixed.v.y = y << 16;
     fall->speed_4.value    = 0x88000;
     fall->count_0          = 0;
-    func_800322A8(wp, 0, 0);
+    EM_Char_Set(wp, 0, 0);
     wp->routine_0++;
 }
 
@@ -276,7 +276,7 @@ void func_80110550(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
         fall->count_C = 0;
         wp->routine_0++;
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_8011061C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
@@ -306,9 +306,9 @@ void func_8011061C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
     {
         wp->routine_0++;
     }
-    func_80032538(wp);
+    EM_Char_Move2(wp);
     *(uint16 *)0x1F800130 = fall->value_8;
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
 }
 
 void func_8011070C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
@@ -334,9 +334,9 @@ void func_8011070C(ST05_OBJ *wp, STAGE_SCENE_WORK *scene, ST05_FALL *fall)
         fall->speed_4.value = 0x10000;
         wp->routine_0++;
     }
-    func_80032538(wp);
+    EM_Char_Move2(wp);
     *(uint16 *)0x1F800130 = fall->value_8;
-    func_8003346C(wp);
+    EM_World_Pos_Calc(wp);
 }
 
 void func_801107D8(STAGE_OBJ *wp, void *arg1, ST05_FALL *fall)
@@ -348,7 +348,7 @@ void func_801107D8(STAGE_OBJ *wp, void *arg1, ST05_FALL *fall)
         fall->count_0 = 0;
         fall->speed_4.value += 0x8000;
     }
-    func_80032488(wp);
+    EM_Char_Move(wp);
 }
 
 void func_80110850(ST05_ACTOR *wp)
@@ -362,24 +362,24 @@ void func_80110850(ST05_ACTOR *wp)
     D_80131358[wp->routine_0](wp);
     if (wp->anim_prev_AD != wp->anim_AC)
     {
-        func_800322A8(wp, wp->anim_AC, 0);
+        EM_Char_Set(wp, wp->anim_AC, 0);
     }
     else if (wp->ctl.flags_0 & 1)
     {
-        func_80032488(wp);
+        EM_Char_Move(wp);
     }
     else
     {
-        func_800322A8(wp, wp->anim_AC, wp->value_A4);
+        EM_Char_Set(wp, wp->anim_AC, wp->value_A4);
     }
-    func_8002C8CC(wp, 0x30, 0x200, 0);
+    Model_Shadow_Trans(wp, 0x30, 0x200, 0);
 }
 
 void func_80110970(ST05_ACTOR *wp)
 {
     wp->kind_2 = 0;
     wp->flags_0 |= 2;
-    func_8002F9C4(wp, NULL);
+    Model_work_init(wp, NULL);
     wp->kind_2                  = 0xC;
     wp->scale.v.z               = 0x200;
     wp->rotation.x              = 0;
@@ -388,7 +388,7 @@ void func_80110970(ST05_ACTOR *wp)
     wp->scale.words[0]          = 0x02000200;
     wp->ctl.flags_0             = 1;
     *(sint32 *)&wp->ctl.timer_4 = 0;
-    func_800322A8(wp, 9, 0);
+    EM_Char_Set(wp, 9, 0);
     wp->routine_0++;
 }
 
@@ -407,7 +407,7 @@ void func_80110A00(ST05_ACTOR *wp)
                 wp->anim_AC      = 9;
                 wp->frame_110    = 7;
                 wp->velocity.v.x = 0xC0;
-                func_8002FEA4(wp, 0xC0, 0, 0);
+                Obj_pos_set(wp, 0xC0, 0, 0);
                 break;
             case 1:
                 wp->anim_AC      = 0;
@@ -426,7 +426,7 @@ void func_80110A00(ST05_ACTOR *wp)
         switch (wp->routine_2)
         {
             case 0:
-                func_8002FEA4(wp, wp->velocity.v.x, 0, 0);
+                Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
                 break;
             case 1:
                 if (wp->ctl.timer_4 == 5 || wp->ctl.timer_4 == 15)

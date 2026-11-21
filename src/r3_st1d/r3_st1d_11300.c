@@ -86,7 +86,7 @@ void func_801113A4(void)
                                 wp->flags_0 = 5;
                                 wp->kind_2  = 0x34;
                                 wp->value_3 = list[k].spawn_E[i] >> 4;
-                                func_8002F9C4(wp, &wp->value_3);
+                                Model_work_init(wp, &wp->value_3);
                                 wp->dir_C           = list[k].spawn_E[i] & 0xF;
                                 wp->value_D         = count;
                                 pos                 = STAGE_CELL_TBL[cell].pos;
@@ -192,7 +192,7 @@ void func_801118E0(STAGE_OBJ50 *wp)
     sint32 flag;
     pl   = &STAGE_PL;
     flag = 0;
-    if (wp->value_E == 0 && D_800987E8 == 0 && D_80098B20 == 0)
+    if (wp->value_E == 0 && Em_work_used == 0 && D_80098B20 == 0)
     {
         switch (Game_work.value_51)
         {
@@ -226,7 +226,7 @@ void func_801118E0(STAGE_OBJ50 *wp)
         }
         if (wp->value_E == 0)
         {
-            if ((D_800987E8 == 0 && D_80098B20 == 0) || Sce_flag_test(flag) != 0)
+            if ((Em_work_used == 0 && D_80098B20 == 0) || Sce_flag_test(flag) != 0)
             {
                 wp->routine_0 = 3;
                 wp->routine_3 = 0x10;
@@ -254,7 +254,7 @@ void func_801118E0(STAGE_OBJ50 *wp)
         if (!(pl->flags_bd & 0x40))
         {
             pl->flags_bd |= 0x40;
-            func_80017C30(0xA);
+            Fade_start(0xA);
             Sce_flag_on(0x5F);
             wp->routine_0 = 6;
             wp->routine_1 = 0;
@@ -415,7 +415,7 @@ void func_80111D78(void)
                                 wp->value_3 = 2;
                             }
                             wp->value_D = rec->value_F;
-                            func_8002F9C4(wp, &wp->value_D);
+                            Model_work_init(wp, &wp->value_D);
                             wp->dir_C           = rec->dir_E;
                             wp->matrix.words[0] = 0x1000;
                             wp->matrix.words[1] = 0;
@@ -464,7 +464,7 @@ void func_80111D78(void)
                                     wp->value_3 = 2;
                                 }
                                 wp->value_D = rec->value_F;
-                                func_8002F9C4(wp, &wp->value_D);
+                                Model_work_init(wp, &wp->value_D);
                                 wp->dir_C           = rec->dir_E;
                                 wp->matrix.words[0] = 0x1000;
                                 wp->matrix.words[1] = 0;

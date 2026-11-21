@@ -37,7 +37,7 @@ void func_8010A7E4(ST08_10C *wp)
     wp->rotation.v.z      = 0;
     wp->flags_0 |= 6;
     wp->rotation.v.y = (wp->value_C << 9) & 0xE00;
-    func_8002F9C4(wp, &wp->variant_3);
+    Model_work_init(wp, &wp->variant_3);
     m          = &wp->matrix;
     wp->kind_2 = 0x2F;
     RotMatrixYXZ(&wp->rotation.v, m);
