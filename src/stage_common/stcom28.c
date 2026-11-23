@@ -123,7 +123,7 @@ void stcom28_func_038C(STCOM28_WORK *wp)
     if (wp->routine_1 != 6 && (wp->ctl.hit_2C & 0x38000000))
     {
         wp->ctl.kind_3C = 0;
-        angle           = func_80031F84(&wp->position, &wp->ctl.from_34, wp->rotation.y, 0);
+        angle           = Calc_hit_side(&wp->position, &wp->ctl.from_34, wp->rotation.y, 0);
         if (angle & 0xFFFF0000)
         {
             wp->rotation.y = (angle + 0x800) & 0xFFF;

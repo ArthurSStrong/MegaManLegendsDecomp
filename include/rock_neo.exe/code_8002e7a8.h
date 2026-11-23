@@ -465,7 +465,7 @@ void Close_EM_WORK(GAME_WORK_3C0 *wp);
 void Close_EVE_WORK(GAME_WORK_24 *wp);
 void Search_Player_Reset(BYTE_WORK *wp);
 void func_80036A78(sint32 arg);
-void func_8002F3A8(BYTE_WORK *wp, uint32 flags);
+void obj_work_mask_set(BYTE_WORK *wp, uint32 flags);
 void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2);
 void Model_work_init2(void *wp, sint32 arg);
 uint32 View_check(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3);
@@ -790,7 +790,7 @@ typedef struct
 
 extern TRACK_INFO D_800899AC[];
 extern PL_HEIGHT_INFO D_80097D0C;
-extern sint32 func_8005EBD4(void);
+extern sint32 Pl_invisible_get(void);
 extern void func_8005D4C0(void);
 extern SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
 extern sint32 Scr_line_calc(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);

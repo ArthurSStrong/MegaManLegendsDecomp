@@ -221,7 +221,7 @@ piece of evidence.
 | 12 | `0x8002D9A0` | `0x1E1A0` | `0x8002E7A8` | 0xE08 | `code_8002D9A0` | low | yes | Atom edge only: gap cost 0; first user of `.sdata` 0x80097CD4; a run of small cost-0 functions up to 0x8002E7A8. |
 | 13 | `0x8002E7A8` | `0x1EFA8` | `0x80037534` | 0x8D8C | `code_8002E7A8` | low | yes | Rodata block `1294` (3 jump-table functions at 0x800320B8..0x800329D4) is inside; names `Obj_work_flag_change`, `Close_EVE_WORK` (an `Obj_`/`EVE` file). Both ends are atom edges only; likely several files. |
 | 14 | `0x80037534` | `0x27D34` | `0x80037FB4` | 0xA80 | `code_80037534` | low | yes | **Start moved** from `0x80037440`: `Pl_special_shot_check` is in row 13's file, by both its `.sbss` and its `.data` (`0x800899E0`, the cluster this row was first based on; see "Small data ownership"). `0x80037534` is the earliest possible start; the boundary lies in `0x80037534`–`0x80037FB4`, or the row merges into 13. Left: the `0x80089EAC` table used by six tiny 0x30-byte functions. No rodata. |
-| 15 | `0x80037FB4` | `0x287B4` | `0x8003A3B4` | 0x2400 | `code_80037FB4` | low | no | Rodata block `1330` (users `func_80038894`, `_80039A60`) + `.sdata` 0x80097D28..0x80097D70 cluster (`func_80038648`..); contains `Swing_Camera2` (0x800398F8), so possibly a camera file. |
+| 15 | `0x80037FB4` | `0x287B4` | `0x8003A3B4` | 0x2400 | `code_80037FB4` | low | no | Rodata block `1330` (users `Camera_update`, `_80039A60`) + `.sdata` 0x80097D28..0x80097D70 cluster (`Camera_init`..); contains `Swing_Camera2` (0x800398F8), so possibly a camera file. |
 | 16 | `0x8003A3B4` | `0x2ABB4` | `0x8003AC24` | 0x870 | `code_8003A3B4` | low | yes | Atom edges only (both gaps cost 0); no data of its own except bss. Could be merged with neighbours. |
 | 17 | `0x8003AC24` | `0x2B424` | `0x8003BE40` | 0x121C | `code_8003AC24` | low | yes | Atom edge + `.data` 0x80089F04..0x80089F90 cluster; ends at the 8-byte stub `func_8003BE38`. |
 | 18 | `0x8003BE40` | `0x2C640` | `0x800425FC` | 0x67BC | `player` | medium | no | ChrisNonyminus `player` 0x2C640; new `.sdata` cluster begins at 0x8003BE6C (0x80097D90); gap cost 0; `Pl00_shot_enable_off/on`; rodata block `136C` (11 jump-table functions, 0x8003CD4C..0x80042458). End 0x800425FC is a guess within a window of six cost-1.0 gaps (0x800424D4..0x80042770). |
@@ -236,7 +236,7 @@ piece of evidence.
 | 27 | `0x8006259C` | `0x52D9C` | `0x800629E0` | 0x444 | `map_screen` | **not a file** | | **Confirmed part of `sub_scrn.c`** by Capcom's source (TCRF, `ST1E.BIN`): `Map_screen_init`, `Map_screen_task`, `map_screen_set` and `map_cursor_set` are its last four functions, then "End of File". Its `.data` interleaves with `sub_scrn`'s (step 3). Merged into row 26 in the yaml. |
 | 28 | `0x800629E0` | `0x531E0` | `0x8006430C` | 0x192C | `debug` | **start confirmed** | no | `sub_scrn.c` ends at `map_cursor_set`, i.e. at 0x800629E0 (Capcom's source); ChrisNonyminus `debug` 0x531E0; the last named function (`map_cursor_set`) ends exactly at 0x800629E0; gap cost 0; new `.data` cluster 0x8008DBD4..0x8008ECE0 (17 variables). Holds `Game_logo_kill`. |
 | 29 | `0x8006430C` | `0x54B0C` | `0x80067FF8` | 0x3CEC | `code_8006430C` | low | yes | Rodata block `1BD8` (first user `func_8006430C`) is a new rodata-owning file; the gap lies in 0x800629E0..0x8006430C. Might be the same file as `debug`. Ends at `2MBYTE.OBJ` (0x80067FF8, certain). |
-| 30 | `0x800680BC` | `0x588BC` | `0x80069038` | 0xF7C | `code_800680BC` | high | no | `2MBYTE.OBJ` sits between Capcom objects, so a new file starts here; rodata block `1BD8` last table (`Event_scene_main`). Ends at the first libgcc object `ADDDF3` (0x80069038). `func_800680BC` (0x64 bytes) is probably a separate tiny file from `screen_tile_draw` on. |
+| 30 | `0x800680BC` | `0x588BC` | `0x80069038` | 0xF7C | `code_800680BC` | high | no | `2MBYTE.OBJ` sits between Capcom objects, so a new file starts here; rodata block `1BD8` last table (`Event_scene_main`). Ends at the first libgcc object `ADDDF3` (0x80069038). `event_room_set` (0x64 bytes) is probably a separate tiny file from `screen_tile_draw` on. |
 
 Row 1's start and row 30's end are fixed by the ranges; `0x80067FF8` (end of row 29) is the start of
 `2MBYTE.OBJ`. Names: ChrisNonyminus's where he has one, `code_<address>` otherwise (renames are the
@@ -252,7 +252,7 @@ evidence column, not the file names.
   `.data` doesn't settle it: `debug`'s 17 variables (`0x8008DBD4`–`0x8008ECE0`) lie inside the range of
   variables `code_8006430C`'s code uses, but the earlier of those sit in `moji`'s data and are probably
   `moji.c`'s (step 3); without them the two are in order.
-- **`code_800680BC` vs `0x80068120`:** `func_800680BC` initialises a handful of bss bytes and ends 0x64
+- **`code_800680BC` vs `0x80068120`:** `event_room_set` initialises a handful of bss bytes and ends 0x64
   bytes in; `0x80068120` starts GPU-primitive code. Likely two objects.
 - **Rows 10-17** (0x8001F828-0x8003BE40, 0x1C000 bytes) have rodata for only three files; the rest is
   atom edges. Expect 5-10 more boundaries in there.

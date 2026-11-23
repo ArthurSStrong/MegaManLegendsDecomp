@@ -228,9 +228,9 @@ sint32 Scr_height_calc(void *snd, CODE456_REC12 *rec, sint32 arg2, sint32 arg3);
 sint32 func_8004B5CC(void *snd, PL_SHORT_VECTOR *old, sint32 arg2, CODE456_REC12 *rec);
 void item_drop_set(PL_SHORT_VECTOR *pos, uint32 arg);
 #ifdef __wasm32__
-sint32 func_8004AC8C(void *tr, sint32 flags);
+sint32 Scr_vec_reflect(void *tr, sint32 flags);
 #else
-void func_8004AC8C(void *tr, sint32 flags);
+void Scr_vec_reflect(void *tr, sint32 flags);
 #endif
 void func_80045AB4(CODE456_WORK *wp);
 void func_80045BC8(CODE456_WORK *wp);
@@ -241,7 +241,7 @@ void func_80047CD8(CODE456_ANIM *wp);
 void func_80047C84(CODE456_ANIM *wp);
 sint32 func_80047BF8(CODE456_SVECTOR *a, CODE456_SVECTOR *b);
 void Swing_Camera(sint32 arg);
-uint32 *func_8002D4B8(void);
+uint32 *Line_alloc(void);
 sint32 Scr_point_height(void *pos);
 uint8 func_800482A8(void *wp);
 void func_80047DD8(CODE456_SPARK *wp);

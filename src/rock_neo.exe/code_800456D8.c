@@ -62,7 +62,7 @@ void func_80045750(CODE456_WORK *wp)
             }
             wp->mtx_18.tr.h.value_2e >>= 1;
         }
-        func_8004AC8C(&wp->mtx_18.tr.h.tx_lo, hit);
+        Scr_vec_reflect(&wp->mtx_18.tr.h.tx_lo, hit);
     }
     func_80045BC8(wp);
 }
@@ -402,7 +402,7 @@ void func_8004622C(CODE456_WORK *wp)
             }
             wp->mtx_18.tr.h.value_2e >>= 1;
         }
-        func_8004AC8C(&wp->mtx_18.tr.h.tx_lo, hit);
+        Scr_vec_reflect(&wp->mtx_18.tr.h.tx_lo, hit);
     }
     item_drop_get(wp);
 }
@@ -1243,7 +1243,7 @@ void func_80047EC8(CODE456_SPARK *wp)
             p1[1] = wp->y - (sint16)(((rsin(rise) * height) >> 12) - 16);
             if (rand() & 1)
             {
-                prim    = func_8002D4B8();
+                prim    = Line_alloc();
                 prim[0] = (p0[1] << 16) + p0[0];
                 prim[1] = 0x52104080;
                 prim[2] = (p1[1] << 16) + p1[0];

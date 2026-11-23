@@ -551,7 +551,7 @@ param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `Angle_ck`, `A
 keeps the result in v0 and a copy of the angle in v1, GCC uses a scratch register), `Muku`
 (`Muku_elevation` on `Angle_xz_svector`, same s2/s1 issue), `view_cone_check` (GTE view-cone test:
 RotMatrixY/RotTrans, returns 0x10 behind, 2 inside; target stores `m[0]` late and shares one `ori 2`
-between the x >= 0 / x < 0 paths) and `func_80031F84` (direction quantizer vs a base angle, returns
+between the x >= 0 / x < 0 paths) and `Calc_hit_side` (direction quantizer vs a base angle, returns
 angle | side << 16; only the prologue order differs).
 
 `code_8002E7A8.c` (batch 5): banked `func_80030CB8` (`func_80030CF0` with arc 0x100), `Obj_target_vel_set`
@@ -572,7 +572,7 @@ d=a3, s=t0, counter=a2). `func_80035508` stays assembly (GTE; needs the repo-wid
 
 `code_8002E7A8.c` (consolidation): the player and every pool slot share one object header (routine_0,
 kind_1, flags at 6, position at 0x14, 16.16 position at 0x1C, angle at 0x56, model data at 0x88/0x90-0xAC,
-keyframes at 0xF8-0x106). `Obj_work_flag_change` and `Work_room_change` apply `func_8002F3A8`/`shift_model`/
+keyframes at 0xF8-0x106). `Obj_work_flag_change` and `Work_room_change` apply `obj_work_mask_set`/`shift_model`/
 `shift_effect` to several pools, `model_dir_search` writes by kind, so `FLAG_WORK`, `MOVE_WORK`, `POS_WORK`,
 `ATTACH_WORK`, `TURN_WORK` and `POS14_WORK` stay views until that header has a type. Merged: the keyframe and
 joint views into `PL_WORK` (`tbl_F8`..`unk106`, `owner_188`, `base_mtx`, `joint_mtx[15]`, `joint_pos[15]`,
@@ -596,7 +596,7 @@ Retried with the new types (no new matches): `lockon_probe_set` (now two registe
 `model_dir_search`, `EM_Char_Move2`, `Model_key_unpack`, `pl_shot_set`, `Obj_player_dist_calc` (unchanged).
 
 `code_8005C258.c` (small functions): banked `Automap_update` (calls `automap_visit`, `automap_draw`),
-`Pl_life_full` (`Player_work+0x6E = +0xB0`, then `Gauge_show_release`), `func_8005D844` (arms slot
+`Pl_life_full` (`Player_work+0x6E = +0xB0`, then `Gauge_show_release`), `Gauge_boss_set` (arms slot
 `D_800BBE2C`..`E46`), `Gauge_show_hold`, `func_8005C720` (dispatch through `D_8008D7B4[wp[4]]`).
 Parked `gauge_show` (`NON_MATCHING`): the target loads and stores `D_800BBD85` through one `lui`+`addiu`
 base register (`$v1`), but GCC folds `&D_800BBD85` into `lui`+`%lo` on each access; a pointer local and
@@ -736,13 +736,13 @@ unless `ev_08` is 0xFF. Also banked: steps `func_80068344`, `func_80068728` (set
 `Scene_work.field_64`), `func_80068760`, and `event_scene_init` (the scene's setup: resets the camera
 with `Sce_camera_start(0, 0, 0)`, installs camera script `D_8008FFD8` in `Sce_camera_work.arg_C0` (a `uint32 *`
 command list stepped by `Sce_camera_script_exec`) and event table `D_8009039C`, opens the four `SCENE_OBJ_ENT`s of
-`D_8008FF88` with `Sce_slot_open`, clears `field_64`); `func_800680BC(arg)` resets the bytes/halfwords `D_800C3560`-`D_800C3571`
+`D_8008FF88` with `Sce_slot_open`, clears `field_64`); `event_room_set(arg)` resets the bytes/halfwords `D_800C3560`-`D_800C3571`
 (`D_800C356F = arg`, `D_800C356E = 0x18`); `part_col_step(obj, n)` steps
 `WORK_5A4.pos_180[n].col` by 0x421 up to 0x4210 (an RGB555 fade on `obj_24[1]`). It matches only with the
 field written at each use: a `sint16 *col = &wp->pos_180[n].col` local adds an `addiu 0x180`. Its 8-byte
 frame comes for free: no unused local needed.
 Also banked: `func_80068244`, `func_8006849C`, `func_8006890C`, `func_80068998`, `func_80068AB0`,
-`func_80068B3C`: call `func_800680BC(0/1/2)` and set or clear bit 1 (sometimes bit 0) of
+`func_80068B3C`: call `event_room_set(0/1/2)` and set or clear bit 1 (sometimes bit 0) of
 `obj_24[0..2]->routine_0`. `func_8006849C` tests `Scene_work.field_0C` (0x0C, otherwise only cleared by
 `Sce_event_start`) instead of `timer_10`. Two matching idioms: when two objects clear bit 1, the mask is an
 `int` local (`mask = ~2`; a literal folds to `andi 0xFD` at each use, the target loads -3 once), and the
@@ -807,8 +807,8 @@ they change: `D_80089200[Player_work[0].unk16A]` → `Game_work.file_070`,
 `Player_work[0].ids_454[32]` and `ids_450[3]`; needs `p = Sce_flag; p += flag >> 3;` and `mask`/`bit`
 locals assigned in that order), and the camera pair on `Sce_camera_work` (`SCENE_CAM_WORK`, `scene.h`; one
 object from 0x800BC730 to at least 0x800BC7F3, which splat splits into many labels; `D_800BC7F0` is its
-`arg_C0`): `Sce_camera_apply` hands position and angles (`func_80038324`) or look-at point
-(`func_800384A4`, whose second argument is a `VECTOR *`) to the camera code, through a local
+`arg_C0`): `Sce_camera_apply` hands position and angles (`Camera_pos_set`) or look-at point
+(`Camera_look_at2`, whose second argument is a `VECTOR *`) to the camera code, through a local
 `cp = &Sce_camera_work` (CSE turns the accesses before the first join into `%lo(sym+off)`, the later ones
 keep the base register, as in the target); the high halfwords at `ang_40 + 2/6/0xA` are plain
 `vx >> 16`, which GCC narrows to `lh`. `Sce_camera_start(x, y, z)` resets it from the current camera

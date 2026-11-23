@@ -367,7 +367,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
             hit = Scr_collision_check(wp);
             if (hit)
             {
-                func_8004AC8C(&wp->velocity, hit);
+                Scr_vec_reflect(&wp->velocity, hit);
             }
             if (STCOM12_ABS(wp->velocity.x) <= STCOM12_ABS(ctl->decel_1C))
             {

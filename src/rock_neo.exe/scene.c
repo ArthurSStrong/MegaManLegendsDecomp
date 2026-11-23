@@ -8,7 +8,7 @@ void Work_close_apply(void);
 void Solid_init(void);
 void Atari_init(void);
 void Debug_init(void);
-void func_8002CFA4(void);
+void Draw_list_clear(void);
 void Obj_work_flag_change(sint32 arg, sint32 flags);
 #endif
 
@@ -513,13 +513,13 @@ void Sce_camera_apply(void)
     }
     if (cam->mode_8 == 0)
     {
-        func_80038324(pos, cam->rot_48.h.i, cam->rot_40.h.i, cam->rot_44.h.i);
+        Camera_pos_set(pos, cam->rot_48.h.i, cam->rot_40.h.i, cam->rot_44.h.i);
         return;
     }
     target[0] = (cam->pos_70 + cam->off_A0) >> 16;
     target[1] = (cam->pos_74 + cam->off_A4) >> 16;
     target[2] = (cam->pos_78 + cam->off_A8) >> 16;
-    ((SCENE_CAM_FUNC)func_800384A4)(pos, target);
+    ((SCENE_CAM_FUNC)Camera_look_at2)(pos, target);
 }
 
 void Sce_camera_start(sint32 arg0, sint32 arg1, sint32 arg2)
@@ -996,7 +996,7 @@ sint32 Sce_room_load(void)
             pw[0x171] = 0;
         }
     }
-    func_8002CFA4();
+    Draw_list_clear();
     Solid_init();
     Atari_init();
     Debug_init();

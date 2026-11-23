@@ -157,7 +157,7 @@ void func_8010CAD4(STCOM16_WORK *wp)
                     stun->hits_4    = 0;
                     stun->timer_5   = 30;
                     wp->routine_1   = 6;
-                    dir = func_80031F84(&wp->position, &ctl->target_10, wp->rotation.y, 0);
+                    dir = Calc_hit_side(&wp->position, &ctl->target_10, wp->rotation.y, 0);
                     wp->velocity.v.x = 0xC0;
                     wp->velocity.v.y = -0xC0;
                     ground->flags_6 &= ~2;

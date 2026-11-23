@@ -6,7 +6,7 @@
 
 #ifdef __wasm32__
 void Gauge_show_hold(void);
-void func_80039630(sint32 arg);
+void Camera_height_set(sint32 arg);
 #endif
 
 void Player_init(sint32 arg)
@@ -1868,9 +1868,9 @@ void Pl_r1_aim(PL_WORK *pl)
     {
         pl_pitch_pad(pl, 2, 0x40);
 #ifdef __wasm32__
-        func_80039630(pl->value108);
+        Camera_height_set(pl->value108);
 #else
-        func_80039630(pl->value108, 0x15E);
+        Camera_height_set(pl->value108, 0x15E);
 #endif
         pl->value10e = 0;
         if (!(pl->shot_status_flag & 0xC0))
@@ -1966,9 +1966,9 @@ void Pl_r1_aim(PL_WORK *pl)
         }
     }
 #ifdef __wasm32__
-    func_80039630(pl->value108);
+    Camera_height_set(pl->value108);
 #else
-    func_80039630(pl->value108, 0x15E);
+    Camera_height_set(pl->value108, 0x15E);
 #endif
 }
 

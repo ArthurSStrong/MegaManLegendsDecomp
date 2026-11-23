@@ -113,7 +113,7 @@ void Game_room_load(GAME_WORK *wp)
             Sound_fade_wait();
             // fall through
         case 1:
-            func_80038648();
+            Camera_init();
             Sce_room_load();
             entry->flags14 = 0;
             wp->routine_0  = 3;
@@ -305,7 +305,7 @@ void game_update(void)
     Player_atari_set();
     pl_shl_work_move();
     effect_common_move();
-    func_80038894();
+    Camera_update();
     Atari_check();
     Map_obj_break_update();
     Automap_update();
@@ -313,7 +313,7 @@ void game_update(void)
     Map_layer_draw();
     func_80027678();
     func_800175FC();
-    func_80028DE0();
+    Em_work_draw();
     index = CODE800133D8_DISPLAY_INDEX;
     link  = Disp_env_ptr;
     setaddr(D_800A4D40[index], getaddr(&link->tag));
@@ -500,7 +500,7 @@ void Game_support(GAME_WORK *wp)
             if (Fade_busy == 0 && Cd_read_sync2() == 0)
             {
                 player->flags_bd &= 0xBF;
-                func_80038648();
+                Camera_init();
                 if (D_800C356C == 0)
                 {
                     Fade_start(1);

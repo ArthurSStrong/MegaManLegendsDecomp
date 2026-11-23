@@ -47,7 +47,7 @@ void func_80116728(ST0B_EVENT *wp)
         Sound_call(0x10, 0, 0);
     }
     Sound_call(0x100, 0, 0);
-    func_8005D844(0, 0, Shl_param_tbl[0x12]->value_A);
+    Gauge_boss_set(0, 0, Shl_param_tbl[0x12]->value_A);
     func_80117938((STAGE_OBJ *)wp);
     if (wp->variant_3 != 0)
     {
@@ -389,7 +389,7 @@ void func_801170A8(ST0B_EVENT *wp)
         case 3:
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
-                func_8005D87C();
+                Gauge_boss_clear();
                 wp->routine_2++;
             }
             break;
@@ -517,7 +517,7 @@ void func_80117300(ST0B_EVENT *wp)
         case 5:
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
-                func_8005D87C();
+                Gauge_boss_clear();
                 wp->routine_2++;
             }
             break;
@@ -624,7 +624,7 @@ void func_8011754C(ST0B_EVENT *wp)
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 D_80120368->routine_0 = 2;
-                func_8005D87C();
+                Gauge_boss_clear();
                 Gauge_close(D_80120368);
                 wp->routine_2++;
             }

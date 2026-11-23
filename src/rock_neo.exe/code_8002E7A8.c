@@ -241,7 +241,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)pl, flags);
+                    obj_work_mask_set((BYTE_WORK *)pl, flags);
                 }
             }
         }
@@ -261,7 +261,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s3c0, flags);
+                    obj_work_mask_set((BYTE_WORK *)s3c0, flags);
                 }
             }
         }
@@ -281,7 +281,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s5a4, flags);
+                    obj_work_mask_set((BYTE_WORK *)s5a4, flags);
                 }
             }
         }
@@ -301,7 +301,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s10c, flags);
+                    obj_work_mask_set((BYTE_WORK *)s10c, flags);
                 }
             }
         }
@@ -321,7 +321,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s10c, flags);
+                    obj_work_mask_set((BYTE_WORK *)s10c, flags);
                 }
             }
         }
@@ -342,7 +342,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                     }
                     else
                     {
-                        func_8002F3A8((BYTE_WORK *)s48, flags);
+                        obj_work_mask_set((BYTE_WORK *)s48, flags);
                     }
                 }
             }
@@ -364,7 +364,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                     }
                     else
                     {
-                        func_8002F3A8((BYTE_WORK *)s48, flags);
+                        obj_work_mask_set((BYTE_WORK *)s48, flags);
                     }
                 }
             }
@@ -384,7 +384,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s24, flags);
+                    obj_work_mask_set((BYTE_WORK *)s24, flags);
                 }
             }
         }
@@ -404,7 +404,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
                 }
                 else
                 {
-                    func_8002F3A8((BYTE_WORK *)s50, flags);
+                    obj_work_mask_set((BYTE_WORK *)s50, flags);
                 }
             }
         }
@@ -444,7 +444,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
 }
 
-void func_8002F3A8(BYTE_WORK *wp, uint32 flags)
+void obj_work_mask_set(BYTE_WORK *wp, uint32 flags)
 {
     if (flags & 1)
     {
@@ -1850,7 +1850,7 @@ sint32 Angle_range_check2(SHORT3_WORK *wp, sint32 a, sint32 b, SHORT3_WORK *targ
 
 // Two calls keep CSE from following block 0 into the angle uses, so angle stays a HImode
 // copy that sched1 may move; jump2 then merges the calls.
-sint32 func_80031F84(SHORT3_WORK *a, SHORT3_WORK *b, sint16 angle, uint16 mode)
+sint32 Calc_hit_side(SHORT3_WORK *a, SHORT3_WORK *b, sint16 angle, uint16 mode)
 {
     sint32 result;
     sint32 t;
@@ -3772,9 +3772,9 @@ sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             }
             t->state = 2;
             t->timer = D_800899AC[t->kind].hold;
-            return func_8005EBD4() < 1;
+            return Pl_invisible_get() < 1;
         case 2:
-            if (func_8005EBD4() > 0)
+            if (Pl_invisible_get() > 0)
             {
                 t->timer = 0;
                 t->state = 0;

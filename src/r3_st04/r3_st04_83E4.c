@@ -137,7 +137,7 @@ sint32 func_80108794(ST04_ROCK *wp)
         {
             Sound_call2(0x13B, &wp->position);
         }
-        func_8004AC8C(&wp->velocity.v, hit);
+        Scr_vec_reflect(&wp->velocity.v, hit);
     }
     return landed;
 }

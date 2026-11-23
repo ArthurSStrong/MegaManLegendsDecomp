@@ -2442,7 +2442,7 @@ sint32 Search_Player(void *track, void *wp);
 
 extern ST05_GUARD_FUNC D_80130B48[];
 
-sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
+sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 
 sint32 func_8010D1A8(ST05_GUARD *wp);
 

@@ -69,13 +69,13 @@ void Camera_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     CAM_VIEW[2] = v[2];
 }
 
-void func_80038324(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Camera_pos_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     D_800A39A0 = *vec;
     Camera_set(vec, arg1, arg2, arg3);
 }
 
-void func_80038370(CAM_VEC *vec, CAM_VEC *target)
+void Camera_look_at(CAM_VEC *vec, CAM_VEC *target)
 {
     sint32 unused[24];
     sint32 dist;
@@ -93,10 +93,10 @@ void func_80038370(CAM_VEC *vec, CAM_VEC *target)
     Camera_set(vec, dist, yaw, -ratan2(target->y - vec->y, dist));
 }
 
-void func_800384A4(CAM_VEC *vec, CAM_VEC *target)
+void Camera_look_at2(CAM_VEC *vec, CAM_VEC *target)
 {
     D_800A39A0 = *vec;
-    func_80038370(vec, target);
+    Camera_look_at(vec, target);
 }
 
 void func_800384F0(CAM_VEC *pos, sint32 arg1, sint32 arg2)
@@ -130,7 +130,7 @@ void func_800384F0(CAM_VEC *pos, sint32 arg1, sint32 arg2)
 // The D_8009A55C table has no symbol, so the clear loop indexes D_8009A598 (its last word).
 // D_80098698 and D_80097D2C are set first after the loop and D_80097D34 separately: that gives
 // retail's early 0x200 load and its store order.
-void func_80038648(void)
+void Camera_init(void)
 {
     CAM_SAVE *cw;
     sint32 x;
@@ -201,7 +201,7 @@ void func_80038648(void)
 // Camera update through the cw pointer (retail keeps &D_800A3958 in s0). Retail reuses its
 // locals: the case 0 blend weight is blend, case 4's angle difference is rot (computed before
 // the cur < want test), and the wrap test keeps value_34 - rot in speed. The abs is a ternary.
-void func_80038894(void)
+void Camera_update(void)
 {
     CAM_VEC pos;
     CAM_VEC unused;
@@ -622,7 +622,7 @@ void func_800395E8(void)
     D_800A3959 = 0;
 }
 
-void func_80039630(sint32 arg)
+void Camera_height_set(sint32 arg)
 {
     if (Camera_work.flag_6 != 0)
     {

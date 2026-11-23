@@ -52,7 +52,7 @@ typedef struct
     STCOM_SVECTOR pos_38; // 38
 } STCOM34_OWNER;
 
-// A 3D line packet from func_8002D4B8, drawn later by ROCK_NEO.
+// A 3D line packet from Line_alloc, drawn later by ROCK_NEO.
 typedef struct
 {
     uint32 xy1_0;   // 00: the far end's x and y
@@ -79,7 +79,7 @@ void stcom34_func_04CC(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade);
 
 // ROCK_NEO.EXE.
 STCOM34_OWNER *Obj_id_work(sint32 id);
-STCOM34_LINE *func_8002D4B8(void);
+STCOM34_LINE *Line_alloc(void);
 void Close_EFFECT_WORK(STCOM34_WORK *wp);
 
 // The scratchpad's frame counter.

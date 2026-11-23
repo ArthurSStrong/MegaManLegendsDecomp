@@ -413,7 +413,7 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
                 effect->sprite    = wp->sprite;
             }
         }
-        func_8004AC8C(&wp->velocity.v, hit);
+        Scr_vec_reflect(&wp->velocity.v, hit);
     }
     return landed;
 }

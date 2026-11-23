@@ -277,11 +277,11 @@ extern uint8 D_800BC739;
 extern sint32 D_800BC7E0;
 extern sint32 D_800BC7E4;
 extern sint32 D_800BC7E8;
-void func_80038324(sint32 *pos, sint16 a, sint16 b, sint16 c);
+void Camera_pos_set(sint32 *pos, sint16 a, sint16 b, sint16 c);
 #ifdef __wasm32__
-void func_800384A4(sint32 *pos, sint32 *target);
+void Camera_look_at2(sint32 *pos, sint32 *target);
 #else
-void func_800384A4(sint32 *pos, sint32 *pos2, sint32 w, SCENE_CAM *cam);
+void Camera_look_at2(sint32 *pos, sint32 *pos2, sint32 w, SCENE_CAM *cam);
 #endif
 
 typedef void (*SCENE_SLOT_FUNC)(SCENE_SLOT *slot);
@@ -317,7 +317,7 @@ void Draw_dist_near(void);
 // (no shared base register), as the script-step helpers need.
 #define SCENE_WORK_FIXED (*(SCENE_WORK *)0x800C4C48)
 
-// func_800384A4 as Sce_camera_apply calls it: retail passes only the two vectors.
+// Camera_look_at2 as Sce_camera_apply calls it: retail passes only the two vectors.
 typedef void (*SCENE_CAM_FUNC)(sint32 *pos, sint32 *target);
 
 // Game_work through its fixed address (same view type). The stage-load helpers read

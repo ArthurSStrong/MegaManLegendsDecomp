@@ -435,7 +435,7 @@ void func_8011552C(STAGE_OBJ *wp)
                 Moji_task_kill(4);
                 Cd_subcmd(0, 1, 0);
             }
-            func_8005D87C();
+            Gauge_boss_clear();
             pl->value_76 = 0;
             pl->flags_0 &= ~1;
             Sce_flag_on(0x605);
@@ -523,7 +523,7 @@ void func_80115780(STAGE_OBJ *wp)
                 Moji_task_kill(4);
                 Cd_subcmd(0, 1, 0);
             }
-            func_8005D87C();
+            Gauge_boss_clear();
             Gauge_close(D_80122B50);
             pl->value_76 = 0;
             pl->flags_0 &= ~1;
@@ -594,7 +594,7 @@ void func_80115A24(STAGE_OBJ *wp)
                 Moji_task_kill(4);
                 Cd_subcmd(0, 1, 0);
             }
-            func_8005D87C();
+            Gauge_boss_clear();
             Gauge_close(D_80122B50);
             pl->value_76 = 0;
             pl->flags_0 &= ~1;
@@ -667,7 +667,7 @@ void func_80115C24(STAGE_OBJ *wp)
         }
         D_80122B48 = (STAGE_OBJ *)op_48;
     }
-    func_8005D844(0, 0, Em_param_tbl[10]->value_A);
+    Gauge_boss_set(0, 0, Em_param_tbl[10]->value_A);
     if (wp->variant_3 == 0)
     {
         op_4C = (ST17_SLOT *)Open_EM_WORK();

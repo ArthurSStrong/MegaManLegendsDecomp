@@ -134,8 +134,8 @@ extern uint8 D_800BBD83;
 extern uint8 D_800BBD84[];
 extern uint8 D_800BBD85;
 extern uint16 D_800BBD90;
-extern sint16 D_800BBD94;
-extern sint16 D_800BBD96;
+extern sint16 Pl_invincible_timer;
+extern sint16 Pl_invisible_timer;
 extern uint8 D_800BBDAB;
 extern CODE5C_WORD_BYTE D_800BBE2C;
 extern uint32 D_800BBE30;
@@ -187,8 +187,8 @@ typedef struct
 } CODE5C_GAUGE;
 extern CODE5C_GAUGE D_80089A8C[];
 extern CODE5C_SLOT Gauge_work[5];
-// The weapon gauge slot after the five 0x24-byte slots (0x20 bytes; the banked helpers
-// reach its words as D_800BBE2C...D_800BBE48).
+// The boss gauge slot (top of the screen; Gauge_boss_set) after the five 0x24-byte slots
+// (0x20 bytes; the banked helpers reach its words as D_800BBE2C...D_800BBE48).
 #define CODE5C_GAUGE_SLOT (*(CODE5C_SLOT *)&D_800BBE2C)
 // Word views of POLY_G4 and POLY_FT4 (colour, position and texture words written whole).
 typedef struct

@@ -620,7 +620,7 @@ void func_8010CA98(ST05_GUARD *wp)
                 ctl->timer_4 = (ctl->timer_4 + 1) & 0x3F;
                 break;
             }
-            rot = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
+            rot = Calc_hit_side(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
             if (rot & 0xFFFF0000)
             {
                 wp->rotation.y = (rot + 0x800) & 0xFFF;
@@ -846,7 +846,7 @@ sint32 func_8010D1A8(ST05_GUARD *wp)
                     ctl->timer_A >= Em_param_tbl[wp->kind_2]->limit_19)
                 {
                     Sound_call2(0xA2, &wp->position);
-                    r              = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
+                    r              = Calc_hit_side(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
                     wp->rotation.y = r + 0x800;
                     if (r & 0xFFFF0000)
                     {

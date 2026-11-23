@@ -181,12 +181,12 @@ sint32 Sub_screen_item(SUB_WORK *wp)
                             break;
                         case 0x42:
                             MojiTaskExec(0, (uint8 *)0x801F2000, 0x55);
-                            func_8005EBB4(0x708);
+                            Pl_invisible_set(0x708);
                             wp->flag_C = 0x542;
                             break;
                         case 0x43:
                             MojiTaskExec(0, (uint8 *)0x801F2000, 0x57);
-                            func_8005EBA4(0x384);
+                            Pl_invincible_set(0x384);
                             wp->flag_C = 0x543;
                             break;
                     }

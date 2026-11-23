@@ -1105,7 +1105,7 @@ void func_8004A060(sint16 *box, uint16 kind)
     box[5] -= CODE486_SP_OFSH6.h12c;
 }
 
-sint32 func_8004AC8C(PL_SHORT_VECTOR *vec, sint32 flags)
+sint32 Scr_vec_reflect(PL_SHORT_VECTOR *vec, sint32 flags)
 {
     PL_SHORT_BYTES old;
     sint32 val;

@@ -609,7 +609,7 @@ struct ST0E_VIEW
     } u_C0;                  // C0
     uint8 reservedC4[0x8];   // C4
     ST0E_HIT hit_CC;         // CC
-    uint8 data_DC[0x4];      // DC: func_80031F84's second argument (func_80107DE0)
+    uint8 data_DC[0x4];      // DC: Calc_hit_side's second argument (func_80107DE0)
     STCOM_SVECTOR vec_E0;    // E0
     sint32 value_E8;         // E8
     sint32 value_EC;         // EC

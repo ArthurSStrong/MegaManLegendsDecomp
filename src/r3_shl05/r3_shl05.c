@@ -315,7 +315,7 @@ sint16 func_800D90B0(SHL_WORK *wp)
                 fx->spr       = wp->draw.spr;
             }
         }
-        func_8004AC8C(&wp->vel, hit);
+        Scr_vec_reflect(&wp->vel, hit);
     }
     return stop;
 }

@@ -657,7 +657,7 @@ void func_8003354C(void *wp);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Scr_ground_check(void *wp);
 sint32 Search_Player(void *track, void *wp);
-sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
+sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_80100DDC(ST13_STCOM27_WORK *wp);
 void func_80101B28(STAGE_OBJ *wp, sint32 anim);
 void func_80101BF8(ST13_OBJ *wp);

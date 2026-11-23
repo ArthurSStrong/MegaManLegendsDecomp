@@ -251,8 +251,8 @@ sint32 func_80027F78(void *work, void *arg)
     C80027678_SCRATCH_E4 = 0x24808080;
     if (Scene_work == 0)
     {
-        a = func_8005EBC4();
-        b = func_8005EBD4();
+        a = Pl_invincible_get();
+        b = Pl_invisible_get();
         if (a >= 0x5A || b >= 0x5A || !(C80027678_SCRATCH_02 & 1))
         {
             if (a != 0)
@@ -537,7 +537,7 @@ void func_800289A0(C80027678_LOD *lod)
 
 // Two descending record scans. Indexing the tables by symbol with a pre-decremented count
 // gives retail's separate byte offset and counter, with the base rebuilt each pass.
-void func_80028DE0(void)
+void Em_work_draw(void)
 {
     sint32 i;
     C80027678_REC5A4 *a;
@@ -1951,7 +1951,7 @@ void shadow_draw(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint32 
     *ot    = (uint32)p & 0xFFFFFF;
 }
 
-void func_8002CFA4(void)
+void Draw_list_clear(void)
 {
     func_800177CC((void *)0x8015BC00, (void *)0x8015BFFC);
     Shadow_count         = 0;
@@ -2117,7 +2117,7 @@ uint8 *Billboard_alloc(void)
     return p;
 }
 
-uint8 *func_8002D4B8(void)
+uint8 *Line_alloc(void)
 {
     uint8 *p;
 

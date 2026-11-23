@@ -1,7 +1,7 @@
 #include "common.h"
 #include "code_800680bc.h"
 
-void func_800680BC(sint32 arg)
+void event_room_set(sint32 arg)
 {
     D_800C356C = -1;
     D_800C356E = 0x18;
@@ -51,7 +51,7 @@ void func_80068244(CODE68_WORK *wp)
         child->routine_9 = 0;
         child->routine_a = 0;
         child->flags_0 |= 2;
-        func_800680BC(0);
+        event_room_set(0);
     }
 }
 
@@ -61,7 +61,7 @@ void func_80068290(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(1);
+        event_room_set(1);
         wp->child_24->flags_0 &= ~2;
         child            = wp->child_28;
         child->routine_9 = 0xB;
@@ -154,7 +154,7 @@ void func_8006849C(CODE68_WORK *wp)
 
     if (wp->word_c == 0)
     {
-        func_800680BC(2);
+        event_room_set(2);
         child = wp->child_28;
         child->flags_0 &= ~2;
         child = wp->child_2c;
@@ -182,7 +182,7 @@ void func_8006854C(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(1);
+        event_room_set(1);
         child            = wp->child_28;
         child->routine_9 = 5;
         child->word_1c   = 0xFE590000;
@@ -357,7 +357,7 @@ void func_8006890C(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(0);
+        event_room_set(0);
         child            = wp->child_24;
         child->routine_9 = 1;
         child->routine_a = 0;
@@ -375,7 +375,7 @@ void func_80068998(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(1);
+        event_room_set(1);
         wp->child_24->flags_0 &= ~2;
         child = wp->child_28;
         child->flags_0 |= 2;
@@ -393,7 +393,7 @@ void func_80068A24(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(0);
+        event_room_set(0);
         child            = wp->child_24;
         child->routine_9 = 1;
         child->routine_a = 0;
@@ -411,7 +411,7 @@ void func_80068AB0(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(1);
+        event_room_set(1);
         wp->child_24->flags_0 &= ~3;
         child            = wp->child_28;
         child->routine_9 = 8;
@@ -428,7 +428,7 @@ void func_80068B3C(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(0);
+        event_room_set(0);
         wp->child_24->flags_0 |= 3;
         child = wp->child_28;
         child->flags_0 &= ~2;
@@ -451,7 +451,7 @@ void func_80068BE4(CODE68_WORK *wp)
 
     if (wp->timer_10 == 0)
     {
-        func_800680BC(1);
+        event_room_set(1);
         wp->child_24->flags_0 &= ~2;
         child            = wp->child_28;
         child->routine_9 = 9;

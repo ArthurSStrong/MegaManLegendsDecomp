@@ -256,7 +256,7 @@ void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, SVECTOR *pos);
 sint32 Set_Atari(SVECTOR *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, uint32 *col,
                      uint32 flags, sint32 arg7, sint32 arg8);
 sint32 Scr_collision_check(void *obj);
-void func_8004AC8C(SVECTOR *vel, sint32 flags);
+void Scr_vec_reflect(SVECTOR *vel, sint32 flags);
 sint32 Scr_cell_get(SVECTOR *pos);
 sint32 Scr_height_check(void *obj);
 sint32 Scr_event_check(void *obj);

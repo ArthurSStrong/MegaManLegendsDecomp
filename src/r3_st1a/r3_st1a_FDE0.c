@@ -3539,7 +3539,7 @@ void func_801169B0(ST1A_STCOM27_WORK_D *wp)
                 EM_Char_Set(wp, 0xB, 0);
                 wp->damage_B2 = 0;
                 ctl->kind_30  = 0;
-                dir           = func_80031F84(&wp->position, &ctl->from_28, wp->rotation.y, 0);
+                dir           = Calc_hit_side(&wp->position, &ctl->from_28, wp->rotation.y, 0);
                 if (dir & 0xFFFF0000)
                 {
                     wp->rotation.y = dir;

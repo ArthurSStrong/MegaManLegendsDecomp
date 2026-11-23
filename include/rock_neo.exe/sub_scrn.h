@@ -257,8 +257,8 @@ extern uint8 D_8008D7EC[];
 sint32 func_8005D95C(void);
 void Gauge_show_release(void);
 void Player_weapon_refill(void);
-void func_8005EBA4(sint32 arg);
-void func_8005EBB4(sint32 arg);
+void Pl_invincible_set(sint32 arg);
+void Pl_invisible_set(sint32 arg);
 #define SUB_PLAYER_BYTE_4F4(slot, i) (*((sint8 *)&Player_work + 0x4F4 + (slot) * 8 + (i)))
 void Sub_screen_gauge_set2(sint32 x, sint32 y, sint32 width, sint32 flag);
 sint32 Player_weapon_bullet_calc(SUB_PLAYER *pl, sint32 slot);

@@ -258,7 +258,7 @@ sint32 Sce_room_load(void);
 #else
 void Sce_room_load(void);
 #endif
-void func_80038648(void);
+void Camera_init(void);
 void Sce_flag_init(sint32 mode);
 void Map_obj_state_reset(sint32 mode);
 void Player_init(sint32 mode);
@@ -301,7 +301,7 @@ void Solid_check(void);
 void Player_atari_set(void);
 void pl_shl_work_move(void);
 void effect_common_move(void);
-void func_80038894(void);
+void Camera_update(void);
 void Atari_check(void);
 void Map_obj_break_update(void);
 void Automap_update(void);
@@ -309,7 +309,7 @@ void func_800238B4(void);
 void Map_layer_draw(void);
 void func_80027678(void);
 void func_800175FC(void);
-void func_80028DE0(void);
+void Em_work_draw(void);
 void Map_screen_init(void);
 sint32 Map_screen_task(void);
 

@@ -122,7 +122,7 @@ void stcom17_func_021C(STCOM17_WORK *wp)
                     ctl->routine_4C = wp->routine_1;
                     wp->routine_1   = 5;
                     dir =
-                        (uint32)func_80031F84(&wp->position, &ctl->target_10, wp->rotation.y, 1) >>
+                        (uint32)Calc_hit_side(&wp->position, &ctl->target_10, wp->rotation.y, 1) >>
                         16;
                     switch (dir)
                     {

@@ -3694,7 +3694,7 @@ typedef struct
     ST1A_STCOM27_CTL_D ctl;                 // 4E0
 } ST1A_STCOM27_WORK_D;
 
-sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
+sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_801169B0(ST1A_STCOM27_WORK_D *wp);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);

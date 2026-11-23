@@ -168,7 +168,7 @@ void stcom27_func_04E4(STCOM27_WORK *wp)
 
     pos = &wp->position;
     Sound_call2(0x197, pos);
-    angle = func_80031F84(pos, &wp->ctl.from_28, wp->rotation.y, 0);
+    angle = Calc_hit_side(pos, &wp->ctl.from_28, wp->rotation.y, 0);
     if (angle & 0xFFFF0000)
     {
         wp->rotation.y = (angle + 0x800) & 0xFFF;

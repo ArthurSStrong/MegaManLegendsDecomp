@@ -343,7 +343,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
     if (ground != 0)
     {
         wp->value_E = 1;
-        func_8004AC8C(&wp->velocity.v, ground);
+        Scr_vec_reflect(&wp->velocity.v, ground);
     }
     func_8010C3D8(wp);
     func_8010C4AC(wp);

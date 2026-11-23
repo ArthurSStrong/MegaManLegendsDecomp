@@ -84,7 +84,7 @@ void Title_init(CODE800133D8_STATE *wp)
                 D_80098864 = 0;
                 Work_init_all(1);
                 Draw_dist_far();
-                func_8002CFA4();
+                Draw_list_clear();
                 Fog_room_set(D_800808D0, D_800808A8);
                 *CODE800133D8_SCRATCH_TABLE = D_800808A4;
                 wp->routine_1++;
@@ -148,9 +148,9 @@ void title_obj_update(void)
     func_800175D8();
     Title_chr_control(&Code800133D8_work);
     Em_work_move();
-    func_80038370(D_800979DC, D_800979EC);
+    Camera_look_at(D_800979DC, D_800979EC);
     func_800175FC();
-    func_80028DE0();
+    Em_work_draw();
     index = CODE800133D8_DISPLAY_INDEX;
     link  = Disp_env_ptr;
     setaddr(D_800A4D40[index], getaddr(&link->tag));

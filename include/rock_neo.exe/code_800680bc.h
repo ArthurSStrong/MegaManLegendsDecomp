@@ -134,7 +134,7 @@ extern sint16 D_800C3564;
 extern sint16 D_800C356A;
 extern sint16 Fade_busy;
 
-void func_800680BC(sint32 arg);
+void event_room_set(sint32 arg);
 void part_col_step(CODE68_CHILD *child, sint32 index);
 void screen_tile_draw(sint32 r, sint32 g, sint32 b, uint16 tpage);
 void func_80101D94(void);

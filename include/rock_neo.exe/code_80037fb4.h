@@ -211,7 +211,7 @@ void camera_cmd_exec(void);
 void Camera_move_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
 void Camera_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
-void func_80038370(CAM_VEC *vec, CAM_VEC *target);
+void Camera_look_at(CAM_VEC *vec, CAM_VEC *target);
 
 extern uint16 D_800C0D92;
 extern uint8 D_80097D5C[];

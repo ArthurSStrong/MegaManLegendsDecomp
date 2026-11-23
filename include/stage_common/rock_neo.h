@@ -215,7 +215,7 @@ STCOM_EFFECT *Open_EFFECT_WORK(void);
 // Sets a 16.16 position from a short one.
 void Obj_pos_adj_round(STCOM_FIXED_VECTOR *fixed, STCOM_SVECTOR *pos);
 void Close_PL_SHL_WORK(void *wp);
-void func_8004AC8C(STCOM_SVECTOR *velocity, sint32 hit);
+void Scr_vec_reflect(STCOM_SVECTOR *velocity, sint32 hit);
 // PsyQ libgte.
 sint32 rsin(sint32 a);
 sint32 rcos(sint32 a);

@@ -39,13 +39,13 @@ void Gauge_update(void)
     uint32 i;
 
     func_8005C868((CODE5C_WORK *)&Gauge_work[1]);
-    if (D_800BBD94 > 0)
+    if (Pl_invincible_timer > 0)
     {
-        D_800BBD94--;
+        Pl_invincible_timer--;
     }
-    if (D_800BBD96 > 0)
+    if (Pl_invisible_timer > 0)
     {
-        D_800BBD96--;
+        Pl_invisible_timer--;
     }
     D_80098B18 = 0;
     if (D_80098008 != Scene_work)
@@ -762,7 +762,7 @@ void Gauge_clear(void)
     }
 }
 
-void func_8005D844(sint16 arg0, sint16 arg1, uint8 arg2)
+void Gauge_boss_set(sint16 arg0, sint16 arg1, uint8 arg2)
 {
     D_800BBE2C.byte = 3;
     D_800BBE44.half = arg0;
@@ -771,7 +771,7 @@ void func_8005D844(sint16 arg0, sint16 arg1, uint8 arg2)
     D_800BBE39      = 1;
 }
 
-void func_8005D87C(void)
+void Gauge_boss_clear(void)
 {
     D_800BBE2C.word = 0;
     D_800BBE30      = 0;
@@ -785,7 +785,7 @@ void func_8005D87C(void)
 
 sint32 func_8005D8C4(sint32 arg0)
 {
-    if (D_800BBD94 > 0)
+    if (Pl_invincible_timer > 0)
     {
     fail:
         return 0;
@@ -809,7 +809,7 @@ sint32 func_8005D8C4(sint32 arg0)
 
 uint8 func_8005D938(void)
 {
-    if (D_800BBD94 > 0)
+    if (Pl_invincible_timer > 0)
     {
         return 0;
     }
@@ -836,7 +836,7 @@ void func_8005D97C(void)
 
 void Gauge_show_hold(void)
 {
-    if (D_800BBD94 <= 0)
+    if (Pl_invincible_timer <= 0)
     {
         D_800BBD84[3] = 1;
         gauge_show();
@@ -1358,24 +1358,24 @@ void func_8005EAA8(CODE5C_RECT *rect)
     }
 }
 
-void func_8005EBA4(sint16 arg0)
+void Pl_invincible_set(sint16 arg0)
 {
-    D_800BBD94 = arg0;
+    Pl_invincible_timer = arg0;
 }
 
-void func_8005EBB4(sint16 arg0)
+void Pl_invisible_set(sint16 arg0)
 {
-    D_800BBD96 = arg0;
+    Pl_invisible_timer = arg0;
 }
 
-sint16 func_8005EBC4(void)
+sint16 Pl_invincible_get(void)
 {
-    return D_800BBD94;
+    return Pl_invincible_timer;
 }
 
-sint16 func_8005EBD4(void)
+sint16 Pl_invisible_get(void)
 {
-    return D_800BBD96;
+    return Pl_invisible_timer;
 }
 
 void func_8005EBE4(void)

@@ -695,7 +695,7 @@ sint8 stcom24_func_1468(STCOM24_WORK *wp)
             wp->life_6E = 0;
         }
         pos             = &wp->position;
-        wp->ctl.angle_C = func_80031F84(pos, &wp->ctl.body_20.from_8, wp->rotation.y, 0);
+        wp->ctl.angle_C = Calc_hit_side(pos, &wp->ctl.body_20.from_8, wp->rotation.y, 0);
         wp->scale.v.pad = 0x7FFF;
         if (limit < wp->ctl.damage_12 || wp->life_6E == 0)
         {
@@ -738,7 +738,7 @@ sint8 stcom24_func_15E8(STCOM24_WORK *wp)
     if (damage != 0 && (wp->ctl.claw_30.hit_0 & 0x38000000))
     {
         wp->ctl.damage_16 += damage;
-        wp->ctl.angle_C = func_80031F84(&wp->position, &wp->ctl.claw_30.from_8, wp->rotation.y, 0);
+        wp->ctl.angle_C = Calc_hit_side(&wp->position, &wp->ctl.claw_30.from_8, wp->rotation.y, 0);
         if (wp->ctl.angle_C & 0xFFFF0000)
         {
             wp->ctl.angle_C += 0x800;

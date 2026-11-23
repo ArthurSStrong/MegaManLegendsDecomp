@@ -330,7 +330,7 @@ void stcom13_func_08B0(STCOM13_WORK *wp)
                 ctl->timer_4 = (ctl->timer_4 + 1) & 0x3F;
                 break;
             }
-            angle = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
+            angle = Calc_hit_side(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
             if (angle & 0xFFFF0000)
             {
                 wp->rotation.y = (angle + 0x800) & 0xFFF;
@@ -482,7 +482,7 @@ sint32 stcom13_func_0DA8(STCOM13_WORK *wp)
                     ctl->damage_A >= Em_param_tbl[wp->kind_2]->stun_19)
                 {
                     Sound_call2(0xA2, &wp->position);
-                    angle          = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
+                    angle          = Calc_hit_side(&wp->position, &ctl->from_1C, wp->rotation.y, 0);
                     wp->rotation.y = angle + 0x800;
                     if (angle & 0xFFFF0000)
                     {

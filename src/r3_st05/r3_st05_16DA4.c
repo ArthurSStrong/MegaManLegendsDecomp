@@ -894,7 +894,7 @@ void func_801188C0(ST05_ACTOR *wp)
                 ep->z_20      = wp->position.z;
             }
         }
-        func_8004AC8C(&wp->velocity.v, hit);
+        Scr_vec_reflect(&wp->velocity.v, hit);
     }
     if (wp->value_E >= 3 && wp->value_F >= 2)
     {

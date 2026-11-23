@@ -168,7 +168,7 @@ void func_80107DE0(ST0E_VIEW *wp)
         if (damage != 0)
         {
             Sound_call2(0xA0, &wp->position);
-            if (!((uint32)func_80031F84(&wp->position, (STCOM_SVECTOR *)wp->data_DC, wp->rotation.y,
+            if (!((uint32)Calc_hit_side(&wp->position, (STCOM_SVECTOR *)wp->data_DC, wp->rotation.y,
                                         0) >>
                   16))
             {
@@ -212,7 +212,7 @@ void func_80107DE0(ST0E_VIEW *wp)
             }
         }
     }
-    else if (!((uint32)func_80031F84(&wp->position, (STCOM_SVECTOR *)wp->data_DC, wp->rotation.y,
+    else if (!((uint32)Calc_hit_side(&wp->position, (STCOM_SVECTOR *)wp->data_DC, wp->rotation.y,
                                      0) >>
                16))
     {

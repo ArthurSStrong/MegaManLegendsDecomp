@@ -703,7 +703,7 @@ extern STCOM_SVECTOR D_801219C8[];
 extern uint16 D_8011AF58[];
 extern STAGE_EV *D_80122B50;
 void Moji_task_kill(sint32 arg);
-void func_8005D87C(void);
+void Gauge_boss_clear(void);
 void Gauge_close(void *wp);
 void func_80116510(STAGE_OBJ *wp);
 void Game_logo_kill(sint32 index);
@@ -804,7 +804,7 @@ typedef struct
 
 void func_80113C84(ST17_BURST *wp);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, uint32 a4);
-void func_8005D844(sint32 a0, sint32 a1, uint8 a2);
+void Gauge_boss_set(sint32 a0, sint32 a1, uint8 a2);
 extern STAGE_OBJ *D_80122B54[];
 // A jointed model's record at a work slot's +0x440: the model's 0x5A4-byte slot
 // (func_80105A0C) and the nine joint rotations it draws with.

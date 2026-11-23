@@ -193,7 +193,7 @@ void func_80029B94(void);
 void shadow_draw_all(void);
 void billboard_list_draw(void);
 void func_80027678(void);
-void func_80028DE0(void);
+void Em_work_draw(void);
 void Model_uv_copy(C80027678_MODEL *m, uint32 idx, sint32 delta);
 void func_800177CC(void *, void *);
 
@@ -334,8 +334,8 @@ extern uint8 Scene_work;            // same as game.h
 extern uint32 D_800A4D40[][0x1000]; // same as code_800133d8.h
 extern sint16 D_800BBCF8[];         // sine table, 64 entries (same as main.h)
 extern sint16 D_800BAEB0[];         // cosine table, 64 entries (same as main.h)
-sint32 func_8005EBC4(void);
-sint32 func_8005EBD4(void);
+sint32 Pl_invincible_get(void);
+sint32 Pl_invisible_get(void);
 
 #define C80027678_SCRATCH_02 (*(uint16 *)0x1F800002)
 

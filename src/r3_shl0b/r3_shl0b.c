@@ -99,7 +99,7 @@ void func_800D8AAC(SHL_WORK *wp)
             wp->value_74  = 0;
             wp->routine_0 = 2;
         }
-        func_8004AC8C(&wp->vel, hit);
+        Scr_vec_reflect(&wp->vel, hit);
     }
     else
     {

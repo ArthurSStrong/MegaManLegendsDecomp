@@ -125,7 +125,7 @@ sint8 stcom24_func_15E8(STCOM24_WORK *wp);
 extern STCOM24_KIND **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
-sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
+sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 #ifdef __wasm32__
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
