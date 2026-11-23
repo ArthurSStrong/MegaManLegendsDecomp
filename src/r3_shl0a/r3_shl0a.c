@@ -17,7 +17,7 @@ void func_800D8854(SHL_WORK *wp)
 
     wp->flags_0 |= 0xA;
     wp->flags_6 |= 0x20;
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->col_c4 = 0;
     wp->col_c8 = 0;
     wp->box_78 = &D_800D8F04;
@@ -171,12 +171,12 @@ void func_800D8E48(SHL_WORK *wp)
     flags = func_800375D4(&Player_work, 1);
     if (wp->index_c)
     {
-        func_8003430C(&wp->pos, size, &wp->old_pos, size, 0x200, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, size, &wp->old_pos, size, 0x200, 0x6000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&wp->pos, size, &wp->old_pos, size, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, size, &wp->old_pos, size, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
 }

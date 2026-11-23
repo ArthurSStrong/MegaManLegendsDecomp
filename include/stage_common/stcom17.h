@@ -42,7 +42,7 @@ typedef struct
     uint32 value_C;              // 2F4
     STCOM_SVECTOR target_10;     // 2F8: where the hit came from
     uint8 track_18[0x10];        // 300
-    STCOM_SVECTOR size_28;       // 310: the player range box (func_80030418, func_80030628)
+    STCOM_SVECTOR size_28;       // 310: the player range box (View_check_center, View_check_ang)
     STCOM_FIXED_VECTOR fixed_30; // 318
     uint16 damage_40;            // 328: damage taken lately (drains by one a frame)
     uint16 power_42;             // 32A: or'd into the hit block's kind bits
@@ -132,7 +132,7 @@ typedef struct
     uint32 value_2C;             // 334
     uint8 track_30[0x10];        // 338
     uint32 dist_40;              // 348: value_80 when the pitch was last aimed
-    STCOM_SVECTOR size_44;       // 34C: the player range box (func_80030628)
+    STCOM_SVECTOR size_44;       // 34C: the player range box (View_check_ang)
     STCOM_FIXED_VECTOR fixed_4C; // 354
     uint16 power_5C;             // 364: or'd into the hit block's kind bits
     sint16 speed_5E;             // 366: shell speed
@@ -219,9 +219,9 @@ sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32
 void func_8002F9EC(void *wp, sint32 arg);
 void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
 void EM_World_Pos_Calc(void *wp);
-uint32 func_80030628(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
+uint32 View_check_ang(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
                      sint32 angle);
-sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
+sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 #ifdef __wasm32__
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
@@ -229,7 +229,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos);
 void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void func_80052528(void *wp);
-sint32 func_800364B0(void *track, void *wp, sint32 angle);
+sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 sint16 Calc_arc_angle(STCOM_SVECTOR *from, STCOM_SVECTOR *to, sint32 speed, sint32 arg3,
                      sint32 arg4);
 void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);

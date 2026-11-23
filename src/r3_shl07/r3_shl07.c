@@ -12,7 +12,7 @@ void func_800D8840(SHL_WORK *wp)
     SVECTOR unused_s;
     VECTOR unused_v;
 
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->timer_b = 0;
     wp->routine_0++;
     Sound_call2(0x12B, &wp->pos);
@@ -33,7 +33,7 @@ void func_800D888C(SHL_WORK *wp)
     sint32 push;
 
     wp->timer_b++;
-    tp   = func_80036294(wp->index_c);
+    tp   = Obj_id_work(wp->index_c);
     p    = tp->pos;
     r    = func_80037634(&Player_work, 7);
     r2   = r * 2;

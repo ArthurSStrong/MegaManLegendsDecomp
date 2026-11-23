@@ -203,7 +203,7 @@ void stcom31_func_033C(STCOM31_WORK *wp)
             stcom31_E_0018[0] = wp->position;
             stcom31_E_0000    = wp->position_fixed;
             set               = ctl->random_2 & 3;
-            func_8002FFC4(stcom31_E_0018, &stcom31_E_0000, wp->rotation.v.y,
+            Obj_pos_move(stcom31_E_0018, &stcom31_E_0000, wp->rotation.v.y,
                           stcom31_D_0078[set][i].x, stcom31_D_0078[set][i].y,
                           stcom31_D_0078[set][i].z);
             effect->sprite.pos_8[0] = stcom31_E_0018[0].x;

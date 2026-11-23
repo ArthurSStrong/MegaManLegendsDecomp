@@ -19,17 +19,17 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 typedef struct
 {
     uint8 unk00[2]; // 0x00: never accessed
-    uint16 flags;   // 0x02: bit 0 = mono (see Cd_set_volume); bit 15 set by Cd_stop/func_8001B7B4.
+    uint16 flags;   // 0x02: bit 0 = mono (see Cd_set_volume); bit 15 set by Cd_stop/cd_subcmd_mute.
     //       lhu/andi 0x8000 in sound_volume_update, B644/B6FC/B89C/B7B4/CB7C, Cd_set_volume
     sint16 unk04; // 0x04: lh (sound_volume_update, master volume factor); init in Sound_init
     sint16 unk06; // 0x06: lh (sound_volume_update, serial volume factor); also read as lhu / saved and
-                  //       cleared by func_8001B7B4 (D_800AD146); init in Sound_init
+                  //       cleared by cd_subcmd_mute (D_800AD146); init in Sound_init
     sint16 unk08; // 0x08: lh (sound_pan_calc); init 0x40 in Sound_init
     sint16 unk0A; // 0x0A: lh (sound_volume_update); init 0x64 in Sound_init
     sint16
         unk0C; // 0x0C: lh; &unk0C passed to sound_fade_step (read/written as 16-bit) by sound_volume_update
     sint16
-        unk0E; // 0x0E: lh; &unk0E passed to sound_fade_step by sound_volume_update; also written by func_8001B89C
+        unk0E; // 0x0E: lh; &unk0E passed to sound_fade_step by sound_volume_update; also written by cd_cmd_xa_play
     sint16 unk10; // 0x10: lh (sound_pan_calc); &unk10 passed to sound_fade_step by sound_volume_update
     sint16
         unk12; // 0x12: lh; &unk12 passed to sound_fade_step; set to 0x7F by Sound_seq_play/Sound_sep_play

@@ -232,10 +232,10 @@ sint32 Scr_height_check(PL_WORK *pl);
 typedef void (*PL_FUNC)(PL_WORK *pl);
 
 extern PL_FUNC D_80089F94[];
-void func_800321C8(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
-void func_800323FC(PL_WORK *pl, sint32 a1, sint32 a2);
-void func_800320B8(PL_WORK *pl, sint32 a1, sint32 a2);
-void func_8003234C(); // signature differs between callers; see code_8002e7a8.h
+void Pl_Char_Set_Upper(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
+void Pl_Char_Move_Upper(PL_WORK *pl, sint32 a1, sint32 a2);
+void Pl_Char_Set(PL_WORK *pl, sint32 a1, sint32 a2);
+void Pl_Char_Move(); // signature differs between callers; see code_8002e7a8.h
 uint32 func_8004324C(PL_WORK *pl);
 sint32 func_8004B414(PL_WORK *pl);
 sint32 func_80042044(PL_WORK *pl, sint32 a1, sint32 a2);
@@ -265,11 +265,11 @@ void func_80053158(PL_WORK *pl, uint32 arg);
 void func_8005331C(PL_WORK *pl, uint32 arg);
 sint32 func_80050C2C(PL_WORK *pl);
 #ifdef __wasm32__
-void func_800329D4(void *arg, sint32 unused);
+void Pl_key_unpack(void *arg, sint32 unused);
 #else
-void func_800329D4(); // signature differs between callers; see code_8002e7a8.h
+void Pl_key_unpack(); // signature differs between callers; see code_8002e7a8.h
 #endif
-void func_800325D4(); // signature differs between callers; see code_8002e7a8.h
+void Pl_World_Pos_Calc(); // signature differs between callers; see code_8002e7a8.h
 void func_8002C794(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 extern uint8 D_80097D9C[];
 void func_80039A38(void *data);
@@ -284,7 +284,7 @@ void func_80037594(void);
 void func_800177CC(void *start, void *end);
 extern uint32 D_8009888C;
 extern PL_HEIGHT_INFO D_80097D90;
-extern uint8 D_800B5DB0[]; // same as cd_local.h
+extern uint8 Cd_ring_buf[]; // same as cd_local.h
 // Generic effect allocator; CODE456_WORK is its full layout (code_800456d8.h).
 struct CODE456_WORK *Open_EFFECT_WORK(void);
 void func_8003E068(PL_WORK *pl, sint32 index);
@@ -320,10 +320,10 @@ typedef struct
 } PL_BOUNDS;
 
 void RotMatrixYXZ();  // argument types differ between callers
-void func_800301A8(); // signature differs between callers; see code_8002e7a8.h
+void Calc_rotate_about(); // signature differs between callers; see code_8002e7a8.h
 sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 
-extern sint32 D_80097D08; // same as code_8002e7a8.h
+extern sint32 Lockon_target; // same as code_8002e7a8.h
 extern sint32 D_80098B18; // same as code_8005c258.h
 
 // Common head of the 0x3C0, 0x5A4 and 0x10C entity records as the lock-on search

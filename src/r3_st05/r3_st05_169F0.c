@@ -26,7 +26,7 @@ void func_80116A2C(ST05_VILLAGER *wp)
     *(uint32 *)&ctl->timer_4 = 0;
     D_80137F58               = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &D_80137F58, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &D_80137F58, wp->rotation.y, 0x100, 0, 0);
     ctl->timer_A              = 0;
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;

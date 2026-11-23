@@ -524,7 +524,7 @@ void func_80068DAC(CODE68_WORK *wp)
             {
                 pl->routine_0 &= 0xFC;
                 wp->routine_4++;
-                func_8001D58C(0x2001000B);
+                Cd_xa_play_id(0x2001000B);
             }
             break;
         case 1:
@@ -578,7 +578,7 @@ void func_80068DAC(CODE68_WORK *wp)
                 D_800C3571  = 0xFF;
                 D_800C3570  = 2;
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Player_work.routine_0 |= 1;
                 func_80042314(&Player_work);
                 Sce_flag_select(0x2EB);

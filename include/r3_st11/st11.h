@@ -92,14 +92,14 @@ typedef struct
     STCOM_SVECTOR mpos;  // AC: the model's position
     uint32 color_b4;     // B4
     uint8 reservedb8[0xC];
-    uint32 col_c4; // C4: hit accumulator (func_8003430C)
+    uint32 col_c4; // C4: hit accumulator (Set_Atari2)
     uint32 col_c8; // C8
 } ST11_SHL;
 
 // Player_work's signed bytes past STCOM_PL_WORK's fields.
 #define ST11_PL_SBYTE(offset) (*((sint8 *)&Player_work + (offset)))
 
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
 sint32 func_80037634(void *player, sint32 arg);
 void func_801076F8(ST11_SHL *wp);

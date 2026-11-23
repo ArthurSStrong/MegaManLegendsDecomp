@@ -90,7 +90,7 @@ extern PL_WORK **D_80098898;
 void func_80042314(PL_WORK *pl);
 void func_80039820(void);
 void Sce_flag_off(sint32 flag);
-uint32 func_8002FE74(uint32 id);
+uint32 Obj_id_class(uint32 id);
 sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind);
 extern uint8 D_800A395C;
 extern uint8 D_8008AA04[];
@@ -187,7 +187,7 @@ extern uint8 Game_work[];
 void Sce_flag_on(sint32 flag);
 void Sce_event_start(sint32 id);
 uint32 Sce_flag_test(uint32 flag);
-void func_80063BC8(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
+void Message_event_set(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 
 void func_8004B3C0(sint32 *arg);
 void func_80048A9C(CODE486_TASK *task);
@@ -249,7 +249,7 @@ typedef struct
 void RotMatrix(CODE486_SVECTOR *r, CODE486_MTX *m);
 void RotMatrixYXZ(CODE486_SVECTOR *r, CODE486_MTX *m);
 #define CODE486_PLAT_AT(a) (*(CODE486_PLAT *)(a))
-void func_800301A8(CODE486_MTX *mtx, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *origin);
+void Calc_rotate_about(CODE486_MTX *mtx, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *origin);
 
 // Solid-object collision: a list of x/z areas (ended by a null hit list), each with
 // height ranges.

@@ -52,7 +52,7 @@ void func_80119474(STAGE_ROOM *wp)
         case 5:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x20010007);
+                Cd_xa_play_id(0x20010007);
                 wp->routine_6++;
             }
             break;
@@ -500,7 +500,7 @@ void func_8011A2FC(STAGE_ROOM *wp)
             if (Fade_busy == 0)
             {
                 D_80122B98 = 0;
-                func_8001D58C(0x20010005);
+                Cd_xa_play_id(0x20010005);
                 wp->routine_5 = 0;
                 wp->routine_6 = 0;
                 wp->routine_7 = 0;
@@ -555,7 +555,7 @@ void func_8011A574(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             wp->routine_5++;
             break;
         case 1:

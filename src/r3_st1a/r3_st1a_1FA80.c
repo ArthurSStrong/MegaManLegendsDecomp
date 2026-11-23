@@ -28,7 +28,7 @@ void func_8011FB90(ST1A_EMITTER *wp)
 {
     ST1A_VIEW_G *owner;
     STAGE_FX *fx;
-    owner = func_80036294(wp->id_F);
+    owner = Obj_id_work(wp->id_F);
     fx    = (STAGE_FX *)Open_EFFECT_WORK();
     if (fx != NULL)
     {

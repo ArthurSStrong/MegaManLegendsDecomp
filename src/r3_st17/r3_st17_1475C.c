@@ -230,7 +230,7 @@ void func_80114F00(STAGE_OBJ *wp)
             if (Moji_flag & 0x08000000)
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             MojiTaskExec2(0, 0x10);
             wp->routine_1++;
@@ -433,7 +433,7 @@ void func_8011552C(STAGE_OBJ *wp)
             if (Moji_flag & 0x800000)
             {
                 Moji_task_kill(4);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             func_8005D87C();
             pl->value_76 = 0;
@@ -521,7 +521,7 @@ void func_80115780(STAGE_OBJ *wp)
             if (Moji_flag & 0x800000)
             {
                 Moji_task_kill(4);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             func_8005D87C();
             func_8005D6E8(D_80122B50);
@@ -592,7 +592,7 @@ void func_80115A24(STAGE_OBJ *wp)
             if (Moji_flag & 0x800000)
             {
                 Moji_task_kill(4);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             func_8005D87C();
             func_8005D6E8(D_80122B50);
@@ -805,7 +805,7 @@ void func_801161C8(STAGE_OBJ *wp)
         if (Moji_flag & 0x08000000)
         {
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
         }
         Sound_key_off_voice(0x11);
         D_80122B48->anim_AC      = 1;
@@ -883,7 +883,7 @@ void func_801161C8(STAGE_OBJ *wp)
             if (Moji_flag & 0x08000000)
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             MojiTaskExec2(0, 0);
             Sound_call(0x182, 0, 0);
@@ -1170,7 +1170,7 @@ void func_80116B04(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8001D58C(0x20010002);
+                Cd_xa_play_id(0x20010002);
                 wp->routine_5++;
             }
             break;
@@ -1248,7 +1248,7 @@ void func_80116E28(STAGE_ROOM *wp)
                 STAGE_PL_BYTE(0x168) = 0;
                 STAGE_PL_BYTE(0x169) = 0;
                 STAGE_PL.flags_bd |= 0x10;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
@@ -1698,7 +1698,7 @@ void func_80117CEC(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8001D58C(0x20010003);
+                Cd_xa_play_id(0x20010003);
                 wp->routine_5 = 0;
                 wp->routine_6 = 0;
                 wp->routine_7 = 0;
@@ -1805,7 +1805,7 @@ void func_801180B4(STAGE_ROOM *wp)
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 if (wp->reserved09[1] & 2)
                 {
                     Cd_read_comb(0xB0);
@@ -2012,7 +2012,7 @@ void func_8011865C(STAGE_ROOM *wp)
         case 3:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x20010004);
+                Cd_xa_play_id(0x20010004);
                 wp->routine_6++;
             }
             break;
@@ -2222,7 +2222,7 @@ void func_80118CD0(STAGE_ROOM *wp)
         case 3:
             if (Fade_busy == 0)
             {
-                func_8001D58C(0x20010006);
+                Cd_xa_play_id(0x20010006);
                 wp->routine_5 = 0;
                 wp->routine_6 = 0;
                 wp->routine_7 = 0;
@@ -2320,7 +2320,7 @@ void func_80119068(STAGE_ROOM *wp)
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 if (wp->reserved09[1] & 2)
                 {
                     Cd_read_comb(0xB1);

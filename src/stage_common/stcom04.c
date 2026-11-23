@@ -391,7 +391,7 @@ void stcom04_func_0AF4(STCOM04_WORK *wp)
         wp->rotation.x = 0x400;
     }
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void stcom04_func_0B58(STCOM04_WORK *wp)

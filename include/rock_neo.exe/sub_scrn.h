@@ -193,19 +193,19 @@ extern uint8 *D_8008CB94;
 
 uint32 Sce_flag_test(uint32 flag);
 sint32 Cd_read_sync2(void);
-void func_8001D7AC(sint32 arg);
+void Cd_seek_file(sint32 arg);
 void func_800425FC(SUB_PLAYER *pl, sint32 arg);
 void func_800605DC(void);
 void func_80060248(SUB_WORK *wp);
 void Sub_screen_shift_check(SUB_WORK *wp);
 void Sub_screen_rb_parts_calc_sub00(SUB_WORK *wp, sint32 idx);
 void Sub_screen_rb_parts_calc_sub01(SUB_WORK *wp, sint32 idx);
-void func_80063BA8(void);
-void func_80063EF0(void);
+void Message_event_clear(void);
+void Game_logo_init(void);
 void func_800665E8(void);
 void func_8001B314(void);
 void Sound_seq_stop_all(void);
-void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
+void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 void Sce_flag_off(uint32 flag);
 void Moji_item_set(sint32 value);
 void Title_task(void);
@@ -278,6 +278,6 @@ void MojiTaskKill(void);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 void Game_logo_kill(sint32 index);
 void Cd_read_comb(sint32 arg);
-void func_80063FC0(sint32 index, sint32 arg);
+void Game_logo_set(sint32 index, sint32 arg);
 
 #endif // ROCK_SUB_SCRN_H

@@ -278,7 +278,7 @@ void func_801011B8(STAGE_ROOM *wp)
             break;
         case 10:
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
             func_80039820();
             Close_SHL_WORK(wp->child_24);

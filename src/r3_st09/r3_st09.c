@@ -66,7 +66,7 @@ void func_80100398(void)
     pl->value_44E   = 1;
     spawn           = D_8011D488[Game_work.value_51];
     STAGE_MAP_EXITS = D_8011DAAC[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_8011DC38[D_8011DC90[Game_work.value_51]], D_8011DAD0[Game_work.value_51]);
     func_8005DC10(D_8011BBB4[Game_work.value_51]);
     func_801005F4();
@@ -216,8 +216,8 @@ void func_80100788(STAGE_ROOM_WORK *wp)
     {
         func_80100BF0();
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         wp->routine_6 = 3;
         Sce_flag_on(0xC);
@@ -269,7 +269,7 @@ void func_80100BF0(void)
         if (D_8011DD60 & (0x80000000 >> i))
         {
             obj  = D_8011EA60[i];
-            kind = func_8002FE74(obj->index_1);
+            kind = Obj_id_class(obj->index_1);
             switch (kind)
             {
                 case 0x20:
@@ -294,7 +294,7 @@ void func_80100D14(sint8 index)
     if (D_8011DD60 & (0x80000000 >> index))
     {
         obj  = D_8011EA60[index];
-        kind = func_8002FE74(obj->index_1);
+        kind = Obj_id_class(obj->index_1);
         if (kind == 0x20 || kind == 0x60)
         {
             obj->routine_0 = 2;
@@ -385,9 +385,9 @@ void func_8010116C(ST09_VIEW *wp)
     wp->ext.u_34.h[1]         = 0;
     wp->ext.u_3C.h[0]         = 0;
     wp->ext.u_38.h[0]         = 4;
-    wp->ext.obj_40            = func_80036294(wp->u_C.b[1]);
-    wp->ext.u_44.fx[0]        = (STAGE_FX *)func_80036294(wp->ext.obj_40->u_C.b.byte_D);
-    wp->ext.u_44.fx[1]        = (STAGE_FX *)func_80036294(wp->ext.obj_40->u_E.b.byte_E);
+    wp->ext.obj_40            = Obj_id_work(wp->u_C.b[1]);
+    wp->ext.u_44.fx[0]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_C.b.byte_D);
+    wp->ext.u_44.fx[1]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_E.b.byte_E);
     life                      = D_80098844[wp->kind_2]->life_8 << 4;
     wp->data_78               = D_8011DE20;
     wp->value_10              = 0;
@@ -406,7 +406,7 @@ void func_801012B4(ST09_VIEW *wp)
     STAGE_ACTOR_EXT *ext;
 
     ext = &wp->ext;
-    if (func_800364B0(wp->ext.u_24.track, wp, (wp->rotation.y + wp->ext.u_3C.h[0]) & 0xFFF))
+    if (Search_Player_Ang(wp->ext.u_24.track, wp, (wp->rotation.y + wp->ext.u_3C.h[0]) & 0xFFF))
     {
         wp->ext.flags_0 |= 0x100;
     }
@@ -687,7 +687,7 @@ void func_801017F0(ST09_VIEW *wp)
                     ext->piece_54->variant_3      = 0;
                     ext->piece_54->position       = wp->position;
                     ext->piece_54->position_fixed = wp->position_fixed;
-                    func_8002FFC4(&ext->piece_54->position, &ext->piece_54->position_fixed,
+                    Obj_pos_move(&ext->piece_54->position, &ext->piece_54->position_fixed,
                                   (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
                     ext->piece_54->angle_64 = wp->rotation.y;
                     ext->u_34.h[0]          = 60;
@@ -1307,7 +1307,7 @@ void func_80102B4C(ST09_VIEW *wp)
                         ext->piece_54->variant_3      = 0;
                         ext->piece_54->position       = wp->position;
                         ext->piece_54->position_fixed = wp->position_fixed;
-                        func_8002FFC4(&ext->piece_54->position, &ext->piece_54->position_fixed,
+                        Obj_pos_move(&ext->piece_54->position, &ext->piece_54->position_fixed,
                                       (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
                         ext->piece_54->angle_64 = wp->rotation.y;
                         ext->obj_40->u_E.b.byte_F |= 1;

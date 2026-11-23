@@ -46,7 +46,7 @@ void func_80124F9C(ST05_PROP *wp)
     uint8 c;
     uint16 f;
 
-    link = func_80036294(wp->value_E);
+    link = Obj_id_work(wp->value_E);
     if (wp->variant_3 < 4)
     {
         if (link->value_C < wp->value_F)
@@ -616,7 +616,7 @@ void func_8012656C(STAGE_OBJ *wp)
             size.x = 2;
             size.y = 9;
             size.z = 2;
-            if (func_80030604(wp, pl, &size, &out) & 1)
+            if (View_check(wp, pl, &size, &out) & 1)
             {
                 pl->step_C    = 10;
                 D_800C0F96[0] = D_800C0F9A = pl->pad_128 | pl->pad_138;
@@ -753,7 +753,7 @@ void func_80126990(ST05_SHL *wp)
     }
     else
     {
-        func_800354E0(wp->bit_d);
+        Homing_target_clear(wp->bit_d);
         rot.x = func_80039B80();
     }
     rot.y = wp->rot_y & 0xFFF;
@@ -885,17 +885,17 @@ void func_80126F10(STAGE_SHOT *wp)
     }
     if (wp->type_3 & 0x40)
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
                       0, 0x80);
     }
     else if (wp->index_c)
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
                       flags | 0x8000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                       flags | 0x8000000, 0, 0x80);
     }
 }

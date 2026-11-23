@@ -80,7 +80,7 @@ void func_80116F7C(ST05_ACTOR *wp)
             {
                 if (func_8003A13C() == 0)
                 {
-                    func_80063BC8(&wp->position, 3, 0, func_80117300());
+                    Message_event_set(&wp->position, 3, 0, func_80117300());
                     EM_Char_Set(wp, 8, 0);
                     wp->routine_1 = 0;
                     wp->routine_0++;
@@ -88,7 +88,7 @@ void func_80116F7C(ST05_ACTOR *wp)
             }
             break;
         case 3:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 if (D_800987B5 == 0x48)
@@ -206,7 +206,7 @@ void func_80117380(ST05_ACTOR *wp)
     *(sint32 *)&wp->ctl2.timer_4 = 0;
     fixed                        = wp->position_fixed;
     wp->ctl2.target_C            = wp->position;
-    func_8002FFC4(&wp->ctl2.target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&wp->ctl2.target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;
     wp->value_B2              = 0x80;
@@ -852,7 +852,7 @@ void func_801188C0(ST05_ACTOR *wp)
         wp->rotation.x += 0x200;
         wp->rotation.y += 0x100;
         EM_Char_Move2(wp);
-        func_80033A28(wp);
+        Model_key_unpack(wp);
         ST05_SP_TILT->x = wp->rotation.x;
         EM_World_Pos_Calc(wp);
         wp->velocity.v.y += wp->accel_4C.y;
@@ -1363,7 +1363,7 @@ void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     sint32 spawned;
 
     spawned = 0;
-    func_80030058(&dir, wp->rotation.y, 0x600, 0, 0);
+    Calc_local_vec(&dir, wp->rotation.y, 0x600, 0, 0);
     Obj_pos_adj_round(&dir, &step);
     fx = (ST05_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
@@ -1372,7 +1372,7 @@ void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
         fx->kind_2  = 1;
         fx->value_4 = 0;
         fx->type_F  = 0x24;
-        func_80030058(&ofs, wp->rotation.y, 0xC80, 0x1900, 0x480);
+        Calc_local_vec(&ofs, wp->rotation.y, 0xC80, 0x1900, 0x480);
         fx->position_fixed = ofs;
         fx->position_fixed.x += wp->position_fixed.x;
         fx->position_fixed.y += wp->position_fixed.y;
@@ -1394,7 +1394,7 @@ void func_8011986C(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
         fx->kind_2  = 1;
         fx->value_4 = 0;
         fx->type_F  = 0x24;
-        func_80030058(&ofs, wp->rotation.y, 0xC80, 0x1900, -0x480);
+        Calc_local_vec(&ofs, wp->rotation.y, 0xC80, 0x1900, -0x480);
         fx->position_fixed = ofs;
         fx->position_fixed.x += wp->position_fixed.x;
         fx->position_fixed.y += wp->position_fixed.y;
@@ -1469,11 +1469,11 @@ void func_80119BE0(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
 
     if (ctl->flags_0 & 0x60)
     {
-        func_80030058(&ofs, wp->rotation.y + 0x80, 0x300, 0, 0);
+        Calc_local_vec(&ofs, wp->rotation.y + 0x80, 0x300, 0, 0);
     }
     else
     {
-        func_80030058(&ofs, wp->rotation.y, 0x1800, 0, 0);
+        Calc_local_vec(&ofs, wp->rotation.y, 0x1800, 0, 0);
     }
     ofs.x += wp->position_fixed.x;
     ofs.z += wp->position_fixed.z;
@@ -1587,7 +1587,7 @@ void func_80119EE8(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     }
     else
     {
-        func_80036470(ctl->track_28);
+        Search_Player_Reset(ctl->track_28);
         Obj_pos_set(wp, 0xC0, 0, 0);
         ctl->flags_0 &= ~0x80;
         if (ctl->random_2 & 1)
@@ -1619,7 +1619,7 @@ void func_8011A094(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     }
     else
     {
-        func_80036470(ctl->track_28);
+        Search_Player_Reset(ctl->track_28);
         if (ctl->timer_4 == 0)
         {
             ctl->timer_6 = 0x20;
@@ -1652,7 +1652,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
             ctl->rise_16 = 8;
             ctl->count_A = 0;
             ctl->flags_0 |= 4;
-            func_80030058(&vec, wp->rotation.y, 0x3C00, 0, 0);
+            Calc_local_vec(&vec, wp->rotation.y, 0x3C00, 0, 0);
             vec.x += wp->position_fixed.x;
             vec.z += wp->position_fixed.z;
             Obj_pos_adj_round(&vec, &pos);
@@ -1663,7 +1663,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
         case 1:
             wp->rotation.y = (wp->rotation.y + 0x20) & 0xFFF;
             Obj_pos_set(wp, 0xC0, 0, 0);
-            func_80030058(&vec, wp->rotation.y, 0x3C00, 0, 0);
+            Calc_local_vec(&vec, wp->rotation.y, 0x3C00, 0, 0);
             vec.x += wp->position_fixed.x;
             vec.z += wp->position_fixed.z;
             Obj_pos_adj_round(&vec, &pos);
@@ -1685,7 +1685,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
             break;
         case 2:
             Obj_pos_set(wp, 0x100, 0, 0);
-            func_80030058(&vec, wp->rotation.y, 0x3C00, 0, 0);
+            Calc_local_vec(&vec, wp->rotation.y, 0x3C00, 0, 0);
             vec.x += wp->position_fixed.x;
             vec.z += wp->position_fixed.z;
             Obj_pos_adj_round(&vec, &pos);
@@ -2284,7 +2284,7 @@ void func_8011B534(ST05_BOSS *wp)
                 wp->ctl.size_C8.x    = 2;
                 wp->ctl.size_C8.y    = 9;
                 wp->ctl.size_C8.z    = 4;
-                side                 = func_80030418(wp, pl, &wp->ctl.size_C8, &wp->ctl.out_D0);
+                side                 = View_check_center(wp, pl, &wp->ctl.size_C8, &wp->ctl.out_D0);
                 angle = (Calc_degree2(&wp->position, &pl->position) + 0x1000) & 0xFFF;
                 if (side & 1)
                 {
@@ -3131,7 +3131,7 @@ sint32 func_8011D0E8(ST05_BOSS *wp, sint16 width, sint32 turn)
     wp->ctl.size_C8.y = 9;
     wp->ctl.size_C8.x = width;
     wp->ctl.size_C8.z = 4;
-    side              = func_80030418(wp, &Player_work, &wp->ctl.size_C8, &wp->ctl.out_D0);
+    side              = View_check_center(wp, &Player_work, &wp->ctl.size_C8, &wp->ctl.out_D0);
     if (!(side & 2))
     {
         if (side & 1)

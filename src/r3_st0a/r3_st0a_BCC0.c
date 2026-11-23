@@ -297,7 +297,7 @@ void func_8010C0A0(ST0A_EM *wp)
             ext->fpos_70.x   = ext->hit_C.pos_0.x << 16;
             ext->fpos_70.y   = ext->hit_C.pos_0.y << 16;
             ext->fpos_70.z   = ext->hit_C.pos_0.z << 16;
-            func_8002FFC4(&ext->hit_C.pos_0, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200, 0);
+            Obj_pos_move(&ext->hit_C.pos_0, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200, 0);
             Set_Atari(&ext->hit_C.pos_0, 0x20, 0, 0x8000, wp->value_1, &ext->hit_C.hit_8,
                           0x4080000, 0, 0x80);
         }
@@ -309,7 +309,7 @@ void func_8010C0A0(ST0A_EM *wp)
                 ext->fpos_70.x   = ext->hit_C.pos_0.x << 16;
                 ext->fpos_70.y   = ext->hit_C.pos_0.y << 16;
                 ext->fpos_70.z   = ext->hit_C.pos_0.z << 16;
-                func_8002FFC4(&ext->hit_C.pos_0, &ext->fpos_70,
+                Obj_pos_move(&ext->hit_C.pos_0, &ext->fpos_70,
                               (wp->rotation.y + ext->angle_42) & 0xFFF, D_80116260[i].x << 4,
                               D_80116260[i].y << 4, D_80116260[i].z << 4);
                 Set_Atari(&ext->hit_C.pos_0, 0x40, 0, 0x8000, wp->value_1,
@@ -549,7 +549,7 @@ void func_8010CFE8(ST0A_EM *wp)
         wp->ext.fpos_70 = D_80116250;
     } while (0);
     angle = wp->value_64 + Calc_degree2(center, &wp->position);
-    func_8002FFC4(&wp->ext.pos_68, &wp->ext.fpos_70, angle & 0xFFF, 0x5000, 0, 0);
+    Obj_pos_move(&wp->ext.pos_68, &wp->ext.fpos_70, angle & 0xFFF, 0x5000, 0, 0);
     wp->position         = wp->ext.pos_68;
     wp->position_fixed.v = wp->ext.fpos_70;
     wp->ext.angle_42     = (angle + wp->value_66 - wp->rotation.y) & 0xFFF;
@@ -677,7 +677,7 @@ void func_8010D2F4(ST0A_EM *wp)
                     obj->u_E.b.byte_F     = 1;
                     obj->position         = wp->position;
                     obj->position_fixed.v = wp->position_fixed.v;
-                    func_8002FFC4(&obj->position, &obj->position_fixed.v, wp->rotation.y, 0xD00,
+                    Obj_pos_move(&obj->position, &obj->position_fixed.v, wp->rotation.y, 0xD00,
                                   -0x2E20, 0);
                     obj->rotation.y = (wp->rotation.y + 0x800) & 0xFFF;
                 }
@@ -785,7 +785,7 @@ void func_8010D6C0(ST0A_EM *wp)
                         ext->fpos_70.x = wp->position.x << 16;
                         ext->fpos_70.y = wp->position.y << 16;
                         ext->fpos_70.z = wp->position.z << 16;
-                        func_8002FFC4(&ext->pos_68, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200,
+                        Obj_pos_move(&ext->pos_68, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200,
                                       0);
                         obj->flags_0  = 1;
                         obj->kind_2   = 3;
@@ -944,7 +944,7 @@ void func_8010DD20(ST0A_EM *wp)
             ext->fpos_70 = wp->position_fixed.v;
             pos          = &ext->pos_68;
             fpos         = &ext->fpos_70;
-            func_8002FFC4(pos, fpos, (wp->rotation.y + ext->angle_42) & 0xFFF, 0x800, 0, 0);
+            Obj_pos_move(pos, fpos, (wp->rotation.y + ext->angle_42) & 0xFFF, 0x800, 0, 0);
             self           = &wp->position;
             step           = Muku(self, pos, wp->rotation.y, 0x20);
             center         = D_80116248;
@@ -953,7 +953,7 @@ void func_8010DD20(ST0A_EM *wp)
             ext->pos_68    = *center;
             ext->fpos_70   = D_80116250;
             angle          = wp->value_64 + Calc_degree2(center, self);
-            func_8002FFC4(pos, fpos, angle & 0xFFF, 0x5000, 0, 0);
+            Obj_pos_move(pos, fpos, angle & 0xFFF, 0x5000, 0, 0);
             ext->flags_F2 |= 1;
             ext->angle_42        = (angle + wp->value_66 - wp->rotation.y) & 0xFFF;
             wp->position         = ext->pos_68;
@@ -1067,8 +1067,8 @@ void func_8010E254(ST0A_EM *wp)
                 *pos            = wp->position;
                 wp->ext.fpos_70 = wp->position_fixed.v;
                 fpos            = &wp->ext.fpos_70;
-                func_8002FFC4(pos, fpos, wp->rotation.y, 0xD00, -(wp->ext.value_6 << 9), 0);
-                func_8002FFC4(pos, fpos, wp->ext.value_6 << 9, D_80116290[wp->routine_3 * 4],
+                Obj_pos_move(pos, fpos, wp->rotation.y, 0xD00, -(wp->ext.value_6 << 9), 0);
+                Obj_pos_move(pos, fpos, wp->ext.value_6 << 9, D_80116290[wp->routine_3 * 4],
                               D_80116292[wp->routine_3 * 4], 0);
                 fx = Open_EFFECT_WORK();
                 if (fx != NULL)

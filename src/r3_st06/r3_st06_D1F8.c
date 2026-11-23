@@ -450,7 +450,7 @@ void func_8010DE88(ST06_ACTOR *wp)
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
     if (turn == 0 && func_8003A13C() == 0)
     {
-        func_80063BC8(&wp->position, 3, 0, wp->timer_C);
+        Message_event_set(&wp->position, 3, 0, wp->timer_C);
         EM_Char_Set(wp, 8, 0);
         wp->routine_1 = 1;
         wp->routine_0++;
@@ -463,7 +463,7 @@ void func_8010DE88(ST06_ACTOR *wp)
 
 void func_8010DF30(STAGE_OBJ *wp)
 {
-    if ((sint8)*D_800987B0 == 0)
+    if ((sint8)*Message_event == 0)
     {
         func_80039E18();
         EM_Char_Set(wp, 1, 0);
@@ -2265,7 +2265,7 @@ void func_80111264(ST06_CRAB *wp)
             size.x       = 2;
             size.y       = 9;
             size.z       = 4;
-            side         = func_80030418(wp, pl, &size, &out);
+            side         = View_check_center(wp, pl, &size, &out);
             if (side & 1)
             {
                 wp->rotation.y =
@@ -2670,7 +2670,7 @@ void func_80111EE4(ST06_ACTOR *wp)
     *(uint32 *)&ctl->timer_4 = 0;
     D_8012BA50               = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &D_8012BA50, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &D_8012BA50, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E          = 0x80;
     wp->value_B0          = 0x80;
     wp->value_B2          = 0x80;

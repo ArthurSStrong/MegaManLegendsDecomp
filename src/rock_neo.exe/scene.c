@@ -6,8 +6,8 @@
 #ifdef __wasm32__
 void Work_close_apply(void);
 void func_80051B40(void);
-void func_80033EBC(void);
-void func_800629E0(void);
+void Atari_init(void);
+void Debug_init(void);
 void func_8002CFA4(void);
 void Obj_work_flag_change(sint32 arg, sint32 flags);
 #endif
@@ -346,7 +346,7 @@ void Sce_slot_close_all(void)
         if (D_800988E8 & (0x80000000U >> i))
         {
             slot = D_800ACD40[i];
-            switch ((sint32)func_8002FE74(slot->id_1))
+            switch ((sint32)Obj_id_class(slot->id_1))
             {
                 case 0x40:
                     slot->routine_8 = 2;
@@ -385,7 +385,7 @@ void Sce_slot_close(sint8 index)
     if (D_800988E8 & (0x80000000U >> index))
     {
         slot = D_800ACD40[index];
-        switch ((sint32)func_8002FE74(slot->id_1))
+        switch ((sint32)Obj_id_class(slot->id_1))
         {
             case 0x40:
                 slot->routine_8 = 2;
@@ -998,8 +998,8 @@ sint32 Sce_room_load(void)
     }
     func_8002CFA4();
     func_80051B40();
-    func_80033EBC();
-    func_800629E0();
+    Atari_init();
+    Debug_init();
     ((SCENE_FUNC)func_800179FC)(); // retail passes no arguments here
     ((uint8 *)gw)[0x7E] = 0;
     Sce_flag_off(0x1FF);
@@ -1059,7 +1059,7 @@ void func_8001F6C4(void)
     sub   = D_800C356F;
     if (Game_work.value_68 != value || ((value = tbl[sub + 1]) >= 0 && Game_work.value_6A != value))
     {
-        func_8001D7AC(value);
+        Cd_seek_file(value);
     }
 }
 

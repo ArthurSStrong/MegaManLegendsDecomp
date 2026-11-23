@@ -56,10 +56,10 @@ void main(void)
         SCRATCH_SCREEN_WORD = D_800806EC[D_80098864][SCRATCH_BUFFER_INDEX];
         thread_exec();
         Sound_update();
-        func_8001C95C();
+        Cd_cmd_exec();
         func_800203A8();
         Moji_update();
-        func_80064060();
+        Game_logo_draw();
         DrawSync(0);
         Fade_draw();
         func_800178FC();
@@ -656,7 +656,7 @@ void func_8001326C(sint8 *state)
         tile->h = 240;
         SetDrawMode(&D_80098A10[i], 0, 0, GetTPage(2, 2, 0, 0), NULL);
     }
-    func_80063EF0();
+    Game_logo_init();
     Moji_init();
     func_800665E8();
     Cd_read_comb(0x1D);

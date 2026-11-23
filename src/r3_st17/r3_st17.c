@@ -32,7 +32,7 @@ void func_8010059C(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_8011AD44[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_8011ADF4[D_8011AE74[Game_work.value_51]], D_8011AD54[Game_work.value_51]);
     func_8005DC10(0);
     func_80100704();
@@ -319,7 +319,7 @@ void func_80100F10(STAGE_OBJ *wp)
     else if (wp->routine_0 == 4)
     {
         EM_Char_Move2(wp);
-        func_800334C4(wp);
+        EM_World_Pos_Calc_YXZ(wp);
     }
     else
     {
@@ -373,7 +373,7 @@ void func_80101130(STAGE_OBJ *wp)
             // fall through
         case 4:
             EM_Char_Move2(wp);
-            func_800334C4(wp);
+            EM_World_Pos_Calc_YXZ(wp);
             break;
     }
     func_80051B68(wp, 1, -1, 0);
@@ -424,7 +424,7 @@ void func_8010147C(STAGE_OBJ *wp)
     wp->position_fixed_prev = wp->position_fixed.v;
     wp->rotation_prev       = wp->rotation;
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 // with the move of wp.
@@ -1176,7 +1176,7 @@ void func_80102B28(STAGE_OBJ *wp)
     {
         EM_Char_Move2(wp);
     }
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_80102D3C(STAGE_OBJ *wp)
@@ -1261,7 +1261,7 @@ void func_80102D3C(STAGE_OBJ *wp)
         }
         EM_Char_Move2(wp);
     }
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_80102FD8(STAGE_OBJ *wp)
@@ -1367,7 +1367,7 @@ void func_80103108(STAGE_OBJ *wp)
         {
             EM_Char_Move2(wp);
         }
-        func_800334C4(wp);
+        EM_World_Pos_Calc_YXZ(wp);
     }
     else if (wp->anim_prev_AD != wp->anim_AC)
     {
@@ -2200,7 +2200,7 @@ void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part)
     sint32 spawned;
 
     spawned = 0;
-    func_80030058(&fixed, wp->rotation.y, 0x600, 0, 0);
+    Calc_local_vec(&fixed, wp->rotation.y, 0x600, 0, 0);
     Obj_pos_adj_round(&fixed, &v);
     shot = Open_SHL_WORK();
     if (shot != NULL)
@@ -2209,7 +2209,7 @@ void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part)
         shot->kind_2  = 1;
         shot->value_4 = 0;
         shot->value_F = 0x34;
-        func_80030058(&offset, wp->rotation.y, 0xC80, 0xD00, 0x440);
+        Calc_local_vec(&offset, wp->rotation.y, 0xC80, 0xD00, 0x440);
         shot->position_fixed.v = offset;
         shot->position_fixed.v.x += wp->position_fixed.v.x;
         shot->position_fixed.v.y += wp->position_fixed.v.y;
@@ -2232,7 +2232,7 @@ void func_80104900(STAGE_OBJ *wp, ST17_PART28 *part)
         shot->kind_2  = 1;
         shot->value_4 = 0;
         shot->value_F = 0x34;
-        func_80030058(&offset, wp->rotation.y, 0xC80, 0xD00, -0x440);
+        Calc_local_vec(&offset, wp->rotation.y, 0xC80, 0xD00, -0x440);
         shot->position_fixed.v = offset;
         shot->position_fixed.v.x += wp->position_fixed.v.x;
         shot->position_fixed.v.y += wp->position_fixed.v.y;
@@ -3567,7 +3567,7 @@ void func_8010761C(STAGE_OBJ *wp)
             break;
         case 1:
         case 4:
-            func_80033A28(wp);
+            Model_key_unpack(wp);
             EM_World_Pos_Calc(wp);
             break;
     }
@@ -5204,7 +5204,7 @@ void func_8010AB78(STAGE_OBJ *wp)
         fixed.x                  = ST17_HW_OF(wp)->vec_1A.x << 16;
         fixed.y                  = ST17_HW_OF(wp)->vec_1A.y << 16;
         fixed.z                  = ST17_HW_OF(wp)->vec_1A.z << 16;
-        func_8002FFC4(&ST17_HW_OF(wp)->vec_1A, &fixed, ST17_HW_OF(wp)->angle_22, 0x7000, 0, 0);
+        Obj_pos_move(&ST17_HW_OF(wp)->vec_1A, &fixed, ST17_HW_OF(wp)->angle_22, 0x7000, 0, 0);
         ST17_HW_OF(wp)->timer_2  = 0x40;
         ST17_HW_OF(wp)->value_4  = 0;
         ST17_HW_OF(wp)->angle_22 = (ST17_HW_OF(wp)->angle_22 + 0x800) & 0xFFF;
@@ -5248,7 +5248,7 @@ void func_8010AC6C(STAGE_OBJ *wp)
     fixed.x = pos.x << 16;
     fixed.y = pos.y << 16;
     fixed.z = pos.z << 16;
-    func_8002FFC4(&pos, &fixed, hw->angle_22, 0x7000, 0, 0);
+    Obj_pos_move(&pos, &fixed, hw->angle_22, 0x7000, 0, 0);
     hw->angle_22         = (hw->angle_22 - 0x20) & 0xFFF;
     wp->position         = pos;
     wp->position_fixed.v = fixed;
@@ -5270,7 +5270,7 @@ void func_8010AE0C(STAGE_OBJ *wp)
         fixed.x                  = ST17_HW_OF(wp)->vec_1A.x << 16;
         fixed.y                  = ST17_HW_OF(wp)->vec_1A.y << 16;
         fixed.z                  = ST17_HW_OF(wp)->vec_1A.z << 16;
-        func_8002FFC4(&ST17_HW_OF(wp)->vec_1A, &fixed, ST17_HW_OF(wp)->angle_22, 0x7000, 0, 0);
+        Obj_pos_move(&ST17_HW_OF(wp)->vec_1A, &fixed, ST17_HW_OF(wp)->angle_22, 0x7000, 0, 0);
         ST17_HW_OF(wp)->timer_2  = 0x40;
         ST17_HW_OF(wp)->angle_22 = (ST17_HW_OF(wp)->angle_22 + 0x800) & 0xFFF;
         wp->routine_2++;
@@ -5312,7 +5312,7 @@ void func_8010AF08(STAGE_OBJ *wp)
     fixed.x = pos.x << 16;
     fixed.y = pos.y << 16;
     fixed.z = pos.z << 16;
-    func_8002FFC4(&pos, &fixed, hw->angle_22, 0x7000, 0, 0);
+    Obj_pos_move(&pos, &fixed, hw->angle_22, 0x7000, 0, 0);
     hw->angle_22         = (hw->angle_22 - 0x20) & 0xFFF;
     wp->position         = pos;
     wp->position_fixed.v = fixed;
@@ -5616,11 +5616,11 @@ void func_8010BA40(STAGE_OBJ *wp, sint32 side, sint32 level)
 
     if (side == 0)
     {
-        func_80030058(&fixed, (wp->rotation.y - D_8011BD64[level]) & 0xFFF, 0x400, 0, 0);
+        Calc_local_vec(&fixed, (wp->rotation.y - D_8011BD64[level]) & 0xFFF, 0x400, 0, 0);
     }
     else
     {
-        func_80030058(&fixed, (wp->rotation.y + D_8011BD64[level]) & 0xFFF, 0x400, 0, 0);
+        Calc_local_vec(&fixed, (wp->rotation.y + D_8011BD64[level]) & 0xFFF, 0x400, 0, 0);
     }
     Obj_pos_adj_round(&fixed, &v);
     shot = Open_SHL_WORK();
@@ -5636,7 +5636,7 @@ void func_8010BA40(STAGE_OBJ *wp, sint32 side, sint32 level)
         shot->position_fixed.v.x = shot->position.x << 16;
         shot->position_fixed.v.y = shot->position.y << 16;
         shot->position_fixed.v.z = shot->position.z << 16;
-        func_8002FFC4(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD6C[side].x,
+        Obj_pos_move(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD6C[side].x,
                       0, D_8011BD6C[side].z);
         shot->value_44.half[0] = v.x << 8;
         shot->value_44.half[1] = 0x3000;
@@ -5669,7 +5669,7 @@ void func_8010BC84(STAGE_OBJ *wp, sint32 index)
     STCOM_SVECTOR v;
     ST17_SHOT *shot;
 
-    func_80030058(&fixed, (wp->rotation.y + D_8011BD9C[rand() & 7]) & 0xFFF, 0x400, 0, 0);
+    Calc_local_vec(&fixed, (wp->rotation.y + D_8011BD9C[rand() & 7]) & 0xFFF, 0x400, 0, 0);
     Obj_pos_adj_round(&fixed, &v);
     shot = Open_SHL_WORK();
     if (shot != NULL)
@@ -5684,7 +5684,7 @@ void func_8010BC84(STAGE_OBJ *wp, sint32 index)
         shot->position_fixed.v.x = shot->position.x << 16;
         shot->position_fixed.v.y = shot->position.y << 16;
         shot->position_fixed.v.z = shot->position.z << 16;
-        func_8002FFC4(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD74[index].x,
+        Obj_pos_move(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD74[index].x,
                       0, D_8011BD74[index].z);
         shot->value_44.half[0] = v.x << 8;
         shot->value_44.half[1] = D_8011BDAC[rand() & 7];
@@ -5897,7 +5897,7 @@ void func_8010C36C(STAGE_OBJ *wp)
         case 3:
             wp->rotation.z = 0x28;
             EM_Char_Move2(wp);
-            func_800334C4(wp);
+            EM_World_Pos_Calc_YXZ(wp);
             wp->routine_0++;
             break;
         case 4:
@@ -5919,7 +5919,7 @@ void func_8010C36C(STAGE_OBJ *wp)
                 wp->routine_0++;
             }
             EM_Char_Move2(wp);
-            func_800334C4(wp);
+            EM_World_Pos_Calc_YXZ(wp);
             break;
         case 5:
             wp->value_48.half[0] += wp->value_50;
@@ -5932,7 +5932,7 @@ void func_8010C36C(STAGE_OBJ *wp)
             wp->position_fixed.v.y = wp->position.y << 16;
             wp->position_fixed.v.z = wp->position.z << 16;
             EM_Char_Move2(wp);
-            func_800334C4(wp);
+            EM_World_Pos_Calc_YXZ(wp);
             break;
     }
     for (i = 0; i < 7; i++)

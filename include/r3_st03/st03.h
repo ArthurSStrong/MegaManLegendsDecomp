@@ -725,7 +725,7 @@ extern uint8 D_80164007[];
 extern void *D_80164008[];
 
 void func_8001D974(void);
-void func_80063BA8(void);
+void Message_event_clear(void);
 void func_8001B314(void);
 void Sce_script_timer_clear(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
@@ -736,7 +736,7 @@ sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FI
 void Sce_script_next(void);
 void Moji_task_kill(sint32 arg);
 void func_8003697C(void);
-void func_8002FF34(void *wp, sint32 x, sint32 y, sint32 z);
+void Pl_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
 void Sce_slot_list_clear(void);
 void func_8001E4C4(void *a, void *b);
 void func_80101B2C(void);
@@ -835,7 +835,7 @@ void func_8010D400(ST03_ACTOR *wp);
 void func_8010D3E4(ST03_ACTOR *wp);
 void func_8010D404(ST03_ACTOR *wp);
 
-STAGE_OBJ *func_80036294(sint32 id); // ROCK_NEO.EXE: the spawned slot with this id (index_1)
+STAGE_OBJ *Obj_id_work(sint32 id); // ROCK_NEO.EXE: the spawned slot with this id (index_1)
 
 void func_80106398(ST03_ACTOR *wp);
 

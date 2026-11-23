@@ -36,7 +36,7 @@ void func_8010010C(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_80103594[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_80103618[D_80103698[Game_work.value_51]], D_801035A0[Game_work.value_51]);
     func_8005DC10(0);
     func_80100270();
@@ -211,15 +211,15 @@ void func_801006A8(STAGE_ROOM_WORK *wp)
             switch (D_8010E050)
             {
                 case 0:
-                    func_8001D58C(0x20010010);
+                    Cd_xa_play_id(0x20010010);
                     break;
                 case 2:
                     scene->value_A = 0xFF;
-                    func_8001D58C(0x20010012);
+                    Cd_xa_play_id(0x20010012);
                     break;
                 case 1:
                 case 3:
-                    func_8001D58C(0x20010011);
+                    Cd_xa_play_id(0x20010011);
                     break;
             }
             wp->routine_4++;
@@ -271,7 +271,7 @@ void func_801006A8(STAGE_ROOM_WORK *wp)
                 D_800C3570            = 2;
                 wp->flags_0           = 0;
                 STAGE_GAME_BYTE(0x7B) = 1;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_80042314(&Player_work);
             }
             break;
@@ -407,10 +407,10 @@ void func_80100C84(STAGE_ROOM_WORK *wp)
             switch ((rand() >> 8) & 1)
             {
                 case 0:
-                    func_8001D58C(0x2001001C);
+                    Cd_xa_play_id(0x2001001C);
                     break;
                 case 1:
-                    func_8001D58C(0x2001001D);
+                    Cd_xa_play_id(0x2001001D);
                     break;
             }
             wp->routine_4++;
@@ -474,7 +474,7 @@ void func_80100C84(STAGE_ROOM_WORK *wp)
                 wp->flags_0           = 0;
                 STAGE_GAME_BYTE(0x7B) = 0;
                 pl->flags_0 |= 1;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_80042314(&Player_work);
             }
             break;

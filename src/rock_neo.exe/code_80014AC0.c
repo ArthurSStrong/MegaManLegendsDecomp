@@ -1,7 +1,7 @@
 #include "common.h"
 #include "code_80014ac0.h"
 
-void func_80014AC0(CODE14_WORK *wp, CODE14_SCRIPT *script)
+void Title_chr_init(CODE14_WORK *wp, CODE14_SCRIPT *script)
 {
     wp->flags |= 2;
     Model_work_init(wp, 0);
@@ -18,7 +18,7 @@ void func_80014AC0(CODE14_WORK *wp, CODE14_SCRIPT *script)
     *(uint32 *)&wp->rotation.x     = 0;
     *(uint32 *)&wp->rotation.z     = 0;
     wp->value10                    = 0;
-    script->commands               = D_800820E0[wp->script_kind][wp->variant];
+    script->commands               = Title_chr_script_tbl[wp->script_kind][wp->variant];
     if (script->commands == NULL)
     {
         wp->routine08 = 2;
@@ -35,11 +35,11 @@ void func_80014AC0(CODE14_WORK *wp, CODE14_SCRIPT *script)
         script->scale_y      = 0;
         script->scale_z      = 0;
         wp->routine08++;
-        func_800150E0(wp, script);
+        Title_chr_move(wp, script);
     }
 }
 
-void func_80014BCC(CODE14_WORK *wp, CODE14_SCRIPT *script)
+void title_chr_script_exec(CODE14_WORK *wp, CODE14_SCRIPT *script)
 {
     while (script->commands[script->index] != 0)
     {
@@ -169,7 +169,7 @@ void func_80014BCC(CODE14_WORK *wp, CODE14_SCRIPT *script)
     script->index += 2;
 }
 
-void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
+void Title_chr_move(CODE14_WORK *wp, CODE14_SCRIPT *script)
 {
     uint16 z;
 
@@ -180,7 +180,7 @@ void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
     wp->rotation_prev       = wp->rotation;
     if (script->timer == 0)
     {
-        func_80014BCC(wp, script);
+        title_chr_script_exec(wp, script);
     }
     else
     {
@@ -268,17 +268,17 @@ void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script)
     }
 }
 
-void func_800153CC(GAME_WORK_3C0 *wp)
+void Title_chr_close(GAME_WORK_3C0 *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void func_800153EC(CODE14_WORK *wp)
+void Title_chr_main(CODE14_WORK *wp)
 {
-    D_80082104[wp->routine08](wp, &wp->script);
+    Title_chr_routine_tbl[wp->routine08](wp, &wp->script);
 }
 
-void func_80015428(CODE800133D8_STATE *wp)
+void Title_chr_control(CODE800133D8_STATE *wp)
 {
     sint32 i;
     CODE14_WORK *entry;

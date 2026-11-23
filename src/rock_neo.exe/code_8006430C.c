@@ -551,8 +551,8 @@ void func_80065064(void)
     pl = &Player_work;
     gw = &Game_work;
     func_80067D10();
-    save = (MEM_IMAGE *)D_800B5DB0;
-    func_80064CB8(D_800B5DB0, D_8008FA64);
+    save = (MEM_IMAGE *)Cd_ring_buf;
+    func_80064CB8(Cd_ring_buf, D_8008FA64);
     D_800B5EB0 = MEM_GWB(0x50);
     for (i = 0; i < 8; i++)
     {

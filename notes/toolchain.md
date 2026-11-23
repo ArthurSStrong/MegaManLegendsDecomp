@@ -150,6 +150,7 @@ PowerShell scripts aren't per-target. Run the Python tools with `.venv/bin/pytho
 | `tools/cc.sh <t> <in.c> <out.o>` | Compile one file with the target's matching toolchain |
 | `tools/format.sh <t>` | clang-format on `src/<t>/` and `include/` |
 | `tools/rename.py <t> OLD NEW [attr]` / `<t> -f FILE` | Renames in `config/<t>/symbol_addrs.txt`, `src/<t>/`, `include/`, `notes/`; `-n` for a dry run. New registry lines get `type:func` (for `func_`) and `absolute:True` (outside the image) |
+| `tools/sweep.sh PAIRS [-n]` | After `rename.py`: the same `OLD NEW` pairs, applied as whole words to what it doesn't reach (`src/r3_*`, `src/stage_common/`, `port/`, leftovers in `src/`, `include/`, `notes/`). Prints files changed and files still holding an old name; exits 1 if any do. `-n` lists the files. Then `make split-overlays` and `make overlays` |
 | `tools/permuter_prep.py <t> <Func> --src FILE` | Builds `permuter/<t>/<Func>/` from a parked `NON_MATCHING` block in `FILE` (e.g. `src/rock_neo.exe/cd.c`; without it, searches `src/<t>/`). `base.c` is the file's preamble plus the draft |
 | `tools/preamble.py FILE` | Prints a C file's preamble: everything before its first function, `INCLUDE_ASM` or parked block (includes, its own small data and pool definitions, file-local prototypes). Used by `permuter_prep.py` and `ctx.sh` |
 | `tools/find_dupes.py [--src S] [--dst D] [--min 0.85]` | Finds functions of one program that are compiled copies of the other's (default shim → ROCK_NEO), by opcode/register shape; immediates and targets ignored. Needs both ELFs built |

@@ -31,7 +31,7 @@ void func_80100250(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_80114E70[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_80114F4C[D_80114F7C[Game_work.value_51]], D_80114E84[Game_work.value_51]);
     func_8005DC10(D_80113F94[Game_work.value_51]);
     func_801003B0();
@@ -209,7 +209,7 @@ void func_80100784(STAGE_ROOM *wp)
             Sce_script_update();
             break;
         case 3:
-            func_8001D58C(0x2001000C);
+            Cd_xa_play_id(0x2001000C);
             Fade_start(1);
             Sce_camera_script_exec();
             Sce_script_update();
@@ -279,7 +279,7 @@ void func_80100A54(STAGE_ROOM *wp)
                 wp->routine_5++;
                 break;
             case 1:
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
@@ -395,7 +395,7 @@ void func_80100D00(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8001D58C(0x2000001B);
+                Cd_xa_play_id(0x2000001B);
                 wp->routine_5++;
             }
             Sce_camera_script_exec();
@@ -469,7 +469,7 @@ void func_80100F7C(STAGE_ROOM *wp)
 {
     STCOM_PL_WORK *pl;
 
-    func_8001D494(0, 1, 0);
+    Cd_subcmd(0, 1, 0);
     Obj_work_flag_change(0x56, 0xA);
     func_8003187C(wp->child_24);
     func_801010F4();

@@ -32,7 +32,7 @@ void func_80100074(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_80101FC0[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_80102044[D_801020C4[Game_work.value_51]], D_80101FCC[Game_work.value_51]);
     func_8005DC10(0);
     func_801001D8();
@@ -746,7 +746,7 @@ void func_80101B60(STAGE_WORK *wp)
     D_801027E8[wp->routine_1](wp);
     Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_80101BC4(STAGE_WORK *wp)

@@ -194,7 +194,7 @@ typedef void (*ST1D_ARM_FUNC)(ST1D_ARM *wp);
         }                                                                                          \
     } while (0)
 
-// The objects an arm reaches through func_80036294: their bone matrices from +0x208.
+// The objects an arm reaches through Obj_id_work: their bone matrices from +0x208.
 typedef struct
 {
     sint8 flags_0;              // 00
@@ -570,7 +570,7 @@ typedef struct
     uint8 value_F; // 0F
 } ST1D_KIND;
 
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 
 extern STAGE_SLOT_FUNC D_80114BA0[];
 extern STCOM_SVECTOR D_8011A698[1];
@@ -595,7 +595,7 @@ void func_8010802C(ST1D_VIEW *wp);
 void func_80100554(STAGE_ROOM_WORK *wp);
 void func_801005E4(STAGE_ROOM_WORK *wp);
 
-sint32 func_800364B0(void *track, void *wp, sint32 angle);
+sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
 void func_8005D6E8(void *wp);
 
@@ -608,7 +608,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
 void func_8001D974(void);
-void func_80033598(void *wp, STCOM_MATRIX *m);
+void EM_World_Pos_Calc_Mtx(void *wp, STCOM_MATRIX *m);
 
 extern uint32 Em_work_used; // allocation masks: 0x3C0 slots
 extern uint32 D_80098B20; // 0x5A4

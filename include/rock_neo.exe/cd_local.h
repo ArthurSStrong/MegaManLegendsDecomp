@@ -30,38 +30,38 @@ typedef struct
     uint32 arg[3];
 } CD_CMD_RAW;
 
-extern uint8 D_800988D0;         // D_80059BC9
-extern uint8 D_800988DC;         // D_80059BCA
-extern sint32 D_80098998;        // D_80059C00
-extern sint32 D_800989C8;        // D_80059C24
+extern uint8 Cd_play_mode;         // D_80059BC9
+extern uint8 Cd_muted;         // D_80059BCA
+extern sint32 Cd_ring_write;        // D_80059C00
+extern sint32 Cd_head_state;        // D_80059C24
 extern uint8 D_80098AA0;         // D_80059C48
-extern uint8 D_80098B42;         // D_80059C74
-extern CD_CMD_FUNC D_80087670[]; // run by func_8001B858, indexed by the command's arg2
+extern uint8 Cd_xa_state;         // D_80059C74
+extern CD_CMD_FUNC cd_subcmd_tbl[]; // run by cd_cmd_subcmd, indexed by the command's arg2
 
 // Read setup and callbacks; widths verified against the read-ready handlers.
-extern uint8 *D_800987A4;                      // next destination byte
+extern uint8 *Cd_read_buf;                      // next destination byte
 extern CdlLOC D_80098814;                      // requested sector in BCD
 extern sint32 D_8009881C;                      // bytes remaining
 extern sint32 D_80098A7C;                      // next expected absolute sector
-extern uint8 D_80098B38[CD_READ_BUFFER_COUNT]; // ten sector-buffer occupancy flags
+extern uint8 Cd_ring_ready[CD_READ_BUFFER_COUNT]; // ten sector-buffer occupancy flags
 
-extern uint8 D_800B5DB0[]; // sector header scratch and buffered sector data
+extern uint8 Cd_ring_buf[]; // sector header scratch and buffered sector data
 
 // Packed playback references and command-dispatch state.
-extern uint32 D_800989B0;   // playback end sector
-extern uint32 D_800989B8;   // packed reference retained for repeat playback
+extern uint32 Cd_xa_end_sector;   // playback end sector
+extern uint32 Cd_xa_id;   // packed reference retained for repeat playback
 extern uint32 D_800989BC;   // saved command argument 2
-extern uint32 D_800989C0;   // saved final command word, including repeat bit
-extern uint32 D_800989D8;   // current playback sector
+extern uint32 Cd_xa_flags;   // saved final command word, including repeat bit
+extern uint32 Cd_xa_sector;   // current playback sector
 extern uint8 D_80098A9D[3]; // absolute M:S:F bytes at Cd_result + 5
-extern CD_CMD_FUNC D_80087680[];
+extern CD_CMD_FUNC cd_cmd_tbl[];
 
 // Unknown
-extern uint16 D_80098994;
+extern uint16 Cd_mute_save;
 extern uint8 D_80098AB8;
 extern sint32
-    *D_80088F9C[16]; // file index tables, selected by the top nibble of func_8001D648's argument
-extern CD_POS **D_80088EF8[16]; // matching sector offset tables
+    *Cd_xa_file_tbl[16]; // file index tables, selected by the top nibble of Cd_xa_seek_id's argument
+extern CD_POS **Cd_xa_track_tbl[16]; // matching sector offset tables
 
 void Cd_set_volume(uint8 vol);
 void Cd_pause(void);
@@ -69,18 +69,18 @@ void Cd_stop(void);
 void Cd_read_sync(void);
 
 // Unknown
-void func_8001C7F0(u_char status, u_char *result);
-void func_8001CC7C(sint32 index, uint8 *dest);
-void func_8001CD60(u_char status, u_char *result);
-void func_8001CF98(sint32 index);
-void func_8001D078(u_char status, u_char *result);
-void func_8001B7B4(void);
-void func_8001D58C(uint32 arg);
-void func_8001D648(uint32 arg);
-void func_8001D6D8(sint32 sector);
-void func_8001D7AC(sint32 index);
+void cd_seek_cb(u_char status, u_char *result);
+void Cd_read_start_buf(sint32 index, uint8 *dest);
+void Cd_ready_cb_buf(u_char status, u_char *result);
+void Cd_read_start_ring(sint32 index);
+void Cd_ready_cb_ring(u_char status, u_char *result);
+void cd_subcmd_mute(void);
+void Cd_xa_play_id(uint32 arg);
+void Cd_xa_seek_id(uint32 arg);
+void Cd_seek(sint32 sector);
+void Cd_seek_file(sint32 index);
 
-// Buffered asset records (func_8001BB4C). Each 0x800-byte buffer starts with a record header;
+// Buffered asset records (cd_cmd_read_comb). Each 0x800-byte buffer starts with a record header;
 // record data begins at +0x100.
 typedef struct
 {
@@ -138,11 +138,11 @@ typedef struct
     sint32 row; // 0x34
 } CD_ASSET_WORK;
 
-extern sint32 D_800987A8; // current sector buffer
+extern sint32 Cd_ring_read; // current sector buffer
 extern sint32 D_80098A54; // type of the record being loaded
 extern CD_ASSET_WORK D_800C5604;
 
-#define CD_SECTOR_BUF(i) (&D_800B5DB0[(i) << 11]) // sector buffer i (0x800 bytes)
+#define CD_SECTOR_BUF(i) (&Cd_ring_buf[(i) << 11]) // sector buffer i (0x800 bytes)
 extern RECT D_8009BE48[];
 extern uint16 D_800AD168[]; // shadow copy of the texture pages
 extern uint32 D_80098868;   // shadow rows touched

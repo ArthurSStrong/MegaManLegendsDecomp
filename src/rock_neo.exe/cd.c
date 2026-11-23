@@ -13,13 +13,13 @@ void Cd_init(void)
     {
     }
 
-    D_800988DC = 0; // stored twice in the original; both needed for the match
-    D_80098998 = 0;
+    Cd_muted = 0; // stored twice in the original; both needed for the match
+    Cd_ring_write = 0;
     Cd_status  = 0;
-    D_80098B42 = 7;
+    Cd_xa_state = 7;
     Cd_mode    = 0;
     D_80098AA0 = 0;
-    D_800988DC = 0; // stored twice in the original; both needed for the match
+    Cd_muted = 0; // stored twice in the original; both needed for the match
 
     Cd_controlb_retry(CdlSetmode, &Cd_mode, Cd_result);
 
@@ -35,16 +35,16 @@ void Cd_init(void)
 
     Cd_wait          = 0;
     Cd_movie_playing = 0;
-    D_800989C8       = 0;
+    Cd_head_state       = 0;
     Cd_cmd_routine   = 0;
-    D_800988D0       = 0;
+    Cd_play_mode       = 0;
 }
 
-void func_8001B4C4(void)
+void cd_cmd_nop(void)
 {
 }
 
-void func_8001B4CC(void)
+void cd_cmd_read(void)
 {
     switch ((uint32)Cd_cmd_routine)
     {
@@ -70,8 +70,8 @@ void func_8001B4CC(void)
                 break;
             }
             // This command carries the destination pointer in its second argument word.
-            func_8001CC7C(Cd_cmd_exec_ptr->args.arg1, (uint8 *)Cd_cmd_exec_ptr->args.arg2);
-            D_800988D0 = 0;
+            Cd_read_start_buf(Cd_cmd_exec_ptr->args.arg1, (uint8 *)Cd_cmd_exec_ptr->args.arg2);
+            Cd_play_mode = 0;
             Cd_wait    = 0;
             Cd_cmd_routine++;
             // fall through
@@ -89,38 +89,11 @@ void func_8001B4CC(void)
     }
 }
 
-void func_8001B63C(void)
+void cd_subcmd_nop(void)
 {
 }
 
-void func_8001B644(void)
-{
-    sint32 i;
-
-    switch (Cd_cmd_routine)
-    {
-        case 0:
-            for (i = CD_VOL_MAX; i > 0; i--)
-            {
-                Cd_set_volume(i);
-            }
-
-            Sound_work.flags |= SOUND_FLAG_CD_OFF;
-            Cd_stop();
-            D_800988D0 = 1;
-            Cd_cmd_routine++;
-            // fall through
-        case 1:
-            if (Cd_sync_done)
-            {
-                D_80098B42 = 1;
-                Cd_cmd_dequeue();
-            }
-            break;
-    }
-}
-
-void func_8001B6FC(void)
+void cd_subcmd_xa_stop(void)
 {
     sint32 i;
 
@@ -134,20 +107,47 @@ void func_8001B6FC(void)
 
             Sound_work.flags |= SOUND_FLAG_CD_OFF;
             Cd_stop();
-            D_800988D0 = 1;
+            Cd_play_mode = 1;
             Cd_cmd_routine++;
             // fall through
         case 1:
             if (Cd_sync_done)
             {
-                D_80098B42 = 2;
+                Cd_xa_state = 1;
                 Cd_cmd_dequeue();
             }
             break;
     }
 }
 
-void func_8001B7B4(void)
+void cd_subcmd_xa_pause(void)
+{
+    sint32 i;
+
+    switch (Cd_cmd_routine)
+    {
+        case 0:
+            for (i = CD_VOL_MAX; i > 0; i--)
+            {
+                Cd_set_volume(i);
+            }
+
+            Sound_work.flags |= SOUND_FLAG_CD_OFF;
+            Cd_stop();
+            Cd_play_mode = 1;
+            Cd_cmd_routine++;
+            // fall through
+        case 1:
+            if (Cd_sync_done)
+            {
+                Cd_xa_state = 2;
+                Cd_cmd_dequeue();
+            }
+            break;
+    }
+}
+
+void cd_subcmd_mute(void)
 {
     sint32 i;
     uint16 tmp;
@@ -159,28 +159,28 @@ void func_8001B7B4(void)
 
     Sound_work.flags |= SOUND_FLAG_CD_OFF;
 
-    if (D_800988DC)
+    if (Cd_muted)
     {
-        D_800988DC       = 0;
-        Sound_work.unk06 = D_80098994;
+        Cd_muted       = 0;
+        Sound_work.unk06 = Cd_mute_save;
     }
     else
     {
         tmp              = Sound_work.unk06;
         Sound_work.unk06 = 0;
-        D_800988DC       = 1;
-        D_80098994       = tmp;
+        Cd_muted       = 1;
+        Cd_mute_save       = tmp;
     }
 
     Cd_cmd_dequeue();
 }
 
-void func_8001B858(void)
+void cd_cmd_subcmd(void)
 {
-    D_80087670[Cd_cmd_exec_ptr->args.arg2]();
+    cd_subcmd_tbl[Cd_cmd_exec_ptr->args.arg2]();
 }
 
-void func_8001B89C(void)
+void cd_cmd_xa_play(void)
 {
     CdlLOC pos;
     CdlFILTER filter;
@@ -193,7 +193,7 @@ void func_8001B89C(void)
             {
                 Cd_stop();
             }
-            D_800988D0 = 2;
+            Cd_play_mode = 2;
             Cd_cmd_routine++;
             // fall through
         case 1:
@@ -214,11 +214,11 @@ void func_8001B89C(void)
             Cd_status      = 0;
             Cd_error_flags = 0;
             Cd_sync_done   = Cd_status;
-            if (D_80098B42 != 2)
+            if (Cd_xa_state != 2)
             {
                 filter.file = 1;
                 filter.chan = ((uint8 *)&Cd_cmd_exec_ptr->args.arg2)[3] & 0x1F;
-                D_800989B0  = Cd_file_tbl[Cd_cmd_exec_ptr->args.arg1].sector +
+                Cd_xa_end_sector  = Cd_file_tbl[Cd_cmd_exec_ptr->args.arg1].sector +
                               (*(uint32 *)&Cd_cmd_exec_ptr->args.arg3 & 0xFFFFFF);
                 CdIntToPos(Cd_file_tbl[Cd_cmd_exec_ptr->args.arg1].sector +
                                (Cd_cmd_exec_ptr->args.arg2 & 0xFFFFFF),
@@ -246,7 +246,7 @@ void func_8001B89C(void)
                 {
                     Cd_set_volume(i);
                 }
-                D_80098B42 = 0;
+                Cd_xa_state = 0;
                 Sound_work.flags &= ~SOUND_FLAG_CD_OFF;
                 Cd_cmd_dequeue();
             }
@@ -262,7 +262,7 @@ void func_8001B89C(void)
 // incomplete array (a complete 8-byte RECT is small data to GCC, which then folds rect->x to the
 // absolute address); the clut test reads back the stored clut_x; the seq/sep destination is a
 // chained assignment.
-void func_8001BB4C(void)
+void cd_cmd_read_comb(void)
 {
     CD_ASSET_REC *rec;
     uint8 *src;
@@ -292,9 +292,9 @@ void func_8001BB4C(void)
                 Cd_wait--;
                 break;
             }
-            func_8001CF98(Cd_cmd_exec_ptr->args.arg1);
-            D_800988D0 = 0;
-            D_800987A8 = 0;
+            Cd_read_start_ring(Cd_cmd_exec_ptr->args.arg1);
+            Cd_play_mode = 0;
+            Cd_ring_read = 0;
             Cd_wait    = 0;
             Cd_cmd_routine++;
             // fall through
@@ -304,12 +304,12 @@ void func_8001BB4C(void)
                 Cd_error_flags |= CD_ERR_CMD_TIMEOUT;
                 break;
             }
-            while (D_80098B38[D_800987A8] == 1)
+            while (Cd_ring_ready[Cd_ring_read] == 1)
             {
-                switch (D_800989C8)
+                switch (Cd_head_state)
                 {
                     case 0:
-                        buf        = CD_SECTOR_BUF(D_800987A8);
+                        buf        = CD_SECTOR_BUF(Cd_ring_read);
                         D_80098A54 = ((CD_ASSET_REC *)buf)->type;
                         if (D_80098A54 == -1)
                         {
@@ -400,7 +400,7 @@ void func_8001BB4C(void)
                                     }
                                     LoadImage(rect, (u_long *)((CD_ASSET_REC *)buf)->data);
                                 }
-                                D_800989C8 = 0;
+                                Cd_head_state = 0;
                                 goto next;
                             case 5:
                                 D_800C5604.u.vab.slot = rec->arg[0];
@@ -456,18 +456,18 @@ void func_8001BB4C(void)
                                 }
                                 break;
                         }
-                        D_800989C8 = D_80098A54 + 1;
+                        Cd_head_state = D_80098A54 + 1;
                         break;
                     case 1:
                         if (D_800C5604.size >= 0x800)
                         {
-                            func_800176DC(CD_SECTOR_BUF(D_800987A8), D_800C5604.u.dest, 0x40);
+                            func_800176DC(CD_SECTOR_BUF(Cd_ring_read), D_800C5604.u.dest, 0x40);
                             D_800C5604.size -= 0x800;
                             D_800C5604.u.dest += 0x800;
                         }
                         else
                         {
-                            src = CD_SECTOR_BUF(D_800987A8);
+                            src = CD_SECTOR_BUF(Cd_ring_read);
                             buf = D_800C5604.u.dest;
                             while (D_800C5604.size != 0)
                             {
@@ -477,20 +477,20 @@ void func_8001BB4C(void)
                         }
                         if (--D_800C5604.count == 0)
                         {
-                            D_800989C8 = 0;
+                            Cd_head_state = 0;
                         }
                         break;
                     case 2:
                         rect    = D_8009BE48;
                         rect->x = D_800C5604.u.tim.x + (D_800C5604.col << 5);
                         rect->y = D_800C5604.u.tim.y + (D_800C5604.row << 5);
-                        LoadImage(rect, (u_long *)CD_SECTOR_BUF(D_800987A8));
+                        LoadImage(rect, (u_long *)CD_SECTOR_BUF(Cd_ring_read));
                         if (++D_800C5604.col == (uint32)D_800C5604.u.tim.w >> 5)
                         {
                             D_800C5604.col = 0;
                             if (++D_800C5604.row == (uint32)D_800C5604.u.tim.h >> 5)
                             {
-                                D_800989C8 = 0;
+                                Cd_head_state = 0;
                             }
                         }
                         break;
@@ -498,13 +498,13 @@ void func_8001BB4C(void)
                         rect    = D_8009BE48;
                         rect->x = D_800C5604.u.tiles.x + (D_800C5604.col << 5);
                         rect->y = D_800C5604.u.tiles.y + (D_800C5604.row << 5);
-                        LoadImage(rect, (u_long *)CD_SECTOR_BUF(D_800987A8));
+                        LoadImage(rect, (u_long *)CD_SECTOR_BUF(Cd_ring_read));
                         if (++D_800C5604.col == D_800C5604.u.tiles.cols)
                         {
                             D_800C5604.col = 0;
                             if (++D_800C5604.row == D_800C5604.u.tiles.rows)
                             {
-                                D_800989C8 = 0;
+                                Cd_head_state = 0;
                             }
                         }
                         break;
@@ -513,18 +513,18 @@ void func_8001BB4C(void)
                         {
                             if (--D_800C5604.count == 0)
                             {
-                                D_800989C8 = 0;
+                                Cd_head_state = 0;
                             }
                         }
                         else if (D_800C5604.u.vab.size >= 0x800)
                         {
-                            func_800176DC(CD_SECTOR_BUF(D_800987A8), D_800C5604.u.vab.head, 0x40);
+                            func_800176DC(CD_SECTOR_BUF(Cd_ring_read), D_800C5604.u.vab.head, 0x40);
                             D_800C5604.u.vab.head += 0x800;
                             D_800C5604.u.vab.size -= 0x800;
                         }
                         else if (D_800C5604.u.vab.size != 0)
                         {
-                            func_80017684(CD_SECTOR_BUF(D_800987A8), D_800C5604.u.vab.head,
+                            func_80017684(CD_SECTOR_BUF(Cd_ring_read), D_800C5604.u.vab.head,
                                           D_800C5604.u.vab.size / 4);
                             D_800C5604.u.vab.size                          = 0;
                             Game_work.sound_1b8[D_800C5604.u.vab.slot].vab = SsVabOpenHeadSticky(
@@ -534,11 +534,11 @@ void func_8001BB4C(void)
                         else
                         {
                             if (SsVabTransBodyPartly(
-                                    CD_SECTOR_BUF(D_800987A8), 0x800,
+                                    CD_SECTOR_BUF(Cd_ring_read), 0x800,
                                     Game_work.sound_1b8[D_800C5604.u.vab.slot].vab) ==
                                 (sint16)Game_work.sound_1b8[D_800C5604.u.vab.slot].vab)
                             {
-                                D_800989C8 = 0;
+                                Cd_head_state = 0;
                             }
                             SsVabTransCompleted(1);
                         }
@@ -548,7 +548,7 @@ void func_8001BB4C(void)
                         {
                             if (D_800C5604.u.seq.load != 0)
                             {
-                                func_800176DC(CD_SECTOR_BUF(D_800987A8), D_800C5604.u.seq.dest,
+                                func_800176DC(CD_SECTOR_BUF(Cd_ring_read), D_800C5604.u.seq.dest,
                                               0x40);
                             }
                             D_800C5604.size -= 0x800;
@@ -558,7 +558,7 @@ void func_8001BB4C(void)
                         {
                             if (D_800C5604.u.seq.load != 0)
                             {
-                                src = CD_SECTOR_BUF(D_800987A8);
+                                src = CD_SECTOR_BUF(Cd_ring_read);
                                 buf = D_800C5604.u.seq.dest;
                                 while (D_800C5604.size != 0)
                                 {
@@ -566,7 +566,7 @@ void func_8001BB4C(void)
                                     D_800C5604.size--;
                                 }
                             }
-                            D_800989C8 = 0;
+                            Cd_head_state = 0;
                         }
                         break;
                     case 9:
@@ -574,7 +574,7 @@ void func_8001BB4C(void)
                         {
                             if (D_800C5604.u.sep.load != 0)
                             {
-                                func_800176DC(CD_SECTOR_BUF(D_800987A8), D_800C5604.u.sep.dest,
+                                func_800176DC(CD_SECTOR_BUF(Cd_ring_read), D_800C5604.u.sep.dest,
                                               0x40);
                             }
                             D_800C5604.size -= 0x800;
@@ -584,7 +584,7 @@ void func_8001BB4C(void)
                         {
                             if (D_800C5604.u.sep.load != 0)
                             {
-                                src = CD_SECTOR_BUF(D_800987A8);
+                                src = CD_SECTOR_BUF(Cd_ring_read);
                                 buf = D_800C5604.u.sep.dest;
                                 while (D_800C5604.size != 0)
                                 {
@@ -592,15 +592,15 @@ void func_8001BB4C(void)
                                     D_800C5604.size--;
                                 }
                             }
-                            D_800989C8 = 0;
+                            Cd_head_state = 0;
                         }
                         break;
                 }
             next:
-                D_80098B38[D_800987A8] = 0;
-                if (++D_800987A8 == CD_READ_BUFFER_COUNT)
+                Cd_ring_ready[Cd_ring_read] = 0;
+                if (++Cd_ring_read == CD_READ_BUFFER_COUNT)
                 {
-                    D_800987A8 = 0;
+                    Cd_ring_read = 0;
                 }
             }
             break;
@@ -610,13 +610,13 @@ void func_8001BB4C(void)
     }
 }
 
-void func_8001C7F0(u_char status, u_char *result)
+void cd_seek_cb(u_char status, u_char *result)
 {
     Cd_cmd_routine++;
     CdSyncCallback(0);
 }
 
-void func_8001C824(void)
+void cd_cmd_seek(void)
 {
     CdlLOC pos;
 
@@ -634,8 +634,8 @@ void func_8001C824(void)
             {
                 break;
             }
-            D_800988D0 = 0;
-            CdSyncCallback(func_8001C7F0);
+            Cd_play_mode = 0;
+            CdSyncCallback(cd_seek_cb);
             CdIntToPos(Cd_cmd_exec_ptr->args.arg2, &pos);
             Cd_control_retry(CdlSeekL, (u_char *)&pos, Cd_result);
             Cd_wait = 0;
@@ -654,7 +654,7 @@ void func_8001C824(void)
     }
 }
 
-void func_8001C95C(void)
+void Cd_cmd_exec(void)
 {
     uint32 sector;
 
@@ -663,7 +663,7 @@ void func_8001C95C(void)
         Cd_sync_done   = 0;
         Cd_mode        = 0;
         Cd_error_flags = 0;
-        D_800989C8     = 0;
+        Cd_head_state     = 0;
         Cd_cmd_routine = 0;
         CdSyncCallback(NULL);
         CdReadyCallback(NULL);
@@ -672,7 +672,7 @@ void func_8001C95C(void)
         }
     }
 
-    if (D_800988D0 == 2)
+    if (Cd_play_mode == 2)
     {
         Cd_controlb_retry(CdlNop, NULL, Cd_result);
         D_80098AB8 = Cd_result[0];
@@ -680,12 +680,12 @@ void func_8001C95C(void)
         {
             Cd_controlb_retry(CdlGetlocP, NULL, Cd_result);
             sector     = CdPosToInt((CdlLOC *)D_80098A9D);
-            D_800989D8 = sector;
-            if (sector >= D_800989B0)
+            Cd_xa_sector = sector;
+            if (sector >= Cd_xa_end_sector)
             {
-                if (D_800989C0 & 0x40000000)
+                if (Cd_xa_flags & 0x40000000)
                 {
-                    func_8001D58C(D_800989B8);
+                    Cd_xa_play_id(Cd_xa_id);
                 }
                 else
                 {
@@ -694,7 +694,7 @@ void func_8001C95C(void)
             }
         }
     }
-    D_80087680[Cd_cmd_exec_ptr->type]();
+    cd_cmd_tbl[Cd_cmd_exec_ptr->type]();
 }
 
 // The command is copied field by field: a struct assignment is a block move, which
@@ -712,7 +712,7 @@ void Cd_cmd_dequeue(void)
     }
 
     p->type        = 0;
-    D_800989C8     = 0;
+    Cd_head_state     = 0;
     Cd_cmd_routine = 0;
     Cd_cmd_write_ptr--;
 }
@@ -739,7 +739,7 @@ void Cd_stop(void)
     CdReadyCallback(0);
     CdSyncCallback(Cd_sync_cb);
     Cd_control_retry(CdlPause, 0, Cd_result);
-    D_800988D0 = 0;
+    Cd_play_mode = 0;
     D_80098AB8 = 0;
 }
 
@@ -759,26 +759,26 @@ void Cd_sync_cb(u_char status, u_char *result)
     }
 }
 
-void func_8001CC7C(sint32 index, uint8 *dest)
+void Cd_read_start_buf(sint32 index, uint8 *dest)
 {
     sint32 sector;
 
     sector         = Cd_file_tbl[index].sector;
     Cd_status      = 1;
-    D_80098B42     = 7;
+    Cd_xa_state     = 7;
     Cd_error_flags = 0;
     Cd_wait        = 0;
     Cd_sync_done   = 0;
     D_80098A7C     = sector;
     CdIntToPos(sector, &D_80098814);
-    D_800987A4 = dest;
+    Cd_read_buf = dest;
     D_8009881C = Cd_file_tbl[index].size;
-    CdReadyCallback(func_8001CD60);
+    CdReadyCallback(Cd_ready_cb_buf);
     Cd_controlb_retry(CdlSetloc, (u_char *)&D_80098814, Cd_result);
     Cd_controlb_retry(CdlReadN, NULL, Cd_result);
 }
 
-void func_8001CD60(u_char status, u_char *result)
+void Cd_ready_cb_buf(u_char status, u_char *result)
 {
     sint32 sector;
     sint32 count;
@@ -787,8 +787,8 @@ void func_8001CD60(u_char status, u_char *result)
     Cd_wait = 0;
     if (status == CdlDataReady)
     {
-        CdGetSector(D_800B5DB0, 3);
-        sector = CdPosToInt((CdlLOC *)D_800B5DB0);
+        CdGetSector(Cd_ring_buf, 3);
+        sector = CdPosToInt((CdlLOC *)Cd_ring_buf);
         if (sector != D_80098A7C)
         {
             Cd_error_flags |= CD_ERR_SECTOR;
@@ -797,15 +797,15 @@ void func_8001CD60(u_char status, u_char *result)
         D_80098A7C = sector + 1;
         if (D_8009881C >= CD_SECTOR_BYTES)
         {
-            CdGetSector(D_800987A4, CD_SECTOR_WORDS);
-            if (D_800989C8 == 0)
+            CdGetSector(Cd_read_buf, CD_SECTOR_WORDS);
+            if (Cd_head_state == 0)
             {
-                if (Cd_file_tbl[Cd_cmd_exec_ptr->args.arg1].unk8 != *(sint32 *)D_800987A4)
+                if (Cd_file_tbl[Cd_cmd_exec_ptr->args.arg1].unk8 != *(sint32 *)Cd_read_buf)
                 {
                     Cd_error_flags |= CD_ERR_FILE_ID;
                     goto read_error;
                 }
-                D_800989C8 = status;
+                Cd_head_state = status;
             }
             D_8009881C -= CD_SECTOR_BYTES;
             if (D_8009881C == 0)
@@ -815,16 +815,16 @@ void func_8001CD60(u_char status, u_char *result)
                 Cd_control_retry(CdlPause, NULL, Cd_result);
                 return;
             }
-            D_800987A4 += CD_SECTOR_BYTES;
+            Cd_read_buf += CD_SECTOR_BYTES;
             return;
         }
-        CdGetSector(D_800B5DB0, CD_SECTOR_WORDS);
+        CdGetSector(Cd_ring_buf, CD_SECTOR_WORDS);
         count = D_8009881C;
-        src   = D_800B5DB0;
+        src   = Cd_ring_buf;
         while (count != 0)
         {
-            *D_800987A4 = *src;
-            D_800987A4++;
+            *Cd_read_buf = *src;
+            Cd_read_buf++;
             src++;
             count--;
         }
@@ -840,53 +840,53 @@ void func_8001CD60(u_char status, u_char *result)
     CdReadyCallback(NULL);
 }
 
-void func_8001CF98(sint32 index)
+void Cd_read_start_ring(sint32 index)
 {
     sint32 i;
     sint32 sector;
 
     for (i = 0; i < 10; i++)
     {
-        D_80098B38[i] = 0;
+        Cd_ring_ready[i] = 0;
     }
 
     sector         = Cd_file_tbl[index].sector;
     Cd_status      = 1;
-    D_80098B42     = 7;
+    Cd_xa_state     = 7;
     Cd_error_flags = 0;
     Cd_wait        = 0;
     Cd_sync_done   = 0;
-    D_80098998     = 0;
+    Cd_ring_write     = 0;
     D_80098A7C     = sector;
     CdIntToPos(sector, &D_80098814);
     D_8009881C = Cd_file_tbl[index].size;
-    CdReadyCallback(func_8001D078);
+    CdReadyCallback(Cd_ready_cb_ring);
     Cd_controlb_retry(CdlReadN, (u_char *)&D_80098814, Cd_result);
 }
 
-void func_8001D078(u_char status, u_char *result)
+void Cd_ready_cb_ring(u_char status, u_char *result)
 {
     sint32 sector;
 
     Cd_wait = 0;
     if (status == CdlDataReady)
     {
-        if (D_80098B38[D_80098998] == 0)
+        if (Cd_ring_ready[Cd_ring_write] == 0)
         {
-            CdGetSector(D_800B5DB0 + D_80098998 * CD_SECTOR_BYTES, 3);
-            sector = CdPosToInt((CdlLOC *)(D_800B5DB0 + D_80098998 * CD_SECTOR_BYTES));
+            CdGetSector(Cd_ring_buf + Cd_ring_write * CD_SECTOR_BYTES, 3);
+            sector = CdPosToInt((CdlLOC *)(Cd_ring_buf + Cd_ring_write * CD_SECTOR_BYTES));
             if (sector != D_80098A7C)
             {
                 Cd_error_flags |= CD_ERR_SECTOR;
                 goto read_error;
             }
             D_80098A7C = sector + 1;
-            CdGetSector(D_800B5DB0 + D_80098998 * CD_SECTOR_BYTES, CD_SECTOR_WORDS);
-            D_80098B38[D_80098998] = 1;
-            D_80098998++;
-            if (D_80098998 == CD_READ_BUFFER_COUNT)
+            CdGetSector(Cd_ring_buf + Cd_ring_write * CD_SECTOR_BYTES, CD_SECTOR_WORDS);
+            Cd_ring_ready[Cd_ring_write] = 1;
+            Cd_ring_write++;
+            if (Cd_ring_write == CD_READ_BUFFER_COUNT)
             {
-                D_80098998 = 0;
+                Cd_ring_write = 0;
             }
             D_8009881C -= CD_SECTOR_BYTES;
             if (D_8009881C <= 0)
@@ -977,7 +977,7 @@ void Cd_set_volume(uint8 vol)
     CdMix(&sw->atv);
 }
 
-void func_8001D414(sint32 arg1, sint32 arg2)
+void Cd_xa_play(sint32 arg1, sint32 arg2)
 {
     Cd_cmd_write_ptr->type      = 4;
     Cd_cmd_write_ptr->args.arg1 = arg1;
@@ -992,7 +992,7 @@ void Cd_read_comb(sint32 arg1)
     Cd_cmd_write_ptr++;
 }
 
-void func_8001D468(sint32 arg1, sint32 arg2)
+void Cd_read(sint32 arg1, sint32 arg2)
 {
     Cd_cmd_write_ptr->type      = 1;
     Cd_cmd_write_ptr->args.arg1 = arg1;
@@ -1000,7 +1000,7 @@ void func_8001D468(sint32 arg1, sint32 arg2)
     Cd_cmd_write_ptr++;
 }
 
-void func_8001D494(sint32 arg1, sint32 arg2, sint32 arg3)
+void Cd_subcmd(sint32 arg1, sint32 arg2, sint32 arg3)
 {
     CD_CMD *p;
     CD_CMD *q;
@@ -1031,11 +1031,11 @@ void func_8001D494(sint32 arg1, sint32 arg2, sint32 arg3)
     Cd_cmd_write_ptr++;
 }
 
-// As in func_8001D648: `arg &= 0xFFFF` keeps retail's three shifts and one table pointer serves
+// As in Cd_xa_seek_id: `arg &= 0xFFFF` keeps retail's three shifts and one table pointer serves
 // both rows. The type store written through a plain word pointer (not the struct field) keeps
-// D_800989B8's store above it; the final word through CD_CMD_RAW lets the exec-pointer load move
+// Cd_xa_id's store above it; the final word through CD_CMD_RAW lets the exec-pointer load move
 // above it.
-void func_8001D58C(uint32 arg)
+void Cd_xa_play_id(uint32 arg)
 {
     uint32 hi;
     uint32 mid;
@@ -1045,25 +1045,25 @@ void func_8001D58C(uint32 arg)
 
     cmd            = Cd_cmd_write_ptr;
     hi             = (arg >> 28) & 3;
-    D_800989B8     = arg;
+    Cd_xa_id     = arg;
     *(sint32 *)cmd = 4;
     mid            = (arg << 4) >> 20;
     rep            = arg & 0x40000000;
     arg &= 0xFFFF;
-    tbl                         = D_80088F9C[hi];
+    tbl                         = Cd_xa_file_tbl[hi];
     cmd->args.arg1              = tbl[mid];
-    tbl                         = (sint32 *)D_80088EF8[hi][mid];
+    tbl                         = (sint32 *)Cd_xa_track_tbl[hi][mid];
     cmd->args.arg2              = ((CD_POS *)tbl)[arg].offset;
     ((CD_CMD_RAW *)cmd)->arg[2] = ((CD_POS *)tbl)[arg].unk4 | rep;
     D_800989BC                  = Cd_cmd_exec_ptr->args.arg2;
-    D_800989C0                  = *(uint32 *)&Cd_cmd_exec_ptr->args.arg3;
+    Cd_xa_flags                  = *(uint32 *)&Cd_cmd_exec_ptr->args.arg3;
     Cd_cmd_write_ptr            = cmd + 1;
 }
 
 // `arg &= 0xFFFF` between the middle index and its first use keeps retail's three shifts (combine
 // can't fold them across the redefinition). The one table pointer reused for the file row and then
 // the offset row gives retail's registers.
-void func_8001D648(uint32 arg)
+void Cd_xa_seek_id(uint32 arg)
 {
     uint32 hi;
     uint32 mid;
@@ -1071,16 +1071,16 @@ void func_8001D648(uint32 arg)
     sint32 file;
 
     hi  = arg >> 28;
-    tbl = D_80088F9C[hi];
+    tbl = Cd_xa_file_tbl[hi];
     mid = (arg << 4) >> 20;
     arg &= 0xFFFF;
     file = tbl[mid];
-    tbl  = (sint32 *)D_80088EF8[hi][mid];
+    tbl  = (sint32 *)Cd_xa_track_tbl[hi][mid];
     hi   = Cd_file_tbl[file].sector + (((CD_POS *)tbl)[arg].offset & 0xFFFFFF);
-    func_8001D6D8(hi);
+    Cd_seek(hi);
 }
 
-void func_8001D6D8(sint32 sector)
+void Cd_seek(sint32 sector)
 {
     CD_CMD *p;
     CD_CMD *q;
@@ -1105,9 +1105,9 @@ void func_8001D6D8(sint32 sector)
     Cd_cmd_write_ptr++;
 }
 
-void func_8001D7AC(sint32 index)
+void Cd_seek_file(sint32 index)
 {
-    func_8001D6D8(Cd_file_tbl[index].sector);
+    Cd_seek(Cd_file_tbl[index].sector);
 }
 
 void Cd_read_sync(void)

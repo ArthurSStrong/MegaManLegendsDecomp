@@ -89,7 +89,7 @@ void func_801011B4(STAGE_WORK *wp)
         EM_Char_Set(wp, 1, 0);
         wp->routine_2++;
     }
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     EM_World_Pos_Calc(wp);
 }
 
@@ -272,7 +272,7 @@ void func_80101790(STAGE_WORK *wp)
     D_80103BB8[wp->routine_0](wp);
     Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_801017F4(void)
@@ -416,7 +416,7 @@ void func_80101C4C(STAGE_OBJ *wp)
         }
         else
         {
-            func_80033A28(wp);
+            Model_key_unpack(wp);
             EM_World_Pos_Calc(wp);
         }
     }
@@ -609,7 +609,7 @@ void func_8010225C(STAGE_WORK *wp)
     D_80103C64[wp->routine_0](wp);
     Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_801022C0(STAGE_FX *wp)

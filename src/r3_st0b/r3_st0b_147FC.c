@@ -385,7 +385,7 @@ void func_80115478(STAGE_OBJ *wp)
 {
     STAGE_OBJ *owner;
 
-    owner = func_80036294(wp->u_C.b.byte_C);
+    owner = Obj_id_work(wp->u_C.b.byte_C);
     if (STAGE_GAME.value_50 != 0xD || owner->u_C.b.byte_C != 0)
     {
         D_8011BE48[wp->variant_3](wp);
@@ -423,7 +423,7 @@ void func_80115570(ST0B_FLAMES *wp)
     uint32 i;
 
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (wp->timer_D == 0)
     {
         if (!(owner->flags_0 & 1))
@@ -547,7 +547,7 @@ void func_80115A28(ST0B_FLAMES *wp)
     uint32 i;
 
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (!(owner->flags_0 & 1))
     {
         wp->routine_0++;
@@ -638,7 +638,7 @@ void func_80115E9C(ST0B_FLAMES *wp)
     ST0B_FLAME *flame;
     uint32 i;
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (owner->value_44.half[0] == 0)
     {
         wp->routine_0++;

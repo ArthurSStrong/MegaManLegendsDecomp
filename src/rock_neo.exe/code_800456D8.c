@@ -260,7 +260,7 @@ void func_80045FE4(CODE456_WORK *wp)
 {
     CODE456_ENTRY *ent;
 
-    switch (func_8002FE74(wp->id_1))
+    switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
             ent = D_8009884C[wp->index_2];
@@ -283,7 +283,7 @@ void func_80046008(CODE456_WORK *wp)
 {
     CODE456_ENTRY *ent;
 
-    switch (func_8002FE74(wp->id_1))
+    switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
             ent = D_8009884C[wp->index_2];
@@ -720,7 +720,7 @@ void func_80046F38(void)
 
 void func_80047148(CODE456_WORK *wp, void *obj)
 {
-    switch (func_8002FE74(wp->id_1))
+    switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
             func_80046B34(obj, D_8009884C[wp->index_2][0].word);
@@ -741,7 +741,7 @@ void func_80047228(CODE456_WORK *wp, void *obj, sint32 n)
 {
     CODE456_ENTRY *ent;
 
-    switch (func_8002FE74(wp->id_1))
+    switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
             ent = D_8009884C[wp->index_2] + n;

@@ -40,7 +40,7 @@ void func_8010051C(void)
     }
     spawns                    = D_801220A0[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_80122208[Game_work.value_51];
-    func_8002EA50(spawns, D_800C356D);
+    Obj_spawn_list(spawns, D_800C356D);
     func_800371A0(D_80122310[D_801224F0[Game_work.value_51]], D_80122220[Game_work.value_51]);
     func_8005DC10(0);
     func_801006B8();
@@ -714,7 +714,7 @@ void func_80101470(STAGE_ROOM *wp)
         if (Moji_flag & 0x08000000)
         {
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
         }
         wp->routine_5 = 0x14;
         wp->reserved09[2] |= 0x81;
@@ -817,8 +817,8 @@ void func_80101AF4(STAGE_ROOM *wp)
         if (wp->routine_6 != 0 && wp->routine_6 < 3 && Sce_skip_check())
         {
             MojiTaskKill();
-            func_80063BA8();
-            func_8001D494(0, 1, 0);
+            Message_event_clear();
+            Cd_subcmd(0, 1, 0);
             func_8001B314();
             Sce_flag_on(0x604);
             wp->routine_6 = 2;
@@ -1011,7 +1011,7 @@ void func_80102288(sint8 index)
     if (D_801228A4 & (0x80000000 >> index))
     {
         obj = D_8012BE88[index];
-        switch (func_8002FE74(obj->index_1))
+        switch (Obj_id_class(obj->index_1))
         {
             case 0x20:
                 obj->routine_0 = 2;
@@ -1106,7 +1106,7 @@ void func_8010246C(STAGE_ROOM *wp)
         case 3:
             Sound_work.volume_6 = 0x6E;
             pl->flags_bd |= 0x20;
-            func_8001D58C(0xB000A);
+            Cd_xa_play_id(0xB000A);
             wp->routine_5++;
             break;
         case 4:
@@ -1166,7 +1166,7 @@ void func_801026CC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             Close_EM_WORK(wp->child_24);
             func_80042314(&Player_work);
             if (wp->reserved09[1] != 0)
@@ -1302,7 +1302,7 @@ void func_80102B3C(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8001D58C(D_801238F4[wp->reserved09[2]]);
+            Cd_xa_play_id(D_801238F4[wp->reserved09[2]]);
             wp->routine_5++;
             break;
         case 1:
@@ -1345,7 +1345,7 @@ void func_80102C5C(ST06_OBJ *wp)
 
 void func_80102CE8(sint8 *arg0)
 {
-    func_8001D494(0, 1, 0);
+    Cd_subcmd(0, 1, 0);
     func_8003697C();
     func_80042314((STCOM_PL_WORK *)&Player_work);
     D_800A395C = 1;
@@ -1417,7 +1417,7 @@ void func_80102F5C(STAGE_ROOM *wp)
     ST06_CRAB *crab;
 
     crab = (ST06_CRAB *)wp->child_24;
-    func_8001D494(0, 1, 0);
+    Cd_subcmd(0, 1, 0);
     func_8003697C();
     D_800A395C = 1;
     if (wp->reserved09[1] & 1)
@@ -1458,7 +1458,7 @@ void func_8010305C(STAGE_ROOM *wp)
         case 1:
             if (Cd_read_sync2() == 0 && wp->frame_10 > 0x64)
             {
-                func_8001D58C(0x20000013);
+                Cd_xa_play_id(0x20000013);
                 wp->routine_6++;
             }
             break;
@@ -1627,7 +1627,7 @@ void func_80103438(STAGE_ROOM *wp)
                 pl->value_448         = 0;
                 Sce_slot_open(&D_80123908[0]);
                 Sce_slot_open(&D_80123908[2]);
-                func_8001D58C(0x2000000B);
+                Cd_xa_play_id(0x2000000B);
                 wp->routine_4++;
             }
             break;
@@ -1681,7 +1681,7 @@ void func_80103438(STAGE_ROOM *wp)
         case 6:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Player_work.routine_1++;
                 func_80039820();
                 Obj_work_flag_change(0x56, 0x80);
@@ -1729,7 +1729,7 @@ void func_8010374C(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0 && Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x20000007);
+                Cd_xa_play_id(0x20000007);
                 wp->routine_5++;
             }
             break;
@@ -1785,7 +1785,7 @@ void func_80103998(ST06_OBJ *wp)
         switch (temp_v1)
         {
             case 0:
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Obj_work_flag_change(0x7E, 0x80);
                 func_8003697C();
                 D_800A395C = 1;
@@ -2991,7 +2991,7 @@ void func_80105D20(STAGE_ROOM *wp)
             if (Sce_skip_check() != 0 && wp->reserved09[1] == 1)
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 wp->routine_4 = 0xC;
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
@@ -3045,7 +3045,7 @@ void func_80105D20(STAGE_ROOM *wp)
             if (Sce_skip_check() != 0 && wp->reserved09[1] == 1)
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 wp->routine_4 = 0x10;
             }
             func_80105CE0((STAGE_ROOM_WORK *)wp);
@@ -3359,7 +3359,7 @@ void func_801068BC(STAGE_ROOM *wp)
             break;
         case 10:
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
             func_80039820();
             Sce_flag_on(0x52B);
@@ -3695,7 +3695,7 @@ void func_80106B98(STAGE_ROOM *wp)
     if (Sce_skip_check() != 0 && D_800C356C == 0 && Fade_busy == 0 && wp->routine_4 == 1)
     {
         Moji_task_kill(0);
-        func_8001D494(0, 1, 0);
+        Cd_subcmd(0, 1, 0);
         wp->routine_5 = 0;
         wp->routine_4++;
     }
@@ -4036,7 +4036,7 @@ void func_80107F24(ST06_PL_SCRIPT *wp)
         case 3:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8001D648(0x70003);
+                Cd_xa_seek_id(0x70003);
                 wp->timer_E = 0xA;
                 wp->routine_D++;
             }
@@ -4114,7 +4114,7 @@ void func_801081B0(STAGE_ROOM *wp)
             break;
         case 10:
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             func_8003697C();
             wp->routine_4++;
             Close_EM_WORK(wp->child_24);

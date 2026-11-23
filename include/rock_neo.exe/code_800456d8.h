@@ -220,7 +220,7 @@ extern uint16 D_80097EC0[][4];
 extern uint8 D_80097EE8[];
 
 void Close_EFFECT_WORK(void *wp);
-uint32 func_8002FE74(uint8 id);
+uint32 Obj_id_class(uint8 id);
 void Model_work_init(void *wp, uint8 *arg);
 void Money_add(uint32 id, sint32 arg1, sint32 arg2);
 void func_80043340(uint32 id, sint32 arg1);

@@ -424,7 +424,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
             {
                 break;
             }
-            func_80063BC8(&wp->position, 2, 0, 5);
+            Message_event_set(&wp->position, 2, 0, 5);
             wp->velocity.x = 0x200;
             wp->rotation.y = 0xA8C;
             wp->flags_0 |= 2;
@@ -443,7 +443,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
         case 4:
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
             stcom12_func_0E9C(wp, func_8004B414(wp));
-            if (D_800987B0[0] != 0)
+            if (Message_event[0] != 0)
             {
                 break;
             }
@@ -548,7 +548,7 @@ uint8 stcom12_func_0F98(STCOM12_WORK *wp)
         size.x       = 2;
         size.y       = 9;
         size.z       = 4;
-        if (func_80030418(wp, pl, &size, &out) & 0x10)
+        if (View_check_center(wp, pl, &size, &out) & 0x10)
         {
             return 1;
         }

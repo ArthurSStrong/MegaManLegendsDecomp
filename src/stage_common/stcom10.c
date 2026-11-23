@@ -73,10 +73,10 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                 {
                     for (pair = stcom10_E_0010; pair->flag != 0xFF; pair++)
                     {
-                        switch (func_8002FE74(pair->flag))
+                        switch (Obj_id_class(pair->flag))
                         {
                             case 0x20:
-                                obj_3C0 = func_80036294(pair->flag);
+                                obj_3C0 = Obj_id_work(pair->flag);
                                 mask    = (Em_work_used ^ stcom10_E_0004) & stcom10_E_0004;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
@@ -90,7 +90,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 }
                                 break;
                             case 0x40:
-                                obj_5A4 = func_80036294(pair->flag);
+                                obj_5A4 = Obj_id_work(pair->flag);
                                 mask    = (D_80098B20 ^ stcom10_E_0000) & stcom10_E_0000;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
@@ -104,7 +104,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 }
                                 break;
                             case 0x60:
-                                obj_10C = func_80036294(pair->flag);
+                                obj_10C = Obj_id_work(pair->flag);
                                 mask    = (Shl_work_used ^ stcom10_E_0008) & stcom10_E_0008;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
@@ -118,7 +118,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 }
                                 break;
                             case 0xE0:
-                                obj_50 = func_80036294(pair->flag);
+                                obj_50 = Obj_id_work(pair->flag);
                                 mask   = (D_800989CC ^ stcom10_E_000C) & stcom10_E_000C;
                                 dx     = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
@@ -142,7 +142,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
         {
             for (pair = stcom10_E_0010; pair->flag != 0xFF; pair++)
             {
-                switch (func_8002FE74(pair->flag))
+                switch (Obj_id_class(pair->flag))
                 {
                     case 0x20:
                         mask = (Em_work_used ^ stcom10_E_0004) & stcom10_E_0004;

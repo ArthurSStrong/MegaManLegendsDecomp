@@ -276,7 +276,7 @@ void func_8010915C(ST1B_TALKER *wp)
     }
     turn >>= 3;
     talk->turn_6 = turn;
-    func_80063BC8(&wp->position, 0, 0, wp->value_C);
+    Message_event_set(&wp->position, 0, 0, wp->value_C);
 }
 
 void func_80109228(ST1B_TALKER *wp)
@@ -289,7 +289,7 @@ void func_80109228(ST1B_TALKER *wp)
         wp->anim_AC = 9;
         wp->talk.routine_3++;
     }
-    if (D_800987B0[0] == 0)
+    if (Message_event[0] == 0)
     {
         wp->talk.routine_3 = 3;
         wp->anim_AC        = 0;
@@ -307,7 +307,7 @@ void func_801092C8(ST1B_TALKER *wp)
         wp->anim_AC = 0;
         wp->talk.routine_3--;
     }
-    if (D_800987B0[0] == 0)
+    if (Message_event[0] == 0)
     {
         wp->talk.routine_3 = 3;
         wp->anim_AC        = 0;

@@ -727,7 +727,7 @@ void func_8010B4BC(STAGE_OBJ *wp)
     {
         EM_Char_Move(wp);
     }
-    func_80030058(&ofs, wp->rotation.y, 0x400, 0, 0);
+    Calc_local_vec(&ofs, wp->rotation.y, 0x400, 0, 0);
     Obj_pos_adj_round(&ofs, &bob->pos_2C);
     bob->pos_2C.x += wp->position.x;
     bob->pos_2C.z += wp->position.z;
@@ -1157,7 +1157,7 @@ void func_8010C060(STAGE_OBJ *wp, ST0B_BOB *bob)
     }
     if (bob->flags_14 & 8)
     {
-        func_80036470(bob->track_3C);
+        Search_Player_Reset(bob->track_3C);
         if (--bob->timer_24 <= 0)
         {
             bob->value_18 = 0;
@@ -1166,7 +1166,7 @@ void func_8010C060(STAGE_OBJ *wp, ST0B_BOB *bob)
     }
     else if (wp->variant_3 == 0)
     {
-        if (func_800364B0(bob->track_3C, wp, bob->angle_1A) != 0)
+        if (Search_Player_Ang(bob->track_3C, wp, bob->angle_1A) != 0)
         {
             bob->value_18 = 0;
             if (Muku(&wp->position, &pl->position, bob->angle_1A, 0x800) > 0)
@@ -1197,7 +1197,7 @@ void func_8010C1EC(STAGE_OBJ *wp, ST0B_BOB *bob)
     track = bob->track_3C;
     if (wp->variant_3 == 0)
     {
-        func_800364B0(track, wp, bob->angle_1A);
+        Search_Player_Ang(track, wp, bob->angle_1A);
         func_8010C3B0(wp, bob);
         return;
     }
@@ -1527,7 +1527,7 @@ void func_8010CC94(ST0B_OBJ *wp)
     wp->value_34C      = 0;
     D_80120350         = wp->position_fixed.v;
     wp->pos_354        = wp->position;
-    func_8002FFC4(&wp->pos_354, &D_80120350, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&wp->pos_354, &D_80120350, wp->rotation.y, 0x100, 0, 0);
     wp->rotation.x            = 0;
     wp->rotation.z            = 0;
     wp->value_44.value        = 0;
@@ -1865,7 +1865,7 @@ void func_8010D6AC(ST0B_BOAT *wp, ST0B_BOAT_CTL *ctl)
     sint32 spawned;
 
     spawned = 0;
-    func_80030058(&dir, wp->rotation.y, 0x600, 0, 0);
+    Calc_local_vec(&dir, wp->rotation.y, 0x600, 0, 0);
     Obj_pos_adj_round(&dir, &step);
     fx = (ST0B_SPRAY *)Open_SHL_WORK();
     if (fx != NULL)
@@ -1874,7 +1874,7 @@ void func_8010D6AC(ST0B_BOAT *wp, ST0B_BOAT_CTL *ctl)
         fx->kind_2  = 1;
         fx->value_4 = 0;
         fx->type_F  = 0x24;
-        func_80030058(&ofs, wp->rotation.y, 0xC80, 0x1900, 0x480);
+        Calc_local_vec(&ofs, wp->rotation.y, 0xC80, 0x1900, 0x480);
         fx->position_fixed = ofs;
         fx->position_fixed.x += wp->position_fixed.x;
         fx->position_fixed.y += wp->position_fixed.y;
@@ -1896,7 +1896,7 @@ void func_8010D6AC(ST0B_BOAT *wp, ST0B_BOAT_CTL *ctl)
         fx->kind_2  = 1;
         fx->value_4 = 0;
         fx->type_F  = 0x24;
-        func_80030058(&ofs, wp->rotation.y, 0xC80, 0x1900, -0x480);
+        Calc_local_vec(&ofs, wp->rotation.y, 0xC80, 0x1900, -0x480);
         fx->position_fixed = ofs;
         fx->position_fixed.x += wp->position_fixed.x;
         fx->position_fixed.y += wp->position_fixed.y;
@@ -2084,7 +2084,7 @@ void func_8010DDD8(STAGE_OBJ *wp, ST0B_HIT_B *ctl)
     Obj_pos_set(wp, 0x120, 0, 0);
     if (wp->u_C.b.byte_C == 1 || wp->u_E.b.byte_F == 1)
     {
-        func_80036470(ctl->track_40);
+        Search_Player_Reset(ctl->track_40);
         if (ctl->timer_18 == 0)
         {
             wp->u_C.b.byte_C = 0;
@@ -2124,7 +2124,7 @@ void func_8010DEF4(STAGE_OBJ *wp, ST0B_HIT_B *ctl)
             ctl->speed_24 = 8;
             ctl->count_1C = 0;
             ctl->flags_14 |= 0x100;
-            func_80030058(&fixed, wp->rotation.y, 0x3C00, 0, 0);
+            Calc_local_vec(&fixed, wp->rotation.y, 0x3C00, 0, 0);
             fixed.x += wp->position_fixed.v.x;
             fixed.z += wp->position_fixed.v.z;
             Obj_pos_adj_round(&fixed, &pos);

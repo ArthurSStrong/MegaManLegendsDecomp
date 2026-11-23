@@ -622,7 +622,7 @@ extern sint32 D_80116B90[];
 
 void func_80100780(void);
 
-void func_8002FFC4(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
+void Obj_pos_move(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
                    sint32 z);
 
 // STCOM_SPRITE's layout, with the direction the 0x10C-byte objects keep at +0x1C.
@@ -1001,7 +1001,7 @@ typedef struct
     uint8 reserved34E[0x72];                // 34E
 } ST19_FOLLOWER;
 
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 sint32 Scr_height_check(void *wp);
 uint8 func_80108CAC(STCOM_SVECTOR a, STCOM_SVECTOR b, sint16 w, sint16 d);
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
@@ -1520,7 +1520,7 @@ typedef struct
     uint8 anim_AC;                     // AC
     uint8 anim_prev_AD;                // AD
     uint8 reservedAE[0x16];            // AE
-    STCOM_SVECTOR value_C4;            // C4: a copy of its position (func_80030628)
+    STCOM_SVECTOR value_C4;            // C4: a copy of its position (View_check_ang)
     uint8 reservedCC[0x2C];            // CC
     ST19_TURRET_PART part_F8[14];      // F8: by joint
     uint8 reserved130[0x50];           // 130
@@ -1584,7 +1584,7 @@ typedef struct
 extern sint16 D_80117A44[]; // the turn speed from each stage
 extern sint16 D_80117A50[]; // the frame each stage starts
 
-uint32 func_80030628(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
+uint32 View_check_ang(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
                      sint32 angle);
 
 // The cells a turret can move to (func_80106238): four neighbours by direction, 0xFF for none.

@@ -268,9 +268,9 @@ typedef struct
 extern MEM_SLOT D_800BAF38[5];
 // Save image buffer (0x1F00 bytes): the CD sector buffer, declared as bytes as in
 // cd_local.h and viewed here as a slot header and as words.
-extern uint8 D_800B5DB0[];
-#define MEM_SAVE       (*(MEM_SLOT *)D_800B5DB0)
-#define MEM_SAVE_WORDS ((uint32 *)D_800B5DB0)
+extern uint8 Cd_ring_buf[];
+#define MEM_SAVE       (*(MEM_SLOT *)Cd_ring_buf)
+#define MEM_SAVE_WORDS ((uint32 *)Cd_ring_buf)
 
 // Save-image checksum over words [first, seed): a rotated sum and two keyed sums,
 // alternating by word index; save[seed] holds the key.
@@ -321,7 +321,7 @@ typedef struct
 {
     uint8 b[8];
 } MEM_BYTES8;
-// Save image layout (0x1F00 bytes at D_800B5DB0), as func_80065064 fills it.
+// Save image layout (0x1F00 bytes at Cd_ring_buf), as func_80065064 fills it.
 typedef struct
 {
     uint8 reserved000[0x101];

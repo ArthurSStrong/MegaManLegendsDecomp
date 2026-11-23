@@ -8,7 +8,7 @@ void func_80103CC4(sint8 index)
     if (stcom36_D_0000 & (0x80000000 >> index))
     {
         obj = stcom36_E2_0000[index];
-        switch (func_8002FE74(obj->index_1))
+        switch (Obj_id_class(obj->index_1))
         {
             case 0x20:
                 obj->routine_0 = 2;
@@ -405,7 +405,7 @@ void func_801048E0(ST03_PL *wp)
             }
             break;
         case 5:
-            func_8002FF34(wp, 0x50, 0, 0);
+            Pl_pos_set(wp, 0x50, 0, 0);
             break;
     }
 }
@@ -468,7 +468,7 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
             break;
         case 0xA:
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             func_8003697C();
             D_800A395C = 1;
             func_80039820();
@@ -619,7 +619,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             break;
         case 0xA:
             Moji_task_kill(0);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
             func_80039820();
             child = wp->child_28;

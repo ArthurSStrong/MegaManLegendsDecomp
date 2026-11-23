@@ -665,7 +665,7 @@ extern uint8 D_8011960C[][0x28];
 extern uint8 D_8011974C[][8];
 
 sint32 Search_Player(void *track, void *wp);
-sint32 func_800364B0(void *track, void *target, sint32 angle);
+sint32 Search_Player_Ang(void *track, void *target, sint32 angle);
 void Sce_slot_open_list(uint8 *list);
 
 // PsyQ's TILE (a flat rectangle), as func_80101110 fills it.
@@ -881,7 +881,7 @@ typedef struct
 
 extern ST0B_10C_FUNC_B D_8011BB84[];
 void func_80111934(STAGE_10C *wp);
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 extern STAGE_OBJ_FUNC D_8011BE48[];
 void func_80115478(STAGE_OBJ *wp);
 void func_80115530(ST0B_PAIRS *wp);
@@ -1239,7 +1239,7 @@ extern STAGE_SCRIPT_ENTRY D_801200D8[];
 void func_80118C34(STAGE_ROOM *wp);
 
 // The control block func_8010C060 and func_8010C1EC take with their slot: flags, an angle, a
-// bobbing counter, the last hit (func_8010BAFC) and a tracking block for func_800364B0/Search_Player.
+// bobbing counter, the last hit (func_8010BAFC) and a tracking block for Search_Player_Ang/Search_Player.
 typedef struct
 {
     uint8 reserved00[4];       // 00
@@ -1779,7 +1779,7 @@ typedef struct
     uint8 track_40[0x10];   // 40: Search_Player_Init
 } ST0B_HIT_B;
 
-void func_80036470(void *track);
+void Search_Player_Reset(void *track);
 
 void func_8010D494(STAGE_OBJ *wp, ST0B_HIT_B *hit);
 

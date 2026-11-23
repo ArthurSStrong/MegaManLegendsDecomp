@@ -1092,7 +1092,7 @@ void func_801145F4(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
                 if (func_801159F8(wp, box))
                 {
                     box->state_8 = 1;
-                    func_8001D648(0);
+                    Cd_xa_seek_id(0);
                 }
                 break;
         }
@@ -1118,7 +1118,7 @@ void func_8011466C(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8001D648(5);
+                    Cd_xa_seek_id(5);
                     Sce_flag_on(0x610);
                     STAGE_PL.flags_bd &= ~0x40;
                     Obj_work_flag_change(0x27E, 2);
@@ -1145,7 +1145,7 @@ void func_80114774(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8001D648(6);
+                    Cd_xa_seek_id(6);
                     Sce_flag_on(0x612);
                 }
                 break;
@@ -1226,7 +1226,7 @@ void func_80114A34(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
                 if (func_801159F8(wp, box))
                 {
                     box->state_8 = 1;
-                    func_8001D648(0xA);
+                    Cd_xa_seek_id(0xA);
                 }
                 break;
         }
@@ -1311,7 +1311,7 @@ void func_80114C88(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8001D648(14);
+                    Cd_xa_seek_id(14);
                     Sce_flag_on(0x616);
                     STAGE_PL.flags_bd &= ~0x40;
                     Obj_work_flag_change(0x27E, 2);
@@ -1341,7 +1341,7 @@ void func_80114D90(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8001D648(7);
+                    Cd_xa_seek_id(7);
                     Sce_flag_on(0x617);
                     STAGE_PL.flags_bd &= ~0x40;
                     Obj_work_flag_change(0x27E, 2);
@@ -1382,7 +1382,7 @@ void func_80114E98(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
             case 1:
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8001D648(0x15);
+                    Cd_xa_seek_id(0x15);
                     Sce_flag_on(0x618);
                     STAGE_PL.flags_bd &= ~0x40;
                     Obj_work_flag_change(0x27E, 2);

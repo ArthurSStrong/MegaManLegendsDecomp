@@ -26,7 +26,7 @@ void func_8010F724(STAGE_OBJ *wp)
     wp->position_fixed_prev = wp->position_fixed.v;
     wp->rotation_prev       = wp->rotation;
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_8010F7DC(STAGE_OBJ *wp)
@@ -217,7 +217,7 @@ void func_8010FEC4(STCOM23_WORK *wp)
             d.z >>= 2;
         }
         VectorNormalS(&d, &unit);
-        func_80033F04(&dir, &unit, &wp->dir_CC, D_8011BF8C[wp->variant_3].turn_8,
+        Vec_turn_toward(&dir, &unit, &wp->dir_CC, D_8011BF8C[wp->variant_3].turn_8,
                       D_8011BF8C[wp->variant_3].turn_C);
         wp->dir_CC     = dir;
         speed          = wp->speed_6E;
@@ -644,7 +644,7 @@ void func_80110E58(ST17_10C_B *wp)
     else
     {
         target = func_8011134C((ST17_10C *)wp);
-        func_80033F04(&dir, &target, &wp->sprite.dir_1C, 0x32, 0xFFFB10B);
+        Vec_turn_toward(&dir, &target, &wp->sprite.dir_1C, 0x32, 0xFFFB10B);
         wp->sprite.dir_1C    = dir;
         wp->value_44.half[0] = (dir.x * 25) >> 2;
         wp->value_44.half[1] = (dir.y * 25) >> 2;
@@ -1310,7 +1310,7 @@ void func_801128C4(ST17_SHL *wp)
     }
     else
     {
-        func_800354E0(wp->bit_d);
+        Homing_target_clear(wp->bit_d);
         rot.x = func_80039B80();
     }
     rot.y = wp->rot_y & 0xFFF;
@@ -1442,17 +1442,17 @@ void func_80112E44(ST17_SHL *wp)
     }
     if (wp->type_3 & 0x40)
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
                       0, 0x80);
     }
     else if (wp->index_c)
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
                       flags | 0x8000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                       flags | 0x8000000, 0, 0x80);
     }
 }
@@ -1757,7 +1757,7 @@ void func_80113894(STAGE_FX *wp)
     wp->u_22     = D_8011C270[wp->type_F * 2];
     wp->v_23     = D_8011C271[wp->type_F * 2];
     wp->w_24     = 0x30;
-    owner        = func_80036294(wp->value_C);
+    owner        = Obj_id_work(wp->value_C);
     m            = owner->matrix_1E8[wp->timer_D];
     v.x          = D_8011C2A4[wp->timer_D - 1].x;
     v.y          = 0;
@@ -1876,7 +1876,7 @@ void func_80113C84(ST17_BURST *wp)
             d        = (uint32)(rcos(d) * 25) >> 6;
             wp->w_24 = 100;
         }
-        owner    = func_80036294(wp->value_C);
+        owner    = Obj_id_work(wp->value_C);
         wp->x_1C = owner->position.x + ((rcos(i) * d) >> 12);
         wp->z_20 = owner->position.z + ((rsin(i) * d) >> 12);
         wp->y_1E = owner->position.y + h;

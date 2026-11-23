@@ -62,9 +62,9 @@ extern uint32 Moji_flag;
 
 void Title_task(void);
 void Game_task(void);
-void func_80015428(CODE800133D8_STATE *wp);
+void Title_chr_control(CODE800133D8_STATE *wp);
 void Fade_start(sint32 arg);
-void func_8002E7A8(sint32 arg);
+void Work_init_all(sint32 arg);
 void func_8003697C(void);
 void func_8002CFA4(void);
 void func_800371A0(uint32 *arg0, uint32 *arg1);
@@ -83,8 +83,8 @@ void func_8005C258(void);
 void Cd_read_comb(sint32 arg);
 void Sce_cd_read_wait(sint32 arg);
 void Sound_bgm_tbl_set(void);
-void func_80063BA8(void);
-void func_80063EF0(void);
+void Message_event_clear(void);
+void Game_logo_init(void);
 void func_80017994(void);
 void Work_close_apply(void);
 // Some sound commands use only the ID; other commands consume two payload words.

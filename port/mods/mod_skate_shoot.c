@@ -8,7 +8,7 @@
 // shot's kind (0x80 buster, 0x40 special weapon) and the upper-body animation in value104/
 // value100. From then on the weapon's handler (func_80042734 / func_800426F8, called by
 // func_8003C88C before the check) plays the arm animation, raises value174's 0x20/0x10 bit on
-// the firing frame, where func_80035724 spawns the projectile from the arm in Mega Man's facing,
+// the firing frame, where pl_shot_set spawns the projectile from the arm in Mega Man's facing,
 // and clears value174 when the animation ends: rate of fire, energy, sound and direction are
 // the game's own.
 //

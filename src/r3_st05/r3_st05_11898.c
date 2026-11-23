@@ -114,7 +114,7 @@ void func_80111CEC(ST05_WAGON *wp)
     ctl->value_14            = 0;
     ctl->value_18            = 0;
     ctl->flags_0 |= 0xB2;
-    ctl->link_34 = func_80036294(wp->u_C.b.byte_D);
+    ctl->link_34 = Obj_id_work(wp->u_C.b.byte_D);
     Search_Player_Init(ctl->track_24, D_80098844[ctl->link_34->kind_2]->track_F, -0x60);
     ctl->value_3C          = ctl->value_40;
     ctl->value_40[0]       = 0;
@@ -178,7 +178,7 @@ void func_80111F80(ST05_WAGON *wp)
     ST05_WAGON_CTL *ctl;
 
     ctl = &wp->ctl;
-    if (func_800364B0(ctl->track_24, wp, wp->rotation.y))
+    if (Search_Player_Ang(ctl->track_24, wp, wp->rotation.y))
     {
         wp->ctl.flags_0 |= 0x100;
     }
@@ -240,7 +240,7 @@ void func_8011214C(ST05_WAGON *wp)
     ST05_WAGON_CTL *ctl;
 
     ctl = &wp->ctl;
-    if (func_800364B0(ctl->track_24, wp, wp->rotation.y))
+    if (Search_Player_Ang(ctl->track_24, wp, wp->rotation.y))
     {
         wp->ctl.flags_0 |= 0x100;
     }
@@ -294,7 +294,7 @@ void func_80112284(STAGE_OBJ *obj)
             wp->ctl.timer_4 = 0x20;
             D_80137F30[0]   = owner->position;
             D_80137F38      = ((STAGE_OBJ *)wp->ctl.link_34)->position_fixed.v;
-            func_8002FFC4(D_80137F30, &D_80137F38, ((STAGE_OBJ *)wp->ctl.link_34)->rotation.y,
+            Obj_pos_move(D_80137F30, &D_80137F38, ((STAGE_OBJ *)wp->ctl.link_34)->rotation.y,
                           0x100, 0, 0);
             wp->turn_66 = Muku(&wp->position, D_80137F30, wp->rotation.y, 0x800) >> 5;
             // fall through
@@ -392,7 +392,7 @@ void func_801126CC(ST05_WAGON *wp)
             wp->routine_2 = 1;
             ctl->value_8  = 0;
             ctl->flags_0 |= 4;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             ctl->value_6 = 0x5A;
             D_801380A0[0]->u_E.b.byte_F |= 1;
             D_801380A0[1]->u_E.b.byte_F |= 1;
@@ -497,7 +497,7 @@ void func_80112B58(ST05_WAGON *wp)
             wp->routine_2   = 1;
             wp->ctl.value_8 = 0;
             wp->ctl.flags_0 |= 4;
-            func_80036470(wp->ctl.track_24);
+            Search_Player_Reset(wp->ctl.track_24);
             wp->ctl.value_6 = 0x5A;
             // fall through
         case 1:
@@ -1497,7 +1497,7 @@ void func_80114DB8(ST05_WALKER *wp)
             wp->routine_3 = 1;
             wp->accel_4C  = D_801317A4[wp->variant_3] >> 1;
             ctl->value_8  = 0;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             ctl->flags_0 &= ~0x110;
             // fall through
         case 1:
@@ -1610,7 +1610,7 @@ void func_801151E8(ST05_WALKER *wp)
             wp->routine_3 = 1;
             wp->accel_4C  = D_801317A4[wp->variant_3] >> 1;
             ctl->value_8  = 0;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             ctl->flags_0 &= ~0x100;
             // fall through
         case 1:

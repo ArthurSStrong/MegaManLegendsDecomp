@@ -143,7 +143,7 @@ void stcom29_func_04B4(void)
     {
         if (Sce_flag_test(0x235) == 0)
         {
-            func_80063BC8(NULL, 2, 0, 1);
+            Message_event_set(NULL, 2, 0, 1);
             Sce_flag_on(0x7E5);
             Sce_flag_on(0x7E6);
             Sce_flag_on(0x7E7);
@@ -152,11 +152,11 @@ void stcom29_func_04B4(void)
             Game_work.value_78 = 0;
             return;
         }
-        func_80063BC8(NULL, 2, 0, 2);
+        Message_event_set(NULL, 2, 0, 2);
     }
     else
     {
-        func_80063BC8(NULL, 2, 0, 0x22);
+        Message_event_set(NULL, 2, 0, 0x22);
     }
 }
 

@@ -63,7 +63,7 @@ typedef struct
     uint8 reservedb8[4];
 } SHL_MODEL;
 
-// A player slot (Player_work, or func_80036294's record for ids 0 to 0xF; stride 0x5F4), as the
+// A player slot (Player_work, or Obj_id_work's record for ids 0 to 0xF; stride 0x5F4), as the
 // weapons see it.
 typedef struct
 {
@@ -182,7 +182,7 @@ typedef struct SHL_WORK
     } draw;          // 88
     uint32 col_bc;   // BC: second hit accumulator (Set_Atari)
     uint32 col_c0;   // C0
-    uint32 col_c4;   // C4: hit accumulator (func_8003430C, Set_Atari)
+    uint32 col_c4;   // C4: hit accumulator (Set_Atari2, Set_Atari)
     uint32 col_c8;   // C8
     sint32 value_cc; // CC
     sint32 value_d0; // D0
@@ -243,13 +243,13 @@ extern SHL_FX Effect_work_tbl[64];
 void Sound_call(sint32 sound, ...);
 void Sound_call2(sint16 id, void *pos);
 sint32 rand(void);
-void *func_80036294(sint32 id);
+void *Obj_id_work(sint32 id);
 void *Open_EFFECT_WORK(void); // a free effect slot (SHL_FX, or a module's own view)
 SHL_WORK *Open_PL_SHL_WORK(void);
 void Close_PL_SHL_WORK(void *obj);
 void Close_SHL_WORK(void *obj);
 void Model_work_init(void *obj, void *arg);
-void func_80033F04(SVECTOR *out, SVECTOR *dir, SVECTOR *cur, sint32 a3, sint32 a4);
+void Vec_turn_toward(SVECTOR *out, SVECTOR *dir, SVECTOR *cur, sint32 a3, sint32 a4);
 void Obj_pos_adj_round(SHL_FIXED *fpos, SVECTOR *pos);
 void Model_Shadow_Trans(void *obj, sint32 a1, sint32 a2, sint32 a3);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, SVECTOR *pos);
@@ -261,13 +261,13 @@ sint32 func_80048C60(SVECTOR *pos);
 sint32 Scr_height_check(void *obj);
 sint32 func_80050C2C(void *obj);
 sint32 func_8004324C(SHL_PLAYER *pl);
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint32 func_80037634(void *pl, sint32 arg);
 sint32 func_80037694(void *obj, sint32 arg);
 sint32 func_800375D4(void *pl, sint32 arg);
 sint16 func_80039B80(void);
 void func_80051BAC(void *obj);
-void func_8003430C(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
+void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
                    uint32 *a7, sint32 a8, sint32 a9, sint32 a10);
 
 #endif // SHL_H

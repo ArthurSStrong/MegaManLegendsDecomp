@@ -51,7 +51,7 @@ void func_80100384(void)
     }
     spawn                     = D_8011262C[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_801127DC[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_801128E4[D_8011295C[Game_work.value_51]], D_801127F4[Game_work.value_51]);
     func_8005DC10(0);
     func_80100578();
@@ -744,7 +744,7 @@ void func_801018CC(STAGE_ROOM *wp)
             {
                 Sound_call2(0x163, &Player_work.position);
                 Sound_work.volume_6 = 0x1E;
-                func_8001D58C(0x2001000F);
+                Cd_xa_play_id(0x2001000F);
                 Scene_work.value_A    = 0;
                 Scene_work.value_10   = 0;
                 STAGE_SCENE_WORD(0xC) = 0;
@@ -1288,7 +1288,7 @@ void func_80102A24(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             Sce_flag_off(0x549);
             Sce_flag_on(0x37);
             func_8001E3F0(0x18);

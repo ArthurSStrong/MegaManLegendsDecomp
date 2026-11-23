@@ -793,7 +793,7 @@ void sound_volume_update(void)
     {
         if (Sound_fade_flags & 0x40)
         {
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
         }
         Sound_fade_flags &= 0x3F;
     }

@@ -12,7 +12,7 @@ void func_800D8840(SHL_WORK *wp)
     SVECTOR unused_s;
     VECTOR unused_v;
 
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->timer_b = 0;
     wp->routine_0++;
     func_800D89F8(wp);
@@ -25,7 +25,7 @@ void func_800D8894(SHL_WORK *wp)
     MATRIX unused;
     SVECTOR rot;
 
-    tp         = func_80036294(wp->index_c);
+    tp         = Obj_id_work(wp->index_c);
     wp->pos.vx = tp->pos_3c8.vx + (tp->pos_3c8.vx - tp->pos_3c0.vx) * 4;
     wp->pos.vy = tp->pos_3c8.vy + (tp->pos_3c8.vy - tp->pos_3c0.vy) * 4;
     wp->pos.vz = tp->pos_3c8.vz + (tp->pos_3c8.vz - tp->pos_3c0.vz) * 4;
@@ -68,11 +68,11 @@ void func_800D89F8(SHL_WORK *wp)
     sint32 flags;
 
     flags  = func_800375D4(&Player_work, 4);
-    tp     = func_80036294(wp->index_c);
+    tp     = Obj_id_work(wp->index_c);
     pos.vx = tp->pos_3c8.vx + (tp->pos_3c8.vx - tp->pos_3c0.vx) * 4;
     pos.vy = tp->pos_3c8.vy + (tp->pos_3c8.vy - tp->pos_3c0.vy) * 4;
     pos.vz = tp->pos_3c8.vz + (tp->pos_3c8.vz - tp->pos_3c0.vz) * 4;
-    func_8003430C(&tp->pos_3c8, 0x14, &pos, 8, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+    Set_Atari2(&tp->pos_3c8, 0x14, &pos, 8, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                   flags | 0x88000000, 0, 0x80);
     wp->col_c4 = 0;
     wp->col_c8 = 0;

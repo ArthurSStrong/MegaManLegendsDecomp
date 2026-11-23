@@ -10,14 +10,14 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 sint32 D_80097CFC;
 uint8 D_80097D02;
 uint8 D_80097D03;
-sint32 D_80097D08;
-uint32 D_80098560, D_80098564, D_80098568;
-MATRIX *D_80098A80;
+sint32 Lockon_target;
+uint32 Lockon_probe_count, Lockon_id, Lockon_timer;
+MATRIX *Matrix_stack_ptr;
 // Small data only addressed here, never loaded: owning them makes GCC rebuild each address per use
 PL_HEIGHT_INFO D_80097D0C;
 PL_HEIGHT_INFO D_80097D18;
 
-// Work area of the turn-toward helper (func_80033F04), reached through $gp. Only
+// Work area of the turn-toward helper (Vec_turn_toward), reached through $gp. Only
 // D_8009857C, D_800985FC..D_80098604 and D_8009860C..D_8009864C (except D_8009862C) are
 // referenced in retail; the others fill the layout between them.
 static MATRIX D_8009857C;
@@ -32,7 +32,7 @@ static VEC32_PAD_WORK D_8009862C;
 static VEC32_PAD_WORK D_8009863C;
 static VEC32_PAD_WORK D_8009864C;
 
-void func_8002E7A8(sint32 mode)
+void Work_init_all(sint32 mode)
 {
     uint32 i;
     uint32 id;
@@ -108,7 +108,7 @@ void func_8002E7A8(sint32 mode)
     func_800177CC((void *)0x8015BC00, (void *)0x8015BFFC);
 }
 
-void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player)
+void Obj_spawn_list(SPAWN_ENTRY *e, sint32 spawn_player)
 {
     SPAWN_SLOT *pl;
     SPAWN_SLOT *o;
@@ -464,7 +464,7 @@ void func_8002F3A8(BYTE_WORK *wp, uint32 flags)
     }
 }
 
-void func_8002F420(sint32 flag, GAME_DELTA *delta)
+void Work_room_change(sint32 flag, GAME_DELTA *delta)
 {
     sint32 i;
     sint32 j;
@@ -488,7 +488,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F884((SYNC_POS_WORK *)slot3c0, (uint16 *)delta);
+                        shift_model((SYNC_POS_WORK *)slot3c0, (uint16 *)delta);
                     }
                 }
                 else
@@ -510,7 +510,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F884((SYNC_POS_WORK *)slot5a4, (uint16 *)delta);
+                        shift_model((SYNC_POS_WORK *)slot5a4, (uint16 *)delta);
                     }
                 }
                 else
@@ -532,7 +532,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F884((SYNC_POS_WORK *)slot10c, (uint16 *)delta);
+                        shift_model((SYNC_POS_WORK *)slot10c, (uint16 *)delta);
                     }
                 }
                 else
@@ -554,7 +554,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F884((SYNC_POS_WORK *)slot10c, (uint16 *)delta);
+                        shift_model((SYNC_POS_WORK *)slot10c, (uint16 *)delta);
                     }
                 }
                 else
@@ -578,7 +578,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                     {
                         if (delta != NULL)
                         {
-                            func_8002F928((MOVE_WORK *)slot48, (uint16 *)delta);
+                            shift_effect((MOVE_WORK *)slot48, (uint16 *)delta);
                         }
                     }
                     else
@@ -603,7 +603,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                     {
                         if (delta != NULL)
                         {
-                            func_8002F928((MOVE_WORK *)slot48, (uint16 *)delta);
+                            shift_effect((MOVE_WORK *)slot48, (uint16 *)delta);
                         }
                     }
                     else
@@ -626,7 +626,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F998((POS_WORK *)slot24, (uint16 *)delta);
+                        shift_eve((POS_WORK *)slot24, (uint16 *)delta);
                     }
                 }
                 else
@@ -648,7 +648,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
                 {
                     if (delta != NULL)
                     {
-                        func_8002F928((MOVE_WORK *)slot50, (uint16 *)delta);
+                        shift_effect((MOVE_WORK *)slot50, (uint16 *)delta);
                     }
                 }
                 else
@@ -660,7 +660,7 @@ void func_8002F420(sint32 flag, GAME_DELTA *delta)
     }
 }
 
-void func_8002F884(SYNC_POS_WORK *wp, uint16 *delta)
+void shift_model(SYNC_POS_WORK *wp, uint16 *delta)
 {
     wp->x_14 += delta[0];
     wp->y_18 += delta[2];
@@ -672,7 +672,7 @@ void func_8002F884(SYNC_POS_WORK *wp, uint16 *delta)
     wp->fixed_3c += (sint16)delta[2] << 16;
 }
 
-void func_8002F928(MOVE_WORK *wp, uint16 *delta)
+void shift_effect(MOVE_WORK *wp, uint16 *delta)
 {
     if (wp->flags & 4)
     {
@@ -686,7 +686,7 @@ void func_8002F928(MOVE_WORK *wp, uint16 *delta)
     }
 }
 
-void func_8002F998(POS_WORK *wp, uint16 *delta)
+void shift_eve(POS_WORK *wp, uint16 *delta)
 {
     wp->x_14 += delta[0];
     wp->y_18 += delta[2];
@@ -694,20 +694,20 @@ void func_8002F998(POS_WORK *wp, uint16 *delta)
 
 void Model_work_init(void *wp, sint32 arg)
 {
-    func_8002FA38((RES_OWNER *)wp, (sint32 *)0x8016C000, (uint8 *)arg);
+    model_dir_search((RES_OWNER *)wp, (sint32 *)0x8016C000, (uint8 *)arg);
 }
 
 void func_8002F9EC(void *wp, sint32 arg)
 {
-    func_8002FA38((RES_OWNER *)wp, (sint32 *)0x80190000, (uint8 *)arg);
+    model_dir_search((RES_OWNER *)wp, (sint32 *)0x80190000, (uint8 *)arg);
 }
 
 void func_8002FA10(void *wp, sint32 arg)
 {
-    func_8002FA38((RES_OWNER *)wp, (sint32 *)0x801F2000, (uint8 *)arg);
+    model_dir_search((RES_OWNER *)wp, (sint32 *)0x801F2000, (uint8 *)arg);
 }
 
-sint32 func_8002FA38(RES_OWNER *wp, sint32 *dir, uint8 *key)
+sint32 model_dir_search(RES_OWNER *wp, sint32 *dir, uint8 *key)
 {
     RES_ENTRY *e;
     sint32 count;
@@ -715,7 +715,7 @@ sint32 func_8002FA38(RES_OWNER *wp, sint32 *dir, uint8 *key)
     sint32 kind;
 
     count = *dir++;
-    kind  = func_8002FE74(wp->id_1);
+    kind  = Obj_id_class(wp->id_1);
     if (kind == 0x60 && wp->sub_2 >= 0x80)
     {
         kind = 0x10;
@@ -831,7 +831,7 @@ void Work_stage_close(void)
     }
 }
 
-uint32 func_8002FE74(uint32 val)
+uint32 Obj_id_class(uint32 val)
 {
     if (val < 0x20)
     {
@@ -851,52 +851,52 @@ uint32 func_8002FE74(uint32 val)
 void Obj_pos_set(FIXED_POS_WORK *wp, sint16 x, sint16 y, sint16 z)
 {
 #ifdef __wasm32__
-    // func_80030058 copies four words, including the vector's padding word.
+    // Calc_local_vec copies four words, including the vector's padding word.
     sint32 delta[4];
 #else
     sint32 delta[3];
 #endif
 
-    func_80030058(delta, wp->angle_56, x, y, z);
+    Calc_local_vec(delta, wp->angle_56, x, y, z);
     wp->fixed_1c[0] += delta[0];
     wp->fixed_1c[1] += delta[1];
     wp->fixed_1c[2] += delta[2];
     Obj_pos_adj_round(wp->fixed_1c, wp->pos_14);
 }
 
-void func_8002FF34(FIXED_POS_BIG *wp, sint16 x, sint16 y, sint16 z)
+void Pl_pos_set(FIXED_POS_BIG *wp, sint16 x, sint16 y, sint16 z)
 {
 #ifdef __wasm32__
-    // func_80030058 copies four words, including the vector's padding word.
+    // Calc_local_vec copies four words, including the vector's padding word.
     sint32 delta[4];
 #else
     sint32 delta[3];
 #endif
 
-    func_80030058(delta, wp->angle_56, x, y, z);
+    Calc_local_vec(delta, wp->angle_56, x, y, z);
     wp->fixed_428[0] += delta[0];
     wp->fixed_428[1] += delta[1];
     wp->fixed_428[2] += delta[2];
     Obj_pos_adj_round(wp->fixed_428, wp->pos_438);
 }
 
-void func_8002FFC4(sint16 *out, sint32 *fixed, sint32 angle, sint16 x, sint16 y, sint16 z)
+void Obj_pos_move(sint16 *out, sint32 *fixed, sint32 angle, sint16 x, sint16 y, sint16 z)
 {
 #ifdef __wasm32__
-    // func_80030058 copies four words, including the vector's padding word.
+    // Calc_local_vec copies four words, including the vector's padding word.
     sint32 delta[4];
 #else
     sint32 delta[3];
 #endif
 
-    func_80030058(delta, angle, x, y, z);
+    Calc_local_vec(delta, angle, x, y, z);
     fixed[0] += delta[0];
     fixed[1] += delta[1];
     fixed[2] += delta[2];
     Obj_pos_adj_round(fixed, out);
 }
 
-sint32 *func_80030058(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z)
+sint32 *Calc_local_vec(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z)
 {
     sint32 v[4];
     sint32 res[4];
@@ -932,7 +932,7 @@ void Obj_pos_adj_round(sint32 *in, sint16 *out)
     out[2] = (in[2] >> 16) + ((in[2] >> 15) & 1);
 }
 
-void func_800301A8(MATRIX *m, sint32 *wp, sint32 *base)
+void Calc_rotate_about(MATRIX *m, sint32 *wp, sint32 *base)
 {
     sint32 delta[4];
     sint32 out[4];
@@ -984,7 +984,7 @@ sint32 Calc_distance_xz_sq(sint16 *a, sint16 *b)
     return d[0] * d[0] + d[2] * d[2];
 }
 
-uint32 func_80030418(CLIP_WORK *a, CLIP_WORK *b, SHORT3_WORK *range, sint32 *out)
+uint32 View_check_center(CLIP_WORK *a, CLIP_WORK *b, SHORT3_WORK *range, sint32 *out)
 {
     sint32 mtx[8];
     SVECTOR sv;
@@ -1003,7 +1003,7 @@ uint32 func_80030418(CLIP_WORK *a, CLIP_WORK *b, SHORT3_WORK *range, sint32 *out
     sv.vx  = b->x_c4 - a->x_c4;
     sv.vy  = b->y_c6 - a->y_c6;
     sv.vz  = b->z_c8 - a->z_c8;
-    mtx[0] = 0x1000; // set last, as in func_8003081C
+    mtx[0] = 0x1000; // set last, as in view_cone_check
     RotMatrixY(0x800 - a->angle_56, (MATRIX *)mtx);
     SetRotMatrix((MATRIX *)mtx);
     SetTransMatrix((MATRIX *)mtx);
@@ -1040,14 +1040,14 @@ uint32 func_80030418(CLIP_WORK *a, CLIP_WORK *b, SHORT3_WORK *range, sint32 *out
     return r;
 }
 
-// Returns func_80030628's flags: stage callers test them.
-uint32 func_80030604(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3)
+// Returns View_check_ang's flags: stage callers test them.
+uint32 View_check(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3)
 {
-    return func_80030628((DELTA14_WORK *)wp, (DELTA14_WORK *)a1, (SHORT3_WORK *)a2, (sint32 *)a3,
+    return View_check_ang((DELTA14_WORK *)wp, (DELTA14_WORK *)a1, (SHORT3_WORK *)a2, (sint32 *)a3,
                   wp->angle_56);
 }
 
-uint32 func_80030628(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
+uint32 View_check_ang(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
                      sint16 angle)
 {
     sint32 mtx[8];
@@ -1118,7 +1118,7 @@ uint32 func_80030628(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint3
     return r;
 }
 
-sint32 func_8003081C(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 angle)
+sint32 view_cone_check(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 angle)
 {
     sint32 mtx[8];
     SVECTOR sv;
@@ -1900,7 +1900,7 @@ sint32 func_80031F84(SHORT3_WORK *a, SHORT3_WORK *b, sint16 angle, uint16 mode)
     return result;
 }
 
-void func_800320B8(PL_WORK *pl, sint32 id, sint32 index)
+void Pl_Char_Set(PL_WORK *pl, sint32 id, sint32 index)
 {
     ANIM_SET_WORK *wp = (ANIM_SET_WORK *)pl;
     STEP_WORK *steps;
@@ -1944,11 +1944,11 @@ void func_800320B8(PL_WORK *pl, sint32 id, sint32 index)
     wp->cur_98   = &steps[index];
     wp->id_ac    = id;
     wp->word_a4  = steps[index].w0.word;
-    func_800329D4(wp, id);
-    func_800325D4(wp);
+    Pl_key_unpack(wp, id);
+    Pl_World_Pos_Calc(wp);
 }
 
-void func_800321C8(PL_WORK *pl, sint32 a1, sint32 id, sint32 index)
+void Pl_Char_Set_Upper(PL_WORK *pl, sint32 a1, sint32 id, sint32 index)
 {
     ANIM_SET_WORK *wp = (ANIM_SET_WORK *)pl;
     STEP_WORK *steps;
@@ -2003,7 +2003,7 @@ void EM_Char_Set(ENEMY_WORK *wp, sint32 a1, sint32 a2)
     wp->tbl_94   = tbl;
     wp->ent_98   = tbl + a2 * 2;
     wp->word_A4  = *wp->ent_98;
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     EM_World_Pos_Calc(wp);
 }
 
@@ -2016,10 +2016,10 @@ void EM_Char_Set2(ENEMY_WORK *wp, sint32 a1, sint32 a2)
     wp->tbl_94   = tbl;
     wp->ent_98   = tbl + a2 * 2;
     wp->word_A4  = *wp->ent_98;
-    func_80033A28(wp);
+    Model_key_unpack(wp);
 }
 
-void func_8003234C(STEP_OWNER2 *wp, sint32 arg)
+void Pl_Char_Move(STEP_OWNER2 *wp, sint32 arg)
 {
     STEP_WORK *step;
     STEP_WORK *next;
@@ -2050,13 +2050,13 @@ void func_8003234C(STEP_OWNER2 *wp, sint32 arg)
             wp->wa4.word = next[1].w0.word;
         }
     }
-    func_800329D4(wp, arg);
-    func_800325D4(wp);
+    Pl_key_unpack(wp, arg);
+    Pl_World_Pos_Calc(wp);
 }
 
 // Upper-body script step (player.h's 3-argument prototype; the third is unused). The
 // chained cur_fc/step assignment keeps retail's load order (timer byte before cur_fc).
-void func_800323FC(PL_WORK *pl, sint32 arg, sint32 unused_arg)
+void Pl_Char_Move_Upper(PL_WORK *pl, sint32 arg, sint32 unused_arg)
 {
     STEP_OWNER *wp = (STEP_OWNER *)pl;
     STEP_WORK *step;
@@ -2119,7 +2119,7 @@ void EM_Char_Move(STEP_OWNER2 *wp)
             wp->wa4.word = next[1].w0.word;
         }
     }
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     EM_World_Pos_Calc(wp);
 }
 
@@ -2153,10 +2153,10 @@ void EM_Char_Move2(STEP_OWNER2 *wp)
             wp->wa4.word = next[1].w0.word;
         }
     }
-    func_80033A28(wp);
+    Model_key_unpack(wp);
 }
 
-void func_800325D4(void *arg)
+void Pl_World_Pos_Calc(void *arg)
 {
     JOINT_WORK *wp = arg;
     SVECTOR vec;
@@ -2167,7 +2167,7 @@ void func_800325D4(void *arg)
     SVECTOR *dst;
     SVECTOR *first;
 
-    func_800333A0();
+    matrix_stack_init();
     ((VEC32_WORK *)0x1F8000D4)->x = wp->x_14 << FOG_MODE;
     ((VEC32_WORK *)0x1F8000D4)->y = wp->y_16 << FOG_MODE;
     ((VEC32_WORK *)0x1F8000D4)->z = wp->z_18 << FOG_MODE;
@@ -2178,18 +2178,18 @@ void func_800325D4(void *arg)
     first       = JOINT_SRC_A;
     wp->mtx_1a8 = *(MATRIX *)0x1F8000C0;
     dst         = D_800DD600;
-    func_800333B4((MATRIX *)0x1F8000C0);
-    func_800331A0(wp, 0, JOINT_SRC_A + 1, JOINT_SRC_A);
-    func_800331A0(wp, 8, JOINT_SRC_A + 9, dst + 8);
-    func_800333B4((MATRIX *)0x1F8000C0);
-    func_800331A0(wp, 9, JOINT_SRC_A + 10, dst + 9);
-    func_800331A0(wp, 10, JOINT_SRC_A + 11, dst + 10);
-    func_800331A0(wp, 11, JOINT_SRC_A + 12, dst + 11);
-    func_8003340C((MATRIX *)0x1F8000C0);
-    func_800331A0(wp, 12, JOINT_SRC_A + 13, dst + 12);
-    func_800331A0(wp, 13, JOINT_SRC_A + 14, dst + 13);
-    func_800331A0(wp, 14, JOINT_SRC_A + 15, dst + 14);
-    func_8003340C((MATRIX *)0x1F8000C0);
+    matrix_push((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 0, JOINT_SRC_A + 1, JOINT_SRC_A);
+    pl_joint_calc(wp, 8, JOINT_SRC_A + 9, dst + 8);
+    matrix_push((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 9, JOINT_SRC_A + 10, dst + 9);
+    pl_joint_calc(wp, 10, JOINT_SRC_A + 11, dst + 10);
+    pl_joint_calc(wp, 11, JOINT_SRC_A + 12, dst + 11);
+    matrix_pop((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 12, JOINT_SRC_A + 13, dst + 12);
+    pl_joint_calc(wp, 13, JOINT_SRC_A + 14, dst + 13);
+    pl_joint_calc(wp, 14, JOINT_SRC_A + 15, dst + 14);
+    matrix_pop((MATRIX *)0x1F8000C0);
     switch (wp->mode_106)
     {
         case 0:
@@ -2214,11 +2214,11 @@ void func_800325D4(void *arg)
             src_c = JOINT_SRC_B;
             break;
     }
-    func_800331A0(wp, 0, src_a + 1, first);
-    func_800333B4((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 0, src_a + 1, first);
+    matrix_push((MATRIX *)0x1F8000C0);
     vec = src_a[2];
     vec.vy += wp->spin_b4 * 5;
-    func_800331A0(wp, 1, &vec, dst + 1);
+    pl_joint_calc(wp, 1, &vec, dst + 1);
     vec.vx = 0;
     vec.vy = -0x96;
     vec.vz = 0;
@@ -2226,25 +2226,25 @@ void func_800325D4(void *arg)
     wp->pos_420[0] = ((VEC32_WORK *)0x1F8000D4)->x + out.x;
     wp->pos_420[1] = ((VEC32_WORK *)0x1F8000D4)->y + out.y;
     wp->pos_420[2] = ((VEC32_WORK *)0x1F8000D4)->z + out.z;
-    func_8003340C((MATRIX *)0x1F8000C0);
-    func_800333B4((MATRIX *)0x1F8000C0);
-    func_800331A0(wp, 2, src_b + 3, dst + 2);
-    func_800331A0(wp, 3, src_b + 4, dst + 3);
-    func_800331A0(wp, 4, src_b + 5, dst + 4);
-    func_8003340C((MATRIX *)0x1F8000C0);
-    func_800333B4((MATRIX *)0x1F8000C0);
-    func_800331A0(wp, 5, src_c + 6, dst + 5);
-    func_800331A0(wp, 6, src_c + 7, dst + 6);
-    func_800331A0(wp, 7, src_c + 8, dst + 7);
-    func_8003340C((MATRIX *)0x1F8000C0);
+    matrix_pop((MATRIX *)0x1F8000C0);
+    matrix_push((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 2, src_b + 3, dst + 2);
+    pl_joint_calc(wp, 3, src_b + 4, dst + 3);
+    pl_joint_calc(wp, 4, src_b + 5, dst + 4);
+    matrix_pop((MATRIX *)0x1F8000C0);
+    matrix_push((MATRIX *)0x1F8000C0);
+    pl_joint_calc(wp, 5, src_c + 6, dst + 5);
+    pl_joint_calc(wp, 6, src_c + 7, dst + 6);
+    pl_joint_calc(wp, 7, src_c + 8, dst + 7);
+    matrix_pop((MATRIX *)0x1F8000C0);
 }
 
-// The packed 12-bit decoder in func_80033A28's style, with src/dst pointers walked by
+// The packed 12-bit decoder in Model_key_unpack's style, with src/dst pointers walked by
 // `*dst++ = (*src & mask) >> n;` and the next word read as src[1]. Offset-0 accesses go through a
 // register only where one address is used twice (0x1F800198, 0x1F80019C, the root at 0x1F800120).
 // The root's x is a plain halfword, not a USVECTOR field: as a scalar it stays ordered after the
 // last group's stores, so sched2 places the root pointer as retail does.
-void func_800329D4(void *arg, sint32 unused)
+void Pl_key_unpack(void *arg, sint32 unused)
 {
     ANIM_SET_WORK *wp = arg;
     uint32 ***bank;
@@ -2438,7 +2438,7 @@ void func_800329D4(void *arg, sint32 unused)
     ((USVECTOR *)0x1F800120)->vz = (sint32)(((USVECTOR *)0x1F800120)->vz << 20) >> 20;
 }
 
-void func_800331A0(JOINT_WORK *wp, sint32 index, void *src, SVECTOR *dst)
+void pl_joint_calc(JOINT_WORK *wp, sint32 index, void *src, SVECTOR *dst)
 {
     VEC32_WORK out;
     VEC32_WORK scale;
@@ -2470,20 +2470,20 @@ void func_800331A0(JOINT_WORK *wp, sint32 index, void *src, SVECTOR *dst)
     ScaleMatrix(&wp->mats_1c8[index], &scale);
 }
 
-void func_800333A0(void)
+void matrix_stack_init(void)
 {
-    D_80098A80 = D_800BC728;
+    Matrix_stack_ptr = Matrix_stack;
 }
 
-void func_800333B4(MATRIX *m)
+void matrix_push(MATRIX *m)
 {
-    *--D_80098A80 = *m;
+    *--Matrix_stack_ptr = *m;
 }
 
-void func_8003340C(MATRIX *m)
+void matrix_pop(MATRIX *m)
 {
-    *m = *D_80098A80;
-    D_80098A80++;
+    *m = *Matrix_stack_ptr;
+    Matrix_stack_ptr++;
 }
 
 void EM_World_Pos_Calc(void *wp)
@@ -2495,15 +2495,15 @@ void EM_World_Pos_Calc(void *wp)
     rot.vy = *(uint16 *)((uint8 *)wp + 0x56);
     rot.vz = 0;
     RotMatrix(&rot, &m);
-    func_80033598(wp, &m);
+    EM_World_Pos_Calc_Mtx(wp, &m);
 }
 
-void func_800334C4(void *wp)
+void EM_World_Pos_Calc_YXZ(void *wp)
 {
     MATRIX m;
 
     RotMatrixYXZ((SVECTOR *)((uint8 *)wp + 0x54), &m);
-    func_80033598(wp, &m);
+    EM_World_Pos_Calc_Mtx(wp, &m);
 }
 
 void func_80033500(uint8 *wp)
@@ -2540,7 +2540,7 @@ void func_8003354C(uint8 *wp)
 
 // Bone-matrix pass. The bone records are reached as wp + (i * 4 + 0xF8), which keeps retail's
 // offset induction variable (added to wp each pass) in both loops.
-void func_80033598(BONE_WORK *wp, MATRIX *m)
+void EM_World_Pos_Calc_Mtx(BONE_WORK *wp, MATRIX *m)
 {
     SVECTOR scale;
     MATRIX tmp;
@@ -2556,7 +2556,7 @@ void func_80033598(BONE_WORK *wp, MATRIX *m)
     uint16 z;
     BONE_REC *bone;
 
-    if (func_8002FE74(wp->id_1) == 0x40)
+    if (Obj_id_class(wp->id_1) == 0x40)
     {
         mats = wp->mats_240;
     }
@@ -2593,7 +2593,7 @@ void func_80033598(BONE_WORK *wp, MATRIX *m)
     }
     if (wp->flags_6 & 0x40)
     {
-        if (func_8002FE74(wp->id_1) == 0x40)
+        if (Obj_id_class(wp->id_1) == 0x40)
         {
             scale_tbl = wp->scale_540;
         }
@@ -2656,7 +2656,7 @@ void func_80033598(BONE_WORK *wp, MATRIX *m)
     }
 }
 
-void func_80033A28(void *arg)
+void Model_key_unpack(void *arg)
 {
     ANIM_SET_WORK *wp = arg;
     uint32 *src;
@@ -2734,20 +2734,20 @@ void func_80033D80(MATRIX *src, MATRIX *dst, SVECTOR *rot, SVECTOR *vec)
     *dst = *tmp;
 }
 
-void func_80033EBC(void)
+void Atari_init(void)
 {
-    D_800988E0         = 0;
-    D_80098798         = 0xFF;
-    D_8009A300[0].kind = 0;
-    D_8009A300[1].kind = 0;
-    D_8009A300[2].kind = 0;
-    D_8009A300[3].kind = 0;
-    D_80098560         = 0;
-    D_80098564         = 0;
-    D_80098568         = 0;
+    Atari_count         = 0;
+    Homing_target_used         = 0xFF;
+    Lockon_probe_tbl[0].kind = 0;
+    Lockon_probe_tbl[1].kind = 0;
+    Lockon_probe_tbl[2].kind = 0;
+    Lockon_probe_tbl[3].kind = 0;
+    Lockon_probe_count         = 0;
+    Lockon_id         = 0;
+    Lockon_timer         = 0;
 }
 
-SVECTOR *func_80033F04(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit)
+SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit)
 {
     sint32 d0;
     sint32 d1;
@@ -2806,19 +2806,19 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
     uint32 n;
     uint32 old;
 
-    n = D_800988E0;
+    n = Atari_count;
     if (n >= 0x40)
     {
         return 0;
     }
-    entry            = &D_800A2F48[n];
+    entry            = &Atari_queue[n];
     entry->pos.u     = *(POS4_WORK *)pos;
     entry->pos.u.pad = ((uint32)half >> 2) | arg2 | arg3;
     entry->word_8    = (id << 24) | ((sint32)tbl & 0x7FFFFF) | arg7;
-    D_800A32E0[n]    = flags;
+    Atari_flags[n]    = flags;
     i                = ((MASK_WORK *)tbl)->mask_4;
-    bits             = i & D_80098798;
-    D_800988E0 += 1;
+    bits             = i & Homing_target_used;
+    Atari_count += 1;
     if (bits & 0x80)
     {
         bits &= ~0xFF;
@@ -2830,7 +2830,7 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
         {
             if (bits > 0x7FFFFFFF)
             {
-                D_800BE478[i]->pos_bc = *(POS4_WORK *)pos;
+                Homing_target_tbl[i]->pos_bc = *(POS4_WORK *)pos;
             }
             bits <<= 1;
         }
@@ -2839,7 +2839,7 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
 }
 
 // Two-entry hit-queue push (cf. Set_Atari). code_8004324c.h declares a different prototype.
-sint32 func_8003430C(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint32 arg5,
+sint32 Set_Atari2(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint32 arg5,
                      sint32 arg6, sint32 id, MASK_WORK *tbl, sint32 flags, sint32 arg9,
                      sint32 arg10)
 {
@@ -2850,26 +2850,26 @@ sint32 func_8003430C(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, s
     uint32 bits;
     uint32 word;
 
-    n = D_800988E0;
+    n = Atari_count;
     if (n >= 0x3F)
     {
         return 0;
     }
-    entry            = &D_800A2F48[n];
+    entry            = &Atari_queue[n];
     entry->pos.u     = *a;
     word             = (id << 24) | ((sint32)tbl & 0x7FFFFF) | arg9;
     entry->pos.u.pad = (size_a >> 2) | arg5 | arg6;
     entry->word_8    = word;
-    D_800A32E0[n]    = flags;
+    Atari_flags[n]    = flags;
     n++;
-    entry            = &D_800A2F48[n];
+    entry            = &Atari_queue[n];
     entry->pos.u     = *b;
     entry->pos.u.pad = (size_b >> 2) | arg5 | arg6;
     entry->word_8    = word;
-    D_800A32E0[n]    = flags;
+    Atari_flags[n]    = flags;
     i                = tbl->mask_4; // the counter variable briefly holds the old mask
-    bits             = i & D_80098798;
-    D_800988E0 += 2;
+    bits             = i & Homing_target_used;
+    Atari_count += 2;
     tbl->mask_4 = bits | arg10;
     if (bits != 0)
     {
@@ -2880,7 +2880,7 @@ sint32 func_8003430C(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, s
                 mid.x                 = ((sint16)a->x + (sint16)b->x) >> 1;
                 mid.y                 = ((sint16)a->y + (sint16)b->y) >> 1;
                 mid.z                 = ((sint16)a->z + (sint16)b->z) >> 1;
-                D_800BE478[i]->pos_bc = mid;
+                Homing_target_tbl[i]->pos_bc = mid;
             }
             bits <<= 1;
         }
@@ -2888,7 +2888,7 @@ sint32 func_8003430C(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, s
     return 1;
 }
 
-void func_8003450C(void)
+void Atari_check(void)
 {
     uint32 i;
     uint32 j;
@@ -2897,10 +2897,10 @@ void func_8003450C(void)
 
     TIME_START = VSync(1);
     mask       = 0xFF000000;
-    func_80034EB8();
-    D_80097D08 = func_800358F0(&Player_slots[0]);
-    n          = D_800988E0;
-    D_800988E0 = 0;
+    pl_shot_aim();
+    Lockon_target = lockon_search(&Player_slots[0]);
+    n          = Atari_count;
+    Atari_count = 0;
     if (n < 2)
     {
         return;
@@ -2911,9 +2911,9 @@ void func_8003450C(void)
         for (j = i + 1; j < n; j++)
         {
             if (((D_80097D00[QUEUE_PAD(i) >> 13] << (QUEUE_PAD(j) >> 13)) & 0x80) &&
-                ((D_800A2F48[i].word_8 ^ D_800A2F48[j].word_8) & mask))
+                ((Atari_queue[i].word_8 ^ Atari_queue[j].word_8) & mask))
             {
-                func_800346AC(&i, &j);
+                atari_pair_check(&i, &j);
             }
         }
     }
@@ -2927,7 +2927,7 @@ void func_8003450C(void)
 // bound, and the deltas reuse x, y and z. Both hit blocks read m->flags_0 into flags before or-ing
 // the other word in. step_b is set before step_a (delay-slot order). The a[0] load sits one loop
 // level deeper (do/while (0), likely a Capcom macro): its extra weight ranks pi above pj.
-void func_800346AC(uint32 *pi, uint32 *pj)
+void atari_pair_check(uint32 *pi, uint32 *pj)
 {
     SVECTOR a[2];
     SVECTOR b[2];
@@ -2950,9 +2950,9 @@ void func_800346AC(uint32 *pi, uint32 *pj)
 
     do
     {
-        a[0] = D_800A2F48[*pi].pos.s;
+        a[0] = Atari_queue[*pi].pos.s;
     } while (0);
-    b[0]     = D_800A2F48[*pj].pos.s;
+    b[0]     = Atari_queue[*pj].pos.s;
     ra       = a[0].pad & 0x1FF;
     rb       = b[0].pad & 0x1FF;
     ta       = (uint16)((rb + ra) * 4);
@@ -2978,19 +2978,19 @@ void func_800346AC(uint32 *pi, uint32 *pj)
     step_a = 9;
     if (cap_a)
     {
-        a[1].vx  = D_800A2F48[*pi + 1].pos.u.x;
-        a[1].vy  = D_800A2F48[*pi + 1].pos.u.y;
-        a[1].vz  = D_800A2F48[*pi + 1].pos.u.z;
-        a[1].pad = (D_800A2F48[*pi + 1].pos.u.pad & 0x1FF) * 4;
+        a[1].vx  = Atari_queue[*pi + 1].pos.u.x;
+        a[1].vy  = Atari_queue[*pi + 1].pos.u.y;
+        a[1].vz  = Atari_queue[*pi + 1].pos.u.z;
+        a[1].pad = (Atari_queue[*pi + 1].pos.u.pad & 0x1FF) * 4;
         step_a   = 8 >> cap_a;
         (*pi)++;
     }
     if (cap_b)
     {
-        b[1].vx  = D_800A2F48[*pj + 1].pos.u.x;
-        b[1].vy  = D_800A2F48[*pj + 1].pos.u.y;
-        b[1].vz  = D_800A2F48[*pj + 1].pos.u.z;
-        b[1].pad = (D_800A2F48[*pj + 1].pos.u.pad & 0x1FF) * 4;
+        b[1].vx  = Atari_queue[*pj + 1].pos.u.x;
+        b[1].vy  = Atari_queue[*pj + 1].pos.u.y;
+        b[1].vz  = Atari_queue[*pj + 1].pos.u.z;
+        b[1].pad = (Atari_queue[*pj + 1].pos.u.pad & 0x1FF) * 4;
         step_b   = 8 >> cap_b;
         (*pj)++;
     }
@@ -3006,12 +3006,12 @@ void func_800346AC(uint32 *pi, uint32 *pj)
             {
                 continue;
             }
-            word  = D_800A2F48[*pi].word_8;
-            other = D_800A32E0[*pj];
+            word  = Atari_queue[*pi].word_8;
+            other = Atari_flags[*pj];
             m     = (HIT_OWNER *)(word & 0x7FFFFF);
             flags = m->flags_0;
             flags |= other & 0xFF000000;
-            if (((D_800A32E0[*pi] & 0xFF0000) << ((QUEUE_PAD(*pj) >> 13) + 8)) >= 0)
+            if (((Atari_flags[*pi] & 0xFF0000) << ((QUEUE_PAD(*pj) >> 13) + 8)) >= 0)
             {
                 flags += other & 0xFFFF;
             }
@@ -3039,12 +3039,12 @@ void func_800346AC(uint32 *pi, uint32 *pj)
                     }
                 }
             } while (0);
-            word  = D_800A2F48[*pj].word_8;
-            other = D_800A32E0[*pi];
+            word  = Atari_queue[*pj].word_8;
+            other = Atari_flags[*pi];
             m     = (HIT_OWNER *)(word & 0x7FFFFF);
             flags = m->flags_0;
             flags |= other & 0xFF000000;
-            if (((D_800A32E0[*pj] & 0xFF0000) << ((QUEUE_PAD(*pi) >> 13) + 8)) >= 0)
+            if (((Atari_flags[*pj] & 0xFF0000) << ((QUEUE_PAD(*pi) >> 13) + 8)) >= 0)
             {
                 flags += other & 0xFFFF;
             }
@@ -3077,7 +3077,7 @@ void func_800346AC(uint32 *pi, uint32 *pj)
     }
 }
 
-void func_80034EB8(void)
+void pl_shot_aim(void)
 {
     MATRIX unused; // never used; it sets the frame size
     sint16 sxy[2];
@@ -3097,7 +3097,7 @@ void func_80034EB8(void)
     uint8 mask;
 
     func_80035508();
-    n = D_800988E0;
+    n = Atari_count;
     if (Player_work.value170 == 8)
     {
         zone = Player_work.parts[8].value04;
@@ -3136,18 +3136,18 @@ void func_80034EB8(void)
             {
                 continue;
             }
-            if (D_800A2F48[j].pos.u.pad & 0x600)
+            if (Atari_queue[j].pos.u.pad & 0x600)
             {
-                c.vx = (D_800A2F48[j].pos.s.vx + D_800A2F48[j + 1].pos.s.vx) >> 1;
-                c.vy = (D_800A2F48[j].pos.s.vy + D_800A2F48[j + 1].pos.s.vy) >> 1;
-                c.vz = (D_800A2F48[j].pos.s.vz + D_800A2F48[j + 1].pos.s.vz) >> 1;
+                c.vx = (Atari_queue[j].pos.s.vx + Atari_queue[j + 1].pos.s.vx) >> 1;
+                c.vy = (Atari_queue[j].pos.s.vy + Atari_queue[j + 1].pos.s.vy) >> 1;
+                c.vz = (Atari_queue[j].pos.s.vz + Atari_queue[j + 1].pos.s.vz) >> 1;
                 j++;
             }
             else
             {
-                c = D_800A2F48[j].pos.s;
+                c = Atari_queue[j].pos.s;
             }
-            if (((MASK_WORK *)(D_800A2F48[j].word_8 & 0x7FFFFF))->mask_4 & 0x80)
+            if (((MASK_WORK *)(Atari_queue[j].word_8 & 0x7FFFFF))->mask_4 & 0x80)
             {
                 continue;
             }
@@ -3169,9 +3169,9 @@ void func_80034EB8(void)
                     pos_a   = c;
                 }
             }
-            if (z > sz && z < D_8008994C[zone].z_max && sxy[0] > D_8008994C[zone].x_min &&
-                sxy[0] < D_8008994C[zone].x_max && sxy[1] > D_8008994C[zone].y_min &&
-                sxy[1] < D_8008994C[zone].y_max)
+            if (z > sz && z < Shot_aim_zone_tbl[zone].z_max && sxy[0] > Shot_aim_zone_tbl[zone].x_min &&
+                sxy[0] < Shot_aim_zone_tbl[zone].x_max && sxy[1] > Shot_aim_zone_tbl[zone].y_min &&
+                sxy[1] < Shot_aim_zone_tbl[zone].y_max)
             {
                 if (LOCK_ABS(0xA0 - best_xb) > LOCK_ABS(0xA0 - sxy[0]))
                 {
@@ -3185,45 +3185,45 @@ void func_80034EB8(void)
         {
             if (Player_slots[i].lock_174 & 0x20)
             {
-                func_80035724((sint32)&c, 1, (OWNER35_WORK *)&Player_slots[i], best_a, 0);
+                pl_shot_set((sint32)&c, 1, (OWNER35_WORK *)&Player_slots[i], best_a, 0);
             }
         }
         else if (Player_slots[i].lock_174 & 0x20)
         {
-            func_80035724((sint32)&c, 0, (OWNER35_WORK *)&Player_slots[i], -1, 0);
+            pl_shot_set((sint32)&c, 0, (OWNER35_WORK *)&Player_slots[i], -1, 0);
         }
         if (best_b >= 0)
         {
             if (Player_slots[i].lock_174 & 0x10)
             {
-                func_80035724((sint32)&c, 1, (OWNER35_WORK *)&Player_slots[i], best_b, 1);
+                pl_shot_set((sint32)&c, 1, (OWNER35_WORK *)&Player_slots[i], best_b, 1);
             }
         }
         else if (Player_slots[i].lock_174 & 0x10)
         {
-            func_80035724((sint32)&c, 0, (OWNER35_WORK *)&Player_slots[i], -1, 1);
+            pl_shot_set((sint32)&c, 0, (OWNER35_WORK *)&Player_slots[i], -1, 1);
         }
     }
 }
 
-sint32 func_8003545C(SPAWN_TARGET *value, MASK_WORK *wp)
+sint32 homing_target_set(SPAWN_TARGET *value, MASK_WORK *wp)
 {
     sint32 i;
     uint32 bit;
 
     i = 0;
-    if (D_80098798 >= 0xFFFFFF00)
+    if (Homing_target_used >= 0xFFFFFF00)
     {
         return -1;
     }
     bit = 0x80000000;
     for (; i < 0x18; i++)
     {
-        if (!(D_80098798 & bit))
+        if (!(Homing_target_used & bit))
         {
-            D_80098798 |= bit;
+            Homing_target_used |= bit;
             wp->mask_4 |= bit;
-            D_800BE478[i] = value;
+            Homing_target_tbl[i] = value;
             return i;
         }
         bit >>= 1;
@@ -3231,9 +3231,9 @@ sint32 func_8003545C(SPAWN_TARGET *value, MASK_WORK *wp)
     return -1;
 }
 
-void func_800354E0(sint32 bit)
+void Homing_target_clear(sint32 bit)
 {
-    D_80098798 &= ~(0x80000000 >> bit);
+    Homing_target_used &= ~(0x80000000 >> bit);
 }
 
 void func_80035508(void)
@@ -3245,19 +3245,19 @@ void func_80035508(void)
     SPAWN_TARGET *t;
 
     GTE_SET_MATRIX(0x1F800008);
-    bits = D_80098798 & ~0xFF;
+    bits = Homing_target_used & ~0xFF;
     if (bits != 0)
     {
         for (i = 0; i < 0x18; i++)
         {
             if (bits > 0x7FFFFFFF)
             {
-                t = D_800BE478[i];
+                t = Homing_target_tbl[i];
                 GTE_LDV0(&t->pos_bc);
                 GTE_NOP2();
                 GTE_RTPS();
                 *(uint32 *)&t->pos_bc.x             = 0;
-                *(uint32 *)&D_800BE478[i]->pos_bc.z = 0;
+                *(uint32 *)&Homing_target_tbl[i]->pos_bc.z = 0;
                 LOCK_GTE_STSZ3_4(&z);
                 GTE_STSXY2(sxy);
             }
@@ -3288,7 +3288,7 @@ MATRIX *func_800355F0(MATRIX *out, sint32 index, sint32 angle)
 
 // Lock-on effect spawn. Each arm has its own copy of the counter decrement; GCC cross-jumps
 // the two copies into one tail, which gives retail's per-arm address computation.
-void func_80035724(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint32 flag)
+void pl_shot_set(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint32 flag)
 {
     FX35_WORK *fx;
     sint32 id;
@@ -3301,7 +3301,7 @@ void func_80035724(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint
         if (index >= 0)
         {
             slot =
-                func_8003545C((SPAWN_TARGET *)fx, (MASK_WORK *)(D_800A2F50[index * 3] & 0x7FFFFF));
+                homing_target_set((SPAWN_TARGET *)fx, (MASK_WORK *)(D_800A2F50[index * 3] & 0x7FFFFF));
             fx->id_d = slot;
             if ((sint8)slot >= 0)
             {
@@ -3346,7 +3346,7 @@ void func_800358E8(void)
 {
 }
 
-sint32 func_800358F0(void *arg)
+sint32 lockon_search(void *arg)
 {
     PICK_PLAYER *pl = arg;
     SVECTOR c;
@@ -3367,11 +3367,11 @@ sint32 func_800358F0(void *arg)
 
     for (i = 0; i < 4; i++)
     {
-        func_80036D40(&D_8009A300[i]);
+        lockon_probe_move(&Lockon_probe_tbl[i]);
     }
     best_d = 4000000;
     side   = pl->side_1;
-    n      = D_800988E0;
+    n      = Atari_count;
     best   = -1;
     if (side)
     {
@@ -3388,7 +3388,7 @@ sint32 func_800358F0(void *arg)
         {
             continue;
         }
-        w     = D_800A2F48[i].word_8;
+        w     = Atari_queue[i].word_8;
         flags = ((MASK_WORK *)(w & 0x7FFFFF))->mask_4;
         if (flags & 0x80)
         {
@@ -3398,16 +3398,16 @@ sint32 func_800358F0(void *arg)
         {
             continue;
         }
-        if (D_800A2F48[i].pos.u.pad & 0x600)
+        if (Atari_queue[i].pos.u.pad & 0x600)
         {
-            c.vx = (D_800A2F48[i].pos.s.vx + D_800A2F48[i + 1].pos.s.vx) >> 1;
-            c.vy = (D_800A2F48[i].pos.s.vy + D_800A2F48[i + 1].pos.s.vy) >> 1;
-            c.vz = (D_800A2F48[i].pos.s.vz + D_800A2F48[i + 1].pos.s.vz) >> 1;
+            c.vx = (Atari_queue[i].pos.s.vx + Atari_queue[i + 1].pos.s.vx) >> 1;
+            c.vy = (Atari_queue[i].pos.s.vy + Atari_queue[i + 1].pos.s.vy) >> 1;
+            c.vz = (Atari_queue[i].pos.s.vz + Atari_queue[i + 1].pos.s.vz) >> 1;
             i++;
         }
         else
         {
-            c = D_800A2F48[i].pos.s;
+            c = Atari_queue[i].pos.s;
         }
         dx = pos.vx - c.vx;
         if ((uint32)(dx + 2000) > 4000)
@@ -3431,8 +3431,8 @@ sint32 func_800358F0(void *arg)
         }
         if (!(flags & (side + 1)))
         {
-            func_80036C50(D_800A2F48[i].word_8 >> 24,
-                          (MASK_WORK *)(D_800A2F48[i].word_8 & 0x7FFFFF));
+            lockon_probe_set(Atari_queue[i].word_8 >> 24,
+                          (MASK_WORK *)(Atari_queue[i].word_8 & 0x7FFFFF));
         }
         else if (d < best_d)
         {
@@ -3440,27 +3440,27 @@ sint32 func_800358F0(void *arg)
             best_d = d;
         }
     }
-    if (D_80098568)
+    if (Lockon_timer)
     {
-        D_80098568--;
+        Lockon_timer--;
     }
     if (best >= 0)
     {
-        kind = D_800A2F48[best].word_8 >> 24;
+        kind = Atari_queue[best].word_8 >> 24;
         if (kind < 0x80)
         {
-            if (D_80098568 == 0)
+            if (Lockon_timer == 0)
             {
-                if (kind != D_80098564)
+                if (kind != Lockon_id)
                 {
-                    D_80098568 = 0x18;
-                    D_80098564 = kind;
+                    Lockon_timer = 0x18;
+                    Lockon_id = kind;
                 }
-                return (sint32)func_80036294(kind);
+                return (sint32)Obj_id_work(kind);
             }
-            if (kind == D_80098564)
+            if (kind == Lockon_id)
             {
-                return (sint32)func_80036294(kind);
+                return (sint32)Obj_id_work(kind);
             }
         }
     }
@@ -3556,7 +3556,7 @@ void *func_80035C90(SEEK_PLAYER *pl, sint32 arc, uint32 max_dist, sint32 min_dot
     return found;
 }
 
-void func_8003606C(void)
+void Obj_player_dist_calc(void)
 {
     sint32 p;
     sint32 i;
@@ -3627,9 +3627,9 @@ void func_8003606C(void)
     }
 }
 
-void *func_80036294(uint8 id)
+void *Obj_id_work(uint8 id)
 {
-    switch ((sint32)func_8002FE74(id))
+    switch ((sint32)Obj_id_class(id))
     {
         case 0:
             return (uint8 *)&Player_work + (id & 0xF) * 0x5F4;
@@ -3652,7 +3652,7 @@ void *func_80036294(uint8 id)
     }
 }
 
-void func_80036470(BYTE_WORK *wp)
+void Search_Player_Reset(BYTE_WORK *wp)
 {
     wp->byte_7 = 0;
 }
@@ -3667,12 +3667,12 @@ void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2)
 // Returns the tracker's result: stage callers test it.
 sint32 Search_Player(TRACK_WORK *a0, ANGLE_WORK *a1)
 {
-    return func_800364B0(a0, (TRACK_TARGET *)a1, a1->angle_56);
+    return Search_Player_Ang(a0, (TRACK_TARGET *)a1, a1->angle_56);
 }
 
 // Homing tracker update. The failure paths share one block (the fail label at the top), state 0
-// breaks to the common return 0, and D_80097D0C is file-owned small data (see func_80036D40).
-sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
+// breaks to the common return 0, and D_80097D0C is file-owned small data (see lockon_probe_move).
+sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
 {
     SHORT3_WORK range;
     SVECTOR dir;
@@ -3692,7 +3692,7 @@ sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             range.z = 0;
             range.y = 0;
             range.x = 0;
-            if (func_80030628((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
+            if (View_check_ang((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
                               (sint32 *)&delta, (sint16)angle) &
                 0x10)
             {
@@ -3725,7 +3725,7 @@ sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
                 goto fail;
             }
             VectorNormalS(&delta, &dir);
-            func_80033F04(&range, &dir, &t->vel, 0x165, 0x0FF069DA);
+            Vec_turn_toward(&range, &dir, &t->vel, 0x165, 0x0FF069DA);
             t->vel.x = range.x;
             t->vel.y = range.y;
             t->vel.z = range.z;
@@ -3783,7 +3783,7 @@ sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             range.z = 9;
             range.y = 9;
             range.x = 9;
-            if (func_80030628((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
+            if (View_check_ang((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
                               (sint32 *)&delta, (sint16)angle) &
                 0x10)
             {
@@ -3845,59 +3845,59 @@ void func_80036A78(sint32 arg)
     *(uint16 *)0x1F800076 = arg;
 }
 
-void func_80036A88(sint32 r, sint32 g, sint32 b, sint32 near)
+void Fog_color_set(sint32 r, sint32 g, sint32 b, sint32 near)
 {
     SetFarColor(r, g, b);
     SetFogNear(near, 0x180);
-    D_8009A370.r    = r;
-    D_8009A370.g    = g;
-    D_8009A370.b    = b;
-    D_8009A370.near = near;
+    Fog_color.r    = r;
+    Fog_color.g    = g;
+    Fog_color.b    = b;
+    Fog_color.near = near;
 }
 
-void func_80036B00(sint16 *out)
+void Fog_color_get(sint16 *out)
 {
-    out[0] = D_8009A370.r;
-    out[1] = D_8009A370.g;
-    out[2] = D_8009A370.b;
-    out[3] = D_8009A370.near;
+    out[0] = Fog_color.r;
+    out[1] = Fog_color.g;
+    out[2] = Fog_color.b;
+    out[3] = Fog_color.near;
 }
 
-void func_80036B40(void)
+void fog_room_restore(void)
 {
     SetFarColor(D_800BC7F8.b[0x20], D_800BC7F8.b[0x21], D_800BC7F8.b[0x22]);
     SetFogNear(*(uint16 *)&D_800BC7F8.b[0x24], 0x180);
     D_8009A350 = D_800BC7F8;
 }
 
-void func_80036C50(uint8 kind, MASK_WORK *target)
+void lockon_probe_set(uint8 kind, MASK_WORK *target)
 {
     uint32 i;
 
-    if (D_8009A300[0].kind == kind || D_8009A300[1].kind == kind || D_8009A300[2].kind == kind ||
-        D_8009A300[3].kind == kind)
+    if (Lockon_probe_tbl[0].kind == kind || Lockon_probe_tbl[1].kind == kind || Lockon_probe_tbl[2].kind == kind ||
+        Lockon_probe_tbl[3].kind == kind)
     {
         return;
     }
-    if (D_80098560 >= 4)
+    if (Lockon_probe_count >= 4)
     {
         return;
     }
     for (i = 0; i < 4; i++)
     {
-        if (D_8009A300[i].kind == 0)
+        if (Lockon_probe_tbl[i].kind == 0)
         {
-            D_8009A300[i].kind   = kind;
-            D_8009A300[i].target = target;
-            if (D_8009A300[i].toggle)
+            Lockon_probe_tbl[i].kind   = kind;
+            Lockon_probe_tbl[i].target = target;
+            if (Lockon_probe_tbl[i].toggle)
             {
-                D_8009A300[i].toggle = 0;
+                Lockon_probe_tbl[i].toggle = 0;
             }
             else
             {
-                D_8009A300[i].toggle = 1;
+                Lockon_probe_tbl[i].toggle = 1;
             }
-            D_80098560++;
+            Lockon_probe_count++;
             return;
         }
     }
@@ -3905,7 +3905,7 @@ void func_80036C50(uint8 kind, MASK_WORK *target)
 
 // D_80097D18 is this file's small data (tentative definition above): GCC treats its address
 // as cheap and rebuilds it before each func_80049C54 call, as retail does.
-sint32 func_80036D40(TRACK_SLOT *t)
+sint32 lockon_probe_move(TRACK_SLOT *t)
 {
     SVECTOR range;
     SVECTOR dir;
@@ -3919,7 +3919,7 @@ sint32 func_80036D40(TRACK_SLOT *t)
     {
         return 0;
     }
-    tg = func_80036294(t->kind);
+    tg = Obj_id_work(t->kind);
     if (tg->flags_0 == 0)
     {
         goto clear;
@@ -3937,7 +3937,7 @@ sint32 func_80036D40(TRACK_SLOT *t)
             dir.vx                         = D_800A39F0.x;
             dir.vy                         = D_800A39F4;
             dir.vz                         = D_800A39F8;
-            if (!(func_8003081C((DELTA0_WORK *)&dir, (DELTA0_WORK *)&tg->pos_14, &range.vx,
+            if (!(view_cone_check((DELTA0_WORK *)&dir, (DELTA0_WORK *)&tg->pos_14, &range.vx,
                                 Player_work.rotation.y) &
                   2))
             {
@@ -3984,7 +3984,7 @@ sint32 func_80036D40(TRACK_SLOT *t)
                 goto fail;
             }
             VectorNormalS(&delta, &dir);
-            func_80033F04(&range, &dir, (SVECTOR *)&t->vel, 0x424, 0x0F746EA4);
+            Vec_turn_toward(&range, &dir, (SVECTOR *)&t->vel, 0x424, 0x0F746EA4);
             t->vel.x = range.vx;
             t->vel.y = range.vy;
             t->vel.z = range.vz;
@@ -4014,7 +4014,7 @@ sint32 func_80036D40(TRACK_SLOT *t)
                 t->state = 0;
             clear:
                 t->kind = 0;
-                D_80098560--;
+                Lockon_probe_count--;
                 return 0;
             }
             if ((uint16)(t->x - tp.vx + 100) >= 200)
@@ -4032,7 +4032,7 @@ sint32 func_80036D40(TRACK_SLOT *t)
             m        = t->target;
             t->state = 0;
             t->kind  = 0;
-            D_80098560--;
+            Lockon_probe_count--;
             m->mask_4 |= 1;
             return 1;
     }

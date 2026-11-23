@@ -34,7 +34,7 @@ void func_8010011C(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_8010426C[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_801043A0[D_801043B8[Game_work.value_51]], D_80104288[Game_work.value_51]);
     func_8005DC10(0);
     func_8010028C();
@@ -617,7 +617,7 @@ void func_80100ED4(STAGE_ROOM *wp)
         case 2:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x20010000);
+                Cd_xa_play_id(0x20010000);
                 Sound_work.volume_6 = 0x64;
                 wp->routine_5++;
             }
@@ -700,7 +700,7 @@ void func_80101158(STAGE_ROOM *wp)
             if (func_80042238(&Player_work) != 0)
             {
                 Player_work.flags_0 &= ~3;
-                func_8001D58C(0x2000001D);
+                Cd_xa_play_id(0x2000001D);
                 wp->routine_4++;
             }
             break;
@@ -746,7 +746,7 @@ void func_80101158(STAGE_ROOM *wp)
                 D_800C3571  = 0xFF;
                 D_800C3570  = 0xFF;
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Player_work.flags_0 |= 1;
                 func_80042314(&Player_work);
             }
@@ -1093,7 +1093,7 @@ void func_80101EC4(STAGE_OBJ *wp)
         if (wp->routine_1 == 4)
         {
             EM_Char_Move2(wp);
-            func_800334C4(wp);
+            EM_World_Pos_Calc_YXZ(wp);
         }
         else
         {

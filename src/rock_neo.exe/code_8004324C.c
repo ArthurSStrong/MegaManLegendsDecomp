@@ -72,9 +72,9 @@ void func_800433FC(CODE43_WORK *wp)
     CODE43_TARGET *target;
 
     wp->mode_e        = wp->pos_14.pad;
-    target            = func_80036294(wp->index_c);
+    target            = Obj_id_work(wp->index_c);
     target->state_198 = 0;
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->timer_b = 0xB;
     wp->word_c4 = 0;
     wp->word_c8 = 0;
@@ -97,8 +97,8 @@ void func_800434F0(CODE43_WORK *wp)
 {
     CODE43_TARGET *target;
 
-    target     = func_80036294(wp->index_c);
-    wp->pos_2c = func_80036294(wp->index_c)->pos_14;
+    target     = Obj_id_work(wp->index_c);
+    wp->pos_2c = Obj_id_work(wp->index_c)->pos_14;
     if (--wp->timer_b == 0)
     {
         Close_PL_SHL_WORK(wp);
@@ -117,7 +117,7 @@ void func_800434F0(CODE43_WORK *wp)
 
 void func_800435BC(CODE43_WORK *wp)
 {
-    func_80036294(wp->index_c)->state_198 = 0;
+    Obj_id_work(wp->index_c)->state_198 = 0;
     Close_PL_SHL_WORK(wp);
 }
 
@@ -127,18 +127,18 @@ void func_800435F8(CODE43_WORK *wp)
     CODE43_TARGET *target;
 
     id     = wp->index_c;
-    target = func_80036294(id);
+    target = Obj_id_work(id);
     if (wp->mode_e)
     {
         wp->pos_14 = target->pos_400;
         if (id)
         {
-            func_8003430C(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
+            Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
                           &wp->word_c4, 0x28000008, 0, 0x80);
         }
         else
         {
-            func_8003430C(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
+            Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
                           &wp->word_c4, 0x28000008, 0, 0x80);
         }
     }
@@ -147,12 +147,12 @@ void func_800435F8(CODE43_WORK *wp)
         wp->pos_14 = target->pos_418;
         if (id)
         {
-            func_8003430C(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
+            Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
                           &wp->word_c4, 0x28000008, 0, 0x80);
         }
         else
         {
-            func_8003430C(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
+            Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
                           &wp->word_c4, 0x28000008, 0, 0x80);
         }
     }
@@ -241,7 +241,7 @@ void func_800437F8(CODE43_WORK *wp)
     }
     if (wp->value_3 >= 0x80 && (wp->target.w.w_bc | wp->target.w.w_c0) == 0)
     {
-        func_800354E0(wp->bit_d);
+        Homing_target_clear(wp->bit_d);
         wp->value_3 = 0;
     }
     func_80043E78(wp);
@@ -249,7 +249,7 @@ void func_800437F8(CODE43_WORK *wp)
 }
 
 // The first arm ends with its own copy of the timeout tail (Close_PL_SHL_WORK and the
-// func_800354E0 check); cross-jumping then merges the two func_80043E00 calls into one, as in
+// Homing_target_clear check); cross-jumping then merges the two func_80043E00 calls into one, as in
 // retail.
 void func_80043A8C(CODE43_WORK *wp)
 {
@@ -274,7 +274,7 @@ void func_80043A8C(CODE43_WORK *wp)
         Close_PL_SHL_WORK(wp);
         if (wp->value_3 >= 0x80)
         {
-            func_800354E0(wp->bit_d);
+            Homing_target_clear(wp->bit_d);
         }
         return;
     }
@@ -303,16 +303,16 @@ void func_80043A8C(CODE43_WORK *wp)
                     VectorNormalS(&delta, &dir);
                     if (wp->timer_b < 4)
                     {
-                        func_80033F04(&step, &dir, &wp->pos_a4, 0x424, 0xF746EA4);
+                        Vec_turn_toward(&step, &dir, &wp->pos_a4, 0x424, 0xF746EA4);
                     }
                     else if (wp->timer_b < 9)
                     {
-                        func_80033F04(&step, &dir, &wp->pos_a4, 0x8F, 0xFFD813C);
+                        Vec_turn_toward(&step, &dir, &wp->pos_a4, 0x8F, 0xFFD813C);
                     }
                     else
                     {
-                        func_80033F04(&step, &dir, &wp->pos_a4, 0x47, 0xFFF604C);
-                        func_800354E0(wp->bit_d);
+                        Vec_turn_toward(&step, &dir, &wp->pos_a4, 0x47, 0xFFF604C);
+                        Homing_target_clear(wp->bit_d);
                         wp->value_3 = 0;
                     }
                     wp->pos_a4 = step;
@@ -323,7 +323,7 @@ void func_80043A8C(CODE43_WORK *wp)
                 }
                 else
                 {
-                    func_800354E0(wp->bit_d);
+                    Homing_target_clear(wp->bit_d);
                     wp->value_3 = 0;
                 }
             }
@@ -340,7 +340,7 @@ void func_80043A8C(CODE43_WORK *wp)
     Close_PL_SHL_WORK(wp);
     if (wp->value_3 >= 0x80)
     {
-        func_800354E0(wp->bit_d);
+        Homing_target_clear(wp->bit_d);
     }
     return;
 move:
@@ -377,12 +377,12 @@ void func_80043E78(CODE43_WORK *wp)
     flags = func_800375D4(Player_work, 1);
     if (wp->index_c)
     {
-        func_8003430C(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x6000, wp->value_1,
+        Set_Atari2(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x6000, wp->value_1,
                       &wp->word_c4, flags | 0x08000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x4000, wp->value_1,
+        Set_Atari2(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x4000, wp->value_1,
                       &wp->word_c4, flags | 0x08000000, 0, 0x80);
     }
 }

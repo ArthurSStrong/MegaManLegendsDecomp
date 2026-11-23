@@ -129,7 +129,7 @@ void func_801092F8(STAGE_OBJ50 *wp)
             }
             else if (wp->u_C.b.hi == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->u_C.b.hi != 1)
             {
@@ -196,7 +196,7 @@ void func_801094D8(STAGE_OBJ50 *wp)
         case 3:
             if (wp->u_C.b.hi == 1 && wp->value_E != -1)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             wp->routine_2++;
             break;
@@ -423,7 +423,7 @@ void func_80109CCC(STAGE_OBJ50 *wp)
             }
             else if (wp->u_C.b.hi == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->u_C.b.hi != 1)
             {
@@ -497,7 +497,7 @@ void func_80109FDC(STAGE_OBJ *wp)
 
 void func_80109FE8(STAGE_OBJ50 *wp)
 {
-    if (D_800987B0[0] != 0 && D_800987B5 < 0x10 && (wp->u_C.b.lo = D_80111CE0[D_800987B5]) != 0)
+    if (Message_event[0] != 0 && D_800987B5 < 0x10 && (wp->u_C.b.lo = D_80111CE0[D_800987B5]) != 0)
     {
         wp->routine_0 = 2;
         wp->routine_1 = 0;
@@ -544,7 +544,7 @@ void func_8010A044(STAGE_OBJ50 *wp)
             {
                 MojiTaskExec2(0, 0xB);
                 Sound_work.volume_6 = D_80111D0C[wp->u_C.b.lo];
-                func_8001D58C(D_80111CF0[wp->u_C.b.lo]);
+                Cd_xa_play_id(D_80111CF0[wp->u_C.b.lo]);
                 wp->routine_1++;
             }
             break;

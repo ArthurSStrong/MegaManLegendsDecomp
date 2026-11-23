@@ -26,7 +26,7 @@ void func_80103F60(ST0F_OBJ *wp)
             {
                 if (func_8003A13C() == 0)
                 {
-                    func_80063BC8(&wp->position, 3, 0, func_801045C0());
+                    Message_event_set(&wp->position, 3, 0, func_801045C0());
                     EM_Char_Set(wp, 8, 0);
                     wp->routine_1 = 0;
                     wp->routine_0++;
@@ -34,7 +34,7 @@ void func_80103F60(ST0F_OBJ *wp)
             }
             break;
         case 3:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 wp->routine_0++;
@@ -77,7 +77,7 @@ void func_801040E0(ST0F_OBJ *wp)
             {
                 if (func_8003A13C() == 0)
                 {
-                    func_80063BC8(&wp->position, 3, 0, 1);
+                    Message_event_set(&wp->position, 3, 0, 1);
                     EM_Char_Set(wp, 8, 0);
                     wp->routine_1 = 0;
                     wp->routine_0++;
@@ -124,7 +124,7 @@ void func_80104264(ST0F_OBJ *wp)
             break;
         case 2:
             Moji_amount_set(0x7D0);
-            func_80063BC8(&wp->position, 2, 0, 0x21);
+            Message_event_set(&wp->position, 2, 0, 0x21);
             EM_Char_Set(wp, 8, 0);
             wp->routine_1 = 0;
             wp->routine_0++;

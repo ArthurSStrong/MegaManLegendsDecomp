@@ -80,12 +80,12 @@ typedef struct
     uint32 wh_c;
 } LOGO_SPRITE;
 
-// Fade request: one word at +0 (flag byte, mode byte, value half), then B4/B8.
+// Message event request (Message_event_set): one word at +0 (flag byte, mode byte, step half), then B4/B8.
 typedef union
 {
     uint32 word;
     uint8 flag;
-} DEBUG_FADE_HEAD;
+} MESSAGE_EVENT_HEAD;
 
 // View of the request through a pointer.
 typedef struct
@@ -97,21 +97,21 @@ typedef struct
     sint8 value_5;
     sint16 value_6;
     uint32 value_8;
-} DEBUG_FADE;
+} MESSAGE_EVENT;
 
-extern DEBUG_FADE_HEAD D_800987B0;
+extern MESSAGE_EVENT_HEAD Message_event;
 extern uint8 D_800987B1;
 extern sint16 D_800987B2;
 extern uint32 D_800987B4;
 extern uint32 D_800987B8;
 extern DEBUG_WORK Debug_work;
-extern DEBUG_FUNC D_8008DBD4[];
-extern DEBUG_FUNC D_8008DBE0[];
-extern LOGO_FUNC D_8008DD64[];
+extern DEBUG_FUNC Debug_mode_tbl[];
+extern DEBUG_FUNC Debug_item_tbl[];
+extern LOGO_FUNC Game_logo_draw_tbl[];
 extern uint16 D_8008ECDC[][4];
 extern uint16 D_8008ECDE[][4];
 extern uint32 D_8008ECE0[][2];
-extern LOGO_WORK D_800C3528[4];
+extern LOGO_WORK Game_logo_work[4];
 extern uint8 *D_8008CACC;
 extern uint8 *D_8008CAD0;
 extern uint8 D_800987D4;
@@ -123,7 +123,7 @@ extern uint8 D_800987B5;
 extern uint32 D_8008DD54[];
 void MojiTaskExec2(uint8 a, uint8 b);
 void MojiTaskKill(void);
-void func_80063C30(void);
+void Message_event_update(void);
 // Debug menu line: flags word then a text buffer, 0x10 bytes each, from 0x8008DCD4.
 typedef struct
 {

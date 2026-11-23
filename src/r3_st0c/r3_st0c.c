@@ -347,7 +347,7 @@ void func_80100C18(void)
     }
     spawn                     = D_8010C468[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010C4D8[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_8010C588[D_8010C788[Game_work.value_51]], D_8010C4E8[Game_work.value_51]);
     func_8005DC10(0);
     func_80100DE8();
@@ -787,11 +787,11 @@ void func_801019A8(STAGE_ROOM *wp)
                 func_8001B314();
                 if (Game_work.value_50 == 0xB)
                 {
-                    func_8001D58C(0x20010013);
+                    Cd_xa_play_id(0x20010013);
                 }
                 else
                 {
-                    func_8001D58C(0x2000000E);
+                    Cd_xa_play_id(0x2000000E);
                 }
                 wp->routine_4++;
             }
@@ -861,7 +861,7 @@ void func_801019A8(STAGE_ROOM *wp)
                     D_800C3570        = 2;
                 }
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 STAGE_PL.flags_0 |= 1;
                 func_80042314(&Player_work);
             }

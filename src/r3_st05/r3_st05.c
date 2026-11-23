@@ -70,7 +70,7 @@ void func_801008F4(void)
     }
     spawns                    = D_8012DFB8[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8012E1F4[Game_work.value_51];
-    func_8002EA50(spawns, D_800C356D);
+    Obj_spawn_list(spawns, D_800C356D);
     func_800371A0(D_8012E2D0[D_8012E438[Game_work.value_51]], D_8012E208[Game_work.value_51]);
     func_8005DC10(0);
     func_80106B28();
@@ -324,7 +324,7 @@ void func_80101420(STAGE_ROOM *wp)
             if (Sce_skip_check() != 0 && (wp->reserved09[1] & 1))
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 wp->routine_4++;
                 break;
             }
@@ -457,7 +457,7 @@ void func_801017C4(STAGE_ROOM *wp)
             }
             break;
         case 3:
-            func_8001D58C(0x20000000);
+            Cd_xa_play_id(0x20000000);
             wp->routine_4++;
             break;
         case 4:
@@ -584,7 +584,7 @@ void func_80101C24(STAGE_ROOM *wp)
             else
             {
                 func_801028D0(1);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             wp->routine_6++;
             // fall through
@@ -1292,7 +1292,7 @@ void func_80102E3C(STAGE_ROOM *wp)
                 case 0:
                     func_8003697C();
                     Obj_work_flag_change(0x76, 0x80);
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                     STAGE_PL.routine_0   = 3;
                     STAGE_PL.routine_1   = 1;
                     STAGE_PL.pos_438.x   = -0x200;
@@ -1322,7 +1322,7 @@ void func_80102E3C(STAGE_ROOM *wp)
                 case 0:
                     func_8003697C();
                     Obj_work_flag_change(0x56, 0x80);
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                     func_80103768(0);
                     func_801037CC(&STAGE_PL);
                     wp->routine_5++;
@@ -1428,7 +1428,7 @@ void func_8010301C(STAGE_ROOM *wp)
             if (pl->routine_1 == 0 && wp->reserved09[2] == 5)
             {
                 pl->flags_bd = (pl->flags_bd & ~0x20) | 0x40;
-                func_8001D58C(0x20000006);
+                Cd_xa_play_id(0x20000006);
                 wp->routine_5++;
             }
             break;
@@ -1790,8 +1790,8 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
     {
         Sce_flag_off(0x60F);
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         wp->routine_6 = 5;
         wp->timer_C   = 1;
@@ -1825,7 +1825,7 @@ void func_80103E68(STAGE_REC_S *rec)
         case 2:
             if (--rec->timer_8 != 0x7C)
             {
-                func_8002FF34(pl, 0x200, 0, 0);
+                Pl_pos_set(pl, 0x200, 0, 0);
                 break;
             }
             rec->step_2++;
@@ -1848,7 +1848,7 @@ void func_80103E68(STAGE_REC_S *rec)
             }
             else
             {
-                func_8002FF34(pl, 0x50, 0, 0);
+                Pl_pos_set(pl, 0x50, 0, 0);
             }
             break;
         case 5:
@@ -2134,7 +2134,7 @@ void func_80104774(STAGE_REC_S *rec)
                 MojiTaskExec2(0, 8);
                 rec->step_2++;
             }
-            func_8002FF34(pl, 0x50, 0, 0);
+            Pl_pos_set(pl, 0x50, 0, 0);
             break;
         case 4:
             if (Moji_flag & 0x200000)
@@ -2239,7 +2239,7 @@ void func_80104774(STAGE_REC_S *rec)
         case 14:
             if (--rec->timer_8 != 0)
             {
-                func_8002FF34(pl, 0x200, 0, 0);
+                Pl_pos_set(pl, 0x200, 0, 0);
                 break;
             }
             rec->timer_8 = 0x5A;
@@ -2252,7 +2252,7 @@ void func_80104774(STAGE_REC_S *rec)
                 break;
             }
             pl->value_442 = (pl->value_442 + 0xA) & 0xFFF;
-            func_8002FF34(pl, 0x200, 0, 0);
+            Pl_pos_set(pl, 0x200, 0, 0);
             break;
         case 16:
             break;
@@ -2687,8 +2687,8 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
     if (wp->routine_6 >= 3 && Sce_skip_check() != 0)
     {
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         wp->routine_6 = 10;
         wp->timer_C   = 0;

@@ -165,7 +165,7 @@ extern uint8 D_800C356F;
 extern uint8 D_800C3570;
 extern uint8 D_800C3571;
 extern sint16 Fade_busy;
-extern sint8 D_800987B0[]; // [0]: nonzero while the screen is fading
+extern sint8 Message_event[]; // [0]: nonzero while the screen is fading
 extern uint32 Moji_flag;
 extern sint32 D_800A396C;
 extern uint16 D_800AD168[]; // shadow copy of the texture pages (palettes live here)
@@ -189,7 +189,7 @@ void func_80039FAC(STCOM_FIXED_VECTOR *pos, sint32 a1, sint32 angle, sint32 a3);
 // by each file's header: its callers disagree on the return type (sint16 in stcom01, int in
 // stcom04, which retail evidently called without a sint16 prototype).
 // Rotates (x, y, z) by `angle` into `out`.
-STCOM_FIXED_VECTOR *func_80030058(STCOM_FIXED_VECTOR *out, sint32 angle, sint16 x, sint16 y,
+STCOM_FIXED_VECTOR *Calc_local_vec(STCOM_FIXED_VECTOR *out, sint32 angle, sint16 x, sint16 y,
                                   sint16 z);
 void Model_work_init(void *wp, uint8 *variant);
 void EM_Char_Set(void *wp, sint32 anim, sint32 arg);
@@ -199,7 +199,7 @@ void func_80051B68(void *wp, sint32 a1, sint32 a2, sint32 a3);
 // Moves a work slot by (x, y, z) along its rotation. ROCK_NEO declares sint16 parameters, but
 // stcom13 passes velocity * 16 without narrowing, so the stage code saw int ones.
 void Obj_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
-void func_80063BC8(void *pos, sint32 a1, sint32 a2, sint32 a3);
+void Message_event_set(void *pos, sint32 a1, sint32 a2, sint32 a3);
 // Frees a 0x24-byte event work slot.
 void Close_EVE_WORK(void *wp);
 void Sound_call2(sint16 id, void *args);
@@ -222,10 +222,10 @@ sint32 rcos(sint32 a);
 void func_80042314(void *pl);
 // Nonzero when the player is free to be taken over by a script.
 sint32 func_80042238(void *pl);
-void func_8001D648(sint32 arg);
+void Cd_xa_seek_id(sint32 arg);
 // Moves `pos` (and its 16.16 copy) by (x, y, z) turned by `angle`. ROCK_NEO declares sint16
 // offsets, but stcom17 passes 0xFF710 unnarrowed, so the stage code saw int ones.
-void func_8002FFC4(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
+void Obj_pos_move(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
                    sint32 z);
 sint32 func_80049C24(void *wp);
 sint32 func_80037BB4(void *wp);
@@ -240,7 +240,7 @@ STCOM_MATRIX *ScaleMatrix(STCOM_MATRIX *m, STCOM_FIXED_VECTOR *v);
 // Distance between two work slots' positions.
 uint32 Obj_distance(void *a, void *b);
 void EM_Char_Move2(void *wp);
-void func_800334C4(void *wp);
+void EM_World_Pos_Calc_YXZ(void *wp);
 sint32 func_80048DAC(STCOM_SVECTOR *pos);
 sint32 func_8004B414(void *wp);
 // Frees a 0x3C0-byte work slot.

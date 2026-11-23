@@ -128,7 +128,7 @@ void func_8010A2EC(ST0D_STCOM21_WORK *wp)
             }
             else if (wp->value_D == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->value_D != 1)
             {
@@ -194,7 +194,7 @@ void func_8010A4CC(ST0D_STCOM21_WORK *wp)
         case 3:
             if (wp->value_D == 1 && wp->value_E != -1)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             wp->routine_2++;
             break;
@@ -419,7 +419,7 @@ void func_8010ACC0(ST0D_STCOM21_WORK *wp)
             }
             else if (wp->value_D == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->value_D != 1)
             {
@@ -484,7 +484,7 @@ void func_8010AF94(STAGE_OBJ *wp)
 {
     STAGE_OBJ *owner;
 
-    owner = func_80036294(wp->u_C.b.byte_C);
+    owner = Obj_id_work(wp->u_C.b.byte_C);
     if (STAGE_GAME.value_50 != 0xD || owner->u_C.b.byte_C != 0)
     {
         D_801124C0[wp->variant_3](wp);
@@ -522,7 +522,7 @@ void func_8010B08C(ST0D_FLAMES *wp)
     uint32 i;
 
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (wp->timer_D == 0)
     {
         if (!(owner->flags_0 & 1))
@@ -646,7 +646,7 @@ void func_8010B544(ST0D_FLAMES *wp)
     uint32 i;
 
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (!(owner->flags_0 & 1))
     {
         wp->routine_0++;
@@ -737,7 +737,7 @@ void func_8010B9B8(ST0D_FLAMES *wp)
     ST0D_FLAME *flame;
     uint32 i;
     flame = wp->flame_28;
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (owner->value_44.half[0] == 0)
     {
         wp->routine_0++;

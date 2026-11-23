@@ -152,7 +152,7 @@ void func_8010C20C(ST06_ACTOR *wp)
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
     if (turn == 0 && func_8003A13C() == 0)
     {
-        func_80063BC8(&wp->position, 3, 0, wp->timer_C);
+        Message_event_set(&wp->position, 3, 0, wp->timer_C);
         EM_Char_Set(wp, 8, 0);
         wp->routine_1 = 1;
         wp->routine_0++;
@@ -165,7 +165,7 @@ void func_8010C20C(ST06_ACTOR *wp)
 
 void func_8010C2B4(STAGE_OBJ *wp)
 {
-    if ((sint8)*D_800987B0 == 0)
+    if ((sint8)*Message_event == 0)
     {
         func_80039E18();
         EM_Char_Set(wp, 1, 0);

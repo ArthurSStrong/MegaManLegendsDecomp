@@ -34,7 +34,7 @@ void Game_init(GAME_WORK *wp)
     wp->flags_81       = 0;
     wp->flags_83       = 0;
     D_800C356C         = 0;
-    func_8002E7A8(1);
+    Work_init_all(1);
     if (mode == 0)
     {
         func_800664BC();
@@ -48,7 +48,7 @@ void Game_init(GAME_WORK *wp)
     func_8003B278(mode);
     func_8005DBB4(mode);
     func_80067E6C(mode);
-    func_80063BA8();
+    Message_event_clear();
     Sound_bgm_tbl_set();
     wp->routine_0 = 1;
     wp->routine_1 = 0;
@@ -129,7 +129,7 @@ void Game_play(GAME_WORK *wp)
     GAME_DELTA delta;
 
     Sce_update();
-    func_80063C30();
+    Message_event_update();
     entry  = &D_800C3558;
     player = &Player_work;
     switch ((sint8)wp->routine_1)
@@ -170,11 +170,11 @@ void Game_play(GAME_WORK *wp)
                         D_800A39F8 += delta.z;
                         func_80039D38(&delta);
                         Obj_work_flag_change(0x200, 0x80);
-                        func_8002F420(0x1FE, &delta);
+                        Work_room_change(0x1FE, &delta);
                     }
                     else
                     {
-                        func_8002F420(0x1FE, NULL);
+                        Work_room_change(0x1FE, NULL);
                     }
                     wp->area_no = entry->room;
                     wp->sce_no   = wp->flags_53;
@@ -270,7 +270,7 @@ void Game_play(GAME_WORK *wp)
                 func_8003B140();
                 MojiTaskKill();
                 Game_logo_kill(-1);
-                func_80063BA8();
+                Message_event_clear();
             }
             else
             {
@@ -294,7 +294,7 @@ void game_update(void)
     func_800679B8();
     eve_work_move();
     func_8003C07C();
-    func_8003606C();
+    Obj_player_dist_calc();
     func_8005C2B8();
     func_80017094();
     Em_work_move();
@@ -306,7 +306,7 @@ void game_update(void)
     pl_shl_work_move();
     effect_common_move();
     func_80038894();
-    func_8003450C();
+    Atari_check();
     func_80037F60();
     func_8005DCB4();
     func_800238B4();
@@ -354,7 +354,7 @@ void Game_sub_screen(GAME_WORK *wp)
                 D_80098810 = 1;
                 D_80098864 = 1;
                 MojiTaskKill();
-                func_80063EF0();
+                Game_logo_init();
                 Sound_key_off_voice(0x10);
                 Sound_key_off_voice(0x16);
                 Sound_key_off_voice(0x17);
@@ -365,7 +365,7 @@ void Game_sub_screen(GAME_WORK *wp)
         case 1:
             D_80098810 = 0;
             func_8005EBE4();
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             wp->routine_1++;
             break;
         case 2:
@@ -415,7 +415,7 @@ void Game_support(GAME_WORK *wp)
                 {
                     sound = 0xCE;
                 }
-                func_8001D7AC(sound);
+                Cd_seek_file(sound);
                 Fade_start(0x17);
                 Sound_fade_start(0x10);
                 wp->routine_1++;
@@ -438,7 +438,7 @@ void Game_support(GAME_WORK *wp)
                 Sound_seq_stop_all();
                 func_8001B314();
                 MojiTaskKill();
-                func_80063EF0();
+                Game_logo_init();
                 if (*(uint16 *)&Game_work.stage_no == 0x603 ||
                     *(uint16 *)&Game_work.stage_no == 0xB13 ||
                     *(uint16 *)&Game_work.stage_no == 0x61B)
@@ -475,7 +475,7 @@ void Game_support(GAME_WORK *wp)
             {
                 if (result > 0)
                 {
-                    func_8001D7AC(0x17);
+                    Cd_seek_file(0x17);
                     support_warp_set(result);
                     Sound_fade_start(0x10);
                     Fade_start(0x15);
@@ -559,7 +559,7 @@ void Game_auto_map(GAME_WORK *wp)
             func_8005DF3C();
             PLAYER_WORK_PTR->flags_bd |= 0x40;
             MojiTaskKill();
-            func_80063EF0();
+            Game_logo_init();
             Fade_start(0);
             Sound_key_off_voice(0x10);
             Sound_key_off_voice(0x16);
@@ -591,7 +591,7 @@ void Game_map_screen(GAME_WORK *wp)
         case 0:
             player->flags_bd |= 0x40;
             MojiTaskKill();
-            func_80063EF0();
+            Game_logo_init();
             Fade_start(0);
             Sound_key_off_voice(0x10);
             Sound_key_off_voice(0x16);
@@ -637,7 +637,7 @@ void Game_over(GAME_WORK *wp)
         case 0:
             GAME_SCRATCH_MODE = 4;
             game_update();
-            func_8001D7AC(0x19);
+            Cd_seek_file(0x19);
             Fade_start(11);
             wp->work08.transition_aperture = 120;
             wp->routine_1++;
@@ -654,9 +654,9 @@ void Game_over(GAME_WORK *wp)
             GAME_SCRATCH_MODE = 2;
             D_80098A70        = 0;
             MojiTaskKill();
-            func_80063BA8();
-            func_80063EF0();
-            func_8001D494(0, 1, 0);
+            Message_event_clear();
+            Game_logo_init();
+            Cd_subcmd(0, 1, 0);
             Sound_seq_stop_all();
             func_8001B314();
             Cd_read_comb(0x19);
@@ -708,7 +708,7 @@ void Game_over2(GAME_WORK *wp)
         case 0:
             GAME_SCRATCH_MODE = 4;
             game_update();
-            func_8001D7AC(0x19);
+            Cd_seek_file(0x19);
             Fade_start(15);
             wp->work08.transition_aperture = 120;
             wp->routine_1++;
@@ -725,9 +725,9 @@ void Game_over2(GAME_WORK *wp)
             GAME_SCRATCH_MODE = 2;
             D_80098A70        = 0;
             MojiTaskKill();
-            func_80063BA8();
-            func_80063EF0();
-            func_8001D494(0, 1, 0);
+            Message_event_clear();
+            Game_logo_init();
+            Cd_subcmd(0, 1, 0);
             Sound_seq_stop_all();
             func_8001B314();
             Cd_read_comb(0x19);
@@ -789,12 +789,12 @@ void soft_reset_check(void)
             {
                 GAME_SCRATCH_MODE = 2;
                 MojiTaskKill();
-                func_80063BA8();
-                func_80063EF0();
+                Message_event_clear();
+                Game_logo_init();
                 func_800665E8();
                 func_8001B314();
                 Sound_seq_stop_all();
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 D_80098A70 = 0;
                 Fade_start(8);
                 Sce_flag_off(0x1FE);

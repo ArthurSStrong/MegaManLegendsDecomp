@@ -1090,7 +1090,7 @@ void func_8010E660(STAGE_OBJ *wp, ST17_BOSS *ext)
             else if ((ext->flags_141 >> ext->value_13F) & 1)
             {
                 Moji_task_kill(4);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 wp->routine_3 = 0;
             }
             break;
@@ -1579,11 +1579,11 @@ void func_8010F520(STAGE_OBJ *wp)
         wp->routine_0++;
     }
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_8010F5D0(STAGE_OBJ *wp)
 {
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }

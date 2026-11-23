@@ -32,7 +32,7 @@ void func_80104D84(ST10_ACTOR *wp)
     *(uint32 *)&ctl->value_8 = 0;
     fixed                    = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;
     wp->value_B2              = 0x80;

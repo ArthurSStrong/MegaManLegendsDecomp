@@ -29,7 +29,7 @@ void func_801054B0(ST04_ACTOR *wp)
     *(uint32 *)&ctl->value_8 = 0;
     fixed                    = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &fixed, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;
     wp->value_B2              = 0x80;
@@ -317,14 +317,14 @@ void func_80105C08(ST04_ACTOR *wp)
         case 20:
             if (Sce_flag_test(0x612))
             {
-                func_80063BC8(&wp->position, 2, 0, 0x4A);
+                Message_event_set(&wp->position, 2, 0, 0x4A);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 21:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 Sce_flag_on(0x613);
                 wp->routine_0++;
@@ -333,14 +333,14 @@ void func_80105C08(ST04_ACTOR *wp)
         case 22:
             if (Sce_flag_test(0x614))
             {
-                func_80063BC8(&wp->position, 2, 0, 0x4C);
+                Message_event_set(&wp->position, 2, 0, 0x4C);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 23:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 Sce_flag_on(0x615);
                 wp->routine_0++;
@@ -470,14 +470,14 @@ void func_801061D8(ST04_ACTOR *wp)
         case 21:
             if (!func_8003A13C())
             {
-                func_80063BC8(&wp->position, 2, 0, 0x48);
+                Message_event_set(&wp->position, 2, 0, 0x48);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 22:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 Sce_flag_on(0x611);
                 wp->routine_0++;
@@ -486,14 +486,14 @@ void func_801061D8(ST04_ACTOR *wp)
         case 23:
             if (Sce_flag_test(0x615))
             {
-                func_80063BC8(&wp->position, 2, 0, 0x4D);
+                Message_event_set(&wp->position, 2, 0, 0x4D);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 24:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 wp->routine_0++;
             }
@@ -1232,14 +1232,14 @@ void func_80107990(ST04_ACTOR *wp)
         case 20:
             if (Sce_flag_test(0x611))
             {
-                func_80063BC8(&wp->position, 2, 0, 0x49);
+                Message_event_set(&wp->position, 2, 0, 0x49);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 21:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 Sce_flag_on(0x612);
                 wp->routine_0++;
@@ -1248,14 +1248,14 @@ void func_80107990(ST04_ACTOR *wp)
         case 22:
             if (Sce_flag_test(0x613))
             {
-                func_80063BC8(&wp->position, 2, 0, 0x4B);
+                Message_event_set(&wp->position, 2, 0, 0x4B);
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 1;
                 wp->routine_0++;
             }
             break;
         case 23:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 Sce_flag_on(0x614);
                 wp->routine_0++;

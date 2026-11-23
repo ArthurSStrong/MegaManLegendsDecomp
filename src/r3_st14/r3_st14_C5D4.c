@@ -467,7 +467,7 @@ void func_8010D1E4(ST14_ACTOR *wp)
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             if (wp->value_A7 == -1)
             {
-                func_80036470(ctl->u_28.track);
+                Search_Player_Reset(ctl->u_28.track);
                 wp->anim_AC = 1;
                 ctl->flags_4 |= 1;
             }
@@ -695,7 +695,7 @@ sint32 func_8010DA30(ST14_ACTOR *wp, sint32 width, sint32 turn)
     size.y           = 9;
     size.x           = width;
     size.z           = 4;
-    side             = func_80030418(wp, &Player_work, &size, &out);
+    side             = View_check_center(wp, &Player_work, &size, &out);
     if (!(side & 2))
     {
         if (side & 1)
@@ -1125,7 +1125,7 @@ void func_8010E728(STAGE_OBJ *wp)
     }
     else
     {
-        func_80033A28(wp);
+        Model_key_unpack(wp);
         EM_World_Pos_Calc(wp);
     }
 }

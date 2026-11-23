@@ -162,10 +162,10 @@ void func_80039FAC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80039FFC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 sint32 func_8003A13C(void);
 extern MOJI_POS *D_800987B8;
-extern uint8 D_800987B0[];
+extern uint8 Message_event[];
 extern sint32 D_800A396C;
 extern uint8 Scene_work;
-void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
+void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 sint32 Money_check(sint32 arg0);
 #ifdef __wasm32__
 void Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
@@ -173,7 +173,7 @@ void Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
 sint32 Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
 #endif
 void Game_logo_kill(sint32 index);
-void func_80063FC0(uint32 arg0, uint32 arg1);
+void Game_logo_set(uint32 arg0, uint32 arg1);
 
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 

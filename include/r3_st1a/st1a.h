@@ -1710,7 +1710,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 id_C;                             // 0C: the owner's slot id (func_80036294)
+    sint8 id_C;                             // 0C: the owner's slot id (Obj_id_work)
     sint8 value_D;                          // 0D
     sint8 value_E;                          // 0E
     sint8 value_F;                          // 0F
@@ -2493,7 +2493,7 @@ extern STAGE_OBJ_FUNC D_80132DA0[];
 
 void func_801273A0(ST1A_50 *wp);
 
-void *func_80036294(sint32 id); // the work slot with that id
+void *Obj_id_work(sint32 id); // the work slot with that id
 
 void func_801255CC(ST1A_50 *wp);
 
@@ -4011,7 +4011,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 id_C;                             // 0C: the owner's slot id (func_80036294)
+    sint8 id_C;                             // 0C: the owner's slot id (Obj_id_work)
     sint8 value_D;                          // 0D: the owner's part it follows
     uint8 reserved0E[6];                    // 0E
     STCOM_SVECTOR position;                 // 14
@@ -4124,7 +4124,7 @@ typedef struct
 
 // ROCK_NEO.EXE. Its callers here saw no prototype: the int result (set in v0) keeps their
 // products out of v0.
-sint32 func_80036A88(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
+sint32 Fog_color_set(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 
 // Game_work's word at +0x174 (STAGE_GAME_VIEW names its low halfword).
 #define ST1A_GAME_U32(offset) (*(uint32 *)((uint8 *)&Game_work + (offset)))
@@ -4157,7 +4157,7 @@ sint32 func_80049C54(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32
 
 STCOM_MATRIX *MulMatrix2(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
 
-void func_80036B00(STCOM_SVECTOR *pos);
+void Fog_color_get(STCOM_SVECTOR *pos);
 
 // The boss's attack picker at +0x440 of its slot (func_8011C080), over ST1A_HIT.
 typedef struct
@@ -4237,7 +4237,7 @@ typedef struct
     uint8 routine_1;        // 09
     uint8 routine_2;        // 0A
     uint8 routine_3;        // 0B
-    uint8 id_C;             // 0C: the owner's slot id (func_80036294)
+    uint8 id_C;             // 0C: the owner's slot id (Obj_id_work)
     uint8 reserved0D[0xB];  // 0D
     STCOM_MATRIX matrix_18; // 18
     STCOM_SVECTOR pos_38;   // 38

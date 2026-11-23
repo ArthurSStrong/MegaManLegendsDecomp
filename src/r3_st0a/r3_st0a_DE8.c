@@ -182,7 +182,7 @@ void func_801011B4(STAGE_ROOM *wp)
                 wp->reserved09[2] = 0;
                 Sce_slot_open(D_801154CC);
                 Fade_start(7);
-                func_8001D58C(0x20000009);
+                Cd_xa_play_id(0x20000009);
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
@@ -236,7 +236,7 @@ void func_801014B0(STAGE_ROOM *wp)
         case 0:
             Obj_work_flag_change(0x156, 0x80);
             func_8003697C();
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             if (Moji_flag & 0x8000000)
             {
                 Moji_task_kill(0);

@@ -48,7 +48,7 @@ void func_80103A74(ST0F_OBJ *wp)
             {
                 if (func_8003A13C() == 0)
                 {
-                    func_80063BC8(&wp->position, 3, 0, func_80103E08());
+                    Message_event_set(&wp->position, 3, 0, func_80103E08());
                     EM_Char_Set(wp, 8, 0);
                     wp->routine_2 = 0;
                     wp->routine_1++;
@@ -56,7 +56,7 @@ void func_80103A74(ST0F_OBJ *wp)
             }
             break;
         case 3:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 wp->routine_1++;

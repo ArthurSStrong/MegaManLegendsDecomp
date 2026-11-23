@@ -19,7 +19,7 @@ sint32 func_8005EC80(sint32 *wp)
 {
     MojiTaskKill();
     MojiTaskExec(0, D_8008CB94, -1);
-    func_80063FC0(0, 0x20006);
+    Game_logo_set(0, 0x20006);
     Sub_screen_basic_param_set();
     *wp = 1;
     return 0;
@@ -82,7 +82,7 @@ sint32 func_8005ED9C(SUB_WORK *wp)
         case 1:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D7AC(0x16);
+                Cd_seek_file(0x16);
                 MojiTaskExec(1, (uint8 *)0x801F2000, 0x14);
                 wp->routine_1++;
             }
@@ -235,9 +235,9 @@ sint32 func_8005F210(SUB_SEL *wp)
             {
                 break;
             }
-            func_8001D7AC(0x16);
+            Cd_seek_file(0x16);
             MojiTaskExec(1, (uint8 *)0x801F2000, 0x19);
-            func_80063FC0(0, 0x20002);
+            Game_logo_set(0, 0x20002);
             wp->routine_1++;
             break;
         case 2:
@@ -754,9 +754,9 @@ sint32 func_800600CC(SUB_WORK *wp)
             {
                 return 0;
             }
-            func_8001D7AC(0x16);
+            Cd_seek_file(0x16);
             MojiTaskExec(0, (uint8 *)0x801F2000, 0x1D);
-            func_80063FC0(2, 0x20007);
+            Game_logo_set(2, 0x20007);
             func_800605DC();
             wp->routine_1++;
             break;
@@ -906,7 +906,7 @@ sint32 func_80060618(SUB_WORK *wp)
             {
                 break;
             }
-            func_8001D7AC(0x16);
+            Cd_seek_file(0x16);
             if (pl->value_170 != 0)
             {
                 MojiTaskExec(0, (uint8 *)0x801F2000, 0x5C);
@@ -920,11 +920,11 @@ sint32 func_80060618(SUB_WORK *wp)
                 MojiTaskExec(1, (uint8 *)0x801F2000, 0x2F);
                 if (pl->value_172 == 0)
                 {
-                    func_80063FC0(0, 0x2001C);
+                    Game_logo_set(0, 0x2001C);
                 }
-                func_80063FC0(1, 0x20009);
-                func_80063FC0(2, 0x20017);
-                func_80063FC0(3, 0x20008);
+                Game_logo_set(1, 0x20009);
+                Game_logo_set(2, 0x20017);
+                Game_logo_set(3, 0x20008);
                 Sub_screen_status_calc(wp, 0);
             }
             func_800602A4(wp, 1);
@@ -991,10 +991,10 @@ sint32 func_80060618(SUB_WORK *wp)
             slot = wp->reserved4[1];
             if (wp->reserved4[0] < 0xD && Sce_flag_test(slot + 0x4C0) != 0)
             {
-                func_80063FC0(1, (wp->reserved4[0] + 9) | 0x20000);
+                Game_logo_set(1, (wp->reserved4[0] + 9) | 0x20000);
                 if (pl->value_172 == slot)
                 {
-                    func_80063FC0(0, 0x2001C);
+                    Game_logo_set(0, 0x2001C);
                 }
                 else
                 {
@@ -1005,7 +1005,7 @@ sint32 func_80060618(SUB_WORK *wp)
             else
             {
                 wp->reserved4[1] = 0;
-                func_80063FC0(1, 0x20016);
+                Game_logo_set(1, 0x20016);
                 Game_logo_kill(0);
                 Sub_screen_status_calc(wp, -1);
             }
@@ -1083,7 +1083,7 @@ sint32 func_80060B00(SUB_WORK *wp)
             {
                 return 0;
             }
-            func_8001D7AC(0x16);
+            Cd_seek_file(0x16);
             MojiTaskExec(0, D_8008CB64, -1);
             wp->routine_1++;
             break;
@@ -1149,12 +1149,12 @@ sint32 func_80060C70(SUB_SEL *wp)
                 else
                 {
                     MojiTaskKill();
-                    func_80063BA8();
-                    func_80063EF0();
+                    Message_event_clear();
+                    Game_logo_init();
                     func_800665E8();
                     func_8001B314();
                     Sound_seq_stop_all();
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                     Sce_flag_off(0x1FE);
                     Code800133D8_work.value_0 = 1;
                     Thread_change(Title_task);

@@ -425,7 +425,7 @@ void func_80125628(ST1A_HAND50 *wp)
         case 1:
             if (wp->routine_1 == 0)
             {
-                owner         = func_80036294(wp->id_C);
+                owner         = Obj_id_work(wp->id_C);
                 wp->matrix_18 = owner->matrix_1E8;
                 rot.x         = 0;
                 rot.y         = wp->angle_48 + 0x5DC;

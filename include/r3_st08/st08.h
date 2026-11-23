@@ -136,7 +136,7 @@ void func_80100D48(STAGE_ROOM *wp);
 void func_80100E48(STAGE_ROOM *wp);
 
 extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
-sint32 func_80036294(sint32 arg);
+sint32 Obj_id_work(sint32 arg);
 extern STAGE_OBJ_FUNC D_80113ACC[];
 extern STAGE_SLOT_FUNC D_801140C0[];
 extern uint8 D_80113130[][8];

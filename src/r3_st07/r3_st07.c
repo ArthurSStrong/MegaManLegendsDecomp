@@ -30,7 +30,7 @@ void func_801000B0(void)
     mw->cells = STAGE_MAP_TBL[Game_work.value_51].cells;
     mw->info  = STAGE_CELL_INFO;
     mw->exits = D_80105760[Game_work.value_51];
-    func_8002EA50(spawns, D_800C356D);
+    Obj_spawn_list(spawns, D_800C356D);
     func_800371A0(D_801058C0[D_80105B00[Game_work.value_51]], D_80105780[Game_work.value_51]);
     func_8005DC10(0);
     func_8010020C();
@@ -100,7 +100,7 @@ void func_8010036C(STAGE_ROOM *wp)
             D_800BBA90[7].pos_C.y  = 0xF0;
             D_800BBA90[7].fpos_4.y = 0xF00000;
             D_80108C0C             = 0;
-            func_8001D58C(0x20000005);
+            Cd_xa_play_id(0x20000005);
             wp->routine_5++;
             break;
         case 1:
@@ -184,7 +184,7 @@ void func_801006D8(STAGE_ROOM *wp)
             {
                 Obj_work_flag_change(0x56, 0x80);
                 func_8003697C();
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 wp->routine_5++;
             }
             if ((wp->reserved09[1] & 1) && !(wp->reserved09[1] & 0x80))
@@ -712,7 +712,7 @@ void func_80101430(STAGE_ROOM *wp)
                 pl->routine_1 = 1;
                 pl->flags_bd |= 0x10;
                 pl->flags_0 &= 0xFC;
-                func_8001D58C(0x20000008);
+                Cd_xa_play_id(0x20000008);
                 wp->routine_4++;
             }
             break;
@@ -765,7 +765,7 @@ void func_80101430(STAGE_ROOM *wp)
                 D_800C356D  = 0;
                 D_800C3570  = 2;
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 pl->flags_0 |= 1;
                 func_80042314(pl);
                 Sce_flag_on(0x19);
@@ -1090,7 +1090,7 @@ void func_80101E20(STAGE_ROOM *wp)
                 pl->routine_1 = 1;
                 pl->flags_bd |= 0x10;
                 pl->flags_0 &= 0xFC;
-                func_8001D58C(0x20000011);
+                Cd_xa_play_id(0x20000011);
                 wp->routine_4++;
             }
             break;
@@ -1136,7 +1136,7 @@ void func_80101E20(STAGE_ROOM *wp)
                 D_800C3571  = 0xFF;
                 D_800C3570  = 2;
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 pl->flags_0 |= 1;
                 func_80042314(&Player_work);
                 Sce_flag_on(0x54);

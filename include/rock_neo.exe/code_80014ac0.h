@@ -71,14 +71,14 @@ typedef struct CODE14_WORK
 
 typedef void (*CODE14_FUNC)(CODE14_WORK *wp, CODE14_SCRIPT *script);
 
-extern CODE14_FUNC D_80082104[];
-extern sint16 **D_800820E0[];
+extern CODE14_FUNC Title_chr_routine_tbl[];
+extern sint16 **Title_chr_script_tbl[];
 extern uint32 D_800979FC[];
 
 void Close_EM_WORK(GAME_WORK_3C0 *wp);
 void Model_work_init(CODE14_WORK *wp, sint32 arg);
-void func_800150E0(CODE14_WORK *wp, CODE14_SCRIPT *script);
-void func_80014BCC(CODE14_WORK *wp, CODE14_SCRIPT *script);
+void Title_chr_move(CODE14_WORK *wp, CODE14_SCRIPT *script);
+void title_chr_script_exec(CODE14_WORK *wp, CODE14_SCRIPT *script);
 CODE14_WORK *Open_EM_WORK(void);
 void Obj_pos_set(CODE14_WORK *wp, sint16 x, sint16 y, sint16 z);
 void EM_Char_Set(CODE14_WORK *wp, uint8 anim, sint32 arg);

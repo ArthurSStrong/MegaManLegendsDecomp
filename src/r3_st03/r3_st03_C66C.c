@@ -34,7 +34,7 @@ void func_8010C6A8(ST03_ACTOR *wp)
     *(uint32 *)&ctl->timer_4 = 0;
     D_8011CAB8               = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &D_8011CAB8, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &D_8011CAB8, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;
     wp->value_B2              = 0x80;
@@ -109,7 +109,7 @@ void func_8010C974(ST03_ACTOR *wp)
             wp->anim_AC      = 1;
             wp->velocity.v.x = 0x2C;
             wp->turn_64      = 0x20;
-            wp->ctl.target_C = func_80036294(wp->timer_C)->position;
+            wp->ctl.target_C = Obj_id_work(wp->timer_C)->position;
             // fall through
         case 1:
             wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &wp->ctl.target_C,
@@ -378,7 +378,7 @@ void func_8010D130(ST03_ACTOR *wp)
     *(uint32 *)&ctl->timer_4 = 0;
     D_8011CAC8               = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &D_8011CAC8, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &D_8011CAC8, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E          = 0x80;
     wp->value_B0          = 0x80;
     wp->value_B2          = 0x80;
@@ -462,7 +462,7 @@ void func_8010D404(ST03_ACTOR *wp)
             wp->turn_64 = 0x20;
             // fall through
         case 1:
-            ctl->target_C = func_80036294(wp->timer_C)->position;
+            ctl->target_C = Obj_id_work(wp->timer_C)->position;
             wp->rotation.y =
                 (wp->rotation.y + Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64)) &
                 0xFFF;
@@ -524,7 +524,7 @@ void func_8010D5EC(ST03_ACTOR *wp)
             wp->anim_AC      = 1;
             wp->velocity.v.x = 0x30;
             wp->turn_64      = 0x20;
-            wp->ctl.target_C = func_80036294(wp->timer_C)->position;
+            wp->ctl.target_C = Obj_id_work(wp->timer_C)->position;
             // fall through
         case 1:
             wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &wp->ctl.target_C,
@@ -655,7 +655,7 @@ void func_8010D9A4(ST03_ACTOR *wp)
     *(uint32 *)&ctl->timer_4 = 0;
     D_8011CAD8               = wp->position_fixed;
     ctl->target_C            = wp->position;
-    func_8002FFC4(&ctl->target_C, &D_8011CAD8, wp->rotation.y, 0x100, 0, 0);
+    Obj_pos_move(&ctl->target_C, &D_8011CAD8, wp->rotation.y, 0x100, 0, 0);
     wp->value_6E              = 0x80;
     wp->value_B0              = 0x80;
     wp->value_B2              = 0x80;
@@ -789,7 +789,7 @@ void func_8010DE18(ST03_ACTOR *wp)
             wp->velocity.v.x = 0x3C;
             wp->turn_64      = 0x20;
             wp->routine_2++;
-            ctl->target_C = func_80036294(wp->timer_C)->position;
+            ctl->target_C = Obj_id_work(wp->timer_C)->position;
             // fall through
         case 1:
             turn           = Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64);
@@ -806,7 +806,7 @@ void func_8010DE18(ST03_ACTOR *wp)
             break;
         case 2:
             wp->routine_2++;
-            ctl->target_C = func_80036294(wp->value_D)->position;
+            ctl->target_C = Obj_id_work(wp->value_D)->position;
             // fall through
         case 3:
             wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &ctl->target_C,
@@ -905,7 +905,7 @@ void func_8010E198(ST03_ACTOR *wp)
             {
                 break;
             }
-            func_80063BC8(&wp->position, 5, 0, wp->timer_C);
+            Message_event_set(&wp->position, 5, 0, wp->timer_C);
             wp->routine_1++;
             break;
         case 3:

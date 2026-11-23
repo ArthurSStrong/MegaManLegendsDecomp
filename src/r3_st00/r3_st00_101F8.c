@@ -9,7 +9,7 @@ void func_801101F8(ST00_OBJ *wp)
 
 void func_80110244(ST00_FOLLOWER *wp)
 {
-    wp->owner_F0 = func_80036294(wp->id_C);
+    wp->owner_F0 = Obj_id_work(wp->id_C);
     if (!(wp->flags_E & 1))
     {
         wp->flags_0 |= 2;
@@ -25,7 +25,7 @@ void func_80110244(ST00_FOLLOWER *wp)
     wp->value_C0 = 0;
     wp->value_C4 = 0;
     wp->value_D0 = 0;
-    func_80036470(wp->track_E0);
+    Search_Player_Reset(wp->track_E0);
     wp->scale_F4              = 0x1000;
     wp->scale_F8              = 0x1000;
     wp->scale_FC              = 0x1000;
@@ -111,7 +111,7 @@ void func_8011032C(ST00_PART *wp)
         ctl->pos_C         = wp->position;
         wp->position       = D_801224AC[0];
         wp->position_fixed = D_801224B4[0];
-        func_8003430C(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
+        Set_Atari2(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
                       &ctl->hit_14, ctl->value_8 | 0x9880000, 0x800000, 0);
     }
 }

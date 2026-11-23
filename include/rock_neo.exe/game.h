@@ -267,14 +267,14 @@ void func_80067E6C(sint32 mode);
 void func_8006471C(void);
 void func_80065AA8(void);
 void func_800664BC(void);
-void func_8002E7A8(sint32 mode);
-void func_80063BA8(void);
+void Work_init_all(sint32 mode);
+void Message_event_clear(void);
 void Sound_bgm_tbl_set(void);
 
 void Sound_seq_stop_all(void);
 void func_800665E8(void);
 void Sce_flag_off(sint32 flag);
-void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
+void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 
 void func_8005DF3C(void);
 void func_8005DF4C(void);
@@ -290,7 +290,7 @@ void func_800175D8(void);
 void func_800679B8(void);
 void eve_work_move(void);
 void func_8003C07C(void);
-void func_8003606C(void);
+void Obj_player_dist_calc(void);
 void func_8005C2B8(void);
 void func_80017094(void);
 void Em_work_move(void);
@@ -302,7 +302,7 @@ void func_8003C2D8(void);
 void pl_shl_work_move(void);
 void effect_common_move(void);
 void func_80038894(void);
-void func_8003450C(void);
+void Atari_check(void);
 void func_80037F60(void);
 void func_8005DCB4(void);
 void func_800238B4(void);
@@ -326,10 +326,10 @@ void func_801D8130(void);
 sint32 func_801D816C(void);
 
 void Sce_update(void);
-void func_80063C30(void);
+void Message_event_update(void);
 void func_80039D38(GAME_DELTA *delta);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
-void func_8002F420(sint32 flag, GAME_DELTA *delta);
+void Work_room_change(sint32 flag, GAME_DELTA *delta);
 void Sound_bgm_change_check(void);
 void func_8003B140(void);
 

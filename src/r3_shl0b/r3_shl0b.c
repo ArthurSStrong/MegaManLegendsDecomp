@@ -13,7 +13,7 @@ void func_800D8854(SHL_WORK *wp)
     SVECTOR rot;
     VECTOR v;
 
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->box_78   = &D_800D8F7C;
     wp->value_74 = 1;
     wp->value_cc = 0xF0;

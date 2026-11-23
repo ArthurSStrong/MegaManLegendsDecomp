@@ -1117,7 +1117,7 @@ void func_801139E8(STAGE_ROOM *wp)
             break;
         case 1:
             wp->routine_4++;
-            func_8001D58C(0x20010020);
+            Cd_xa_play_id(0x20010020);
             break;
         case 2:
             if (Sce_cd_reading() != 0)
@@ -1164,7 +1164,7 @@ void func_801139E8(STAGE_ROOM *wp)
                 D_800C3570    = 0xFF;
                 pl->value_170 = D_80118D48;
                 pl->value_171 = D_80118D4C;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_80042314(&Player_work);
                 wp->routine_4 = 0;
             }

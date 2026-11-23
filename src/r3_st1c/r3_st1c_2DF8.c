@@ -81,14 +81,14 @@ void func_80102FD0(ST1C_OBJ *wp)
         case 1:
             if (func_8003A13C() == 0)
             {
-                func_80063BC8(&wp->position, 1, 0, 1);
+                Message_event_set(&wp->position, 1, 0, 1);
                 EM_Char_Set(wp, 8, 0);
                 done = 1;
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 pl->flags_0 |= 2;
@@ -163,17 +163,17 @@ void func_80103178(ST1C_OBJ *wp)
                 slot = func_80102DF8();
                 if (slot == 0xFF)
                 {
-                    func_80063BC8(&wp->position, 1, 0, 2);
+                    Message_event_set(&wp->position, 1, 0, 2);
                 }
                 else
                 {
-                    func_80063BC8(&wp->position, 1, 0, slot + 3);
+                    Message_event_set(&wp->position, 1, 0, slot + 3);
                 }
                 wp->routine_2++;
             }
             break;
         case 4:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 slot = func_80102DF8();
@@ -262,7 +262,7 @@ void func_801034C8(ST1C_OBJ50 *wp)
             ScaleMatrix(&wp->matrix, &scale);
             if (pl->target_184 == wp)
             {
-                func_80063BC8(&wp->pos_38, 0, 0, wp->index_C + 0x3C);
+                Message_event_set(&wp->pos_38, 0, 0, wp->index_C + 0x3C);
             }
             break;
     }

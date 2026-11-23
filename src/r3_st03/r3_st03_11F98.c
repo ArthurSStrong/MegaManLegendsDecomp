@@ -85,12 +85,12 @@ void func_80112240(STAGE_PROP *wp)
         case 1:
             if (pl->target_184 == wp)
             {
-                func_80063BC8(&wp->position, 0, 0, wp->value_C);
+                Message_event_set(&wp->position, 0, 0, wp->value_C);
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 wp->routine_2--;
             }

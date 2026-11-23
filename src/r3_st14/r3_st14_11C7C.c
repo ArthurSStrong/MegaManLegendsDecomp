@@ -61,7 +61,7 @@ void func_80111E7C(ST14_PROP *wp)
                 Player_work.routine_0  = 3;
                 Player_work.routine_1  = 0;
                 Player_work.value_C    = 0;
-                func_80063BC8(&wp->position, 2, 0, 0xA);
+                Message_event_set(&wp->position, 2, 0, 0xA);
                 Player_work.target_184 = NULL;
                 wp->routine_1++;
             }
@@ -71,7 +71,7 @@ void func_80111E7C(ST14_PROP *wp)
             wp->routine_1++;
             break;
         case 2:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 wp->routine_1++;

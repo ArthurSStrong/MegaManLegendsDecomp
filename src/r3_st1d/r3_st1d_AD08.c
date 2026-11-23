@@ -8,7 +8,7 @@ void func_8010AD08(ST1D_ARM *wp)
     wp->scale.v.pad         = 0x4210;
     wp->ctl.rand_46         = rand();
     wp->rotation.y =
-        (Calc_degree2(&func_80036294(wp->parent_C)->position, &wp->position) + 0x800) & 0xFFF;
+        (Calc_degree2(&Obj_id_work(wp->parent_C)->position, &wp->position) + 0x800) & 0xFFF;
     D_80114D50[wp->routine_0](wp);
     wp->ctl.hit_18[0].hit = 0;
     wp->ctl.hit_18[1].hit = 0;
@@ -29,9 +29,9 @@ void func_8010ADCC(ST1D_ARM *wp)
     wp->anim_prev_AD   = 0;
     wp->anim_AC        = 0;
     EM_Char_Set2(wp, 0, 0);
-    owner          = (ST1D_ARM_OWNER *)func_80036294(wp->owner_D);
+    owner          = (ST1D_ARM_OWNER *)Obj_id_work(wp->owner_D);
     wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
-    func_80033598(wp,
+    EM_World_Pos_Calc_Mtx(wp,
                   (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208))); // offset first
     wp->scale.v.pad  = 0x4210;
     wp->value_78     = 0;
@@ -47,8 +47,8 @@ void func_8010AF10(ST1D_ARM *wp)
     ST1D_ARM_OWNER *owner;
     sint16 damage;
     ctl    = &wp->ctl;
-    parent = (ST1D_ARM_OWNER *)func_80036294(wp->parent_C);
-    owner  = (ST1D_ARM_OWNER *)func_80036294(wp->owner_D);
+    parent = (ST1D_ARM_OWNER *)Obj_id_work(wp->parent_C);
+    owner  = (ST1D_ARM_OWNER *)Obj_id_work(wp->owner_D);
     if (wp->routine_1 != 2)
     {
         if (ctl->value_42 != 0)
@@ -74,7 +74,7 @@ void func_8010AF10(ST1D_ARM *wp)
                 }
                 if (wp->life_6E < 0)
                 {
-                    parent         = (ST1D_ARM_OWNER *)func_80036294(wp->parent_C);
+                    parent         = (ST1D_ARM_OWNER *)Obj_id_work(wp->parent_C);
                     wp->routine_1  = 2;
                     ctl->timer_48  = 0x3C;
                     wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
@@ -162,12 +162,12 @@ void func_8010AF10(ST1D_ARM *wp)
     {
         EM_Char_Move2(wp);
         wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
-        func_80033598(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
+        EM_World_Pos_Calc_Mtx(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
         if (parent->flags_C & 0x80)
         {
             EM_Char_Move2(wp);
             wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
-            func_80033598(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
+            EM_World_Pos_Calc_Mtx(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
         }
         ctl->pos_10.x = wp->joints_180[0].x;
         ctl->pos_10.y = wp->joints_180[0].y + 0x28;
@@ -175,7 +175,7 @@ void func_8010AF10(ST1D_ARM *wp)
         ctl->pos_0.x  = ctl->pos_10.x << 16;
         ctl->pos_0.y  = ctl->pos_10.y << 16;
         ctl->pos_0.z  = ctl->pos_10.z << 16;
-        func_8002FFC4(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0x320, 0, 0);
+        Obj_pos_move(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0x320, 0, 0);
         Set_Atari(&ctl->pos_10, 0xC8, 0, 0x8000, wp->value_1, &ctl->hit_18[0],
                       wp->power_73 | 0x04080000, 0, 0x80);
         ctl->pos_10.x = wp->joints_180[7].x;
@@ -184,7 +184,7 @@ void func_8010AF10(ST1D_ARM *wp)
         ctl->pos_0.x  = ctl->pos_10.x << 16;
         ctl->pos_0.y  = ctl->pos_10.y << 16;
         ctl->pos_0.z  = ctl->pos_10.z << 16;
-        func_8002FFC4(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, 0x820);
+        Obj_pos_move(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, 0x820);
         Set_Atari(&ctl->pos_10, 0x46, 0, 0x8000, wp->value_1, &ctl->hit_18[2],
                       wp->power_73 | 0x04080000, 0, 0x80);
         ctl->pos_10.x = wp->joints_180[7].x;
@@ -193,7 +193,7 @@ void func_8010AF10(ST1D_ARM *wp)
         ctl->pos_0.x  = ctl->pos_10.x << 16;
         ctl->pos_0.y  = ctl->pos_10.y << 16;
         ctl->pos_0.z  = ctl->pos_10.z << 16;
-        func_8002FFC4(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, -0x820);
+        Obj_pos_move(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, -0x820);
         Set_Atari(&ctl->pos_10, 0x46, 0, 0x8000, wp->value_1, &ctl->hit_18[3],
                       wp->power_73 | 0x04080000, 0, 0x80);
         ctl->pos_10.x = wp->joints_180[7].x;
@@ -202,14 +202,14 @@ void func_8010AF10(ST1D_ARM *wp)
         ctl->pos_0.x  = ctl->pos_10.x << 16;
         ctl->pos_0.y  = ctl->pos_10.y << 16;
         ctl->pos_0.z  = ctl->pos_10.z << 16;
-        func_8002FFC4(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, 0);
+        Obj_pos_move(&ctl->pos_10, &ctl->pos_0, wp->rotation.y & 0xFFF, -0xF00, 0, 0);
         Set_Atari(&ctl->pos_10, 0x46, 0, 0x8000, wp->value_1, &ctl->hit_18[1],
                       wp->power_73 | 0x04080000, 0, 0);
     }
     else
     {
         EM_Char_Move2(wp);
-        func_80033598(wp, &wp->matrix_160);
+        EM_World_Pos_Calc_Mtx(wp, &wp->matrix_160);
     }
 }
 
@@ -220,7 +220,7 @@ void func_8010B5B4(STAGE_OBJ *wp)
 
 void func_8010B5D4(ST1D_ARM *wp)
 {
-    if (!(((ST1D_ARM_OWNER *)func_80036294(wp->parent_C))->flags_C & 1))
+    if (!(((ST1D_ARM_OWNER *)Obj_id_work(wp->parent_C))->flags_C & 1))
     {
         ST1D_ARM_ANIM(wp, 1);
     }
@@ -1004,7 +1004,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind)
             obj->position_fixed.x = obj->position.x << 16;
             obj->position_fixed.y = obj->position.y << 16;
             obj->position_fixed.z = obj->position.z << 16;
-            func_8002FFC4(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
+            Obj_pos_move(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
                           0);
             pl->value_C4.x = obj->position.x + (s * dist >> 12);
             if (kind == 0)
@@ -1026,7 +1026,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind)
             obj->position_fixed.x = obj->position.x << 16;
             obj->position_fixed.y = obj->position.y << 16;
             obj->position_fixed.z = obj->position.z << 16;
-            func_8002FFC4(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
+            Obj_pos_move(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
                           0);
             pl->value_C4.x = obj->position.x + (s * ((ctl->rand_6A & 0x3FF) + 0x80) >> 12);
             pl->value_C4.y = obj->position.y;
@@ -1089,7 +1089,7 @@ void func_8010CDE4(ST1D_VIEW *wp)
             child->position_fixed.v.z = child->position.z << 16;
         }
     }
-    owner               = func_80036294(wp->value_C);
+    owner               = Obj_id_work(wp->value_C);
     owner->u_C.b.byte_D = wp->value_D;
     owner->u_E.b.byte_E = wp->value_E;
     wp->routine_0       = 1;
@@ -1100,7 +1100,7 @@ void func_8010CF78(ST1D_VIEW *wp)
     STAGE_OBJ *owner;
     STAGE_OBJ *part[2];
 
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     if (owner->life_6E >= 0)
     {
         if (!(owner->u_C.b.byte_C & 1))
@@ -1109,7 +1109,7 @@ void func_8010CF78(ST1D_VIEW *wp)
         }
         if (wp->value_D > 0)
         {
-            part[0] = func_80036294(wp->value_D);
+            part[0] = Obj_id_work(wp->value_D);
             if (part[0]->life_6E >= 0)
             {
                 part[0]->position = wp->vec_180[1];
@@ -1117,7 +1117,7 @@ void func_8010CF78(ST1D_VIEW *wp)
         }
         if (wp->value_E > 0)
         {
-            part[1] = func_80036294(wp->value_E);
+            part[1] = Obj_id_work(wp->value_E);
             if (part[1]->life_6E >= 0)
             {
                 part[1]->position = wp->vec_180[2];
@@ -2249,12 +2249,12 @@ void func_8010F180(STCOM16_WORK *wp)
     switch (wp->routine_2)
     {
         case 0:
-            func_8002FFC4(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
+            Obj_pos_move(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
                           wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 1:
-            func_8002FFC4(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
+            Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
                           wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;

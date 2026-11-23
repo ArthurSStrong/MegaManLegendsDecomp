@@ -649,7 +649,7 @@ void func_80114CF0(STAGE_OBJ *wp);
 void func_801150D4(STAGE_OBJ *wp);
 void func_80104AF0(STAGE_OBJ *wp);
 void func_80104B2C(STAGE_OBJ *wp);
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 void func_80107DA0(STAGE_OBJ *wp);
 void func_8010D3E8(STAGE_OBJ *wp);
 void func_8010E048(STAGE_OBJ *wp);

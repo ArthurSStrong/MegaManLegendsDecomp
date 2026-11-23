@@ -79,8 +79,8 @@ extern uint8 D_80089A86[];
 extern uint8 D_80089A87[];
 
 // Defined with the player's work type elsewhere; declared without parameters here.
-void func_800320B8();
-void func_800321C8();
+void Pl_Char_Set();
+void Pl_Char_Set_Upper();
 sint32 func_80037664();
 void Pl00_shot_enable_off();
 uint8 func_80042458(C800425FC_ACT *ap);

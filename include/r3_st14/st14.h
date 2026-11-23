@@ -571,7 +571,7 @@ void func_8003187C(void *wp);
 void func_8003697C(void);
 void func_8005D6E8(void *wp);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
-void func_80036470(void *track);
+void Search_Player_Reset(void *track);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 

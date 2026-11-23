@@ -8,7 +8,7 @@
 typedef struct
 {
     sint8 flags_0;       // 00: -1 ends the list
-    uint8 kind_1;        // 01: pool (0x20, 0x40, 0x60 or 0xE0, as func_8002FE74 returns)
+    uint8 kind_1;        // 01: pool (0x20, 0x40, 0x60 or 0xE0, as Obj_id_class returns)
     uint8 value_2;       // 02
     uint8 value_3;       // 03
     uint8 value_4;       // 04
@@ -56,7 +56,7 @@ typedef struct
 typedef struct
 {
     uint8 flags_0;                          // 00
-    uint8 index_1;                          // 01: pool id and slot (func_80036294)
+    uint8 index_1;                          // 01: pool id and slot (Obj_id_work)
     uint8 kind_2;                           // 02: first index into the pool's handler table
     uint8 value_3;                          // 03
     uint8 handler_4;                        // 04: second index (two-level tables)
@@ -127,8 +127,8 @@ extern uint32 Shl_work_used; // 0x10C
 extern uint32 D_800989CC; // 0x50
 void Sce_flag_off(sint32 flag);
 sint32 Sce_flag_test(sint32 flag);
-sint32 func_8002FE74(uint8 id);
-STCOM10_OBJ *func_80036294(uint8 id);
+sint32 Obj_id_class(uint8 id);
+STCOM10_OBJ *Obj_id_work(uint8 id);
 STCOM10_OBJ *Open_EM_WORK(void);
 STCOM10_OBJ *func_80031498(void);
 STCOM10_OBJ *Open_SHL_WORK(void);

@@ -30,8 +30,8 @@ void Title_task(void)
     Sce_cd_read_wait(1);
     Sound_bgm_tbl_set();
     MojiTaskKill();
-    func_80063BA8();
-    func_80063EF0();
+    Message_event_clear();
+    Game_logo_init();
     func_80017994();
     while (1)
     {
@@ -82,7 +82,7 @@ void Title_init(CODE800133D8_STATE *wp)
             {
                 D_80098810 = 1;
                 D_80098864 = 0;
-                func_8002E7A8(1);
+                Work_init_all(1);
                 func_8003697C();
                 func_8002CFA4();
                 func_800371A0(D_800808D0, D_800808A8);
@@ -93,7 +93,7 @@ void Title_init(CODE800133D8_STATE *wp)
         case 1:
             D_80098810  = 0;
             wp->value0a = 0;
-            func_80015428(wp);
+            Title_chr_control(wp);
             Fade_start(2);
             wp->routine_0 = 2;
             wp->routine_1 = 1;
@@ -146,7 +146,7 @@ void title_obj_update(void)
     CODE800133D8_LINK *link;
 
     func_800175D8();
-    func_80015428(&Code800133D8_work);
+    Title_chr_control(&Code800133D8_work);
     Em_work_move();
     func_80038370(D_800979DC, D_800979EC);
     func_800175FC();

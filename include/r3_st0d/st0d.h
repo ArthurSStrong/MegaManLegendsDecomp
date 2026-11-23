@@ -804,7 +804,7 @@ void func_80100668(STAGE_ROOM *wp);
 void func_801007B0(STAGE_ROOM *wp);
 void func_80101118(STAGE_ROOM *wp);
 void func_8010134C(STAGE_ROOM *wp);
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 void func_80100BA4(sint32 arg);
 void Sce_slot_open_list(uint8 *script);
 void func_80101548(sint32 mode, uint8 arg);

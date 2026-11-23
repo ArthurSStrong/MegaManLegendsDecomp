@@ -28,7 +28,7 @@ void func_801001EC(void)
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_8010C1DC[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_8010C2E4[D_8010C2F4[Game_work.value_51]], D_8010C1F4[Game_work.value_51]);
     func_8005DC10(0);
     *(uint32 *)&D_800989F8.routine_4 = 0;
@@ -384,7 +384,7 @@ void func_80100DF0(STAGE_ROOM *wp)
                 Player_work.routine_1 = 0;
                 Player_work.flags_0 &= ~2;
                 wp->reserved09[1] = 0;
-                func_8001D58C(0x20000012);
+                Cd_xa_play_id(0x20000012);
                 wp->routine_5 = 0;
                 wp->routine_4++;
             }
@@ -439,7 +439,7 @@ void func_80101034(STAGE_ROOM *wp)
         case 0:
             Obj_work_flag_change(0x56, 0x80);
             func_8003697C();
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             wp->routine_5++;
             break;
         case 1:
@@ -753,13 +753,13 @@ void func_80101644(STAGE_ROOM *wp)
             {
                 if (Fade_busy == 0 && Cd_read_sync2() == 0)
                 {
-                    func_8001D58C(0x20000014);
+                    Cd_xa_play_id(0x20000014);
                     wp->routine_5++;
                 }
             }
             else if (Fade_busy == 0)
             {
-                func_8001D58C(0x20000015);
+                Cd_xa_play_id(0x20000015);
                 wp->routine_5++;
             }
             break;
@@ -825,7 +825,7 @@ void func_80101A60(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x56, 0x80);
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             if (wp->reserved09[1] & 1)
             {
                 func_8003697C();
@@ -1826,7 +1826,7 @@ void func_8010390C(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, STAGE_FACE *face)
         case 2:
             if (wp->value_A4 < 0x11)
             {
-                func_80030058(&step, wp->rotation.y - 0x1B8, 0x2E, 0, 0);
+                Calc_local_vec(&step, wp->rotation.y - 0x1B8, 0x2E, 0, 0);
                 Obj_pos_adj_round(&step, &move);
                 wp->position.x += move.x;
                 wp->position.z += move.z;

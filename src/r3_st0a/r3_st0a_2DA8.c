@@ -713,7 +713,7 @@ void func_80104030(ST0A_EN *wp)
     Search_Player_Init(wp->ctl.track_24, 0, -0x60);
     wp->ctl.home_34  = wp->position;
     wp->ctl.held_3C  = NULL;
-    wp->ctl.owner_40 = func_80036294(wp->byte_C);
+    wp->ctl.owner_40 = Obj_id_work(wp->byte_C);
     life             = D_80098844[wp->kind_2]->life_28;
     wp->data_78      = D_80115988;
     wp->routine_0    = 1;

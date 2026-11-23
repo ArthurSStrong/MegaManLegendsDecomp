@@ -352,5 +352,5 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
 
 void func_8010CB24(STAGE_FX *wp)
 {
-    D_801140F4[wp->routine_0](wp, func_80036294((uint8)wp->type_F));
+    D_801140F4[wp->routine_0](wp, Obj_id_work((uint8)wp->type_F));
 }

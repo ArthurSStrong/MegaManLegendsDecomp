@@ -110,7 +110,7 @@ typedef struct
 #define setaddr(p, _addr) (((P_TAG *)(p))->addr = (u_long)(_addr))
 #define addPrim(ot, p)    setaddr(p, getaddr(ot)), setaddr(ot, p)
 
-// Links the chain p0..p1 in front of ot's entry (PsyQ's addPrims; matched in func_800640F0).
+// Links the chain p0..p1 in front of ot's entry (PsyQ's addPrims; matched in Game_logo_draw_sprites).
 #define addPrims(ot, p0, p1) setaddr(p1, getaddr(ot)), setaddr(ot, p0)
 
 // Primitive header setters. Same effect as PsyQ's macros, written from the layouts above.

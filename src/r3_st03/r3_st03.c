@@ -87,7 +87,7 @@ void func_80100524(void)
     }
     spawns                    = D_80114918[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_80114B7C[Game_work.value_51];
-    func_8002EA50(spawns, D_800C356D);
+    Obj_spawn_list(spawns, D_800C356D);
     func_800371A0(D_80114D08[D_80114F08[Game_work.value_51]], D_80114BA0[Game_work.value_51]);
     func_8005DC10(0);
     func_801007B4();
@@ -962,8 +962,8 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
     if ((uint32)(wp->routine_6 - 3) < 8 && Sce_skip_check())
     {
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         Sound_call(0x108, 0, 0);
         wp->routine_6 = 0xB;
@@ -1094,8 +1094,8 @@ void func_80102224(STAGE_ROOM_WORK *wp)
     if ((uint32)(wp->routine_6 - 2) < 4 && Sce_skip_check())
     {
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 < 4)
@@ -1320,8 +1320,8 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         func_80103CC4(1);
         func_80103CC4(5);
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 >= 2)
@@ -1533,7 +1533,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             spawned       = ST03_SPAWNED_0;
             D_8011CA84    = Muku(&pl->pos_438, &spawned->position, pl->rot_440.y, 0x50);
             pl->rot_440.y = (pl->rot_440.y + D_8011CA84) & 0xFFF;
-            func_8002FF34(pl, 0x200, 0, 0);
+            Pl_pos_set(pl, 0x200, 0, 0);
             if (--wp->timer_C < 0)
             {
                 MojiTaskExec2(0, 0x39);
@@ -1578,8 +1578,8 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
     {
         Sce_flag_on(0x607);
         MojiTaskKill();
-        func_80063BA8();
-        func_8001D494(0, 1, 0);
+        Message_event_clear();
+        Cd_subcmd(0, 1, 0);
         func_8001B314();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 >= 2)
@@ -1675,7 +1675,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             pl->anim_448 = 1;
             // fall through
         case 3:
-            func_8002FF34(pl, 0x200, 0, 0);
+            Pl_pos_set(pl, 0x200, 0, 0);
             if (wp->timer_C == 5)
             {
                 Sce_script_next();
@@ -1756,8 +1756,8 @@ void func_80103578(STAGE_ROOM_WORK *wp)
                 D_800A395C = 1;
             }
             MojiTaskKill();
-            func_80063BA8();
-            func_8001D494(0, 1, 0);
+            Message_event_clear();
+            Cd_subcmd(0, 1, 0);
             func_8001B314();
             Sound_call(0x108, 0, 0);
             wp->routine_6 = 7;

@@ -822,7 +822,7 @@ void func_80112D00(STAGE_ROOM *wp)
         case 2:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x20010014);
+                Cd_xa_play_id(0x20010014);
                 wp->routine_4++;
             }
             break;
@@ -882,7 +882,7 @@ void func_80112D00(STAGE_ROOM *wp)
                 pl->value_444 = 0;
                 pl->value_442 = 0;
                 Obj_work_flag_change(0x56, 0x80);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 func_80042314(&Player_work);
             }
             break;
@@ -904,7 +904,7 @@ void func_80113048(STAGE_OBJ *wp)
     }
     else
     {
-        func_80033A28(wp);
+        Model_key_unpack(wp);
         EM_World_Pos_Calc(wp);
     }
     func_80113A2C(wp, face);
@@ -1263,7 +1263,7 @@ void func_80113B78(STAGE_OBJ *wp)
         EM_Char_Set(wp, 1, 0);
         wp->routine_2++;
     }
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     EM_World_Pos_Calc(wp);
 }
 
@@ -1292,7 +1292,7 @@ void func_80113C30(STAGE_OBJ *wp)
             EM_Char_Set(wp, 2, 0);
             wp->routine_2++;
         case 1:
-            func_80033A28(wp);
+            Model_key_unpack(wp);
             EM_World_Pos_Calc(wp);
             return;
         case 2:
@@ -1466,7 +1466,7 @@ void func_801140E4(STAGE_OBJ *wp)
             wp->routine_2 = 3;
             return;
         case 2:
-            func_80033A28(wp);
+            Model_key_unpack(wp);
             EM_World_Pos_Calc(wp);
             return;
         case 3:

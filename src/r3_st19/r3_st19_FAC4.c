@@ -298,7 +298,7 @@ void func_801103DC(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8001D58C(0x20000019);
+                Cd_xa_play_id(0x20000019);
                 wp->routine_5++;
             }
             break;
@@ -356,7 +356,7 @@ void func_801106C4(STAGE_ROOM *wp)
         case 0:
             if (Fade_busy == 0)
             {
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Obj_work_flag_change(0x7E, 0x80);
                 wp->routine_5++;
             }
@@ -878,7 +878,7 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
         case 0:
             if (Fade_busy == 0)
             {
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Obj_work_flag_change(0x5E, 0x80);
                 wp->reserved09[1] = 0x80;
                 Cd_read_comb(0xB5);
@@ -888,7 +888,7 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
         case 1:
             if (Cd_read_sync2() == 0)
             {
-                func_8001D58C(0x2000001C);
+                Cd_xa_play_id(0x2000001C);
                 wp->reserved09[2]++;
                 wp->routine_5++;
             }

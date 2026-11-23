@@ -330,7 +330,7 @@ typedef struct
     uint8 routine_3;                        // 0B
     sint8 value_C;                          // 0C: hits left (variant 0)
     uint8 value_D;                          // 0D
-    sint8 value_E;                          // 0E: func_80036294's id
+    sint8 value_E;                          // 0E: Obj_id_work's id
     sint8 value_F;                          // 0F
     void *data_10;                          // 10
     STCOM_SVECTOR position;                 // 14
@@ -1048,14 +1048,14 @@ typedef struct
     STCOM_SVECTOR mpos;  // AC: the model's position
     uint32 color_b4;     // B4
     uint8 reservedb8[0xC];
-    uint32 col_c4; // C4: hit accumulator (func_8003430C)
+    uint32 col_c4; // C4: hit accumulator (Set_Atari2)
     uint32 col_c8; // C8
 } ST05_SHL;
 
 // Player_work's signed bytes past STCOM_PL_WORK's fields.
 #define ST05_PL_SBYTE(offset) (*((sint8 *)&Player_work + (offset)))
 
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
 sint32 func_80037634(void *player, sint32 arg);
 void func_80126990(ST05_SHL *wp);
@@ -1218,7 +1218,7 @@ typedef struct
     ST05_WALKER_CTL ctl;                    // 308
 } ST05_WALKER;
 
-// The record func_80036294 returns (by id): a kind, a counter, a timer and flags.
+// The record Obj_id_work returns (by id): a kind, a counter, a timer and flags.
 typedef struct
 {
     uint8 reserved00[2]; // 00
@@ -1230,7 +1230,7 @@ typedef struct
     uint8 flags_F;       // 0F
 } ST05_LINK;
 
-ST05_LINK *func_80036294(sint32 id);
+ST05_LINK *Obj_id_work(sint32 id);
 
 // Player_work with its vectors at +0xC4 and +0x3A8 (r3_st14's ST14_PL_VIEW).
 typedef struct
@@ -1284,8 +1284,8 @@ typedef struct
     sint32 value_14;            // 33C: Set_Atari's result
     sint32 value_18;            // 340
     uint8 reserved1C[8];        // 344
-    uint8 track_24[0x10];       // 34C: func_800364B0
-    ST05_LINK *link_34;         // 35C: func_80036294's record
+    uint8 track_24[0x10];       // 34C: Search_Player_Ang
+    ST05_LINK *link_34;         // 35C: Obj_id_work's record
     sint16 timer_38;            // 360
     sint16 side_3A;             // 362: joint_180's index (3 or 5)
     sint16 *value_3C;           // 364: points at value_40
@@ -1401,7 +1401,7 @@ typedef void (*ST05_WAGON_FUNC)(ST05_WAGON *wp);
 
 extern ST05_WAGON_FUNC D_80131380[];
 extern ST05_WAGON_FUNC D_80131398[];
-sint32 func_800364B0(void *track, void *wp, sint32 angle);
+sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
 typedef void (*ST05_WALKER_FUNC)(ST05_WALKER *wp);
 
@@ -1414,7 +1414,7 @@ void func_8011472C(ST05_WALKER *wp);
 sint32 func_80116254(ST05_WALKER *wp);
 sint32 func_80116380(ST05_WALKER *wp);
 void func_80116528(ST05_WALKER *wp);
-void func_80036470(void *track);
+void Search_Player_Reset(void *track);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Scr_height_check(void *wp);
 
@@ -2170,8 +2170,8 @@ typedef struct
     STCOM_SVECTOR hit_pos_B0;  // 4F0: Set_Atari's point
     STCOM_SVECTOR home_B8;     // 4F8: pad is the heading
     STCOM_SVECTOR target_C0;   // 500: pad is the angle from it to the player
-    STCOM_SVECTOR size_C8;     // 508: func_80030418's box
-    STCOM_FIXED_VECTOR out_D0; // 510: func_80030418's push
+    STCOM_SVECTOR size_C8;     // 508: View_check_center's box
+    STCOM_FIXED_VECTOR out_D0; // 510: View_check_center's push
     uint32 dist_E0;            // 520: squared distance to the player
     uint8 reservedE4[2];       // 524
     sint16 value_E6;           // 526
@@ -2495,7 +2495,7 @@ void func_8005D7C0(void);
 
 void func_80107CEC(void);
 
-sint32 func_80030604(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
+sint32 View_check(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 
 void Moji_task_kill(sint32 arg);
 

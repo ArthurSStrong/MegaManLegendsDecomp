@@ -441,7 +441,7 @@ void func_80106F04(ST1B_ACTOR *wp)
             {
                 break;
             }
-            func_80063BC8(&wp->position, 5, 0, wp->timer_C);
+            Message_event_set(&wp->position, 5, 0, wp->timer_C);
             wp->routine_1++;
             break;
         case 3:

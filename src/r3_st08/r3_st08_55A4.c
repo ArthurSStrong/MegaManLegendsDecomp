@@ -289,7 +289,7 @@ void func_80105F1C(ST08_ACTOR *wp)
     }
     wp->rotation.v.z += 0x400;
     EM_Char_Move2(wp);
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     ST08_SP_ROT_Z = wp->rotation.v.z;
     EM_World_Pos_Calc(wp);
     Model_Shadow_Trans(wp, 0x28, 0x200, 0);
@@ -320,7 +320,7 @@ void func_801060C0(ST08_ACTOR *wp)
         wp->rotation.v.x -= 0x400;
     }
     EM_Char_Move2(wp);
-    func_80033A28(wp);
+    Model_key_unpack(wp);
     ST08_SP_ROT_X = wp->rotation.v.x;
     EM_World_Pos_Calc(wp);
     Model_Shadow_Trans(wp, 0x28, 0x200, 0);

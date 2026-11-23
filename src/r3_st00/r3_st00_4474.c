@@ -441,7 +441,7 @@ void func_801053B8(STAGE_STCOM15_WORK_348 *wp)
             wp->anim_AC   = 7;
             ctl->timer_4  = 0xC;
             ctl->value_8  = 0;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             // fall through
         case 1:
             if (--ctl->timer_4 < 0)

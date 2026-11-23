@@ -47,7 +47,7 @@ void func_800D8854(SHL08_WORK *wp)
     Model_work_init(wp, 0);
     if (wp->type_3 >= 0x80 && (wp->target.w.w0 | wp->target.w.w1) == 0)
     {
-        func_800354E0(wp->bit_d);
+        Homing_target_clear(wp->bit_d);
         wp->type_3 = 0;
     }
     wp->timer_b = func_80037634(&Player_work, 8);
@@ -69,7 +69,7 @@ void func_800D8AE0(SHL08_WORK *wp)
         Close_PL_SHL_WORK(wp);
         if (wp->type_3 >= 0x80)
         {
-            func_800354E0(wp->bit_d);
+            Homing_target_clear(wp->bit_d);
         }
         func_800D8F0C(wp);
     }
@@ -97,12 +97,12 @@ void func_800D8AE0(SHL08_WORK *wp)
                     d.vz >>= 2;
                 }
                 VectorNormalS(&d, &n);
-                func_80033F04(&vel, &n, &wp->vel, 0x424, 0xF746EA4);
+                Vec_turn_toward(&vel, &n, &wp->vel, 0x424, 0xF746EA4);
                 wp->vel = vel;
             }
             else
             {
-                func_800354E0(wp->bit_d);
+                Homing_target_clear(wp->bit_d);
                 wp->type_3 = 0;
             }
         }
@@ -119,7 +119,7 @@ void func_800D8AE0(SHL08_WORK *wp)
         Close_PL_SHL_WORK(wp);
         if (wp->type_3 >= 0x80)
         {
-            func_800354E0(wp->bit_d);
+            Homing_target_clear(wp->bit_d);
         }
         return;
     }
@@ -138,12 +138,12 @@ void func_800D8E38(SHL08_WORK *wp)
     p.vz  = wp->old_pos.vz;
     if (wp->index_c)
     {
-        func_8003430C(&wp->pos, 0x30, &p, 0x30, 0x200, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, 0x30, &p, 0x30, 0x200, 0x6000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&wp->pos, 0x30, &p, 0x30, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, 0x30, &p, 0x30, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
 }

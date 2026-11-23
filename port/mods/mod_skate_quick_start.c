@@ -8,7 +8,7 @@
 // case 2, which waits for the animation step whose flag byte (value_a6) is set, then case 3
 // moves at 0x340 while waiting for the animation's last step (value_a7 -1), plays the start
 // sound 0x8C and cruises (case 4). The animation runs in func_8003C418 after the routines, one
-// tick a frame (func_8003234C). Until case 3, letting go of Circle cancels (func_8003FDA8).
+// tick a frame (Pl_Char_Move). Until case 3, letting go of Circle cancels (func_8003FDA8).
 //
 // Measured headless (30 game frames a second; frame 1 is the first with Circle held):
 //            skates start   first move   cruising (start sound)
@@ -40,7 +40,7 @@
 
 #define FUNC_STAND_CHECK 0x8003F5D8u // void func_8003F5D8(PL_WORK *pl): D_80089FF8[0]
 #define FUNC_PL_FRAME    0x8003C88Cu // void func_8003C88C(PL_WORK *pl): D_80089F94[1]
-#define FUNC_ANIM_STEP   0x8003234Cu // void func_8003234C(PL_WORK *pl, sint32 id): one tick
+#define FUNC_ANIM_STEP   0x8003234Cu // void Pl_Char_Move(PL_WORK *pl, sint32 id): one tick
 #define FUNC_SOUND_CALL  0x8001A008u // Sound_call(id, a1, a2)
 
 // PL_WORK (include/rock_neo.exe/player.h) offsets.

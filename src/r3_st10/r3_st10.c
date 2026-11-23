@@ -59,7 +59,7 @@ void func_80100354(void)
     }
     spawn                     = D_8010F58C[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010F754[Game_work.value_51];
-    func_8002EA50(spawn, D_800C356D);
+    Obj_spawn_list(spawn, D_800C356D);
     func_800371A0(D_8010F85C[D_8010F8F4[Game_work.value_51]], D_8010F76C[Game_work.value_51]);
     func_8005DC10(0);
     func_801006B0();

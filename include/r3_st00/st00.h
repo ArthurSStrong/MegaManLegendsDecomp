@@ -1642,9 +1642,9 @@ typedef struct
     uint8 reserved100[0xC]; // 100
 } ST00_FOLLOWER;
 
-void func_80036470(void *track);
+void Search_Player_Reset(void *track);
 
-STAGE_OBJ *func_80036294(sint32 id);
+STAGE_OBJ *Obj_id_work(sint32 id);
 
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
@@ -1662,7 +1662,7 @@ typedef struct
 
 extern ST00_KIND **D_80098844;
 
-// The boss a part follows (func_80036294 of the part's parent_C): its joints' positions and
+// The boss a part follows (Obj_id_work of the part's parent_C): its joints' positions and
 // matrices.
 typedef struct
 {
@@ -1687,7 +1687,7 @@ typedef struct
     STCOM_SVECTOR pos_C;         // C8: its hit box
     uint32 hit_14;               // D0: damage (low 24 bits) and kind bits
     uint8 reserved18[0xC];       // D4
-    uint8 track_24[0x10];        // E0 (func_80036470)
+    uint8 track_24[0x10];        // E0 (Search_Player_Reset)
     ST00_BOSS *parent_34;        // F0
     STCOM_FIXED_VECTOR scale_38; // F4
     uint8 reserved48[8];         // 104

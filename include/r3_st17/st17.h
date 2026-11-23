@@ -1094,7 +1094,7 @@ typedef struct
     STCOM_SVECTOR mpos;  // AC: the model's position
     uint32 color_b4;     // B4
     uint8 reservedb8[0xC];
-    uint32 col_c4; // C4: hit accumulator (func_8003430C)
+    uint32 col_c4; // C4: hit accumulator (Set_Atari2)
     uint32 col_c8; // C8
 } ST17_SHL;
 
@@ -1126,11 +1126,11 @@ void func_801128C4(ST17_SHL *wp);
 void func_80112CCC(ST17_SHL *wp);
 void func_80112E44(ST17_SHL *wp);
 void func_80112F88(ST17_SHL *wp, sint32 arg);
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
 sint32 func_80037634(void *player, sint32 arg);
 sint32 func_800375D4(void *player, sint32 arg);
-// func_8003430C is declared in stage_common/stage.h.
+// Set_Atari2 is declared in stage_common/stage.h.
 
 // A work slot's fields STAGE_OBJ leaves unnamed: +0x80 is ROCK_NEO's distance to the player
 // (squared?), as stcom16's value_80.
@@ -1412,7 +1412,7 @@ typedef struct
 } ST17_TILE;
 
 // A work slot's joint positions and matrices (stcom16's layout; func_80113894 reads them through
-// func_80036294).
+// Obj_id_work).
 typedef struct
 {
     uint8 reserved000[0x14];     // 000
@@ -1423,6 +1423,6 @@ typedef struct
 } ST17_JOINT_OWNER;
 
 extern ST17_XZ D_8011C2A4[]; // offsets from the joints, by index - 1
-ST17_JOINT_OWNER *func_80036294(sint32 id);
+ST17_JOINT_OWNER *Obj_id_work(sint32 id);
 
 #endif // ST17_H

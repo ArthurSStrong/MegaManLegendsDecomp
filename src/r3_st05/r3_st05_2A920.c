@@ -141,12 +141,12 @@ void func_8012AB24(ST05_PRIZE *wp)
             fx = wp->fx_44;
             if ((sint8)fx->flags_0 == 0) // a signed byte test (lb)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->variant_3 != 0 ? 0x41 : 0x3E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->variant_3 != 0 ? 0x41 : 0x3E);
                 wp->routine_1++;
             }
             break;
         case 6:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 D_800A395C = 1;
                 func_80039820();
@@ -183,7 +183,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             }
             break;
         case 13:
-            func_80063BC8(&wp->pos_38, 2, 0,
+            Message_event_set(&wp->pos_38, 2, 0,
                           (Sce_flag_test(0x671) || Sce_flag_test(0x672)) ? 0x40 : 0x3F);
             wp->routine_1++;
             break;
@@ -359,7 +359,7 @@ void func_8012B314(STAGE_OBJ50 *wp)
         case 3:
             if (pl->flags_A7 < 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, 0x45);
+                Message_event_set(&wp->pos_38, 2, 0, 0x45);
                 Sce_flag_on(0x546);
                 wp->routine_1++;
             }
@@ -716,7 +716,7 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
                 MojiTaskExec2(2, 0x39);
                 msg2 = Game_work_90[wp->value_F].kind_0 + 0x64;
                 MojiTaskExec2(3, wp->value_F * 4 + msg2);
-                func_8001D58C(0x2001000D);
+                Cd_xa_play_id(0x2001000D);
                 wp->routine_2 = 0;
                 wp->routine_1++;
             }

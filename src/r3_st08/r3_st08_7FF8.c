@@ -54,7 +54,7 @@ void func_80108180(ST08_ACTOR *wp)
     {
         if (Sce_flag_test(0x36))
         {
-            func_80063BC8(&wp->position, 0, 0, 0x1A);
+            Message_event_set(&wp->position, 0, 0, 0x1A);
         }
         else if (Sce_flag_test(0x549))
         {
@@ -110,12 +110,12 @@ void func_801082F0(ST08_ACTOR *wp)
         case 1:
             if (!func_8003A13C())
             {
-                func_80063BC8(&wp->position, 1, 0, 0x14);
+                Message_event_set(&wp->position, 1, 0, 0x14);
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 pl->flags_0 |= 2;

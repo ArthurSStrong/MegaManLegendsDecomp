@@ -292,7 +292,7 @@ void func_80105F58(STAGE_STCOM15_WORK_348 *wp)
             *((uint8 *)wp + 0x108) = 5; // a byte past the named fields
             ctl->timer_4           = 3;
             ctl->flags_0 |= 0x100;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             Sound_call2(0xBB, &wp->position);
             // fall through
         case 1:
@@ -1039,7 +1039,7 @@ void func_80107870(ST09_VIEW *wp)
                         piece->angle_64       = (i ? wp->rotation.y + ext->u_44.h[1] + 0x800
                                                    : wp->rotation.y + ext->u_44.h[1]) &
                                                 0xFFF;
-                        func_8002FFC4(&piece->position, &piece->position_fixed, piece->angle_64,
+                        Obj_pos_move(&piece->position, &piece->position_fixed, piece->angle_64,
                                       0x600, -0x7C0, 0);
                     }
                     i++;
@@ -1371,7 +1371,7 @@ void func_80108384(ST09_ACTOR *wp)
             {
                 wp->routine_2++;
                 wp->anim_AC = 0x15;
-                func_80063BC8(&wp->position, 2, 0, wp->timer_C + 6);
+                Message_event_set(&wp->position, 2, 0, wp->timer_C + 6);
             }
             break;
         case 1:
@@ -1433,7 +1433,7 @@ void func_80108430(ST09_ACTOR *wp)
                     fx->variant_3 = 0;
                     D_8011E968[0] = wp->position;
                     D_8011E970[0] = wp->position_fixed;
-                    func_8002FFC4(D_8011E968, D_8011E970, (wp->rotation.y + 0x800) & 0xFFF,
+                    Obj_pos_move(D_8011E968, D_8011E970, (wp->rotation.y + 0x800) & 0xFFF,
                                   D_8011DF68[(ctl->value_2 & 3) * 4], -((rand() & 0x1F) * 16),
                                   D_8011DF6C[(ctl->value_2 & 3) * 4]);
                     fx->sprite.pos_8[0] = D_8011E968[0].x;
@@ -1791,7 +1791,7 @@ void func_80109260(STAGE_STCOM15_WORK_348 *wp)
             wp->anim_AC   = 7;
             ctl->timer_4  = 0xC;
             ctl->value_8  = 0;
-            func_80036470(ctl->track_24);
+            Search_Player_Reset(ctl->track_24);
             // fall through
         case 1:
             if (--ctl->timer_4 < 0)

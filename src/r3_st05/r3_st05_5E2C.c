@@ -12,7 +12,7 @@ void func_80105E2C(sint8 index)
     if (stcom36_D_0000 & (0x80000000 >> index))
     {
         obj = stcom36_E2_0000[index];
-        switch (func_8002FE74(obj->index_1))
+        switch (Obj_id_class(obj->index_1))
         {
             case 0x20:
                 obj->routine_0 = 2;
@@ -34,7 +34,7 @@ void func_80105F2C(sint8 index)
     if (stcom36_D_0000 & (0x80000000 >> index))
     {
         obj = stcom36_E2_0000[index];
-        switch (func_8002FE74(obj->index_1))
+        switch (Obj_id_class(obj->index_1))
         {
             case 0x20:
                 obj->routine_0 = 2;

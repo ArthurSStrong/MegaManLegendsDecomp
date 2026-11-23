@@ -300,7 +300,7 @@ sint32 func_80048EA4(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint
     *CODE486_SP_POS_C0 = *pos;
     count              = func_8004B1E0(CODE486_SP_POS_C0, 0);
     func_8004B3C0((sint32 *)info);
-    slide = (func_8002FE74(kind) == 0) << 15;
+    slide = (Obj_id_class(kind) == 0) << 15;
     do
     {
         prev = best;
@@ -506,7 +506,7 @@ sint32 func_80049470(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
     *CODE486_SP_POS_C0 = *pos;
     n                  = func_8004B1E0(CODE486_SP_POS_C0, 0);
     func_8004B3C0((sint32 *)info);
-    slide = (func_8002FE74(kind) == 0) << 15;
+    slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
         val = func_80048CEC(CODE486_SP_CELLS[n]);
@@ -577,7 +577,7 @@ sint32 func_8004976C(PL_WORK *pl)
 {
     sint32 turn;
 
-    if (func_8002FE74(pl->value01) != 0)
+    if (Obj_id_class(pl->value01) != 0)
     {
         turn = 0;
     }
@@ -619,7 +619,7 @@ sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sin
     *CODE486_SP_POS_C0 = *pos;
     n                  = func_8004B1E0(CODE486_SP_POS_C0, 0);
     func_8004B3C0((sint32 *)info);
-    slide = (func_8002FE74(kind) == 0) << 15;
+    slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
         val = func_80048CEC(CODE486_SP_CELLS[n]);
@@ -800,7 +800,7 @@ sint32 func_80049C54(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO
     }
     n = func_8004B1E0(CODE486_SP_POS_C0, 1);
     func_8004B3C0((sint32 *)info);
-    slide = (func_8002FE74(kind) == 0) << 15;
+    slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
         val = func_80048CEC(CODE486_SP_CELLS[n]);
@@ -1431,7 +1431,7 @@ sint32 func_8004B414(PL_WORK *wp)
     sint32 slide;
 
     func_8004B3C0((sint32 *)wp->info78);
-    slide  = (func_8002FE74(wp->value01) == 0) << 15;
+    slide  = (Obj_id_class(wp->value01) == 0) << 15;
     result = func_8004B6AC(&wp->position, &wp->position_prev, wp->value74, slide);
     if (result != 0)
     {
@@ -3913,7 +3913,7 @@ sint32 func_80050C2C(PL_WORK *pl)
         case 0x55:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA58[kind] + (flags & 0xF));
+                Message_event_set(0, 0, 0, D_8008AA58[kind] + (flags & 0xF));
             }
             break;
         case 0x61:
@@ -3922,38 +3922,38 @@ sint32 func_80050C2C(PL_WORK *pl)
         case 0x64:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0x10, 0, D_8008AA58[kind] + (flags & 0xF));
+                Message_event_set(0, 0x10, 0, D_8008AA58[kind] + (flags & 0xF));
             }
             break;
         case 0x2C:
         case 0x2D:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA6C[flags & 0xF]);
+                Message_event_set(0, 0, 0, D_8008AA6C[flags & 0xF]);
             }
             break;
         case 0x2F:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA44[flags & 0xF]);
+                Message_event_set(0, 0, 0, D_8008AA44[flags & 0xF]);
             }
             break;
         case 0x38:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA60[flags & 0xF]);
+                Message_event_set(0, 0, 0, D_8008AA60[flags & 0xF]);
             }
             break;
         case 0x3B:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA68[flags & 0xF]);
+                Message_event_set(0, 0, 0, D_8008AA68[flags & 0xF]);
             }
             break;
         case 0x44:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0, 0, D_8008AA50[flags & 0xF]);
+                Message_event_set(0, 0, 0, D_8008AA50[flags & 0xF]);
             }
             break;
         case 0x50:
@@ -3963,7 +3963,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             if ((flags & 0xFF) == 0)
             {
-                func_80063BC8(0, 0, 0, 6);
+                Message_event_set(0, 0, 0, 6);
             }
             else if (CODE486_GAME_BYTE50 == 0xE)
             {
@@ -3989,14 +3989,14 @@ sint32 func_80050C2C(PL_WORK *pl)
             {
                 if (Sce_flag_test(0x44) == 0)
                 {
-                    func_80063BC8(0, 0, 0, 0xC);
+                    Message_event_set(0, 0, 0, 0xC);
                 }
             }
             else
             {
                 if (Sce_flag_test(0x49) == 0)
                 {
-                    func_80063BC8(0, 0, 0, 0x11);
+                    Message_event_set(0, 0, 0, 0x11);
                 }
             }
             break;
@@ -4015,7 +4015,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             else
             {
-                func_80063BC8(0, 0, 0, 1);
+                Message_event_set(0, 0, 0, 1);
             }
             break;
         case 0x54:
@@ -4031,13 +4031,13 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             if ((flags & 0xFF) == 0)
             {
-                func_80063BC8(0, 0, 0, 0x1C);
+                Message_event_set(0, 0, 0, 0x1C);
             }
             break;
         case 0x60:
             if (func_80051970(obj) != 0)
             {
-                func_80063BC8(0, 0x10, 0, D_8008AA70[flags & 0xF]);
+                Message_event_set(0, 0x10, 0, D_8008AA70[flags & 0xF]);
             }
             break;
     }
@@ -4248,7 +4248,7 @@ sint32 func_800519E4(CODE486_EXIT *exit)
     {
         return 1;
     }
-    func_80063BC8(0, 0, 0, exit->value4);
+    Message_event_set(0, 0, 0, exit->value4);
     return 1;
 }
 
@@ -4455,7 +4455,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
     old74 = pl->value74;
     func_800536B0((PL_WORK *)key, &now, &prev, index);
     func_8004B3C0((sint32 *)pl->info78);
-    slide = (func_8002FE74(pl->value01) == 0) << 15;
+    slide = (Obj_id_class(pl->value01) == 0) << 15;
     if (func_80052674(pl, key, &now, flag, slide) == 0)
     {
         if (pl->value76 != 0 && (uint32)obj == pl->value_c0)
@@ -4478,7 +4478,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
                 zero.x = 0;
                 zero.y = 0;
                 zero.z = 0;
-                func_800301A8(&mtx, &push, &zero);
+                Calc_rotate_about(&mtx, &push, &zero);
             }
             else if (pl->value01 == 0)
             {
@@ -4489,7 +4489,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
                 zero.x = 0;
                 zero.y = 0;
                 zero.z = 0;
-                func_800301A8(&mtx, &push, &zero);
+                Calc_rotate_about(&mtx, &push, &zero);
             }
             pl->value44 += push.x;
             pl->value48 += push.z;
@@ -4679,7 +4679,7 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
         rot.vy       = -CODE486_SOLID_AT(key)->rot.vy;
         rot.vz       = -CODE486_SOLID_AT(key)->rot.vz;
         RotMatrix(&rot, &mtx);
-        func_800301A8(&mtx, &D_80098AC0, pos);
+        Calc_rotate_about(&mtx, &D_80098AC0, pos);
         Obj_pos_adj_round(&D_80098AC0, CODE486_SP_POS_C0);
     }
     else
@@ -4726,7 +4726,7 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
         rot.vy = -rot.vy;
         rot.vz = -rot.vz;
         RotMatrixYXZ(&rot, &mtx);
-        func_800301A8(&mtx, &D_80098AC0, pos);
+        Calc_rotate_about(&mtx, &D_80098AC0, pos);
     }
     return 1;
 }
@@ -4747,7 +4747,7 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
     func_800536B0((PL_WORK *)arg0, &now, &prev, index);
     result = 0;
     func_8004B3C0((sint32 *)pl->info78);
-    slide = (func_8002FE74(pl->value01) == 0) << 15;
+    slide = (Obj_id_class(pl->value01) == 0) << 15;
     if (func_80052674(pl, arg0, &now, arg3, slide) != 0)
     {
         cur = pl->position_fixed;
@@ -4806,8 +4806,8 @@ sint32 func_80052B04(sint32 key, PL_FIXED_VECTOR *now, PL_FIXED_VECTOR *cur, PL_
         rot.vy = -CODE486_SOLID_AT(key)->rot.vy;
         rot.vz = -CODE486_SOLID_AT(key)->rot.vz;
         RotMatrix(&rot, &mtx);
-        func_800301A8(&mtx, old, now);
-        func_800301A8(&mtx, cur, now);
+        Calc_rotate_about(&mtx, old, now);
+        Calc_rotate_about(&mtx, cur, now);
     }
     Obj_pos_adj_round(now, CODE486_SP_POS_E0);
     Obj_pos_adj_round(old, CODE486_SP_POS_C8);
@@ -4939,7 +4939,7 @@ done:
         rot.vy = -rot.vy;
         rot.vz = -rot.vz;
         RotMatrixYXZ(&rot, &mtx);
-        func_800301A8(&mtx, cur, now);
+        Calc_rotate_about(&mtx, cur, now);
     }
     return result;
 }
@@ -4964,12 +4964,12 @@ void func_80053158(PL_WORK *pl, uint32 arg)
             rot_inv.vy = -CODE486_PLAT_AT(arg).rot_inv.y;
             rot_inv.vz = -CODE486_PLAT_AT(arg).rot_inv.z;
             RotMatrix(&rot_inv, &mtx);
-            func_800301A8(&mtx, &pos, &piv);
+            Calc_rotate_about(&mtx, &pos, &piv);
             rot.vx = CODE486_PLAT_AT(arg).rot.vec.x;
             rot.vy = CODE486_PLAT_AT(arg).rot.vec.y;
             rot.vz = CODE486_PLAT_AT(arg).rot.vec.z;
             RotMatrixYXZ(&rot, &mtx);
-            func_800301A8(&mtx, &pos, &piv);
+            Calc_rotate_about(&mtx, &pos, &piv);
         }
         pl->position_fixed.x = pos.x + org.x - piv.x;
         pl->position_fixed.y = pos.y + org.y - piv.y;
@@ -4999,12 +4999,12 @@ void func_8005331C(PL_WORK *pl, uint32 arg)
             rot_inv.vy = -CODE486_PLAT_AT(arg).rot_inv.y;
             rot_inv.vz = -CODE486_PLAT_AT(arg).rot_inv.z;
             RotMatrix(&rot_inv, &mtx);
-            func_800301A8(&mtx, &pos, &piv);
+            Calc_rotate_about(&mtx, &pos, &piv);
             rot.vx = CODE486_PLAT_AT(arg).rot.vec.x;
             rot.vy = CODE486_PLAT_AT(arg).rot.vec.y;
             rot.vz = CODE486_PLAT_AT(arg).rot.vec.z;
             RotMatrixYXZ(&rot, &mtx);
-            func_800301A8(&mtx, &pos, &piv);
+            Calc_rotate_about(&mtx, &pos, &piv);
         }
         pl->position_saved_fixed.x = pos.x + org.x - piv.x;
         pl->position_saved_fixed.y = pos.y + org.y - piv.y;
@@ -5037,9 +5037,9 @@ void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR 
         {
             pos = *a4;
             RotMatrix(&rot_inv, &mtx);
-            func_800301A8(&mtx, &pos, a2);
+            Calc_rotate_about(&mtx, &pos, a2);
             RotMatrixYXZ(&rot, &mtx);
-            func_800301A8(&mtx, &pos, a2);
+            Calc_rotate_about(&mtx, &pos, a2);
             a5->x += pos.x - a4->x;
             a5->y += pos.y - a4->y;
             a5->z += pos.z - a4->z;

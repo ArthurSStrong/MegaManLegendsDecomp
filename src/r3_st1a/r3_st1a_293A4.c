@@ -23,7 +23,7 @@ void func_8012941C(STAGE_FX *wp)
     wp->type_F    = 0;
     wp->flags_0 |= 2;
     wp->timer_D -= 3;
-    owner        = func_80036294(wp->value_C);
+    owner        = Obj_id_work(wp->value_C);
     wp->x_1C     = owner->pos_38.x + D_80138D24[wp->timer_D * 3];
     wp->y_1E     = owner->pos_38.y + D_80138D26[wp->timer_D * 3];
     wp->z_20     = owner->pos_38.z + D_80138D28[wp->timer_D * 3];
@@ -147,7 +147,7 @@ void func_8012984C(STAGE_FX *wp)
     wp->flags_0 |= 2;
     wp->frame_E  = D_80138D56[wp->timer_D * 4];
     wp->type_F   = 0;
-    owner        = func_80036294(wp->value_C);
+    owner        = Obj_id_work(wp->value_C);
     wp->x_1C     = owner->position.x + D_80138D48[wp->timer_D * 3];
     wp->y_1E     = owner->position.y + D_80138D4A[wp->timer_D * 3];
     wp->z_20     = owner->position.z + D_80138D4C[wp->timer_D * 3];
@@ -184,7 +184,7 @@ void func_80129A24(STAGE_OBJ *wp)
 
 void func_80129A60(STAGE_FX *wp)
 {
-    func_80036294((sint32)wp->value_C);
+    Obj_id_work((sint32)wp->value_C);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->routine_2 = 0;
@@ -201,7 +201,7 @@ void func_80129AE0(STAGE_OBJ *wp)
 {
     STAGE_OBJ50 *owner;
 
-    owner = func_80036294(wp->u_C.b.byte_C);
+    owner = Obj_id_work(wp->u_C.b.byte_C);
     func_80129BD8(wp);
     if (++wp->u_E.b.byte_F >= 8)
     {
@@ -221,7 +221,7 @@ void func_80129B7C(STAGE_OBJ *wp)
 {
     uint8 temp_v0;
 
-    func_80036294((sint32)wp->u_C.b.byte_C);
+    Obj_id_work((sint32)wp->u_C.b.byte_C);
     func_80129BD8(wp);
     temp_v0       = wp->routine_3 - 2;
     wp->routine_3 = temp_v0;
@@ -238,7 +238,7 @@ void func_80129BD8(STAGE_FX *wp)
     sint32 angle;
     uint32 c;
 
-    owner    = func_80036294(wp->value_C);
+    owner    = Obj_id_work(wp->value_C);
     wp->x_1C = owner->pos_38.x;
     wp->y_1E = owner->pos_38.y;
     wp->z_20 = owner->pos_38.z;
@@ -262,7 +262,7 @@ void func_80129D28(STAGE_OBJ *wp)
 
 void func_80129D64(STAGE_OBJ *wp)
 {
-    func_80036294((sint32)wp->u_C.b.byte_C);
+    Obj_id_work((sint32)wp->u_C.b.byte_C);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->routine_2 = 0;
@@ -276,7 +276,7 @@ void func_80129DCC(STAGE_OBJ *wp)
 {
     STAGE_OBJ50 *owner;
 
-    owner = func_80036294(wp->u_C.b.byte_C);
+    owner = Obj_id_work(wp->u_C.b.byte_C);
     func_80129EC4(wp);
     if (++wp->u_E.b.byte_F >= 3)
     {
@@ -296,7 +296,7 @@ void func_80129E68(STAGE_OBJ *wp)
 {
     uint8 temp_v0;
 
-    func_80036294((sint32)wp->u_C.b.byte_C);
+    Obj_id_work((sint32)wp->u_C.b.byte_C);
     func_80129EC4(wp);
     temp_v0       = wp->routine_3 - 2;
     wp->routine_3 = temp_v0;
@@ -313,7 +313,7 @@ void func_80129EC4(STAGE_FX *wp)
     sint32 angle;
     uint32 c;
 
-    owner    = func_80036294(wp->value_C);
+    owner    = Obj_id_work(wp->value_C);
     target   = STAGE_SCENE.slot_24[0];
     wp->x_1C = owner->pos_38.x;
     wp->y_1E = owner->pos_38.y;

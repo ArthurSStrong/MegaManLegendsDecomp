@@ -258,7 +258,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
                 func_80042314(&Player_work);
                 Sound_call2(0x16D, &Player_work.position);
                 Sound_work.volume_6 = 0x50;
-                func_8001D58C(0x2001000E);
+                Cd_xa_play_id(0x2001000E);
                 wp->value_48   = 0;
                 wp->u_C.b.lo   = 0;
                 MojiTaskExec2(2, 0x1A);

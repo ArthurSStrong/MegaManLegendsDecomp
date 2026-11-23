@@ -98,7 +98,7 @@ typedef struct
     void *child_518;          // 518
 } ST09_PAIR_OBJ;
 
-// The boss a part follows (func_80036294 of the part's parent_C): its joints' positions and
+// The boss a part follows (Obj_id_work of the part's parent_C): its joints' positions and
 // matrices.
 typedef struct
 {
@@ -123,7 +123,7 @@ typedef struct
     STCOM_SVECTOR pos_C;         // C8: its hit box
     uint32 hit_14;               // D0: damage (low 24 bits) and kind bits
     uint8 reserved18[0xC];       // D4
-    uint8 track_24[0x10];        // E0 (func_80036470)
+    uint8 track_24[0x10];        // E0 (Search_Player_Reset)
     ST09_BOSS *parent_34;        // F0
     STCOM_FIXED_VECTOR scale_38; // F4
     uint8 reserved48[8];         // 104
@@ -674,7 +674,7 @@ void func_80114D5C(ST09_PART *wp);
 void func_80114EE0(ST09_PART *wp);
 void func_80115014(ST09_PART *wp);
 sint32 func_801157F0(ST09_PART *wp);
-void func_80036470(void *track);
+void Search_Player_Reset(void *track);
 void func_80101740(ST09_VIEW *wp);
 void func_80107828(ST09_VIEW *wp);
 void func_8010779C(ST09_VIEW *wp);
@@ -698,7 +698,7 @@ typedef struct
 } ST09_KIND;
 
 extern ST09_KIND **D_80098844;
-void *func_80036294(sint32 id); // the spawned slot with this id; callers use their own view
+void *Obj_id_work(sint32 id); // the spawned slot with this id; callers use their own view
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 // The scale vector r3_st09's stcom15 enemies keep in their block's +0x34 (ScaleMatrix).
 #define ST09_STCOM15_SCALE(ctl) (*(STCOM_FIXED_VECTOR *)&(ctl)->timer_34)
@@ -714,7 +714,7 @@ sint32 func_80103170(ST09_VIEW *wp);
 sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 
-sint32 func_800364B0(void *track, void *wp, sint32 angle);
+sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
 // A model part as func_801170EC reads it from a func_8003AC24 record: its colors at +0x24.
 typedef struct
@@ -839,7 +839,7 @@ void func_80100788(STAGE_ROOM_WORK *wp);
 void func_801005F4(void);
 void func_80100BF0(void);
 void Sce_script_timer_clear(void);
-void func_80063BA8(void);
+void Message_event_clear(void);
 void func_8001B314(void);
 
 // The block a sliding platform keeps at +0xCC.

@@ -191,7 +191,7 @@ extern uint8 D_80111CA8[];
 extern uint8 D_80111CD4[];
 extern uint8 D_80111D2C[]; // scene command (Sce_slot_open)
 
-extern uint8 D_800987B5; // D_800987B0[5]
+extern uint8 D_800987B5; // Message_event[5]
 extern sint8 D_80111CE0[];
 void func_80031A4C(void *wp);
 void func_80109C8C(STAGE_OBJ50 *wp);

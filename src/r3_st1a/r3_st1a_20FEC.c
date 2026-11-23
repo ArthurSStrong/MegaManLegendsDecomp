@@ -64,7 +64,7 @@ void func_80121164(ST1A_PIECES *wp)
     STCOM_SVECTOR pos;
     ST1A_COPY_SRC *owner;
 
-    owner = func_80036294(wp->id_C);
+    owner = Obj_id_work(wp->id_C);
     m     = owner->matrix_8C;
     pos   = owner->position;
     // A cast word store (not struct memory to GCC), so the frame counter load stays after it
@@ -127,7 +127,7 @@ void func_80121418(ST1A_PIECES *wp)
         prev.x = (wp->position_fixed.v.x + step.x * n) >> 16;
         prev.y = (wp->position_fixed.v.y + step.y * n) >> 16;
         prev.z = (wp->position_fixed.v.z + step.z * n) >> 16;
-        func_8003430C(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
+        Set_Atari2(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
                       (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
         (wp->piece_CC + i)->words[0] = 0;
         (wp->piece_CC + i)->words[1] = 0;
@@ -142,7 +142,7 @@ void func_80121418(ST1A_PIECES *wp)
         prev.x = (wp->position_fixed.v.x + step.x * n) >> 16;
         prev.y = (wp->position_fixed.v.y + step.y * n) >> 16;
         prev.z = (wp->position_fixed.v.z + step.z * n) >> 16;
-        func_8003430C(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
+        Set_Atari2(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
                       (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
         (wp->piece_CC + i)->words[0] = 0;
         (wp->piece_CC + i)->words[1] = 0;
@@ -529,7 +529,7 @@ void func_80122268(ST1A_DART *wp)
     }
     else if (wp->variant_3 == 0xFC)
     {
-        func_80036B00(&wp->position_prev);
+        Fog_color_get(&wp->position_prev);
         wp->routine_0 = 0xA;
     }
     else
@@ -673,7 +673,7 @@ void func_801226E4(ST1A_DART *wp)
                 v.z >>= 2;
             }
             VectorNormalS(&v, &dir);
-            func_80033F04(&out, &dir, &wp->dir_CC, 0x165, 0x0FF069DA);
+            Vec_turn_toward(&out, &dir, &wp->dir_CC, 0x165, 0x0FF069DA);
             wp->dir_CC     = out;
             speed          = wp->life_6E;
             wp->velocity.x = (out.x * speed) >> 4;
@@ -857,7 +857,7 @@ void func_80122DEC(STAGE_PROP *wp)
         return;
     }
     rest = n - i;
-    func_80036A88((wp->position_prev.x * rest + wp->position.x * i) / n,
+    Fog_color_set((wp->position_prev.x * rest + wp->position.x * i) / n,
                   (wp->position_prev.y * rest + wp->position.y * i) / n,
                   (wp->position_prev.z * rest + wp->position.z * i) / n,
                   (wp->position_prev.pad * rest + wp->position.pad * i) / n);
@@ -882,7 +882,7 @@ void func_80122FA0(STAGE_PROP *wp)
         return;
     }
     rest = n - i;
-    func_80036A88((wp->position_prev.x * rest + wp->position.x * i) / n,
+    Fog_color_set((wp->position_prev.x * rest + wp->position.x * i) / n,
                   (wp->position_prev.y * rest + wp->position.y * i) / n,
                   (wp->position_prev.z * rest + wp->position.z * i) / n,
                   (wp->position_prev.pad * rest + wp->position.pad * i) / n);
@@ -902,7 +902,7 @@ void func_80123154(ST1A_OBJ *wp)
 // color_B4 store and the call; GCC builds the constant twice (a2 for the store, a1 for the call).
 void func_801231A0(ST1A_COPY *wp)
 {
-    wp->ctl.owner_34      = func_80036294(wp->id_C);
+    wp->ctl.owner_34      = Obj_id_work(wp->id_C);
     wp->rotation.words[0] = 0;
     wp->rotation.words[1] = 0;
     wp->flags_0 |= 0x26;
@@ -1191,7 +1191,7 @@ void func_80123C00(ST1A_COPY *wp)
             Sound_call2(0x1DA, &wp->position);
             // fall through
         case 1:
-            func_8002FFC4(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
+            Obj_pos_move(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
                           wp->speed_4C * 16, 0, 0);
             if (--ctl->timer_4 < 0)
             {
@@ -1201,7 +1201,7 @@ void func_80123C00(ST1A_COPY *wp)
             }
             break;
         case 2:
-            func_8002FFC4(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
+            Obj_pos_move(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
                           wp->speed_4C * 16, 0, 0);
             wp->color_B4 -= 0x101010;
             if (--ctl->timer_4 < 0)

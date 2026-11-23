@@ -20,7 +20,7 @@ void func_800D8840(SHL_WORK *wp)
     wp->col_c8 = 0;
     wp->flags_0 |= 6;
     wp->flags_6 |= 0x20;
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->value_f = Player_work.value_558;
     rot.vx      = func_80039B80();
     rot.vy      = Player_work.rot.vy & 0xFFF;

@@ -90,7 +90,7 @@ extern STCOM_FIXED_VECTOR stcom12_E_0000; // another object's data: where the pl
 
 // ROCK_NEO.EXE.
 sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
-sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
+sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 void func_8001E3F0(sint32 arg);
 
 uint8 stcom12_func_0F98(STCOM12_WORK *wp);

@@ -68,7 +68,7 @@ void func_80100860(STAGE_ROOM *wp)
             wp->reserved09[1] = 0x80;
             wp->reserved09[2] = 0;
             wp->routine_6     = 0;
-            func_8001D58C(0x2000000A);
+            Cd_xa_play_id(0x2000000A);
             wp->routine_5 = 0;
             wp->routine_4++;
             break;
@@ -129,7 +129,7 @@ void func_80100B98(STAGE_ROOM *wp)
                 Close_EM_WORK(wp->child_30);
             }
             func_8003697C();
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
             STAGE_PL.routine_0   = 3;
             STAGE_PL.routine_1   = 1;
             STAGE_PL.pos_438.x   = -0xD00;

@@ -20,7 +20,7 @@ void func_8003BE6C(PL_WORK *pl, sint32 arg)
     uint8 *save;
 
     D_8009888C = 0x80000000;
-    save       = D_800B5DB0;
+    save       = Cd_ring_buf;
     if (Game_work.flags_82 & 0x80)
     {
         pl->routine_0 = 0;
@@ -189,19 +189,19 @@ void func_8003C418(PL_WORK *pl)
     }
     if (pl->value104 != pl->value105)
     {
-        func_800321C8(pl, pl->value174 & 3, pl->value104, pl->value100);
+        Pl_Char_Set_Upper(pl, pl->value174 & 3, pl->value104, pl->value100);
         pl->value105 = pl->value104;
     }
     else
     {
-        func_800323FC(pl, pl->value174 & 3, pl->value104);
+        Pl_Char_Move_Upper(pl, pl->value174 & 3, pl->value104);
     }
     if (pl->value_ac != pl->value_ad)
     {
-        func_800320B8(pl, pl->value_ac, pl->value_a4);
+        Pl_Char_Set(pl, pl->value_ac, pl->value_a4);
         return;
     }
-    func_8003234C(pl, pl->value_ac);
+    Pl_Char_Move(pl, pl->value_ac);
 }
 
 void func_8003C4EC(PL_WORK *pl)
@@ -284,11 +284,11 @@ void func_8003C4EC(PL_WORK *pl)
     }
     func_8002D004(pl, pl->value168, pl->value169);
 #ifdef __wasm32__
-    func_800329D4(pl, 0);
+    Pl_key_unpack(pl, 0);
 #else
-    func_800329D4(pl);
+    Pl_key_unpack(pl);
 #endif
-    func_800325D4(pl);
+    Pl_World_Pos_Calc(pl);
     if (pl->routine_0 & 2)
     {
         func_8002C794(pl, 0x32, 0x2AB, 0);
@@ -330,7 +330,7 @@ void func_8003C7B0(PL_WORK *pl)
     *(uint32 *)&pl->table180[0].z = 0;
     pl->flags06 |= 3;
     func_80041DDC(pl, 0, 0, 1);
-    func_800321C8(pl, 0, 5, 0);
+    Pl_Char_Set_Upper(pl, 0, 5, 0);
 }
 
 // Word-sized locals with narrowing casts load value6e/74/76 straight into a1-a3. The
@@ -1863,7 +1863,7 @@ void func_8003EEC0(PL_WORK *pl)
         pl->value10a = 0;
         pl->value10e = 0;
     }
-    target = (PL_WORK *)D_80097D08;
+    target = (PL_WORK *)Lockon_target;
     if (target == NULL || !(D_80098B18 & 2) || func_8003F224(pl) != 0)
     {
         func_80041EF4(pl, 2, 0x40);
@@ -3289,7 +3289,7 @@ sint32 func_800414F0(PL_WORK *pl, PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *rot, PL
     sz                    = box->z0 - (box->z0 + box->z1) / 2;
     ez                    = box->z1 - (box->z0 + box->z1) / 2;
     RotMatrixYXZ(rot, &mtx);
-    func_800301A8(&mtx, center, origin);
+    Calc_rotate_about(&mtx, center, origin);
     for (i = 0, margin = 0xC, dist = 0x50; i < 3; margin += 0xC, i++, dist += 0x30)
     {
         probe[0] = pl->position.x - (*(sint16 *)0x1F800100 * dist) / 0x1000;

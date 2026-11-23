@@ -385,7 +385,7 @@ typedef struct
 #define FOG_A    (*(uint16 *)0x1F800006)
 #define FOG_B    (*(uint16 *)0x1F800076)
 
-extern uint32 D_80098798;
+extern uint32 Homing_target_used;
 extern uint32 Eve_work_closing, Eve_work_used, Em_work_closing, Em_work_used;
 extern uint32 Shl_work_closing, Shl_work_used, Pl_shl_work_closing, Pl_shl_work_used;
 extern uint32 D_80098A4C, D_800989CC, D_80098B64, D_80098B20;
@@ -410,16 +410,16 @@ typedef struct
     uint32 word_8;
 } QUEUE_ENTRY;
 
-extern SPAWN_TARGET *D_800BE478[];
-sint32 func_8003545C(SPAWN_TARGET *value, MASK_WORK *wp);
-extern uint32 D_800988E0;
+extern SPAWN_TARGET *Homing_target_tbl[];
+sint32 homing_target_set(SPAWN_TARGET *value, MASK_WORK *wp);
+extern uint32 Atari_count;
 extern uint32 D_800A2F50[];
-extern QUEUE_ENTRY D_800A2F48[];
+extern QUEUE_ENTRY Atari_queue[];
 // Entry i's pad halfword read through a halfword view of the queue: the kind tests use this
-// form, which makes GCC hoist &D_800A2F48[0].pos.pad into a base register as retail does.
-#define QUEUE_PAD(i) (((uint16 *)D_800A2F48)[(i) * 6 + 3])
-extern sint32 D_800A32E0[];
-// Fog colour and near distance last set by func_80036A88
+// form, which makes GCC hoist &Atari_queue[0].pos.pad into a base register as retail does.
+#define QUEUE_PAD(i) (((uint16 *)Atari_queue)[(i) * 6 + 3])
+extern sint32 Atari_flags[];
+// Fog colour and near distance last set by Fog_color_set
 typedef struct
 {
     uint8 r;
@@ -428,7 +428,7 @@ typedef struct
     uint8 pad;
     uint16 near;
 } C8002E7A8_FOG;
-extern C8002E7A8_FOG D_8009A370;
+extern C8002E7A8_FOG Fog_color;
 extern uint16 D_800BC81C;
 extern uint8 D_800BC818, D_800BC819, D_800BC81A;
 
@@ -445,13 +445,13 @@ extern void RotMatrix(SVECTOR *r, MATRIX *m);
 extern sint32 SquareRoot0(sint32 v);
 extern void SetFogNear(sint32 a, sint32 b);
 extern void SetFarColor(sint32 r, sint32 g, sint32 b);
-extern void func_80033A28(void *wp);
+extern void Model_key_unpack(void *wp);
 extern sint16 Calc_arc_angle(SHORT3_WORK *a, SHORT3_WORK *b, sint16 c, sint16 d, sint16 e);
 extern void EM_Char_Set2(ENEMY_WORK *wp, sint32 a1, sint32 a2);
 extern void EM_World_Pos_Calc(void *wp);
 
 extern sint32 ratan2(sint32 x, sint32 y);
-extern uint32 func_80030628(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
+extern uint32 View_check_ang(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
                             sint16 angle);
 extern void Obj_arc_vel_set(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4);
 extern void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
@@ -459,24 +459,24 @@ extern void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint1
 extern sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4);
 
 void func_800358E8(void);
-void func_8002F884(SYNC_POS_WORK *wp, uint16 *delta);
-void func_8002F928(MOVE_WORK *wp, uint16 *delta);
+void shift_model(SYNC_POS_WORK *wp, uint16 *delta);
+void shift_effect(MOVE_WORK *wp, uint16 *delta);
 void Close_EM_WORK(GAME_WORK_3C0 *wp);
 void Close_EVE_WORK(GAME_WORK_24 *wp);
-void func_80036470(BYTE_WORK *wp);
+void Search_Player_Reset(BYTE_WORK *wp);
 void func_80036A78(sint32 arg);
 void func_8002F3A8(BYTE_WORK *wp, uint32 flags);
 void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2);
 void func_8002F9EC(void *wp, sint32 arg);
-uint32 func_80030604(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3);
+uint32 View_check(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3);
 void Model_work_init(void *wp, sint32 arg);
 void func_8002FA10(void *wp, sint32 arg);
-void func_800354E0(sint32 bit);
-void func_8002F998(POS_WORK *wp, uint16 *delta);
-uint32 func_8002FE74(uint32 val);
+void Homing_target_clear(sint32 bit);
+void shift_eve(POS_WORK *wp, uint16 *delta);
+uint32 Obj_id_class(uint32 val);
 sint32 Calc_degree2(SHORT3_WORK *a, SHORT3_WORK *b);
 extern SHORT3_WORK D_80097CF4;
-void func_800329D4(void *wp, sint32 arg);
+void Pl_key_unpack(void *wp, sint32 arg);
 extern void ApplyMatrixLV(MATRIX *m, sint32 *v0, sint32 *v1);
 void func_80031324(SPAWN_OWNER *owner, SPAWN_CHILD *child, sint16 index);
 void Obj_pos_adj_round(sint32 *in, sint16 *out);
@@ -494,7 +494,7 @@ typedef struct
     sint32 w[4];
 } VEC4_WORK;
 
-sint32 *func_80030058(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z);
+sint32 *Calc_local_vec(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z);
 sint32 Calc_degree(VEC32_WORK *a, VEC32_WORK *b);
 extern sint32 catan(sint32 v);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
@@ -628,11 +628,11 @@ extern SVECTOR *D_800DD600;
 #define POSE_BANK_EF600 ((uint32 ***)0x800EF600)
 #define POSE_BANK_F1600 ((uint32 ***)0x800F1600)
 #define POSE_BANK_F3600 ((uint32 ***)0x800F3600)
-extern void func_800333A0(void);
-extern void func_800333B4(MATRIX *m);
-extern void func_8003340C(MATRIX *m);
-extern void func_800331A0(JOINT_WORK *wp, sint32 index, void *src, SVECTOR *dst);
-void func_800325D4(void *wp);
+extern void matrix_stack_init(void);
+extern void matrix_push(MATRIX *m);
+extern void matrix_pop(MATRIX *m);
+extern void pl_joint_calc(JOINT_WORK *wp, sint32 index, void *src, SVECTOR *dst);
+void Pl_World_Pos_Calc(void *wp);
 
 // Spawn table entry (0x14 bytes, terminated by flags == 0xFF).
 typedef struct
@@ -719,7 +719,7 @@ extern SPAWN_GAME_VIEW Spawn_game __asm__("Game_work");
 #define SPAWN_GAME Spawn_game
 
 extern uint32 D_8009888C;
-void func_8002EA50(SPAWN_ENTRY *e, sint32 spawn_player);
+void Obj_spawn_list(SPAWN_ENTRY *e, sint32 spawn_player);
 
 // Skeleton owner for the bone-matrix pass.
 typedef struct
@@ -762,9 +762,9 @@ typedef struct
 
 extern void MulMatrix0(MATRIX *m0, MATRIX *m1, MATRIX *out);
 extern void ScaleMatrix(MATRIX *m, VEC32_WORK *v);
-void func_80033598(BONE_WORK *wp, MATRIX *m);
+void EM_World_Pos_Calc_Mtx(BONE_WORK *wp, MATRIX *m);
 
-// Homing-tracker work (func_800364B0): position, velocity, state.
+// Homing-tracker work (Search_Player_Ang): position, velocity, state.
 typedef struct
 {
     sint16 x, y, z;
@@ -792,16 +792,16 @@ extern TRACK_INFO D_800899AC[];
 extern PL_HEIGHT_INFO D_80097D0C;
 extern sint32 func_8005EBD4(void);
 extern void func_8005D4C0(void);
-extern SVECTOR *func_80033F04(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
+extern SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
 extern sint32 func_80049C54(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);
-sint32 func_800364B0(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle);
+sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle);
 sint32 Search_Player(TRACK_WORK *a0, ANGLE_WORK *a1);
 
-// Matrix stack: func_800333A0 resets it, func_800333B4 pushes, func_8003340C pops.
-extern MATRIX D_800BC728[];
-extern MATRIX *D_80098A80;
+// Matrix stack: matrix_stack_init resets it, matrix_push pushes, matrix_pop pops.
+extern MATRIX Matrix_stack[];
+extern MATRIX *Matrix_stack_ptr;
 
-extern uint32 D_80098560, D_80098564, D_80098568;
+extern uint32 Lockon_probe_count, Lockon_id, Lockon_timer;
 
 // Animation-set owner: lower-body script at +0x94, upper-body script at +0xF8; the alternate
 // table flags at +0x170/+0x171 pick between two script banks.
@@ -834,7 +834,7 @@ typedef struct
 #define ANIM_BANK_DD000 ((STEP_WORK **)0x800DD000)
 
 // Frame-timing words at fixed addresses (retail builds 0x800D9BE4 with lui/ori).
-// Four homing-shot slots at 0x8009A300 (0x14 bytes each), run by func_80036D40.
+// Four homing-shot slots at 0x8009A300 (0x14 bytes each), run by lockon_probe_move.
 typedef struct
 {
     sint16 x, y, z;
@@ -846,12 +846,12 @@ typedef struct
     MASK_WORK *target;
 } TRACK_SLOT;
 
-extern TRACK_SLOT D_8009A300[4];
-void func_80036C50(uint8 kind, MASK_WORK *target);
-sint32 func_80036D40(TRACK_SLOT *t);
-void *func_80036294(uint8 kind);
+extern TRACK_SLOT Lockon_probe_tbl[4];
+void lockon_probe_set(uint8 kind, MASK_WORK *target);
+sint32 lockon_probe_move(TRACK_SLOT *t);
+void *Obj_id_work(uint8 kind);
 
-// Player as the target pick (func_800358F0) sees it.
+// Player as the target pick (lockon_search) sees it.
 typedef struct
 {
     uint8 reserved00;
@@ -860,7 +860,7 @@ typedef struct
     SVECTOR pos_14;
 } PICK_PLAYER;
 
-// Target record (func_80036294) as the homing slots read it.
+// Target record (Obj_id_work) as the homing slots read it.
 typedef struct
 {
     sint8 flags_0;
@@ -873,7 +873,7 @@ typedef struct
     uint32 dist_80;
 } HOMING_TARGET;
 
-// Lock-on screen windows (func_80034EB8), one per zone.
+// Lock-on screen windows (pl_shot_aim), one per zone.
 typedef struct
 {
     sint16 z_max;
@@ -882,7 +882,7 @@ typedef struct
     sint16 pad;
 } LOCK_WINDOW;
 
-extern LOCK_WINDOW D_8008994C[];
+extern LOCK_WINDOW Shot_aim_zone_tbl[];
 #define LOCK_ABS(x) ((x) < 0 ? -(x) : (x))
 // Store SZ3 / 4 (data register 19 through $12) to the word at p
 #define LOCK_GTE_STSZ3_4(p)                                                                        \
@@ -892,21 +892,21 @@ extern LOCK_WINDOW D_8008994C[];
                      : "$12", "memory")
 void func_80035508(void);
 extern uint8 D_80089A8B[];
-void func_80035724(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint32 flag);
+void pl_shot_set(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint32 flag);
 
 extern PL_HEIGHT_INFO D_80097D18;
-sint32 func_8003081C(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 angle);
+sint32 view_cone_check(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 angle);
 #define TIME_START (*(sint32 *)0x800D9BE4)
 #define TIME_SPLIT (*(sint32 *)0x800D9BF4)
 #define TIME_TOTAL (*(sint32 *)0x800D9BF8)
 
 extern sint32 VSync(sint32 mode);
 extern uint8 D_80097D00[];
-extern sint32 D_80097D08;
+extern sint32 Lockon_target;
 extern uint8 D_80097D02, D_80097D03;
-void func_80034EB8(void);
-sint32 func_800358F0(void *pl);
-void func_800346AC(uint32 *pi, uint32 *pj);
+void pl_shot_aim(void);
+sint32 lockon_search(void *pl);
+void atari_pair_check(uint32 *pi, uint32 *pj);
 
 // Owner record a queue entry points at (word_8 & 0x7FFFFF): hit flags, then the hit point.
 typedef struct
@@ -916,7 +916,7 @@ typedef struct
     sint16 x_8, y_a, z_c, w_e;
 } HIT_OWNER;
 
-// Resource directory entry (0x10 bytes) searched by func_8002FA38; the directory starts with
+// Resource directory entry (0x10 bytes) searched by model_dir_search; the directory starts with
 // its entry count.
 typedef struct
 {
@@ -953,7 +953,7 @@ typedef struct
     uint8 head_f8[0x18];
 } RES_OWNER;
 
-sint32 func_8002FA38(RES_OWNER *wp, sint32 *dir, uint8 *key);
+sint32 model_dir_search(RES_OWNER *wp, sint32 *dir, uint8 *key);
 
 // Hand-written copies inside asm_fastmem.s (0x80017684 words, 0x800176DC 32-byte blocks; not
 // in the registry yet)

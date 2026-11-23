@@ -8,22 +8,22 @@
 // Small data reached through $gp
 uint32 D_80098700;
 
-void func_800629E0(void)
+void Debug_init(void)
 {
     *(uint32 *)&Debug_work.routine_0 = 0;
 }
 
-void func_800629F0(void)
+void debug_main(void)
 {
     DEBUG_WORK *wp;
 
     wp               = &Debug_work;
     Debug_work.pad_4 = D_800C0C2A;
     Debug_work.pad_6 = D_800C0C26;
-    D_8008DBD4[Debug_work.mode_8](wp);
+    Debug_mode_tbl[Debug_work.mode_8](wp);
 }
 
-sint32 func_80062A50(DEBUG_WORK *wp)
+sint32 Debug_menu_open(DEBUG_WORK *wp)
 {
     sint32 i;
 
@@ -37,7 +37,7 @@ sint32 func_80062A50(DEBUG_WORK *wp)
     *(uint32 *)&wp->entry[4].state_0 = 0;
     for (i = 0; i < 5; i++)
     {
-        D_8008DBE0[i](wp);
+        Debug_item_tbl[i](wp);
     }
     wp->mode_8 = 1;
     MojiTaskExec(0, D_8008CACC, -1);
@@ -45,7 +45,7 @@ sint32 func_80062A50(DEBUG_WORK *wp)
     return 0;
 }
 
-sint32 func_80062B04(DEBUG_WORK *wp)
+sint32 Debug_menu_select(DEBUG_WORK *wp)
 {
     sint32 i;
 
@@ -92,12 +92,12 @@ sint32 func_80062B04(DEBUG_WORK *wp)
     wp->sel_c = wp->sel_9;
     for (i = 0; i < 5; i++)
     {
-        D_8008DBE0[i](wp);
+        Debug_item_tbl[i](wp);
     }
     return 0;
 }
 
-sint32 func_80062C6C(DEBUG_WORK *wp)
+sint32 Debug_menu_apply(DEBUG_WORK *wp)
 {
     sint32 i;
 
@@ -111,7 +111,7 @@ sint32 func_80062C6C(DEBUG_WORK *wp)
     wp->entry[4].state_0      = 3;
     for (i = 0; i < 5; i++)
     {
-        D_8008DBE0[i](wp);
+        Debug_item_tbl[i](wp);
     }
     return 1;
 }
@@ -552,21 +552,21 @@ sint32 func_800638D8(DEBUG_WORK *wp)
     }
 }
 
-void func_80063BA8(void)
+void Message_event_clear(void)
 {
-    D_800987B0.word = 0;
+    Message_event.word = 0;
     D_800987B4      = 0;
     D_800987B8      = 0;
 }
 
-void func_80063BC8(sint32 arg0, sint32 arg1, sint32 arg2, sint32 arg3)
+void Message_event_set(sint32 arg0, sint32 arg1, sint32 arg2, sint32 arg3)
 {
-    DEBUG_FADE *fp;
+    MESSAGE_EVENT *fp;
 
-    fp = (DEBUG_FADE *)&D_800987B0;
+    fp = (MESSAGE_EVENT *)&Message_event;
     if (*(sint8 *)&Game_work == 3)
     {
-        D_800987B0.flag = 1;
+        Message_event.flag = 1;
         D_800987B1      = arg1;
         if (arg1 & 2)
         {
@@ -583,14 +583,14 @@ void func_80063BC8(sint32 arg0, sint32 arg1, sint32 arg2, sint32 arg3)
     }
 }
 
-void func_80063C30(void)
+void Message_event_update(void)
 {
     PL_WORK *pl;
-    DEBUG_FADE *fp;
+    MESSAGE_EVENT *fp;
 
     pl = &Player_work;
-    fp = (DEBUG_FADE *)&D_800987B0;
-    if (*(sint8 *)&D_800987B0 == 0)
+    fp = (MESSAGE_EVENT *)&Message_event;
+    if (*(sint8 *)&Message_event == 0)
     {
         return;
     }
@@ -666,12 +666,12 @@ void func_80063C30(void)
     }
 }
 
-void func_80063EF0(void)
+void Game_logo_init(void)
 {
     sint32 i;
     LOGO_WORK *wp;
 
-    wp = D_800C3528;
+    wp = Game_logo_work;
     for (i = 0; i < 4; i++, wp++)
     {
         *(uint32 *)&wp->active_0 = 0;
@@ -687,7 +687,7 @@ void Game_logo_kill(sint32 index)
 
     if (index < 0)
     {
-        wp = D_800C3528;
+        wp = Game_logo_work;
         // The accumulator is the loop counter itself.
         for (i = 0; i < 4; i++)
         {
@@ -698,10 +698,10 @@ void Game_logo_kill(sint32 index)
         {
             Obj_work_flag_change(0x3FF, 2);
         }
-        func_80063EF0();
+        Game_logo_init();
         return;
     }
-    wp           = &D_800C3528[index];
+    wp           = &Game_logo_work[index];
     wp->active_0 = 0;
     if (wp->flag_1 != 0)
     {
@@ -709,11 +709,11 @@ void Game_logo_kill(sint32 index)
     }
 }
 
-void func_80063FC0(sint32 index, sint32 arg)
+void Game_logo_set(sint32 index, sint32 arg)
 {
     LOGO_WORK *wp;
 
-    wp           = &D_800C3528[index];
+    wp           = &Game_logo_work[index];
     wp->active_0 = 1;
     wp->value_5  = arg >> 16;
     wp->value_4  = D_8008ECDE[arg & 0xFF][0];
@@ -730,26 +730,26 @@ void func_80063FC0(sint32 index, sint32 arg)
     }
 }
 
-void func_80064060(void)
+void Game_logo_draw(void)
 {
     sint32 i;
     LOGO_WORK *wp;
 
     if (D_80098824 == 0)
     {
-        wp = D_800C3528;
+        wp = Game_logo_work;
         for (i = 0; i < 4; i++)
         {
             if (wp->active_0 != 0)
             {
-                D_8008DD64[wp->kind_2](wp);
+                Game_logo_draw_tbl[wp->kind_2](wp);
             }
             wp++;
         }
     }
 }
 
-void func_800640F0(LOGO_WORK *wp)
+void Game_logo_draw_sprites(LOGO_WORK *wp)
 {
     LOGO_SPRITE *rec;
     DEBUG_PRIM *start;

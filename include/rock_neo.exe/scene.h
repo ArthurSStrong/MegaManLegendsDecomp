@@ -202,7 +202,7 @@ extern sint32 D_800BC7B4;
 extern sint32 D_800BC7B8;
 extern uint8 D_800BC738;
 void func_800398E0(sint32 arg);
-void func_8001D7AC(sint32 index);
+void Cd_seek_file(sint32 index);
 extern sint32 D_800891F0[];
 sint32 catan(sint32 x);
 extern sint16 D_80089200[];
@@ -290,7 +290,7 @@ typedef void (*SCENE_SLOT_FUNC)(SCENE_SLOT *slot);
 #define SCENE_TBL_5C (*(SCENE_SLOT_FUNC ***)0x1F80005C)
 #define SCENE_TBL_60 (*(SCENE_SLOT_FUNC **)0x1F800060)
 #define SCENE_TBL_6C (*(SCENE_SLOT_FUNC **)0x1F80006C)
-uint32 func_8002FE74(uint8 id);
+uint32 Obj_id_class(uint8 id);
 void Close_EM_WORK(SCENE_SLOT *slot);
 
 extern uint16 D_800896D4[];

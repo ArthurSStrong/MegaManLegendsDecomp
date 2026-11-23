@@ -1332,7 +1332,7 @@ sint32 func_80110A54(ST06_CRAB *wp);
 sint32 func_80111D54(ST06_CRAB *wp);
 void func_80110498(ST06_CRAB *wp);
 void func_80111C4C(ST06_CRAB *wp);
-sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
+sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 extern ST06_CRAB_FUNC D_80125204[];
 
 // The scratchpad as the crab writes it: two angles its model's draw reads.
@@ -1737,7 +1737,7 @@ void func_80102388(uint8 index, uint8 kind);
 
 void func_801023F4(void);
 
-void func_80063BA8(void);
+void Message_event_clear(void);
 
 void func_8001B314(void);
 

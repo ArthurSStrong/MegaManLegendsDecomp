@@ -31,7 +31,7 @@ void func_800D8928(SHL_WORK *wp)
     VECTOR v;
     MATRIX m;
 
-    func_800354E0(wp->index_c);
+    Homing_target_clear(wp->index_c);
     wp->routine_1 = 0;
     wp->timer_b   = 0;
     wp->mode_a    = 0;

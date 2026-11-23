@@ -1112,12 +1112,12 @@ void stcom16_func_20D8(STCOM16_WORK *wp)
     switch (wp->routine_2)
     {
         case 0:
-            func_8002FFC4(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
+            Obj_pos_move(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
                           wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 1:
-            func_8002FFC4(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
+            Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
                           wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;

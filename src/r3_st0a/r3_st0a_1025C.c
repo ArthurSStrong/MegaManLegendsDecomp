@@ -96,7 +96,7 @@ void func_80110438(ST0A_10C_B *wp)
     else
     {
         target = func_8011092C((ST0A_10C *)wp);
-        func_80033F04(&dir, &target, &wp->sprite.dir_1C, 0x32, 0xFFFB10B);
+        Vec_turn_toward(&dir, &target, &wp->sprite.dir_1C, 0x32, 0xFFFB10B);
         wp->sprite.dir_1C    = dir;
         wp->value_44.half[0] = (dir.x * 25) >> 2;
         wp->value_44.half[1] = (dir.y * 25) >> 2;

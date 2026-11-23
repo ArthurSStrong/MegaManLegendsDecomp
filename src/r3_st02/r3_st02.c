@@ -30,7 +30,7 @@ void func_801000B0(void)
     mw->cells = STAGE_MAP_TBL[Game_work.value_51].cells;
     mw->info  = STAGE_CELL_INFO;
     mw->exits = D_80106968[Game_work.value_51];
-    func_8002EA50(spawns, D_800C356D);
+    Obj_spawn_list(spawns, D_800C356D);
     func_800371A0(D_80106A18[D_80106C18[Game_work.value_51]], D_80106978[Game_work.value_51]);
     func_8005DC10(0);
 }
@@ -970,7 +970,7 @@ void func_80101CC0(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_8001D58C(0x20000004);
+            Cd_xa_play_id(0x20000004);
             wp->routine_4++;
             break;
         case 2:
@@ -1055,7 +1055,7 @@ void func_80102040(STAGE_OBJ *wp)
 {
     Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_80102080(STAGE_OBJ *wp)
@@ -1275,7 +1275,7 @@ void func_80102830(STAGE_OBJ *wp)
 {
     D_80107504[wp->routine_1](wp);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_80102888(STAGE_OBJ *wp)
@@ -1319,7 +1319,7 @@ void func_80102990(STAGE_OBJ *wp)
     D_80107520[wp->routine_0](wp);
     Obj_pos_adj_round(&wp->position_fixed.v, &wp->position);
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_801029F4(STAGE_OBJ *wp, sint32 index)

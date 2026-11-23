@@ -197,7 +197,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
                     fx->kind_2    = 0x80;
                     fx->variant_3 = 0x41;
                     fx->value_D   = 1;
-                    func_80030058(&fixed, wp->rotation.y, -0x2000, 0, 0);
+                    Calc_local_vec(&fixed, wp->rotation.y, -0x2000, 0, 0);
                     Obj_pos_adj_round(&fixed, &pos);
                     if (!(rnd & 1))
                     {
@@ -231,7 +231,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
                 fx->value_C   = 0;
                 fx->value_D   = 0;
                 fx->value_F   = 0xC;
-                func_80030058(&fixed, wp->rotation.y, -0x2000, 0, 0);
+                Calc_local_vec(&fixed, wp->rotation.y, -0x2000, 0, 0);
                 Obj_pos_adj_round(&fixed, &pos);
                 fx->sprite.pos_8[0] = wp->position.x + pos.x;
                 fx->sprite.pos_8[1] = wp->position.y;

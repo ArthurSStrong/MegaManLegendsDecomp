@@ -29,7 +29,7 @@ void func_801076E8(STAGE_STCOM15_WORK_4E0 *wp)
     }
     else
     {
-        func_80033A28(wp);
+        Model_key_unpack(wp);
         EM_World_Pos_Calc(wp);
     }
     if (wp->flags_0 & 2)
@@ -3373,7 +3373,7 @@ void func_8010E474(STAGE_OBJ *wp)
     }
     else
     {
-        func_80033A28(wp);
+        Model_key_unpack(wp);
         EM_World_Pos_Calc(wp);
     }
     Model_Shadow_Trans(wp, 0x32, 0x2AB, 0);
@@ -3717,7 +3717,7 @@ void func_8010F140(STAGE_OBJ *wp)
         return;
     }
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_8010F1A0(STAGE_OBJ *wp)
@@ -3729,7 +3729,7 @@ void func_8010F1A0(STAGE_OBJ *wp)
         return;
     }
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_8010F200(STAGE_OBJ *wp)
@@ -3741,7 +3741,7 @@ void func_8010F200(STAGE_OBJ *wp)
         return;
     }
     EM_Char_Move2(wp);
-    func_800334C4(wp);
+    EM_World_Pos_Calc_YXZ(wp);
 }
 
 void func_8010F260(STAGE_OBJ *wp)

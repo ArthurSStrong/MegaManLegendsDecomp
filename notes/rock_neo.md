@@ -360,7 +360,7 @@ The kinds come in two families laid over 0x14-0x43, the two halves of the `EFC` 
 the shared code (and `SHL_WORK.efc` at 0x88): `EFC_MODEL` (`data` from `Model_work_init`, `mtx`, `pos`, `rgbc`; bit 2
 of `routine_0` set) and `EFC_SPRITE` (`code`, `rgbc`, `pos[3]`, two bytes and two halfwords, kind data from +0x14).
 The kinds' own structs write them out at their offsets (`data_14`, `mtx`, `pos_38`, `rgbc_40`; `code_14`, `rgbc_18`,
-`pos_1C[3]`, `field_22..26`). `func_8002F928` moves `efc.model.pos` or `efc.sprite.pos` by that bit. The name follows Capcom's shot code (`wk_p->efc.model.m`, `.sv`, `.rgbc`). The debris kinds copy the whole
+`pos_1C[3]`, `field_22..26`). `shift_effect` moves `efc.model.pos` or `efc.sprite.pos` by that bit. The name follows Capcom's shot code (`wk_p->efc.model.m`, `.sv`, `.rgbc`). The debris kinds copy the whole
 matrix as a `MATRIX` (`func_80045AB4`), but keep their speed and acceleration in its `t` bytes, so their struct has
 `m[3][3]` plus `vx_2C..az_36` and passes `(MATRIX *)wp->m`. `func_80037890` creates kinds 0x80 and 0x83 through one
 reused local, so it stays generic. `func_80045CE8` and `func_80046B34` are spawners (of 0x86 and 0x87), not
@@ -380,7 +380,7 @@ no per-kind code for this pool yet.
 position, two bytes, two halfwords) is the same. Where `EFC` starts and that `free` follows it are inferred from that
 match and from `EFC_MODEL`'s size (0x30); Capcom's offsets for `SHL_WORK` aren't known.
 
-The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `Open_PL_SHL_WORK` / `Close_PL_SHL_WORK`, spawned by `func_80035724`),
+The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `Open_PL_SHL_WORK` / `Close_PL_SHL_WORK`, spawned by `pl_shot_set`),
 have their own struct, `PL_SHL_WORK`: same layout, with the sprite `EFC` and the free block written out, because a
 player's shot keeps its own bytes in both (the flight direction `dir_A4` in the EFC's kind bytes, `tgt_BC` and
 `owner_C4` in the free block). Its `id_2` is byte 0xB of the player's action record (`D_80089A8B`); the handlers are
@@ -491,44 +491,44 @@ now an array, the target indexes it by symbol; `unk56` read as `(uint16)` for `l
 (scratchpad matrix `0x1F8000C0` + `ApplyMatrix`/`RotMatrix`/`MulMatrix`), `func_80037440` (counts
 `Pl_shl_work_tbl[n]` by id into `D_8009856C[16]`; `D_800BFB22` is declared as a second `SHL_WORK` array so
 the access keeps its own `lui`), `Angle_xz_vector`, `Angle_xz_svector` (`catan` of the x/z delta).
-Parked `func_80036C50` (`NON_MATCHING`; 4-entry table at `D_8009A306`, stride 0x14): the target keeps
+Parked `lockon_probe_set` (`NON_MATCHING`; 4-entry table at `D_8009A306`, stride 0x14): the target keeps
 `&D_8009A306` in a3 for the first compare and the loop; ours folds the first compare to `lui`+`%lo` and
 rebuilds the base for the loop (local pointer, `e++`/flag pointer, index forms tried). Update: with
-`base = &D_8009A300[0].id_6` copied to a separate loop pointer (and `flag = base + 9`) only the loop counter
-(target t0) and the `D_8009A300[i]` offset (target a3) are swapped.
+`base = &Lockon_probe_tbl[0].id_6` copied to a separate loop pointer (and `flag = base + 9`) only the loop counter
+(target t0) and the `Lockon_probe_tbl[i]` offset (target a3) are swapped.
 
-`code_8002E7A8.c` (batch 3): banked `func_800331A0` (joint matrix/position update on the player, `PL_WORK.joint_mtx`/`joint_pos`: scratchpad
+`code_8002E7A8.c` (batch 3): banked `pl_joint_calc` (joint matrix/position update on the player, `PL_WORK.joint_mtx`/`joint_pos`: scratchpad
 matrix + `ApplyMatrix`/`RotMatrix`/`MulMatrix`/`ScaleMatrix`; the byte at `0x1F800074` is a shift count,
-also written as `Scratch_scale_shift`; needs an unused 8-byte local), `Set_Atari` and `func_8003430C`
-(queue one/two `SLOT_REQ` entries in `D_800A2F48[0x40]`, count in `D_800988E0`, value in `D_800A32E0[n]`,
-then copy the vector or the midpoint into `D_800BE478[slot] + 0xBC` for each slot bit of
-`owner->mask_4 & D_80098798`; the register match needs a separate `mask` local and `i` used as the
-`owner->mask_4` temp). Parked `func_80036B40` (`NON_MATCHING`): copies the 0x28-byte block at
+also written as `Scratch_scale_shift`; needs an unused 8-byte local), `Set_Atari` and `Set_Atari2`
+(queue one/two `SLOT_REQ` entries in `Atari_queue[0x40]`, count in `Atari_count`, value in `Atari_flags[n]`,
+then copy the vector or the midpoint into `Homing_target_tbl[slot] + 0xBC` for each slot bit of
+`owner->mask_4 & Homing_target_used`; the register match needs a separate `mask` local and `i` used as the
+`owner->mask_4` temp). Parked `fog_room_restore` (`NON_MATCHING`): copies the 0x28-byte block at
 `D_800BC7F8` to `D_8009A350` after `SetFarColor`/`SetFogNear`; the copy is right, but the target keeps
 `&D_800BC818` in s0 from the start (also the copy end pointer) while ours rebuilds `D_800BC818-0x20`.
-Parked `func_80035724` (`NON_MATCHING`; spawns a `SHL_WORK` slot from `PL_WORK`, claims a slot with
-`func_8003545C`): the target computes `pl + sel * 8` at the end of each branch, ours once after the merge.
+Parked `pl_shot_set` (`NON_MATCHING`; spawns a `SHL_WORK` slot from `PL_WORK`, claims a slot with
+`homing_target_set`): the target computes `pl + sel * 8` at the end of each branch, ours once after the merge.
 `func_80035508` (GTE: projects each claimed slot's position at +0xBC through `Scratch_view_mtx`, then
 clears it) banked with `psyq/inline_c.h`; its screen XY local is 8 bytes (frame 0x10), and `mask <<= 1`
 sits at the end of the body.
 
-`code_8002E7A8.c` (batch 4): banked `func_80036294` (id byte -> pointer into one of eight work pools,
-kind from `func_8002FE74`; `kind` must be `sint32` for the `slti` switch), `Calc_arc_angle` (launch
+`code_8002E7A8.c` (batch 4): banked `Obj_id_work` (id byte -> pointer into one of eight work pools,
+kind from `Obj_id_class`; `kind` must be `sint32` for the `slti` switch), `Calc_arc_angle` (launch
 angle from a delta, with an unused 8-byte `SVECTOR` local; `to->vy > from->vy` fixes the reg order),
-`func_80030418` and `func_80030628` (view-cone flags: same body, the first reads positions at 0xC4 and
+`View_check_center` and `View_check_ang` (view-cone flags: same body, the first reads positions at 0xC4 and
 the angle at 0x56, the second takes positions at 0x14 and the angle as the 5th argument). Both need
 `m[0] = 0x1000` written after `sv.vz`, and each `|=` test written as `(x >= 0 && ...) || (x < 0 && ...)`,
-which gives the shared `ori`; this probably also fixes parked `func_8003081C`. Parked `func_8002FA38`
+which gives the shared `ori`; this probably also fixes parked `view_cone_check`. Parked `model_dir_search`
 (`NON_MATCHING`; binds a table entry (kind, id, sub) to an object): only the entry pointer / counter
 registers (a1/a2) are swapped. `func_80035508` stays assembly (GTE, same decision as above).
 
-`code_8002E7A8.c` (small functions): banked `func_8002FE74`, `Obj_pos_adj_round` (16.16 vector rounded to
-`SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `func_80033EBC`, `func_8003697C`
-(scratchpad fog setup, `SetFogNear(D_800BC81C, 0x180)`). Parked `func_80036B00` (`NON_MATCHING`): copies
-`D_8009A370..74` into an `SVECTOR`; the target does load/store pair by pair, GCC hoists the later loads
+`code_8002E7A8.c` (small functions): banked `Obj_id_class`, `Obj_pos_adj_round` (16.16 vector rounded to
+`SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `Atari_init`, `func_8003697C`
+(scratchpad fog setup, `SetFogNear(D_800BC81C, 0x180)`). Parked `Fog_color_get` (`NON_MATCHING`): copies
+`Fog_color..74` into an `SVECTOR`; the target does load/store pair by pair, GCC hoists the later loads
 above the earlier stores (struct, `sint16 *`, `*v++` and `volatile` forms tried).
 Banked `Angle_diff_clamp` (signed angle difference on a 0x1000 circle, clamped to +-limit; `r = limit`
-first, and the else-branch test written `limit > 0x1000 - d`). Parked (`NON_MATCHING`): `func_800323FC`
+first, and the else-branch test written `limit > 0x1000 - d`). Parked (`NON_MATCHING`): `Pl_Char_Move_Upper`
 (steps a `KEY_ENT` table; target loads `lbu 0x101` before `lw 0xFC` and keeps `ctl` in a2 with a copy in a1)
 and the slot allocators `Open_EVE_WORK`, `func_80031734` (pool bitmask scan; only the store order
 differs: the target keeps the stores in source order around the mask update). A scratch test with the
@@ -540,60 +540,60 @@ everywhere) was cleared with one word store over 0x74-0x77, like their other mul
 
 Banked `func_80031324` (initialises a child object from slot n of a parent: copies the 32-byte block at
 parent+0x240+n*32, position from parent+0x180+n*8, takes and clears the id at parent+0xF9+n*4; the id
-field is `sint8` so the `-1` store is `li -1`) and `func_8003545C` (claims a free bit of `D_80098798`,
-24 slots, records it in owner+4 and stores the value in `D_800BE478[slot]`). Parked (`NON_MATCHING`):
+field is `sint8` so the `-1` store is `li -1`) and `homing_target_set` (claims a free bit of `Homing_target_used`,
+24 slots, records it in owner+4 and stores the value in `Homing_target_tbl[slot]`). Parked (`NON_MATCHING`):
 `func_80031498` (the `WORK_5A4` allocator: only its `field_2` halfword store is scheduled before the
 `D_80098B20` update, where its three matched twins keep source order),
 `Muku_elevation` (clamped angle step toward a target; target keeps the `limit` parameter in s2 and a copy
-in s1, GCC merges them) and `func_80030058` (rotates an offset (x, y, z) by an angle into a VECTOR; same
+in s1, GCC merges them) and `Calc_local_vec` (rotates an offset (x, y, z) by an angle into a VECTOR; same
 param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `Angle_ck`, `func_80031E60`,
 `func_80031EF0` (two-sector angle test, 1 if within +-half1 of center1 and +-half2 of center2; target
 keeps the result in v0 and a copy of the angle in v1, GCC uses a scratch register), `Muku`
-(`Muku_elevation` on `Angle_xz_svector`, same s2/s1 issue), `func_8003081C` (GTE view-cone test:
+(`Muku_elevation` on `Angle_xz_svector`, same s2/s1 issue), `view_cone_check` (GTE view-cone test:
 RotMatrixY/RotTrans, returns 0x10 behind, 2 inside; target stores `m[0]` late and shares one `ori 2`
 between the x >= 0 / x < 0 paths) and `func_80031F84` (direction quantizer vs a base angle, returns
 angle | side << 16; only the prologue order differs).
 
 `code_8002E7A8.c` (batch 5): banked `func_80030CB8` (`func_80030CF0` with arc 0x100), `Obj_target_vel_set`
 (velocity (+0x44..0x4A) toward a target at speed `s`: `d * s << 8 / dist`, time = dist / s; the three stores
-must be written vx, vy, vz, time) and `func_80033F04` (rotates unit vector `a` toward `b`: two
+must be written vx, vy, vz, time) and `Vec_turn_toward` (rotates unit vector `a` toward `b`: two
 `OuterProduct12`, a scratchpad-like static matrix, `ApplyMatrix` twice, `VectorNormalS` of the closer result;
 `angle` must be `sint32` and the `>> 16` chained `D_800985FC.vz = D_80098604.vz = ...`, else GCC keeps `limit`
 in an extra s-register). The `D_8009857C`..`D_80098654` statics are now `MATRIX`/`SVECTOR`/`VECTOR` objects.
-`Player_work.pos` is an `SVECTOR` (the 8-byte copy in `func_8003606C` only compiles with the unaligned
+`Player_work.pos` is an `SVECTOR` (the 8-byte copy in `Obj_player_dist_calc` only compiles with the unaligned
 `lwl`/`lwr` per-access form from a struct member, not from a cast pointer). Parked (`NON_MATCHING`):
-`func_8003606C` (squared xz distance, `<< 2`, of every object in three pools to each of the two players, -1 when
+`Obj_player_dist_calc` (squared xz distance, `<< 2`, of every object in three pools to each of the two players, -1 when
 over 0x10000000, stored at +0x80/+0x84; the target keeps `Em_work_tbl` in t6 across the outer loop, computes the
 next-object pointer first (`a3 = a1 + size`) with the counter increment in the branch delay slot; ours moves the
 pointer add into the delay slot and the counter to the loop tail; needs an unused 8-byte `SVECTOR` local) and
-`func_80033A28` (unpacks 75 twelve-bit values from the 0x20-word block at `0x1F800180` into 25 `SVECTOR`s at
+`Model_key_unpack` (unpacks 75 twelve-bit values from the 0x20-word block at `0x1F800180` into 25 `SVECTOR`s at
 `0x1F800120`; the code is identical, only the register assignment differs: target d=a1, s=a2, counter=t0, ours
 d=a3, s=t0, counter=a2). `func_80035508` stays assembly (GTE; needs the repo-wide GTE decision above).
 
 `code_8002E7A8.c` (consolidation): the player and every pool slot share one object header (routine_0,
 kind_1, flags at 6, position at 0x14, 16.16 position at 0x1C, angle at 0x56, model data at 0x88/0x90-0xAC,
-keyframes at 0xF8-0x106). `Obj_work_flag_change` and `func_8002F420` apply `func_8002F3A8`/`func_8002F884`/
-`func_8002F928` to several pools, `func_8002FA38` writes by kind, so `FLAG_WORK`, `MOVE_WORK`, `POS_WORK`,
+keyframes at 0xF8-0x106). `Obj_work_flag_change` and `Work_room_change` apply `func_8002F3A8`/`shift_model`/
+`shift_effect` to several pools, `model_dir_search` writes by kind, so `FLAG_WORK`, `MOVE_WORK`, `POS_WORK`,
 `ATTACH_WORK`, `TURN_WORK` and `POS14_WORK` stay views until that header has a type. Merged: the keyframe and
 joint views into `PL_WORK` (`tbl_F8`..`unk106`, `owner_188`, `base_mtx`, `joint_mtx[15]`, `joint_pos[15]`,
-`pos_1C`, `pos_428`, `svec_438`), `OBJ_10C` into `SHL_WORK`, `func_8002F998`'s pointer into `EVE_WORK`.
-`func_800323FC` is down to the order of its first two loads (lbu time before lw ent_FC) after reusing the
+`pos_1C`, `pos_428`, `svec_438`), `OBJ_10C` into `SHL_WORK`, `shift_eve`'s pointer into `EVE_WORK`.
+`Pl_Char_Move_Upper` is down to the order of its first two loads (lbu time before lw ent_FC) after reusing the
 parameter as the copy of ctl.
 
 `code_8002E7A8.c` (consolidation 2): the common header now has Capcom's type, `MODEL_WORK` (their source
 passes `EM_WORK` to `Model_work_init`, `Obj_pos_set` and `EM_Char_Set` as `(MODEL_WORK *)`; field names from
 it: `id`, `type`, `pos` 0x14, `pos_l` 0x1C, `old` 0x2C, `old_l` 0x34, `spd` 0x44 (pad = time), `add` 0x4C,
 `ang` 0x54, `ang.vy` the facing). `ATTACH_WORK`, `FLAG_WORK`, `MOVE_WORK` and `POS14_WORK` merged into it;
-`POS_WORK` into `WORK_48` (`func_8002F928` only sees `WORK_48`/`WORK_50`). Like Capcom, the pool types keep
+`POS_WORK` into `WORK_48` (`shift_effect` only sees `WORK_48`/`WORK_50`). Like Capcom, the pool types keep
 their own structs with the same leading layout: `SHL_WORK` (`pos`, `pos_l`, `old`, `old_l`, `ang`),
 `WORK_3C0`/`WORK_5A4`/`EVE_WORK` (`pos`) and `PL_WORK` (`pos_1C` -> `pos_l`, `unk56` -> `ang`). Still views:
-`TURN_WORK` (`func_8002FF34`, only overlay callers; fields beyond MODEL_WORK at 0x428), `VIEW_WORK`
+`TURN_WORK` (`Pl_pos_set`, only overlay callers; fields beyond MODEL_WORK at 0x428), `VIEW_WORK`
 (position at 0xC4, overlay callers only; SHL_WORK has `owner_C4` there), `CHILD_WORK`
 (`func_80031324` has no callers; `CHILD_PARENT` was merged into `WORK_5A4`, see below; `CHILD_WORK` looks like a MODEL_WORK but writes a halfword at 0xAC, where
-MODEL_WORK has the byte `idx_AC`). `SLOT_ENT`/`SLOT_VAL` merged into one `SLOT_ENT[4]` at `D_8009A300`
-(`func_800358F0` uses that base; the old labels `D_8009A306`/`310`/`31A`/... are fields of it).
-Retried with the new types (no new matches): `func_80036C50` (now two registers from matching),
-`func_8002FA38`, `EM_Char_Move2`, `func_80033A28`, `func_80035724`, `func_8003606C` (unchanged).
+MODEL_WORK has the byte `idx_AC`). `SLOT_ENT`/`SLOT_VAL` merged into one `SLOT_ENT[4]` at `Lockon_probe_tbl`
+(`lockon_search` uses that base; the old labels `D_8009A306`/`310`/`31A`/... are fields of it).
+Retried with the new types (no new matches): `lockon_probe_set` (now two registers from matching),
+`model_dir_search`, `EM_Char_Move2`, `Model_key_unpack`, `pl_shot_set`, `Obj_player_dist_calc` (unchanged).
 
 `code_8005C258.c` (small functions): banked `func_8005DCB4` (calls `func_8005DCDC`, `func_8005DE28`),
 `func_8005D9EC` (`Player_work+0x6E = +0xB0`, then `func_8005D9C4`), `func_8005D844` (arms slot
@@ -607,7 +607,7 @@ not fields of one struct (declared in `code_8005C258.h`). `func_8005C720`'s `wp`
 `code_800456D8.c`: banked `func_80045918`/`func_8004594C` (`WORK_48.timer_B` countdown, then `routine_8`
 += 2 / += 1), `func_80045A7C` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `func_80047318`
 (`D_8008A708[wp->routine_8](wp)`). Parked `func_80045FE4` and `func_80046008` (identical, `NON_MATCHING`):
-the target is `func_8002FE74(wp->kind_1)` followed by `move v1,v0`; GCC drops the dead copy for a
+the target is `Obj_id_class(wp->kind_1)` followed by `move v1,v0`; GCC drops the dead copy for a
 `void` function with a local, and a `return` form emits no move either (also tried `register`).
 Also banked: `func_80047D9C`/`func_80048354` (`D_8008A724`/`D_8008A76C[wp->routine_8](wp)`), `func_800485E4`
 (`D_8008A778[wp->flag_4](wp)`), `func_80048268`, `func_80046848` (`WORK_48.flag_3` picks sound 0x9E/0x9D).
@@ -674,7 +674,7 @@ written inline folds to `(ground - 1) - D`, so a local `h = D + 1` is needed to 
 
 `code_800456D8.c` (consolidation): `WORK_48`'s 0x18-0x37 is a union `u_18` by kind: `mtx` (the model kinds, with
 bit 2 of `routine_0` set, position in `pos_38`; replaces the `(MATRIX *)&field_18` casts and the raw word stores of
-`func_80047354`) and `s` (`field_18`, `pos_1C` for the kinds without bit 2, which `func_8002F928`/`POS_WORK` moves,
+`func_80047354`) and `s` (`field_18`, `pos_1C` for the kinds without bit 2, which `shift_effect`/`POS_WORK` moves,
 `field_22..24`, and the debris speed/acceleration `vx_2C..az_36`, which share the bytes of `mtx.t` while the debris
 uses `mtx.m`). `HIT_ENT` (`D_8008A310`, `D_8008A618`) is three (min, max) halfword pairs; `D_8008A622` is written as
 `D_8008A618[i][j].max_A` (same bytes; only the relocation symbol changes). Retried after the change, no new matches:
@@ -692,16 +692,16 @@ at the slot's position; in `func_80043E00` the `flag_3`/`field_C` stores are wri
 Batch 2: banked `Money_add` (0x80043294; `amount` added to `money`, clamped to 999999 when positive, reset to 0
 on underflow when not, which also adds it to `Game_work+0x20`/`+0x24` by `c`; does nothing unless `b == 0`),
 `func_80043340` (`Player_work[n].unk6E += amount`, capped at `unkB0`; player 0's losses are added to
-`Game_work+0x4C`), `func_800435F8` and `func_80043E78` (queue `x_14`/`pos_2C` with `func_8003430C`; the source
+`Game_work+0x4C`), `func_800435F8` and `func_80043E78` (queue `x_14`/`pos_2C` with `Set_Atari2`; the source
 has one call per value of the `0x6000`/`0x4000` argument, and `func_800435F8` repeats that `if` in both arms of
 its `field_E` test: the target duplicates the `0x6000` setup). `field_C` is `sint8` (read with `lb`; the
-`(uint8)` casts give the `andi`/`lbu` before `func_80036294`), and `func_800375D4` returns `sint32` (the caller
+`(uint8)` casts give the `andi`/`lbu` before `Obj_id_work`), and `func_800375D4` returns `sint32` (the caller
 doesn't re-extend it).
 `SHL_WORK.field_8` is split into `routine_8`/`field_9`/`field_A`/`timer_B`; `field_C` holds the owning player's
-id (`func_80036294` returns a `PL_WORK`: `func_800433FC` reads its `joint_pos[11]`/`[14]`; `+0x198` is that
+id (`Obj_id_work` returns a `PL_WORK`: `func_800433FC` reads its `joint_pos[11]`/`[14]`; `+0x198` is that
 player's state flag for the slot).
 Batch 3: banked `func_800433FC` (frame has 0x18 bytes of unused locals: an `SVECTOR` + `VECTOR`, like
-`func_800437F8`'s), `func_800434F0` (calls `func_80036294` twice: once kept for `unk198`, once for the copy of
+`func_800437F8`'s), `func_800434F0` (calls `Obj_id_work` twice: once kept for `unk198`, once for the copy of
 `pos` to `old`), `func_800437F8` (launch: direction `(0, 0, -0x1000)` rotated by `func_80039B80()`/`field_64`,
 speed `dir * D_80097DD4[idx[2]] >> 4`, collision box `hit_78 = &D_80097DA0`; `field_88` is stored twice, the
 constant first; `x_90 = pos.vx = pos_l.vx >> 16` is Capcom's chained form, cf. `efc.model.sv` in

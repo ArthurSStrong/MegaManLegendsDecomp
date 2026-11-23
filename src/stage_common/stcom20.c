@@ -72,7 +72,7 @@ void stcom20_func_0148(STCOM20_WORK *wp)
     {
         wp->velocity.v.x = 0;
     }
-    func_8002FFC4(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
+    Obj_pos_move(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
     if (func_8004B414(wp) == 0)
     {
         y = Scr_height_check(wp);
@@ -153,7 +153,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
     {
         wp->velocity.v.x = 0xA0;
     }
-    func_8002FFC4(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
+    Obj_pos_move(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
     hit = func_8004B414(wp);
     if (hit == 0)
     {
@@ -198,7 +198,7 @@ void stcom20_func_05FC(STCOM20_WORK *wp)
         wp->rotation.y = angle;
         angle          = wp->rotation.x + 400;
         wp->rotation.x = angle;
-        func_8002FFC4(&wp->position, &wp->position_fixed, wp->angle_66, 0x200, 0, 0);
+        Obj_pos_move(&wp->position, &wp->position_fixed, wp->angle_66, 0x200, 0, 0);
     }
     wp->ctl.scale_18.value += 0x330000;
     if (wp->ctl.scale_18.value > 0x2FFFFFF)

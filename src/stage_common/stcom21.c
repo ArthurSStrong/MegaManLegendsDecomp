@@ -677,7 +677,7 @@ void stcom21_func_11A0(STCOM21_WORK *wp)
             }
             else if (wp->value_D == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->value_D != 1)
             {
@@ -744,7 +744,7 @@ void stcom21_func_1380(STCOM21_WORK *wp)
         case 3:
             if (wp->value_D == 1 && wp->value_E != -1)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             wp->routine_2++;
             break;
@@ -951,7 +951,7 @@ void stcom21_func_1B74(STCOM21_WORK *wp)
             }
             else if (wp->value_D == 0)
             {
-                func_80063BC8(&wp->pos_38, 2, 0, wp->value_E);
+                Message_event_set(&wp->pos_38, 2, 0, wp->value_E);
             }
             else if (wp->value_D != 1)
             {

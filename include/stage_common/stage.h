@@ -204,7 +204,7 @@ extern uint8 *D_800BC7F0;
 void Title_task(void); // ROCK_NEO.EXE
 
 void func_80022FD4(void *tbl);
-void func_8002EA50(void *spawn, sint32 spawn_player);
+void Obj_spawn_list(void *spawn, sint32 spawn_player);
 void func_800371A0(void *blocks, void *arg1);
 void func_8005DC10(sint32 arg);
 void Sce_event_start(sint32 id);
@@ -218,13 +218,13 @@ sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 extern uint8 *D_8008CE90;
 extern uint16 D_800C0C2A;
 void Sound_seq_stop_all(void);
-void func_8001D58C(uint32 arg);
+void Cd_xa_play_id(uint32 arg);
 uint32 Sce_cd_reading(void);
 uint32 Sce_skip_check(void);
 void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
-void func_8001D494(sint32 arg0, sint32 arg1, sint32 arg2);
+void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 void func_80039820(void);
 void Thread_change(STAGE_THREAD_FUNC entry);
 sint32 func_8002D404(sint32 id, sint32 a1, sint32 a2, sint32 a3);
@@ -729,7 +729,7 @@ sint32 Cd_read_sync2(void);
 void Sound_fade_start(sint32 arg);
 void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
 void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
-void func_80033A28(void *wp);
+void Model_key_unpack(void *wp);
 void EM_World_Pos_Calc(void *wp);
 
 // Three shorts (a position in a table).
@@ -1237,7 +1237,7 @@ typedef struct
     uint8 reservedb8[4];    // B8
     uint32 col_bc;          // BC
     uint32 col_c0;          // C0
-    uint32 col_c4;          // C4: hit accumulator (func_8003430C)
+    uint32 col_c4;          // C4: hit accumulator (Set_Atari2)
     uint32 col_c8;          // C8
     sint32 value_cc;        // CC
     sint32 value_d0;        // D0
@@ -1266,7 +1266,7 @@ typedef struct
 } STAGE_SHOT_FX;
 
 sint32 func_800375D4(void *pl, sint32 arg);
-void func_8003430C(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
+void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
                    void *hit, sint32 flags, sint32 a9, sint32 a10);
 
 // Player_work while a room routine drives it: the bytes at +0xC to +0xE are its own routine
@@ -1313,7 +1313,7 @@ struct STAGE_SPAWNED
 #define STAGE_SPAWNED_TABLE_3C0 (*(STAGE_SPAWNED_FUNC ***)0x1F800058)
 #define STAGE_SPAWNED_TABLE_10C (*(STAGE_SPAWNED_FUNC **)0x1F800060)
 
-sint32 func_8002FE74(uint8 id);
+sint32 Obj_id_class(uint8 id);
 
 // Returns a work slot by index, or NULL (r3_st00, r3_st1a: tried from 0x1F down).
 void *func_800317AC(sint32 index); // returns the slot; callers use it as their own view

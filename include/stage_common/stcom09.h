@@ -121,7 +121,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos);
 #else
 void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
-sint32 func_80030418(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
+sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 sint32 Sce_flag_test(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 // PsyQ libgte.

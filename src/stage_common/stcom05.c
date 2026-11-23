@@ -293,7 +293,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                     break;
                 }
                 wp->routine_2++;
-                func_8001D648(0x140006);
+                Cd_xa_seek_id(0x140006);
             }
             else if (wp->routine_2 == 2)
             {
@@ -389,7 +389,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                 ctl->value_23 = 0;
                 stcom05_func_05B8(wp);
                 wp->routine_2 = 0;
-                func_8001D648(0x140009);
+                Cd_xa_seek_id(0x140009);
             }
             break;
         case 12:
@@ -473,7 +473,7 @@ void stcom05_func_0D44(STCOM05_WORK *wp)
             wp->rotation.y = 0x800;
         }
     }
-    func_8002FFC4(&wp->position, &wp->position_fixed, wp->rotation.y + 0x800, wp->velocity.v.x, 0,
+    Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y + 0x800, wp->velocity.v.x, 0,
                   0);
     stcom05_func_0E64(wp);
     ctl->dist_10 = Calc_distance(&wp->position, &stcom05_D_0044[ctl->index_20]);
@@ -587,7 +587,7 @@ void stcom05_func_1178(STCOM05_WORK *wp)
                      0xFFF) < 0x300 &&
                     !(Moji_flag & 0x8000000))
                 {
-                    func_80063BC8(&Player_work, 0, 0, 0xD2);
+                    Message_event_set(&Player_work, 0, 0, 0xD2);
                     wp->routine_2 = 1;
                 }
             }
@@ -631,12 +631,12 @@ void stcom05_func_12D0(STCOM05_WORK *wp)
         case 1:
             if (pl->target_184 == wp)
             {
-                func_80063BC8(&wp->position, 0, 0, wp->param_C);
+                Message_event_set(&wp->position, 0, 0, wp->param_C);
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 wp->routine_2 = 1;
             }

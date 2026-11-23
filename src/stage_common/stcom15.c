@@ -979,7 +979,7 @@ void stcom15_func_1E0C(STCOM15_WORK *wp)
         ctl->shot_4C->position_fixed.z = wp->position_fixed.z;
         ctl->shot_4C->angle_64         = wp->rotation.y;
         Obj_pos_adj_round(&ctl->shot_4C->position_fixed, &ctl->shot_4C->position);
-        func_8002FFC4(&ctl->shot_4C->position, &ctl->shot_4C->position_fixed,
+        Obj_pos_move(&ctl->shot_4C->position, &ctl->shot_4C->position_fixed,
                       ctl->shot_4C->angle_64, 0x6E0, 0, 0);
     }
 }

@@ -66,13 +66,13 @@ sint32 MojiTaskExec(sint32 id, uint8 *script, sint32 index)
     wp = &Moji_work[id];
     if (wp->flags_0 & 0x40000)
     {
-        func_8001D494(0, 1, 0);
+        Cd_subcmd(0, 1, 0);
     }
     if (id != 4)
     {
         if (Moji_work[4].flags_0 & 0x40000)
         {
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
         }
         Moji_work[4].flags_0 = 0;
         Moji_work[4].val_C2  = 0xFF;
@@ -136,7 +136,7 @@ void MojiTaskKill(void)
     }
     if (flags & 0x40000)
     {
-        func_8001D494(0, 1, 0);
+        Cd_subcmd(0, 1, 0);
     }
     Moji_flag = 0;
 }
@@ -148,7 +148,7 @@ void Moji_task_kill(uint8 index)
     wp = &Moji_work[index];
     if (wp->flags_0 & 0x40000)
     {
-        func_8001D494(0, 1, 0);
+        Cd_subcmd(0, 1, 0);
     }
     wp->val_C2  = 0xFF;
     wp->flags_0 = 0;
@@ -194,7 +194,7 @@ void Moji_update(void)
                     (wp->flags_0 & 0x40000) && Sce_cd_reading() != 0)
                 {
                     wp->flags_0 &= ~0x40000;
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                 }
                 while (1)
                 {
@@ -406,7 +406,7 @@ sint32 Moji_cmd_end_wait(MOJI_WORK *wp)
         wp->pos_6C += 3;
         if (wp->flags_0 & 0x40000)
         {
-            func_8001D494(0, 1, 0);
+            Cd_subcmd(0, 1, 0);
         }
         wp->val_C2 = 0xFF;
         wp->flags_0 &= ~0x40000;
@@ -530,7 +530,7 @@ sint32 Moji_cmd_voice(MOJI_WORK *wp)
     if (!(wp->flags_0 & 0x1000000))
     {
         wp->flags_0 |= 0x1000000;
-        func_8001D58C(get_le32(wp->pos_6C + 1));
+        Cd_xa_play_id(get_le32(wp->pos_6C + 1));
     }
     else if (Sce_cd_reading() != 0)
     {
@@ -1045,7 +1045,7 @@ sint32 Moji_cmd_camera(MOJI_WORK *wp)
     uint8 *state;
     PL_WORK *pl;
 
-    state = D_800987B0;
+    state = Message_event;
     pl    = &Player_work;
     if (!(wp->flags_0 & 0x1000000))
     {
@@ -1115,7 +1115,7 @@ sint32 Moji_cmd_logo(MOJI_WORK *wp)
     else
     {
         id = get_le16(wp->pos_6C + 3);
-        func_80063FC0(id, get_le32(wp->pos_6C + 5));
+        Game_logo_set(id, get_le32(wp->pos_6C + 5));
     }
     wp->pos_6C += 9;
     return 1;
@@ -1611,16 +1611,16 @@ void Moji_text_list_choice(MOJI_WORK *wp)
                 {
                     if (Moji_list_top != 0 && Moji_list_count - 5 != Moji_list_top)
                     {
-                        func_80063FC0(0, 0x20003);
-                        func_80063FC0(1, 0x20004);
+                        Game_logo_set(0, 0x20003);
+                        Game_logo_set(1, 0x20004);
                     }
                     else if (Moji_list_top != 0)
                     {
-                        func_80063FC0(0, 0x20003);
+                        Game_logo_set(0, 0x20003);
                     }
                     else if (Moji_list_count - 5 != Moji_list_top)
                     {
-                        func_80063FC0(0, 0x20004);
+                        Game_logo_set(0, 0x20004);
                     }
                 }
             }
@@ -2925,16 +2925,16 @@ sint32 func_800592FC(MOJI_WORK *wp)
         }
         else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x2001A);
-            func_80063FC0(1, 0x2001B);
+            Game_logo_set(0, 0x2001A);
+            Game_logo_set(1, 0x2001B);
         }
         else if (Moji_list_top != 0)
         {
-            func_80063FC0(0, 0x2001A);
+            Game_logo_set(0, 0x2001A);
         }
         else if (Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x2001B);
+            Game_logo_set(0, 0x2001B);
         }
     }
     else
@@ -3098,16 +3098,16 @@ sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
         }
         else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x20018);
-            func_80063FC0(1, 0x20019);
+            Game_logo_set(0, 0x20018);
+            Game_logo_set(1, 0x20019);
         }
         else if (Moji_list_top != 0)
         {
-            func_80063FC0(0, 0x20018);
+            Game_logo_set(0, 0x20018);
         }
         else if (Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x20019);
+            Game_logo_set(0, 0x20019);
         }
     }
     else
@@ -3459,16 +3459,16 @@ sint32 Moji_cmd_parts_sort(MOJI_WORK *wp)
         }
         else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x20018);
-            func_80063FC0(1, 0x20019);
+            Game_logo_set(0, 0x20018);
+            Game_logo_set(1, 0x20019);
         }
         else if (Moji_list_top != 0)
         {
-            func_80063FC0(0, 0x20018);
+            Game_logo_set(0, 0x20018);
         }
         else if (Moji_list_top < D_800989D4)
         {
-            func_80063FC0(0, 0x20019);
+            Game_logo_set(0, 0x20019);
         }
     }
     else

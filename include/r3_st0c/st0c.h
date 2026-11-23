@@ -324,7 +324,7 @@ typedef struct
     uint8 reserved7E[0x2E];     // 7E
     STCOM_SVECTOR model_pos_AC; // AC
     uint8 reservedB4[0x10];     // B4
-    uint32 col_C4;              // C4: hit accumulator (func_8003430C, Set_Atari)
+    uint32 col_C4;              // C4: hit accumulator (Set_Atari2, Set_Atari)
     uint8 reservedC8[0x44];     // C8
 } ST0C_SHOT;
 
@@ -403,7 +403,7 @@ typedef struct
     STCOM_SVECTOR mpos;  // AC: the model's position
     uint32 color_b4;     // B4
     uint8 reservedb8[0xC];
-    uint32 col_c4; // C4: hit accumulator (func_8003430C)
+    uint32 col_c4; // C4: hit accumulator (Set_Atari2)
     uint32 col_c8; // C8
 } ST0C_SHL;
 
@@ -495,7 +495,7 @@ void func_8010AB60(ST0C_SHOT *wp);
 sint32 func_80048C60(STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 void func_8003786C(sint32 id);
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
 sint32 func_80037634(void *player, sint32 arg);
 void func_8010A5E0(ST0C_SHL *wp);

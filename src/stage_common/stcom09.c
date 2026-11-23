@@ -128,11 +128,11 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             {
                 if (wp->value_D == 0)
                 {
-                    func_80063BC8(&wp->position, 2, 0, wp->param_E);
+                    Message_event_set(&wp->position, 2, 0, wp->param_E);
                 }
                 else if (wp->value_D == 1)
                 {
-                    func_80063BC8(&wp->position, 2, 0, 0);
+                    Message_event_set(&wp->position, 2, 0, 0);
                 }
                 else if (wp->value_D & 0x80)
                 {
@@ -144,7 +144,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
                 {
                     if (wp->flag_C == 0x40 || wp->flag_C == 0x42)
                     {
-                        func_80063BC8(&wp->position, 2, 0, 0xC);
+                        Message_event_set(&wp->position, 2, 0, 0xC);
                     }
                     else
                     {
@@ -403,7 +403,7 @@ uint8 stcom09_func_0B48(STCOM09_WORK *wp)
     size.y               = 9;
     size.z               = 4;
     mask                 = 0x10;
-    return (func_80030418(wp, &Player_work, &size, &out) & mask) == 0;
+    return (View_check_center(wp, &Player_work, &size, &out) & mask) == 0;
 }
 
 void stcom09_func_0BE0(STCOM09_WORK *wp)

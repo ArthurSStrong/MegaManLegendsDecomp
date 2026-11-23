@@ -57,11 +57,11 @@ void func_80042770(C800425FC_ACT *ap)
         case 1:
             if (!(ap->b174 & 4))
             {
-                func_800320B8(ap, ap->b0ac, D_80089A84[act * 12]);
+                Pl_Char_Set(ap, ap->b0ac, D_80089A84[act * 12]);
             }
             dir      = func_80042458(ap);
             ap->b104 = dir;
-            func_800321C8(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
+            Pl_Char_Set_Upper(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
             ap->b178++;
             ap->b174 |= 0x10;
             break;
@@ -201,8 +201,8 @@ void func_80042B58(C800425FC_ACT *ap)
             {
                 // The second read of each table byte goes through the base symbol;
                 // the same spelling twice lets GCC keep the whole address live.
-                func_800320B8(ap, ap->b0ac, D_80089A85[act * 12]);
-                func_800321C8(ap, ap->b174 & 3, ap->b104, D_80089A84[act * 12 + 1]);
+                Pl_Char_Set(ap, ap->b0ac, D_80089A85[act * 12]);
+                Pl_Char_Set_Upper(ap, ap->b174 & 3, ap->b104, D_80089A84[act * 12 + 1]);
             }
             if (!(pad & ap->h13c) || ap->parts[act].h06 <= 0)
             {
@@ -211,8 +211,8 @@ void func_80042B58(C800425FC_ACT *ap)
             }
             break;
         case 3:
-            func_800320B8(ap, ap->b0ac, D_80089A86[act * 12]);
-            func_800321C8(ap, ap->b174 & 3, ap->b104, D_80089A84[act * 12 + 2]);
+            Pl_Char_Set(ap, ap->b0ac, D_80089A86[act * 12]);
+            Pl_Char_Set_Upper(ap, ap->b174 & 3, ap->b104, D_80089A84[act * 12 + 2]);
             ap->b110 = 0;
             ap->b178++;
             break;
@@ -341,11 +341,11 @@ void func_80042F78(C800425FC_ACT *ap)
         case 1:
             if (!(ap->b174 & 4))
             {
-                func_800320B8(ap, ap->b0ac, D_80089A84[act * 12]);
+                Pl_Char_Set(ap, ap->b0ac, D_80089A84[act * 12]);
             }
             dir      = func_800423DC(ap);
             ap->b104 = dir;
-            func_800321C8(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
+            Pl_Char_Set_Upper(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
             ap->b178++;
             ap->b174 |= 0x20;
             break;

@@ -9,7 +9,7 @@ void func_801143B4(ST09_PART *wp)
 
 void func_80114400(ST09_PART *wp)
 {
-    wp->ctl.parent_34 = func_80036294(wp->parent_C);
+    wp->ctl.parent_34 = Obj_id_work(wp->parent_C);
     if (!(wp->flags_E & 1))
     {
         wp->flags_0 |= 2;
@@ -25,7 +25,7 @@ void func_80114400(ST09_PART *wp)
     *(uint32 *)&wp->ctl.timer_4 = 0;
     *(uint32 *)&wp->ctl.value_8 = 0;
     wp->ctl.hit_14              = 0;
-    func_80036470(wp->ctl.track_24);
+    Search_Player_Reset(wp->ctl.track_24);
     wp->ctl.scale_38.x        = 0x1000;
     wp->ctl.scale_38.y        = 0x1000;
     wp->ctl.scale_38.z        = 0x1000;
@@ -110,7 +110,7 @@ void func_801144E8(ST09_PART *wp)
         ctl->pos_C         = wp->position;
         wp->position       = D_8011E988[0];
         wp->position_fixed = D_8011E990[0];
-        func_8003430C(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
+        Set_Atari2(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
                       &ctl->hit_14, ctl->value_8 | 0x9880000, 0x800000, 0);
     }
 }

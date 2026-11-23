@@ -149,7 +149,7 @@ void func_80116A88(ST0B_EVENT *wp)
                 if (Moji_flag & 0x800000)
                 {
                     Moji_task_kill(4);
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                 }
                 MojiTaskExec2(4, 0);
                 wp->routine_2++;
@@ -475,7 +475,7 @@ void func_80117300(ST0B_EVENT *wp)
                 if (Moji_flag & 0x08000000)
                 {
                     Moji_task_kill(0);
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                 }
                 MojiTaskExec2(0, 4);
                 Sound_call(0x101, 0, 0);
@@ -572,7 +572,7 @@ void func_8011754C(ST0B_EVENT *wp)
                 if (Moji_flag & 0x800000)
                 {
                     Moji_task_kill(4);
-                    func_8001D494(0, 1, 0);
+                    Cd_subcmd(0, 1, 0);
                 }
                 MojiTaskExec2(4, 9);
                 func_8005D620(D_80120368, 0, 0, 0x50, 0x2C400040);
@@ -592,7 +592,7 @@ void func_8011754C(ST0B_EVENT *wp)
                     if (Moji_flag & 0x800000)
                     {
                         Moji_task_kill(4);
-                        func_8001D494(0, 1, 0);
+                        Cd_subcmd(0, 1, 0);
                     }
                     wp->routine_3 = 0;
                     wp->routine_2++;
@@ -662,7 +662,7 @@ void func_80117830(STAGE_OBJ *wp)
             if (Moji_flag & 0x08000000)
             {
                 Moji_task_kill(0);
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
             }
             MojiTaskExec2(0, 0x12);
             wp->routine_2++;
@@ -1410,11 +1410,11 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
                 func_8001B314();
                 if (STAGE_GAME.value_50 == 0xB)
                 {
-                    func_8001D58C(0x20010013);
+                    Cd_xa_play_id(0x20010013);
                 }
                 else
                 {
-                    func_8001D58C(0x2000000E);
+                    Cd_xa_play_id(0x2000000E);
                 }
                 wp->routine_4++;
             }
@@ -1484,7 +1484,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
                     D_800C3570      = 2;
                 }
                 wp->flags_0 = 0;
-                func_8001D494(0, 1, 0);
+                Cd_subcmd(0, 1, 0);
                 Player_work.flags_0 |= 1;
                 func_80042314(&Player_work);
             }

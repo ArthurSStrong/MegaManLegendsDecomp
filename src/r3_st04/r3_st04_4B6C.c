@@ -94,7 +94,7 @@ void func_80104E28(ST04_ACTOR *wp)
         case 0:
             wp->routine_2++;
             wp->velocity.v.x = 0x1C0;
-            func_80063BC8(&wp->position, 2, 0, wp->timer_C);
+            Message_event_set(&wp->position, 2, 0, wp->timer_C);
             // fall through
         case 1:
             wp->rotation.y = (wp->rotation.y +
@@ -163,14 +163,14 @@ void func_8010506C(ST04_ACTOR *wp)
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             if ((sint16)step == 0 && !func_8003A13C())
             {
-                func_80063BC8(&wp->position, 3, 0, func_801053BC());
+                Message_event_set(&wp->position, 3, 0, func_801053BC());
                 EM_Char_Set(wp, 8, 0);
                 wp->routine_1 = 0;
                 wp->routine_0++;
             }
             break;
         case 3:
-            if (D_800987B0[0] == 0)
+            if (Message_event[0] == 0)
             {
                 func_80039E18();
                 wp->routine_0++;

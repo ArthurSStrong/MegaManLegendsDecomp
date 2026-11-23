@@ -396,7 +396,7 @@ typedef struct
     uint8 reserved7E[0x2E];     // 7E
     STCOM_SVECTOR model_pos_AC; // AC
     uint8 reservedB4[0x10];     // B4
-    uint32 col_C4;              // C4: hit accumulator (func_8003430C, Set_Atari)
+    uint32 col_C4;              // C4: hit accumulator (Set_Atari2, Set_Atari)
     uint8 reservedC8[0x44];     // C8
 } ST0A_SHOT;
 
@@ -456,7 +456,7 @@ typedef struct
     STCOM_SVECTOR mpos;  // AC: the model's position
     uint32 color_b4;     // B4
     uint8 reservedb8[0xC];
-    uint32 col_c4; // C4: hit accumulator (func_8003430C)
+    uint32 col_c4; // C4: hit accumulator (Set_Atari2)
     uint32 col_c8; // C8
 } ST0A_SHL;
 
@@ -751,7 +751,7 @@ typedef struct
     uint8 track_24[0x10];  // 34C: Search_Player_Init
     STCOM_SVECTOR home_34; // 35C: where it started
     ST0A_HELD *held_3C;    // 364
-    STAGE_OBJ *owner_40;   // 368: func_80036294's object
+    STAGE_OBJ *owner_40;   // 368: Obj_id_work's object
 } ST0A_EN_CTL;
 
 // A 0x3C0-byte enemy (D_8011597C's routines; stcom13's STCOM13_WORK with its block at +0x328).
@@ -768,7 +768,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 byte_C;                           // 0C: func_80036294's argument
+    sint8 byte_C;                           // 0C: Obj_id_work's argument
     uint8 reserved0D[3];                    // 0D
     void *data_10;                          // 10
     STCOM_SVECTOR position;                 // 14
@@ -817,7 +817,7 @@ typedef struct
 } ST0A_EN_KIND;
 
 extern ST0A_EN_KIND **D_80098844;
-void *func_80036294(sint32 kind);
+void *Obj_id_work(sint32 kind);
 sint32 Search_Player(void *track, void *wp);
 
 extern STAGE_SLOT_FUNC *D_801146A8[];
@@ -930,10 +930,10 @@ void func_8001E4C4(void *a, void *b);
 void *func_80031498(void);
 void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 sint32 func_800375D4(void *pl, sint32 arg);
-// func_8003430C is declared in stage_common/stage.h.
+// Set_Atari2 is declared in stage_common/stage.h.
 void func_80113744(ST0A_SHOT *wp);
 void func_80113888(ST0A_SHOT *wp, sint32 arg);
-void func_800354E0(sint32 bit);
+void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
 sint32 func_80037634(void *player, sint32 arg);
 void func_801131C4(ST0A_SHL *wp);

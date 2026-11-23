@@ -265,7 +265,7 @@ void func_8010802C(ST1D_VIEW *wp)
                         piece->angle_64       = (i ? wp->rotation.y + ext->u_44.h[1] + 0x800
                                                    : wp->rotation.y + ext->u_44.h[1]) &
                                                 0xFFF;
-                        func_8002FFC4(&piece->position, &piece->position_fixed, piece->angle_64,
+                        Obj_pos_move(&piece->position, &piece->position_fixed, piece->angle_64,
                                       0x600, -0x7C0, 0);
                     }
                     i++;

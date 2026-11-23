@@ -87,7 +87,7 @@ void func_80128D9C(STAGE_FX *wp)
 {
     STAGE_OBJ50 *owner;
 
-    owner = func_80036294(wp->value_C);
+    owner = Obj_id_work(wp->value_C);
     owner->u_C.b.lo--;
     Close_EFFECT_WORK(wp);
 }

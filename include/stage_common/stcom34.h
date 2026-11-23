@@ -37,7 +37,7 @@ typedef struct
     uint8 routine_1;           // 09
     uint8 routine_2;           // 0A
     uint8 routine_3;           // 0B
-    sint8 owner_C;             // 0C: the work slot the sparks fly from (func_80036294)
+    sint8 owner_C;             // 0C: the work slot the sparks fly from (Obj_id_work)
     uint8 value_D;             // 0D
     uint8 value_E;             // 0E
     uint8 value_F;             // 0F
@@ -78,7 +78,7 @@ extern STCOM34_FUNC stcom34_D_0010[]; // routine_0 handlers (stcom34_func_0000)
 void stcom34_func_04CC(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade);
 
 // ROCK_NEO.EXE.
-STCOM34_OWNER *func_80036294(sint32 id);
+STCOM34_OWNER *Obj_id_work(sint32 id);
 STCOM34_LINE *func_8002D4B8(void);
 void Close_EFFECT_WORK(STCOM34_WORK *wp);
 

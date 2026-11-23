@@ -410,8 +410,8 @@ extern sint32 D_800BC7D0;   // the screen shake offsets (16.16)
 extern sint32 D_800BC7D4;
 void func_80101B2C(STAGE_ROOM *wp);
 void func_80101C80(STAGE_ROOM *wp);
-// ROCK_NEO's func_8001D494 as func_80101CC0 called it: with two arguments (stage.h has three; retail
+// ROCK_NEO's Cd_subcmd as func_80101CC0 called it: with two arguments (stage.h has three; retail
 // leaves a2 unset).
-void func_8001D494_2(sint32 arg0, sint32 arg1) __asm__("func_8001D494");
+void func_8001D494_2(sint32 arg0, sint32 arg1) __asm__("Cd_subcmd");
 
 #endif // ST02_H

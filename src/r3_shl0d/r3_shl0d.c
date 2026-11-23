@@ -12,7 +12,7 @@ void func_800D8840(SHL0D_WORK *wp)
     uint8 level;
     uint8 i;
 
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->mode_a    = 0;
@@ -157,7 +157,7 @@ void func_800D8D08(SHL0D_WORK *wp)
         b.vx = (wp->fpos.w.x + step.vx * (uint8)m) >> 16;
         b.vy = (wp->fpos.w.y + step.vy * (uint8)m) >> 16;
         b.vz = (wp->fpos.w.z + step.vz * (uint8)m) >> 16;
-        func_8003430C(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
+        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
                       &wp->beam.hit[i], bp->flags_c4 | 0x8000000, 0, 0x80);
         wp->beam.hit[i * 2]     = 0;
         wp->beam.hit[i * 2 + 1] = 0;
@@ -173,7 +173,7 @@ void func_800D8D08(SHL0D_WORK *wp)
         b.vx = (wp->fpos.w.x + step.vx * (uint8)(k & 0xF8)) >> 16;
         b.vy = (wp->fpos.w.y + step.vy * (uint8)(k & 0xF8)) >> 16;
         b.vz = (wp->fpos.w.z + step.vz * (uint8)(k & 0xF8)) >> 16;
-        func_8003430C(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
+        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
                       &wp->beam.hit[i], bp->flags_c4 | 0x8000000, 0, 0x80);
         wp->beam.hit[i * 2]     = 0;
         wp->beam.hit[i * 2 + 1] = 0;

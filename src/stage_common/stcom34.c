@@ -50,7 +50,7 @@ void stcom34_func_014C(STCOM34_WORK *wp)
     uint8 shade;
 
     sparks = wp->spark_28;
-    owner  = func_80036294(wp->owner_C);
+    owner  = Obj_id_work(wp->owner_C);
     for (i = 0; i < 4; i++)
     {
         if (sparks[i].delay_2 == 0)

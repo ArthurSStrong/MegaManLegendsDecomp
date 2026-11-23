@@ -16,7 +16,7 @@ void func_800D8854(SHL_WORK *wp)
     MATRIX m;
     SHL_WORK *np;
 
-    func_800354E0(wp->bit_d);
+    Homing_target_clear(wp->bit_d);
     rot.vx = func_80039B80();
     func_800D8E44(wp, rot.vx, wp->rot_y);
     np = Open_PL_SHL_WORK();
@@ -150,12 +150,12 @@ void func_800D8D28(SHL_WORK *wp)
     flags = func_800375D4(&Player_work, 6);
     if (wp->index_c)
     {
-        func_8003430C(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
     else
     {
-        func_8003430C(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
+        Set_Atari2(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
                       flags | 0x88000000, 0, 0x80);
     }
 }
