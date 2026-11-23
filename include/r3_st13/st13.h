@@ -655,7 +655,7 @@ void func_8010D3E8(STAGE_OBJ *wp);
 void func_8010E048(STAGE_OBJ *wp);
 void func_8003354C(void *wp);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
-sint32 func_80049448(void *wp);
+sint32 Scr_ground_check(void *wp);
 sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void func_80100DDC(ST13_STCOM27_WORK *wp);
@@ -693,7 +693,7 @@ void func_80101A84(STAGE_OBJ *wp);
 void func_801079DC(STAGE_OBJ *wp);
 void func_80100664(STAGE_OBJ *wp);
 // func_800317AC is declared in stage_common/stage.h.
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 void func_8001EB98(void *entry);
 
 // Game_work's four halfwords at +0x194 that this stage's room script clears.
@@ -705,8 +705,8 @@ extern uint32 D_80098B20; // ROCK_NEO.EXE
 
 STAGE_OBJ *func_80031498(void); // ROCK_NEO.EXE: allocates a work slot (NULL when none is free)
 
-sint32 func_80049C54(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
-sint32 func_80048EA4(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);
+sint32 Scr_line_calc(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
+sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);
 void func_80104C9C(ST13_SPARK *wp);
 
 // A 0x10C-byte slot (Open_SHL_WORK) as func_80112348 fires it: STAGE_PIECE with two more words.

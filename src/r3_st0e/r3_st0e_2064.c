@@ -71,7 +71,7 @@ void func_801021D4(ST0E_ACTOR *wp)
             obj->position  = wp->position;
             obj->byte_C    = 3;
         }
-        func_80052528(wp);
+        Ride_clear(wp);
         wp->routine_0 = 2;
         return;
     }
@@ -81,7 +81,7 @@ void func_801021D4(ST0E_ACTOR *wp)
         {
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->value_4E;
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             ground = Scr_height_check(wp);
             if (ground - wp->position_prev.y < 0x10)
             {
@@ -95,14 +95,14 @@ void func_801021D4(ST0E_ACTOR *wp)
         else
         {
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
         }
     }
     EM_Char_Move(wp);
     wp->data_78 = D_801102D4;
-    func_80050C2C(wp);
+    Scr_event_check(wp);
     wp->data_78 = D_801102C8;
-    func_80051B68(wp, 1, 0, 0);
+    Solid_set(wp, 1, 0, 0);
     if (wp->routine_1 != 0)
     {
         if (Scr_height_check(wp) != wp->position_prev.y)
@@ -125,7 +125,7 @@ void func_801021D4(ST0E_ACTOR *wp)
             }
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;

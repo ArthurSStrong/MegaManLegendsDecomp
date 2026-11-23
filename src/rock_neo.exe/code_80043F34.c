@@ -730,7 +730,7 @@ void func_8004548C(CODE43_WORK *wp)
     uint16 dy;
     uint16 dz;
 
-    if (func_80049C54(wp->sound_1c, wp->sound_1c, 0, wp->byte_1) == 0)
+    if (Scr_line_calc(wp->sound_1c, wp->sound_1c, 0, wp->byte_1) == 0)
     {
         wp->u14.word = 0x3D48002E;
         wp->word_18  = 0x2E000000 | (wp->index_a << 3) | (wp->index_a << 11) | (wp->index_a << 19);

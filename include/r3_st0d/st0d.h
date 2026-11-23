@@ -752,7 +752,7 @@ extern sint32 D_800BC774;
 extern sint32 D_800BC778;
 
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 void func_80100358(void);
 void func_80100DB4(STAGE_ROOM *wp);
 void func_80101608(STAGE_ROOM *wp);
@@ -829,7 +829,7 @@ void func_80103CB8(STAGE_OBJ *wp, STAGE_FACE *face);
 void func_8010288C(STAGE_OBJ *wp, STAGE_FACE *face);
 void func_801036E0(STAGE_OBJ *wp, STAGE_FACE *face);
 
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 
 #endif

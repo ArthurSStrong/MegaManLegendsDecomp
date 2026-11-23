@@ -44,12 +44,12 @@ void func_80100354(void)
         if (Sce_flag_test(0x21B))
         {
             D_8010F5D4 = D_8010F604;
-            func_8003AC9C(func_80048C60(&D_8010F90C), 0x180300);
+            func_8003AC9C(Scr_cell_get(&D_8010F90C), 0x180300);
         }
         else if (Sce_flag_test(0x218))
         {
             D_8010F5D4 = D_8010F5EC;
-            func_8003AC9C(func_80048C60(&D_8010F90C), 0x180200);
+            func_8003AC9C(Scr_cell_get(&D_8010F90C), 0x180200);
         }
         pl->value_44E = 1;
     }
@@ -69,7 +69,7 @@ void func_801006B0(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
     Sce_slot_list_clear();
-    func_8001E4C4(D_80110094, D_8011009C[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_80110094, D_8011009C[STAGE_GAME_VALUE_52]);
 }
 
 void func_801006FC(void)

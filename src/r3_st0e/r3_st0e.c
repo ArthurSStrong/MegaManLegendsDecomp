@@ -67,7 +67,7 @@ void func_80100370(STAGE_ROOM *wp)
         case 1:
             if (!Sce_flag_test(0x43))
             {
-                func_8001E460(3, 1, 0);
+                Sce_exit_lock(3, 1, 0);
                 wp->routine_4 = 2;
             }
             else
@@ -78,7 +78,7 @@ void func_80100370(STAGE_ROOM *wp)
         case 2:
             if (Sce_flag_test(0x43))
             {
-                func_8001E460(3, 0, 0);
+                Sce_exit_lock(3, 0, 0);
                 wp->routine_4 = 3;
             }
             break;
@@ -144,7 +144,7 @@ void func_801005A0(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Sound_fade_start(0x10);
                 wp->routine_5++;
@@ -252,7 +252,7 @@ void func_80100870(STAGE_ROOM *wp)
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 Player_work.flags_0 |= 3;
                 wp->routine_5++;
                 break;

@@ -20,7 +20,7 @@ void func_80114268(ST0A_EV *wp)
         case 1:
             if (pl->position.x < -0x900)
             {
-                if (func_80042208())
+                if (Player_atari_off())
                 {
                     pl->flags_bd |= 0x40;
                     Sound_fade_start(0x10);
@@ -76,7 +76,7 @@ void func_801143F8(ST0A_EV *wp)
         case 0:
             if (pl->position.x >= -0x7CF)
             {
-                if (func_80042208())
+                if (Player_atari_off())
                 {
                     pl->flags_bd |= 0x40;
                     wp->routine_0++;
@@ -88,7 +88,7 @@ void func_801143F8(ST0A_EV *wp)
             }
             break;
         case 1:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -113,7 +113,7 @@ void func_801143F8(ST0A_EV *wp)
             }
             break;
         case 5:
-            func_80042314(pl);
+            Player_control_on(pl);
             D_800C356C = 2;
             D_800C356E = 7;
             D_800C356F = 5;

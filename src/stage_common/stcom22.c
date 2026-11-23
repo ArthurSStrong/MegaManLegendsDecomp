@@ -77,7 +77,7 @@ void stcom22_func_0078(STCOM22_WORK *wp)
                 pl->fixed_428.y                = pl->pos_438.y << 16;
                 pl->fixed_428.z                = pl->pos_438.z << 16;
                 pl->rot_440.y = pl->rotation.y = (ctl->rot.y + 0x800) & 0xFFF;
-                if (func_80042238(pl) != 1 || pl->routine_0 == 3)
+                if (Player_control_off(pl) != 1 || pl->routine_0 == 3)
                 {
                     return;
                 }
@@ -96,7 +96,7 @@ void stcom22_func_0078(STCOM22_WORK *wp)
                 pl->rot_440.y = pl->rotation.y = (ctl->rot.y + 0x800) & 0xFFF;
                 wp->value_E                    = 8;
                 wp->routine_1                  = 2;
-                ctl->value = func_80048EA4(&wp->pos_38, stcom22_D_0000, 0, 0xFFFF);
+                ctl->value = Scr_height_calc(&wp->pos_38, stcom22_D_0000, 0, 0xFFFF);
                 Sound_call2(0x176, &wp->pos_38);
                 *count = 1;
             }
@@ -176,7 +176,7 @@ void stcom22_func_0078(STCOM22_WORK *wp)
 void stcom22_func_04B4(STCOM22_WORK *wp)
 {
     stcom22_D_0050[wp->routine_1](wp);
-    func_80051B68(wp, 5, -1, 0);
+    Solid_set(wp, 5, -1, 0);
 }
 
 void stcom22_func_0510(STCOM22_WORK *wp)
@@ -233,7 +233,7 @@ void stcom22_func_0530(STCOM22_WORK *wp)
     }
     if ((moji & 0xFF) == 0)
     {
-        if (func_80042238(pl) == 0)
+        if (Player_control_off(pl) == 0)
         {
             return;
         }
@@ -249,7 +249,7 @@ void stcom22_func_0530(STCOM22_WORK *wp)
         {
             if ((wp->value_5 & 0xF) == 2)
             {
-                func_80042238(pl);
+                Player_control_off(pl);
                 pl->routine_0 = 3;
                 pl->routine_1 = 1;
                 pl->flags_bd |= 0x10;
@@ -371,7 +371,7 @@ void stcom22_func_0A24(STCOM22_WORK *wp)
         pl->fixed_428.y = pl->pos_438.y << 16;
         if (wp->pos_38.y >= ctl->value)
         {
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->flags_bd &= ~0x40;
             wp->pos_38.y  = ctl->value;
             wp->routine_1 = 0;
@@ -386,7 +386,7 @@ void stcom22_func_0A24(STCOM22_WORK *wp)
         STCOM22_PL->fixed_428.y = STCOM22_PL->pos_438.y << 16;
         if (wp->pos_38.y >= wp->matrix.f.ctl.value)
         {
-            func_80042314(pl);
+            Player_control_on(pl);
             wp->routine_1 = 0;
             STCOM22_PL->flags_bd &= ~0x40;
             wp->routine_2 = 0;
@@ -413,7 +413,7 @@ void stcom22_func_0A24(STCOM22_WORK *wp)
         diff = wp->pos_38.y - wp->matrix.f.ctl.value;
         if (STCOM_ABS(diff) >= 0x460)
         {
-            func_80042314(pl);
+            Player_control_on(pl);
             wp->routine_1 = 0;
             STCOM22_PL->flags_bd &= ~0x40;
             wp->routine_2           = 0;
@@ -481,7 +481,7 @@ void stcom22_func_0E50(STCOM22_WORK *wp)
     if (D_800C356C == 2 && Fade_busy == 0)
     {
         D_800C356C++;
-        func_80042314(&Player_work);
+        Player_control_on(&Player_work);
     }
 }
 
@@ -537,7 +537,7 @@ void stcom22_func_1030(STCOM22_WORK *wp)
         Model_work_init(wp, &wp->variant_3);
         wp->value_D = 0x1E;
     }
-    func_80051B68(wp, 5, -1, 0);
+    Solid_set(wp, 5, -1, 0);
 }
 
 void stcom22_func_10B8(STCOM22_WORK *wp)
@@ -547,7 +547,7 @@ void stcom22_func_10B8(STCOM22_WORK *wp)
     if (wp->value_D != 0)
     {
         wp->value_D--;
-        func_80051B68(wp, 5, -1, 0);
+        Solid_set(wp, 5, -1, 0);
         return;
     }
     pos = wp->pos_38;
@@ -598,7 +598,7 @@ void stcom22_func_10B8(STCOM22_WORK *wp)
     func_8010D9F8(0, 5, 1, &pos);
     pos.x += 0x3E;
     func_8010D9F8(0, 4, 1, &pos);
-    func_80052528(wp);
+    Ride_clear(wp);
     if (wp->value_5 != 0)
     {
         Sce_flag_on(0x60C);
@@ -648,14 +648,14 @@ void stcom22_func_14A8(STCOM22_WORK *wp)
         pos.x = -0x900;
         pos.y = -0x12B;
         pos.z = -0x2300;
-        func_8003AC9C(func_80048D08(2, &pos), 0x61302);
+        func_8003AC9C(Scr_map_cell_get(2, &pos), 0x61302);
     }
     else
     {
         pos.x = -0x1700;
         pos.y = -0x2AB;
         pos.z = -0x2300;
-        func_8003AC9C(func_80048D08(2, &pos), 0x61402);
+        func_8003AC9C(Scr_map_cell_get(2, &pos), 0x61402);
     }
 }
 
@@ -685,14 +685,14 @@ void stcom22_func_15C4(STCOM22_WORK *wp)
                 pos.x = -0x900;
                 pos.y = -0x12B;
                 pos.z = -0x2300;
-                func_8003AC9C(func_80048D08(2, &pos), 0x60302);
+                func_8003AC9C(Scr_map_cell_get(2, &pos), 0x60302);
             }
             else
             {
                 pos.x = -0x1700;
                 pos.y = -0x2AB;
                 pos.z = -0x2300;
-                func_8003AC9C(func_80048D08(2, &pos), 0x60402);
+                func_8003AC9C(Scr_map_cell_get(2, &pos), 0x60402);
             }
             Sound_call2(0x175, &wp->pos_38);
         }

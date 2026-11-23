@@ -45,7 +45,7 @@ void func_80111E10(STAGE_OBJ *wp)
         wp->routine_1 = 0;
         wp->routine_0++;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80111E7C(ST14_PROP *wp)
@@ -56,7 +56,7 @@ void func_80111E7C(ST14_PROP *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Player_work.routine_0  = 3;
                 Player_work.routine_1  = 0;
@@ -80,7 +80,7 @@ void func_80111E7C(ST14_PROP *wp)
         case 3:
             if (func_8003A13C() == 0)
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 wp->routine_0 = 1;
                 wp->routine_1 = 0;

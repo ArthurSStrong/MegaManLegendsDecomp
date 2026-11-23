@@ -37,7 +37,7 @@ void func_80100524(STAGE_ROOM *wp);
 void func_801003C4(STAGE_ROOM *wp);
 
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_80109BBC[][8];
 extern STAGE_ROOM_FUNC D_80109944[];
 extern STAGE_ROOM_FUNC *D_80109904[];

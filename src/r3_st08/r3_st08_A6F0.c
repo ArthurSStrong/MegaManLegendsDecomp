@@ -16,7 +16,7 @@ void func_8010A6F0(ST08_10C *wp)
     scale.y = 0x200;
     scale.z = 0x200;
     ScaleMatrix(m, &scale);
-    func_80051B68(wp, 1, -1, 0x1000008);
+    Solid_set(wp, 1, -1, 0x1000008);
 }
 
 void func_8010A7E4(ST08_10C *wp)

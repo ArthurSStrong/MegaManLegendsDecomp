@@ -138,7 +138,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Sce_camera_start(0, 0, 0);
                 wp->routine_4++;
@@ -182,7 +182,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             {
                 Obj_work_flag_change(0x56, 0x80);
                 Cd_subcmd(0, 1, 0);
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 D_800A395C = 1;
                 func_80039820();
                 STAGE_GAME_FLAGS_82 &= 0x7F;

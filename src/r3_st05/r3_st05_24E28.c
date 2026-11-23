@@ -70,7 +70,7 @@ void func_80124F9C(ST05_PROP *wp)
         {
             wp->color_B4 = 0x808080;
         }
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
     else if (wp->hit_BC & 0x22000000)
     {
@@ -116,7 +116,7 @@ void func_801251FC(ST05_PROP *wp)
     wp->position_fixed.y += wp->velocity.v.y << 12;
     Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     wp->draw_88.pos_24 = wp->position;
-    if (func_8004B414(wp) != 0)
+    if (Scr_collision_check(wp) != 0)
     {
         wp->velocity.v.x = 0;
         wp->velocity.v.y = 0;
@@ -340,7 +340,7 @@ void func_80125880(ST05_PROP *wp)
         wp->value_CC = 0;
     }
     wp->rotation.y = angle;
-    func_80051B68(wp, 1, -1, 0x1000008);
+    Solid_set(wp, 1, -1, 0x1000008);
     angle = wp->rotation.y;
     pos   = wp->position;
     pos.y -= 0x50;
@@ -352,7 +352,7 @@ void func_80125880(ST05_PROP *wp)
 
 void func_80125C54(STAGE_OBJ *wp)
 {
-    func_80052528(wp);
+    Ride_clear(wp);
     Close_SHL_WORK(wp);
 }
 
@@ -365,7 +365,7 @@ void func_80125C8C(ST05_OBJ *wp)
     STCOM_SVECTOR pos;
     sint16 angle;
 
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     angle = wp->rotation.y;
     pos   = wp->position;
     pos.y -= 0x50;
@@ -512,7 +512,7 @@ void func_80126160(ST05_OBJ *wp)
     STCOM_EFFECT *mark;
     STCOM_EFFECT *fx;
 
-    if (wp->value_44.half[0] < 0x20 || func_8004B414(wp) != 0)
+    if (wp->value_44.half[0] < 0x20 || Scr_collision_check(wp) != 0)
     {
         obj                 = func_8001EB98(&D_80132354[0]);
         obj->position       = wp->position;
@@ -573,7 +573,7 @@ void func_8012649C(STAGE_OBJ *wp)
     pl = &Player_work;
     if (!func_8003A13C())
     {
-        func_80042314(pl);
+        Player_control_on(pl);
         pl->flags_0 |= 2;
         wp->routine_0 = 3;
         wp->routine_1 = 0;
@@ -584,7 +584,7 @@ void func_8012649C(STAGE_OBJ *wp)
 
 void func_80126508(STAGE_OBJ *wp)
 {
-    if (func_80042238(&Player_work))
+    if (Player_control_off(&Player_work))
     {
         Player_work.routine_0 = 3;
         Player_work.routine_1 = 0;
@@ -599,9 +599,9 @@ void func_8012656C(STAGE_OBJ *wp)
     STCOM_SVECTOR size;
     STCOM_FIXED_VECTOR out;
 
-    pl            = &ST05_PL;
-    D_800C0F9A    = 0;
-    D_800C0F96[0] = 0;
+    pl             = &ST05_PL;
+    D_800C0F9A     = 0;
+    Pl_demo_pad[0] = 0;
     switch (ST05_PL.step_C)
     {
         case 0:
@@ -619,20 +619,20 @@ void func_8012656C(STAGE_OBJ *wp)
             if (View_check(wp, pl, &size, &out) & 1)
             {
                 pl->step_C    = 10;
-                D_800C0F96[0] = D_800C0F9A = pl->pad_128 | pl->pad_138;
+                Pl_demo_pad[0] = D_800C0F9A = pl->pad_128 | pl->pad_138;
             }
             else
             {
                 pl->step_C    = 20;
-                D_800C0F96[0] = D_800C0F9A = pl->pad_12A | pl->pad_138;
+                Pl_demo_pad[0] = D_800C0F9A = pl->pad_12A | pl->pad_138;
             }
             break;
         case 10:
-            D_800C0F96[0] = D_800C0F9A = pl->pad_128 | pl->pad_138;
+            Pl_demo_pad[0] = D_800C0F9A = pl->pad_128 | pl->pad_138;
             pl->step_C++;
             goto count;
         case 20:
-            D_800C0F96[0] = D_800C0F9A = pl->pad_12A | pl->pad_138;
+            Pl_demo_pad[0] = D_800C0F9A = pl->pad_12A | pl->pad_138;
             pl->step_C++;
             // fall through
         case 11:
@@ -734,7 +734,7 @@ void func_801267B0(STAGE_OBJ *wp, uint8 kind)
 void func_80126940(STAGE_OBJ *wp)
 {
     D_80132400[wp->routine_0](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_80126990(ST05_SHL *wp)
@@ -886,17 +886,17 @@ void func_80126F10(STAGE_SHOT *wp)
     if (wp->type_3 & 0x40)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
-                      0, 0x80);
+                   0, 0x80);
     }
     else if (wp->index_c)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
     else
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
 }
 

@@ -421,8 +421,8 @@ void func_80046438(CODE456_WORK *wp)
         wp->routine_8++;
         wp->timer_b = (rand() & 7) + 30;
     }
-    r   = func_80048EA4(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a], wp->mtx_18.tr.h.value_2e,
-                        0xFFFF);
+    r   = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a],
+                          wp->mtx_18.tr.h.value_2e, 0xFFFF);
     lim = D_8008A618[wp->flag_3][wp->value_a].h[5];
     lim++;
     diff = r - lim;
@@ -453,8 +453,8 @@ void func_800465C8(CODE456_WORK *wp)
     {
         wp->routine_8++;
     }
-    r   = func_80048EA4(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a], wp->mtx_18.tr.h.value_2e,
-                        0xFFFF);
+    r   = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a],
+                          wp->mtx_18.tr.h.value_2e, 0xFFFF);
     lim = D_8008A618[wp->flag_3][wp->value_a].h[5];
     lim++;
     diff = r - lim;
@@ -1279,20 +1279,20 @@ uint8 func_800482A8(void *vp)
         if (wp->flag_3)
         {
             pad = Player_work.pad_cur;
-            if (!(pad & Player_work.value12a))
+            if (!(pad & Player_work.key_turn_r))
             {
                 goto fail;
             }
-            hit = Player_work.value128 & pad;
+            hit = Player_work.key_turn_l & pad;
         }
         else
         {
             pad = Player_work.pad_cur;
-            if (!(pad & Player_work.value128))
+            if (!(pad & Player_work.key_turn_l))
             {
                 goto fail;
             }
-            hit = Player_work.value12a & pad;
+            hit = Player_work.key_turn_r & pad;
         }
         if (hit)
         {

@@ -171,7 +171,7 @@ sint32 func_8005ED9C(SUB_WORK *wp)
                     {
                         case 0x40:
                             MojiTaskExec(0, (uint8 *)0x801F2000, 0x51);
-                            func_8005D9C4();
+                            Gauge_show_release();
                             wp->flag_C = 0x540;
                             break;
                         case 0x41:
@@ -1095,7 +1095,7 @@ sint32 func_80060B00(SUB_WORK *wp)
                     Sound_call(0x83, 1, 0);
                 }
                 MojiTaskKill();
-                func_800425FC(&Player_work, Game_work.value_54);
+                Pl_key_type_set(&Player_work, Game_work.value_54);
                 Cd_read_comb(0x16);
                 wp->routine_1++;
             }

@@ -285,7 +285,7 @@ void func_80115034(STAGE_OBJ *wp)
             wp->routine_2++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -297,7 +297,7 @@ void func_80115034(STAGE_OBJ *wp)
             wp->routine_2++;
             break;
         case 3:
-            D_800C0F96[0]        = 0;
+            Pl_demo_pad[0]       = 0;
             Player_work.flags_bd = (Player_work.flags_bd & ~0x40) | 0x20;
             wp->routine_0        = 1;
             wp->routine_1        = 0;
@@ -422,7 +422,7 @@ void func_8011552C(STAGE_OBJ *wp)
             wp->routine_1++;
             break;
         case 6:
-            if (Fade_busy == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0 && Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -505,7 +505,7 @@ void func_80115780(STAGE_OBJ *wp)
             wp->routine_1++;
             break;
         case 5:
-            if (Fade_busy == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0 && Player_control_off(pl) != 0)
             {
                 if (Moji_flag & 0x8000000)
                 {
@@ -524,7 +524,7 @@ void func_80115780(STAGE_OBJ *wp)
                 Cd_subcmd(0, 1, 0);
             }
             func_8005D87C();
-            func_8005D6E8(D_80122B50);
+            Gauge_close(D_80122B50);
             pl->value_76 = 0;
             pl->flags_0 &= ~1;
             Sce_flag_on(0x606);
@@ -581,7 +581,7 @@ void func_80115A24(STAGE_OBJ *wp)
             wp->routine_1++;
             break;
         case 4:
-            if (Fade_busy == 0 && Sound_fade_flags == 0 && func_80042238(pl) != 0)
+            if (Fade_busy == 0 && Sound_fade_flags == 0 && Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -595,7 +595,7 @@ void func_80115A24(STAGE_OBJ *wp)
                 Cd_subcmd(0, 1, 0);
             }
             func_8005D87C();
-            func_8005D6E8(D_80122B50);
+            Gauge_close(D_80122B50);
             pl->value_76 = 0;
             pl->flags_0 &= ~1;
             Sce_flag_on(0x607);
@@ -707,7 +707,7 @@ void func_80115C24(STAGE_OBJ *wp)
                 op_50->rotation.y = 0;
                 op_50->value_B0   = 0;
                 op_50->life_6E    = 0;
-                func_8005D620(op_50, 0, 0, 0x60, 0x2C004000);
+                Gauge_open(op_50, 0, 0, 0x60, 0x2C004000);
             }
             else
             {
@@ -719,7 +719,7 @@ void func_80115C24(STAGE_OBJ *wp)
                 op_50->rotation.y = 0x400;
                 op_50->value_B0   = 0;
                 op_50->life_6E    = 0;
-                func_8005D620(op_50, 0, 0, 0x50, 0x2C004080);
+                Gauge_open(op_50, 0, 0, 0x50, 0x2C004080);
             }
             op_50->value_4    = 0;
             op_50->rotation.x = op_50->rotation.z = 0;
@@ -818,7 +818,7 @@ void func_801161C8(STAGE_OBJ *wp)
     switch (wp->routine_2)
     {
         case 0:
-            D_800C0F96[0] = 0;
+            Pl_demo_pad[0] = 0;
             if (++wp->position_fixed.v.x == 6)
             {
                 MojiTaskExec2(0, 1);
@@ -833,14 +833,14 @@ void func_801161C8(STAGE_OBJ *wp)
             }
             break;
         case 1:
-            D_800C0F96[0] = pl->value_140 | (pl->value_126 | pl->value_13E);
+            Pl_demo_pad[0] = pl->value_140 | (pl->value_126 | pl->value_13E);
             if (++wp->position_fixed.v.x == 108)
             {
                 wp->routine_2++;
             }
             break;
         case 2:
-            D_800C0F96[0] = 0;
+            Pl_demo_pad[0] = 0;
             if (++wp->position_fixed.v.x == 160)
             {
                 Sound_call(0x19F, 0, 0);
@@ -859,7 +859,7 @@ void func_801161C8(STAGE_OBJ *wp)
         case 3:
             if (Fade_busy == 0)
             {
-                D_800C0F96[0]          = 0;
+                Pl_demo_pad[0]         = 0;
                 wp->position_fixed.v.x = 0;
                 wp->u_E.b.byte_E       = 2;
                 wp->routine_2++;
@@ -896,7 +896,7 @@ void func_801161C8(STAGE_OBJ *wp)
             }
             break;
         case 8:
-            func_80042314(pl);
+            Player_control_on(pl);
             Sound_call(0x12, 0, 0);
             Sound_call(0x19F, 0, 0);
             Sound_call(0x181, 0, 0);
@@ -1146,7 +1146,7 @@ void func_80116B04(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 STAGE_PL.routine_0   = 3;
                 STAGE_PL.routine_1   = 1;
@@ -1256,7 +1256,7 @@ void func_80116E28(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_80042314(pl);
+            Player_control_on(pl);
             STAGE_PL.value_76 = 0;
             STAGE_PL.flags_bd |= 0x40;
             pl->flags_0 &= ~3;
@@ -1673,7 +1673,7 @@ void func_80117CEC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 1;
@@ -1814,7 +1814,7 @@ void func_801180B4(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_80042314(pl);
+            Player_control_on(pl);
             STAGE_PL.value_76 = 0;
             pl->flags_0 &= ~3;
             Obj_work_flag_change(0x5E, 0x80);
@@ -2196,7 +2196,7 @@ void func_80118CD0(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 2:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 1;
@@ -2329,7 +2329,7 @@ void func_80119068(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_80042314(pl);
+            Player_control_on(pl);
             STAGE_PL.value_76 = 0;
             pl->flags_0 &= ~3;
             Obj_work_flag_change(0x5E, 0x80);

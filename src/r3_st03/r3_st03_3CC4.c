@@ -27,7 +27,7 @@ void func_80103DC4(STAGE_ROOM_WORK *wp)
 {
     STAGE_OBJ *obj;
 
-    if (func_80042238(&Player_work))
+    if (Player_control_off(&Player_work))
     {
         obj = Open_EM_WORK();
         if (obj != NULL)
@@ -47,7 +47,7 @@ void func_80103DC4(STAGE_ROOM_WORK *wp)
             wp->child_24            = (STAGE_WORK *)obj;
         }
         D_800C0F9A          = 0;
-        D_800C0F96[0]       = 0;
+        Pl_demo_pad[0]      = 0;
         D_8011CA88          = 0;
         STAGE_PL_BYTE(0xBD) = (STAGE_PL_BYTE(0xBD) | 0x20) & ~0x40;
         wp->routine_5       = 0;
@@ -78,11 +78,11 @@ void func_80103EBC(ST03_ROOM_WORK *wp)
                 wp->child_24->value_E      = 2;
                 if (pl->rotation.y < 0x800)
                 {
-                    D_800C0F96[0] = pl->pad_12A;
+                    Pl_demo_pad[0] = pl->pad_12A;
                 }
                 else
                 {
-                    D_800C0F96[0] = pl->pad_128;
+                    Pl_demo_pad[0] = pl->pad_128;
                 }
                 wp->routine_5++;
             }
@@ -92,18 +92,18 @@ void func_80103EBC(ST03_ROOM_WORK *wp)
             {
                 wp->child_24->velocity.v.x = 0;
             }
-            if (D_800C0F96[0] & pl->pad_128)
+            if (Pl_demo_pad[0] & pl->pad_128)
             {
                 if (pl->rotation.y < 0x801)
                 {
-                    D_800C0F96[0] = 0;
+                    Pl_demo_pad[0] = 0;
                 }
             }
             else if (pl->rotation.y >= 0x800)
             {
-                D_800C0F96[0] = 0;
+                Pl_demo_pad[0] = 0;
             }
-            if (D_800C0F96[0] == 0 && wp->child_24->velocity.v.x == 0)
+            if (Pl_demo_pad[0] == 0 && wp->child_24->velocity.v.x == 0)
             {
                 wp->child_24->value_D = 1;
                 wp->child_24->value_E = 0;
@@ -180,11 +180,11 @@ void func_801041C8(ST03_ROOM_WORK *wp)
             wp->child_24->routine_0 = 0;
             wp->child_24->value_4   = 0;
             D_800C0F9A              = 0;
-            D_800C0F96[0]           = 0;
+            Pl_demo_pad[0]          = 0;
             wp->routine_5++;
             break;
         case 1:
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             D_800A395C = 1;
             func_80039820();
             wp->flags_0 = 0;
@@ -202,7 +202,7 @@ void func_80104364(ST03_ROOM_WORK *wp)
     ST03_ACTOR *obj;
     sint32 i;
 
-    if (func_80042238(&Player_work))
+    if (Player_control_off(&Player_work))
     {
         obj = Em_work_tbl;
         for (i = 0; i < 0x10; i++, obj++)
@@ -336,7 +336,7 @@ void func_80104778(STAGE_ROOM_WORK *wp)
             wp->routine_5++;
             break;
         case 1:
-            func_80042314(pl);
+            Player_control_on(pl);
             func_8001D974();
             wp->flags_0 = 0;
             break;
@@ -440,7 +440,7 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 func_80104AD4((STAGE_ROOM *)wp);
                 wp->routine_4++;
@@ -476,7 +476,7 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
             wp->routine_4++;
             break;
         case 0xB:
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             Game_work.value_81 = 1;
             wp->flags_0        = 0;
             Sce_flag_on(0x45);
@@ -590,7 +590,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 func_80104F1C((STAGE_ROOM *)wp);
                 Sce_camera_script_exec();
@@ -630,7 +630,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             wp->routine_4++;
             break;
         case 0xB:
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             D_800A395C = 1;
             func_8003A264();
             wp->flags_0 = 0;
@@ -930,7 +930,7 @@ void func_8010593C(ST03_ACTOR *wp)
             Obj_pos_set(wp, 0, wp->velocity.v.y << 4, 0);
             wp->position.y -= 0x34;
             wp->position_fixed.y = wp->position.y << 16;
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 if (++wp->routine_3 == 3)
                 {
@@ -1000,7 +1000,7 @@ void func_80105C64(ST03_ACTOR *wp)
             }
             wp->rotation.y = (wp->rotation.y + wp->spin_66) & 0xFFF;
             Obj_pos_set(wp, 0x30, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->position.y - wp->position_prev.y > 0x10)
@@ -1038,7 +1038,7 @@ void func_80105DC4(ST03_ACTOR *wp)
                 break;
             }
             Obj_pos_set(wp, 0x80, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->position.y - wp->position_prev.y > 0x10)
@@ -1114,7 +1114,7 @@ void func_80105F14(ST03_ACTOR *wp)
             }
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x * 16, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->position.y - wp->position_prev.y > 0x10)
@@ -1183,7 +1183,7 @@ void func_8010616C(ST03_ACTOR *wp)
                                                              wp->rotation.y, wp->spin_66)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x << 4, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->position.y - wp->position_prev.y > 0x10)
@@ -1338,7 +1338,7 @@ void func_801065F8(ST03_ACTOR *wp)
             }
             wp->velocity.v.y = (8 - (uint16)ctl->timer_4) * 4;
             Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -1366,7 +1366,7 @@ void func_801065F8(ST03_ACTOR *wp)
                 wp->velocity.v.x--;
             }
             Obj_pos_set(wp, wp->velocity.v.x << 4, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->position.y - wp->position_prev.y > 0x10)
@@ -1450,7 +1450,7 @@ void func_80106950(ST03_ACTOR *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -1464,7 +1464,7 @@ void func_80106950(ST03_ACTOR *wp)
             ctl->timer_4     = t;
             wp->velocity.v.y = (4 - t) * 8;
             Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -1531,7 +1531,7 @@ void func_80106BBC(ST03_ACTOR *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -1545,7 +1545,7 @@ void func_80106BBC(ST03_ACTOR *wp)
             ctl->timer_4     = t;
             wp->velocity.v.y = (8 - t) * 8;
             Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -1634,7 +1634,7 @@ void func_80106E54(ST03_ACTOR *wp)
                 wp->velocity.v.y = (7 - t) * 2;
             }
             Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)

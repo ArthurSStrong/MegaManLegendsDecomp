@@ -394,7 +394,7 @@ void func_801170A8(ST0B_EVENT *wp)
             }
             break;
         case 4:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -522,7 +522,7 @@ void func_80117300(ST0B_EVENT *wp)
             }
             break;
         case 6:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -575,7 +575,7 @@ void func_8011754C(ST0B_EVENT *wp)
                     Cd_subcmd(0, 1, 0);
                 }
                 MojiTaskExec2(4, 9);
-                func_8005D620(D_80120368, 0, 0, 0x50, 0x2C400040);
+                Gauge_open(D_80120368, 0, 0, 0x50, 0x2C400040);
                 D_80120368->u_E.b.byte_E = 1;
                 wp->timer_1C             = 0;
                 wp->routine_3            = 0;
@@ -605,7 +605,7 @@ void func_8011754C(ST0B_EVENT *wp)
             }
             break;
         case 4:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 MojiTaskExec2(0, 0x1F);
                 wp->routine_2++;
@@ -625,12 +625,12 @@ void func_8011754C(ST0B_EVENT *wp)
             {
                 D_80120368->routine_0 = 2;
                 func_8005D87C();
-                func_8005D6E8(D_80120368);
+                Gauge_close(D_80120368);
                 wp->routine_2++;
             }
             break;
         case 7:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -1404,7 +1404,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Sound_fade_start(0x10);
                 func_8001B314();
@@ -1486,7 +1486,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

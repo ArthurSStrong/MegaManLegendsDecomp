@@ -1,14 +1,14 @@
 // Quick skate start: holding Circle gets Mega Man onto the Jet Skates and moving sooner.
 //
 // Vanilla (src/rock_neo.exe/player.c): standing (routine_1 0), the check routine
-// func_8003F5D8 (D_80089FF8[0]) ends in func_80040574, which counts the frames Circle
-// (PL_WORK.value134) is held in value44a and, with the skates owned (flags16b & 2) and value44b
+// Pl_r1_stand_check (Pl_r1_check_tbl[0]) ends in pl_super_dash_start, which counts the frames Circle
+// (PL_WORK.key_dash) is held in value44a and, with the skates owned (flags16b & 2) and value44b
 // clear, switches to the skates (routine_1 3, value0a 0) on the ninth. The skates' routine
-// func_8003D1E0 (D_80089FA4[3]) then plays a start-up: case 0 starts animation 0x38 and goes to
+// Pl_r1_super_dash (Pl_r1_tbl[3]) then plays a start-up: case 0 starts animation 0x38 and goes to
 // case 2, which waits for the animation step whose flag byte (value_a6) is set, then case 3
 // moves at 0x340 while waiting for the animation's last step (value_a7 -1), plays the start
-// sound 0x8C and cruises (case 4). The animation runs in func_8003C418 after the routines, one
-// tick a frame (Pl_Char_Move). Until case 3, letting go of Circle cancels (func_8003FDA8).
+// sound 0x8C and cruises (case 4). The animation runs in pl_move_exec after the routines, one
+// tick a frame (Pl_Char_Move). Until case 3, letting go of Circle cancels (Pl_r1_super_dash_check).
 //
 // Measured headless (30 game frames a second; frame 1 is the first with Circle held):
 //            skates start   first move   cruising (start sound)
@@ -16,18 +16,18 @@
 //   Quick    frame 4        frame 12     frame 15
 //   Instant  frame 2        frame 2      frame 2
 //
-// Circle is also the investigate button (value136): func_80051970 opens doors and starts talk
-// on the frame Circle is pressed (value11e) while routine_1 is below 2 or 4, after the player's
+// Circle is also the investigate button (key_check): scr_check_press opens doors and starts talk
+// on the frame Circle is pressed (pad_trg) while routine_1 is below 2 or 4, after the player's
 // routines; talk then takes Mega Man out of routine_1 0 (0x10). So the skates never start on the
 // press frame itself, and a tap near someone talks as before. Away from anything, a tap of two
 // frames or more on Instant is a short dash and the usual slide to a stop.
 //
 // The mod hooks two functions reached through the player's tables (so every call is seen), and
 // none that another mod hooks (a retail address takes one hook: port_stub_hook):
-// - func_8003F5D8, the standing check: after it, if Mega Man is still standing with Circle held
+// - Pl_r1_stand_check, the standing check: after it, if Mega Man is still standing with Circle held
 //   for `hold` frames (value44a) and the game's own conditions hold, starts the skates as
-//   func_80040574 would (Instant: already cruising, below).
-// - func_8003C88C, the player's frame (D_80089F94[1], which runs the check and the routine):
+//   pl_super_dash_start would (Instant: already cruising, below).
+// - Pl_move_main, the player's frame (Pl_move_tbl[1], which runs the check and the routine):
 //   before it, on the skates' start-up, Quick advances the start-up animation one extra tick
 //   (twice the speed), never past the step case 2 waits for and never past the end; Instant
 //   skips the start-up: the start sound and straight into cruising (case 4, which sets the
@@ -38,8 +38,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define FUNC_STAND_CHECK 0x8003F5D8u // void func_8003F5D8(PL_WORK *pl): D_80089FF8[0]
-#define FUNC_PL_FRAME    0x8003C88Cu // void func_8003C88C(PL_WORK *pl): D_80089F94[1]
+#define FUNC_STAND_CHECK 0x8003F5D8u // void Pl_r1_stand_check(PL_WORK *pl): Pl_r1_check_tbl[0]
+#define FUNC_PL_FRAME    0x8003C88Cu // void Pl_move_main(PL_WORK *pl): Pl_move_tbl[1]
 #define FUNC_ANIM_STEP   0x8003234Cu // void Pl_Char_Move(PL_WORK *pl, sint32 id): one tick
 #define FUNC_SOUND_CALL  0x8001A008u // Sound_call(id, a1, a2)
 
@@ -107,7 +107,7 @@ static void stand_check_hook(uint32_t addr)
     uint8_t *pl = MODS_PTR(addr);
 
     orig_stand_check(addr);
-    // value44a counts only while func_80040574 ran this frame with Circle held and the skates
+    // value44a counts only while pl_super_dash_start ran this frame with Circle held and the skates
     // owned (every other path clears it), so this is the game's own count.
     if (is_player(addr) && PL_U8(pl, PL_ROUTINE_1) == PL_STANDING &&
         (PL_U16(pl, PL_PAD_CUR) & PL_U16(pl, PL_VALUE134)) && (PL_U8(pl, PL_FLAGS16B) & 2) &&

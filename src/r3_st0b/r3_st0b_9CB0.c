@@ -1629,7 +1629,7 @@ void func_8010CEE0(ST0B_OBJ *wp)
     }
     ground        = Scr_height_check(wp);
     ctl->value_30 = 0;
-    hit           = func_8004B414(wp);
+    hit           = Scr_collision_check(wp);
     ctl->value_2C = hit;
     if (!(hit & 0x1000) && wp->position.y == ground)
     {

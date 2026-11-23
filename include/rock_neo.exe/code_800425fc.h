@@ -11,13 +11,15 @@ typedef struct
     sint8 routine_171;
 } C800425FC_WORK;
 
-// Same record seen as two 16-halfword colour banks at +0x124 and +0x144
+// PL_WORK seen from its button masks: key[] is key_forward..+0x142 (one mask per action, from
+// the control layout), pad[] is pad_tbl (PL_PAD_ENTRY[4], movement direction masks built from
+// key[]).
 typedef struct
 {
     uint8 reserved00[0x124];
-    uint16 src[16];
-    uint16 out[16];
-} C800425FC_COLORS;
+    uint16 key[16];
+    uint16 pad[16];
+} PL_KEY_VIEW;
 
 typedef struct
 {
@@ -71,7 +73,7 @@ typedef struct
 
 extern uint8 D_80089A84[];
 extern uint8 Game_work[];
-void func_80041E90(C800425FC_ACT *ap, sint32 b, sint32 c, sint32 d);
+void Pl_move(C800425FC_ACT *ap, sint32 b, sint32 c, sint32 d);
 void func_80042A40(C800425FC_ACT *ap);
 void func_80042DF8(C800425FC_ACT *ap);
 extern uint8 D_80089A85[];
@@ -83,19 +85,19 @@ void Pl_Char_Set();
 void Pl_Char_Set_Upper();
 sint32 func_80037664();
 void Pl00_shot_enable_off();
-uint8 func_80042458(C800425FC_ACT *ap);
-uint8 func_800423DC(C800425FC_ACT *ap);
+uint8 Pl_anim_special(C800425FC_ACT *ap);
+uint8 Pl_anim_buster(C800425FC_ACT *ap);
 
-extern uint16 D_8008A04C[][16];
+extern uint16 Pl_key_type_tbl[][16];
 
-void func_800425FC(C800425FC_COLORS *wp, sint32 idx);
+void Pl_key_type_set(PL_KEY_VIEW *wp, sint32 idx);
 
 typedef void (*C800425FC_FUNC)(C800425FC_WORK *wp);
 
-extern C800425FC_FUNC D_8008A08C[];
-extern C800425FC_FUNC D_8008A0C4[];
+extern C800425FC_FUNC Pl_shot_special_tbl[];
+extern C800425FC_FUNC Pl_shot_buster_tbl[];
 
-void func_800426F8(C800425FC_WORK *wp);
-void func_80042734(C800425FC_WORK *wp);
+void Pl_shot_special(C800425FC_WORK *wp);
+void Pl_shot_buster(C800425FC_WORK *wp);
 
 #endif // CODE_800425FC_H

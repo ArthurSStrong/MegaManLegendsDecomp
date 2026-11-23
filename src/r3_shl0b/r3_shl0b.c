@@ -5,7 +5,7 @@
 void func_800D8804(SHL_WORK *wp)
 {
     D_800D8F88[wp->routine_0](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_800D8854(SHL_WORK *wp)
@@ -76,7 +76,7 @@ void func_800D8AAC(SHL_WORK *wp)
 {
     sint32 hit;
 
-    if (func_80037694(wp, 0) == 0x7FFF || wp->hit_7c || !func_80048C60(&wp->pos))
+    if (func_80037694(wp, 0) == 0x7FFF || wp->hit_7c || !Scr_cell_get(&wp->pos))
     {
         func_800D8EF4(wp);
         Close_PL_SHL_WORK(wp);
@@ -91,7 +91,7 @@ void func_800D8AAC(SHL_WORK *wp)
     wp->draw.mdl.pos.vx = wp->pos.vx = wp->fpos.h.x;
     wp->draw.mdl.pos.vy = wp->pos.vy = wp->fpos.h.y;
     wp->draw.mdl.pos.vz = wp->pos.vz = wp->fpos.h.z;
-    hit                              = func_8004B414(wp);
+    hit                              = Scr_collision_check(wp);
     if (hit >= 0)
     {
         if (hit & 0x1000)
@@ -119,8 +119,8 @@ void func_800D8C1C(SHL_WORK *wp)
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
-    func_80050C2C(wp);
-    func_8004B414(wp);
+    Scr_event_check(wp);
+    Scr_collision_check(wp);
     wp->pos.vy          = Scr_height_check(wp);
     wp->fpos.w.y        = wp->pos.vy << 16;
     wp->draw.mdl.pos.vx = wp->pos.vx;
@@ -145,8 +145,8 @@ void func_800D8D14(SHL_WORK *wp)
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
-    func_80050C2C(wp);
-    func_8004B414(wp);
+    Scr_event_check(wp);
+    Scr_collision_check(wp);
     wp->pos.vy          = Scr_height_check(wp);
     wp->fpos.w.y        = wp->pos.vy << 16;
     wp->draw.mdl.pos.vx = wp->pos.vx;

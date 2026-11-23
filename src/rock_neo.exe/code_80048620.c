@@ -17,7 +17,7 @@ void func_80048620(CODE486_TASK *task)
             task->routine_1++;
             // fall through
         case 1:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 D_800BC7F0[0]   = D_8008A9D4[*(sint16 *)(entry + 0x10) >> 10];
                 task->value_a4  = D_8008A9F4;
@@ -147,7 +147,7 @@ void func_80048704(CODE486_TASK *task)
 
 void func_80048A40(PL_WORK *pl)
 {
-    func_80042314(&Player_work);
+    Player_control_on(&Player_work);
     *(uint32 *)&Player_work.kind = 0;
     D_800A395C                   = 1;
     func_80039820();
@@ -155,13 +155,13 @@ void func_80048A40(PL_WORK *pl)
     pl->routine_0 = 0;
 }
 
-// D_800C0F96 is an array: an array reference keeps &D_800C0F96 in a1 within each case.
+// Pl_demo_pad is an array: an array reference keeps &Pl_demo_pad in a1 within each case.
 void func_80048A9C(CODE486_TASK *task)
 {
     PL_WORK *pl;
 
-    pl            = &Player_work;
-    D_800C0F96[0] = 0;
+    pl             = &Player_work;
+    Pl_demo_pad[0] = 0;
     switch (task->value0a)
     {
         case 0:
@@ -170,13 +170,13 @@ void func_80048A9C(CODE486_TASK *task)
             task->value0a++;
             // fall through
         case 1:
-            D_800C0F96[0] = pl->value124;
+            Pl_demo_pad[0] = pl->key_forward;
             if (task->value10 >= 0x25)
             {
                 task->routine_1++;
                 task->value0a++;
-                D_800C0F96[0] = 0;
-                pl->flags_bd  = (pl->flags_bd & 0xDF) | 0x40;
+                Pl_demo_pad[0] = 0;
+                pl->flags_bd   = (pl->flags_bd & 0xDF) | 0x40;
             }
             break;
         case 2:
@@ -184,13 +184,13 @@ void func_80048A9C(CODE486_TASK *task)
             task->value0a++;
             // fall through
         case 3:
-            D_800C0F96[0] = pl->value124;
+            Pl_demo_pad[0] = pl->key_forward;
             if (task->value0b < task->value10)
             {
                 task->routine_1++;
                 task->value0a++;
-                D_800C0F96[0] = 0;
-                pl->flags_bd  = (pl->flags_bd & 0xDF) | 0x40;
+                Pl_demo_pad[0] = 0;
+                pl->flags_bd   = (pl->flags_bd & 0xDF) | 0x40;
             }
             break;
     }
@@ -200,7 +200,7 @@ void func_80048BE4(void)
 {
 }
 
-sint32 func_80048BEC(PL_SHORT_VECTOR *pos)
+sint32 scr_cell_index(PL_SHORT_VECTOR *pos)
 {
     sint32 x;
     sint32 z;
@@ -213,7 +213,7 @@ sint32 func_80048BEC(PL_SHORT_VECTOR *pos)
     return x + z * CODE486_MAP_W;
 }
 
-sint32 func_80048C60(PL_SHORT_VECTOR *pos)
+sint32 Scr_cell_get(PL_SHORT_VECTOR *pos)
 {
     sint32 x;
     sint32 z;
@@ -226,12 +226,12 @@ sint32 func_80048C60(PL_SHORT_VECTOR *pos)
     return (CODE486_MAP_CELLS + x)[z * CODE486_MAP_W];
 }
 
-sint32 func_80048CEC(sint32 index)
+sint32 scr_cell_get_index(sint32 index)
 {
     return CODE486_MAP_CELLS[index];
 }
 
-sint32 func_80048D08(sint32 map, PL_SHORT_VECTOR *pos)
+sint32 Scr_map_cell_get(sint32 map, PL_SHORT_VECTOR *pos)
 {
     sint32 x;
     sint32 z;
@@ -247,7 +247,7 @@ sint32 func_80048D08(sint32 map, PL_SHORT_VECTOR *pos)
     return (m->cells + x)[z * m->w];
 }
 
-sint32 func_80048DAC(PL_SHORT_VECTOR *pos)
+sint32 Scr_area_check(PL_SHORT_VECTOR *pos)
 {
     if ((uint32)(((pos->x + 0x8000) >> 9) - CODE486_MAP_X0) >= CODE486_MAP_W ||
         (uint32)(((pos->z + 0x8000) >> 9) - CODE486_MAP_Z0) >= CODE486_MAP_H)
@@ -257,11 +257,11 @@ sint32 func_80048DAC(PL_SHORT_VECTOR *pos)
     return 0;
 }
 
-sint32 func_80048E18(PL_SHORT_VECTOR *pos)
+sint32 Scr_cell_attr(PL_SHORT_VECTOR *pos)
 {
     sint32 cell;
 
-    cell = func_80048C60(pos);
+    cell = Scr_cell_get(pos);
     if (cell > 0)
     {
         return CODE486_MAP_INFO[cell].flags6 & 0xFFF;
@@ -271,13 +271,13 @@ sint32 func_80048E18(PL_SHORT_VECTOR *pos)
 
 sint32 Scr_height_check(PL_WORK *pl)
 {
-    return func_80048EA4(&pl->position, pl->info78, pl->position.y - pl->position_prev.y,
-                         pl->value01);
+    return Scr_height_calc(&pl->position, pl->info78, pl->position.y - pl->position_prev.y,
+                           pl->value01);
 }
 
 // The do/while (0) levels below are loop-depth wrappers: they only raise register
 // priorities (area s3, left s4, best s5, the box and hit order) to retail's.
-sint32 func_80048EA4(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint32 kind)
+sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint32 kind)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -298,8 +298,8 @@ sint32 func_80048EA4(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint
 
     best               = 0x7FFF;
     *CODE486_SP_POS_C0 = *pos;
-    count              = func_8004B1E0(CODE486_SP_POS_C0, 0);
-    func_8004B3C0((sint32 *)info);
+    count              = scr_cell_list(CODE486_SP_POS_C0, 0);
+    scr_box_set((sint32 *)info);
     slide = (Obj_id_class(kind) == 0) << 15;
     do
     {
@@ -307,10 +307,10 @@ sint32 func_80048EA4(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint
         n    = count;
         while (n-- != 0)
         {
-            val = func_80048CEC(CODE486_SP_CELLS[n]);
+            val = scr_cell_get_index(CODE486_SP_CELLS[n]);
             if (val <= 0)
             {
-                if (CODE486_SP_CELLS[n] == func_80048BEC(CODE486_SP_POS_C0))
+                if (CODE486_SP_CELLS[n] == scr_cell_index(CODE486_SP_POS_C0))
                 {
                     lim = ~((val & 0x1F00) >> 1) - CODE486_SP_12E;
                     if (lim < best)
@@ -423,7 +423,7 @@ sint16 func_8004920C(PL_SHORT_VECTOR *pos)
     sint32 left;
     CODE486_HIT *hit;
 
-    val  = func_80048C60(pos);
+    val  = Scr_cell_get(pos);
     best = 0x7FFF;
     if (val <= 0)
     {
@@ -475,9 +475,9 @@ sint16 func_8004920C(PL_SHORT_VECTOR *pos)
     return best;
 }
 
-sint32 func_80049448(PL_WORK *pl)
+sint32 Scr_ground_check(PL_WORK *pl)
 {
-    return func_80049470(&pl->position, pl->info78, pl->value01);
+    return scr_ground_calc(&pl->position, pl->info78, pl->value01);
 }
 
 // The hit loop is a do/while (retail has no zero-count test); the 0x12C/0x12E offsets are
@@ -486,7 +486,7 @@ sint32 func_80049448(PL_WORK *pl)
 // +1 is its own statement. Loop depth: the box corners sit two do/while (0) levels deeper and
 // the hit pointer one (see func_8004AF28); GCC weights each reference by loop depth, and only
 // this ranks the area giv above hit (s0/s1) without changing the box[4] temporaries.
-sint32 func_80049470(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
+sint32 scr_ground_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -504,15 +504,15 @@ sint32 func_80049470(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
 
     best               = -0x7FFF;
     *CODE486_SP_POS_C0 = *pos;
-    n                  = func_8004B1E0(CODE486_SP_POS_C0, 0);
-    func_8004B3C0((sint32 *)info);
+    n                  = scr_cell_list(CODE486_SP_POS_C0, 0);
+    scr_box_set((sint32 *)info);
     slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
-        val = func_80048CEC(CODE486_SP_CELLS[n]);
+        val = scr_cell_get_index(CODE486_SP_CELLS[n]);
         if (val <= 0)
         {
-            if (CODE486_SP_CELLS[n] == func_80048BEC(CODE486_SP_POS_C0) && (val & 0x6000))
+            if (CODE486_SP_CELLS[n] == scr_cell_index(CODE486_SP_POS_C0) && (val & 0x6000))
             {
                 lim = -((val & 0x1F00) >> 1) - ((val & 0x6000) >> 13) * 0x180 + 1;
                 lim -= CODE486_SP_12C;
@@ -573,7 +573,7 @@ sint32 func_80049470(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
     return best;
 }
 
-sint32 func_8004976C(PL_WORK *pl)
+sint32 Scr_wall_dist_check(PL_WORK *pl)
 {
     sint32 turn;
 
@@ -585,19 +585,19 @@ sint32 func_8004976C(PL_WORK *pl)
     {
         turn = (sint16)pl->value116;
     }
-    return func_800497CC(&pl->position, pl->info78, ((pl->rotation.y - turn + 0x200) >> 10) & 3,
-                         pl->value01);
+    return scr_wall_dist_calc(&pl->position, pl->info78,
+                              ((pl->rotation.y - turn + 0x200) >> 10) & 3, pl->value01);
 }
 
 // Nearest wall in one of four directions.
 // FAKE MATCH: nine dead conditional stores (`val = 0`), kept only for register allocation.
 // The `if (...) { val = 0; }` statements are dead stores (val is reassigned from
-// func_80048CEC before every read) and compile to nothing: flow deletes each store, but its
+// scr_cell_get_index before every read) and compile to nothing: flow deletes each store, but its
 // test survives until jump2 and adds weighted references to area, area->hits (the area giv),
 // hit and dir. That gives retail's register order (area giv, hit, dir, best, area, left), and
 // unlike do/while (0) levels it leaves no loop note to pin the switch's constant load. The
 // one-pass do/while (0) around the hit loop is still needed.
-sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind)
+sint32 scr_wall_dist_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -617,12 +617,12 @@ sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sin
         best = 0x7FFF;
     }
     *CODE486_SP_POS_C0 = *pos;
-    n                  = func_8004B1E0(CODE486_SP_POS_C0, 0);
-    func_8004B3C0((sint32 *)info);
+    n                  = scr_cell_list(CODE486_SP_POS_C0, 0);
+    scr_box_set((sint32 *)info);
     slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
-        val = func_80048CEC(CODE486_SP_CELLS[n]);
+        val = scr_cell_get_index(CODE486_SP_CELLS[n]);
         if (val <= 0)
         {
             continue;
@@ -752,9 +752,9 @@ sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sin
     return best;
 }
 
-sint32 func_80049C24(PL_WORK *pl)
+sint32 Scr_line_check(PL_WORK *pl)
 {
-    return func_80049C54(&pl->position, &pl->position_prev, pl->info78, pl->value01);
+    return Scr_line_calc(&pl->position, &pl->position_prev, pl->info78, pl->value01);
 }
 
 // The cell count goes straight to n, the z test uses ABS_NEG (retail lays it out differently
@@ -763,7 +763,7 @@ sint32 func_80049C24(PL_WORK *pl)
 // operand's register), cy is a sint16. Loop depth: the area loop sits one level deeper than the
 // cell loop and the area selection one more (two do/while (0)s, see func_8004AF28); GCC weights
 // each reference by loop depth, and only this ranks the area pointer above pad (s4/s5).
-sint32 func_80049C54(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info, sint32 kind)
+sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info, sint32 kind)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -794,19 +794,19 @@ sint32 func_80049C54(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO
     {
         return 0x80000000;
     }
-    if (func_80048C60(CODE486_SP_POS_C0) == 0)
+    if (Scr_cell_get(CODE486_SP_POS_C0) == 0)
     {
         return 0x40000000;
     }
-    n = func_8004B1E0(CODE486_SP_POS_C0, 1);
-    func_8004B3C0((sint32 *)info);
+    n = scr_cell_list(CODE486_SP_POS_C0, 1);
+    scr_box_set((sint32 *)info);
     slide = (Obj_id_class(kind) == 0) << 15;
     while (n-- != 0)
     {
-        val = func_80048CEC(CODE486_SP_CELLS[n]);
+        val = scr_cell_get_index(CODE486_SP_CELLS[n]);
         if (val <= 0)
         {
-            if (CODE486_SP_CELLS[n] == func_80048BEC(CODE486_SP_POS_C0))
+            if (CODE486_SP_CELLS[n] == scr_cell_index(CODE486_SP_POS_C0))
             {
                 floor = -((val & 0x1F00) >> 1);
                 cy    = CODE486_SP_POS_C0->y;
@@ -1282,16 +1282,16 @@ sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
     CODE486_HIT *hit;
 
     *CODE486_SP_POS_C0 = *pos;
-    n                  = func_8004B1E0(CODE486_SP_POS_C0, 0);
+    n                  = scr_cell_list(CODE486_SP_POS_C0, 0);
     CODE486_SP_OFS.a   = 0;
     CODE486_SP_OFS.b   = 0;
     CODE486_SP_OFS.c   = 0;
     while (n-- != 0)
     {
-        val = func_80048CEC(CODE486_SP_CELLS[n]);
+        val = scr_cell_get_index(CODE486_SP_CELLS[n]);
         if (val <= 0)
         {
-            if (CODE486_SP_CELLS[n] == func_80048BEC(CODE486_SP_POS_C0) &&
+            if (CODE486_SP_CELLS[n] == scr_cell_index(CODE486_SP_POS_C0) &&
                 CODE486_SP_POS_C0->y == ~((val & 0x1F00) >> 1) - CODE486_SP_12E)
             {
                 return 0;
@@ -1341,7 +1341,7 @@ sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
     return 0;
 }
 
-sint32 func_8004B1E0(PL_SHORT_VECTOR *pos, sint32 keep_empty)
+sint32 scr_cell_list(PL_SHORT_VECTOR *pos, sint32 keep_empty)
 {
     uint16 ofs[4][2];
     sint16 *list;
@@ -1387,13 +1387,13 @@ sint32 func_8004B1E0(PL_SHORT_VECTOR *pos, sint32 keep_empty)
             break;
         }
         cell = x + z * CODE486_MAP_W;
-        val  = func_80048CEC(cell);
+        val  = scr_cell_get_index(cell);
         if (val != 0 || keep_empty != 0)
         {
             found = 0;
             for (j = 0; j < count; j++)
             {
-                if (val > 0 && val == func_80048CEC(list[j]))
+                if (val > 0 && val == scr_cell_get_index(list[j]))
                 {
                     found = 1;
                     break;
@@ -1409,7 +1409,7 @@ sint32 func_8004B1E0(PL_SHORT_VECTOR *pos, sint32 keep_empty)
     return count;
 }
 
-void func_8004B3C0(sint32 *arg)
+void scr_box_set(sint32 *arg)
 {
     if (arg != 0)
     {
@@ -1425,14 +1425,14 @@ void func_8004B3C0(sint32 *arg)
     }
 }
 
-sint32 func_8004B414(PL_WORK *wp)
+sint32 Scr_collision_check(PL_WORK *wp)
 {
     sint32 result;
     sint32 slide;
 
-    func_8004B3C0((sint32 *)wp->info78);
+    scr_box_set((sint32 *)wp->info78);
     slide  = (Obj_id_class(wp->value01) == 0) << 15;
-    result = func_8004B6AC(&wp->position, &wp->position_prev, wp->value74, slide);
+    result = scr_collision_calc(&wp->position, &wp->position_prev, wp->value74, slide);
     if (result != 0)
     {
         if (result > 0)
@@ -1486,8 +1486,8 @@ sint32 func_8004B5CC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sin
 {
     sint32 result;
 
-    func_8004B3C0((sint32 *)arg3);
-    result = func_8004B6AC(out, in, arg2, 0);
+    scr_box_set((sint32 *)arg3);
+    result = scr_collision_calc(out, in, arg2, 0);
     if (result != 0)
     {
         if (result > 0)
@@ -1518,7 +1518,7 @@ sint32 func_8004B5CC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sin
 // target height and val for the result. The two do { } while (0) levels around the box
 // corners and the one around the cell setup give retail's saved-register ranking (as in
 // func_80052674).
-sint32 func_8004B6AC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3)
+sint32 scr_collision_calc(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3)
 {
     PL_SHORT_VECTOR org;
     sint16 box[6];
@@ -1564,7 +1564,7 @@ sint32 func_8004B6AC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sin
     CODE486_SP_D8       = CODE486_SP_POS_C0->x - CODE486_SP_POS_C8->x;
     CODE486_SP_DA       = CODE486_SP_POS_C0->y - CODE486_SP_POS_C8->y;
     CODE486_SP_DC       = CODE486_SP_POS_C0->z - CODE486_SP_POS_C8->z;
-    count               = func_8004B1E0(CODE486_SP_POS_C0, 0);
+    count               = scr_cell_list(CODE486_SP_POS_C0, 0);
 retry:
     n = count;
     while (n-- != 0)
@@ -1573,11 +1573,11 @@ retry:
         CODE486_SP_POS_D0->y = CODE486_SP_POS_C0->y - CODE486_SP_POS_C8->y;
         CODE486_SP_POS_D0->z = CODE486_SP_POS_C0->z - CODE486_SP_POS_C8->z;
         id                   = CODE486_SP_CELLS[n];
-        val                  = func_80048CEC(id);
+        val                  = scr_cell_get_index(id);
         if (val <= 0)
         {
             found = 0;
-            if (id != func_80048BEC(CODE486_SP_POS_C0))
+            if (id != scr_cell_index(CODE486_SP_POS_C0))
             {
                 continue;
             }
@@ -3704,7 +3704,7 @@ sint32 func_80050BF4(PL_SHORT_VECTOR *vec)
 // Case 3's exit search sits one loop level deeper (an extra do/while (0)), as in
 // func_8004AF28: GCC weights references by loop depth, and only this depth ranks the
 // exit+0xE pointer above ev.z (a0/a1) as retail does.
-sint32 func_80050C2C(PL_WORK *pl)
+sint32 Scr_event_check(PL_WORK *pl)
 {
     CODE486_EVENT ev;
     PL_WORK *obj;
@@ -3713,7 +3713,7 @@ sint32 func_80050C2C(PL_WORK *pl)
     uint16 flags;
     sint32 dir;
 
-    if (func_800514FC(pl, (sint32 *)pl->info78, &ev) == 0)
+    if (scr_event_get(pl, (sint32 *)pl->info78, &ev) == 0)
     {
         return 0;
     }
@@ -3755,7 +3755,7 @@ sint32 func_80050C2C(PL_WORK *pl)
         case 4:
         case 5:
         case 6:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -3764,11 +3764,11 @@ sint32 func_80050C2C(PL_WORK *pl)
                 if (ev.x == exit->x && ev.y == exit->y && ev.z == exit->z &&
                     ((ev.rot - exit->rot + 0x200) & 0xFFF) <= 0x400)
                 {
-                    if (func_800519E4(exit) != 0)
+                    if (scr_exit_locked(exit) != 0)
                     {
                         break;
                     }
-                    if (func_80051A78(exit) != 0)
+                    if (scr_exit_event(exit) != 0)
                     {
                         break;
                     }
@@ -3786,7 +3786,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             break;
         case 3:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -3814,7 +3814,7 @@ sint32 func_80050C2C(PL_WORK *pl)
                         {
                             continue;
                         }
-                        if (func_800519E4(exit) != 0)
+                        if (scr_exit_locked(exit) != 0)
                         {
                             break;
                         }
@@ -3841,7 +3841,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             } while (0);
             break;
         case 8:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -3849,7 +3849,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             {
                 if (ev.x == exit->x && ev.y == exit->y && ev.z == exit->z)
                 {
-                    if (func_800519E4(exit) != 0)
+                    if (scr_exit_locked(exit) != 0)
                     {
                         break;
                     }
@@ -3911,7 +3911,7 @@ sint32 func_80050C2C(PL_WORK *pl)
         case 0x48:
         case 0x49:
         case 0x55:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA58[kind] + (flags & 0xF));
             }
@@ -3920,44 +3920,44 @@ sint32 func_80050C2C(PL_WORK *pl)
         case 0x62:
         case 0x63:
         case 0x64:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0x10, 0, D_8008AA58[kind] + (flags & 0xF));
             }
             break;
         case 0x2C:
         case 0x2D:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA6C[flags & 0xF]);
             }
             break;
         case 0x2F:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA44[flags & 0xF]);
             }
             break;
         case 0x38:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA60[flags & 0xF]);
             }
             break;
         case 0x3B:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA68[flags & 0xF]);
             }
             break;
         case 0x44:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0, 0, D_8008AA50[flags & 0xF]);
             }
             break;
         case 0x50:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -3981,7 +3981,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             break;
         case 0x52:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -4001,7 +4001,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             break;
         case 0x53:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -4019,13 +4019,13 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             break;
         case 0x54:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 CODE486_GAME_WORD174 |= 1 << flags;
             }
             break;
         case 0x56:
-            if (func_80051970(obj) == 0)
+            if (scr_check_press(obj) == 0)
             {
                 break;
             }
@@ -4035,7 +4035,7 @@ sint32 func_80050C2C(PL_WORK *pl)
             }
             break;
         case 0x60:
-            if (func_80051970(obj) != 0)
+            if (scr_check_press(obj) != 0)
             {
                 Message_event_set(0, 0x10, 0, D_8008AA70[flags & 0xF]);
             }
@@ -4047,7 +4047,7 @@ sint32 func_80050C2C(PL_WORK *pl)
 // The identity matrix is built with eight word stores through a word view (field stores
 // schedule the t words first). The do/while (0) levels below are loop-depth wrappers: they
 // only raise register priorities (left s2, area s3, hit s4) to retail's.
-sint32 func_800514FC(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
+sint32 scr_event_get(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
 {
     PL_SHORT_VECTOR base;
     PL_SHORT_VECTOR ahead;
@@ -4067,7 +4067,7 @@ sint32 func_800514FC(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
 
     ahead               = pl->position;
     base                = ahead;
-    n                   = func_8004B1E0(&base, 0);
+    n                   = scr_cell_list(&base, 0);
     ((sint32 *)&mtx)[0] = 0x1000;
     ((sint32 *)&mtx)[1] = 0;
     ((sint32 *)&mtx)[2] = 0x1000;
@@ -4097,7 +4097,7 @@ sint32 func_800514FC(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
     }
     while (n-- != 0)
     {
-        val = func_80048CEC(CODE486_SP_CELLS[n]);
+        val = scr_cell_get_index(CODE486_SP_CELLS[n]);
         if (val <= 0)
         {
             continue;
@@ -4203,7 +4203,7 @@ sint32 func_800514FC(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
     return 0;
 }
 
-sint32 func_80051970(PL_WORK *pl)
+sint32 scr_check_press(PL_WORK *pl)
 {
     uint32 state;
     uint32 pad;
@@ -4211,14 +4211,14 @@ sint32 func_80051970(PL_WORK *pl)
     if (pl != 0)
     {
         state = pl->routine_1;
-        pad   = pl->value11e;
+        pad   = pl->pad_trg;
         if (*(uint32 *)&pl->table180[0].z == 0)
         {
             if (state >= 2 && state != 4)
             {
                 return 0;
             }
-            if ((pad & pl->value136) == 0)
+            if ((pad & pl->key_check) == 0)
             {
                 return 0;
             }
@@ -4231,7 +4231,7 @@ sint32 func_80051970(PL_WORK *pl)
     return 0;
 }
 
-sint32 func_800519E4(CODE486_EXIT *exit)
+sint32 scr_exit_locked(CODE486_EXIT *exit)
 {
     if (Sce_flag_test(0x7E0) == 0)
     {
@@ -4252,7 +4252,7 @@ sint32 func_800519E4(CODE486_EXIT *exit)
     return 1;
 }
 
-sint32 func_80051A78(CODE486_EXIT *exit)
+sint32 scr_exit_event(CODE486_EXIT *exit)
 {
     switch (exit->value2)
     {
@@ -4290,39 +4290,39 @@ sint32 func_80051A78(CODE486_EXIT *exit)
     }
 }
 
-void func_80051B40(void)
+void Solid_init(void)
 {
-    D_80098894 = D_800BC058;
-    D_80098898 = D_800BC360;
+    Solid_ptr       = Solid_tbl;
+    Solid_mover_ptr = Solid_mover_tbl;
 }
 
-void func_80051B68(PL_WORK *obj, sint32 arg1, sint32 arg2, uint32 arg3)
+void Solid_set(PL_WORK *obj, sint32 arg1, sint32 arg2, uint32 arg3)
 {
     if (obj->routine_0 & 3)
     {
-        D_80098894->obj.pl = obj;
-        D_80098894->value4 = arg1;
-        D_80098894->value6 = arg2;
-        D_80098894->value8 = arg3;
-        D_80098894++;
+        Solid_ptr->obj.pl = obj;
+        Solid_ptr->value4 = arg1;
+        Solid_ptr->value6 = arg2;
+        Solid_ptr->value8 = arg3;
+        Solid_ptr++;
     }
 }
 
-void func_80051BAC(PL_WORK *obj)
+void Solid_mover_set(PL_WORK *obj)
 {
     PL_WORK **list;
 
     if (obj->routine_0 & 3)
     {
-        list       = D_80098898;
-        *list      = obj;
-        D_80098898 = list + 1;
+        list            = Solid_mover_ptr;
+        *list           = obj;
+        Solid_mover_ptr = list + 1;
     }
     obj->value7c = 0;
 }
 
 // D_8009A770 is a stand-in solid inside D_8009A710, reached here through its own symbol.
-void func_80051BE4(void)
+void Solid_check(void)
 {
     PL_WORK **pp;
     CODE486_REQ *req;
@@ -4333,12 +4333,12 @@ void func_80051BE4(void)
     uint32 value;
 
     count = 0;
-    pp    = D_800BC360;
-    while (pp != D_80098898)
+    pp    = Solid_mover_tbl;
+    while (pp != Solid_mover_ptr)
     {
         result = 0;
-        req    = D_800BC058;
-        while (req != D_80098894)
+        req    = Solid_tbl;
+        while (req != Solid_ptr)
         {
             result = 0;
             if (req->obj.pl != *pp)
@@ -4428,8 +4428,8 @@ void func_80051BE4(void)
         count = 0;
         pp++;
     }
-    D_80098894 = D_800BC058;
-    D_80098898 = D_800BC360;
+    Solid_ptr       = Solid_tbl;
+    Solid_mover_ptr = Solid_mover_tbl;
 }
 
 sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32 value8,
@@ -4454,7 +4454,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
 
     old74 = pl->value74;
     func_800536B0((PL_WORK *)key, &now, &prev, index);
-    func_8004B3C0((sint32 *)pl->info78);
+    scr_box_set((sint32 *)pl->info78);
     slide = (Obj_id_class(pl->value01) == 0) << 15;
     if (func_80052674(pl, key, &now, flag, slide) == 0)
     {
@@ -4598,7 +4598,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
     return result;
 }
 
-void func_80052528(sint32 key)
+void Ride_clear(sint32 key)
 {
     sint32 i;
     uint32 mask;
@@ -4613,7 +4613,7 @@ void func_80052528(sint32 key)
     {
         if ((sint32)(mask << i) < 0)
         {
-            func_80052644(key, &players->link);
+            ride_clear_one(key, &players->link);
         }
     }
     objs3c0 = Em_work_tbl;
@@ -4622,7 +4622,7 @@ void func_80052528(sint32 key)
     {
         if ((sint32)(mask << i) < 0)
         {
-            func_80052644(key, &objs3c0->link);
+            ride_clear_one(key, &objs3c0->link);
         }
     }
     objs5a4 = D_800C3580;
@@ -4631,7 +4631,7 @@ void func_80052528(sint32 key)
     {
         if ((sint32)(mask << i) < 0)
         {
-            func_80052644(key, &objs5a4->link);
+            ride_clear_one(key, &objs5a4->link);
         }
     }
     objs10c = Shl_work_tbl;
@@ -4640,12 +4640,12 @@ void func_80052528(sint32 key)
     {
         if ((sint32)(mask << i) < 0)
         {
-            func_80052644(key, &objs10c->link);
+            ride_clear_one(key, &objs10c->link);
         }
     }
 }
 
-void func_80052644(sint32 key, CODE486_LINK *pl)
+void ride_clear_one(sint32 key, CODE486_LINK *pl)
 {
     if (pl->value76 != 0 && key == pl->value_c0)
     {
@@ -4746,7 +4746,7 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
 
     func_800536B0((PL_WORK *)arg0, &now, &prev, index);
     result = 0;
-    func_8004B3C0((sint32 *)pl->info78);
+    scr_box_set((sint32 *)pl->info78);
     slide = (Obj_id_class(pl->value01) == 0) << 15;
     if (func_80052674(pl, arg0, &now, arg3, slide) != 0)
     {
@@ -4778,7 +4778,7 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
 // slide ^ 0x8000 out of both loop levels, where retail recomputes it before the area loop.
 // The push block copies PUSH[0..2]/[6..8] straight into [3..5]/[9..11] after moving C0 by
 // PUSH[3..5] (no temporaries), then clears the sources. The do { } while (0) around the
-// box corners (as in func_80049C54) ranks &area->hits above left and hit, as retail.
+// box corners (as in Scr_line_calc) ranks &area->hits above left and hit, as retail.
 sint32 func_80052B04(sint32 key, PL_FIXED_VECTOR *now, PL_FIXED_VECTOR *cur, PL_FIXED_VECTOR *old,
                      sint32 keep, sint32 slide)
 {
@@ -4944,7 +4944,7 @@ done:
     return result;
 }
 
-void func_80053158(PL_WORK *pl, uint32 arg)
+void Ride_carry(PL_WORK *pl, uint32 arg)
 {
     CODE486_MTX mtx;
     PL_FIXED_VECTOR pos;
@@ -4979,7 +4979,7 @@ void func_80053158(PL_WORK *pl, uint32 arg)
     }
 }
 
-void func_8005331C(PL_WORK *pl, uint32 arg)
+void Ride_carry_saved(PL_WORK *pl, uint32 arg)
 {
     CODE486_MTX mtx;
     PL_FIXED_VECTOR pos;

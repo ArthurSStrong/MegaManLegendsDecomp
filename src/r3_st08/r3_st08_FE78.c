@@ -219,7 +219,7 @@ void func_801104C8(STAGE_OBJ *wp)
     switch (temp_v1)
     {
         case 0:
-            if (func_80042238((STCOM_PL_WORK *)&Player_work) != 0)
+            if (Player_control_off((STCOM_PL_WORK *)&Player_work) != 0)
             {
                 func_80110150(wp);
                 Sound_fade_start(0x10);
@@ -255,7 +255,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
         case 1:
             if (!(Moji_flag & 0x8000000) && Sound_fade_flags == 0)
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 Sound_call2(0x16D, &Player_work.position);
                 Sound_work.volume_6 = 0x50;
                 Cd_xa_play_id(0x2001000E);
@@ -277,7 +277,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             }
             break;
         case 3:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sound_call2(0x16D, &Player_work.position);
                 Sound_fade_start(0x40);
@@ -429,7 +429,7 @@ void func_80110A54(STAGE_OBJ50 *wp)
             if (D_800C356C == wp->routine_1)
             {
                 D_800C356C++;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 Sound_work.volume_6 = 0x7F;
                 func_80031A4C(wp);
             }
@@ -472,7 +472,7 @@ void func_80110C28(STAGE_OBJ50 *wp)
 
 void func_80110CC0(STAGE_OBJ50 *wp)
 {
-    func_80051B68(wp, 7, 0, 0);
+    Solid_set(wp, 7, 0, 0);
     if (STCOM_PLAYER_WORK_PTR->target_184 == wp)
     {
         STCOM_PLAYER_WORK_PTR->target_184 = NULL;

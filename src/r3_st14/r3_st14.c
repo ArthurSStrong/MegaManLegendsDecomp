@@ -39,7 +39,7 @@ void func_80100250(void)
 
 void func_801003B0(void)
 {
-    func_8001E4C4(D_80114FFC, D_80115004[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_80114FFC, D_80115004[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
@@ -130,7 +130,7 @@ void func_80100580(STAGE_ROOM *wp)
             {
                 Sce_flag_on(0x41);
                 Sce_event_start(0x28);
-                func_8001E4C4(D_80114FFC, D_80115064);
+                Sce_exit_lock_list(D_80114FFC, D_80115064);
                 wp->routine_4++;
             }
             break;
@@ -138,7 +138,7 @@ void func_80100580(STAGE_ROOM *wp)
             if (Sce_flag_test(0x50))
             {
                 MojiTaskExec2(4, 0x10);
-                func_8001E4C4(D_80114FFC, D_8011506C);
+                Sce_exit_lock_list(D_80114FFC, D_8011506C);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -175,7 +175,7 @@ void func_80100784(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sound_fade_start(0x10);
                 wp->routine_5++;
@@ -283,7 +283,7 @@ void func_80100A54(STAGE_ROOM *wp)
                 func_8003697C();
                 D_800A395C = 1;
                 func_80039820();
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 Player_work.flags_0 |= 3;
                 wp->routine_5++;
                 break;
@@ -367,7 +367,7 @@ void func_80100D00(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 wp->reserved09[1] = 0x80;
                 Sound_fade_start(0x10);
@@ -474,7 +474,7 @@ void func_80100F7C(STAGE_ROOM *wp)
     func_8003187C(wp->child_24);
     func_801010F4();
     pl = &Player_work;
-    func_80042314(pl);
+    Player_control_on(pl);
     pl->flags_0 |= 3;
     func_8003697C();
     D_800A395C = 1;
@@ -555,6 +555,6 @@ void func_801010F4(void)
         wp->position_fixed.v.x = wp->position.x << 16;
         wp->position_fixed.v.y = wp->position.y << 16;
         wp->position_fixed.v.z = wp->position.z << 16;
-        func_8005D620(wp, 0, 0, 0x51, 0x7080);
+        Gauge_open(wp, 0, 0, 0x51, 0x7080);
     }
 }

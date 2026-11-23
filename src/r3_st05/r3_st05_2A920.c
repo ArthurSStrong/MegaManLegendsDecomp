@@ -24,7 +24,7 @@ void func_8012A96C(STAGE_OBJ50 *wp)
     wp->matrix.words[7] = 0;
     scale.x = scale.y = scale.z = 0x400;
     ScaleMatrix(&wp->matrix.m, &scale);
-    y             = func_80048EA4(&wp->pos_38, NULL, 0, wp->index_1);
+    y             = Scr_height_calc(&wp->pos_38, NULL, 0, wp->index_1);
     wp->color_40  = 0x808080;
     wp->pos_38.y  = y - 0xA;
     wp->model_10  = D_80137760;
@@ -79,7 +79,7 @@ void func_8012AB24(ST05_PRIZE *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl) != 0 && func_8003A13C() == 0)
+            if (Player_control_off(pl) != 0 && func_8003A13C() == 0)
             {
                 wp->routine_1++;
             }
@@ -119,16 +119,16 @@ void func_8012AB24(ST05_PRIZE *wp)
                 Sound_call(0xA4, 0, 0);
                 if (wp->variant_3 == 0)
                 {
-                    func_80037738(func_80048C60(&wp->pos_38) | 0xF0000, 10000);
+                    func_80037738(Scr_cell_get(&wp->pos_38) | 0xF0000, 10000);
                 }
                 else if (wp->variant_3 == 1)
                 {
-                    func_80037738(func_80048C60(&wp->pos_38) | 0xF0000, 10000);
+                    func_80037738(Scr_cell_get(&wp->pos_38) | 0xF0000, 10000);
                     Sce_flag_on(0x671);
                 }
                 else if (wp->variant_3 == 2)
                 {
-                    func_80037738(func_80048C60(&D_80137820[wp->value_E]) | 0xF0000, 10000);
+                    func_80037738(Scr_cell_get(&D_80137820[wp->value_E]) | 0xF0000, 10000);
                     Sce_flag_on(0x672);
                 }
                 func_8012AFA0();
@@ -154,7 +154,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             }
             break;
         case 10:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -184,7 +184,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             break;
         case 13:
             Message_event_set(&wp->pos_38, 2, 0,
-                          (Sce_flag_test(0x671) || Sce_flag_test(0x672)) ? 0x40 : 0x3F);
+                              (Sce_flag_test(0x671) || Sce_flag_test(0x672)) ? 0x40 : 0x3F);
             wp->routine_1++;
             break;
         case 14:
@@ -206,7 +206,7 @@ void func_8012AB24(ST05_PRIZE *wp)
         case 15:
             if (func_8003A13C() == 0)
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 func_80031A4C(wp);
                 Sce_flag_off(0x670);
@@ -330,7 +330,7 @@ void func_8012B314(STAGE_OBJ50 *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -367,7 +367,7 @@ void func_8012B314(STAGE_OBJ50 *wp)
         case 4:
             if (!(Moji_flag & 0x08000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 func_80031A4C(wp);
             }
             break;
@@ -608,7 +608,7 @@ void func_8012BB3C(void)
                 case 0x18:
                 case 0x19:
                 case 0x21:
-                    func_80052528(slot);
+                    Ride_clear(slot);
                     func_80031A4C(slot);
                     break;
             }
@@ -627,7 +627,7 @@ void func_8012BBF8(STAGE_OBJ50 *wp)
             wp->routine_1++;
             break;
         case 1:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 wp->routine_1++;
             }
@@ -712,7 +712,7 @@ void func_8012BD2C(STAGE_OBJ50 *wp)
         case 5:
             if (!(Moji_flag & 0x08000000) && Sound_fade_flags == 0)
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 MojiTaskExec2(2, 0x39);
                 msg2 = Game_work_90[wp->value_F].kind_0 + 0x64;
                 MojiTaskExec2(3, wp->value_F * 4 + msg2);
@@ -800,7 +800,7 @@ void func_8012C1F4(STAGE_OBJ *wp)
     switch (temp_v1)
     {
         case 0:
-            if (func_80042238((STCOM_PL_WORK *)&Player_work) != 0)
+            if (Player_control_off((STCOM_PL_WORK *)&Player_work) != 0)
             {
                 MojiTaskExec2(0, 0x32);
                 wp->routine_3++;
@@ -824,7 +824,7 @@ void func_8012C29C(STAGE_OBJ *wp)
     switch (temp_v1)
     {
         case 0:
-            if (func_80042238((STCOM_PL_WORK *)&Player_work) != 0)
+            if (Player_control_off((STCOM_PL_WORK *)&Player_work) != 0)
             {
                 MojiTaskExec2(0, 0x34);
                 wp->routine_3++;
@@ -845,7 +845,7 @@ void func_8012C344(STAGE_OBJ50 *wp)
     switch (wp->routine_3)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 func_8012B948(wp);
                 func_8001E3F0(7);
@@ -893,7 +893,7 @@ void func_8012C4F4(STAGE_OBJ *wp)
     switch (wp->routine_3)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
                 Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
@@ -939,7 +939,7 @@ void func_8012C6A0(STAGE_OBJ50 *wp)
     switch (wp->routine_3)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 func_8012B948(wp);
                 func_8001E3F0(7);
@@ -980,7 +980,7 @@ void func_8012C830(STAGE_OBJ *wp)
     switch (wp->routine_3)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
                 Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
@@ -1056,7 +1056,7 @@ void func_8012CA40(STAGE_OBJ50 *wp)
                 Sce_flag_off(0x7E0);
                 Sce_flag_off(0x200);
                 STAGE_GAME.value_78 = 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 func_80031A4C(wp);
             }
             break;

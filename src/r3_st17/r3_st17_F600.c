@@ -218,7 +218,7 @@ void func_8010FEC4(STCOM23_WORK *wp)
         }
         VectorNormalS(&d, &unit);
         Vec_turn_toward(&dir, &unit, &wp->dir_CC, D_8011BF8C[wp->variant_3].turn_8,
-                      D_8011BF8C[wp->variant_3].turn_C);
+                        D_8011BF8C[wp->variant_3].turn_C);
         wp->dir_CC     = dir;
         speed          = wp->speed_6E;
         wp->velocity.x = (dir.x * speed) >> 4;
@@ -435,7 +435,7 @@ void func_80110774(STCOM18_WORK *wp)
     wp->hit_BC   = 0;
     Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                   wp->kind_E | 0x8000000, 0, 0x80);
-    if (func_80049C24(wp))
+    if (Scr_line_check(wp))
     {
         wp->routine_0 = 2;
     }
@@ -499,7 +499,7 @@ void func_80110938(STCOM18_WORK *wp)
         Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                       wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
-        hit        = func_80049C24(wp);
+        hit        = Scr_line_check(wp);
         if (hit)
         {
             wp->routine_0++;
@@ -604,7 +604,7 @@ void func_80110E58(ST17_10C_B *wp)
     STCOM_SVECTOR target;
     sint32 hit;
 
-    hit = func_80049C24(wp);
+    hit = Scr_line_check(wp);
     if (hit != 0)
     {
         func_80037738(hit, D_8011C11C[wp->byte_D]);
@@ -1282,7 +1282,7 @@ void func_80112748(ST17_10C *wp, ST17_PART_D0 *part)
                       part->value_C | 0x04000000, 0, flag);
     }
     wp->value_BC = 0;
-    if (func_80049C24(wp) != 0)
+    if (Scr_line_check(wp) != 0)
     {
         part->flags_0 |= 1;
     }
@@ -1291,7 +1291,7 @@ void func_80112748(ST17_10C *wp, ST17_PART_D0 *part)
 void func_80112874(STAGE_OBJ *wp)
 {
     D_8011C248[wp->routine_0](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_801128C4(ST17_SHL *wp)
@@ -1443,17 +1443,17 @@ void func_80112E44(ST17_SHL *wp)
     if (wp->type_3 & 0x40)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
-                      0, 0x80);
+                   0, 0x80);
     }
     else if (wp->index_c)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
     else
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
 }
 

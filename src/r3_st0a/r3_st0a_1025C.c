@@ -56,7 +56,7 @@ void func_80110438(ST0A_10C_B *wp)
     STCOM_SVECTOR target;
     sint32 hit;
 
-    hit = func_80049C24(wp);
+    hit = Scr_line_check(wp);
     if (hit != 0)
     {
         func_80037738(hit, D_80116404[wp->byte_D]);
@@ -470,14 +470,14 @@ void func_80111680(ST0A_PIECE *wp)
         return;
     }
     wp->routine_2 = 3;
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_80111788(ST0A_PIECE *wp)
 {
     STCOM_FIXED_VECTOR scale;
 
-    if ((wp->hit_C4 & 0x1A000000) || func_80049C24(wp) || wp->hit_7C != 0)
+    if ((wp->hit_C4 & 0x1A000000) || Scr_line_check(wp) || wp->hit_7C != 0)
     {
         func_801118B4(wp);
         Close_SHL_WORK(wp);

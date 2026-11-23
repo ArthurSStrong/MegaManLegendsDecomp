@@ -27,7 +27,7 @@ void stcom05_func_003C(STCOM05_WORK *wp)
     wp->pos_saved = wp->position;
     if (wp->flags_0 & 1)
     {
-        func_80051B68(wp, 1, -1, 0x1000008);
+        Solid_set(wp, 1, -1, 0x1000008);
     }
     if (wp->flags_0 & 2)
     {
@@ -109,7 +109,7 @@ void stcom05_func_029C(STCOM05_WORK *wp)
         if (!(Moji_flag & 0x8000000))
         {
             pl->flags_bd |= 0x40;
-            func_80042238(pl);
+            Player_control_off(pl);
             MojiTaskExec2(0, 0x13);
             wp->routine_0 = 3;
             wp->routine_1 = 0;
@@ -152,7 +152,7 @@ void stcom05_func_0484(STCOM05_WORK *wp)
     else if (D_800C356C == 2 && Fade_busy == 0)
     {
         D_800C356C++;
-        func_80042314(&Player_work);
+        Player_control_on(&Player_work);
     }
 }
 
@@ -474,7 +474,7 @@ void stcom05_func_0D44(STCOM05_WORK *wp)
         }
     }
     Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y + 0x800, wp->velocity.v.x, 0,
-                  0);
+                 0);
     stcom05_func_0E64(wp);
     ctl->dist_10 = Calc_distance(&wp->position, &stcom05_D_0044[ctl->index_20]);
     if (ctl->dist_10 < 0x25D)
@@ -492,7 +492,7 @@ void stcom05_func_0E64(STCOM05_WORK *wp)
 {
     sint32 value;
 
-    value = func_80049C24(wp);
+    value = Scr_line_check(wp);
     if (value != 0)
     {
         func_80037BB4(wp);
@@ -539,7 +539,7 @@ void stcom05_func_0F78(STCOM05_WORK *wp)
     wp->pos_saved = wp->position;
     if (wp->flags_0 & 1)
     {
-        func_80051B68(wp, 1, -1, 0x20000008);
+        Solid_set(wp, 1, -1, 0x20000008);
     }
     if (wp->flags_0 & 2)
     {

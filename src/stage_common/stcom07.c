@@ -72,7 +72,7 @@ void stcom07_func_003C(STCOM07_WORK *wp)
 
 void stcom07_func_02F4(STCOM07_WORK *wp)
 {
-    if (func_80048C60(&wp->position) == func_80048C60(&Player_work.position) &&
+    if (Scr_cell_get(&wp->position) == Scr_cell_get(&Player_work.position) &&
         Sce_flag_test(0x7B1) != 0)
     {
         wp->timer_B = 24;
@@ -113,7 +113,7 @@ void stcom07_func_0360(STCOM07_WORK *wp)
 
 void stcom07_func_0488(STCOM07_WORK *wp)
 {
-    if (func_80048C60(&wp->position) == func_80048C60(&Player_work.position) &&
+    if (Scr_cell_get(&wp->position) == Scr_cell_get(&Player_work.position) &&
         Sce_flag_test(0x7B1) == 0)
     {
         wp->timer_B = 0;

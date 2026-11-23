@@ -122,7 +122,7 @@ void func_8011B00C(ST06_EVENT *wp)
     }
     for (i = 0; i < 7; i++)
     {
-        D_8012BB3C[i] = func_80037C14(func_80048C60(&D_80125A80[i]));
+        D_8012BB3C[i] = func_80037C14(Scr_cell_get(&D_80125A80[i]));
     }
     wp->routine_1 = 0;
     wp->routine_0++;
@@ -138,25 +138,25 @@ void func_8011B164(ST06_EVENT *wp)
     {
         if (STAGE_SCENE_BYTE(0) == 0)
         {
-            if (Sce_flag_test(0x627) && !Sce_flag_test(0x622) && func_80042208())
+            if (Sce_flag_test(0x627) && !Sce_flag_test(0x622) && Player_atari_off())
             {
                 Sce_flag_on(0x621);
                 Sce_flag_on(0x622);
             }
             else if (level < 0x7E && !Sce_flag_test(0x623) && !Sce_flag_test(0x624) &&
-                     !Sce_flag_test(0x625) && func_80042208())
+                     !Sce_flag_test(0x625) && Player_atari_off())
             {
                 Sce_flag_on(0x621);
                 Sce_flag_on(0x623);
             }
             else if (level < 0x3F && Sce_flag_test(0x623) && !Sce_flag_test(0x624) &&
-                     !Sce_flag_test(0x625) && func_80042208())
+                     !Sce_flag_test(0x625) && Player_atari_off())
             {
                 Sce_flag_on(0x621);
                 Sce_flag_on(0x624);
             }
             else if (level == 0 && Sce_flag_test(0x623) && Sce_flag_test(0x624) &&
-                     !Sce_flag_test(0x625) && func_80042208())
+                     !Sce_flag_test(0x625) && Player_atari_off())
             {
                 Sce_flag_on(0x621);
                 Sce_flag_on(0x625);
@@ -165,7 +165,7 @@ void func_8011B164(ST06_EVENT *wp)
                     Sce_flag_on(0x629);
                 }
             }
-            else if (Sce_flag_test(0x628) && !Sce_flag_test(0x626) && func_80042208())
+            else if (Sce_flag_test(0x628) && !Sce_flag_test(0x626) && Player_atari_off())
             {
                 Sce_flag_on(0x621);
                 Sce_flag_on(0x626);
@@ -209,7 +209,7 @@ sint32 func_8011B444(void)
     best = 0xBB;
     for (; i < 7; i++)
     {
-        d = func_80037C14(func_80048C60(&D_80125A80[i]));
+        d = func_80037C14(Scr_cell_get(&D_80125A80[i]));
         if (d < D_8012BB3C[i] && d < best)
         {
             best = d;

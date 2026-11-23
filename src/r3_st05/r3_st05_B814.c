@@ -475,7 +475,7 @@ void func_8010C6D0(ST05_GUARD *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -488,7 +488,7 @@ void func_8010C6D0(ST05_GUARD *wp)
             ctl->timer_4     = t;
             wp->velocity.v.y = (4 - t) * 8;
             Obj_pos_set(wp, wp->velocity.v.x * 16, wp->velocity.v.y * 16, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -538,7 +538,7 @@ void func_8010C8A0(ST05_GUARD *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -551,7 +551,7 @@ void func_8010C8A0(ST05_GUARD *wp)
             ctl->timer_4     = t;
             wp->velocity.v.y = (8 - t) * 8;
             Obj_pos_set(wp, wp->velocity.v.x * 16, wp->velocity.v.y * 16, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -650,7 +650,7 @@ void func_8010CA98(ST05_GUARD *wp)
         case 2:
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel_4C.y;
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)
@@ -713,7 +713,7 @@ void func_8010CE38(ST05_GUARD *wp)
                               Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if ((hit & 0xF00) || wp->position.y - wp->position_prev.y > 0x10)
@@ -762,7 +762,7 @@ void func_8010CFC4(ST05_GUARD *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -775,7 +775,7 @@ void func_8010CFC4(ST05_GUARD *wp)
             ctl->timer_4     = t;
             wp->velocity.v.y = (4 - t) * 8;
             Obj_pos_set(wp, wp->velocity.v.x * 16, wp->velocity.v.y * 16, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit != 0)
             {
                 if (hit & 0xF00)

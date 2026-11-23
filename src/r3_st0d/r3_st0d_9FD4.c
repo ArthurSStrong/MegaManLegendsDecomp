@@ -42,7 +42,7 @@ void func_8010A0C0(STAGE_OBJ50 *wp)
     D_80112458[wp->variant_3](wp);
     if (wp->variant_3 != 2)
     {
-        func_80051B68(wp, 7, 0, 0);
+        Solid_set(wp, 7, 0, 0);
         pos = wp->pos_38;
         pos.y -= 0x2D;
         Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
@@ -112,7 +112,7 @@ void func_8010A2EC(ST0D_STCOM21_WORK *wp)
     switch (wp->routine_2)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -153,7 +153,7 @@ void func_8010A2EC(ST0D_STCOM21_WORK *wp)
         case 2:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 Player_work.target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_1 = 0;
@@ -348,7 +348,7 @@ void func_8010AB1C(STAGE_OBJ50 *wp)
 {
     STCOM_SVECTOR pos;
 
-    func_80051B68(wp, 7, 0, 0);
+    Solid_set(wp, 7, 0, 0);
     D_8011248C[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
@@ -403,7 +403,7 @@ void func_8010ACC0(ST0D_STCOM21_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -444,7 +444,7 @@ void func_8010ACC0(ST0D_STCOM21_WORK *wp)
         case 2:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 Player_work.target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_0 = 1;

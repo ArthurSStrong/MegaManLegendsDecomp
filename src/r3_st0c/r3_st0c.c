@@ -22,7 +22,7 @@ void func_80100168(STAGE_ROOM *wp)
             D_800BC7F0 = D_8010BF2C;
             wp->tbl_A4 = (STAGE_ROOM2_FUNC *)D_8010C078;
             wp->timer_C = 0;
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 owner      = (ST0C_VIEW *)Open_SHL_WORK();
                 D_801129A0 = owner;
@@ -148,13 +148,13 @@ void func_80100168(STAGE_ROOM *wp)
             break;
         case 6:
             pl->flags_bd |= 0x20;
-            D_800C0F96 = pl->value_124;
+            Pl_demo_pad = pl->value_124;
             wp->routine_5++;
             break;
         case 7:
             if (pl->position.z < 0x1C20)
             {
-                D_800C0F96 = 0;
+                Pl_demo_pad = 0;
                 D_801129A0->flags_0 |= 6;
                 Sce_camera_start(0, 0, 0);
                 D_800BC7F0 = D_8010BF78;
@@ -204,7 +204,7 @@ void func_80100168(STAGE_ROOM *wp)
             break;
         case 11:
             Sound_call2(0x17D, &D_801129A0->position);
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             Obj_work_flag_change(8, 2);
             D_800A395C = 1;
             func_8003A264();
@@ -253,7 +253,7 @@ void func_801008FC(STAGE_ROOM *wp)
         {
             D_800C356C++;
             wp->flags_0 = 0;
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
         }
     }
     Sce_camera_script_exec();
@@ -293,7 +293,7 @@ void func_80100A40(STAGE_ROOM *wp)
     D_801129A0->rotation.z       = 0;
     obj->value_EC                = 2;
     D_801129A0->value_44         = 0x140;
-    func_80042314(&Player_work);
+    Player_control_on(&Player_work);
     Obj_work_flag_change(8, 2);
     wp->flags_0 = 0;
 }
@@ -356,7 +356,7 @@ void func_80100C18(void)
 void func_80100DE8(void)
 {
     Sce_slot_list_clear();
-    func_8001E4C4(D_8010CB98, D_8010CBA0[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_8010CB98, D_8010CBA0[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
@@ -384,7 +384,7 @@ void func_80100ED4(STAGE_ROOM *wp)
         pos.x = 0xB00;
         pos.y = 0;
         pos.z = 0x900;
-        func_8003AC9C(func_80048C60(&pos), 0xE0100);
+        func_8003AC9C(Scr_cell_get(&pos), 0xE0100);
         wp->routine_4 = 0xFF;
     }
 }
@@ -434,7 +434,7 @@ void func_80101000(STAGE_ROOM *wp)
             if (Sce_flag_test(0x30))
             {
                 func_8003786C(0x19D);
-                func_8001E4C4(D_8010CB98, D_8010CBC0);
+                Sce_exit_lock_list(D_8010CB98, D_8010CBC0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -781,7 +781,7 @@ void func_801019A8(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Sound_fade_start(0x10);
                 func_8001B314();
@@ -863,7 +863,7 @@ void func_801019A8(STAGE_ROOM *wp)
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
                 STAGE_PL.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

@@ -5,7 +5,7 @@
 
 #ifdef __wasm32__
 void Work_close_apply(void);
-void func_80051B40(void);
+void Solid_init(void);
 void Atari_init(void);
 void Debug_init(void);
 void func_8002CFA4(void);
@@ -453,7 +453,7 @@ void func_8001E3F0(sint32 arg)
 #endif
 }
 
-void func_8001E460(sint32 arg0, sint32 arg1, sint32 arg2)
+void Sce_exit_lock(sint32 arg0, sint32 arg1, sint32 arg2)
 {
     if (arg1 != 0)
     {
@@ -472,7 +472,7 @@ void func_8001E460(sint32 arg0, sint32 arg1, sint32 arg2)
 }
 
 // The flags cursor is a local copy: walking the parameter itself swaps its register with i.
-void func_8001E4C4(uint8 *ids, uint8 *flags)
+void Sce_exit_lock_list(uint8 *ids, uint8 *flags)
 {
     sint32 i;
     uint8 *flag;
@@ -482,7 +482,7 @@ void func_8001E4C4(uint8 *ids, uint8 *flags)
     {
         if (*flag != 0xFF)
         {
-            func_8001E460(*ids, *flag & 1, (*flag >> 1) & 1);
+            Sce_exit_lock(*ids, *flag & 1, (*flag >> 1) & 1);
         }
     }
 }
@@ -997,7 +997,7 @@ sint32 Sce_room_load(void)
         }
     }
     func_8002CFA4();
-    func_80051B40();
+    Solid_init();
     Atari_init();
     Debug_init();
     ((SCENE_FUNC)func_800179FC)(); // retail passes no arguments here

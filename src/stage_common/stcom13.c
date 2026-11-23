@@ -186,7 +186,7 @@ void stcom13_func_04E8(STCOM13_WORK *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -197,7 +197,7 @@ void stcom13_func_04E8(STCOM13_WORK *wp)
         case 2:
             wp->velocity.v.y = (4 - --ctl->timer_4) << 3;
             Obj_pos_set(wp, wp->velocity.v.x * 16, wp->velocity.v.y * 16, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit)
             {
                 if (hit & 0xF00)
@@ -246,7 +246,7 @@ void stcom13_func_06B8(STCOM13_WORK *wp)
                 if (ctl->timer_4 < 2)
                 {
                     Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
-                    func_8004B414(wp);
+                    Scr_collision_check(wp);
                 }
                 break;
             }
@@ -257,7 +257,7 @@ void stcom13_func_06B8(STCOM13_WORK *wp)
         case 2:
             wp->velocity.v.y = (8 - --ctl->timer_4) << 3;
             Obj_pos_set(wp, wp->velocity.v.x * 16, wp->velocity.v.y * 16, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit)
             {
                 if (hit & 0xF00)
@@ -360,7 +360,7 @@ void stcom13_func_08B0(STCOM13_WORK *wp)
         case 2:
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->gravity_4E;
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit)
             {
                 if (hit & 0xF00)
@@ -419,7 +419,7 @@ void stcom13_func_0C24(STCOM13_WORK *wp)
                               Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if ((hit & 0xF00) || STCOM_ABS(wp->position.y - wp->position_prev.y) > 16)

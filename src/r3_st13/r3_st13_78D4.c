@@ -101,7 +101,7 @@ void func_80107B1C(STAGE_OBJ *wp)
             wp->routine_2++;
             // fall through
         case 2:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sce_flag_on(0x647);
                 MojiTaskExec2(0, 0xB);
@@ -111,7 +111,7 @@ void func_80107B1C(STAGE_OBJ *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 wp->routine_0 = 0;
                 wp->routine_1 = 0;
             }

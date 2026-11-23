@@ -96,20 +96,20 @@ void func_80100524(void)
 void func_801007B4(void)
 {
     Sce_slot_list_clear();
-    func_8001E4C4(D_801152E4, D_801152EC[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_801152E4, D_801152EC[STAGE_GAME_VALUE_52]);
     if (STAGE_GAME_VALUE_52 == 0)
     {
         if (Sce_flag_test(2))
         {
-            func_8001E4C4(D_801152E4, D_801152EC[14]);
+            Sce_exit_lock_list(D_801152E4, D_801152EC[14]);
         }
         else if (Sce_flag_test(0xE))
         {
-            func_8001E4C4(D_801152E4, D_801152EC[13]);
+            Sce_exit_lock_list(D_801152E4, D_801152EC[13]);
         }
         else if (Sce_flag_test(0))
         {
-            func_8001E4C4(D_801152E4, D_801152EC[12]);
+            Sce_exit_lock_list(D_801152E4, D_801152EC[12]);
         }
     }
     *(uint32 *)&D_800989F8.routine_4 = 0;
@@ -826,7 +826,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
             wp->routine_6++;
             // fall through
         case 1:
-            if (!func_80042238(pl))
+            if (!Player_control_off(pl))
             {
                 break;
             }
@@ -946,7 +946,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
         case 11:
             if (--wp->timer_C == 0)
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
                 Sce_flag_on(3);
@@ -988,7 +988,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
     {
         case 0:
         case 1:
-            if (!func_80042238(pl))
+            if (!Player_control_off(pl))
             {
                 break;
             }
@@ -1084,7 +1084,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
             break;
         case 7:
             wp->flags_0 = 0;
-            func_80042314(pl);
+            Player_control_on(pl);
             break;
     }
     if (wp->routine_6 == 4 && *(uint8 *)wp->tbl_A4 != 0xFF)
@@ -1143,7 +1143,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             }
             break;
         case 2:
-            if (!(Moji_flag & 0x08000000) && func_80042238(pl))
+            if (!(Moji_flag & 0x08000000) && Player_control_off(pl))
             {
                 func_80039E50();
                 pl->flags_BD &= ~0x40;
@@ -1293,7 +1293,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             }
             break;
         case 11:
-            func_80042314(pl);
+            Player_control_on(pl);
             D_800A395C = 1;
             func_80039820();
             func_80103CC4(5);
@@ -1302,7 +1302,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             break;
         case 12:
             func_80039E50();
-            func_80042314(pl);
+            Player_control_on(pl);
             wp->flags_0 = 0;
             Sce_flag_on(0);
             pl->flags_BD &= ~0x40;
@@ -1376,7 +1376,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             }
             break;
         case 2:
-            if (!(Moji_flag & 0x08000000) && func_80042238(pl))
+            if (!(Moji_flag & 0x08000000) && Player_control_off(pl))
             {
                 func_80039E50();
                 Sce_script_timer_clear();
@@ -1546,7 +1546,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             if (Sce_flag_test(0x607))
             {
                 Sce_flag_off(0x607);
-                func_80042314(pl);
+                Player_control_on(pl);
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
                 func_80039820();
@@ -1561,7 +1561,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             {
                 Sce_flag_off(0x607);
                 func_80039E50();
-                func_80042314(pl);
+                Player_control_on(pl);
                 wp->flags_0 = 0;
                 stcom36_func_0118();
                 Sce_flag_on(6);
@@ -1617,7 +1617,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
     switch (wp->routine_6)
     {
         case 0:
-            if (!func_80042238(pl))
+            if (!Player_control_off(pl))
             {
                 break;
             }
@@ -1737,7 +1737,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
         case 7:
             if ((wp->timer_C == 0 || --wp->timer_C == 0) && !(Moji_flag & 0x08000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 wp->flags_0 = 0;
                 Sce_flag_on(0x17);
             }

@@ -798,7 +798,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 void func_80105AB0(ST0E_PROP *wp);
 
 extern sint16 D_800BBCF8[]; // ROCK_NEO.EXE: a sine table
-sint32 func_80048D08(sint32 a0, STCOM_SVECTOR *pos);
+sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 void func_8010BD90(ST0E_LEVER *wp);
 sint32 Search_Player(void *track, void *wp);
@@ -806,8 +806,8 @@ sint32 Search_Player(void *track, void *wp);
 void func_8010D9F8(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos);
 void func_8010DC00(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *pos, sint32 from,
                    sint32 to);
-void func_80050C2C(void *wp);
-void func_80052528(void *wp);
+void Scr_event_check(void *wp);
+void Ride_clear(void *wp);
 
 // A ROCK_NEO record per 0x10C-slot kind (D_80098928).
 typedef struct
@@ -820,10 +820,10 @@ typedef struct
 
 extern ST0E_KIND10C **D_80098928;
 
-void func_8001E460(sint32 a0, sint32 a1, sint32 a2);
+void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 
 ST0E_UV8 *func_8002D22C(void *model, sint32 id);
 void func_8002D27C(void *model, sint32 id, ST0E_UV8 *uv);
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 #endif

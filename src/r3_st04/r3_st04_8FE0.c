@@ -42,7 +42,7 @@ void func_801090CC(STAGE_OBJ50 *wp)
     D_80111C90[wp->variant_3](wp);
     if (wp->variant_3 != 2)
     {
-        func_80051B68(wp, 7, 0, 0);
+        Solid_set(wp, 7, 0, 0);
         pos = wp->pos_38;
         pos.y -= 0x2D;
         Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->value_48, 0x4000000, 0, 0x80);
@@ -113,7 +113,7 @@ void func_801092F8(STAGE_OBJ50 *wp)
     switch (wp->routine_2)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -154,7 +154,7 @@ void func_801092F8(STAGE_OBJ50 *wp)
         case 2:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 Player_work.target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_1 = 0;
@@ -352,7 +352,7 @@ void func_80109B28(STAGE_OBJ50 *wp)
 {
     STCOM_SVECTOR pos;
 
-    func_80051B68(wp, 7, 0, 0);
+    Solid_set(wp, 7, 0, 0);
     D_80111CC4[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
@@ -407,7 +407,7 @@ void func_80109CCC(STAGE_OBJ50 *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -448,7 +448,7 @@ void func_80109CCC(STAGE_OBJ50 *wp)
         case 2:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 Player_work.target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_0 = 1;
@@ -513,7 +513,7 @@ void func_8010A044(STAGE_OBJ50 *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -577,7 +577,7 @@ void func_8010A044(STAGE_OBJ50 *wp)
         case 10:
             if (!func_8003A13C())
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 pl->target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_0 = 1;
@@ -625,7 +625,7 @@ void func_8010A32C(ST04_EV *wp)
             }
             break;
         case 1:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -658,7 +658,7 @@ void func_8010A32C(ST04_EV *wp)
         case 6:
             if (!func_8003A13C())
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 func_8001E3F0(0x1A);
                 wp->routine_1++;

@@ -640,7 +640,7 @@ extern uint8 D_8011B534[];
 extern STAGE_OBJ_FUNC D_8011AEF0[];
 extern sint16 D_8011AF0C[4]; // roll steps by frame (func_801016B4)
 void func_80101990(STAGE_OBJ *wp);
-void func_80053158(STAGE_OBJ *target, STAGE_OBJ *wp);
+void Ride_carry(STAGE_OBJ *target, STAGE_OBJ *wp);
 extern STAGE_OBJ_FUNC D_8011BF78[];
 extern STAGE_OBJ *D_80122B48;
 void func_80115C24(STAGE_OBJ *wp);
@@ -704,12 +704,12 @@ extern uint16 D_8011AF58[];
 extern STAGE_EV *D_80122B50;
 void Moji_task_kill(sint32 arg);
 void func_8005D87C(void);
-void func_8005D6E8(void *wp);
+void Gauge_close(void *wp);
 void func_80116510(STAGE_OBJ *wp);
 void Game_logo_kill(sint32 index);
 sint32 func_801166C8(STAGE_OBJ *wp);
 extern STAGE_OBJ *D_80122B4C;
-extern sint16 D_800C0F96[]; // an array: its stores stay ordered against struct accesses
+extern sint16 Pl_demo_pad[]; // an array: its stores stay ordered against struct accesses
 
 // Player_work's halfwords at +0x126, +0x13E and +0x140, read through a pointer (func_801161C8).
 typedef struct
@@ -803,7 +803,7 @@ typedef struct
 } ST17_BURST;
 
 void func_80113C84(ST17_BURST *wp);
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, uint32 a4);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, uint32 a4);
 void func_8005D844(sint32 a0, sint32 a1, uint8 a2);
 extern STAGE_OBJ *D_80122B54[];
 // A jointed model's record at a work slot's +0x440: the model's 0x5A4-byte slot

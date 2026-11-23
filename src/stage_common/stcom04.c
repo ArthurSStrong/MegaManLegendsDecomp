@@ -250,7 +250,7 @@ void stcom04_func_05E0(STCOM04_WORK *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void stcom04_func_0748(STCOM04_WORK *wp, sint32 hit)
@@ -373,12 +373,12 @@ void stcom04_func_0A10(STCOM04_WORK *wp, sint32 hit)
 uint8 stcom04_func_0A84(STCOM04_WORK *wp, uint32 *hit)
 {
     Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, 0);
-    if (func_80048DAC(&wp->position) != 0)
+    if (Scr_area_check(&wp->position) != 0)
     {
         Close_EM_WORK(wp);
         return 1;
     }
-    *hit = func_8004B414(wp);
+    *hit = Scr_collision_check(wp);
     return 0;
 }
 

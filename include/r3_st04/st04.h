@@ -217,7 +217,7 @@ void func_801051EC(ST04_ACTOR *wp);
 void func_80106048(ST04_ACTOR *wp);
 
 uint8 func_8010A484(ST04_SLOT *slot);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_8010AF4C[][8];
 extern STAGE_ROOM_FUNC D_8010AF2C[];
 extern STAGE_ROOM_FUNC *D_8010AEEC[];

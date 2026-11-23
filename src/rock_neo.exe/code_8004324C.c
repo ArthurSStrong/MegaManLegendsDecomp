@@ -134,12 +134,12 @@ void func_800435F8(CODE43_WORK *wp)
         if (id)
         {
             Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
-                          &wp->word_c4, 0x28000008, 0, 0x80);
+                       &wp->word_c4, 0x28000008, 0, 0x80);
         }
         else
         {
             Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
-                          &wp->word_c4, 0x28000008, 0, 0x80);
+                       &wp->word_c4, 0x28000008, 0, 0x80);
         }
     }
     else
@@ -148,12 +148,12 @@ void func_800435F8(CODE43_WORK *wp)
         if (id)
         {
             Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x6000, wp->value_1,
-                          &wp->word_c4, 0x28000008, 0, 0x80);
+                       &wp->word_c4, 0x28000008, 0, 0x80);
         }
         else
         {
             Set_Atari2(&wp->pos_14, 0x20, &wp->pos_2c, 0x20, 0x200, 0x4000, wp->value_1,
-                          &wp->word_c4, 0x28000008, 0, 0x80);
+                       &wp->word_c4, 0x28000008, 0, 0x80);
         }
     }
     wp->pos_2c = wp->pos_14;
@@ -178,7 +178,7 @@ void func_80043740(CODE43_WORK *wp)
 void func_800437A8(CODE43_WORK *wp)
 {
     D_8008A0D8[wp->routine_8](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_800437F8(CODE43_WORK *wp)
@@ -378,11 +378,11 @@ void func_80043E78(CODE43_WORK *wp)
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x6000, wp->value_1,
-                      &wp->word_c4, flags | 0x08000000, 0, 0x80);
+                   &wp->word_c4, flags | 0x08000000, 0, 0x80);
     }
     else
     {
         Set_Atari2(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x4000, wp->value_1,
-                      &wp->word_c4, flags | 0x08000000, 0, 0x80);
+                   &wp->word_c4, flags | 0x08000000, 0, 0x80);
     }
 }

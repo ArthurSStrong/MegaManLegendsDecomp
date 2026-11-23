@@ -128,7 +128,7 @@ void func_80121418(ST1A_PIECES *wp)
         prev.y = (wp->position_fixed.v.y + step.y * n) >> 16;
         prev.z = (wp->position_fixed.v.z + step.z * n) >> 16;
         Set_Atari2(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
-                      (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
+                   (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
         (wp->piece_CC + i)->words[0] = 0;
         (wp->piece_CC + i)->words[1] = 0;
     }
@@ -143,7 +143,7 @@ void func_80121418(ST1A_PIECES *wp)
         prev.y = (wp->position_fixed.v.y + step.y * n) >> 16;
         prev.z = (wp->position_fixed.v.z + step.z * n) >> 16;
         Set_Atari2(&pos, 0x48, &prev, 0x48, 0x200, 0xA000, wp->value_1,
-                      (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
+                   (uint32 *)wp->piece_CC + i, 0x9000030, 0, 0x80);
         (wp->piece_CC + i)->words[0] = 0;
         (wp->piece_CC + i)->words[1] = 0;
     }
@@ -168,7 +168,7 @@ sint32 func_80121710(ST1A_PIECES *wp)
         prev.x = (wp->position_fixed.v.x + step.x * i) >> 16;
         prev.y = (wp->position_fixed.v.y + step.y * i) >> 16;
         prev.z = (wp->position_fixed.v.z + step.z * i) >> 16;
-        if (func_80049C54(&pos, &prev, D_801330D0, 0xFFFF))
+        if (Scr_line_calc(&pos, &prev, D_801330D0, 0xFFFF))
         {
             fx = Open_EFFECT_WORK();
             if (fx != NULL)
@@ -462,7 +462,7 @@ void func_801220D0(ST1A_SHOT *wp)
 {
     STAGE_OBJ50 *ep;
 
-    if (func_80048EA4(&wp->position, NULL, 0, 0xFFFF) < -0x11)
+    if (Scr_height_calc(&wp->position, NULL, 0, 0xFFFF) < -0x11)
     {
         Close_SHL_WORK(wp);
         return;
@@ -1192,7 +1192,7 @@ void func_80123C00(ST1A_COPY *wp)
             // fall through
         case 1:
             Obj_pos_move(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
-                          wp->speed_4C * 16, 0, 0);
+                         wp->speed_4C * 16, 0, 0);
             if (--ctl->timer_4 < 0)
             {
                 wp->routine_2++;
@@ -1202,7 +1202,7 @@ void func_80123C00(ST1A_COPY *wp)
             break;
         case 2:
             Obj_pos_move(&wp->position, &wp->position_fixed.v, ctl->owner_34->rotation.y,
-                          wp->speed_4C * 16, 0, 0);
+                         wp->speed_4C * 16, 0, 0);
             wp->color_B4 -= 0x101010;
             if (--ctl->timer_4 < 0)
             {

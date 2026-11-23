@@ -106,7 +106,7 @@ void func_80110090(ST1A_VIEW_H *wp)
     wp->u_44.h[0]                              = 0x140;
     wp->value_AD                               = 0;
     EM_Char_Set(wp, wp->value_AC, 0);
-    ctl->ground_60 = func_8004B414(wp);
+    ctl->ground_60 = Scr_collision_check(wp);
     ctl->angle_64  = (wp->rotation.y + 0x800) & 0xFFF;
 }
 
@@ -187,7 +187,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
     {
         Sound_call2(0x1BD, &wp->position);
     }
-    ctl->ground_60       = func_8004B414(wp);
+    ctl->ground_60       = Scr_collision_check(wp);
     wp->position.y       = Scr_height_check(wp);
     wp->position_fixed.y = wp->position.y << 16;
     if ((ctl->flags_6C & 8) && wp->routine_1 != 1 && (ctl->ground_60 & 0xF00))
@@ -757,7 +757,7 @@ void func_801110B4(ST1A_VIEW_H *wp, uint8 kind)
             slot->position_fixed.v.y = slot->position.y << 16;
             slot->position_fixed.v.z = slot->position.z << 16;
             Obj_pos_move(&slot->position, &slot->position_fixed.v, wp->rotation.y & 0xFFF, 0x550,
-                          0, 0);
+                         0, 0);
             pl->value_C4.x = slot->position.x + ((s * dist) >> 12);
             if (kind == 0)
             {
@@ -779,7 +779,7 @@ void func_801110B4(ST1A_VIEW_H *wp, uint8 kind)
             slot->position_fixed.v.y = slot->position.y << 16;
             slot->position_fixed.v.z = slot->position.z << 16;
             Obj_pos_move(&slot->position, &slot->position_fixed.v, wp->rotation.y & 0xFFF, 0x550,
-                          0, 0);
+                         0, 0);
             pl->value_C4.x = slot->position.x + ((s * ((ctl->rand_6A & 0x3FF) + 0x80)) >> 12);
             pl->value_C4.y = slot->position.y;
             pl->value_C4.z = slot->position.z + ((c * ((ctl->rand_6A & 0x3FF) + 0x80)) >> 12);
@@ -3579,7 +3579,7 @@ void func_80116C10(ST1A_STCOM27_WORK *wp)
     sint32 ground;
     wp->ctl.flags_14 = 0;
     ctl              = &wp->ctl;
-    if (func_8004B414(wp) & 0xF00)
+    if (Scr_collision_check(wp) & 0xF00)
     {
         wp->ctl.flags_14 |= 1;
     }
@@ -5002,7 +5002,7 @@ void func_80119320(ST1A_OBJ *wp)
     wp->routine_1                              = 0;
     *(uint16 *)&wp->routine_2                  = 0;
     EM_Char_Set(wp, 0, 0);
-    func_8005D620(wp, 0, 0, 0x81, 0x805058);
+    Gauge_open(wp, 0, 0, 0x81, 0x805058);
     func_80119714(wp);
 }
 
@@ -5032,7 +5032,7 @@ void func_80119714(ST1A_OBJ *wp)
     wp->value_78 = D_80132DE4[bp->value_53];
     if (wp->value_78 != 0)
     {
-        bp->hit_0.value_C = func_8004B414(wp);
+        bp->hit_0.value_C = Scr_collision_check(wp);
     }
     else
     {
@@ -5346,7 +5346,7 @@ void func_8011A080(ST1A_OBJ *wp)
             wp->routine_2++;
             Obj_pos_adj_round(&bp->fixed_40, &bp->target_38);
             Obj_pos_move(&bp->target_38, &bp->fixed_40,
-                          Calc_degree2(&bp->target_38, &wp->position_prev) & 0xFFF, 0x3000, 0, 0);
+                         Calc_degree2(&bp->target_38, &wp->position_prev) & 0xFFF, 0x3000, 0, 0);
             wp->position         = bp->target_38;
             wp->position_fixed.v = bp->fixed_40;
             wp->rotation.y       = Calc_degree2(&wp->position, &Player_work.position) & 0xFFF;
@@ -5698,8 +5698,8 @@ void func_8011B000(ST1A_OBJ *wp)
                 Obj_pos_adj_round(&bp->fixed_40, &bp->target_38);
                 angle = Calc_degree2(&bp->target_38, &Player_work.position) & 0xFFF;
                 Obj_pos_move(&bp->target_38, &bp->fixed_40, angle,
-                              (Calc_distance_xz(&bp->target_38, &Player_work.position) - 0x100) * 16,
-                              0, 0);
+                             (Calc_distance_xz(&bp->target_38, &Player_work.position) - 0x100) * 16,
+                             0, 0);
             }
             wp->rotation.y = (wp->rotation.y +
                               Muku(&wp->position, &bp->target_38, wp->rotation.y, 0x800)) &
@@ -6221,7 +6221,7 @@ sint32 func_8011C260(ST1A_OBJ *wp)
             wp->value_6E -= damage;
             if (wp->value_6E <= 0)
             {
-                if (func_80042208() != 0)
+                if (Player_atari_off() != 0)
                 {
                     dm->flags_0 &= ~0xC;
                     wp->value_B2 = 0;
@@ -7827,9 +7827,9 @@ STAGE_OBJ *func_8011F27C(void)
         op->position_prev       = op->position;
         op->position_fixed_prev = op->position_fixed.v;
         op->rotation_prev       = op->rotation;
-        func_8005D7C0();
+        Gauge_clear();
         op->life_prev_B2 = op->life_max_B0 = op->life_6E = D_8009884C[op->kind_2]->life_8 << 8;
-        func_8005D620(op, 0, 0, 0x81, 0x806468);
+        Gauge_open(op, 0, 0, 0x81, 0x806468);
         func_8005D4D4();
         return op;
     }

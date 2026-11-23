@@ -142,14 +142,14 @@ void func_80107C94(ST0E_VIEW *wp)
         pos.x = -0xB00;
         pos.y = -0x181;
         pos.z = -0xD00;
-        func_8003AC9C(func_80048D08(1, &pos), 0x31802);
+        func_8003AC9C(Scr_map_cell_get(1, &pos), 0x31802);
     }
     else
     {
         pos.x = -0x1B00;
         pos.y = -0x181;
         pos.z = -0x1100;
-        func_8003AC9C(func_80048D08(1, &pos), 0x31702);
+        func_8003AC9C(Scr_map_cell_get(1, &pos), 0x31702);
     }
     hit->flags_8 = 0;
 }
@@ -226,7 +226,7 @@ void func_80107DE0(ST0E_VIEW *wp)
     scale.z = 0x1000;
     ScaleMatrix(m, &scale);
     wp->vec_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     if (ctl->value_2F != 0)
     {
         ctl->hit.pos_0.x = wp->position.x;
@@ -274,14 +274,14 @@ void func_801080AC(ST0E_VIEW *wp)
             pos.x = -0xB00;
             pos.y = -0x181;
             pos.z = -0xD00;
-            func_8003AC9C(func_80048D08(1, &pos), 0x30802);
+            func_8003AC9C(Scr_map_cell_get(1, &pos), 0x30802);
         }
         else
         {
             pos.x = -0x1B00;
             pos.y = -0x181;
             pos.z = -0x1100;
-            func_8003AC9C(func_80048D08(1, &pos), 0x30702);
+            func_8003AC9C(Scr_map_cell_get(1, &pos), 0x30702);
         }
     }
 }
@@ -381,14 +381,14 @@ void func_80108448(STAGE_OBJ *wp)
             pos.x = -0x900;
             pos.y = -0x12B;
             pos.z = -0x2300;
-            func_8003AC9C(func_80048D08(2, &pos), 0x60302);
+            func_8003AC9C(Scr_map_cell_get(2, &pos), 0x60302);
         }
         else
         {
             pos.x = -0x1700;
             pos.y = -0x2AB;
             pos.z = -0x2300;
-            func_8003AC9C(func_80048D08(2, &pos), 0x60402);
+            func_8003AC9C(Scr_map_cell_get(2, &pos), 0x60402);
         }
     }
 }

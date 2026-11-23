@@ -1,24 +1,24 @@
 // Shoot while skating: the buster (and the special weapon) fire on the Jet Skates.
 //
-// The player's routines come in pairs, called each frame by func_8003C88C (player.c): a check
-// routine D_80089FF8[routine_1] that reads the buttons and changes state, then the state's
-// routine D_80089FA4[routine_1]. Every state that can shoot has its check call
-// func_80040B68(pl, how): it starts a shot when the fire button is held, the weapon is ready
-// (PL_WORK.value175's enable bits) and nothing is firing yet, by setting value174 to the
+// The player's routines come in pairs, called each frame by Pl_move_main (player.c): a check
+// routine Pl_r1_check_tbl[routine_1] that reads the buttons and changes state, then the state's
+// routine Pl_r1_tbl[routine_1]. Every state that can shoot has its check call
+// pl_shot_start(pl, how): it starts a shot when the fire button is held, the weapon is ready
+// (PL_WORK.value175's enable bits) and nothing is firing yet, by setting shot_status_flag to the
 // shot's kind (0x80 buster, 0x40 special weapon) and the upper-body animation in value104/
-// value100. From then on the weapon's handler (func_80042734 / func_800426F8, called by
-// func_8003C88C before the check) plays the arm animation, raises value174's 0x20/0x10 bit on
+// value100. From then on the weapon's handler (Pl_shot_buster / Pl_shot_special, called by
+// Pl_move_main before the check) plays the arm animation, raises shot_status_flag's 0x20/0x10 bit on
 // the firing frame, where pl_shot_set spawns the projectile from the arm in Mega Man's facing,
-// and clears value174 when the animation ends: rate of fire, energy, sound and direction are
+// and clears shot_status_flag when the animation ends: rate of fire, energy, sound and direction are
 // the game's own.
 //
-// The skates (routine_1 3) have func_8003FDA8 as their check, which only watches Circle, so
-// they never shoot. The mod hooks func_8003FDA8 (reached through the D_80089FF8 table, so the
+// The skates (routine_1 3) have Pl_r1_super_dash_check as their check, which only watches Circle, so
+// they never shoot. The mod hooks Pl_r1_super_dash_check (reached through the Pl_r1_check_tbl table, so the
 // hook sees every call) and, after it, while Player_work is skating (value0a 3 or 4: cruising,
-// not starting or stopping), does what the jump's check func_800400B8 does in the air: sets the
-// enable bit (a jump landing on the skates turns it off) and calls func_80040B68(pl, 2). With
+// not starting or stopping), does what the jump's check Pl_r1_jump_check does in the air: sets the
+// enable bit (a jump landing on the skates turns it off) and calls pl_shot_start(pl, 2). With
 // `how` 2 a weapon that cannot fire on the move (its table's reload byte 0) does not fire, and
-// value174 gets bit 4, so the shot only animates the arm layer and leaves the skating body
+// shot_status_flag gets bit 4, so the shot only animates the arm layer and leaves the skating body
 // animation alone, as a shot in the air does. Of the weapon table (D_80089A84, 12 bytes each,
 // reload at +4) the buster (part 1) and specials 2 and 5 fire on the move; parts whose handlers
 // move Mega Man themselves (part 0's recoil, specials 3, 4, 7 and 9) have reload 0 and do not fire
@@ -28,8 +28,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define FUNC_SKATE_CHECK 0x8003FDA8u // void func_8003FDA8(PL_WORK *pl): D_80089FF8[3]
-#define FUNC_SHOT_CHECK  0x80040B68u // sint32 func_80040B68(PL_WORK *pl, sint32 how)
+#define FUNC_SKATE_CHECK 0x8003FDA8u // void Pl_r1_super_dash_check(PL_WORK *pl): Pl_r1_check_tbl[3]
+#define FUNC_SHOT_CHECK  0x80040B68u // sint32 pl_shot_start(PL_WORK *pl, sint32 how)
 
 // PL_WORK (include/rock_neo.exe/player.h) offsets.
 #define PL_ROUTINE_1 0x09
@@ -55,7 +55,7 @@ static void check_hook(uint32_t addr)
     if (pl[PL_ROUTINE_1] == PL_SKATING && (pl[PL_VALUE0A] == 3 || pl[PL_VALUE0A] == 4))
     {
         pl[PL_VALUE175] |= 1;
-        mods_call(FUNC_SHOT_CHECK, 2, addr, 2, 0, 0); // sint32 func_80040B68(pl, how)
+        mods_call(FUNC_SHOT_CHECK, 2, addr, 2, 0, 0); // sint32 pl_shot_start(pl, how)
     }
 }
 

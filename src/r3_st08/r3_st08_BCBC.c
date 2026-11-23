@@ -339,7 +339,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner)
     wp->position_fixed.z += wp->velocity.v.z << 12;
     wp->position_fixed.y += wp->velocity.v.y << 12;
     Obj_pos_adj_round(&wp->position_fixed, &wp->position);
-    ground = func_8004B414(wp);
+    ground = Scr_collision_check(wp);
     if (ground != 0)
     {
         wp->value_E = 1;

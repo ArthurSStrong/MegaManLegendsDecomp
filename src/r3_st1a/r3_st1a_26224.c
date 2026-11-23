@@ -102,8 +102,8 @@ void func_80126550(STAGE_OBJ *wp)
     wp->value_44.value = 0;
     if (Sce_flag_test(0x5A))
     {
-        func_8003AC9C(func_80048C60(&D_8013361C[0]), 0x10060200);
-        func_8003AC9C(func_80048C60(&D_8013361C[5]), 0x10060300);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[0]), 0x10060200);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[5]), 0x10060300);
         wp->routine_0 = 2;
         return;
     }
@@ -119,8 +119,8 @@ void func_801265F4(STAGE_OBJ *wp)
     wp->value_44.value = 0;
     if (Sce_flag_test(0x5B))
     {
-        func_8003AC9C(func_80048C60(&D_8013361C[1]), 0x10060200);
-        func_8003AC9C(func_80048C60(&D_8013361C[6]), 0x10060300);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[1]), 0x10060200);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[6]), 0x10060300);
         wp->routine_0 = 2;
         return;
     }
@@ -136,8 +136,8 @@ void func_80126698(STAGE_OBJ *wp)
     wp->value_44.value = 0;
     if (Sce_flag_test(0x5C))
     {
-        func_8003AC9C(func_80048C60(&D_8013361C[2]), 0x10060200);
-        func_8003AC9C(func_80048C60(&D_8013361C[7]), 0x10060300);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[2]), 0x10060200);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[7]), 0x10060300);
         wp->routine_0 = 2;
         return;
     }
@@ -163,8 +163,8 @@ void func_80126780(STAGE_OBJ *wp)
     wp->value_44.value = 0;
     if (Sce_flag_test(0x56))
     {
-        func_8003AC9C(func_80048C60(&D_8013361C[4]), 0x10060100);
-        func_8003AC9C(func_80048C60(&D_8013361C[9]), 0x10060102);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[4]), 0x10060100);
+        func_8003AC9C(Scr_cell_get(&D_8013361C[9]), 0x10060102);
         wp->routine_0 = 2;
         return;
     }
@@ -245,8 +245,8 @@ void func_80126914(STAGE_EV *wp)
             if (--wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_8013361C[0]), 0x10060200);
-                func_8003AC9C(func_80048C60(&D_8013361C[0 + 5]), 0x10060300);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[0]), 0x10060200);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[0 + 5]), 0x10060300);
                 STAGE_PL_BYTE(0xBD) &= ~0x40;
                 wp->routine_0 = 2;
             }
@@ -295,8 +295,8 @@ void func_80126AF0(STAGE_EV *wp)
             if (--wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_8013361C[1]), 0x10060200);
-                func_8003AC9C(func_80048C60(&D_8013361C[1 + 5]), 0x10060300);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[1]), 0x10060200);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[1 + 5]), 0x10060300);
                 STAGE_PL_BYTE(0xBD) &= ~0x40;
                 wp->routine_0 = 2;
             }
@@ -345,8 +345,8 @@ void func_80126CCC(STAGE_EV *wp)
             if (--wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_8013361C[2]), 0x10060200);
-                func_8003AC9C(func_80048C60(&D_8013361C[2 + 5]), 0x10060300);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[2]), 0x10060200);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[2 + 5]), 0x10060300);
                 STAGE_PL_BYTE(0xBD) &= ~0x40;
                 wp->routine_0 = 2;
             }
@@ -373,16 +373,16 @@ void func_80126EA8(STAGE_EV *wp)
             if (wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_8013361C[3]), 0x10060200);
-                func_8003AC9C(func_80048C60(&D_8013361C[3 + 5]), 0x10060300);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[3]), 0x10060200);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[3 + 5]), 0x10060300);
                 wp->routine_1++;
             }
             break;
         case 2:
             if (STCOM_ABS(Player_work.position.z - 0x500) > 0x200)
             {
-                func_8003AC9C(func_80048C60(&D_8013361C[3]), 0x63200);
-                func_8003AC9C(func_80048C60(&D_8013361C[3 + 5]), 0x63300);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[3]), 0x63200);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[3 + 5]), 0x63300);
                 wp->routine_1++;
             }
             break;
@@ -448,8 +448,8 @@ void func_801270D4(STAGE_EV *wp)
             if (--wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_8013361C[4]), 0x10060100);
-                func_8003AC9C(func_80048C60(&D_8013361C[4 + 5]), 0x10060102);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[4]), 0x10060100);
+                func_8003AC9C(Scr_cell_get(&D_8013361C[4 + 5]), 0x10060102);
                 wp->routine_0 = 2;
             }
             break;
@@ -728,7 +728,7 @@ void func_80127AE4(STAGE_EV *wp)
             }
             break;
         case 2:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -740,7 +740,7 @@ void func_80127AE4(STAGE_EV *wp)
             wp->routine_1++;
             break;
         case 4:
-            D_800C0F96[0] = 0;
+            Pl_demo_pad[0] = 0;
             pl->flags_bd |= 0x20;
             wp->routine_1++;
             break;
@@ -752,8 +752,8 @@ void func_80127AE4(STAGE_EV *wp)
             if (--wp->value_E == 0)
             {
                 Sound_call(0x185, 0, 0);
-                func_8003AC9C(func_80048C60(&D_801336A8[0]), 0x10060400);
-                func_8003AC9C(func_80048C60(&D_801336A8[1]), 0x10060500);
+                func_8003AC9C(Scr_cell_get(&D_801336A8[0]), 0x10060400);
+                func_8003AC9C(Scr_cell_get(&D_801336A8[1]), 0x10060500);
                 wp->value_F = 0;
                 if (pl->rotation.y < 0x800)
                 {
@@ -772,7 +772,7 @@ void func_80127AE4(STAGE_EV *wp)
         case 6:
             if ((pl->rotation.y & 0xFFF) > 0x800)
             {
-                D_800C0F96[0] = 0;
+                Pl_demo_pad[0] = 0;
                 pl->flags_bd |= 0x10;
                 pl->pos_438   = pl->position;
                 pl->fixed_428 = pl->position_fixed;
@@ -783,13 +783,13 @@ void func_80127AE4(STAGE_EV *wp)
             }
             else
             {
-                D_800C0F96[0] = ST1A_PL_U16(pl, 0x12A);
+                Pl_demo_pad[0] = ST1A_PL_U16(pl, 0x12A);
             }
             break;
         case 7:
             if ((pl->rotation.y & 0xFFF) < 0x800)
             {
-                D_800C0F96[0] = 0;
+                Pl_demo_pad[0] = 0;
                 pl->flags_bd |= 0x10;
                 pl->pos_438   = pl->position;
                 pl->fixed_428 = pl->position_fixed;
@@ -800,7 +800,7 @@ void func_80127AE4(STAGE_EV *wp)
             }
             else
             {
-                D_800C0F96[0] = ST1A_PL_U16(pl, 0x128);
+                Pl_demo_pad[0] = ST1A_PL_U16(pl, 0x128);
             }
             break;
         case 8:
@@ -808,20 +808,20 @@ void func_80127AE4(STAGE_EV *wp)
             wp->routine_1++;
             // fall through
         case 9:
-            D_800C0F96[0] = pl->value_124;
+            Pl_demo_pad[0] = pl->value_124;
             if (pl->position.z > 0x300)
             {
-                D_800C0F96[0] = 0;
+                Pl_demo_pad[0] = 0;
                 wp->routine_1++;
             }
             break;
         case 10:
-            D_800C0F96[0] = 0;
+            Pl_demo_pad[0] = 0;
             if (++wp->value_F == 0xF)
             {
                 wp->value_E = 0x20;
-                func_8003AC9C(func_80048C60(&D_801336A8[0]), 0x60400);
-                func_8003AC9C(func_80048C60(&D_801336A8[1]), 0x60500);
+                func_8003AC9C(Scr_cell_get(&D_801336A8[0]), 0x60400);
+                func_8003AC9C(Scr_cell_get(&D_801336A8[1]), 0x60500);
                 wp->routine_1++;
             }
             break;

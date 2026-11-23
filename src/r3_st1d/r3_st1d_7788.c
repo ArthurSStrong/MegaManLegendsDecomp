@@ -197,7 +197,7 @@ void func_80107EB8(ST1D_VIEW *wp)
     }
     if (!(wp->ext.flags_0 & 8))
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
 }
 
@@ -266,7 +266,7 @@ void func_8010802C(ST1D_VIEW *wp)
                                                    : wp->rotation.y + ext->u_44.h[1]) &
                                                 0xFFF;
                         Obj_pos_move(&piece->position, &piece->position_fixed, piece->angle_64,
-                                      0x600, -0x7C0, 0);
+                                     0x600, -0x7C0, 0);
                     }
                     i++;
                 } while (i < 2);
@@ -331,7 +331,7 @@ void func_801081D0(ST1D_VIEW *wp)
             {
                 Obj_pos_set(wp, 0, wp->u_44.h[1] << 4, 0);
                 wp->u_44.h[1] += wp->value_4E;
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 break;
             }
             // fall through

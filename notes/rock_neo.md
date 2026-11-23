@@ -596,13 +596,13 @@ Retried with the new types (no new matches): `lockon_probe_set` (now two registe
 `model_dir_search`, `EM_Char_Move2`, `Model_key_unpack`, `pl_shot_set`, `Obj_player_dist_calc` (unchanged).
 
 `code_8005C258.c` (small functions): banked `func_8005DCB4` (calls `func_8005DCDC`, `func_8005DE28`),
-`func_8005D9EC` (`Player_work+0x6E = +0xB0`, then `func_8005D9C4`), `func_8005D844` (arms slot
-`D_800BBE2C`..`E46`), `func_8005D98C`, `func_8005C720` (dispatch through `D_8008D7B4[wp[4]]`).
-Parked `func_8005D4F8` (`NON_MATCHING`): the target loads and stores `D_800BBD85` through one `lui`+`addiu`
+`Pl_life_full` (`Player_work+0x6E = +0xB0`, then `Gauge_show_release`), `func_8005D844` (arms slot
+`D_800BBE2C`..`E46`), `Gauge_show_hold`, `func_8005C720` (dispatch through `D_8008D7B4[wp[4]]`).
+Parked `gauge_show` (`NON_MATCHING`): the target loads and stores `D_800BBD85` through one `lui`+`addiu`
 base register (`$v1`), but GCC folds `&D_800BBD85` into `lui`+`%lo` on each access; a pointer local and
 a `volatile` pointer both fold the same way. The store to `D_800BBD81` uses its own `lui`. So `D_800BBD81`, `D_800BBD85`, ... are separate globals,
 not fields of one struct (declared in `code_8005C258.h`). `func_8005C720`'s `wp` is the 9-byte object at
-`D_800BBD78` (byte +4 indexes `D_8008D7B4`); it stays `uint8 *` until that object's layout is known.
+`Gauge_work` (byte +4 indexes `D_8008D7B4`); it stays `uint8 *` until that object's layout is known.
 
 `code_800456D8.c`: banked `func_80045918`/`func_8004594C` (`WORK_48.timer_B` countdown, then `routine_8`
 += 2 / += 1), `func_80045A7C` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `func_80047318`
@@ -713,10 +713,10 @@ branches; if/else, switch, ternary, goto and two calls (not cross-jumped) all tr
 also differ by a v0/v1 swap (target loads the table byte before `dir.vx`). The rest, including the
 `if (...) {...} else { close: ...; return; } func_80043E78(wp);` layout, matches.
 Banked `func_800437A8` (the shot's update: `D_8008A0D8[wp->routine_8](wp)`, a table of `func_800437F8` and
-`func_80043A8C`, then `func_80051BAC(wp)`, which the player code also calls: it pushes the object on the
-list at `D_80098898` when `routine_0 & 3`, and clears `+0x7C`).
+`func_80043A8C`, then `Solid_mover_set(wp)`, which the player code also calls: it pushes the object on the
+list at `Solid_mover_ptr` when `routine_0 & 3`, and clears `+0x7C`).
 `SHL_WORK` fields from these: `spd`/`add` (0x44/0x4C, MODEL_WORK's), `hit_78` (`HIT_ENT *`, read by
-`func_80049C24`), `field_7C`, `field_88`, `rgbc_8C`, `x_90`..`z_94`, `field_96`/`97`, `field_9A`, `dir_A4`,
+`Scr_line_check`), `field_7C`, `field_88`, `rgbc_8C`, `x_90`..`z_94`, `field_96`/`97`, `field_9A`, `dir_A4`,
 `tgt_BC` (tested as two words, Capcom's `*(uint32 *)&v.vx` idiom).
 
 `code_800680BC.c` (event steps): `D_8009039C` is an event table of 8-byte entries (`u8`, `u8`, `s16` frame,
@@ -760,14 +760,14 @@ WORK_5A4 (the same parts at the same offsets; `blk_240[24]` fills 0x240-0x53F ex
 takes 0x28 bytes from the scratchpad pointer `Map_prim_ptr` (0x1F800070, Capcom's name), whatever its size.
 `Disp_env_ptr` (0x80098934) is the shim's name for the current `DISP_ENV`.
 Banked `func_80068DAC(sw)` (0x80068DAC), the scene's main routine, a switch on `Scene_work.routine_4`:
-0 waits for `func_80042238(Player_work)`, clears bits 0-1 of `Player_work[0].unk00` and plays XA
+0 waits for `Player_control_off(Player_work)`, clears bits 0-1 of `Player_work[0].unk00` and plays XA
 `0x2001000B`; 1 waits for `Sce_cd_reading`, sets `field_0C = 30`; 2 counts `field_0C` down, then
 `Fade_start(2)`; 3 `event_scene_init` and falls through to 4 (ends when `Fade_busy == 0` and the
 event table reached its 0xFF entry or `Sce_skip_check` says START skipped, `Fade_start(10)`) and 5:
 the per-frame work (`event_step_call`, `screen_tile_draw(field_68, 6C, 70, 74)` while `field_64`, the
 camera, `Sce_event_update`, the empty `func_80068DA4` at `timer_14 == 0x4680`, 5 minutes). In 5 with
 `Fade_busy == 0` it sets the `D_800C3560`.. block for the next stage (0x1B, 6), clears `unk00`, pauses
-the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`func_80042314`), `Sce_flag_select(0x2EB)`,
+the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`Player_control_on`), `Sce_flag_select(0x2EB)`,
 `Sce_flag_on(0x55)`, `func_8001D974`. So `screen_tile_draw` takes `uint8` r, g, b (the caller loads
 the low bytes of the `uint32` fields with `lbu`), and the stores only match with `D_800C356C = 2`
 written first (its constant is loaded before the others; its store stays in place).

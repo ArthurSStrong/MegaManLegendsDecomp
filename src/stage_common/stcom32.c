@@ -110,7 +110,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -186,7 +186,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
             break;
         case 10:
             Sce_flag_on(stcom32_D_0068[wp->variant_3]);
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->target_184 = NULL;
             pl->flags_0 |= 2;
             func_80031A4C(wp);

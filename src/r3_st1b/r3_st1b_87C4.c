@@ -208,7 +208,7 @@ void func_80108EDC(ST1B_TALKER *wp)
     }
     if (!(talk->flags_0 & 4))
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 

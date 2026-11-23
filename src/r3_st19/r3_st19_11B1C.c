@@ -791,7 +791,7 @@ void func_80112D00(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (Sound_fade_flags == 0 && func_80042238(&Player_work) != 0)
+            if (Sound_fade_flags == 0 && Player_control_off(&Player_work) != 0)
             {
                 pl->routine_0   = 3;
                 pl->routine_1   = 1;
@@ -883,7 +883,7 @@ void func_80112D00(STAGE_ROOM *wp)
                 pl->value_442 = 0;
                 Obj_work_flag_change(0x56, 0x80);
                 Cd_subcmd(0, 1, 0);
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

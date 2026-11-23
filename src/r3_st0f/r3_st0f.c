@@ -40,7 +40,7 @@ void func_801000CC(void)
 void func_80100210(void)
 {
     Sce_slot_list_clear();
-    func_8001E4C4(D_801058F8, D_80105900[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_801058F8, D_80105900[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 

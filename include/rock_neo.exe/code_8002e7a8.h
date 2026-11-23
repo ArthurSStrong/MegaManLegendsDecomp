@@ -452,7 +452,7 @@ extern void EM_World_Pos_Calc(void *wp);
 
 extern sint32 ratan2(sint32 x, sint32 y);
 extern uint32 View_check_ang(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
-                            sint16 angle);
+                             sint16 angle);
 extern void Obj_arc_vel_set(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4);
 extern void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
                           sint16 f, sint16 g);
@@ -514,7 +514,7 @@ typedef struct
     uint32 link_14;
 } LINK14_VIEW;
 
-extern void func_80052528(void *wp);
+extern void Ride_clear(void *wp);
 void Work_stage_close(void);
 void func_8003187C(GAME_WORK_5A4 *wp);
 void Close_SHL_WORK(GAME_WORK_10C *wp);
@@ -793,7 +793,7 @@ extern PL_HEIGHT_INFO D_80097D0C;
 extern sint32 func_8005EBD4(void);
 extern void func_8005D4C0(void);
 extern SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
-extern sint32 func_80049C54(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);
+extern sint32 Scr_line_calc(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);
 sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle);
 sint32 Search_Player(TRACK_WORK *a0, ANGLE_WORK *a1);
 

@@ -50,7 +50,7 @@ void func_8010026C(STAGE_ROOM *wp)
 
 void func_80100378(STAGE_ROOM *wp)
 {
-    if (func_80042238(&Player_work) != 0)
+    if (Player_control_off(&Player_work) != 0)
     {
         STAGE_PL.routine_0 = 3;
         STAGE_PL.routine_1 = 1;
@@ -173,7 +173,7 @@ void func_801004B4(STAGE_ROOM *wp)
 
 void func_80100724(sint8 *arg0)
 {
-    func_80042314((STCOM_PL_WORK *)&Player_work);
+    Player_control_on((STCOM_PL_WORK *)&Player_work);
     Cd_subcmd(0, 1, 0);
     *arg0 = 0;
 }
@@ -246,7 +246,7 @@ void func_80100818(void)
 void func_80100A20(void)
 {
     Sce_slot_list_clear();
-    func_8001E4C4(D_8010DAA0, D_8010DAA8[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_8010DAA0, D_8010DAA8[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 

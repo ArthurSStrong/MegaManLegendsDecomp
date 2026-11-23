@@ -504,7 +504,7 @@ void func_801010C4(STAGE_ROOM_WORK *wp)
             }
             break;
         case 1:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Player_work.flags_0 &= ~3;
                 wp->routine_4++;
@@ -566,7 +566,7 @@ void func_801010C4(STAGE_ROOM_WORK *wp)
                 D_800C3570 = 2;
                 Sce_flag_off(0x604);
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
             }
@@ -899,7 +899,7 @@ void func_8010194C(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Player_work.flags_0 &= ~3;
                 wp->routine_4++;
@@ -954,7 +954,7 @@ void func_8010194C(STAGE_ROOM *wp)
                 Sce_flag_off(0x605);
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }
@@ -1134,8 +1134,8 @@ void func_80102058(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            func_8005D7C0();
-            if (func_80042238(&Player_work) != 0)
+            Gauge_clear();
+            if (Player_control_off(&Player_work) != 0)
             {
                 wp->routine_4++;
             }
@@ -1175,7 +1175,7 @@ void func_80102058(STAGE_ROOM *wp)
             Sce_script_update();
             if (wp->routine_4 == 6 && Fade_busy == 0)
             {
-                func_8005D9EC();
+                Pl_life_full();
                 D_800C356C = 2;
                 D_800C356F = 4;
                 D_800C356E = 0;
@@ -1191,7 +1191,7 @@ void func_80102058(STAGE_ROOM *wp)
                 Cd_subcmd(0, 1, 0);
                 pl = &Player_work;
                 pl->flags_0 |= 1;
-                func_80042314(pl);
+                Player_control_on(pl);
             }
             break;
     }

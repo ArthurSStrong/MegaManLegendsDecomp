@@ -36,7 +36,7 @@ void func_80100860(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 1;
@@ -63,7 +63,7 @@ void func_80100860(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 3:
-            D_800C0F96[0] = 0;
+            Pl_demo_pad[0] = 0;
             STAGE_PL.flags_bd |= 0x20;
             wp->reserved09[1] = 0x80;
             wp->reserved09[2] = 0;
@@ -146,7 +146,7 @@ void func_80100B98(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             D_800A395C = 1;
             if (wp->reserved09[1] & 1)
             {

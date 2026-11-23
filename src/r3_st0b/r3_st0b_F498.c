@@ -75,7 +75,7 @@ void func_8010F534(STCOM18_WORK *wp)
     wp->hit_BC   = 0;
     Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                   wp->kind_E | 0x8000000, 0, 0x80);
-    if (func_80049C24(wp))
+    if (Scr_line_check(wp))
     {
         wp->routine_0 = 2;
     }
@@ -139,7 +139,7 @@ void func_8010F6F8(STCOM18_WORK *wp)
         Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
                       wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
-        hit        = func_80049C24(wp);
+        hit        = Scr_line_check(wp);
         if (hit)
         {
             wp->routine_0++;
@@ -245,7 +245,7 @@ void func_8010FC18(ST0B_10C_B *wp)
     STCOM_SVECTOR target;
     sint32 hit;
 
-    hit = func_80049C24(wp);
+    hit = Scr_line_check(wp);
     if (hit != 0)
     {
         func_80037738(hit, D_8011B64C[wp->byte_D]);

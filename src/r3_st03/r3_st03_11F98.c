@@ -17,7 +17,7 @@ void func_80111F98(STAGE_PROP *wp)
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     if (wp->flags_0 & 1)
     {
-        ((ST03_DRAW3_FUNC)func_80051B68)(wp, 1, -1);
+        ((ST03_DRAW3_FUNC)Solid_set)(wp, 1, -1);
     }
 }
 

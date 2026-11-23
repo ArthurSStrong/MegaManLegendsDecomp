@@ -5,7 +5,7 @@
 void func_800D8804(SHL_WORK *wp)
 {
     D_800D90CC[wp->routine_0](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_800D8854(SHL_WORK *wp)
@@ -151,12 +151,12 @@ void func_800D8D28(SHL_WORK *wp)
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
-                      flags | 0x88000000, 0, 0x80);
+                   flags | 0x88000000, 0, 0x80);
     }
     else
     {
         Set_Atari2(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_c4,
-                      flags | 0x88000000, 0, 0x80);
+                   flags | 0x88000000, 0, 0x80);
     }
 }
 

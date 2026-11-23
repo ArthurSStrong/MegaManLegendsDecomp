@@ -65,7 +65,7 @@ void func_80111898(ST05_WAGON *wp)
     }
     if (!(ctl->flags_0 & 0x40))
     {
-        func_80051B68(wp, 1, -1, 0x1000008);
+        Solid_set(wp, 1, -1, 0x1000008);
     }
     if (ctl->flags_0 & 0x80)
     {
@@ -295,7 +295,7 @@ void func_80112284(STAGE_OBJ *obj)
             D_80137F30[0]   = owner->position;
             D_80137F38      = ((STAGE_OBJ *)wp->ctl.link_34)->position_fixed.v;
             Obj_pos_move(D_80137F30, &D_80137F38, ((STAGE_OBJ *)wp->ctl.link_34)->rotation.y,
-                          0x100, 0, 0);
+                         0x100, 0, 0);
             wp->turn_66 = Muku(&wp->position, D_80137F30, wp->rotation.y, 0x800) >> 5;
             // fall through
         case 1:
@@ -332,7 +332,7 @@ void func_80112444(ST05_WAGON *wp)
             wp->ctl.timer_4 = 0x3C;
             wp->ctl.value_8 = 0;
             wp->ctl.flags_0 |= 0x40;
-            func_80052528(wp);
+            Ride_clear(wp);
             wp->ctl.part_44->routine_1 = 0xF;
             // fall through
         case 1:
@@ -2173,7 +2173,7 @@ sint32 func_80116380(ST05_WALKER *wp)
         *(uint16 *)&wp->routine_2           = 0;
         ctl->part_34->routine_1             = 0;
         *(uint16 *)&ctl->part_34->routine_2 = 0;
-        func_8005D620(wp, 0, D_801317CC[wp->variant_3], 0x60, D_801317D0[wp->variant_3]);
+        Gauge_open(wp, 0, D_801317CC[wp->variant_3], 0x60, D_801317D0[wp->variant_3]);
     }
     return 1;
 }

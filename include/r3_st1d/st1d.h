@@ -77,7 +77,7 @@ typedef struct
     sint32 value_C;       // 354
     uint8 reserved10[8];  // 358
     uint8 track_18[0x48]; // 360
-    sint32 ground_60;     // 3A8: func_8004B414's result
+    sint32 ground_60;     // 3A8: Scr_collision_check's result
     sint16 angle_64;      // 3AC: the rotation.y to turn back to
     uint16 value_66;      // 3AE: damage taken since the last stun
     uint8 reserved68[2];  // 3B0
@@ -597,12 +597,12 @@ void func_801005E4(STAGE_ROOM_WORK *wp);
 
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
-void func_8005D6E8(void *wp);
+void Gauge_close(void *wp);
 
 void Sound_key_off_voice(sint32 voice);
 void func_80111D78(void);
 extern STCOM16_KIND **D_8009884C; // a second record per kind
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 a4);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 a4);
 void func_80017684(void *src, void *dst, sint32 count);
 void func_8010C9AC(ST1D_VIEW *wp, uint8 kind);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);

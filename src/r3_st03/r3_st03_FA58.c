@@ -138,7 +138,7 @@ void func_8010FE24(ST03_PROP *wp)
     {
         Model_Shadow_Trans(wp, 0x80, 0x200, 0);
     }
-    func_80051B68(wp, 1, -1, 0x1000008);
+    Solid_set(wp, 1, -1, 0x1000008);
 }
 
 void func_8010FF4C(ST03_PROP *wp)

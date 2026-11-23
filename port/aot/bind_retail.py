@@ -36,11 +36,11 @@ HOST_IMPORTS = (*RETAIL_IMPORTS, "port_vblank_idle", "port_spin_pause")
 # is renamed NAME__orig and NAME becomes an import, so every call (direct, through a retail
 # address, from an overlay) reaches the host, which runs the mod's hook or the original.
 MOD_HOOKS = (
-    "func_8003D1E0",  # the skates' routine (fast_skates)
+    "Pl_r1_super_dash",  # the skates' routine (fast_skates)
     "Obj_pos_set",  # a step of movement (fast_skates)
-    "func_8003F5D8",  # standing: the skate button check (skate_quick_start)
-    "func_8003C88C",  # the player's routine (skate_quick_start)
-    "func_8003FDA8",  # skating: the action check (skate_shoot)
+    "Pl_r1_stand_check",  # standing: the skate button check (skate_quick_start)
+    "Pl_move_main",  # the player's routine (skate_quick_start)
+    "Pl_r1_super_dash_check",  # skating: the action check (skate_shoot)
     "Game_play",  # the field mode (teleport)
 )
 LIBRARY_SYMBOLS = (

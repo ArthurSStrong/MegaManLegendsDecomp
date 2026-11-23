@@ -111,7 +111,7 @@ void func_801144E8(ST09_PART *wp)
         wp->position       = D_8011E988[0];
         wp->position_fixed = D_8011E990[0];
         Set_Atari2(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
-                      &ctl->hit_14, ctl->value_8 | 0x9880000, 0x800000, 0);
+                   &ctl->hit_14, ctl->value_8 | 0x9880000, 0x800000, 0);
     }
 }
 
@@ -180,7 +180,7 @@ void func_80114A18(ST09_PART *wp)
             wp->position_fixed.x = wp->position.x << 16;
             wp->position_fixed.y = wp->position.y << 16;
             wp->position_fixed.z = wp->position.z << 16;
-            if (!(func_8004B414(wp) & 0x3F00) && !(ctl->hit_14 & 0x2000000))
+            if (!(Scr_collision_check(wp) & 0x3F00) && !(ctl->hit_14 & 0x2000000))
             {
                 break;
             }
@@ -230,7 +230,7 @@ void func_80114D5C(ST09_PART *wp)
                 wp->velocity.y = (0x20 - timer) * 2;
                 wp->position.y += wp->velocity.y;
                 wp->position_fixed.y = wp->position.y << 16;
-                if (!(func_8004B414(wp) & 0x3F00) && !(ctl->hit_14 & 0x2000000))
+                if (!(Scr_collision_check(wp) & 0x3F00) && !(ctl->hit_14 & 0x2000000))
                 {
                     break;
                 }
@@ -373,7 +373,7 @@ void func_80115014(ST09_PART *wp)
                 ctl->timer_4--;
             }
             Obj_pos_set(wp, wp->velocity.x << 4, 0, 0);
-            if ((func_8004B414(wp) & 0x3F00) || (ctl->hit_14 & 0x2000000))
+            if ((Scr_collision_check(wp) & 0x3F00) || (ctl->hit_14 & 0x2000000))
             {
                 if ((sint16)ctl->timer_4 == 0)
                 {
@@ -391,7 +391,7 @@ void func_80115014(ST09_PART *wp)
             break;
         case 4:
             Obj_pos_set(wp, (wp->velocity.x + 8) << 4, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             wp->velocity.x >>= 1;
             if (hit & 0x3F00)
             {

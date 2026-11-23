@@ -926,9 +926,9 @@ void func_801015D4(STAGE_OBJ *wp);
 void func_80102F58(STAGE_OBJ *wp, STAGE_OBJ *arg1);
 void func_80103530(STAGE_OBJ *wp, STAGE_ROOM *arg1, sint16 *arg2);
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 void *func_80031498(void);
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 sint32 func_800375D4(void *pl, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
 void func_80113744(ST0A_SHOT *wp);
@@ -976,15 +976,15 @@ void func_8010ED90(ST0A_EM *wp, sint32 index);
 void func_8010E9C8(ST0A_EM *wp, sint32 side);
 sint32 func_8010EE60(ST0A_EM *wp, sint32 index);
 uint8 *func_8002D22C(void *model, sint32 id);
-sint32 func_80042208(void);
+sint32 Player_atari_off(void);
 void func_8005D4C0(void);
 void func_80111788(ST0A_PIECE *wp);
 void func_80111864(ST0A_PIECE *wp);
 void func_801118B4(ST0A_PIECE *wp);
 // A scratchpad halfword EM_World_Pos_Calc reads: the enemy's turn.
 #define ST0A_SP_182 (*(uint16 *)0x1F800182)
-void func_80052528(void *wp);
-void func_8005D6E8(void *wp);
+void Ride_clear(void *wp);
+void Gauge_close(void *wp);
 // Declared returning int here: retail narrows the result at each use (rock_neo.h).
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 sint32 func_8010EBE8(ST0A_EM *wp);
@@ -996,7 +996,7 @@ sint32 func_80101A78(sint32 down);
 void func_8003187C(void *wp);
 void func_80031A4C(void *wp);
 
-void func_8005D7C0(void);
+void Gauge_clear(void);
 void Sce_script_timer_clear(void);
 void func_8003697C(void);
 void Moji_task_kill(sint32 arg);
@@ -1005,7 +1005,7 @@ void func_8003A264(void);
 extern sint16 D_8011B5FC; // the gate's height (func_80101A78)
 extern sint16 D_8011B600; // its step
 
-extern uint16 D_800C0F96[]; // the pad bits the player sees this frame
+extern uint16 Pl_demo_pad[]; // the pad bits the player sees this frame
 
 sint32 func_8010EB40(void);
 

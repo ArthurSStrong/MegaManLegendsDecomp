@@ -113,7 +113,7 @@ void func_8010AB8C(ST03_ACTOR *wp)
                 (wp->rotation.y + Muku(&wp->position, target, wp->rotation.y, 0x50)) &
                 0xFFF;
             Obj_pos_set(wp, 0x140, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             dx = wp->position.x - target->x;
             dz = wp->position.z - D_801170A8;
             if (dx * dx + dz * dz < 0x800)
@@ -344,7 +344,7 @@ void func_8010AFC0(ST03_ACTOR *wp)
     {
         Close_EM_WORK(wp);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010B2CC(ST03_ACTOR *wp)
@@ -454,7 +454,7 @@ void func_8010B444(ST03_ACTOR *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010B63C(ST03_ACTOR *wp)
@@ -515,7 +515,7 @@ void func_8010B7DC(STAGE_OBJ *wp)
     }
     EM_Char_Move(wp);
     Model_Shadow_Trans(wp, 0x30, 0x200, 0);
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010B858(ST03_ACTOR *wp)
@@ -532,7 +532,7 @@ void func_8010B858(ST03_ACTOR *wp)
     }
     else
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
     if (wp->value_D == 0)
     {

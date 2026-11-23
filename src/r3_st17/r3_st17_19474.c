@@ -490,7 +490,7 @@ void func_8011A2FC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 Fade_start(1);
                 wp->routine_5++;
@@ -576,7 +576,7 @@ void func_8011A574(STAGE_ROOM *wp)
             {
                 func_8003697C();
                 pl = &Player_work;
-                func_80042314(pl);
+                Player_control_on(pl);
                 STAGE_PL_BYTE(0x168) = 0;
                 STAGE_PL_BYTE(0x169) = 0;
                 D_800A395C           = 1;

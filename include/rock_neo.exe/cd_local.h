@@ -59,8 +59,7 @@ extern CD_CMD_FUNC cd_cmd_tbl[];
 // Unknown
 extern uint16 Cd_mute_save;
 extern uint8 D_80098AB8;
-extern sint32
-    *Cd_xa_file_tbl[16]; // file index tables, selected by the top nibble of Cd_xa_seek_id's argument
+extern sint32 *Cd_xa_file_tbl[16]; // file index tables, by the top nibble of Cd_xa_seek_id's arg
 extern CD_POS **Cd_xa_track_tbl[16]; // matching sector offset tables
 
 void Cd_set_volume(uint8 vol);

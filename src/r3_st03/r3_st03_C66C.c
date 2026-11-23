@@ -78,7 +78,7 @@ void func_8010C7E8(ST03_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 3, -1, 0);
+    Solid_set(wp, 3, -1, 0);
 }
 
 void func_8010C934(STAGE_OBJ *wp)
@@ -327,7 +327,7 @@ void func_8010CD68(ST03_ACTOR *wp)
             Close_EM_WORK(wp);
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010D020(ST03_ACTOR *wp)
@@ -433,7 +433,7 @@ void func_8010D268(ST03_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 3, -1, 0);
+    Solid_set(wp, 3, -1, 0);
 }
 
 void func_8010D3C4(STAGE_OBJ *wp)
@@ -699,7 +699,7 @@ void func_8010DAE8(ST03_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 3, -1, 0);
+    Solid_set(wp, 3, -1, 0);
 }
 
 void func_8010DC34(STAGE_OBJ *wp)
@@ -935,7 +935,7 @@ void func_8010E198(ST03_ACTOR *wp)
             pl->flags_0 |= 2;
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010E300(ST03_VIEW *wp)

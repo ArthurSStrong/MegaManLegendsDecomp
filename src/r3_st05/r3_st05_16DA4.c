@@ -110,7 +110,7 @@ void func_80116F7C(ST05_ACTOR *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80117130(ST05_ACTOR *wp)
@@ -383,7 +383,7 @@ void func_801178EC(ST05_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x100, 0);
     }
-    func_80051B68(wp, 3, -1, 0);
+    Solid_set(wp, 3, -1, 0);
 }
 
 void func_801179D4(ST05_ACTOR *wp)
@@ -572,7 +572,7 @@ void func_80117FC4(STAGE_OBJ *wp)
     switch (wp->routine_3)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 STAGE_PL.routine_0 = 3;
                 STAGE_PL.routine_1 = 0;
@@ -861,7 +861,7 @@ void func_801188C0(ST05_ACTOR *wp)
         wp->position_fixed.y += wp->velocity.v.y << 12;
         Obj_pos_adj_round(&wp->position_fixed, &wp->position);
     }
-    hit = func_8004B414(wp);
+    hit = Scr_collision_check(wp);
     if (hit != 0)
     {
         Sound_call2(0x129, &wp->position);
@@ -1008,7 +1008,7 @@ void func_80118DE0(ST05_BOAT *wp)
         EM_World_Pos_Calc(wp);
     }
     ctl->ground_1C = 0;
-    ctl->hit_18    = func_8004B414(wp);
+    ctl->hit_18    = Scr_collision_check(wp);
     if (!(ctl->hit_18 & 0x1000) && wp->position.y == (sint16)Scr_height_check(wp))
     {
         ctl->ground_1C = 1;
@@ -1478,7 +1478,7 @@ void func_80119BE0(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     ofs.x += wp->position_fixed.x;
     ofs.z += wp->position_fixed.z;
     Obj_pos_adj_round(&ofs, &pos);
-    if (func_80048EA4(&pos, D_80131920, 0, 0xFFFF) >= -0x27F)
+    if (Scr_height_calc(&pos, D_80131920, 0, 0xFFFF) >= -0x27F)
     {
         floor = -0x340;
     }
@@ -1691,7 +1691,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
             Obj_pos_adj_round(&vec, &pos);
             if (func_8011953C(pos.x, pos.z, ((wp->rotation.y + 0x200) & 0xFFF) / 0x400) == 0)
             {
-                if (func_80048EA4(&pos, D_80131920, 0, 0xFFFF) >= -0x27F)
+                if (Scr_height_calc(&pos, D_80131920, 0, 0xFFFF) >= -0x27F)
                 {
                     ctl->count_A = 0;
                     ctl->flags_0 |= 0x400;
@@ -1827,11 +1827,11 @@ void func_8011A7E8(ST05_ACTOR *wp)
     D_80131974[wp->routine_0](wp);
     if (wp->routine_1 != 0)
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
     else
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 
@@ -2050,7 +2050,7 @@ void func_8011AFA0(ST05_BOSS *wp)
     {
         wp->ctl.timer_A--;
     }
-    func_80051B68(wp, 1, 0, 0x1000008);
+    Solid_set(wp, 1, 0, 0x1000008);
     ctl = &wp->ctl;
     for (i = 8; i >= 0; i--)
     {
@@ -2828,7 +2828,7 @@ void func_8011C5D8(ST05_BOSS *wp)
                 ctl->flags_0 |= 5;
             }
             Obj_pos_set(wp, wp->value_44.half[0] * 8, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y         = Scr_height_check(wp);
             wp->position_fixed.v.y = wp->position.y << 16;
             if (((wp->position.y - wp->position_prev.y >= 0)
@@ -2907,7 +2907,7 @@ void func_8011C720(ST05_BOSS *wp)
             wp->routine_0             = 2;
             wp->routine_1             = 0;
             *(uint16 *)&wp->routine_2 = 0;
-            func_80052528(wp);
+            Ride_clear(wp);
             break;
     }
 }
@@ -3021,7 +3021,7 @@ void func_8011CC64(ST05_BOSS *wp)
     {
         wp->ctl.flags_0 &= ~0x40;
     }
-    hit = func_80049C54(&((STCOM_SPRITE *)work)->position, &((STCOM_SPRITE *)work)->position, NULL,
+    hit = Scr_line_calc(&((STCOM_SPRITE *)work)->position, &((STCOM_SPRITE *)work)->position, NULL,
                         0xFFFF);
     if (hit != 0)
     {
@@ -3030,7 +3030,8 @@ void func_8011CC64(ST05_BOSS *wp)
             func_80037738(hit, 0x190);
             ctl->flags_0 &= ~0x40;
         }
-        else if (func_80048EA4(&((STCOM_SPRITE *)work)->position, NULL, 0, fx->reserved01) < -0x80)
+        else if (Scr_height_calc(&((STCOM_SPRITE *)work)->position, NULL, 0, fx->reserved01) <
+                 -0x80)
         {
             ctl->flags_0 &= ~0x40;
         }

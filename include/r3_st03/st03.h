@@ -708,7 +708,7 @@ extern ST03_ACTOR Em_work_tbl[]; // ROCK_NEO: the 0x3C0-byte work slots
 extern ST03_CAM D_800BC730;
 extern uint8 D_8011CA88;
 extern ST03_KIND **D_80098844;
-extern uint16 D_800C0F96[]; // an array: GCC keeps its address in a register (func_80103EBC)
+extern uint16 Pl_demo_pad[]; // an array: GCC keeps its address in a register (func_80103EBC)
 extern sint16 D_800C0F9A;
 extern uint8 D_8011CA90;
 extern STCOM_FIXED_VECTOR D_8011CA98;
@@ -738,7 +738,7 @@ void Moji_task_kill(sint32 arg);
 void func_8003697C(void);
 void Pl_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 void func_80101B2C(void);
 void func_801007B4(void);
 void func_8010089C(void);
@@ -839,7 +839,7 @@ STAGE_OBJ *Obj_id_work(sint32 id); // ROCK_NEO.EXE: the spawned slot with this i
 
 void func_80106398(ST03_ACTOR *wp);
 
-// func_80051B68 as this file calls it: with three arguments, a3 left as it is (Capcom's file had
+// Solid_set as this file calls it: with three arguments, a3 left as it is (Capcom's file had
 // no prototype for it).
 typedef void (*ST03_DRAW3_FUNC)(void *wp, sint32 a1, sint32 a2);
 

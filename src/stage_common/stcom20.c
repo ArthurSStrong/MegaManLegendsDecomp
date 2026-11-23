@@ -73,7 +73,7 @@ void stcom20_func_0148(STCOM20_WORK *wp)
         wp->velocity.v.x = 0;
     }
     Obj_pos_move(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
-    if (func_8004B414(wp) == 0)
+    if (Scr_collision_check(wp) == 0)
     {
         y = Scr_height_check(wp);
         d = y - ctl->ground_12;
@@ -154,7 +154,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
         wp->velocity.v.x = 0xA0;
     }
     Obj_pos_move(&wp->position, &wp->position_fixed, wp->angle_66, wp->velocity.v.x, 0, 0);
-    hit = func_8004B414(wp);
+    hit = Scr_collision_check(wp);
     if (hit == 0)
     {
         y = Scr_height_check(wp);
@@ -218,7 +218,7 @@ void stcom20_func_05FC(STCOM20_WORK *wp)
         func_80047148(wp, &wp->position, effect);
 #endif
     }
-    func_8004B414(wp);
+    Scr_collision_check(wp);
 }
 
 void stcom20_func_06E8(STCOM20_WORK *wp)

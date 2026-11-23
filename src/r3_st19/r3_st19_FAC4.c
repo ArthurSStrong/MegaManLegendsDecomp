@@ -273,7 +273,7 @@ void func_801103DC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0   = 3;
                 pl->routine_1   = 1;
@@ -362,7 +362,7 @@ void func_801106C4(STAGE_ROOM *wp)
             }
             break;
         case 1:
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->value_76 = 0;
             pl->flags_0 |= 3;
             wp->routine_5++;

@@ -115,11 +115,11 @@ void stcom01_func_01FC(STCOM01_WORK *wp)
         }
         if (ctl->flags & 2)
         {
-            func_80051B68(wp, 1, -1, 0);
+            Solid_set(wp, 1, -1, 0);
         }
         else
         {
-            func_80051B68(wp, 3, -1, 0);
+            Solid_set(wp, 3, -1, 0);
         }
     }
 }

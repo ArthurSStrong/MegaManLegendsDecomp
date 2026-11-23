@@ -220,7 +220,7 @@ void func_8002F9EC(void *wp, sint32 arg);
 void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
 void EM_World_Pos_Calc(void *wp);
 uint32 View_check_ang(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_VECTOR *out,
-                     sint32 angle);
+                      sint32 angle);
 sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 #ifdef __wasm32__
@@ -228,7 +228,7 @@ void func_80047148(void *wp, STCOM_SVECTOR *pos);
 #else
 void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
-void func_80052528(void *wp);
+void Ride_clear(void *wp);
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 sint16 Calc_arc_angle(STCOM_SVECTOR *from, STCOM_SVECTOR *to, sint32 speed, sint32 arg3,
                      sint32 arg4);

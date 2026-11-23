@@ -85,7 +85,7 @@ void func_80108180(ST08_ACTOR *wp)
         wp->hold_359--;
         EM_Char_Move(wp);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_801082F0(ST08_ACTOR *wp)

@@ -16,7 +16,7 @@ typedef struct
 // The ground block at +0xC4 of the work slot.
 typedef struct
 {
-    uint32 hit_0;   // C4: ground hit flags (func_8004B414)
+    uint32 hit_0;   // C4: ground hit flags (Scr_collision_check)
     uint16 value_4; // C8: the claws' hit kind bits, from the kind's record (value_B, value_C)
     uint8 flags_6;  // CA
     uint8 count_7;  // CB: frames chasing the player

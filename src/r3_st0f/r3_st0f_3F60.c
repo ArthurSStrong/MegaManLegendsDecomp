@@ -49,7 +49,7 @@ void func_80103F60(ST0F_OBJ *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_801040E0(ST0F_OBJ *wp)
@@ -102,7 +102,7 @@ void func_801040E0(ST0F_OBJ *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80104264(ST0F_OBJ *wp)
@@ -152,7 +152,7 @@ void func_80104264(ST0F_OBJ *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_801043CC(ST0F_OBJ *wp)

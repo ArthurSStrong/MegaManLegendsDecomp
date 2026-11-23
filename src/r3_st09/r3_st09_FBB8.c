@@ -110,7 +110,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
         wp->routine_1                = 0;
         *(uint16 *)&wp->routine_2    = 0;
         EM_Char_Set(wp, 0, 0);
-        func_8005D620(wp, 0, 0, 0x51, 0x203050);
+        Gauge_open(wp, 0, 0, 0x51, 0x203050);
     }
     else
     {
@@ -149,7 +149,7 @@ void func_80110018(STAGE_STCOM15_WORK_4E0 *wp)
             {
                 ctl->flags_0 |= 0x40;
                 Sce_flag_on(0x606);
-                func_8005D6E8(wp);
+                Gauge_close(wp);
             }
         }
         else
@@ -328,7 +328,7 @@ void func_8011047C(STAGE_STCOM15_WORK_4E0 *wp)
                               Muku(&wp->position, &pl->position, wp->rotation.y, 0x20)) &
                              0xFFF;
             Obj_pos_set(wp, 0x100, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (!(((STAGE_OBJ *)wp)->value_A4 & 3))
             {
                 Sound_call2(0xC8, &wp->position);
@@ -423,7 +423,7 @@ void func_801106F0(STAGE_STCOM15_WORK_4E0 *wp)
                 break;
             }
             Obj_pos_set(wp, 0x100, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             if (!(((STAGE_OBJ *)wp)->value_A4 & 3))
             {
                 Sound_call2(0xC8, &wp->position);
@@ -468,7 +468,7 @@ void func_801109A4(STAGE_STCOM15_WORK_4E0 *wp)
                 break;
             }
             Obj_pos_set(wp, 0x200, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 0x20)
@@ -579,7 +579,7 @@ void func_80110CA0(STAGE_STCOM15_WORK_4E0 *wp)
             }
             wp->anim_AC = 2;
             Obj_pos_set(wp, 0x200, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
         puff:
@@ -608,7 +608,7 @@ void func_80110CA0(STAGE_STCOM15_WORK_4E0 *wp)
         case 2:
         walk:
             Obj_pos_set(wp, 0x200, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (wp->value_A6 & 1)
@@ -792,7 +792,7 @@ void func_80111508(STAGE_OBJ *wp)
                 hw->value_0 |= 5;
             }
             Obj_pos_set(wp, wp->value_44.half[0] << 3, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y         = Scr_height_check(wp);
             wp->position_fixed.v.y = wp->position.y << 16;
             if (STCOM_ABS(wp->position.y - wp->position_prev.y) > 0x20)
@@ -873,7 +873,7 @@ void func_80111650(STAGE_STCOM15_WORK_4E0 *wp)
             wp->velocity.v.y += wp->accel.y;
             wp->position.y -= 0x46;
             wp->position_fixed.y = wp->position.y << 16;
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 wp->flags_0 &= ~2;
                 i = func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
@@ -924,7 +924,7 @@ void func_80111650(STAGE_STCOM15_WORK_4E0 *wp)
             if ((((ST09_PAIR_CTL *)ctl)->part_34->u_E.b.byte_E & 1) &&
                 (((ST09_PAIR_CTL *)ctl)->part_38->u_E.b.byte_E & 1))
             {
-                func_8005D6E8(wp);
+                Gauge_close(wp);
                 func_8003187C(wp);
                 Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_34);
                 Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_38);
@@ -1426,7 +1426,7 @@ sint32 func_80112918(STAGE_STCOM15_WORK_4E0 *wp)
                     wp->routine_1             = 4;
                     *(uint16 *)&wp->routine_2 = 0;
                 }
-                else if (func_80042208() != 0)
+                else if (Player_atari_off() != 0)
                 {
                     wp->life_6E = 0;
                     wp->ctl.flags_0 &= ~2;

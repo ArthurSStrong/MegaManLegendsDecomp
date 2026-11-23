@@ -391,7 +391,7 @@ sint32 func_80063334(DEBUG_WORK *wp)
     }
 }
 
-sint32 func_80063604(DEBUG_WORK *wp)
+sint32 Debug_item_key_type(DEBUG_WORK *wp)
 {
     DEBUG_ENTRY *e;
     sint32 i;
@@ -461,7 +461,7 @@ sint32 func_80063604(DEBUG_WORK *wp)
             idx = e->index_6;
             if (idx != DEBUG_GAME_54)
             {
-                func_800425FC(&Player_work, idx);
+                Pl_key_type_set(&Player_work, idx);
                 DEBUG_GAME_54 = wp->entry[3].index_6;
             }
             return 0;
@@ -555,8 +555,8 @@ sint32 func_800638D8(DEBUG_WORK *wp)
 void Message_event_clear(void)
 {
     Message_event.word = 0;
-    D_800987B4      = 0;
-    D_800987B8      = 0;
+    D_800987B4         = 0;
+    D_800987B8         = 0;
 }
 
 void Message_event_set(sint32 arg0, sint32 arg1, sint32 arg2, sint32 arg3)
@@ -567,7 +567,7 @@ void Message_event_set(sint32 arg0, sint32 arg1, sint32 arg2, sint32 arg3)
     if (*(sint8 *)&Game_work == 3)
     {
         Message_event.flag = 1;
-        D_800987B1      = arg1;
+        D_800987B1         = arg1;
         if (arg1 & 2)
         {
             D_800987B2 = 2;
@@ -598,7 +598,7 @@ void Message_event_update(void)
     {
         case 0:
             Player_work.routine_1                 = 0x10;
-            Player_work.value0a                   = 0;
+            Player_work.routine_2                 = 0;
             *(uint32 *)&Player_work.table180[0].z = 0;
             Player_work.value44d                  = 0;
             (*(sint8 *)&D_800987B2)++;
@@ -629,7 +629,7 @@ void Message_event_update(void)
                 }
                 if (!(fp->mode_1 & 8) && pl->routine_1 == 0x10)
                 {
-                    pl->value0a++;
+                    pl->routine_2++;
                 }
                 if (fp->mode_1 & 0x10)
                 {
@@ -787,7 +787,7 @@ void Game_logo_draw_sprites(LOGO_WORK *wp)
                 }
                 break;
             case 3:
-                d = *(sint16 *)((uint8 *)&Player_work + 0xB0);
+                d = Player_work.life_max;
                 if (d > 0x50)
                 {
                     d = ((d - 0x41) >> 4) * 5;

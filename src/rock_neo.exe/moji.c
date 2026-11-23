@@ -1296,7 +1296,7 @@ void Moji_text_bright(MOJI_WORK *wp)
 
 sint32 func_8005619C(MOJI_WORK *wp)
 {
-    if (func_8005DA78(1) != 0)
+    if (Pl_life_refill(1) != 0)
     {
         wp->pos_6C += 1;
         return 1;
@@ -1306,7 +1306,7 @@ sint32 func_8005619C(MOJI_WORK *wp)
 
 sint32 func_800561E8(MOJI_WORK *wp)
 {
-    if (func_8005DAEC(1) != 0)
+    if (Pl_energy_refill(1) != 0)
     {
         wp->pos_6C += 1;
         return 1;
@@ -1331,7 +1331,7 @@ sint32 func_80056280(MOJI_WORK *wp)
     sint32 x;
 
     a = func_8005DA1C(0);
-    b = func_8005DAEC(0);
+    b = Pl_energy_refill(0);
     if (a == 0)
     {
         if (b == 0)
@@ -1677,14 +1677,14 @@ sint32 Moji_cmd_shop_list(MOJI_WORK *wp)
     Moji_list_top = D_800988F4;
     have       = &Sce_flag[base >> 3];
     seen       = &Sce_flag[(sint32)(base - 0x80) >> 3];
-    if (*(sint16 *)((uint8 *)&Player_work + 0xB0) >= 0xA0)
+    if (Player_work.life_max >= 0xA0)
     {
         D_8008FD3C[0x23] = D_8008FE44;
     }
     else
     {
         D_8008FD3C[0x23] =
-            D_8008FD3C[0x85 - (0xA0 - *(sint16 *)((uint8 *)&Player_work + 0xB0)) / 16];
+            D_8008FD3C[0x85 - (0xA0 - Player_work.life_max) / 16];
     }
     if (MOJI_GAME->value7D >= 0x12)
     {
@@ -1707,7 +1707,7 @@ sint32 Moji_cmd_shop_list(MOJI_WORK *wp)
             {
                 if (i == 3)
                 {
-                    if (*(sint16 *)((uint8 *)&Player_work + 0xB0) != 0xA0)
+                    if (Player_work.life_max != 0xA0)
                     {
                         Moji_list[Moji_list_count] = i;
                         Moji_list_count++;
@@ -1899,8 +1899,8 @@ sint32 Moji_cmd_shop_trade(MOJI_WORK *wp)
         if (D_80098930 == 0x23)
         {
             // Player_work + 0xB0 (not yet named in PL_WORK)
-            Player_work.value6e = ((uint16 *)&Player_work)[0x58] += 0x10;
-            func_8005DA78(1);
+            Player_work.life = Player_work.life_max += 0x10;
+            Pl_life_refill(1);
         }
         else if (D_80098930 == 0x24)
         {

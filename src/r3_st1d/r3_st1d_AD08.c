@@ -31,8 +31,8 @@ void func_8010ADCC(ST1D_ARM *wp)
     EM_Char_Set2(wp, 0, 0);
     owner          = (ST1D_ARM_OWNER *)Obj_id_work(wp->owner_D);
     wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
-    EM_World_Pos_Calc_Mtx(wp,
-                  (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208))); // offset first
+    // offset first
+    EM_World_Pos_Calc_Mtx(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
     wp->scale.v.pad  = 0x4210;
     wp->value_78     = 0;
     wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 6;
@@ -167,7 +167,8 @@ void func_8010AF10(ST1D_ARM *wp)
         {
             EM_Char_Move2(wp);
             wp->matrix_160 = *ST1D_BONE_MATRIX(owner, wp->variant_3);
-            EM_World_Pos_Calc_Mtx(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
+            EM_World_Pos_Calc_Mtx(wp,
+                                  (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
         }
         ctl->pos_10.x = wp->joints_180[0].x;
         ctl->pos_10.y = wp->joints_180[0].y + 0x28;
@@ -355,7 +356,7 @@ void func_8010B988(ST1D_VIEW *wp)
     wp->u_44.h[0]                              = 0x140;
     wp->value_AD                               = 0;
     EM_Char_Set(wp, wp->value_AC, 0);
-    ctl->ground_60 = func_8004B414(wp);
+    ctl->ground_60 = Scr_collision_check(wp);
     ctl->angle_64  = (wp->rotation.y + 0x800) & 0xFFF;
 }
 
@@ -436,7 +437,7 @@ void func_8010BAEC(ST1D_VIEW *wp)
     {
         Sound_call2(0x1BD, &wp->position);
     }
-    ctl->ground_60       = func_8004B414(wp);
+    ctl->ground_60       = Scr_collision_check(wp);
     wp->position.y       = Scr_height_check(wp);
     wp->position_fixed.y = wp->position.y << 16;
     if ((ctl->flags_6C & 8) && wp->routine_1 != 1 && (ctl->ground_60 & 0xF00))
@@ -1005,7 +1006,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind)
             obj->position_fixed.y = obj->position.y << 16;
             obj->position_fixed.z = obj->position.z << 16;
             Obj_pos_move(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
-                          0);
+                         0);
             pl->value_C4.x = obj->position.x + (s * dist >> 12);
             if (kind == 0)
             {
@@ -1027,7 +1028,7 @@ void func_8010C9AC(ST1D_VIEW *wp, uint8 kind)
             obj->position_fixed.y = obj->position.y << 16;
             obj->position_fixed.z = obj->position.z << 16;
             Obj_pos_move(&obj->position, &obj->position_fixed, wp->rotation.y & 0xFFF, 0x550, 0,
-                          0);
+                         0);
             pl->value_C4.x = obj->position.x + (s * ((ctl->rand_6A & 0x3FF) + 0x80) >> 12);
             pl->value_C4.y = obj->position.y;
             pl->value_C4.z = obj->position.z + (c * ((ctl->rand_6A & 0x3FF) + 0x80) >> 12);
@@ -2146,7 +2147,7 @@ void func_8010EE48(STCOM16_WORK *wp)
         }
     }
     EM_Char_Move(wp);
-    ground->hit_0 = func_8004B414(wp);
+    ground->hit_0 = Scr_collision_check(wp);
     y             = Scr_height_check(wp);
     if (!(ground->flags_6 & 0x40))
     {
@@ -2250,12 +2251,12 @@ void func_8010F180(STCOM16_WORK *wp)
     {
         case 0:
             Obj_pos_move(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
-                          wp->velocity.v.x, wp->velocity.v.y, 0);
+                         wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 1:
             Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
-                          wp->velocity.v.x, wp->velocity.v.y, 0);
+                         wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 2:
@@ -2299,7 +2300,7 @@ void func_8010F180(STCOM16_WORK *wp)
             break;
     }
     EM_Char_Move(wp);
-    ground->hit_0 = func_8004B414(wp);
+    ground->hit_0 = Scr_collision_check(wp);
     y             = Scr_height_check(wp);
     if ((ground->flags_6 & 0x10) && !(ground->flags_6 & 0x20) && y == wp->position.y)
     {
@@ -2474,7 +2475,7 @@ void func_8010F890(STCOM16_WORK *wp)
     sint32 y;
 
     EM_Char_Move(wp);
-    wp->ground.hit_0 = func_8004B414(wp);
+    wp->ground.hit_0 = Scr_collision_check(wp);
     y                = Scr_height_check(wp);
     if (y - wp->position_prev.y >= 16)
     {

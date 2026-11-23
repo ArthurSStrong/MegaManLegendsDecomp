@@ -1004,7 +1004,7 @@ void func_8010E504(STCOM16_WORK *wp)
         }
     }
     EM_Char_Move(wp);
-    ground->hit_0 = func_8004B414(wp);
+    ground->hit_0 = Scr_collision_check(wp);
     y             = Scr_height_check(wp);
     if (!(ground->flags_6 & 0x40))
     {
@@ -1108,12 +1108,12 @@ void func_8010E83C(STCOM16_WORK *wp)
     {
         case 0:
             Obj_pos_move(&wp->position, &wp->position_fixed, (wp->rotation.y + 0x800) & 0xFFF,
-                          wp->velocity.v.x, wp->velocity.v.y, 0);
+                         wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 1:
             Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y & 0xFFF,
-                          wp->velocity.v.x, wp->velocity.v.y, 0);
+                         wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
             break;
         case 2:
@@ -1157,7 +1157,7 @@ void func_8010E83C(STCOM16_WORK *wp)
             break;
     }
     EM_Char_Move(wp);
-    ground->hit_0 = func_8004B414(wp);
+    ground->hit_0 = Scr_collision_check(wp);
     y             = Scr_height_check(wp);
     if ((ground->flags_6 & 0x10) && !(ground->flags_6 & 0x20) && y == wp->position.y)
     {
@@ -1332,7 +1332,7 @@ void func_8010EF4C(STCOM16_WORK *wp)
     sint32 y;
 
     EM_Char_Move(wp);
-    wp->ground.hit_0 = func_8004B414(wp);
+    wp->ground.hit_0 = Scr_collision_check(wp);
     y                = Scr_height_check(wp);
     if (y - wp->position_prev.y >= 16)
     {

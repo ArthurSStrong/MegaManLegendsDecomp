@@ -67,9 +67,9 @@ typedef struct PL_WORK
     uint8 flags06;
     uint8 reserved07;
     uint8 kind;
-    uint8 routine_1;
-    uint8 value0a;
-    uint8 value0b;
+    uint8 routine_1; // the state (Pl_r1_tbl); Capcom: PL_R1_*
+    uint8 routine_2; // the state's step (Capcom: routine_2, e.g. super dash 4 = cruising)
+    uint8 routine_3;
     uint8 reservedC[0x8];
     PL_SHORT_VECTOR position;
     PL_FIXED_VECTOR position_fixed;
@@ -83,7 +83,7 @@ typedef struct PL_WORK
     PL_SHORT_VECTOR rotation_prev;
     uint8 reserved64[0x8];
     sint16 value6c;
-    sint16 value6e;
+    sint16 life; // Capcom's name (ZAKO_WORK.life in tcrf)
     uint8 reserved70;
     uint8 value71;
     uint8 reserved72;
@@ -102,8 +102,9 @@ typedef struct PL_WORK
     uint8 reserveda8[4];
     uint8 value_ac;
     uint8 value_ad;
-    uint8 reservedAE[0x4];
-    uint16 value_b2;
+    uint8 reservedAE[0x2];
+    sint16 life_max;
+    uint16 value_b2; // last frame's life
     sint16 value_b4;
     sint16 value_b6;
     uint8 reservedb8[5];
@@ -128,20 +129,23 @@ typedef struct PL_WORK
     uint16 value116;
     uint16 value118;
     uint8 reserved11A[0x2];
-    uint16 pad_cur;
-    uint16 value11e;
+    uint16 pad_cur; // buttons held
+    uint16 pad_trg; // buttons pressed this frame
     uint16 value120;
     uint16 value122;
-    uint16 value124;
-    uint16 value126;
-    uint16 value128, value12a;
-    uint16 value12c, value12e;
-    uint16 value130, value132;
-    uint16 value134;
-    uint16 value136;
-    uint16 value138;
-    uint16 value13a, value13c;
-    uint16 value13e, value140;
+    // Button masks per action, copied from the control layout Pl_key_type_tbl[Game_work.flags_54] by
+    // Pl_key_type_set (layout A: Up, Down, L1, R1, Left, Right, Left, Right, Circle, Circle, Cross,
+    // Square, Triangle, L2, R2).
+    uint16 key_forward;
+    uint16 key_back;
+    uint16 key_turn_l, key_turn_r;
+    uint16 key_run_l, key_run_r;
+    uint16 key_step_l, key_step_r;
+    uint16 key_dash;
+    uint16 key_check;
+    uint16 key_jump;
+    uint16 key_shot_l, key_shot_r;
+    uint16 value13e, key_aim;
     uint8 reserved142[0x2];
     PL_PAD_ENTRY pad_tbl[4];
     sint16 value164;
@@ -150,10 +154,10 @@ typedef struct PL_WORK
     uint8 reserved16a;
     uint8 flags16b;
     uint8 reserved16c[4];
-    sint8 value170, value171;
+    sint8 weapon_right_no, weapon_left_no;
     sint8 part_index;
     uint8 reserved173;
-    sint8 value174;
+    sint8 shot_status_flag;
     uint8 value175, value176;
     sint8 value177;
     uint16 value178;
@@ -197,73 +201,73 @@ extern uint8 D_80089A8A[];
 #define PL_GAME_FLAG55 (*(sint8 *)((uint8 *)&Game_work + 0x55))
 #define PL_GAME_FLAG56 (*(sint8 *)((uint8 *)&Game_work + 0x56))
 
-void func_8003BE6C(PL_WORK *pl, sint32 arg);
-sint32 func_80040764(PL_WORK *pl);
+void pl_init(PL_WORK *pl, sint32 arg);
+sint32 pl_recover_jump_start(PL_WORK *pl);
 sint32 rand(void);
-void func_8003F3E8(PL_WORK *pl);
-void func_80041EF4(PL_WORK *pl, sint32 a1, sint32 a2);
-void func_80041DDC(PL_WORK *pl, uint8 id, sint16 arg2, uint8 flag);
-sint32 func_80042154(PL_WORK *pl, sint32 a1, sint32 a2, sint32 mask);
+void Pl_r1_talk(PL_WORK *pl);
+void pl_pitch_pad(PL_WORK *pl, sint32 a1, sint32 a2);
+void pl_anim_set(PL_WORK *pl, uint8 id, sint16 arg2, uint8 flag);
+sint32 pl_turn_accel(PL_WORK *pl, sint32 a1, sint32 a2, sint32 mask);
 void Pl00_shot_enable_on(PL_WORK *pl);
-sint32 func_80040B68(PL_WORK *pl, sint32 arg);
-sint32 func_800402C4(PL_WORK *pl);
-sint32 func_8004030C(PL_WORK *pl, sint32 arg);
+sint32 pl_shot_start(PL_WORK *pl, sint32 arg);
+sint32 pl_walk_start(PL_WORK *pl);
+sint32 pl_walk_back_start(PL_WORK *pl, sint32 arg);
 void func_800394AC(void);
-sint32 func_800406A8(PL_WORK *pl);
-void func_80041A44(PL_WORK *pl, uint32 flags);
-sint32 func_80040818(PL_WORK *pl);
-sint32 func_80040710(PL_WORK *pl);
-sint32 func_800404FC(PL_WORK *pl, sint32 arg);
-sint32 func_80040630(PL_WORK *pl, sint32 arg);
+sint32 pl_jump_start(PL_WORK *pl);
+void pl_damage_state_set(PL_WORK *pl, uint32 flags);
+sint32 pl_hang_start(PL_WORK *pl);
+sint32 pl_side_jump_start(PL_WORK *pl);
+sint32 pl_run_back_start(PL_WORK *pl, sint32 arg);
+sint32 pl_side_step_start(PL_WORK *pl, sint32 arg);
 void func_8002D004(PL_WORK *pl, sint32 a1, sint32 a2);
-sint32 func_80040574(PL_WORK *pl);
+sint32 pl_super_dash_start(PL_WORK *pl);
 sint32 func_800410D4(PL_WORK *pl);
 sint32 func_80041158(PL_WORK *pl);
-void func_80042314(PL_WORK *pl);
+void Player_control_on(PL_WORK *pl);
 sint32 func_80041044(PL_WORK *pl);
-sint32 func_800403D4(PL_WORK *pl, sint32 arg);
-sint32 func_80040468(PL_WORK *pl, sint32 arg);
-void func_8003F188(PL_WORK *pl, sint32 dir, sint32 arg);
-sint32 func_80040E00(PL_WORK *pl, sint32 a1, sint16 a2, sint16 a3);
-void func_80040E9C(PL_WORK *pl, sint16 arg);
+sint32 pl_run_left_start(PL_WORK *pl, sint32 arg);
+sint32 pl_run_right_start(PL_WORK *pl, sint32 arg);
+void pl_turn_to(PL_WORK *pl, sint32 dir, sint32 arg);
+sint32 pl_shot_mode_set(PL_WORK *pl, sint32 a1, sint16 a2, sint16 a3);
+void pl_shot_status_set(PL_WORK *pl, sint16 arg);
 sint32 func_80040FA8(PL_WORK *pl);
-void func_80040178(PL_WORK *pl);
+void Pl_r1_hang_check(PL_WORK *pl);
 sint32 Scr_height_check(PL_WORK *pl);
 typedef void (*PL_FUNC)(PL_WORK *pl);
 
-extern PL_FUNC D_80089F94[];
+extern PL_FUNC Pl_move_tbl[];
 void Pl_Char_Set_Upper(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 void Pl_Char_Move_Upper(PL_WORK *pl, sint32 a1, sint32 a2);
 void Pl_Char_Set(PL_WORK *pl, sint32 a1, sint32 a2);
 void Pl_Char_Move(); // signature differs between callers; see code_8002e7a8.h
 uint32 func_8004324C(PL_WORK *pl);
-sint32 func_8004B414(PL_WORK *pl);
-sint32 func_80042044(PL_WORK *pl, sint32 a1, sint32 a2);
+sint32 Scr_collision_check(PL_WORK *pl);
+sint32 pl_turn_l1r1(PL_WORK *pl, sint32 a1, sint32 a2);
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      uint32 flags, sint32 arg7, sint32 arg8);
-void func_8003C4EC(PL_WORK *pl);
-sint32 func_800411DC();
-sint32 func_80040AEC(PL_WORK *pl);
-sint32 func_800405F4(PL_WORK *pl);
-sint32 func_80040380(PL_WORK *pl);
+void pl_world_update(PL_WORK *pl);
+sint32 pl_investigate_check();
+sint32 pl_aim_start(PL_WORK *pl);
+sint32 pl_turn_start(PL_WORK *pl);
+sint32 pl_run_start(PL_WORK *pl);
 void func_800395E8(void);
 void Pl00_shot_enable_off(PL_WORK *pl);
-void func_80051BAC(PL_WORK *pl);
+void Solid_mover_set(PL_WORK *pl);
 extern uint16 D_800C0C26, D_800C0C2A, D_800C0C2C, D_800C0C2E;
-extern uint16 D_800C0F96[];
+extern uint16 Pl_demo_pad[];
 extern uint16 D_800C0F9A, D_800C0F9C, D_800C0F9E;
 extern uint16 D_800C0FE6, D_800C0FEA, D_800C0FEC, D_800C0FEE;
-void func_8003C418(PL_WORK *pl);
-extern PL_FUNC D_80089FF8[];
-extern PL_FUNC D_80089FA4[];
-void func_8004174C(PL_WORK *pl);
-void func_800426F8(PL_WORK *pl);
-void func_80042734(PL_WORK *pl);
+void pl_move_exec(PL_WORK *pl);
+extern PL_FUNC Pl_r1_check_tbl[];
+extern PL_FUNC Pl_r1_tbl[];
+void pl_damage_check(PL_WORK *pl);
+void Pl_shot_special(PL_WORK *pl);
+void Pl_shot_buster(PL_WORK *pl);
 sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3);
 sint32 func_80037440();
-void func_80053158(PL_WORK *pl, uint32 arg);
-void func_8005331C(PL_WORK *pl, uint32 arg);
-sint32 func_80050C2C(PL_WORK *pl);
+void Ride_carry(PL_WORK *pl, uint32 arg);
+void Ride_carry_saved(PL_WORK *pl, uint32 arg);
+sint32 Scr_event_check(PL_WORK *pl);
 #ifdef __wasm32__
 void Pl_key_unpack(void *arg, sint32 unused);
 #else
@@ -273,12 +277,12 @@ void Pl_World_Pos_Calc(); // signature differs between callers; see code_8002e7a
 void func_8002C794(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 extern uint8 D_80097D9C[];
 void func_80039A38(void *data);
-sint32 func_8004976C(PL_WORK *pl);
-void func_80041E90(PL_WORK *pl, sint32 x, sint32 y, sint32 z);
-void func_80041F54(PL_WORK *pl, sint32 a1, sint32 a2, uint16 mask);
-sint32 func_800423DC(PL_WORK *pl);
-sint32 func_80042458(PL_WORK *pl);
-void func_800425FC(); // signature differs between callers
+sint32 Scr_wall_dist_check(PL_WORK *pl);
+void Pl_move(PL_WORK *pl, sint32 x, sint32 y, sint32 z);
+void pl_pitch_accel(PL_WORK *pl, sint32 a1, sint32 a2, uint16 mask);
+sint32 Pl_anim_buster(PL_WORK *pl);
+sint32 Pl_anim_special(PL_WORK *pl);
+void Pl_key_type_set(); // signature differs between callers
 void func_80037534(PL_WORK *wp);
 void func_80037594(void);
 void func_800177CC(void *start, void *end);
@@ -287,14 +291,14 @@ extern PL_HEIGHT_INFO D_80097D90;
 extern uint8 Cd_ring_buf[]; // same as cd_local.h
 // Generic effect allocator; CODE456_WORK is its full layout (code_800456d8.h).
 struct CODE456_WORK *Open_EFFECT_WORK(void);
-void func_8003E068(PL_WORK *pl, sint32 index);
-void func_8005D528(void);
-void func_8003D124(PL_WORK *pl, sint32 dir);
-void func_8003EE68(PL_WORK *pl);
-sint32 func_80048EA4(); // signature differs between callers; see code_80048620.h
+void pl_air_move(PL_WORK *pl, sint32 index);
+void Gauge_hide(void);
+void pl_run_move(PL_WORK *pl, sint32 dir);
+void pl_fall_start(PL_WORK *pl);
+sint32 Scr_height_calc(); // signature differs between callers; see code_80048620.h
 sint32 func_8005D8C4(sint32 arg);
 void Swing_Camera2(); // takes a CAM_DELTA pointer; see code_80037fb4.h
-void func_80042528(PL_WORK *pl, PL_EFFECT *fx, sint32 arg);
+void pl_effect_pos_set(PL_WORK *pl, PL_EFFECT *fx, sint32 arg);
 void Obj_pos_adj_round(); // signature differs between callers; see code_8002e7a8.h
 // Hand-written copy entry in asm_fastmem.s; not in the symbol registry yet.
 void func_800176DC(void *src, void *dst, sint32 count);
@@ -327,7 +331,7 @@ extern sint32 Lockon_target; // same as code_8002e7a8.h
 extern sint32 D_80098B18; // same as code_8005c258.h
 
 // Common head of the 0x3C0, 0x5A4 and 0x10C entity records as the lock-on search
-// (func_800411DC) reads it: collision bounds, then position and rotation.
+// (pl_investigate_check) reads it: collision bounds, then position and rotation.
 typedef struct
 {
     sint8 flags;
@@ -355,6 +359,6 @@ typedef struct
 
 sint32 rsin(sint32 angle);
 sint32 rcos(sint32 angle);
-sint32 func_800414F0(PL_WORK *pl, PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *rot, PL_BOUNDS *box);
+sint32 pl_front_box_check(PL_WORK *pl, PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *rot, PL_BOUNDS *box);
 
 #endif

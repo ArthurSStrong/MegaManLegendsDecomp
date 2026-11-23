@@ -156,8 +156,8 @@ uint32 Sce_skip_check(void);
 void Sce_flag_select(sint32 arg);
 void Sce_camera_script_exec(void);
 void Sce_script_update(void);
-sint32 func_80042238(PL_WORK *pl);
-void func_80042314(PL_WORK *pl);
+sint32 Player_control_off(PL_WORK *pl);
+void Player_control_on(PL_WORK *pl);
 void Sce_flag_on(sint32 flag);
 
 #endif

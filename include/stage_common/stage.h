@@ -1267,7 +1267,7 @@ typedef struct
 
 sint32 func_800375D4(void *pl, sint32 arg);
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
-                   void *hit, sint32 flags, sint32 a9, sint32 a10);
+                void *hit, sint32 flags, sint32 a9, sint32 a10);
 
 // Player_work while a room routine drives it: the bytes at +0xC to +0xE are its own routine
 // indices and timer (r3_st06, r3_st0b).
@@ -1538,7 +1538,7 @@ typedef struct
     STCOM_EFFECT *effect_40; // 40
     sint16 turn_44;          // 44
     sint16 angle_46;         // 46: its bearing from the player, relative to the player's facing
-    uint32 hit_48;           // 48: ground hit flags (func_8004B414)
+    uint32 hit_48;           // 48: ground hit flags (Scr_collision_check)
     void *shot_4C;           // 4C
 } STAGE_STCOM15_CTL;
 

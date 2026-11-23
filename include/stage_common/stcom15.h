@@ -43,7 +43,7 @@ typedef struct
     STCOM_EFFECT *effect_40; // 368
     sint16 turn_44;          // 36C
     sint16 angle_46;         // 36E: its bearing from the player, relative to the player's facing
-    uint32 hit_48;           // 370: ground hit flags (func_8004B414)
+    uint32 hit_48;           // 370: ground hit flags (Scr_collision_check)
     STCOM15_SHOT *shot_4C;   // 374
 } STCOM15_CTL;
 

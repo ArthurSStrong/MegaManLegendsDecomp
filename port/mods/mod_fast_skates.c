@@ -1,18 +1,18 @@
 // Faster skates: Mega Man moves faster on the Jet Skates.
 //
-// The skates are the player's routine_1 3 (Player_work's state table D_80089FA4[3],
-// func_8003D1E0 in src/rock_neo.exe/player.c): entered by holding Circle (PL_WORK.value134) with
+// The skates are the player's routine_1 3 (Player_work's state table Pl_r1_tbl[3],
+// Pl_r1_super_dash in src/rock_neo.exe/player.c): entered by holding Circle (PL_WORK.key_dash) with
 // the skates owned (flags16b & 2), it sets a forward speed in value44 (0x340 cruising, 0x400 with
 // Up, 0x280 with Down; 0x300 when landing from a jump onto the skates) and a sideways one in
-// value48, and moves through func_80041E90(pl, x, y, z), which turns those local speeds into a
+// value48, and moves through Pl_move(pl, x, y, z), which turns those local speeds into a
 // world step with Obj_pos_set(wp, x, y, z) (code_8002E7A8.c). Walking and running
 // (routine_1 2, value44 0x200), jumping, enemies and everything else reach Obj_pos_set from
 // other routines.
 //
-// The mod hooks func_8003D1E0 and Obj_pos_set: while the skates' routine runs for
+// The mod hooks Pl_r1_super_dash and Obj_pos_set: while the skates' routine runs for
 // Player_work, a step of Player_work has its x and z multiplied. The stored speeds are untouched
 // (the skates' own slowing down, value44 -= 0x28 a frame, works on them), so only the distance
-// covered on skates changes. (Not func_80041E90: the native build inlines it into the routine,
+// covered on skates changes. (Not Pl_move: the native build inlines it into the routine,
 // so a hook there would never see these calls; Obj_pos_set is in another file and is a real
 // call. docs/mods.md has the general rule.)
 #include "mods.h"
@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define FUNC_PL_SKATE 0x8003D1E0u // void func_8003D1E0(PL_WORK *pl): routine_1 3, the skates
+#define FUNC_PL_SKATE 0x8003D1E0u // void Pl_r1_super_dash(PL_WORK *pl): routine_1 3, the skates
 #define FUNC_STEP     0x8002FEA4u // void Obj_pos_set(FIXED_POS_WORK *wp, sint16 x, y, z)
 
 typedef void (*SKATE_FN)(uint32_t pl);
@@ -37,7 +37,7 @@ static MOD_SETTING settings[] = {
 
 static SKATE_FN orig_skate;
 static STEP_FN orig_step;
-static int skating; // inside func_8003D1E0 for Player_work
+static int skating; // inside Pl_r1_super_dash for Player_work
 
 static void skate_hook(uint32_t pl)
 {

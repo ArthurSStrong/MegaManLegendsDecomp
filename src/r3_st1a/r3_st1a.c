@@ -114,7 +114,7 @@ void func_80100A80(STAGE_ROOM *wp)
         case 0:
             if (Sce_flag_test(0x35))
             {
-                func_8003AC9C(func_80048C60(&pos), 0x31500);
+                func_8003AC9C(Scr_cell_get(&pos), 0x31500);
                 wp->routine_4 = 0xFF;
             }
             else

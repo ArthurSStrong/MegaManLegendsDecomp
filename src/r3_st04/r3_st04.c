@@ -64,16 +64,16 @@ void func_80100268(void)
 
 void func_8010044C(void)
 {
-    func_8001E4C4(D_8010AF44, D_8010AF4C[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_8010AF44, D_8010AF4C[STAGE_GAME_VALUE_52]);
     if (STAGE_GAME_VALUE_52 == 0)
     {
         if (Sce_flag_test(2))
         {
-            func_8001E4C4(D_8010AF44, D_8010AF4C[13]);
+            Sce_exit_lock_list(D_8010AF44, D_8010AF4C[13]);
         }
         else if (Sce_flag_test(0x46))
         {
-            func_8001E4C4(D_8010AF44, D_8010AF4C[12]);
+            Sce_exit_lock_list(D_8010AF44, D_8010AF4C[12]);
         }
     }
     *(uint32 *)&D_800989F8.routine_4 = 0;
@@ -175,7 +175,7 @@ void func_80100594(STAGE_ROOM *wp)
             }
             break;
         case 11:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -895,7 +895,7 @@ void func_80101C1C(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 Sce_script_timer_clear();
                 Sce_camera_start(0, 0, 0);
@@ -927,7 +927,7 @@ void func_80101C1C(STAGE_ROOM *wp)
             {
                 D_800A395C  = 1;
                 wp->flags_0 = 0;
-                func_80042314(pl);
+                Player_control_on(pl);
             }
             break;
         case 2:
@@ -940,7 +940,7 @@ void func_80101C1C(STAGE_ROOM *wp)
             {
                 D_800A395C  = 1;
                 wp->flags_0 = 0;
-                func_80042314(pl);
+                Player_control_on(pl);
             }
             break;
     }

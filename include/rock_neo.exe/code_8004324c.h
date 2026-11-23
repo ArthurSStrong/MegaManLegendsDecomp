@@ -184,7 +184,7 @@ void Sound_call2(sint16 id, void *args);
 CODE43_TARGET *Obj_id_work(uint8 id);
 CODE43_FX *Open_EFFECT_WORK(void);
 void Close_PL_SHL_WORK(CODE43_WORK *wp);
-void func_80051BAC(CODE43_WORK *wp);
+void Solid_mover_set(CODE43_WORK *wp);
 sint32 func_80037694(CODE43_WORK *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 void func_80043740(CODE43_WORK *wp);
@@ -195,7 +195,7 @@ CODE43_SVECTOR *Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43
                    sint32 a4);
 #else
 void Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43_SVECTOR *cur, sint32 a3,
-                   sint32 a4);
+                     sint32 a4);
 #endif
 void func_80043DF8(CODE43_WORK *wp, CODE43_MATRIX *mtx);
 void func_8005D97C(void);
@@ -211,7 +211,7 @@ sint32 Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sin
                    sint32 *a7, sint32 a8, sint32 a9, sint32 a10);
 #else
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
-                   sint32 *a7, sint32 a8, sint32 a9, sint32 a10);
+                sint32 *a7, sint32 a8, sint32 a9, sint32 a10);
 #endif
 
 #endif

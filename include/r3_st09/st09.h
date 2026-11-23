@@ -757,7 +757,7 @@ typedef struct
         uint8 routine_0; // 08
         uint32 word;
     } u_8;
-    uint16 cell_C[3];    // 0C: per lift, its map object (func_80048C60)
+    uint16 cell_C[3];    // 0C: per lift, its map object (Scr_cell_get)
     uint8 reserved12[2]; // 12
     sint16 value_14[3];  // 14
     uint8 reserved1A[2]; // 1A
@@ -1010,7 +1010,7 @@ void func_80111450(STAGE_OBJ *wp);
 void func_80111508(STAGE_OBJ *wp);
 
 sint32 func_80112918(STAGE_STCOM15_WORK_4E0 *wp);
-sint32 func_80042208(void);
+sint32 Player_atari_off(void);
 
 // A ROCK_NEO record per kind and variant (D_8009884C): 16 bytes each.
 typedef struct
@@ -1032,7 +1032,7 @@ typedef struct
     STAGE_OBJ *part_38;
 } ST09_PAIR_CTL;
 
-void func_8005D6E8(void *wp);
+void Gauge_close(void *wp);
 
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 

@@ -16,7 +16,7 @@ void func_80104EF4(STAGE_OBJ *wp)
     {
         EM_Char_Move(wp);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80104FE4(STAGE_OBJ *wp, uint16 *arg1)

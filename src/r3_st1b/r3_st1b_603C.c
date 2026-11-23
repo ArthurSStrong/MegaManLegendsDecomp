@@ -232,7 +232,7 @@ void func_80106810(ST1B_ACTOR *wp)
     switch (wp->routine_2)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -276,7 +276,7 @@ void func_80106810(ST1B_ACTOR *wp)
         case 4:
             if (!func_8003A13C())
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 wp->routine_0 = wp->routine_1 = wp->routine_2 = wp->routine_3 = 0;
                 wp->value_D = wp->value_E = wp->value_F = wp->timer_C = 0;
@@ -471,7 +471,7 @@ void func_80106F04(ST1B_ACTOR *wp)
             pl->flags_0 |= 2;
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010706C(ST1B_VIEW *wp)

@@ -111,7 +111,7 @@ void func_80104C9C(ST0D_ACTOR *wp, uint16 *bob)
                         STAGE_CAM_REQ_PTR->value_10 = 2;
                     }
                 }
-                func_80052528(wp);
+                Ride_clear(wp);
                 Close_SHL_WORK(wp);
             }
             else

@@ -18,27 +18,27 @@ sint16 D_800986FC;
 sint32 D_8009878C;
 sint32 D_80098794;
 sint32 D_8009882C;
-sint32 D_80098AF0;
+sint32 Gauge_count;
 sint32 D_80098B18;
 
-void func_8005C258(void)
+void Gauge_init(void)
 {
-    func_800177CC(D_800BBD78, (uint8 *)D_800BBD78 + 0xD4);
-    D_800BBD78[0].active_00 = 3;
+    func_800177CC(Gauge_work, (uint8 *)Gauge_work + 0xD4);
+    Gauge_work[0].active_00 = 3;
     D_800BBD9C              = 3;
-    D_80098AF0              = 0;
+    Gauge_count             = 0;
     D_8009800C              = 5;
     Scene_work              = 0;
     D_80098008              = 0;
     D_8009801C              = 0;
 }
 
-void func_8005C2B8(void)
+void Gauge_update(void)
 {
     sint32 off;
     uint32 i;
 
-    func_8005C868((CODE5C_WORK *)&D_800BBD78[1]);
+    func_8005C868((CODE5C_WORK *)&Gauge_work[1]);
     if (D_800BBD94 > 0)
     {
         D_800BBD94--;
@@ -66,23 +66,23 @@ void func_8005C2B8(void)
         default:
             D_80098010                = 10;
             D_8009800C                = 1;
-            D_800BBD78[0].byte_0E     = 1;
-            D_800BBD78[1].byte_0E     = 1;
-            D_800BBD78[2].byte_0E     = 1;
-            D_800BBD78[3].byte_0E     = 1;
-            D_800BBD78[4].byte_0E     = 1;
+            Gauge_work[0].byte_0E     = 1;
+            Gauge_work[1].byte_0E     = 1;
+            Gauge_work[2].byte_0E     = 1;
+            Gauge_work[3].byte_0E     = 1;
+            Gauge_work[4].byte_0E     = 1;
             CODE5C_GAUGE_SLOT.byte_0E = 1;
-            D_800BBD78[0].x_14        = 8;
-            D_800BBD78[0].y_16        = 0x88;
-            D_800BBD78[1].x_14        = 0x118;
-            D_800BBD78[1].y_16        = 0xBE;
-            D_800BBD78[2].x_14        = 0x120;
-            D_800BBD78[3].x_14        = 0x120;
-            D_800BBD78[2].y_16        = 0x10;
-            D_800BBD78[3].y_16        = 0x10;
-            D_800BBD78[4].y_16        = 0x10;
+            Gauge_work[0].x_14        = 8;
+            Gauge_work[0].y_16        = 0x88;
+            Gauge_work[1].x_14        = 0x118;
+            Gauge_work[1].y_16        = 0xBE;
+            Gauge_work[2].x_14        = 0x120;
+            Gauge_work[3].x_14        = 0x120;
+            Gauge_work[2].y_16        = 0x10;
+            Gauge_work[3].y_16        = 0x10;
+            Gauge_work[4].y_16        = 0x10;
             CODE5C_GAUGE_SLOT.y_16    = 0x18;
-            D_800BBD78[4].x_14        = 0x120;
+            Gauge_work[4].x_14        = 0x120;
             CODE5C_GAUGE_SLOT.x_14    = 0;
             D_80098014                = 8;
             D_80098018                = 0x60;
@@ -92,11 +92,11 @@ void func_8005C2B8(void)
             if (D_80098010-- != 0)
             {
                 off                    = (10 - D_80098010) * 8;
-                D_800BBD78[0].x_14     = 8 - off;
-                D_800BBD78[1].x_14     = off + 0x118;
-                D_800BBD78[2].x_14     = off + 0x120;
-                D_800BBD78[3].x_14     = off + 0x120;
-                D_800BBD78[4].x_14     = off + 0x120;
+                Gauge_work[0].x_14     = 8 - off;
+                Gauge_work[1].x_14     = off + 0x118;
+                Gauge_work[2].x_14     = off + 0x120;
+                Gauge_work[3].x_14     = off + 0x120;
+                Gauge_work[4].x_14     = off + 0x120;
                 CODE5C_GAUGE_SLOT.x_14 = -off;
                 D_80098014             = 8 - off;
             }
@@ -109,22 +109,22 @@ void func_8005C2B8(void)
             D_80098010                = 10;
             off                       = 0x50;
             D_8009800C                = 4;
-            D_800BBD78[0].byte_0E     = 1;
-            D_800BBD78[1].byte_0E     = 1;
-            D_800BBD78[2].byte_0E     = 1;
-            D_800BBD78[3].byte_0E     = 1;
-            D_800BBD78[4].byte_0E     = 1;
+            Gauge_work[0].byte_0E     = 1;
+            Gauge_work[1].byte_0E     = 1;
+            Gauge_work[2].byte_0E     = 1;
+            Gauge_work[3].byte_0E     = 1;
+            Gauge_work[4].byte_0E     = 1;
             CODE5C_GAUGE_SLOT.byte_0E = 1;
-            D_800BBD78[0].x_14        = 8 - off;
-            D_800BBD78[0].y_16        = 0x88;
-            D_800BBD78[1].x_14        = off + 0x118;
-            D_800BBD78[1].y_16        = 0xBE;
-            D_800BBD78[2].x_14        = off + 0x120;
-            D_800BBD78[2].y_16        = 0x10;
-            D_800BBD78[3].x_14        = off + 0x120;
-            D_800BBD78[3].y_16        = 0x10;
-            D_800BBD78[4].y_16        = 0x10;
-            D_800BBD78[4].x_14        = off + 0x120;
+            Gauge_work[0].x_14        = 8 - off;
+            Gauge_work[0].y_16        = 0x88;
+            Gauge_work[1].x_14        = off + 0x118;
+            Gauge_work[1].y_16        = 0xBE;
+            Gauge_work[2].x_14        = off + 0x120;
+            Gauge_work[2].y_16        = 0x10;
+            Gauge_work[3].x_14        = off + 0x120;
+            Gauge_work[3].y_16        = 0x10;
+            Gauge_work[4].y_16        = 0x10;
+            Gauge_work[4].x_14        = off + 0x120;
             CODE5C_GAUGE_SLOT.x_14    = -off;
             CODE5C_GAUGE_SLOT.y_16    = 0x18;
             D_80098014                = 8 - off;
@@ -133,11 +133,11 @@ void func_8005C2B8(void)
             if (D_80098010-- != 0)
             {
                 off                    = D_80098010 * 8;
-                D_800BBD78[0].x_14     = 8 - off;
-                D_800BBD78[1].x_14     = off + 0x118;
-                D_800BBD78[2].x_14     = off + 0x120;
-                D_800BBD78[3].x_14     = off + 0x120;
-                D_800BBD78[4].x_14     = off + 0x120;
+                Gauge_work[0].x_14     = 8 - off;
+                Gauge_work[1].x_14     = off + 0x118;
+                Gauge_work[2].x_14     = off + 0x120;
+                Gauge_work[3].x_14     = off + 0x120;
+                Gauge_work[4].x_14     = off + 0x120;
                 CODE5C_GAUGE_SLOT.x_14 = -off;
                 D_80098014             = 8 - off;
             }
@@ -147,43 +147,43 @@ void func_8005C2B8(void)
             }
             break;
         case 5:
-            D_800BBD78[0].byte_0E     = 0;
-            D_800BBD78[1].byte_0E     = 0;
-            D_800BBD78[2].byte_0E     = 0;
-            D_800BBD78[3].byte_0E     = 0;
-            D_800BBD78[4].byte_0E     = 0;
+            Gauge_work[0].byte_0E     = 0;
+            Gauge_work[1].byte_0E     = 0;
+            Gauge_work[2].byte_0E     = 0;
+            Gauge_work[3].byte_0E     = 0;
+            Gauge_work[4].byte_0E     = 0;
             CODE5C_GAUGE_SLOT.byte_0E = 0;
             D_8009801C                = 0;
             break;
         case 2:
             return;
     }
-    if (D_800BBD78[0].active_00 & 1)
+    if (Gauge_work[0].active_00 & 1)
     {
-        func_8005C720((CODE5C_WORK *)&D_800BBD78[0]);
+        func_8005C720((CODE5C_WORK *)&Gauge_work[0]);
     }
-    if (D_800BBD78[0].active_00 & 2)
+    if (Gauge_work[0].active_00 & 2)
     {
-        func_8005C9BC(&D_800BBD78[0]);
+        func_8005C9BC(&Gauge_work[0]);
     }
-    if (Player_work.value171 != 0 && (D_800BBD78[1].active_00 & 2))
+    if (Player_work.weapon_left_no != 0 && (Gauge_work[1].active_00 & 2))
     {
-        func_8005CCF4(&D_800BBD78[1]);
+        func_8005CCF4(&Gauge_work[1]);
     }
     for (i = 0; i < 3; i++)
     {
-        if (D_800BBD78[i + 2].active_00 & 1)
+        if (Gauge_work[i + 2].active_00 & 1)
         {
-            func_8005C978((CODE5C_WORK *)&D_800BBD78[i + 2]);
+            func_8005C978((CODE5C_WORK *)&Gauge_work[i + 2]);
         }
-        if (D_800BBD78[i + 2].active_00 & 2)
+        if (Gauge_work[i + 2].active_00 & 2)
         {
-            func_8005CEFC(&D_800BBD78[i + 2]);
+            func_8005CEFC(&Gauge_work[i + 2]);
         }
     }
-    if (D_800BBD78[5].active_00 & 2)
+    if (Gauge_work[5].active_00 & 2)
     {
-        func_8005D0FC(&D_800BBD78[5]);
+        func_8005D0FC(&Gauge_work[5]);
     }
 }
 
@@ -192,7 +192,7 @@ void func_8005C720(CODE5C_WORK *wp)
     D_8008D7B4[wp->routine_4](wp);
 }
 
-void func_8005C75C(CODE5C_WATCH *wp)
+void Gauge_life_watch(CODE5C_WATCH *wp)
 {
     PL_WORK *pl;
 
@@ -223,7 +223,7 @@ void func_8005C75C(CODE5C_WATCH *wp)
         if ((sint16)wp->count_18 >= 0x96 || (sint8)wp->still_0B >= 0x5A ||
             ((sint8)wp->idle_0A >= 0x3C && (sint8)wp->still_0B >= 0x3C))
         {
-            func_8005D528();
+            Gauge_hide();
         }
     }
 }
@@ -241,7 +241,7 @@ void func_8005C868(CODE5C_WORK *wp)
     D_8008D7C0[wp->routine_4](wp);
 }
 
-void func_8005C8A4(CODE5C_REPEAT *wp)
+void Gauge_buster_recharge(CODE5C_REPEAT *wp)
 {
     PL_WORK *pl;
     sint32 target;
@@ -249,8 +249,8 @@ void func_8005C8A4(CODE5C_REPEAT *wp)
 
     pl     = &Player_work;
     target = Player_weapon_bullet_calc(pl, 1);
-    limit  = (pl->parts[Player_work.value171].selected != 7) ? 0x11 : 0;
-    if (Player_work.value171 == 1)
+    limit  = (pl->parts[Player_work.weapon_left_no].selected != 7) ? 0x11 : 0;
+    if (Player_work.weapon_left_no == 1)
     {
         if (Player_work.parts[1].value06 == 0)
         {
@@ -268,8 +268,8 @@ void func_8005C8A4(CODE5C_REPEAT *wp)
         {
             return;
         }
-        wp->count_0F                    = 0;
-        pl->parts[pl->value171].value06 = target;
+        wp->count_0F                          = 0;
+        pl->parts[pl->weapon_left_no].value06 = target;
     }
 }
 
@@ -342,12 +342,12 @@ void func_8005C9BC(CODE5C_SLOT *wp)
             face = 0;
             break;
     }
-    len = (*(sint16 *)((uint8 *)&Player_work + 0xB0) >> 4) * 5 - 10;
+    len = (Player_work.life_max >> 4) * 5 - 10;
     func_8005D298(&D_8008D37C[face][0], x, y - len, 0);
     func_8005D298(&D_8008D37C[face][2], x, y, 0);
     func_8005D298(&D_8008D37C[face][1], x, y - len, D_8008D37C[face][1].width | (len << 8));
     func_8005D298(&D_8008D37C[face][3], x, y, 0);
-    hp = Player_work.value6e;
+    hp = Player_work.life;
     if (hp > 0)
     {
         n    = hp >> 4;
@@ -407,9 +407,9 @@ void func_8005CCF4(CODE5C_SLOT *wp)
     {
         level = 0; // dead store; see above
     }
-    shift = D_80089A8C[pl->value170].shift;
-    level = pl->parts[pl->value170].value06 - 1;
-    max   = tbl[pl->value170][pl->parts[pl->value170].selected].value1;
+    shift = D_80089A8C[pl->weapon_right_no].shift;
+    level = pl->parts[pl->weapon_right_no].value06 - 1;
+    max   = tbl[pl->weapon_right_no][pl->parts[pl->weapon_right_no].selected].value1;
     fill  = ((level + ((1 << shift) >> 16)) << 16) >> shift;
     if (max == lim)
     {
@@ -442,15 +442,15 @@ void func_8005CEFC(CODE5C_SLOT *wp)
     D_80098B18 |= 4;
     shift = wp->byte_0C >> 4;
     mask  = (1 << shift) - 1;
-    if (wp->owner_20->value6e > 0)
+    if (wp->owner_20->life > 0)
     {
-        len = (uint32)(wp->owner_20->value6e + mask) >> shift;
+        len = (uint32)(wp->owner_20->life + mask) >> shift;
     }
     else
     {
         len = 0;
     }
-    full = *(sint16 *)((uint8 *)wp->owner_20 + 0xB0) >> shift;
+    full = wp->owner_20->life_max >> shift;
     set  = wp->byte_0C & 0xF;
     if (wp->byte_0E != 0)
     {
@@ -642,7 +642,7 @@ void func_8005D4E8(void)
     D_800BBD84[0] = 0;
 }
 
-void func_8005D4F8(void)
+void gauge_show(void)
 {
     if (D_800BBD84[1] == 0)
     {
@@ -651,7 +651,7 @@ void func_8005D4F8(void)
     }
 }
 
-void func_8005D528(void)
+void Gauge_hide(void)
 {
     if (D_800BBD84[3] != 1)
     {
@@ -663,15 +663,15 @@ void func_8005D528(void)
     }
 }
 
-void func_8005D574(PL_WORK *owner, sint16 x, sint16 y, uint8 kind)
+void gauge_open_simple(PL_WORK *owner, sint16 x, sint16 y, uint8 kind)
 {
     uint32 i;
 
-    if ((uint32)D_80098AF0 < 3)
+    if ((uint32)Gauge_count < 3)
     {
         for (i = 0; i < 3; i++)
         {
-            if (D_800BBD78[i + 2].active_00 == 0)
+            if (Gauge_work[i + 2].active_00 == 0)
             {
                 goto found;
             }
@@ -680,26 +680,26 @@ void func_8005D574(PL_WORK *owner, sint16 x, sint16 y, uint8 kind)
     return;
 
 found:
-    D_80098AF0 += 1;
-    D_800BBD78[i + 2].x_18      = x;
-    D_800BBD78[i + 2].y_1A      = y;
-    D_800BBD78[i + 2].owner_20  = owner;
-    D_800BBD78[i + 2].active_00 = 3;
-    D_800BBD78[i + 2].byte_0C   = kind;
-    D_800BBD78[i + 2].byte_0D   = 1;
+    Gauge_count += 1;
+    Gauge_work[i + 2].x_18      = x;
+    Gauge_work[i + 2].y_1A      = y;
+    Gauge_work[i + 2].owner_20  = owner;
+    Gauge_work[i + 2].active_00 = 3;
+    Gauge_work[i + 2].byte_0C   = kind;
+    Gauge_work[i + 2].byte_0D   = 1;
 }
 
 // word_10 is indexed from slot 2 (retail recomputes i * 0x24 for it instead of reusing the
 // scan offset).
-void func_8005D620(PL_WORK *owner, sint16 x, sint16 y, uint8 kind, sint32 value)
+void Gauge_open(PL_WORK *owner, sint16 x, sint16 y, uint8 kind, sint32 value)
 {
     uint32 i;
 
-    if ((uint32)D_80098AF0 < 3)
+    if ((uint32)Gauge_count < 3)
     {
         for (i = 0; i < 3; i++)
         {
-            if (D_800BBD78[i + 2].active_00 == 0)
+            if (Gauge_work[i + 2].active_00 == 0)
             {
                 goto found;
             }
@@ -708,24 +708,24 @@ void func_8005D620(PL_WORK *owner, sint16 x, sint16 y, uint8 kind, sint32 value)
     return;
 
 found:
-    D_80098AF0 += 1;
-    D_800BBD78[i + 2].x_18      = x;
-    D_800BBD78[i + 2].y_1A      = y;
-    D_800BBD78[i + 2].active_00 = 3;
-    D_800BBD78[i + 2].byte_0D   = 1;
-    D_800BBD78[i + 2].byte_0C   = kind;
-    (&D_800BBD78[2])[i].word_10 = value;
-    D_800BBD78[i + 2].owner_20  = owner;
+    Gauge_count += 1;
+    Gauge_work[i + 2].x_18      = x;
+    Gauge_work[i + 2].y_1A      = y;
+    Gauge_work[i + 2].active_00 = 3;
+    Gauge_work[i + 2].byte_0D   = 1;
+    Gauge_work[i + 2].byte_0C   = kind;
+    (&Gauge_work[2])[i].word_10 = value;
+    Gauge_work[i + 2].owner_20  = owner;
 }
 
-void func_8005D6E8(PL_WORK *owner)
+void Gauge_close(PL_WORK *owner)
 {
     uint32 i;
     uint32 slot;
 
     for (i = 0, slot = 2; i < 3; i++, slot++)
     {
-        if (D_800BBD78[slot].active_00 != 0 && D_800BBD78[slot].owner_20 == owner)
+        if (Gauge_work[slot].active_00 != 0 && Gauge_work[slot].owner_20 == owner)
         {
             goto found;
         }
@@ -733,32 +733,32 @@ void func_8005D6E8(PL_WORK *owner)
     return;
 
 found:
-    D_80098AF0 -= 1;
-    ((uint32 *)&D_800BBD78[slot])[0] = 0;
-    ((uint32 *)&D_800BBD78[slot])[1] = 0;
-    ((uint32 *)&D_800BBD78[slot])[2] = 0;
-    ((uint32 *)&D_800BBD78[slot])[3] = 0;
-    ((uint32 *)&D_800BBD78[slot])[4] = 0;
-    ((uint32 *)&D_800BBD78[slot])[5] = 0;
-    ((uint32 *)&D_800BBD78[slot])[6] = 0;
-    ((uint32 *)&D_800BBD78[slot])[7] = 0;
+    Gauge_count -= 1;
+    ((uint32 *)&Gauge_work[slot])[0] = 0;
+    ((uint32 *)&Gauge_work[slot])[1] = 0;
+    ((uint32 *)&Gauge_work[slot])[2] = 0;
+    ((uint32 *)&Gauge_work[slot])[3] = 0;
+    ((uint32 *)&Gauge_work[slot])[4] = 0;
+    ((uint32 *)&Gauge_work[slot])[5] = 0;
+    ((uint32 *)&Gauge_work[slot])[6] = 0;
+    ((uint32 *)&Gauge_work[slot])[7] = 0;
 }
 
-void func_8005D7C0(void)
+void Gauge_clear(void)
 {
     uint32 i;
 
-    D_80098AF0 = 0;
+    Gauge_count = 0;
     for (i = 0; i < 3; i++)
     {
-        ((uint32 *)&D_800BBD78[i + 2])[0] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[1] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[2] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[3] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[4] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[5] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[6] = 0;
-        ((uint32 *)&D_800BBD78[i + 2])[7] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[0] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[1] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[2] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[3] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[4] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[5] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[6] = 0;
+        ((uint32 *)&Gauge_work[i + 2])[7] = 0;
     }
 }
 
@@ -798,7 +798,7 @@ sint32 func_8005D8C4(sint32 arg0)
             {
                 goto fail;
             }
-            func_8005D4F8();
+            gauge_show();
             D_800BBD82 = 0;
             D_800BBD83 = 0;
             D_800BBD90 = 0;
@@ -834,25 +834,25 @@ void func_8005D97C(void)
     D_800BBDAB = 0;
 }
 
-void func_8005D98C(void)
+void Gauge_show_hold(void)
 {
     if (D_800BBD94 <= 0)
     {
         D_800BBD84[3] = 1;
-        func_8005D4F8();
+        gauge_show();
     }
 }
 
-void func_8005D9C4(void)
+void Gauge_show_release(void)
 {
     D_800BBD84[3] = 0;
-    func_8005D528();
+    Gauge_hide();
 }
 
-void func_8005D9EC(void)
+void Pl_life_full(void)
 {
-    Player_work.value6e = *(uint16 *)((uint8 *)&Player_work + 0xB0);
-    func_8005D9C4();
+    Player_work.life = Player_work.life_max;
+    Gauge_show_release();
 }
 
 sint32 func_8005DA1C(sint32 arg0)
@@ -867,27 +867,27 @@ sint32 func_8005DA1C(sint32 arg0)
     return D_800BBD84[3] == 0;
 }
 
-sint32 func_8005DA78(sint32 arg0)
+sint32 Pl_life_refill(sint32 arg0)
 {
     sint16 cur;
     sint16 target;
 
     if (arg0 != 0)
     {
-        cur    = Player_work.value6e;
-        target = *(sint16 *)((uint8 *)&Player_work + 0xB0);
+        cur    = Player_work.life;
+        target = Player_work.life_max;
         if (cur + 2 >= target)
         {
-            Player_work.value6e = target;
+            Player_work.life = target;
             return 1;
         }
-        Player_work.value6e = cur + 2;
+        Player_work.life = cur + 2;
         return 0;
     }
-    return Player_work.value6e == *(sint16 *)((uint8 *)&Player_work + 0xB0);
+    return Player_work.life == Player_work.life_max;
 }
 
-sint32 func_8005DAEC(sint32 arg0)
+sint32 Pl_energy_refill(sint32 arg0)
 {
     PL_WORK *pl;
     sint32 target;
@@ -1382,5 +1382,5 @@ void func_8005EBE4(void)
     D_800A38F8 = *((uint8 *)&Player_work + 0x450);
     D_800A38F9 = *((uint8 *)&Player_work + 0x451);
     D_800A38FA = *((uint8 *)&Player_work + 0x452);
-    D_800A38FB = Player_work.value170;
+    D_800A38FB = Player_work.weapon_right_no;
 }

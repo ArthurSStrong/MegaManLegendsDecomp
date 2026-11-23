@@ -91,7 +91,7 @@ void func_8010478C(ST00_MOVER *wp)
     wp->rotation_prev.words[0] = wp->rotation.words[0];
     wp->rotation_prev.words[1] = wp->rotation.words[1];
     D_8011BF10[wp->routine_2](wp);
-    func_80053158(STAGE_SCENE.slot_24[0], wp);
+    Ride_carry(STAGE_SCENE.slot_24[0], wp);
 }
 
 void func_80104808(STAGE_OBJ *wp)
@@ -320,7 +320,7 @@ void func_80104E64(STAGE_STCOM15_WORK_348 *wp)
             wp->rotation.y = (wp->rotation.y + wp->turn_66) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             wp->velocity.v.x += wp->accel.x;
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (hit & 0xF00)
@@ -382,7 +382,7 @@ void func_801050E8(STAGE_STCOM15_WORK_348 *wp)
                              0xFFF;
             Obj_pos_set(wp, (uint8)wp->value_A6, 0, 0);
             wp->velocity.v.x += wp->accel.x;
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (hit & 0xF00)
@@ -458,7 +458,7 @@ void func_801053B8(STAGE_STCOM15_WORK_348 *wp)
                     break;
                 }
                 Obj_pos_set(wp, -0x50, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (!(((wp->position.y - wp->position_prev.y < 0)
@@ -516,7 +516,7 @@ void func_801053B8(STAGE_STCOM15_WORK_348 *wp)
             // fall through
         case 4:
             Obj_pos_set(wp, 0x33, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (!(((wp->position.y - wp->position_prev.y < 0)
@@ -584,7 +584,7 @@ void func_80105740(STAGE_STCOM15_WORK_348 *wp)
         case 1:
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, 0);
             wp->velocity.v.y += wp->accel.y;
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit & 0xF00)
             {
                 wp->velocity.v.x = 0;
@@ -636,7 +636,7 @@ void func_80105974(STAGE_STCOM15_WORK_348 *wp)
             else
             {
                 Obj_pos_set(wp, -0x50, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 wp->position.y       = Scr_height_check(wp);
                 wp->position_fixed.y = wp->position.y << 16;
                 if (!(((wp->position.y - wp->position_prev.y < 0)
@@ -658,7 +658,7 @@ void func_80105974(STAGE_STCOM15_WORK_348 *wp)
             wp->anim_AC   = 9;
             ctl->timer_4  = -3;
             Obj_pos_set(wp, 0x640, -0x5A0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             Sound_call2(0xBA, &wp->position);
             break;
         case 3:
@@ -672,7 +672,7 @@ void func_80105974(STAGE_STCOM15_WORK_348 *wp)
             }
             wp->position_fixed.y = wp->position.y << 16;
             Obj_pos_set(wp, 0x370, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit & 0xF00)
             {
                 wp->velocity.v.x = 0;
@@ -694,7 +694,7 @@ void func_80105974(STAGE_STCOM15_WORK_348 *wp)
             break;
         case 4:
             Obj_pos_set(wp, 0xA0, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
             wp->position_fixed.y = wp->position.y << 16;
             if (!(((wp->position.y - wp->position_prev.y < 0)

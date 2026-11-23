@@ -462,7 +462,7 @@ extern void *D_80164008[];
 
 void func_8010012C(STAGE_ROOM *wp);
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 void func_80100DE8(void);
 void func_80100E34(void);
 void Sce_slot_open_list(uint8 *);
@@ -492,7 +492,7 @@ void func_8001EB98(void *entry);
 void func_8010ACA4(ST0C_SHOT *wp, sint32 arg);
 sint32 func_800375D4(void *pl, sint32 arg);
 void func_8010AB60(ST0C_SHOT *wp);
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
 void func_8003786C(sint32 id);
 void Homing_target_clear(sint32 bit);
@@ -503,7 +503,7 @@ void func_8010A5E0(ST0C_SHL *wp);
 // The player's second position (STAGE_PL_VIEW's fixed_428) read by its integer halves.
 #define ST0C_PL_FIXED_428 (*(STAGE_FIXED_VECTOR *)&STAGE_PL.fixed_428)
 
-extern sint16 D_800C0F96;
+extern sint16 Pl_demo_pad;
 void Sce_script_next(void);
 void Moji_task_kill(sint32 arg);
 void func_8003A264(void);

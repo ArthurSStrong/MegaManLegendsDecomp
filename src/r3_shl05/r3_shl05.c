@@ -21,7 +21,7 @@ void func_800D8804(SHL_WORK *wp)
                       D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
     }
     Model_Shadow_Trans(wp, 0x18, 0x200, 0);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_800D8928(SHL_WORK *wp)
@@ -253,7 +253,7 @@ sint16 func_800D90B0(SHL_WORK *wp)
     stop         = 0;
     wp->value_74 = 1;
     func_800D94C0(wp);
-    hit = func_8004B414(wp);
+    hit = Scr_collision_check(wp);
     if (hit != 0)
     {
         if (hit & 0x1000)

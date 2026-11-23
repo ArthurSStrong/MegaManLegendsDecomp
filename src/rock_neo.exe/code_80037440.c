@@ -13,7 +13,7 @@ sint32 func_80037440(void)
     sint32 level;
     sint32 kind;
 
-    part                      = Player_work.value170;
+    part                      = Player_work.weapon_right_no;
     ((sint32 *)D_8009856C)[0] = 0;
     ((sint32 *)D_8009856C)[1] = 0;
     ((sint32 *)D_8009856C)[2] = 0;
@@ -101,14 +101,14 @@ sint32 func_80037694(PL_WORK *wp, sint32 amount)
     {
         return 0x7FFF;
     }
-    value = func_80049C24(wp);
+    value = Scr_line_check(wp);
     if (value != 0)
     {
         if (value > 0 && (value & 0xFFFF) <= 0x7FFF && (value & CODE374_GROUP_MASK))
         {
             func_8003777C(value & 0xFFFF, amount);
         }
-        func_8004B414(wp);
+        Scr_collision_check(wp);
         return value;
     }
     return 0;

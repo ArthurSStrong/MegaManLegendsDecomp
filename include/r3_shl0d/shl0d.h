@@ -59,7 +59,7 @@ extern sint32 D_800D9288[]; // beam scale by level
 extern SHL_BOX D_800D92A8;
 extern SHL0D_FUNC D_800D92B4[]; // routine_0 handlers
 
-sint32 func_80049C54(SVECTOR *a, SVECTOR *b, SHL_BOX *box, sint32 mask);
+sint32 Scr_line_calc(SVECTOR *a, SVECTOR *b, SHL_BOX *box, sint32 mask);
 
 uint8 func_800D8A6C(SHL0D_WORK *wp);
 void func_800D8AB8(SHL0D_WORK *wp);

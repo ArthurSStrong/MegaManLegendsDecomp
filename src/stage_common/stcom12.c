@@ -30,7 +30,7 @@ void stcom12_func_0000(STCOM12_WORK *wp)
     }
     if (wp->routine_0 != 7)
     {
-        func_80051B68(wp, 2, -1, 0);
+        Solid_set(wp, 2, -1, 0);
     }
     if (wp->routine_0 == 1)
     {
@@ -148,7 +148,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
                 }
             }
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             stcom12_func_0E9C(wp, hit);
             if (wp->param_D != 0 &&
                 wp->param_D < (Calc_distance(&wp->position, &ctl->home_24) >> 7))
@@ -210,7 +210,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             // fall through
         case 15:
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            stcom12_func_0E9C(wp, func_8004B414(wp));
+            stcom12_func_0E9C(wp, Scr_collision_check(wp));
             if (--ctl->timer_4 == 0)
             {
                 wp->routine_1 = 0;
@@ -364,7 +364,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
                 break;
             }
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (hit)
             {
                 func_8004AC8C(&wp->velocity, hit);
@@ -407,7 +407,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -442,12 +442,12 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
             // fall through
         case 4:
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            stcom12_func_0E9C(wp, func_8004B414(wp));
+            stcom12_func_0E9C(wp, Scr_collision_check(wp));
             if (Message_event[0] != 0)
             {
                 break;
             }
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->flags_0 |= 2;
             Sce_flag_on(0x239);
             wp->routine_0 = 1;

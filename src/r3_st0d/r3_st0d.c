@@ -38,7 +38,7 @@ void func_801001EC(void)
 void func_80100358(void)
 {
     Sce_slot_list_clear();
-    func_8001E4C4(D_8010C7D8, D_8010C7E0[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_8010C7D8, D_8010C7E0[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
@@ -341,7 +341,7 @@ void func_80100BA4(sint32 arg)
             }
             break;
     }
-    func_8003AC9C(func_80048C60(&pos), key);
+    func_8003AC9C(Scr_cell_get(&pos), key);
 }
 
 void func_80100D54(uint8 arg0, uint8 arg1)
@@ -378,7 +378,7 @@ void func_80100DF0(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 1:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Player_work.routine_0 = 3;
                 Player_work.routine_1 = 0;
@@ -445,7 +445,7 @@ void func_80101034(STAGE_ROOM *wp)
         case 1:
             if (D_800C356C_A[0] == 2)
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 D_800A395C = 1;
                 func_80039820();
                 func_8001D974();
@@ -681,7 +681,7 @@ void func_80101644(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -835,7 +835,7 @@ void func_80101A60(STAGE_ROOM *wp)
         case 1:
             if (Sound_fade_flags == 0 && Fade_busy == 0)
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 D_800A395C = 1;
                 func_80039820();
                 wp->routine_5++;
@@ -958,7 +958,7 @@ void func_80101F14(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Fade_start(9);
                 wp->routine_4++;
@@ -1970,7 +1970,7 @@ void func_80103DB0(STAGE_PROP *wp, uint16 *bob)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80103EDC(ST0D_ACTOR *wp, uint16 *bob)
@@ -2070,7 +2070,7 @@ void func_80104184(ST0D_LIFT *wp, ST0D_PATH *path)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     func_8010494C(wp, &wp->path);
     wp->hit_BC = 0;
     wp->hit_C4 = 0;
@@ -2279,7 +2279,7 @@ void func_80104A48(STAGE_PROP *wp, uint16 *bob)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80104BE0(ST0D_ACTOR *wp, uint16 *bob)

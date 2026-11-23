@@ -589,7 +589,7 @@ extern uint8 D_800989FD;
 extern sint16 D_800BBCF8[];
 extern sint16 D_800BBD38[];
 extern STAGE_CAM D_800BC730;
-extern sint16 D_800C0F96[];
+extern sint16 Pl_demo_pad[];
 extern uint8 D_80100474[];
 extern sint32 D_801224F0[];
 extern uint8 D_80122668[];
@@ -1206,14 +1206,14 @@ typedef struct
     STCOM_SVECTOR hit_pos_68;          // 4A8: joint 10
     uint32 hit_70;                     // 4B0
     sint32 value_74;                   // 4B4
-    sint32 ground_78;                  // 4B8: func_8004B414's result
-    sint32 hit_7C;                     // 4BC: func_80049C54's result
+    sint32 ground_78;                  // 4B8: Scr_collision_check's result
+    sint32 hit_7C;                     // 4BC: Scr_line_calc's result
     uint16 timer_80;                   // 4C0
     uint16 timer_82;                   // 4C2
     STAGE_OBJ *child_84;               // 4C4: func_80117BF0
     uint16 value_88;                   // 4C8
     uint8 reserved8A[2];               // 4CA
-    sint32 area_8C;                    // 4CC: func_80048C60's result
+    sint32 area_8C;                    // 4CC: Scr_cell_get's result
 } ST06_CRAB_BODY;
 
 // A 0x3C0-byte enemy slot of this stage (STAGE_OBJ's fields, then ST06_CRAB_CTL at +0x328).
@@ -1327,7 +1327,7 @@ void func_80111A30(ST06_CRAB *wp);
 void func_80111AFC(ST06_CRAB *wp);
 void func_80111CF8(ST06_CRAB *wp);
 sint32 func_80111DF0(ST06_CRAB *wp);
-void func_80052528(void *wp);
+void Ride_clear(void *wp);
 sint32 func_80110A54(ST06_CRAB *wp);
 sint32 func_80111D54(ST06_CRAB *wp);
 void func_80110498(ST06_CRAB *wp);
@@ -1372,7 +1372,7 @@ typedef struct
     sint32 rise_A0;                    // A0
 } ST06_SHOT;
 
-sint32 func_80048E18(void *arg);
+sint32 Scr_cell_attr(void *arg);
 
 void func_80104DF8(STAGE_ROOM *wp);
 
@@ -1554,7 +1554,7 @@ extern STAGE_ROOM_FUNC D_801228A8[];
 void func_80113A1C(ST06_ACTOR *wp);
 
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 
 void func_801067CC(STAGE_ROOM *wp);
 
@@ -1580,7 +1580,7 @@ void func_8011201C(ST06_ACTOR *wp);
 
 void Sce_flag_select(sint32 id);
 
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 sint32 func_80037C14(sint32 cell);
 
@@ -1588,9 +1588,9 @@ void func_80114880(ST06_ACTOR *wp);
 
 STAGE_OBJ *func_80031498(void);
 
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 
-sint32 func_80049C54(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
+sint32 Scr_line_calc(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
 
 void func_80039E50(void);
 
@@ -1600,7 +1600,7 @@ extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 
 void func_8003A264(void);
 
-void func_8001E460(sint32 a0, sint32 a1, sint32 a2);
+void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 
 uint8 *func_8002D22C(void *model, sint32 id);
 
@@ -1614,11 +1614,11 @@ sint32 func_80118884(ST06_CRAB *wp);
 
 void func_8005D4C0(void);
 
-void func_8005D6E8(void *wp);
+void Gauge_close(void *wp);
 
 sint32 func_8003B360(sint32 area);
 
-sint32 func_80042208(void);
+sint32 Player_atari_off(void);
 
 sint32 func_80118B2C(ST06_CRAB *wp);
 
@@ -1666,7 +1666,7 @@ void Money_add(sint32 a0, sint32 a1, sint32 a2);
 
 void Moji_amount_set(sint32 price);
 
-sint32 func_80048EA4(STCOM_SVECTOR *pos, void *arg1, sint32 arg2, sint32 arg3);
+sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *arg1, sint32 arg2, sint32 arg3);
 
 // A 0x50-byte slot (func_80031734) as func_8011B00C starts it.
 typedef struct
@@ -1741,7 +1741,7 @@ void Message_event_clear(void);
 
 void func_8001B314(void);
 
-void func_8005D7C0(void);
+void Gauge_clear(void);
 
 // A smoke puff's sprite packet (func_8002D464; stcom23's STCOM23_PACKET).
 typedef struct

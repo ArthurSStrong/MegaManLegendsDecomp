@@ -34,7 +34,7 @@ void stcom06_func_0000(STCOM06_WORK *wp)
             Set_Atari(&pos, 0x20, 0, 0x8000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
                           0x80);
         }
-        func_80051BAC(wp);
+        Solid_mover_set(wp);
     }
     Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
 }
@@ -353,7 +353,7 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
     sint16 landed;
 
     landed = 0;
-    hit    = func_8004B414(wp);
+    hit    = Scr_collision_check(wp);
     if (hit != 0)
     {
         if (hit & 0x1000)

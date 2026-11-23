@@ -1822,7 +1822,7 @@ void func_8002CA10(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3)
     if (n < 0x40)
     {
         D_800ACE00[n].f0 = p->f0;
-        r                = func_80048EA4(p, 0, 0, 0xFFFF);
+        r                = Scr_height_calc(p, 0, 0, 0xFFFF);
         D_800ACE00[n].f2 = r;
         D_800ACE00[n].f4 = p->f4;
         D_800ACE00[n].f6 = (a3 & 0xFFF) | ((a2 >> 6) << 12);

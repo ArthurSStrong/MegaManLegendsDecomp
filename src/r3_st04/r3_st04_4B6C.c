@@ -74,7 +74,7 @@ void func_80104CB8(ST04_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 1, -1, 0x1000000);
+    Solid_set(wp, 1, -1, 0x1000000);
 }
 
 void func_80104E08(STAGE_FX *wp)
@@ -185,7 +185,7 @@ void func_8010506C(ST04_ACTOR *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_801051EC(ST04_ACTOR *wp)

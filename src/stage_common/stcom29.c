@@ -55,7 +55,7 @@ void stcom29_func_013C(STCOM29_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -86,7 +86,7 @@ void stcom29_func_013C(STCOM29_WORK *wp)
             }
             break;
         case 5:
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->flags_0 |= 2;
             Sce_flag_off(0x60D);
             wp->script_C  = 1;
@@ -263,7 +263,7 @@ void stcom29_func_09A4(STCOM29_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -308,7 +308,7 @@ void stcom29_func_09A4(STCOM29_WORK *wp)
         case 6:
             if (func_8003A13C() == 0)
             {
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 pl->target_184 = NULL;
                 pl->flags_0 |= 2;
                 wp->routine_0 = 1;

@@ -582,7 +582,7 @@ void func_80101CB0(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 STAGE_PL.routine_0   = 3;
                 STAGE_PL.routine_1   = 1;
@@ -630,9 +630,9 @@ void func_80101CB0(STAGE_ROOM *wp)
                 D_800A395C = 1;
                 func_80039820();
                 STAGE_PL.flags_0 |= 2;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 STAGE_PL.value_6E = STAGE_PL.value_B0;
-                func_8005D9C4();
+                Gauge_show_release();
                 Obj_work_flag_change(0x56, 0x80);
                 wp->routine_4++;
             }
@@ -814,7 +814,7 @@ void func_801022D4(STAGE_ROOM *wp)
             wp->routine_4++;
             break;
         case 1:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Player_work.flags_0 &= ~3;
                 Obj_work_flag_change(0x56, 0x80);
@@ -866,7 +866,7 @@ void func_801022D4(STAGE_ROOM *wp)
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

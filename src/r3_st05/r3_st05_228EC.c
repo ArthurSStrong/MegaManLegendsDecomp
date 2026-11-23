@@ -176,7 +176,7 @@ void func_80122E88(ST05_PROP_B *wp)
             wp->position_fixed.y += wp->velocity.v.y << 8;
             wp->position_fixed.z += wp->velocity.v.z << 8;
             Obj_pos_adj_round(&wp->position_fixed, &wp->position);
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 if (wp->spin_64.h[1] == 0)
                 {
@@ -210,7 +210,7 @@ void func_80122FE4(ST05_PROP_B *wp)
             wp->position.y += wp->velocity.v.y;
             wp->position_fixed.y = wp->position.y << 16;
             wp->velocity.v.y += wp->accel.y;
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 wp->routine_2 = 2;
                 wp->ctl.flags_0 |= 1;

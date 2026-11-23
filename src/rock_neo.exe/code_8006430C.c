@@ -602,7 +602,7 @@ void func_80065064(void)
     save->gw_58[3]    = MEM_B(gw, 0x5B);
     save->pl_position = *(MEM_BYTES8 *)&pl->position;
     save->pl_56       = MEM_H(pl, 0x56);
-    save->pl_6e       = pl->value6e;
+    save->pl_6e       = pl->life;
     save->pl_b0       = MEM_H(pl, 0xB0);
     save->pl_16a[0]   = MEM_B(pl, 0x16A);
     save->pl_16a[1]   = MEM_B(pl, 0x16B);

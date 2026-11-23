@@ -697,7 +697,7 @@ void func_80101158(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work) != 0)
+            if (Player_control_off(&Player_work) != 0)
             {
                 Player_work.flags_0 &= ~3;
                 Cd_xa_play_id(0x2000001D);
@@ -748,7 +748,7 @@ void func_80101158(STAGE_ROOM *wp)
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

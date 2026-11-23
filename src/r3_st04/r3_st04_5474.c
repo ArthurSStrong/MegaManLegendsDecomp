@@ -87,7 +87,7 @@ void func_801055F0(ST04_ACTOR *wp)
     }
     if (wp->flags_0 & 1)
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 
@@ -308,7 +308,7 @@ void func_80105C08(ST04_ACTOR *wp)
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             if (step == 0 && !func_8003A13C())
             {
-                func_80042314(pl);
+                Player_control_on(pl);
                 Sce_flag_off(0x610);
                 Sce_flag_on(0x60E);
                 wp->routine_0 = 1;
@@ -545,7 +545,7 @@ void func_801061D8(ST04_ACTOR *wp)
             {
                 D_800A395C = 1;
                 func_80039820();
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 Close_EM_WORK(wp);
             }
@@ -603,7 +603,7 @@ void func_801065FC(ST04_ACTOR *wp)
                       0x80);
     }
     Model_Shadow_Trans(wp, 0x30, 0x200, 0);
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     ctl->at_14.hit = 0;
 }
 
@@ -800,7 +800,7 @@ void func_80106C5C(ST04_ACTOR *wp)
             wp->rotation.y =
                 (wp->rotation.y + Muku(&wp->position, &ctl[1].at_14.goal, wp->rotation.y, 8)) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-            hit                  = func_8004B414(wp);
+            hit                  = Scr_collision_check(wp);
             y                    = Scr_height_check(wp);
             wp->position.y       = y;
             wp->position_fixed.y = y << 16;
@@ -925,7 +925,7 @@ void func_80106F90(ST04_ACTOR *wp)
             // fall through
         case 2:
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-            hit = func_8004B414(wp);
+            hit = Scr_collision_check(wp);
             if (--ctl->timer_4 < 0)
             {
                 wp->routine_2   = 3;

@@ -45,7 +45,7 @@ void func_80128B28(ST1A_SPARK *wp)
     sint32 c;
 
     ctl = &wp->ctl;
-    if (func_80049C54(&wp->u_1C.pos, &wp->u_1C.pos, D_80138CEC, wp->index_1) == 0 &&
+    if (Scr_line_calc(&wp->u_1C.pos, &wp->u_1C.pos, D_80138CEC, wp->index_1) == 0 &&
         !(ctl->hit_8 & 0x2000000))
     {
         wp->ctl.shade_18 = (ctl->timer_6 < 6) ? ctl->timer_6 * 16 : 0x80;
@@ -67,7 +67,7 @@ void func_80128B28(ST1A_SPARK *wp)
         pos.x          = wp->u_1C.pos.x;
         pos.y          = wp->u_1C.pos.y;
         pos.z          = wp->u_1C.pos.z;
-        pos.y          = func_80048EA4(&pos, D_80138CEC, 0, wp->index_1);
+        pos.y          = Scr_height_calc(&pos, D_80138CEC, 0, wp->index_1);
         if (pos.y < wp->u_1C.pos.y)
         {
             wp->u_1C.pos.y = pos.y;

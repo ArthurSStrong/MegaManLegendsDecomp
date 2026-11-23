@@ -255,19 +255,19 @@ void Model_Shadow_Trans(void *obj, sint32 a1, sint32 a2, sint32 a3);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, SVECTOR *pos);
 sint32 Set_Atari(SVECTOR *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, uint32 *col,
                      uint32 flags, sint32 arg7, sint32 arg8);
-sint32 func_8004B414(void *obj);
+sint32 Scr_collision_check(void *obj);
 void func_8004AC8C(SVECTOR *vel, sint32 flags);
-sint32 func_80048C60(SVECTOR *pos);
+sint32 Scr_cell_get(SVECTOR *pos);
 sint32 Scr_height_check(void *obj);
-sint32 func_80050C2C(void *obj);
+sint32 Scr_event_check(void *obj);
 sint32 func_8004324C(SHL_PLAYER *pl);
 void Homing_target_clear(sint32 bit);
 sint32 func_80037634(void *pl, sint32 arg);
 sint32 func_80037694(void *obj, sint32 arg);
 sint32 func_800375D4(void *pl, sint32 arg);
 sint16 func_80039B80(void);
-void func_80051BAC(void *obj);
+void Solid_mover_set(void *obj);
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
-                   uint32 *a7, sint32 a8, sint32 a9, sint32 a10);
+                uint32 *a7, sint32 a8, sint32 a9, sint32 a10);
 
 #endif // SHL_H

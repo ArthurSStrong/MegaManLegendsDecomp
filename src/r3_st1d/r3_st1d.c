@@ -60,14 +60,14 @@ void func_801004C4(STAGE_ROOM_WORK *wp)
             }
             else
             {
-                func_8001E460(0, 1, 0);
+                Sce_exit_lock(0, 1, 0);
                 wp->routine_4++;
             }
             break;
         case 1:
             if (Sce_flag_test(0x616))
             {
-                func_8001E460(0, 0, 0);
+                Sce_exit_lock(0, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -85,14 +85,14 @@ void func_80100554(STAGE_ROOM_WORK *wp)
             }
             else
             {
-                func_8001E460(0, 1, 0);
+                Sce_exit_lock(0, 1, 0);
                 wp->routine_4++;
             }
             break;
         case 1:
             if (Sce_flag_test(0x617))
             {
-                func_8001E460(0, 0, 0);
+                Sce_exit_lock(0, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -110,14 +110,14 @@ void func_801005E4(STAGE_ROOM_WORK *wp)
             }
             else
             {
-                func_8001E460(0, 1, 0);
+                Sce_exit_lock(0, 1, 0);
                 wp->routine_4++;
             }
             break;
         case 1:
             if (Sce_flag_test(0x618))
             {
-                func_8001E460(0, 0, 0);
+                Sce_exit_lock(0, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -199,7 +199,7 @@ void func_80100720(ST1D_VIEW *wp)
         obj->position_fixed.v.y = obj->position.y << 16;
         obj->position_fixed.v.z = obj->position.z << 16;
     }
-    func_8005D620(wp, 0, 0, 0x51, 0x2C580048);
+    Gauge_open(wp, 0, 0, 0x51, 0x2C580048);
     wp->value_3F8  = 0;
     wp->u_400.w[0] = 0;
     wp->value_408  = 0;
@@ -1485,7 +1485,7 @@ void func_80102B54(ST1D_VIEW *wp)
             spark->timer_4C--;
             break;
         case 1:
-            func_8005D6E8(wp);
+            Gauge_close(wp);
             Fade_start(14);
             wp->routine_2++;
             break;
@@ -1848,7 +1848,7 @@ void func_80103920(ST1D_VIEW *wp)
                 Muku(&wp->position, &ext->u_58.obj->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + wp->u_64.h[0]) & 0xFFF;
             Obj_pos_set(wp, 0x100, 0, 0);
-            ext->u_5C.w          = func_8004B414(wp);
+            ext->u_5C.w          = Scr_collision_check(wp);
             y                    = Scr_height_check(wp);
             wp->position.y       = y;
             wp->position_fixed.y = y << 16;
@@ -1925,7 +1925,7 @@ void func_80103920(ST1D_VIEW *wp)
                     ext->piece_54->position       = wp->position;
                     ext->piece_54->position_fixed = wp->position_fixed;
                     Obj_pos_move(&ext->piece_54->position, &ext->piece_54->position_fixed,
-                                  (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
+                                 (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
                     ext->piece_54->angle_64 = wp->rotation.y;
                     ext->u_34.h[0]          = 60;
                     ext->obj_40->u_E.b.byte_F |= 1;
@@ -1966,7 +1966,7 @@ void func_80103D6C(ST1D_VIEW *wp)
                 break;
             }
             Obj_pos_set(wp, 0x200, 0, 0);
-            ext->u_5C.w          = func_8004B414(wp);
+            ext->u_5C.w          = Scr_collision_check(wp);
             y                    = Scr_height_check(wp);
             wp->position.y       = y;
             wp->position_fixed.y = y << 16;
@@ -2089,7 +2089,7 @@ void func_80104180(ST1D_VIEW *wp)
                 ext->flags_0 &= ~4;
             }
             Obj_pos_set(wp, -0x460, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             break;
         case 1:
             wp->routine_2 = 2;
@@ -2097,7 +2097,7 @@ void func_80104180(ST1D_VIEW *wp)
             wp->u_44.h[1] = 0;
             ext->u_4.h[0] = 3;
             Obj_pos_set(wp, wp->u_44.h[0], -0x960, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             break;
         case 2:
             if (--ext->u_4.h[0] < 0)
@@ -2108,7 +2108,7 @@ void func_80104180(ST1D_VIEW *wp)
             // fall through
         case 3:
             Obj_pos_set(wp, wp->u_44.h[0], wp->u_44.h[1], 0);
-            if ((ext->u_5C.w = func_8004B414(wp)) != 0)
+            if ((ext->u_5C.w = Scr_collision_check(wp)) != 0)
             {
                 if (ext->u_5C.w & 0xF00)
                 {
@@ -2131,7 +2131,7 @@ void func_80104180(ST1D_VIEW *wp)
             }
             wp->u_44.h[1] = (3 - ext->u_4.h[0]) << 4;
             Obj_pos_set(wp, wp->u_44.h[0], wp->u_44.h[1] << 4, 0);
-            if ((ext->u_5C.w = func_8004B414(wp)) != 0)
+            if ((ext->u_5C.w = Scr_collision_check(wp)) != 0)
             {
                 if (ext->u_5C.w & 0xF00)
                 {
@@ -2171,7 +2171,7 @@ void func_801043B8(ST1D_VIEW *wp)
                 ext->flags_0 &= ~4;
             }
             Obj_pos_set(wp, 0x460, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             break;
         case 1:
             wp->routine_2 = 2;
@@ -2179,7 +2179,7 @@ void func_801043B8(ST1D_VIEW *wp)
             wp->u_44.h[1] = 0;
             ext->u_4.h[0] = 3;
             Obj_pos_set(wp, wp->u_44.h[0], -0x960, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             break;
         case 2:
             if (--ext->u_4.h[0] < 0)
@@ -2190,7 +2190,7 @@ void func_801043B8(ST1D_VIEW *wp)
             // fall through
         case 3:
             Obj_pos_set(wp, wp->u_44.h[0], wp->u_44.h[1], 0);
-            if ((ext->u_5C.w = func_8004B414(wp)) != 0)
+            if ((ext->u_5C.w = Scr_collision_check(wp)) != 0)
             {
                 if (ext->u_5C.w & 0xF00)
                 {
@@ -2213,7 +2213,7 @@ void func_801043B8(ST1D_VIEW *wp)
             }
             wp->u_44.h[1] = (3 - ext->u_4.h[0]) << 4;
             Obj_pos_set(wp, wp->u_44.h[0], wp->u_44.h[1] << 4, 0);
-            if ((ext->u_5C.w = func_8004B414(wp)) != 0)
+            if ((ext->u_5C.w = Scr_collision_check(wp)) != 0)
             {
                 if (ext->u_5C.w & 0xF00)
                 {
@@ -2274,7 +2274,7 @@ void func_801045F0(ST1D_VIEW *wp)
             else
             {
                 Obj_pos_set(wp, 0xF0, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 y                    = Scr_height_check(wp);
                 wp->position.y       = y;
                 wp->position_fixed.y = y << 16;
@@ -2320,7 +2320,7 @@ void func_8010478C(ST1D_VIEW *wp)
             else
             {
                 Obj_pos_set(wp, -0x50, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 y                    = Scr_height_check(wp);
                 wp->position.y       = y;
                 wp->position_fixed.y = y << 16;
@@ -2355,7 +2355,7 @@ void func_8010478C(ST1D_VIEW *wp)
                 ext->flags_0 |= 0x21;
             }
             Obj_pos_set(wp, -0x80, 0, 0);
-            func_8004B414(wp);
+            Scr_collision_check(wp);
             y                    = Scr_height_check(wp);
             wp->position.y       = y;
             wp->position_fixed.y = y << 16;
@@ -2396,7 +2396,7 @@ void func_80104974(ST1D_VIEW *wp)
             // fall through
         case 2:
             Obj_pos_set(wp, 0, wp->u_44.h[1] << 7, 0);
-            if (!(func_8004B414(wp) & 0x1000))
+            if (!(Scr_collision_check(wp) & 0x1000))
             {
                 break;
             }
@@ -2451,7 +2451,7 @@ void func_80104B20(ST1D_VIEW *wp)
             else
             {
                 Obj_pos_set(wp, -0xF0, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 y                    = Scr_height_check(wp);
                 wp->position.y       = y;
                 wp->position_fixed.y = y << 16;
@@ -2509,7 +2509,7 @@ void func_80104C7C(ST1D_VIEW *wp)
             else
             {
                 Obj_pos_set(wp, 0x200, 0, 0);
-                func_8004B414(wp);
+                Scr_collision_check(wp);
                 y                    = Scr_height_check(wp);
                 wp->position.y       = y;
                 wp->position_fixed.y = y << 16;
@@ -2526,7 +2526,7 @@ void func_80104C7C(ST1D_VIEW *wp)
             ext->u_4.h[0]--;
             wp->u_44.h[1] = (5 - ext->u_4.h[0]) << 2;
             Obj_pos_set(wp, 0, wp->u_44.h[1] << 4, wp->u_48.h[0] << 4);
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 Sound_call2(0xB8, &wp->position);
                 if ((ext->flags_0 & 0x200) &&
@@ -2544,7 +2544,7 @@ void func_80104C7C(ST1D_VIEW *wp)
                         ext->piece_54->position       = wp->position;
                         ext->piece_54->position_fixed = wp->position_fixed;
                         Obj_pos_move(&ext->piece_54->position, &ext->piece_54->position_fixed,
-                                      (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
+                                     (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x6E0, -0xD00, 0);
                         ext->piece_54->angle_64 = wp->rotation.y;
                         ext->obj_40->u_E.b.byte_F |= 1;
                         ext->u_44.fx[0]->routine_1 = 0;
@@ -2616,7 +2616,7 @@ void func_80105060(ST1D_VIEW *wp)
             else
             {
                 Obj_pos_set(wp, 0x180, 0, 0);
-                ext->u_5C.w          = func_8004B414(wp);
+                ext->u_5C.w          = Scr_collision_check(wp);
                 y                    = Scr_height_check(wp);
                 wp->position.y       = y;
                 wp->position_fixed.y = y << 16;

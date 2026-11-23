@@ -4,7 +4,7 @@
 void func_80113174(STAGE_OBJ *wp)
 {
     D_8011656C[wp->routine_0](wp);
-    func_80051BAC(wp);
+    Solid_mover_set(wp);
 }
 
 void func_801131C4(ST0A_SHL *wp)
@@ -156,17 +156,17 @@ void func_80113744(ST0A_SHOT *wp)
     if (wp->type_3 & 0x40)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_C4, 0x8000005,
-                      0, 0x80);
+                   0, 0x80);
     }
     else if (wp->index_C)
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_C4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
     else
     {
         Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0x4000, wp->value_1, &wp->col_C4,
-                      flags | 0x8000000, 0, 0x80);
+                   flags | 0x8000000, 0, 0x80);
     }
 }
 

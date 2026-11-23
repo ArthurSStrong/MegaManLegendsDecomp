@@ -808,8 +808,8 @@ sint16 func_8010DCCC(ST14_ACTOR *wp)
     {
         pos.z += 0x100;
     }
-    if ((sint16)func_80048EA4(&pos, NULL, 0, wp->value_1) !=
-        (sint16)func_80048EA4(&wp->position, NULL, 0, wp->value_1))
+    if ((sint16)Scr_height_calc(&pos, NULL, 0, wp->value_1) !=
+        (sint16)Scr_height_calc(&wp->position, NULL, 0, wp->value_1))
     {
         blocked = 1;
     }
@@ -1379,7 +1379,7 @@ void func_8010EFF8(ST14_VILLAGER *wp)
     sint32 ground;
     wp->ext.flags_0 = 0;
     flags           = &wp->ext.flags_0;
-    if (func_8004B414(wp) & 0xF00)
+    if (Scr_collision_check(wp) & 0xF00)
     {
         wp->ext.flags_0 |= 1;
     }
@@ -1564,7 +1564,7 @@ void func_8010F4F4(ST14_VILLAGER *wp)
         func_80047148(wp, &wp->position, effect);
 #endif
         func_8005D4E8();
-        func_8005D6E8(wp);
+        Gauge_close(wp);
         wp->routine_0 = 2;
         wp->routine_1 = 0;
         wp->routine_2 = 0;

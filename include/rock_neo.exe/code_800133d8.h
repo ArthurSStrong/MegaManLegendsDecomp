@@ -79,7 +79,7 @@ void func_80038370(uint32 *arg0, uint32 *arg1);
 void func_800175FC(void);
 void func_80028DE0(void);
 
-void func_8005C258(void);
+void Gauge_init(void);
 void Cd_read_comb(sint32 arg);
 void Sce_cd_read_wait(sint32 arg);
 void Sound_bgm_tbl_set(void);

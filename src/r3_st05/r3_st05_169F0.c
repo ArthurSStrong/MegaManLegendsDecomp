@@ -73,5 +73,5 @@ void func_80116B70(ST05_VILLAGER *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 3, -1, 0);
+    Solid_set(wp, 3, -1, 0);
 }

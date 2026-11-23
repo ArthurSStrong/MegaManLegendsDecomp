@@ -57,7 +57,7 @@ void func_80102F50(ST1C_OBJ *wp)
             wp->routine_1 = 2;
         }
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80102FD0(ST1C_OBJ *wp)

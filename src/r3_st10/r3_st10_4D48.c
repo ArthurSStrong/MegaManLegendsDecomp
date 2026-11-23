@@ -89,7 +89,7 @@ void func_80104EC4(ST10_ACTOR *wp)
     }
     if (wp->flags_0 & 1)
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 

@@ -69,11 +69,11 @@ void func_80100DFC(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 Obj_work_flag_change(0x15E, 0x80);
                 wp->reserved09[1]  = 0x80;
-                D_801396F4         = func_80048C60(&D_8012F708);
+                D_801396F4         = Scr_cell_get(&D_8012F708);
                 D_801396F8         = STAGE_CELL_TBL[D_801396F4].pos.y;
                 STAGE_PL.routine_0 = 3;
                 STAGE_PL.routine_1 = 0;
@@ -187,7 +187,7 @@ void func_801010E8(STAGE_ROOM *wp)
                     STAGE_CELL_TBL[D_801396F4].pos.y = D_801396F8;
                     func_8003AC9C(D_801396F4, 0x31500);
                 }
-                func_80042314(pl);
+                Player_control_on(pl);
                 wp->routine_5++;
             }
             break;
@@ -1449,7 +1449,7 @@ void func_80103448(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 Obj_work_flag_change(0x100, 0x80);
                 wp->routine_5++;
@@ -1594,7 +1594,7 @@ void func_801036F4(STAGE_ROOM *wp)
             D_800C356D = 0;
             D_800C3571 = 0xFF;
             func_8011BC80();
-            func_80042314(pl);
+            Player_control_on(pl);
             wp->flags_0 = 0;
             break;
     }
@@ -2039,11 +2039,11 @@ void func_801047D0(STAGE_ROOM *wp)
                 pos.x = -0xF9;
                 pos.y = -1;
                 pos.z = -0x12;
-                STAGE_CELL_TBL[func_80048C60(&pos)].pos.x -= 2;
+                STAGE_CELL_TBL[Scr_cell_get(&pos)].pos.x -= 2;
                 pos.x = 0xF9;
                 pos.y = -1;
                 pos.z = -0x12;
-                STAGE_CELL_TBL[func_80048C60(&pos)].pos.x += 2;
+                STAGE_CELL_TBL[Scr_cell_get(&pos)].pos.x += 2;
             }
             else
             {
@@ -2133,11 +2133,11 @@ void func_80104A80(STAGE_ROOM *wp)
     pos.x = -0xF9;
     pos.y = -1;
     pos.z = -0x12;
-    STAGE_CELL_TBL[func_80048C60(&pos)].pos.x += 3;
+    STAGE_CELL_TBL[Scr_cell_get(&pos)].pos.x += 3;
     pos.x = 0xF9;
     pos.y = -1;
     pos.z = -0x12;
-    STAGE_CELL_TBL[func_80048C60(&pos)].pos.x -= 3;
+    STAGE_CELL_TBL[Scr_cell_get(&pos)].pos.x -= 3;
 }
 
 void func_80104BAC(STAGE_ROOM *wp)
@@ -2160,7 +2160,7 @@ void func_80104BAC(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 wp->routine_5++;
             }
@@ -2306,13 +2306,13 @@ void func_80104EC8(ST1A_ROOM_A0 *wp)
             pos.x = -0x100;
             pos.y = 0;
             pos.z = 0xB00;
-            func_8003AC9C(func_80048D08(2, &pos), 0x40A00);
-            func_8003AC9C(func_80048D08(0xF, &pos), 0x40A00);
+            func_8003AC9C(Scr_map_cell_get(2, &pos), 0x40A00);
+            func_8003AC9C(Scr_map_cell_get(0xF, &pos), 0x40A00);
             pos.x = 0x100;
             pos.y = 0;
             pos.z = 0xB00;
-            func_8003AC9C(func_80048D08(2, &pos), 0x40B00);
-            func_8003AC9C(func_80048D08(0xF, &pos), 0x40B00);
+            func_8003AC9C(Scr_map_cell_get(2, &pos), 0x40B00);
+            func_8003AC9C(Scr_map_cell_get(0xF, &pos), 0x40B00);
             D_800C356C = -1;
             D_800C356E = 0x1A;
             D_800C356F = 0xF;
@@ -2325,7 +2325,7 @@ void func_80104EC8(ST1A_ROOM_A0 *wp)
             D_800C3570 = 0xFF;
             wp->obj_A0 = func_8011F27C();
             Sound_call(0x2F, 1, 0);
-            func_80042314(pl);
+            Player_control_on(pl);
             wp->flags_0 = 0;
             break;
     }
@@ -2349,7 +2349,7 @@ void func_80105278(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -2360,7 +2360,7 @@ void func_80105278(STAGE_ROOM *wp)
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sce_file_read(0xC0, 1, 1);
-                func_8005D7C0();
+                Gauge_clear();
                 wp->reserved09[1] = 0x80;
                 wp->routine_5++;
             }
@@ -2459,7 +2459,7 @@ void func_80105598(STAGE_ROOM *wp)
             if (Fade_busy == 0)
             {
                 Obj_work_flag_change(0x156, 0x80);
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 STAGE_PL.value_AC  = 0;
                 STAGE_PL.value_168 = 0;
                 STAGE_PL.value_169 = 0;

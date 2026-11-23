@@ -23,7 +23,7 @@ void func_80127914(STAGE_MATRIX_OBJ *wp)
 
 void func_801279A8(STAGE_OBJ *wp)
 {
-    func_80051B68(wp, 7, 0, 0);
+    Solid_set(wp, 7, 0, 0);
 }
 
 void func_801279D0(STAGE_OBJ *wp)

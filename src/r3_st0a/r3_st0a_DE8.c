@@ -58,7 +58,7 @@ void func_80100EE8(void)
 
 void func_80100EF0(STAGE_ROOM *wp)
 {
-    D_800C0F96[0] = 0;
+    Pl_demo_pad[0] = 0;
     switch (wp->routine_6)
     {
         case 0:
@@ -78,7 +78,7 @@ void func_80100EF0(STAGE_ROOM *wp)
             }
             else
             {
-                D_800C0F96[0] = ((STAGE_PL_PAD *)&Player_work)->pad_124;
+                Pl_demo_pad[0] = ((STAGE_PL_PAD *)&Player_work)->pad_124;
             }
             break;
         case 1:
@@ -98,7 +98,7 @@ void func_80100EF0(STAGE_ROOM *wp)
             }
             else
             {
-                D_800C0F96[0] = ((STAGE_PL_PAD *)&Player_work)->pad_12A;
+                Pl_demo_pad[0] = ((STAGE_PL_PAD *)&Player_work)->pad_12A;
             }
             break;
         case 2:
@@ -152,7 +152,7 @@ void func_801011B4(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 1:
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 // statement order found by search
                 pl->routine_0 = 3;
@@ -200,7 +200,7 @@ void func_80101394(STAGE_ROOM *wp)
             Sce_camera_script_exec();
             if (Sce_cd_reading() != 0)
             {
-                func_8005D7C0();
+                Gauge_clear();
                 Sce_script_timer_clear();
                 D_800BC7F0 = D_801155B4;
                 wp->tbl_A4 = D_801158BC;
@@ -245,7 +245,7 @@ void func_801014B0(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 1:
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             D_800A395C = 1;
             if (wp->reserved09[1] & 1)
             {

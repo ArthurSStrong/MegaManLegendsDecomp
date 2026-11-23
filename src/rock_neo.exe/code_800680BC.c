@@ -520,7 +520,7 @@ void func_80068DAC(CODE68_WORK *wp)
     {
         case 0:
             pl = &Player_work;
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->routine_0 &= 0xFC;
                 wp->routine_4++;
@@ -580,7 +580,7 @@ void func_80068DAC(CODE68_WORK *wp)
                 wp->flags_0 = 0;
                 Cd_subcmd(0, 1, 0);
                 Player_work.routine_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 Sce_flag_select(0x2EB);
                 Sce_flag_on(0x55);
                 func_8001D974();

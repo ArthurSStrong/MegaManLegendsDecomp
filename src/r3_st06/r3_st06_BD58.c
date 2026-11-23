@@ -11,11 +11,11 @@ void func_8010BD58(ST06_ACTOR *wp)
     D_80125150[wp->variant_3](wp);
     if (wp->routine_1 != 0)
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
     else
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 

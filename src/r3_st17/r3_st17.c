@@ -175,7 +175,7 @@ void func_80100ACC(STAGE_OBJ *wp)
     {
         EM_Char_Move(wp);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     wp->anim_prev_AD = wp->anim_AC;
 }
 
@@ -325,7 +325,7 @@ void func_80100F10(STAGE_OBJ *wp)
     {
         EM_Char_Move(wp);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80101130(STAGE_OBJ *wp)
@@ -376,7 +376,7 @@ void func_80101130(STAGE_OBJ *wp)
             EM_World_Pos_Calc_YXZ(wp);
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010130C(STAGE_OBJ *wp)
@@ -409,7 +409,7 @@ void func_8010130C(STAGE_OBJ *wp)
             wp->position_fixed.v.x = x << 16;
             wp->position_fixed.v.y = wp->position.y << 16;
             wp->position_fixed.v.z = wp->position.z << 16;
-            func_80053158(ST17_SCENE_OBJ(&Scene_work, 2), wp);
+            Ride_carry(ST17_SCENE_OBJ(&Scene_work, 2), wp);
             // fall through
         case 2:
             EM_Char_Move(wp);
@@ -5637,7 +5637,7 @@ void func_8010BA40(STAGE_OBJ *wp, sint32 side, sint32 level)
         shot->position_fixed.v.y = shot->position.y << 16;
         shot->position_fixed.v.z = shot->position.z << 16;
         Obj_pos_move(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD6C[side].x,
-                      0, D_8011BD6C[side].z);
+                     0, D_8011BD6C[side].z);
         shot->value_44.half[0] = v.x << 8;
         shot->value_44.half[1] = 0x3000;
         shot->value_48.half[0] = v.z << 8;
@@ -5685,7 +5685,7 @@ void func_8010BC84(STAGE_OBJ *wp, sint32 index)
         shot->position_fixed.v.y = shot->position.y << 16;
         shot->position_fixed.v.z = shot->position.z << 16;
         Obj_pos_move(&shot->position, &shot->position_fixed.v, wp->rotation.y, D_8011BD74[index].x,
-                      0, D_8011BD74[index].z);
+                     0, D_8011BD74[index].z);
         shot->value_44.half[0] = v.x << 8;
         shot->value_44.half[1] = D_8011BDAC[rand() & 7];
         shot->value_48.half[0] = v.z << 8;

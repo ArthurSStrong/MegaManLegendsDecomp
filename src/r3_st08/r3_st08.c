@@ -37,7 +37,7 @@ void func_80100384(void)
             pl->value_44E = 0;
             if (STAGE_GAME_VALUE_52 >= 5)
             {
-                func_8003AC9C(func_80048C60(&D_80112974), 0x93300);
+                func_8003AC9C(Scr_cell_get(&D_80112974), 0x93300);
             }
             break;
         case 4:
@@ -62,10 +62,10 @@ void func_80100578(void)
     Sce_slot_list_clear();
     Sce_flag_off(0x604);
     Sce_flag_off(0x605);
-    func_8001E4C4(D_80113128, D_80113130[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_80113128, D_80113130[STAGE_GAME_VALUE_52]);
     if (Sce_flag_test(0x37))
     {
-        func_8001E460(4, 0, 0);
+        Sce_exit_lock(4, 0, 0);
     }
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
@@ -93,7 +93,7 @@ void func_80100690(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -234,7 +234,7 @@ void func_80100A94(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -266,7 +266,7 @@ void func_80100B94(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -298,7 +298,7 @@ void func_80100C94(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -330,7 +330,7 @@ void func_80100D94(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -362,7 +362,7 @@ void func_80100E94(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -385,7 +385,7 @@ void func_80100F48(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -408,7 +408,7 @@ void func_80100FFC(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -432,7 +432,7 @@ void func_801010B0(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -456,7 +456,7 @@ void func_8010116C(STAGE_ROOM_WORK *wp)
         case 1:
             if (Sce_flag_test(0x225) || Sce_flag_test(0x37))
             {
-                func_8001E460(4, 0, 0);
+                Sce_exit_lock(4, 0, 0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -529,7 +529,7 @@ void func_80101424(void)
 {
     STCOM_SVECTOR pos = {0x1900, 0, 0x300, 0};
 
-    func_8003AC9C(func_80048C60(&pos), 0x80100000);
+    func_8003AC9C(Scr_cell_get(&pos), 0x80100000);
 }
 
 // Puts the player at (x, y, z) facing `angle`.
@@ -685,12 +685,12 @@ void func_801018CC(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sound_fade_start(0x10);
                 func_80101798();
                 STAGE_GAME.value_83 = 2;
-                func_800425FC(&Player_work, 0);
+                Pl_key_type_set(&Player_work, 0);
                 ST08_PL->value_44B = 1;
                 Sce_camera_start(0, 0, 0);
                 cam->pos_10   = 0;
@@ -748,7 +748,7 @@ void func_801018CC(STAGE_ROOM *wp)
                 Scene_work.value_A    = 0;
                 Scene_work.value_10   = 0;
                 STAGE_SCENE_WORD(0xC) = 0;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 MojiTaskExec2(2, 0x1A);
                 MojiTaskExec2(1, 0x23);
                 MojiTaskExec2(3, ST08_GAME_WORD(0x120) + 0x2D);
@@ -759,7 +759,7 @@ void func_801018CC(STAGE_ROOM *wp)
             func_80101604(wp);
             break;
         case 6:
-            if (func_80042238(&Player_work))
+            if (Player_control_off(&Player_work))
             {
                 Sound_call2(0x163, &Player_work.position);
                 Sound_fade_start(0x40);
@@ -897,12 +897,12 @@ void func_801018CC(STAGE_ROOM *wp)
                 Sound_fade_start(0xA0);
                 STAGE_GAME.value_83 = 0;
                 D_800C356C_A[0]++;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 D_800A395C         = 1;
                 ST08_PL->value_44B = 0;
                 func_80039820();
                 Sound_work.volume_6 = 0x7F;
-                func_800425FC(&Player_work, (sint8)STAGE_GAME_BYTE(0x54));
+                Pl_key_type_set(&Player_work, (sint8)STAGE_GAME_BYTE(0x54));
                 wp->flags_0 = 0;
             }
             break;
@@ -938,7 +938,7 @@ void func_80101FE0(STAGE_ROOM *wp)
             wp->routine_5++;
             // fall through
         case 1:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -1002,7 +1002,7 @@ void func_801021D8(STAGE_ROOM *wp)
             if (Fade_busy == 0)
             {
                 func_8003697C();
-                func_80042314(pl);
+                Player_control_on(pl);
                 D_800A395C = 1;
                 func_80039820();
                 wp->routine_5++;
@@ -1052,7 +1052,7 @@ void func_80102328(STAGE_FX *wp)
 
 void func_801023A4(STAGE_ROOM *wp)
 {
-    if (func_80042238(&Player_work))
+    if (Player_control_off(&Player_work))
     {
         ST08_PL->routine_1 = 0x10;
         ST08_PL->flags_bd |= 0x10;
@@ -1293,7 +1293,7 @@ void func_80102A24(STAGE_ROOM *wp)
             Sce_flag_on(0x37);
             func_8001E3F0(0x18);
             Sce_flag_select(0x2E8);
-            func_80042314(&Player_work);
+            Player_control_on(&Player_work);
             D_800A395C = 1;
             ST08_PL->value_A++;
             func_80039820();

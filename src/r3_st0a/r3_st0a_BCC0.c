@@ -283,7 +283,7 @@ void func_8010C0A0(ST0A_EM *wp)
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0x200, 0x200, 1);
-        func_80051B68(wp, 1, 0, D_8009884C[wp->kind_2]->value_C | 0x1000000);
+        Solid_set(wp, 1, 0, D_8009884C[wp->kind_2]->value_C | 0x1000000);
     }
     if (ext->flags_0 & 0x200)
     {
@@ -310,8 +310,8 @@ void func_8010C0A0(ST0A_EM *wp)
                 ext->fpos_70.y   = ext->hit_C.pos_0.y << 16;
                 ext->fpos_70.z   = ext->hit_C.pos_0.z << 16;
                 Obj_pos_move(&ext->hit_C.pos_0, &ext->fpos_70,
-                              (wp->rotation.y + ext->angle_42) & 0xFFF, D_80116260[i].x << 4,
-                              D_80116260[i].y << 4, D_80116260[i].z << 4);
+                             (wp->rotation.y + ext->angle_42) & 0xFFF, D_80116260[i].x << 4,
+                             D_80116260[i].y << 4, D_80116260[i].z << 4);
                 Set_Atari(&ext->hit_C.pos_0, 0x40, 0, 0x8000, wp->value_1,
                               &ext->hit_88[i].hit_8, D_8009884C[wp->kind_2]->value_D | 0x4080000, 0,
                               0x80);
@@ -678,7 +678,7 @@ void func_8010D2F4(ST0A_EM *wp)
                     obj->position         = wp->position;
                     obj->position_fixed.v = wp->position_fixed.v;
                     Obj_pos_move(&obj->position, &obj->position_fixed.v, wp->rotation.y, 0xD00,
-                                  -0x2E20, 0);
+                                 -0x2E20, 0);
                     obj->rotation.y = (wp->rotation.y + 0x800) & 0xFFF;
                 }
                 wp->routine_2++;
@@ -786,7 +786,7 @@ void func_8010D6C0(ST0A_EM *wp)
                         ext->fpos_70.y = wp->position.y << 16;
                         ext->fpos_70.z = wp->position.z << 16;
                         Obj_pos_move(&ext->pos_68, &ext->fpos_70, wp->rotation.y, 0xD00, -0x3200,
-                                      0);
+                                     0);
                         obj->flags_0  = 1;
                         obj->kind_2   = 3;
                         obj->position = ext->pos_68;
@@ -1069,7 +1069,7 @@ void func_8010E254(ST0A_EM *wp)
                 fpos            = &wp->ext.fpos_70;
                 Obj_pos_move(pos, fpos, wp->rotation.y, 0xD00, -(wp->ext.value_6 << 9), 0);
                 Obj_pos_move(pos, fpos, wp->ext.value_6 << 9, D_80116290[wp->routine_3 * 4],
-                              D_80116292[wp->routine_3 * 4], 0);
+                             D_80116292[wp->routine_3 * 4], 0);
                 fx = Open_EFFECT_WORK();
                 if (fx != NULL)
                 {
@@ -1110,9 +1110,9 @@ void func_8010E254(ST0A_EM *wp)
             {
                 wp->routine_1 = 9;
                 Sce_flag_on(0x604);
-                func_80052528(wp);
+                Ride_clear(wp);
                 wp->ext.flags_0 = 0x200;
-                func_8005D6E8(wp);
+                Gauge_close(wp);
             }
             else if (wp->value_A7 < 0)
             {
@@ -1329,7 +1329,7 @@ sint32 func_8010EB40(void)
         Obj_pos_adj_round(&obj->position_fixed, &obj->position);
         obj->value_B0 = 0;
         obj->value_6E = 0;
-        func_8005D620(obj, 0, 0, 0x50, 0x208080);
+        Gauge_open(obj, 0, 0, 0x50, 0x208080);
         return 0;
     }
     return 1;
@@ -1357,7 +1357,7 @@ sint32 func_8010EBE8(ST0A_EM *wp)
             wp->life_6E -= damage;
             if (wp->life_6E <= 0)
             {
-                if (func_80042208())
+                if (Player_atari_off())
                 {
                     wp->ext.flags_0 &= ~0xC;
                     wp->life_6E               = 0;

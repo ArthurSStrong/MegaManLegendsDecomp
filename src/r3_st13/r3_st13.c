@@ -44,7 +44,7 @@ void func_80100350(void)
 
 void func_801004D8(void)
 {
-    func_8001E4C4(D_80117490, D_80117498[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_80117490, D_80117498[STAGE_GAME_VALUE_52]);
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
@@ -93,7 +93,7 @@ void func_80100664(STAGE_OBJ *wp)
     }
     if ((wp->value_4 == 0) && (Sce_flag_test(0x4C) == 0))
     {
-        func_8001E460(3, 1, 0);
+        Sce_exit_lock(3, 1, 0);
         wp->value_4 = 0xFF;
     }
 }
@@ -110,7 +110,7 @@ void func_801006DC(STAGE_ROOM *wp)
         case 0:
             if (!Sce_flag_test(0x21))
             {
-                func_8001E460(2, 1, 0);
+                Sce_exit_lock(2, 1, 0);
                 wp->routine_4++;
             }
             else
@@ -121,7 +121,7 @@ void func_801006DC(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x4C))
             {
-                func_8001E460(2, 0, 0);
+                Sce_exit_lock(2, 0, 0);
                 wp->routine_4++;
             }
             break;
@@ -413,7 +413,7 @@ void func_8010103C(ST13_STCOM27_WORK *wp)
     sint32 ground;
     wp->ctl.flags_14 = 0;
     ctl              = &wp->ctl;
-    if (func_8004B414(wp) & 0xF00)
+    if (Scr_collision_check(wp) & 0xF00)
     {
         wp->ctl.flags_14 |= 1;
     }

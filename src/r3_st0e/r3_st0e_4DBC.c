@@ -116,7 +116,7 @@ void func_801050A0(ST0E_ACTOR *wp)
 void func_80105148(ST0E_ACTOR *wp)
 {
     wp->ctl.hit_14 = 0;
-    if (func_8004B414(wp) & 0xF00)
+    if (Scr_collision_check(wp) & 0xF00)
     {
         wp->ctl.hit_14 |= 1;
     }
@@ -538,7 +538,7 @@ void func_80105D94(ST0E_PROP *wp)
             wp->position_fixed.y += wp->velocity.v.y << 8;
             wp->position_fixed.z += wp->velocity.v.z << 8;
             Obj_pos_adj_round(&wp->position_fixed, &wp->position);
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 if (wp->spin_64.h[1] == 0)
                 {
@@ -572,7 +572,7 @@ void func_80105EF0(ST0E_PROP *wp)
             wp->position.y += wp->velocity.v.y;
             wp->position_fixed.y = wp->position.y << 16;
             wp->velocity.v.y += wp->accel.y;
-            if (func_8004B414(wp) & 0x1000)
+            if (Scr_collision_check(wp) & 0x1000)
             {
                 wp->routine_2 = 2;
                 wp->ctl.flags_0 |= 1;

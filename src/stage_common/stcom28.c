@@ -155,7 +155,7 @@ void stcom28_func_0468(STCOM28_WORK *wp)
     wp->rotation.x   = 0;
     wp->ctl.flags_20 = 0;
     ctl              = &wp->ctl;
-    if (func_8004B414(wp) & 0xF00)
+    if (Scr_collision_check(wp) & 0xF00)
     {
         wp->ctl.flags_20 |= 1;
     }

@@ -2328,7 +2328,7 @@ typedef struct
     uint8 reserved16[2]; // 16
     union
     {
-        sint32 hit;       // func_8004B414's result
+        sint32 hit;       // Scr_collision_check's result
         uint16 h[2];      // [1]: frames since it rose (func_8010D558)
     } u_18;               // 18
     sint32 ground_1C;     // 1C: 1 on the ground
@@ -2633,8 +2633,8 @@ extern ST0B_KIND_B **D_8009884C;
 sint32 func_8004324C(void *pl);
 sint32 Sce_flag_test(sint32 flag);
 
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
-void func_8005D6E8(void *wp);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
+void Gauge_close(void *wp);
 
 void func_80115BCC(ST0B_FLAMES *wp, sint32 angle, sint32 frame);
 
@@ -2761,6 +2761,6 @@ typedef struct
 
 extern ST0B_CAM_SHOT *D_8011BC18[];
 
-void func_80052528(void *wp);
+void Ride_clear(void *wp);
 
 #endif

@@ -190,12 +190,12 @@ void func_80039FAC(STCOM_FIXED_VECTOR *pos, sint32 a1, sint32 angle, sint32 a3);
 // stcom04, which retail evidently called without a sint16 prototype).
 // Rotates (x, y, z) by `angle` into `out`.
 STCOM_FIXED_VECTOR *Calc_local_vec(STCOM_FIXED_VECTOR *out, sint32 angle, sint16 x, sint16 y,
-                                  sint16 z);
+                                   sint16 z);
 void Model_work_init(void *wp, uint8 *variant);
 void EM_Char_Set(void *wp, sint32 anim, sint32 arg);
 void EM_Char_Move(void *wp);
 void Model_Shadow_Trans(void *wp, sint32 a1, sint32 a2, sint32 a3);
-void func_80051B68(void *wp, sint32 a1, sint32 a2, sint32 a3);
+void Solid_set(void *wp, sint32 a1, sint32 a2, sint32 a3);
 // Moves a work slot by (x, y, z) along its rotation. ROCK_NEO declares sint16 parameters, but
 // stcom13 passes velocity * 16 without narrowing, so the stage code saw int ones.
 void Obj_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
@@ -209,7 +209,7 @@ void Moji_param_exec(sint32 index, sint32 mode, sint32 value, sint32 id);
 void Fade_start(sint32 arg);
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
                      sint32 arg6, sint32 arg7, sint32 arg8);
-void func_80051BAC(void *wp);
+void Solid_mover_set(void *wp);
 // Allocates an effect record; NULL when none is free.
 STCOM_EFFECT *Open_EFFECT_WORK(void);
 // Sets a 16.16 position from a short one.
@@ -219,15 +219,15 @@ void func_8004AC8C(STCOM_SVECTOR *velocity, sint32 hit);
 // PsyQ libgte.
 sint32 rsin(sint32 a);
 sint32 rcos(sint32 a);
-void func_80042314(void *pl);
+void Player_control_on(void *pl);
 // Nonzero when the player is free to be taken over by a script.
-sint32 func_80042238(void *pl);
+sint32 Player_control_off(void *pl);
 void Cd_xa_seek_id(sint32 arg);
 // Moves `pos` (and its 16.16 copy) by (x, y, z) turned by `angle`. ROCK_NEO declares sint16
 // offsets, but stcom17 passes 0xFF710 unnarrowed, so the stage code saw int ones.
 void Obj_pos_move(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
-                   sint32 z);
-sint32 func_80049C24(void *wp);
+                  sint32 z);
+sint32 Scr_line_check(void *wp);
 sint32 func_80037BB4(void *wp);
 void func_80037738(sint32 value, uint32 amount);
 // Distance between two positions.
@@ -241,8 +241,8 @@ STCOM_MATRIX *ScaleMatrix(STCOM_MATRIX *m, STCOM_FIXED_VECTOR *v);
 uint32 Obj_distance(void *a, void *b);
 void EM_Char_Move2(void *wp);
 void EM_World_Pos_Calc_YXZ(void *wp);
-sint32 func_80048DAC(STCOM_SVECTOR *pos);
-sint32 func_8004B414(void *wp);
+sint32 Scr_area_check(STCOM_SVECTOR *pos);
+sint32 Scr_collision_check(void *wp);
 // Frees a 0x3C0-byte work slot.
 void Close_EM_WORK(void *wp);
 // Hand-written: copies `count` 32-byte blocks.

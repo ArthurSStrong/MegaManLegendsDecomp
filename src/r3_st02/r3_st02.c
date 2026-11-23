@@ -963,7 +963,7 @@ void func_80101CC0(STAGE_ROOM *wp)
     {
         case 0:
             pl = &Player_work;
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->flags_0 &= ~3;
                 wp->routine_4++;
@@ -1035,7 +1035,7 @@ void func_80101CC0(STAGE_ROOM *wp)
                 wp->flags_0 = 0;
                 func_8001D494_2(0, 1);
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
             }
             break;
     }

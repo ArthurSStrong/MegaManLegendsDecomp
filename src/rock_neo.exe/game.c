@@ -43,7 +43,7 @@ void Game_init(GAME_WORK *wp)
     {
         func_80065AA8();
     }
-    func_8003BE40(mode);
+    Player_init(mode);
     Sce_flag_init(mode);
     func_8003B278(mode);
     func_8005DBB4(mode);
@@ -189,7 +189,7 @@ void Game_play(GAME_WORK *wp)
                 }
             }
             else if (Scene_work == 0 && Fade_busy == 0 && !(Moji_flag & 0x0F000000) &&
-                     player->value6e >= 0 && (sint8)player->flags_bd == 0 && player->kind == 1)
+                     player->life >= 0 && (sint8)player->flags_bd == 0 && player->kind == 1)
             {
                 if ((D_800C0C2A & 8) || D_800C0C24 == 255)
                 {
@@ -293,16 +293,16 @@ void game_update(void)
     func_800175D8();
     func_800679B8();
     eve_work_move();
-    func_8003C07C();
+    Player_move();
     Obj_player_dist_calc();
-    func_8005C2B8();
+    Gauge_update();
     func_80017094();
     Em_work_move();
     shl_work_move();
     effect_stage_move();
     func_80017528();
-    func_80051BE4();
-    func_8003C2D8();
+    Solid_check();
+    Player_atari_set();
     pl_shl_work_move();
     effect_common_move();
     func_80038894();

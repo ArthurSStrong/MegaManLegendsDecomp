@@ -82,19 +82,19 @@ typedef struct
     sint16 *cells;
 } CODE486_MAP;
 
-extern CODE486_REQ D_800BC058[];
-extern PL_WORK *D_800BC360[];
-extern CODE486_REQ *D_80098894;
-extern PL_WORK **D_80098898;
+extern CODE486_REQ Solid_tbl[];
+extern PL_WORK *Solid_mover_tbl[];
+extern CODE486_REQ *Solid_ptr;
+extern PL_WORK **Solid_mover_ptr;
 
-void func_80042314(PL_WORK *pl);
+void Player_control_on(PL_WORK *pl);
 void func_80039820(void);
 void Sce_flag_off(sint32 flag);
 uint32 Obj_id_class(uint32 id);
-sint32 func_800497CC(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind);
+sint32 scr_wall_dist_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind);
 extern uint8 D_800A395C;
 extern uint8 D_8008AA04[];
-extern uint16 D_800C0F96[];
+extern uint16 Pl_demo_pad[];
 #define CODE486_GAME_BYTE50 (*(sint8 *)(Game_work + 0x50))
 
 typedef struct
@@ -136,7 +136,7 @@ extern uint32 Shl_work_used;
 extern PL_WORK3C0 Em_work_tbl[];
 extern PL_WORK5A4 D_800C3580[];
 extern PL_WORK10C Shl_work_tbl[];
-void func_80052644(sint32 key, CODE486_LINK *link);
+void ride_clear_one(sint32 key, CODE486_LINK *link);
 extern uint32 D_8008A9D4[];
 extern uint8 D_8008A9F4[];
 // Current room-entry handler (scene.c sees it as a pointer); a one-element array here.
@@ -167,7 +167,7 @@ extern CODE486_ENTRY D_800C3558;
 #define CODE486_ENTRY_H(entry, off) (*(sint16 *)((entry) + (off)))
 extern uint32 D_8008A9E4[];
 void Obj_work_flag_change(sint32 mask, sint32 flags);
-sint32 func_80042238(PL_WORK *pl);
+sint32 Player_control_off(PL_WORK *pl);
 
 typedef struct
 {
@@ -189,7 +189,7 @@ void Sce_event_start(sint32 id);
 uint32 Sce_flag_test(uint32 flag);
 void Message_event_set(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 
-void func_8004B3C0(sint32 *arg);
+void scr_box_set(sint32 *arg);
 void func_80048A9C(CODE486_TASK *task);
 void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
 void Sce_camera_script_exec(void);
@@ -199,7 +199,7 @@ sint32 rcos(sint32 angle);
 extern sint8 D_800C356C;
 extern uint8 D_800C3570;
 extern uint8 D_800C3571;
-sint32 func_8004B6AC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3);
+sint32 scr_collision_calc(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3);
 sint32 func_80052674(PL_WORK *pl, sint32 a0, PL_FIXED_VECTOR *pos, sint32 a3, sint32 slide);
 void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
                    PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5);
@@ -207,13 +207,13 @@ sint32 func_80052B04(sint32 a0, PL_FIXED_VECTOR *a1, PL_FIXED_VECTOR *a2, PL_FIX
                      sint32 a4, sint32 slide);
 void Obj_pos_adj_round(PL_FIXED_VECTOR *fixed, PL_SHORT_VECTOR *pos);
 void func_800536B0(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index);
-sint32 func_80048CEC(sint32 index);
-sint32 func_80048BEC(PL_SHORT_VECTOR *pos);
-sint32 func_80048C60(PL_SHORT_VECTOR *pos);
-sint32 func_80049470(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind);
-sint32 func_80049C54(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info,
+sint32 scr_cell_get_index(sint32 index);
+sint32 scr_cell_index(PL_SHORT_VECTOR *pos);
+sint32 Scr_cell_get(PL_SHORT_VECTOR *pos);
+sint32 scr_ground_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind);
+sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info,
                      sint32 kind);
-sint32 func_80048EA4(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint32 kind);
+sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, sint32 kind);
 
 // Moving-platform object that the player rides (pl->value_c0).
 typedef struct
@@ -302,7 +302,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
 sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3);
 
 typedef sint32 (*CODE486_TEST_FUNC)(sint16 *box, uint16 kind);
-// The same tests called with the box alone (func_800514FC leaves a1 unset).
+// The same tests called with the box alone (scr_event_get leaves a1 unset).
 typedef sint32 (*CODE486_BOX_TEST_FUNC)(sint16 *box);
 
 #define CODE486_SP_POS_C0 ((PL_SHORT_VECTOR *)0x1F8000C0)
@@ -340,7 +340,7 @@ typedef struct
 #define CODE486_SP_12E   (*(sint16 *)0x1F80012E)
 #define CODE486_SP_FE    (*(sint8 *)0x1F8000FE)
 #define CODE486_SP_12C   (*(sint16 *)0x1F80012C)
-sint32 func_8004B1E0(PL_SHORT_VECTOR *pos, sint32 keep_empty);
+sint32 scr_cell_list(PL_SHORT_VECTOR *pos, sint32 keep_empty);
 
 // Event trigger found in front of an object.
 typedef struct
@@ -430,10 +430,10 @@ extern uint8 D_8008AA6C[];
 extern uint8 D_8008AA70[];
 #define CODE486_GAME_WORD174 (*(uint32 *)(Game_work + 0x174))
 #define CODE486_GAME_HALF17A (*(uint16 *)(Game_work + 0x17A))
-sint32 func_800514FC(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out);
-sint32 func_80051970(PL_WORK *pl);
-sint32 func_800519E4(CODE486_EXIT *exit);
-sint32 func_80051A78(CODE486_EXIT *exit);
+sint32 scr_event_get(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out);
+sint32 scr_check_press(PL_WORK *pl);
+sint32 scr_exit_locked(CODE486_EXIT *exit);
+sint32 scr_exit_event(CODE486_EXIT *exit);
 void func_8001F6C4(void);
 
 #endif

@@ -1,43 +1,43 @@
 #include "common.h"
 #include "rock_neo.exe/code_800425fc.h"
 
-void func_800425FC(C800425FC_COLORS *wp, sint32 idx)
+void Pl_key_type_set(PL_KEY_VIEW *wp, sint32 idx)
 {
     uint32 i;
 
     for (i = 0; i < 16; i++)
     {
-        wp->src[i] = D_8008A04C[idx][i];
+        wp->key[i] = Pl_key_type_tbl[idx][i];
     }
-    wp->out[0]  = wp->src[0] | wp->src[1];
-    wp->out[1]  = wp->src[0];
-    wp->out[2]  = wp->src[4] | wp->src[5];
-    wp->out[3]  = wp->src[5];
-    wp->out[4]  = wp->src[4] | wp->src[5];
-    wp->out[5]  = wp->src[4];
-    wp->out[6]  = wp->src[0] | wp->src[1];
-    wp->out[7]  = wp->src[0];
-    wp->out[8]  = wp->src[0] | wp->src[1];
-    wp->out[9]  = wp->src[1];
-    wp->out[10] = wp->src[4] | wp->src[5];
-    wp->out[11] = wp->src[4];
-    wp->out[12] = wp->src[4] | wp->src[5];
-    wp->out[13] = wp->src[5];
-    wp->out[14] = wp->src[0] | wp->src[1];
-    wp->out[15] = wp->src[1];
+    wp->pad[0]  = wp->key[0] | wp->key[1];
+    wp->pad[1]  = wp->key[0];
+    wp->pad[2]  = wp->key[4] | wp->key[5];
+    wp->pad[3]  = wp->key[5];
+    wp->pad[4]  = wp->key[4] | wp->key[5];
+    wp->pad[5]  = wp->key[4];
+    wp->pad[6]  = wp->key[0] | wp->key[1];
+    wp->pad[7]  = wp->key[0];
+    wp->pad[8]  = wp->key[0] | wp->key[1];
+    wp->pad[9]  = wp->key[1];
+    wp->pad[10] = wp->key[4] | wp->key[5];
+    wp->pad[11] = wp->key[4];
+    wp->pad[12] = wp->key[4] | wp->key[5];
+    wp->pad[13] = wp->key[5];
+    wp->pad[14] = wp->key[0] | wp->key[1];
+    wp->pad[15] = wp->key[1];
 }
 
-void func_800426F8(C800425FC_WORK *wp)
+void Pl_shot_special(C800425FC_WORK *wp)
 {
-    D_8008A08C[wp->routine_170](wp);
+    Pl_shot_special_tbl[wp->routine_170](wp);
 }
 
-void func_80042734(C800425FC_WORK *wp)
+void Pl_shot_buster(C800425FC_WORK *wp)
 {
-    D_8008A0C4[wp->routine_171](wp);
+    Pl_shot_buster_tbl[wp->routine_171](wp);
 }
 
-void func_80042770(C800425FC_ACT *ap)
+void Pl_special_std(C800425FC_ACT *ap)
 {
     sint32 act;
     uint16 pad;
@@ -59,7 +59,7 @@ void func_80042770(C800425FC_ACT *ap)
             {
                 Pl_Char_Set(ap, ap->b0ac, D_80089A84[act * 12]);
             }
-            dir      = func_80042458(ap);
+            dir      = Pl_anim_special(ap);
             ap->b104 = dir;
             Pl_Char_Set_Upper(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
             ap->b178++;
@@ -120,7 +120,7 @@ void func_80042770(C800425FC_ACT *ap)
                     ap->h44.u = 0;
                 }
             }
-            func_80041E90(ap, ap->h44.s, 0, 0);
+            Pl_move(ap, ap->h44.s, 0, 0);
         }
         else
         {
@@ -171,13 +171,13 @@ void func_80042A40(C800425FC_ACT *ap)
     ap->h44.u += 0xE0;
     if (ap->h44.s < 0)
     {
-        func_80041E90(ap, ap->h44.s, 0, 0);
+        Pl_move(ap, ap->h44.s, 0, 0);
         return;
     }
     ap->h44.u = 0;
 }
 
-void func_80042B58(C800425FC_ACT *ap)
+void Pl_special_hold(C800425FC_ACT *ap)
 {
     sint32 act;
     uint16 pad;
@@ -251,7 +251,7 @@ void func_80042B58(C800425FC_ACT *ap)
                     ap->b110  = 0;
                 }
             }
-            func_80041E90(ap, ap->h44.s, 0, 0);
+            Pl_move(ap, ap->h44.s, 0, 0);
         }
         else
         {
@@ -318,10 +318,10 @@ void func_80042DF8(C800425FC_ACT *ap)
             }
             break;
     }
-    func_80041E90(ap, ap->h44.s, 0, 0);
+    Pl_move(ap, ap->h44.s, 0, 0);
 }
 
-void func_80042F78(C800425FC_ACT *ap)
+void Pl_buster_std(C800425FC_ACT *ap)
 {
     sint32 act;
     uint16 pad;
@@ -343,7 +343,7 @@ void func_80042F78(C800425FC_ACT *ap)
             {
                 Pl_Char_Set(ap, ap->b0ac, D_80089A84[act * 12]);
             }
-            dir      = func_800423DC(ap);
+            dir      = Pl_anim_buster(ap);
             ap->b104 = dir;
             Pl_Char_Set_Upper(ap, ap->b174 & 3, dir, D_80089A84[act * 12]);
             ap->b178++;
@@ -405,7 +405,7 @@ void func_80042F78(C800425FC_ACT *ap)
                     ap->h44.u = 0;
                 }
             }
-            func_80041E90(ap, ap->h44.s, 0, 0);
+            Pl_move(ap, ap->h44.s, 0, 0);
         }
         else
         {

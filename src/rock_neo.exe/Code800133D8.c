@@ -25,7 +25,7 @@ void Title_task(void)
     Game_work.sce_no                       = 0;
     Game_work.flags_53                       = 0;
     Game_work.flags_82                       = 0;
-    func_8005C258();
+    Gauge_init();
     Cd_read_comb(20);
     Sce_cd_read_wait(1);
     Sound_bgm_tbl_set();

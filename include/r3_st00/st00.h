@@ -1356,7 +1356,7 @@ typedef struct
 typedef void (*ST00_MOVER_FUNC)(ST00_MOVER *wp);
 
 extern ST00_MOVER_FUNC D_8011BF10[];
-void func_80053158(STAGE_OBJ *target, void *wp);
+void Ride_carry(STAGE_OBJ *target, void *wp);
 
 extern STAGE_OBJ_FUNC D_8011C4DC[];
 
@@ -1882,7 +1882,7 @@ void func_8010AE00(STAGE_STCOM15_WORK_4E0 *wp);
 
 void func_8010AFF8(STAGE_STCOM15_WORK_4E0 *wp);
 
-sint32 func_80049448(void *wp);
+sint32 Scr_ground_check(void *wp);
 void func_8010B6C8(STAGE_STCOM15_WORK_4E0 *wp);
 
 void func_8010BED4(STAGE_STCOM15_WORK_4E0 *wp);
@@ -1938,15 +1938,15 @@ typedef struct
 
 void Sce_flag_off(sint32 flag);
 
-void func_8005D7C0(void);
-void func_8005D9EC(void);
+void Gauge_clear(void);
+void Pl_life_full(void);
 
 // Scr_height_check as func_801150CC calls it: the int result compared unnarrowed.
 sint32 func_80048E6C_int(void *wp) __asm__("Scr_height_check");
 
 sint32 func_8010A448(STAGE_STCOM15_WORK_4E0 *wp);
 extern STAGE_STCOM15_FUNC_4E0 D_8011C068[];
-void func_8005D6E8(void *wp);
+void Gauge_close(void *wp);
 void func_80107B48(STAGE_STCOM15_WORK_4E0 *wp);
 
 void func_80107D04(STAGE_STCOM15_WORK_4E0 *wp);
@@ -2091,12 +2091,12 @@ typedef struct
     STAGE_OBJ *part_38;
 } ST00_PAIR_CTL;
 
-sint32 func_80042208(void);
+sint32 Player_atari_off(void);
 
 // ROCK_NEO: a model's UV block (stcom07's STCOM07_QUAD): u0, v0, u1, v1, u2, v2, u3, v3.
 uint8 *func_8002D22C(uint32 model, sint32 arg);
 
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 
 // Eight bytes of texture coordinates of a model face (func_8002D22C, func_8002D27C; r3_st0e's
 // ST0E_UV8).

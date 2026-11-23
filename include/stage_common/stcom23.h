@@ -121,7 +121,7 @@ sint32 SquareRoot0(sint32 v);
 sint32 ratan2(sint32 y, sint32 x);
 sint32 func_80037694(STCOM23_WORK *wp, sint32 arg);
 void Vec_turn_toward(STCOM_SVECTOR *out, STCOM_SVECTOR *dir, STCOM_SVECTOR *cur, sint32 a3,
-                   sint32 a4);
+                     sint32 a4);
 STCOM23_PACKET *func_8002D464(void);
 
 #endif // STCOM23_H

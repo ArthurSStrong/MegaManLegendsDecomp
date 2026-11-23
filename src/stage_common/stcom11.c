@@ -85,7 +85,7 @@ void stcom11_func_003C(STCOM11_WORK *wp)
             wp->rotation.y = wp->angle_64;
             break;
     }
-    if (func_80049C24(wp))
+    if (Scr_line_check(wp))
     {
         Close_SHL_WORK(wp);
     }
@@ -141,7 +141,7 @@ void stcom11_func_0308(STCOM11_WORK *wp)
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
     }
-    if (func_80049C24(wp) || (wp->sprite.hit_14 & 0x2000000))
+    if (Scr_line_check(wp) || (wp->sprite.hit_14 & 0x2000000))
     {
         wp->routine_0      = 4;
         wp->sprite.value_E = 0;
@@ -200,7 +200,7 @@ void stcom11_func_0564(STCOM11_WORK *wp)
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
     }
-    if (func_80049C24(wp) || (wp->sprite.hit_14 & 0x2000000))
+    if (Scr_line_check(wp) || (wp->sprite.hit_14 & 0x2000000))
     {
         wp->routine_0      = 4;
         wp->sprite.value_E = 0;
@@ -259,7 +259,7 @@ void stcom11_func_077C(STCOM11_WORK *wp)
         wp->sprite.pos_8[1] = wp->position.y;
         wp->sprite.pos_8[2] = wp->position.z;
     }
-    if (func_80049C24(wp) || (wp->sprite.hit_14 & 0x2000000))
+    if (Scr_line_check(wp) || (wp->sprite.hit_14 & 0x2000000))
     {
         wp->routine_0      = 4;
         wp->sprite.value_E = 0;

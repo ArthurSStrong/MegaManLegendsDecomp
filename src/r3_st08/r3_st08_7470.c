@@ -110,7 +110,7 @@ void func_801077AC(STAGE_ACTOR *wp)
             wp->routine_1++;
             break;
         case 1:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -181,7 +181,7 @@ void func_801077AC(STAGE_ACTOR *wp)
             {
                 D_800A395C = 1;
                 func_80039820();
-                func_80042314(pl);
+                Player_control_on(pl);
                 pl->flags_0 |= 2;
                 wp->reserved04[0] = 0;
                 wp->timer_C       = 0x2C;

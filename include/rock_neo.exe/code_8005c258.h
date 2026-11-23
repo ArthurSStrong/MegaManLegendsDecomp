@@ -49,7 +49,7 @@ typedef struct
     uint16 tpage;
 } CODE5C_SPRITE;
 
-// Effect slot (0x24 bytes). D_800BBD78 holds five of them; the banked helpers above
+// Effect slot (0x24 bytes). Gauge_work holds five of them; the banked helpers above
 // still reach slot 0's bytes through separate symbols (D_800BBD81, D_800BBD84, ...).
 typedef struct
 {
@@ -163,7 +163,7 @@ extern sint16 D_800986FC;
 extern sint32 D_8009878C;
 extern sint32 D_80098794;
 extern sint32 D_8009882C;
-extern sint32 D_80098AF0;
+extern sint32 Gauge_count;
 extern sint32 D_80098B18;
 extern CODE5C_SPRITE D_8008D750[5];
 extern CODE5C_SPRITE D_8008D688[][5];
@@ -186,7 +186,7 @@ typedef struct
     uint8 reserved01[11];
 } CODE5C_GAUGE;
 extern CODE5C_GAUGE D_80089A8C[];
-extern CODE5C_SLOT D_800BBD78[5];
+extern CODE5C_SLOT Gauge_work[5];
 // The weapon gauge slot after the five 0x24-byte slots (0x20 bytes; the banked helpers
 // reach its words as D_800BBE2C...D_800BBE48).
 #define CODE5C_GAUGE_SLOT (*(CODE5C_SLOT *)&D_800BBE2C)
@@ -239,9 +239,9 @@ void func_8005C9BC(CODE5C_SLOT *wp);
 void func_8005CCF4(CODE5C_SLOT *wp);
 void func_8005CEFC(CODE5C_SLOT *wp);
 void func_8005D0FC(CODE5C_SLOT *wp);
-void func_8005D4F8(void);
-void func_8005D528(void);
-void func_8005D9C4(void);
+void gauge_show(void);
+void Gauge_hide(void);
+void Gauge_show_release(void);
 void func_8005DCDC(void);
 void func_8005DE28(void);
 void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect);

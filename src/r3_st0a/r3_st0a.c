@@ -42,7 +42,7 @@ void func_801004E4(void)
 {
     Sce_slot_list_clear();
     *(uint32 *)&D_800989F8.routine_4 = 0;
-    func_8001E4C4(D_80114EE8, D_80114EF0[STAGE_GAME_VALUE_52]);
+    Sce_exit_lock_list(D_80114EE8, D_80114EF0[STAGE_GAME_VALUE_52]);
 }
 
 void func_80100530(void)
@@ -83,7 +83,7 @@ void func_8010058C(STAGE_ROOM *wp)
             if (Sce_flag_test(0x26) != 0)
             {
                 Sce_event_start(0x14);
-                func_8001E460(1, 1, 1);
+                Sce_exit_lock(1, 1, 1);
                 wp->routine_4 = 2;
             }
             break;
@@ -91,7 +91,7 @@ void func_8010058C(STAGE_ROOM *wp)
             if (Sce_flag_test(0x10) != 0)
             {
                 Sce_event_start(0x15);
-                func_8001E460(1, 0, 0);
+                Sce_exit_lock(1, 0, 0);
                 wp->routine_4 = 3;
             }
             break;

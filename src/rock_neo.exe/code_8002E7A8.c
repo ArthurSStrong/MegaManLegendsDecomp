@@ -256,7 +256,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
             {
                 if (flags & 0x80)
                 {
-                    func_80052528(s3c0);
+                    Ride_clear(s3c0);
                     Close_EM_WORK(s3c0);
                 }
                 else
@@ -276,7 +276,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
             {
                 if (flags & 0x80)
                 {
-                    func_80052528(s5a4);
+                    Ride_clear(s5a4);
                     func_8003187C(s5a4);
                 }
                 else
@@ -296,7 +296,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
             {
                 if (flags & 0x80)
                 {
-                    func_80052528(s10c);
+                    Ride_clear(s10c);
                     Close_PL_SHL_WORK(s10c);
                 }
                 else
@@ -316,7 +316,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
             {
                 if (flags & 0x80)
                 {
-                    func_80052528(s10c);
+                    Ride_clear(s10c);
                     Close_SHL_WORK(s10c);
                 }
                 else
@@ -399,7 +399,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
             {
                 if (flags & 0x80)
                 {
-                    func_80052528(s50);
+                    Ride_clear(s50);
                     func_80031A4C(s50);
                 }
                 else
@@ -767,7 +767,7 @@ void Work_stage_close(void)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p3c0)->link_88 <= 0x8018FFFF)
         {
-            func_80052528(p3c0);
+            Ride_clear(p3c0);
             Close_EM_WORK(p3c0);
         }
         p3c0++;
@@ -778,7 +778,7 @@ void Work_stage_close(void)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p5a4)->link_88 <= 0x8018FFFF)
         {
-            func_80052528(p5a4);
+            Ride_clear(p5a4);
             func_8003187C(p5a4);
         }
         p5a4++;
@@ -789,7 +789,7 @@ void Work_stage_close(void)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p10c)->link_88 <= 0x8018FFFF)
         {
-            func_80052528(p10c);
+            Ride_clear(p10c);
             Close_PL_SHL_WORK(p10c);
         }
         p10c++;
@@ -800,7 +800,7 @@ void Work_stage_close(void)
     {
         if ((sint32)(mask << i) < 0 && ((LINK88_VIEW *)p10c)->link_88 <= 0x8018FFFF)
         {
-            func_80052528(p10c);
+            Ride_clear(p10c);
             Close_SHL_WORK(p10c);
         }
         p10c++;
@@ -824,7 +824,7 @@ void Work_stage_close(void)
     {
         if ((sint32)(mask << i) < 0 && ((LINK14_VIEW *)p50)->link_14 <= 0x8018FFFF)
         {
-            func_80052528(p50);
+            Ride_clear(p50);
             func_80031A4C(p50);
         }
         p50++;
@@ -1048,7 +1048,7 @@ uint32 View_check(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3)
 }
 
 uint32 View_check_ang(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *range, sint32 *out,
-                     sint16 angle)
+                      sint16 angle)
 {
     sint32 mtx[8];
     SVECTOR sv;
@@ -2736,15 +2736,15 @@ void func_80033D80(MATRIX *src, MATRIX *dst, SVECTOR *rot, SVECTOR *vec)
 
 void Atari_init(void)
 {
-    Atari_count         = 0;
-    Homing_target_used         = 0xFF;
+    Atari_count              = 0;
+    Homing_target_used       = 0xFF;
     Lockon_probe_tbl[0].kind = 0;
     Lockon_probe_tbl[1].kind = 0;
     Lockon_probe_tbl[2].kind = 0;
     Lockon_probe_tbl[3].kind = 0;
-    Lockon_probe_count         = 0;
-    Lockon_id         = 0;
-    Lockon_timer         = 0;
+    Lockon_probe_count       = 0;
+    Lockon_id                = 0;
+    Lockon_timer             = 0;
 }
 
 SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit)
@@ -2815,7 +2815,7 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
     entry->pos.u     = *(POS4_WORK *)pos;
     entry->pos.u.pad = ((uint32)half >> 2) | arg2 | arg3;
     entry->word_8    = (id << 24) | ((sint32)tbl & 0x7FFFFF) | arg7;
-    Atari_flags[n]    = flags;
+    Atari_flags[n]   = flags;
     i                = ((MASK_WORK *)tbl)->mask_4;
     bits             = i & Homing_target_used;
     Atari_count += 1;
@@ -2840,8 +2840,8 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
 
 // Two-entry hit-queue push (cf. Set_Atari). code_8004324c.h declares a different prototype.
 sint32 Set_Atari2(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint32 arg5,
-                     sint32 arg6, sint32 id, MASK_WORK *tbl, sint32 flags, sint32 arg9,
-                     sint32 arg10)
+                  sint32 arg6, sint32 id, MASK_WORK *tbl, sint32 flags, sint32 arg9,
+                  sint32 arg10)
 {
     uint32 i;
     QUEUE_ENTRY *entry;
@@ -2860,13 +2860,13 @@ sint32 Set_Atari2(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint
     word             = (id << 24) | ((sint32)tbl & 0x7FFFFF) | arg9;
     entry->pos.u.pad = (size_a >> 2) | arg5 | arg6;
     entry->word_8    = word;
-    Atari_flags[n]    = flags;
+    Atari_flags[n]   = flags;
     n++;
     entry            = &Atari_queue[n];
     entry->pos.u     = *b;
     entry->pos.u.pad = (size_b >> 2) | arg5 | arg6;
     entry->word_8    = word;
-    Atari_flags[n]    = flags;
+    Atari_flags[n]   = flags;
     i                = tbl->mask_4; // the counter variable briefly holds the old mask
     bits             = i & Homing_target_used;
     Atari_count += 2;
@@ -2877,9 +2877,9 @@ sint32 Set_Atari2(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint
         {
             if (bits > 0x7FFFFFFF)
             {
-                mid.x                 = ((sint16)a->x + (sint16)b->x) >> 1;
-                mid.y                 = ((sint16)a->y + (sint16)b->y) >> 1;
-                mid.z                 = ((sint16)a->z + (sint16)b->z) >> 1;
+                mid.x                        = ((sint16)a->x + (sint16)b->x) >> 1;
+                mid.y                        = ((sint16)a->y + (sint16)b->y) >> 1;
+                mid.z                        = ((sint16)a->z + (sint16)b->z) >> 1;
                 Homing_target_tbl[i]->pos_bc = mid;
             }
             bits <<= 1;
@@ -2899,8 +2899,8 @@ void Atari_check(void)
     mask       = 0xFF000000;
     pl_shot_aim();
     Lockon_target = lockon_search(&Player_slots[0]);
-    n          = Atari_count;
-    Atari_count = 0;
+    n             = Atari_count;
+    Atari_count   = 0;
     if (n < 2)
     {
         return;
@@ -3098,7 +3098,7 @@ void pl_shot_aim(void)
 
     func_80035508();
     n = Atari_count;
-    if (Player_work.value170 == 8)
+    if (Player_work.weapon_right_no == 8)
     {
         zone = Player_work.parts[8].value04;
     }
@@ -3169,9 +3169,9 @@ void pl_shot_aim(void)
                     pos_a   = c;
                 }
             }
-            if (z > sz && z < Shot_aim_zone_tbl[zone].z_max && sxy[0] > Shot_aim_zone_tbl[zone].x_min &&
-                sxy[0] < Shot_aim_zone_tbl[zone].x_max && sxy[1] > Shot_aim_zone_tbl[zone].y_min &&
-                sxy[1] < Shot_aim_zone_tbl[zone].y_max)
+            if (z > sz && z < Shot_aim_zone_tbl[zone].z_max &&
+                sxy[0] > Shot_aim_zone_tbl[zone].x_min && sxy[0] < Shot_aim_zone_tbl[zone].x_max &&
+                sxy[1] > Shot_aim_zone_tbl[zone].y_min && sxy[1] < Shot_aim_zone_tbl[zone].y_max)
             {
                 if (LOCK_ABS(0xA0 - best_xb) > LOCK_ABS(0xA0 - sxy[0]))
                 {
@@ -3256,7 +3256,7 @@ void func_80035508(void)
                 GTE_LDV0(&t->pos_bc);
                 GTE_NOP2();
                 GTE_RTPS();
-                *(uint32 *)&t->pos_bc.x             = 0;
+                *(uint32 *)&t->pos_bc.x                    = 0;
                 *(uint32 *)&Homing_target_tbl[i]->pos_bc.z = 0;
                 LOCK_GTE_STSZ3_4(&z);
                 GTE_STSXY2(sxy);
@@ -3300,8 +3300,8 @@ void pl_shot_set(sint32 a0, sint32 a1, OWNER35_WORK *owner, sint32 index, sint32
         fx->flag_3 = 0;
         if (index >= 0)
         {
-            slot =
-                homing_target_set((SPAWN_TARGET *)fx, (MASK_WORK *)(D_800A2F50[index * 3] & 0x7FFFFF));
+            slot = homing_target_set((SPAWN_TARGET *)fx,
+                                     (MASK_WORK *)(D_800A2F50[index * 3] & 0x7FFFFF));
             fx->id_d = slot;
             if ((sint8)slot >= 0)
             {
@@ -3432,7 +3432,7 @@ sint32 lockon_search(void *arg)
         if (!(flags & (side + 1)))
         {
             lockon_probe_set(Atari_queue[i].word_8 >> 24,
-                          (MASK_WORK *)(Atari_queue[i].word_8 & 0x7FFFFF));
+                             (MASK_WORK *)(Atari_queue[i].word_8 & 0x7FFFFF));
         }
         else if (d < best_d)
         {
@@ -3454,7 +3454,7 @@ sint32 lockon_search(void *arg)
                 if (kind != Lockon_id)
                 {
                     Lockon_timer = 0x18;
-                    Lockon_id = kind;
+                    Lockon_id    = kind;
                 }
                 return (sint32)Obj_id_work(kind);
             }
@@ -3693,7 +3693,7 @@ sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             range.y = 0;
             range.x = 0;
             if (View_check_ang((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
-                              (sint32 *)&delta, (sint16)angle) &
+                               (sint32 *)&delta, (sint16)angle) &
                 0x10)
             {
                 return 0;
@@ -3738,14 +3738,14 @@ sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             t->x     = dir.vx + range.x;
             t->y     = dir.vy + range.y;
             t->z     = dir.vz + range.z;
-            if (func_80049C54(t, t, &D_80097D0C, 0xFFFF) != 0)
+            if (Scr_line_calc(t, t, &D_80097D0C, 0xFFFF) != 0)
             {
                 goto fail;
             }
             dir.vx += range.x >> 1;
             dir.vy += range.y >> 1;
             dir.vz += range.z >> 1;
-            if (func_80049C54(&dir, &dir, &D_80097D0C, 0xFFFF) != 0)
+            if (Scr_line_calc(&dir, &dir, &D_80097D0C, 0xFFFF) != 0)
             {
                 goto fail;
             }
@@ -3784,7 +3784,7 @@ sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
             range.y = 9;
             range.x = 9;
             if (View_check_ang((DELTA14_WORK *)tg, (DELTA14_WORK *)&Player_work, &range,
-                              (sint32 *)&delta, (sint16)angle) &
+                               (sint32 *)&delta, (sint16)angle) &
                 0x10)
             {
                 if (--t->timer == 0)
@@ -3874,8 +3874,8 @@ void lockon_probe_set(uint8 kind, MASK_WORK *target)
 {
     uint32 i;
 
-    if (Lockon_probe_tbl[0].kind == kind || Lockon_probe_tbl[1].kind == kind || Lockon_probe_tbl[2].kind == kind ||
-        Lockon_probe_tbl[3].kind == kind)
+    if (Lockon_probe_tbl[0].kind == kind || Lockon_probe_tbl[1].kind == kind ||
+        Lockon_probe_tbl[2].kind == kind || Lockon_probe_tbl[3].kind == kind)
     {
         return;
     }
@@ -3904,7 +3904,7 @@ void lockon_probe_set(uint8 kind, MASK_WORK *target)
 }
 
 // D_80097D18 is this file's small data (tentative definition above): GCC treats its address
-// as cheap and rebuilds it before each func_80049C54 call, as retail does.
+// as cheap and rebuilds it before each Scr_line_calc call, as retail does.
 sint32 lockon_probe_move(TRACK_SLOT *t)
 {
     SVECTOR range;
@@ -3938,7 +3938,7 @@ sint32 lockon_probe_move(TRACK_SLOT *t)
             dir.vy                         = D_800A39F4;
             dir.vz                         = D_800A39F8;
             if (!(view_cone_check((DELTA0_WORK *)&dir, (DELTA0_WORK *)&tg->pos_14, &range.vx,
-                                Player_work.rotation.y) &
+                                  Player_work.rotation.y) &
                   2))
             {
                 return 0;
@@ -3997,14 +3997,14 @@ sint32 lockon_probe_move(TRACK_SLOT *t)
             t->x     = dir.vx + range.vx;
             t->y     = dir.vy + range.vy;
             t->z     = dir.vz + range.vz;
-            if (func_80049C54(t, t, &D_80097D18, 0xFFFF))
+            if (Scr_line_calc(t, t, &D_80097D18, 0xFFFF))
             {
                 goto fail;
             }
             dir.vx += range.vx >> 1;
             dir.vy += range.vy >> 1;
             dir.vz += range.vz >> 1;
-            if (func_80049C54(&dir, &dir, &D_80097D18, 0xFFFF))
+            if (Scr_line_calc(&dir, &dir, &D_80097D18, 0xFFFF))
             {
                 goto fail;
             }

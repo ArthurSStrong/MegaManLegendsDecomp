@@ -313,7 +313,7 @@ void func_80111C1C(STAGE_OBJ50 *wp)
     else if (D_800C356C == 2)
     {
         D_800C356C++;
-        func_80042314(&Player_work);
+        Player_control_on(&Player_work);
         wp->routine_0 = 2;
     }
 }

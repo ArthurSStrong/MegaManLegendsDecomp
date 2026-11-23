@@ -141,8 +141,8 @@ extern STAGE_OBJ_FUNC D_80113ACC[];
 extern STAGE_SLOT_FUNC D_801140C0[];
 extern uint8 D_80113130[][8];
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
-void func_8001E460(sint32 a0, sint32 a1, sint32 a2);
+void Sce_exit_lock_list(void *a, void *b);
+void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 void Sce_flag_off(sint32 flag);
 void Moji_amount_set(sint32 arg);
 extern sint32 D_80113220;
@@ -290,7 +290,7 @@ extern uint8 D_801131A4[];
 void func_80101424(void);
 void func_80101478(sint16 x, sint16 y, sint16 z, sint16 angle);
 uint32 func_8003AC9C(sint32 idx, uint32 key);
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 // A ranking entry: a score (time) and four values kept with it.
 typedef struct
@@ -553,6 +553,6 @@ void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg
 // The shooting game's script (func_801018CC): its place in the ranking (0xFF: none).
 extern uint8 D_80118510;
 void Moji_num2_set(sint32 hits);
-void func_800425FC(void *pl, sint32 arg);
+void Pl_key_type_set(void *pl, sint32 arg);
 
 #endif // ST08_H

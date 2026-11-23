@@ -5,9 +5,9 @@
 // - Owned: scenario flag 0x4C0 + id (Sce_flag, 0x800BE378, bit 0x80 >> (flag & 7)). Roll's
 //   equip list (r3_sup func_801D952C, ids from D_801DC0C8) and the pause menu's special-weapon
 //   screen (sub_scrn.c) both test it. Ids 2-13 are the special weapons; id 1 is the buster
-//   (the buster part's slot, PL_WORK.value171), id 0 is no special weapon.
+//   (the buster part's slot, PL_WORK.weapon_left_no), id 0 is no special weapon.
 // - Chosen: PL_WORK +0x172 (the special weapon picked at Roll's, kept in the save). In use:
-//   +0x170, the weapon the handlers (D_8008A08C) and the shot spawner read; +0x44F says the
+//   +0x170, the weapon the handlers (Pl_shot_special_tbl) and the shot spawner read; +0x44F says the
 //   special weapon is out (the pause menu's special-weapon screen puts it away and back), and
 //   +0x44E > 0 says weapons are usable in this area (0 in towns: the room loader sets +0x170
 //   from +0x172 and +0x44F on the way out, scene.c).
@@ -40,7 +40,7 @@
 
 #define PL_IN_USE    (MODS_PLAYER_WORK + 0x170) // sint8: the special weapon in use
 #define PL_CHOSEN    (MODS_PLAYER_WORK + 0x172) // sint8: the special weapon chosen at Roll's
-#define PL_SHOT      (MODS_PLAYER_WORK + 0x174) // value174: 0x40 special / 0x80 buster firing
+#define PL_SHOT      (MODS_PLAYER_WORK + 0x174) // shot_status_flag: 0x40 special / 0x80 buster
 #define PL_ARMED     (MODS_PLAYER_WORK + 0x44E) // sint8: > 0 where weapons are usable
 #define PL_OUT       (MODS_PLAYER_WORK + 0x44F) // the special weapon is out
 #define PL_ENERGY(i) (MODS_PLAYER_WORK + 0x4F4 + (i) * 8 + 6) // parts[i].value06

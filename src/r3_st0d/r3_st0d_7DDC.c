@@ -15,7 +15,7 @@ void func_80107DDC(ST0D_VILLAGER *wp)
     {
         func_80108040(wp, &wp->talk);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);

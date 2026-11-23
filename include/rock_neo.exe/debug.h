@@ -137,11 +137,11 @@ sint32 func_80063058(DEBUG_WORK *wp);
 extern DEBUG_MENU_LINE D_8008DCF4[];
 sint32 func_80063334(DEBUG_WORK *wp);
 extern DEBUG_MENU_LINE D_8008DD14[];
-sint32 func_80063604(DEBUG_WORK *wp);
+sint32 Debug_item_key_type(DEBUG_WORK *wp);
 extern DEBUG_MENU_LINE D_8008DD34[];
 extern sint32 D_80097864;
 sint32 func_800638D8(DEBUG_WORK *wp);
-void func_800425FC(void *pl, sint32 arg);
+void Pl_key_type_set(void *pl, sint32 arg);
 #define DEBUG_GAME_54 (*((sint8 *)&Game_work + 0x54))
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 void Obj_work_flag_change(sint32 mask, sint32 flags);

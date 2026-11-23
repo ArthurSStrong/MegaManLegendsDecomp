@@ -40,7 +40,7 @@ void func_80114BC8(STAGE_OBJ *wp)
             D_80118D50[i]           = obj;
         }
     }
-    func_8001E460(0xC, 1, 3);
+    Sce_exit_lock(0xC, 1, 3);
     wp->routine_0 = 1;
     wp->routine_1 = 0;
 }
@@ -52,7 +52,7 @@ void func_80114CF0(STAGE_OBJ *wp)
 
 void func_80114D2C(STAGE_OBJ *wp)
 {
-    if ((uint16)STAGE_PL.position.y > 0xFFD7 && !(STAGE_PL_BYTE(6) & 0x40) && Sound_fade_flags == 0 && func_80042238(&Player_work))
+    if ((uint16)STAGE_PL.position.y > 0xFFD7 && !(STAGE_PL_BYTE(6) & 0x40) && Sound_fade_flags == 0 && Player_control_off(&Player_work))
     {
         Sound_call(0x32, 0, 0);
         Sce_flag_on(0x64B);
@@ -79,14 +79,14 @@ void func_80114E98(STAGE_OBJ *wp)
 {
     if (!(Moji_flag & 0x8000000))
     {
-        func_80042314(&Player_work);
+        Player_control_on(&Player_work);
         STAGE_PL.flags_bd &= ~0x40;
         D_80118D50[0]->u_C.b.byte_D = 1;
         D_80118D50[1]->u_C.b.byte_D = 1;
         D_80118D50[2]->u_C.b.byte_D = 1;
-        func_8005D620(D_80118D50[0], 0, 0, 0x51, D_80118C74);
-        func_8005D620(D_80118D50[1], 0, 0x14, 0x51, D_80118C78);
-        func_8005D620(D_80118D50[2], 0, 0x28, 0x51, D_80118C7C);
+        Gauge_open(D_80118D50[0], 0, 0, 0x51, D_80118C74);
+        Gauge_open(D_80118D50[1], 0, 0x14, 0x51, D_80118C78);
+        Gauge_open(D_80118D50[2], 0, 0x28, 0x51, D_80118C7C);
         wp->routine_1++;
     }
 }
@@ -107,8 +107,8 @@ void func_80114F98(STAGE_OBJ *wp)
         Sce_flag_on(0x53);
         func_8005D4E8();
         MojiTaskExec2(0, 0x15);
-        func_8001E460(0xC, 0, 3);
-        func_8005D7C0();
+        Sce_exit_lock(0xC, 0, 3);
+        Gauge_clear();
         wp->routine_1++;
     }
 }

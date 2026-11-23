@@ -212,7 +212,7 @@ void func_800D8F50(SHL_WORK *wp)
     v.vy   = D_800D9798[level].len + 0x1000;
     ScaleMatrix(&wp->draw.mdl.mtx_8c, &v);
     Set_Atari2(&dir, D_800D9778[level], &wp->pos, D_800D9778[level], 0x200, 0x4000, wp->value_1,
-                  &wp->col_bc, flags | 0x28000000, 0, 0x80);
+               &wp->col_bc, flags | 0x28000000, 0, 0x80);
     wp->col_bc = 0;
     wp->col_c0 = 0;
 }
@@ -238,7 +238,7 @@ void func_800D922C(SHL_WORK *wp)
     b.vy = (f.w.y + (d.vy << 8)) >> 16;
     b.vz = (f.w.z + (d.vz << 8)) >> 16;
     Set_Atari2(&a, size, &b, size, 0x200, 0x4000, wp->value_1, &wp->col_c4, flags | 0x28000000,
-                  0, 0x80);
+               0, 0x80);
     wp->col_c4 = 0;
     wp->col_c8 = 0;
 }
@@ -251,7 +251,7 @@ void func_800D9398(SHL_WORK *wp)
 
     level = Player_work.value_53c;
     Set_Atari2(&wp->pos, 8, &wp->old_pos, 0x5C, 0x200, 0x4000, wp->value_1, &wp->col_c4,
-                  D_800D9704[level] | 0x8000000, 0, 0x80);
+               D_800D9704[level] | 0x8000000, 0, 0x80);
     wp->col_c4 = 0;
     wp->col_c8 = 0;
 }

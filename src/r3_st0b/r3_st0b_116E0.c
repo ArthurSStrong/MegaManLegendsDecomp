@@ -73,7 +73,7 @@ void func_80111970(ST0B_LIFT *wp, ST0B_PATH *path)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_80111A9C(ST0B_ACTOR_B *wp, uint16 *bob)
@@ -173,7 +173,7 @@ void func_80111D44(ST0B_LIFT *wp, ST0B_PATH *path)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
     func_8011250C(wp, &wp->path);
     wp->hit_BC = 0;
     wp->hit_C4 = 0;
@@ -383,7 +383,7 @@ void func_80112608(STAGE_PROP *wp, uint16 *bob)
     RotMatrixYXZ(&wp->rotation, &wp->matrix_8C.m);
     ScaleMatrix(&wp->matrix_8C.m, &scale);
     wp->position_AC = wp->position;
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_801127A0(ST0B_ACTOR *wp, uint16 *bob)
@@ -521,7 +521,7 @@ void func_8011285C(ST0B_ACTOR *wp, uint16 *bob)
                         STAGE_CAM_REQ_PTR->value_10 = 2;
                     }
                 }
-                func_80052528(wp);
+                Ride_clear(wp);
                 Close_SHL_WORK(wp);
             }
             else
@@ -650,7 +650,7 @@ void func_80113120(ST0B_10C *wp)
 {
     STCOM_FIXED_VECTOR unused;
 
-    if ((wp->value_C4 & 0x1A000000) || func_80048EA4(&wp->position, NULL, 0, 0xFFFF) < -0x10 ||
+    if ((wp->value_C4 & 0x1A000000) || Scr_height_calc(&wp->position, NULL, 0, 0xFFFF) < -0x10 ||
         wp->value_7C != 0 || (uint32)wp->value_80 <= 0xFFFF)
     {
         func_8011325C((STAGE_OBJ *)wp);

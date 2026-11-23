@@ -151,7 +151,7 @@ void func_8010025C(void);
 
 sint32 func_8003B2D4(sint32 row, sint32 bit);
 void Sce_slot_list_clear(void);
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_80105900[][8];
 sint16 Scr_height_check(void *wp);
 void Sce_flag_off(sint32 flag);

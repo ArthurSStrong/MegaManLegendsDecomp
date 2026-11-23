@@ -707,7 +707,7 @@ extern sint16 D_800BBB0E;
 extern uint8 D_800BBB38;
 extern sint16 D_800BBCF8[];
 extern sint16 D_800BBD38[];
-extern sint16 D_800C0F96[];
+extern sint16 Pl_demo_pad[];
 extern uint8 D_80100004[];
 extern uint8 D_8010069C[];
 extern uint8 D_801006E4[];
@@ -3180,7 +3180,7 @@ typedef struct
     sint32 value_C;       // 354
     uint8 reserved10[8];  // 358
     uint8 track_18[0x48]; // 360
-    sint32 ground_60;     // 3A8: func_8004B414's result
+    sint32 ground_60;     // 3A8: Scr_collision_check's result
     sint16 angle_64;      // 3AC: the rotation.y to turn back to
     uint16 value_66;      // 3AE: damage taken since the last stun
     uint8 reserved68[2];  // 3B0
@@ -3884,7 +3884,7 @@ typedef struct
 #define ST1A_TILE_PTR ((ST1A_TILE **)0x1F800070)
 #define ST1A_MODE_PTR ((DR_MODE **)0x1F800070)
 
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 
@@ -3922,8 +3922,8 @@ typedef struct
     STAGE_OBJ *child_50;    // 50
 } ST1A_ROOM_LIFT;
 
-void func_8005D7C0(void);
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
+void Gauge_clear(void);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 void func_8005D4D4(void);
 
 // PsyQ's POLY_G3 (a gouraud triangle), as func_801025F4 fills it.
@@ -3960,7 +3960,7 @@ typedef struct
 } ST1A_ROOM_A0;
 
 STAGE_OBJ *func_8011F27C(void);
-sint32 func_80048D08(sint32 a0, STCOM_SVECTOR *pos);
+sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
 
 STAGE_FX *func_8012B320(STCOM_SVECTOR *pos, sint32 frame, sint32 type, sint32 count,
                         sint32 count_28, uint8 attach, uint8 color);
@@ -4102,7 +4102,7 @@ typedef struct
     uint8 reservedB4[0x58];                 // B4
 } ST1A_SHOT;
 
-sint32 func_80048EA4(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);
+sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);
 
 // A 0x10C-byte slot of kind 0x33 as the boss spawns it, with a halfword size at +0x2C
 // (func_80119B18).
@@ -4153,7 +4153,7 @@ void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 
 #define ST1A_ABS(x) ((x) >= 0 ? (x) : -(x))
 
-sint32 func_80049C54(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
+sint32 Scr_line_calc(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
 
 STCOM_MATRIX *MulMatrix2(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
 
@@ -4331,7 +4331,7 @@ typedef struct
     sint16 timer_7A;        // 4BA
 } ST1A_DAMAGE;
 
-sint32 func_80042208(void);
+sint32 Player_atari_off(void);
 
 sint32 func_8011BD08(ST1A_OBJ *wp, sint32 i);
 

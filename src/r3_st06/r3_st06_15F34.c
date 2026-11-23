@@ -590,7 +590,7 @@ void func_80117160(ST06_CRAB *wp)
     wp->body.timer_80         = 0;
     wp->body.timer_82         = 0;
     wp->body.value_88         = 0;
-    wp->body.area_8C          = func_80048C60(&D_801258B8);
+    wp->body.area_8C          = Scr_cell_get(&D_801258B8);
     life                      = D_8009884C[wp->kind_2]->life_8 << 5;
     wp->data_78               = D_801258AC;
     wp->routine_0             = 1;
@@ -634,7 +634,7 @@ void func_80117290(ST06_CRAB *wp)
         {
             case 4:
                 func_8003187C(wp);
-                func_8005D6E8(wp);
+                Gauge_close(wp);
                 obj = Open_EM_WORK();
                 if (obj != NULL)
                 {
@@ -731,7 +731,7 @@ void func_80117290(ST06_CRAB *wp)
                           D_8009884C[wp->kind_2]->value_A | 0x5000000, 0, 0x80);
         }
     }
-    body->ground_78 = func_8004B414(wp);
+    body->ground_78 = Scr_collision_check(wp);
 }
 
 void func_80117784(STAGE_OBJ *wp)
@@ -784,7 +784,7 @@ void func_801177D0(ST06_CRAB *wp)
             body->probe_38.v = pl->position;
             body->probe_fixed_40 = pl->position_fixed;
             Obj_pos_move(&body->probe_38.v, &body->probe_fixed_40,
-                          Calc_degree2(&pl->position, &wp->position) & 0xFFF, 0x1100, 0, 0);
+                         Calc_degree2(&pl->position, &wp->position) & 0xFFF, 0x1100, 0, 0);
             wp->value_4C.half[0] =
                 Calc_distance_xz(&wp->position.x, &body->probe_38.v.x) / (body->u_4.h.timer_4 + 1);
             wp->value_4C.half[0] = (wp->value_4C.half[0] > 0x40) ? 0x40 : wp->value_4C.half[0];
@@ -1212,7 +1212,7 @@ sint32 func_80118708(ST06_CRAB *wp)
     wp->body.probe_38.v     = wp->position;
     wp->body.probe_fixed_40 = wp->position_fixed.v;
     Obj_pos_move(&wp->body.probe_38.v, &wp->body.probe_fixed_40, wp->rotation.y, 0x800, 0, 0);
-    wp->body.hit_7C = func_80049C54(&wp->body.probe_38.v, &wp->position, wp->data_78, wp->value_1);
+    wp->body.hit_7C = Scr_line_calc(&wp->body.probe_38.v, &wp->position, wp->data_78, wp->value_1);
     if (wp->body.hit_7C != 0 && func_80037BB4((void *)wp->body.hit_7C) > 0)
     {
         return 1;
@@ -1276,7 +1276,7 @@ sint32 func_801188E4(ST06_CRAB *wp)
         Obj_pos_adj_round(&obj->position_fixed.v, &obj->position);
         obj->life_max_B0 = 0;
         obj->life_6E     = 0;
-        func_8005D620(obj, 0, 0, 0x50, 0x305880);
+        Gauge_open(obj, 0, 0, 0x50, 0x305880);
         return 0;
     }
     return 1;
@@ -1347,7 +1347,7 @@ sint32 func_80118B2C(ST06_CRAB *wp)
             wp->life_6E -= damage;
             if (wp->life_6E <= 0)
             {
-                if (wp->routine_1 != 2 && func_80042208() != 0)
+                if (wp->routine_1 != 2 && Player_atari_off() != 0)
                 {
                     wp->body.flags_0 &= ~0xC;
                     wp->life_prev_B2          = 0;

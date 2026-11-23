@@ -48,7 +48,7 @@ void func_8010849C(ST04_ROCK *wp)
     wp->position_fixed_prev = wp->position_fixed;
     wp->position_prev       = wp->position;
     wp->data_78             = D_8010CBA4;
-    func_8004B414(wp);
+    Scr_collision_check(wp);
     wp->value_74 = 0;
     wp->routine_0++;
 }
@@ -101,7 +101,7 @@ sint32 func_80108794(ST04_ROCK *wp)
     sint32 bounce;
 
     landed = 0;
-    hit    = func_8004B414(wp);
+    hit    = Scr_collision_check(wp);
     if (hit != 0)
     {
         if (hit & 0x1000)

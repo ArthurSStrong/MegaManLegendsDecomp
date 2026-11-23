@@ -79,8 +79,8 @@ typedef struct
 
 #define CODE374_STATUS_PTR2(status) (*(sint32 **)((uint8 *)(status) + 2))
 
-sint32 func_80049C24(PL_WORK *wp);
-sint32 func_8004B414(PL_WORK *wp);
+sint32 Scr_line_check(PL_WORK *wp);
+sint32 Scr_collision_check(PL_WORK *wp);
 void func_80037818(uint16 index);
 void func_80037C50(uint16 index);
 void func_80037CD8(uint16 cell);

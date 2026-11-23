@@ -42,7 +42,7 @@ void func_80100B2C(STAGE_ROOM *wp)
             else if (Sce_flag_test(0x34))
             {
                 Sce_slot_close_all();
-                func_8001E460(0, 1, 0);
+                Sce_exit_lock(0, 1, 0);
                 wp->routine_4++;
             }
             break;
@@ -63,7 +63,7 @@ void func_80100B2C(STAGE_ROOM *wp)
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 Sce_event_start(0x42);
-                func_8001E460(0, 0, 0);
+                Sce_exit_lock(0, 0, 0);
                 wp->routine_4++;
             }
             break;

@@ -241,7 +241,7 @@ void func_8010D680(ST06_ACTOR *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010D7E8(ST06_ACTOR *wp)
@@ -310,11 +310,11 @@ void func_8010D9D4(ST06_ACTOR *wp)
     D_801251B8[wp->variant_3](wp);
     if (wp->routine_1 != 0)
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
     else
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 
@@ -505,11 +505,11 @@ void func_8010E048(STAGE_OBJ *wp)
     D_801251E0[wp->variant_3 & 0xF](wp);
     if (wp->routine_3 != 0)
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
     else
     {
-        func_80051B68(wp, 1, -1, 0);
+        Solid_set(wp, 1, -1, 0);
     }
 }
 
@@ -1071,7 +1071,7 @@ void func_8010EE38(ST06_ACTOR *wp)
             }
             break;
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010EF94(ST06_ACTOR *wp)
@@ -1233,7 +1233,7 @@ void func_8010F490(ST06_CRAB *wp)
         *(uint16 *)&wp->routine_2 = 0;
         wp->ctl.flags_4 &= ~1;
     }
-    func_80051B68(wp, 1, 0, 0x1000008);
+    Solid_set(wp, 1, 0, 0x1000008);
     wp->ctl.hit_18 = 0;
 }
 
@@ -1256,7 +1256,7 @@ void func_8010F53C(ST06_CRAB *wp)
             }
             if (wp->ctl.timer_8 == 0)
             {
-                func_80052528(wp);
+                Ride_clear(wp);
                 func_80047148(wp, &wp->joint_180[0]);
                 wp->u_C.b.byte_C |= 1;
                 wp->routine_2++;
@@ -1384,7 +1384,7 @@ void func_8010F8B0(ST06_CRAB *wp)
             wp->value_44.half[0] = 0x200;
         }
         Obj_pos_set(wp, wp->value_44.half[0], 0, 0);
-        hit = func_80049C24(wp);
+        hit = Scr_line_check(wp);
         if (hit != 0)
         {
             count = func_80037BB4((void *)hit);
@@ -1428,7 +1428,7 @@ void func_8010F8B0(ST06_CRAB *wp)
             {
                 probe.z += 0x6C;
             }
-            front = func_80048EA4(&probe, NULL, wp->value_44.half[1], wp->value_1);
+            front = Scr_height_calc(&probe, NULL, wp->value_44.half[1], wp->value_1);
             if ((front - wp->position_prev.y < 0 ? wp->position_prev.y - front
                                                  : front - wp->position_prev.y) > 0)
             {
@@ -1446,7 +1446,7 @@ void func_8010F8B0(ST06_CRAB *wp)
                 {
                     probe.x += 0x6C;
                 }
-                side = func_80048EA4(&probe, NULL, wp->value_44.half[1], wp->value_1);
+                side = Scr_height_calc(&probe, NULL, wp->value_44.half[1], wp->value_1);
                 if ((side - wp->position_prev.y < 0 ? wp->position_prev.y - side
                                                     : side - wp->position_prev.y) > 0)
                 {
@@ -1540,7 +1540,7 @@ void func_8010FD0C(ST06_CRAB *wp)
                         wp->value_44.half[0] = 0x200;
                     }
                     Obj_pos_set(wp, wp->value_44.half[0], 0, 0);
-                    hit = (void *)func_80049C24(wp);
+                    hit = (void *)Scr_line_check(wp);
                     if (hit != NULL)
                     {
                         count = func_80037BB4(hit);
@@ -1653,7 +1653,7 @@ void func_8010FF90(ST06_CRAB *wp)
             }
             wp->value_44.half[0] = -0x90;
             Obj_pos_set(wp, -0x90, 0, 0);
-            if (func_80049C24(wp) != 0)
+            if (Scr_line_check(wp) != 0)
             {
                 wp->position         = wp->position_prev;
                 wp->position_fixed.v = wp->position_fixed_prev;
@@ -1676,7 +1676,7 @@ void func_8010FF90(ST06_CRAB *wp)
             }
             wp->value_44.half[0] = 0x400;
             Obj_pos_set(wp, 0x400, 0, 0);
-            hit = func_80049C24(wp);
+            hit = Scr_line_check(wp);
             if (hit != 0)
             {
                 count = func_80037BB4((void *)hit);
@@ -2726,7 +2726,7 @@ void func_8011201C(ST06_ACTOR *wp)
     EM_World_Pos_Calc(wp);
     if (wp->flags_0 & 1)
     {
-        func_80051B68(wp, 3, -1, 0);
+        Solid_set(wp, 3, -1, 0);
     }
     if (wp->flags_0 & 2)
     {

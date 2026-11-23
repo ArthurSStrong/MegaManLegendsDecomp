@@ -23,7 +23,7 @@ void stcom31_func_0000(STCOM31_WORK *wp)
     scale.y = 0x200;
     scale.z = 0x200;
     ScaleMatrix(m, &scale);
-    func_80051B68(wp, 1, -1, 0x1000008);
+    Solid_set(wp, 1, -1, 0x1000008);
 }
 
 void stcom31_func_00F8(STCOM31_WORK *wp)
@@ -204,8 +204,8 @@ void stcom31_func_033C(STCOM31_WORK *wp)
             stcom31_E_0000    = wp->position_fixed;
             set               = ctl->random_2 & 3;
             Obj_pos_move(stcom31_E_0018, &stcom31_E_0000, wp->rotation.v.y,
-                          stcom31_D_0078[set][i].x, stcom31_D_0078[set][i].y,
-                          stcom31_D_0078[set][i].z);
+                         stcom31_D_0078[set][i].x, stcom31_D_0078[set][i].y,
+                         stcom31_D_0078[set][i].z);
             effect->sprite.pos_8[0] = stcom31_E_0018[0].x;
             effect->sprite.pos_8[1] = stcom31_E_0018[0].y;
             effect->sprite.pos_8[2] = stcom31_E_0018[0].z;

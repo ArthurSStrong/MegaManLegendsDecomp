@@ -1057,7 +1057,7 @@ void func_8010E514(STAGE_OBJ *wp, ST17_BOSS *ext)
         Set_Atari(&ext->pos_20[i], D_8011BE40[i].pad, 0, 0x8000, wp->value_1, &ext->hit_D0[i],
                       0x04880000, 0, 0x80);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }
 
 void func_8010E660(STAGE_OBJ *wp, ST17_BOSS *ext)

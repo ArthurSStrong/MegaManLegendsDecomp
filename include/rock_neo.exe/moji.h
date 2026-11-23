@@ -128,8 +128,8 @@ extern uint32 Game_work[];
 
 uint16 get_le16(uint8 *p);
 void num_to_text(sint32 mode, uint32 value, uint8 *out);
-sint32 func_8005DA78(sint32 arg0);
-sint32 func_8005DAEC(sint32 arg0);
+sint32 Pl_life_refill(sint32 arg0);
+sint32 Pl_energy_refill(sint32 arg0);
 sint32 func_8005DA1C(sint32 arg0);
 sint32 Sce_flag_test(sint32 flag);
 // Sce_flag_on, func_80039E18 and Money_add are void, but Capcom's moji code called them

@@ -41,7 +41,7 @@ void stcom24_func_0000(STCOM24_WORK *wp)
     {
         EM_Char_Move(wp);
     }
-    func_8004B414(wp);
+    Scr_collision_check(wp);
     ground = Scr_height_check(wp);
     if (wp->jump_74 == 0)
     {
@@ -233,7 +233,7 @@ void stcom24_func_07E4(STCOM24_WORK *wp)
             shot->position_fixed.y = shot->position.y << 16;
             shot->position_fixed.z = shot->position.z << 16;
             Obj_pos_move(&shot->position, &shot->position_fixed, wp->rotation.y & 0xFFF, 0x800,
-                          0x140, 0);
+                         0x140, 0);
             shot->angle_64 = wp->rotation.y;
         }
         wp->ctl.timer_8 = 15;

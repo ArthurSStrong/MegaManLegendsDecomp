@@ -351,7 +351,7 @@ void func_80038894(void)
                         D_80098660 = cw->pos_98.x;
                         D_80098662 = cw->pos_98.y;
                         D_80098664 = cw->pos_98.z;
-                        if (func_80049C54((PL_SHORT_VECTOR *)&D_80098660,
+                        if (Scr_line_calc((PL_SHORT_VECTOR *)&D_80098660,
                                           (PL_SHORT_VECTOR *)&D_80098660, &D_80097D60, 0xFFFF) == 0)
                         {
                             D_80097D48 = 0x3C;

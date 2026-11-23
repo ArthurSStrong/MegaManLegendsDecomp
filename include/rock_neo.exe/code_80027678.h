@@ -108,7 +108,7 @@ typedef struct
     uint16 f6;
 } C80027678_SRC;
 
-sint16 func_80048EA4(C80027678_SRC *p, sint32 a, sint32 b, sint32 c);
+sint16 Scr_height_calc(C80027678_SRC *p, sint32 a, sint32 b, sint32 c);
 // Model object fields used for the shadow queue
 typedef struct
 {

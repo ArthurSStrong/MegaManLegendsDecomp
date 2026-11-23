@@ -96,7 +96,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             }
             break;
         case 3:
-            if (func_80042238(pl))
+            if (Player_control_off(pl))
             {
                 pl->routine_0 = 3;
                 pl->routine_1 = 0;
@@ -190,14 +190,14 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             break;
         case 10:
             Obj_work_flag_change(0x3FE, 2);
-            func_80042314(pl);
+            Player_control_on(pl);
             pl->target_184 = NULL;
             pl->flags_0 |= 2;
             hit->flags_0 &= ~2;
             wp->routine_0 = 1;
             break;
     }
-    func_80051B68(wp, 1, 0, 0);
+    Solid_set(wp, 1, 0, 0);
     Set_Atari(&wp->position, 0x28, 0, 0x8000, wp->value_1, &hit->hit_18, 0x4000000, 0, 0x80);
     hit->hit_18 = 0;
 }
@@ -223,7 +223,7 @@ void stcom09_func_06A0(STCOM09_WORK *wp)
     stcom09_D_0008[wp->routine_0](wp);
     if (wp->routine_0 == 0)
     {
-        func_80051B68(wp, 1, -1, 0x1000000);
+        Solid_set(wp, 1, -1, 0x1000000);
     }
     else
     {

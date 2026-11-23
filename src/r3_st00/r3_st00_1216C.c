@@ -81,7 +81,7 @@ void func_801124B0(ST00_STCOM19_WORK *wp)
     wp->matrix.words[3] = 0;
     wp->matrix.words[4] = 0x1000;
     RotMatrixY(wp->dir_C << 10, &wp->matrix.m);
-    wp->cell_44 = func_80048C60(&wp->pos_38);
+    wp->cell_44 = Scr_cell_get(&wp->pos_38);
     wp->routine_0++;
     wp->matrix.words[5] = ST00_SLOTS[wp->cell_44].value_0;
     wp->matrix.words[6] = func_8003AC24(*(uint32 *)(wp->matrix.words[5] & 0xFFFFFF) & ~0x1000);
@@ -97,7 +97,7 @@ void func_80112568(STAGE_PANEL_WORK *wp)
     uint8 frame;
     uint32 color;
 
-    if (Sce_flag_test(0x7B1) != 0 && wp->cell_44 == func_80048C60(&Player_work.position) &&
+    if (Sce_flag_test(0x7B1) != 0 && wp->cell_44 == Scr_cell_get(&Player_work.position) &&
         Sce_flag_test((sint8)wp->value_D + 0x7E0) == 0)
     {
         wp->routine_0 = 2;
@@ -168,7 +168,7 @@ void func_801127A0(ST00_STCOM19_WORK *wp)
             Sound_call2(0x106, &wp->pos_38);
         }
     }
-    else if (wp->cell_44 != func_80048C60(&Player_work.position))
+    else if (wp->cell_44 != Scr_cell_get(&Player_work.position))
     {
         wp->timer_B          = 16;
         wp->matrix.words[0]  = 0x1000;
@@ -925,7 +925,7 @@ void func_80113FEC(ST00_BOX_B *wp)
     {
         if (wp->routine_1 != 1)
         {
-            func_80051B68(wp, 5, -1, 0);
+            Solid_set(wp, 5, -1, 0);
         }
         if ((wp->flags_0 & 1) && (wp->matrix.f.ctl.flags_0 & 4))
         {
@@ -959,7 +959,7 @@ void func_80114170(ST00_BOX_B *wp)
             wp->timer_C   = 1;
             wp->color_40  = 0x808080;
             ctl->flags_0 &= ~8;
-            func_80052528(wp);
+            Ride_clear(wp);
             fx = Open_EFFECT_WORK();
             if (fx != NULL)
             {
@@ -1721,7 +1721,7 @@ void func_80115A88(STAGE_PANEL_WORK *wp)
     {
         wp->routine_0        = 1;
         wp->matrix.m.m[1][1] = 0;
-        wp->cell_44          = func_80048C60(&wp->pos_38);
+        wp->cell_44          = Scr_cell_get(&wp->pos_38);
         wp->matrix.words[5]  = ST00_SLOTS[wp->cell_44].value_0;
         wp->matrix.words[6]  = func_8003AC24(0x40500);
     }
@@ -1899,7 +1899,7 @@ void func_80115EAC(ST00_POOL *wp)
         wp->value_A = 0;
         if (wp->variant_3 & 0x4F)
         {
-            wp->cell_44            = func_80048C60(&wp->pos_38);
+            wp->cell_44            = Scr_cell_get(&wp->pos_38);
             wp->cell_C             = ST00_SLOTS[wp->cell_44].value_0;
             wp->matrix_18.f.key_14 = func_8003AC24(D_8011CD0C[wp->variant_3 & 0xF]);
         }
@@ -1977,7 +1977,7 @@ void func_801161D4(ST00_ORBIT *wp)
     pos.y -= 0x28;
     Set_Atari(&pos, 0x50, 0, 0x8000, wp->index_1, &D_80122620[wp->variant_3 & 1].f.hit_0,
                   0x4000000, 0x800000, 0);
-    func_80051B68(wp, 5, -1, 0);
+    Solid_set(wp, 5, -1, 0);
 }
 
 void func_801164A8(ST00_ORBIT *wp)

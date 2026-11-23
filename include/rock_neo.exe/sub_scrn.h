@@ -194,7 +194,7 @@ extern uint8 *D_8008CB94;
 uint32 Sce_flag_test(uint32 flag);
 sint32 Cd_read_sync2(void);
 void Cd_seek_file(sint32 arg);
-void func_800425FC(SUB_PLAYER *pl, sint32 arg);
+void Pl_key_type_set(SUB_PLAYER *pl, sint32 arg);
 void func_800605DC(void);
 void func_80060248(SUB_WORK *wp);
 void Sub_screen_shift_check(SUB_WORK *wp);
@@ -255,7 +255,7 @@ extern uint16 D_8008DB08[];
 extern uint8 D_8008D7EC[];
 // Defined as uint8 in code_8005C258.c; func_8005ED9C tests v0 without an andi, so it saw int.
 sint32 func_8005D95C(void);
-void func_8005D9C4(void);
+void Gauge_show_release(void);
 void func_80037594(void);
 void func_8005EBA4(sint32 arg);
 void func_8005EBB4(sint32 arg);

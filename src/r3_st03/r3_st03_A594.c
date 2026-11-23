@@ -93,5 +93,5 @@ void func_8010A788(ST03_ACTOR *wp)
     {
         Model_Shadow_Trans(wp, 0x30, 0x200, 0);
     }
-    func_80051B68(wp, 1, -1, 0);
+    Solid_set(wp, 1, -1, 0);
 }

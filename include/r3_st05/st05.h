@@ -557,7 +557,7 @@ extern sint16 D_800BBCF8[];
 extern sint32 D_800BC7D4;
 extern STAGE_50 D_800BF118[];
 extern uint32 D_800989CC;
-extern uint16 D_800C0F96[];
+extern uint16 Pl_demo_pad[];
 extern sint16 D_800C0F9A;
 extern uint8 D_80100384[];
 extern sint32 D_8012E438[];
@@ -632,7 +632,7 @@ extern uint16 D_801318B8[];
 extern uint8 D_801318C0[];
 extern uint8 D_801318CC[];
 extern STCOM_SVECTOR D_80131910[]; // the boats' start points (pad: heading), by index_C
-extern sint16 D_80131920[];        // the boat's box (its data_78; func_80048EA4)
+extern sint16 D_80131920[];        // the boat's box (its data_78; Scr_height_calc)
 extern sint16 D_8013192C[];        // 36 roll angles
 extern uint8 D_801319C8[];
 extern sint8 D_801319D4[][4]; // the boss's areas: x0, z0, x1, z1 in units of 0x200
@@ -787,7 +787,7 @@ extern STAGE_OBJ_FUNC D_80130AF0[];
 
 void func_80031A4C(void *wp);
 
-void func_80052528(void *wp);
+void Ride_clear(void *wp);
 
 extern STAGE_REC D_80137E18[];
 
@@ -806,7 +806,7 @@ extern STAGE_FACE16 D_80137E00;
 extern sint16 *D_8012F43C[];
 extern sint16 *D_8012F448[];
 extern STAGE_FX Effect_work_tbl[];
-sint32 func_80048E18(void *arg);
+sint32 Scr_cell_attr(void *arg);
 void func_80105E2C(sint8 index);
 uint8 func_80107D68(void);
 
@@ -817,7 +817,7 @@ extern uint8 D_8012E208[][0x28];
 extern uint8 D_8012E2D0[][8];
 extern STCOM_SVECTOR D_8012E44C[];
 uint32 func_8003AC9C(sint32 idx, uint32 key);
-sint32 func_80048C60(STCOM_SVECTOR *pos);
+sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
 void func_8003187C(void *wp);
@@ -1460,7 +1460,7 @@ extern ST05_WALKER *D_80137F50;
 extern ST05_WALKER *D_80137F54;
 extern uint32 D_80138028[3];
 
-void func_8005D620(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 a4);
+void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 a4);
 
 extern STAGE_OBJ_FUNC D_80137AA4[];
 
@@ -1610,9 +1610,9 @@ extern ST05_ACTOR_FUNC D_80130B08[];
 extern STAGE_ROOM_FUNC D_80130970[];
 extern STAGE_ROOM_FUNC *D_80130930[];
 
-void func_8001E4C4(void *a, void *b);
+void Sce_exit_lock_list(void *a, void *b);
 
-sint32 func_80048EA4(STCOM_SVECTOR *pos, void *a1, sint32 a2, sint32 a3);
+sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *a1, sint32 a2, sint32 a3);
 void func_8012B44C(STAGE_OBJ50 *wp);
 
 void Sce_flag_select(sint32 id);
@@ -1795,7 +1795,7 @@ typedef struct
         uint8 routine_0; // 08
         uint32 word;
     } u_8;
-    uint16 cell_C[3];    // 0C: per lift, its map object (func_80048C60)
+    uint16 cell_C[3];    // 0C: per lift, its map object (Scr_cell_get)
     uint8 reserved12[2]; // 12
     sint16 value_14[3];  // 14
     uint8 reserved1A[2]; // 1A
@@ -2023,7 +2023,7 @@ typedef struct
     sint16 sink_12;       // 12
     sint16 rise_14;       // 14
     sint16 rise_16;       // 16: how fast it sinks (func_8011A194)
-    sint32 hit_18;        // 18: func_8004B414's result
+    sint32 hit_18;        // 18: Scr_collision_check's result
     sint32 ground_1C;     // 1C: 1 on the ground
     sint32 hit_20;        // 20: Set_Atari's record
     sint32 value_24;      // 24
@@ -2491,7 +2491,7 @@ sint32 Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void func_8003697C(void);
 
 void Sce_script_timer_clear(void);
-void func_8005D7C0(void);
+void Gauge_clear(void);
 
 void func_80107CEC(void);
 

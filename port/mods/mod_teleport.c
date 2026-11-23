@@ -4,7 +4,7 @@
 // stage module has a table of exit lists by room, and an exit names the stage and room it leads
 // to and where Mega Man appears there, facing which way (tools/teleport_dests.py reads them).
 //
-// A teleport goes through the same path as a door. Leaving a room by a door, func_80050C2C
+// A teleport goes through the same path as a door. Leaving a room by a door, Scr_event_check
 // (code_80048620.c) fills the room-entry request D_800C3558 (GAME_ENTRY_WORK: arrival x/y/z,
 // facing, stage, room, fades) with flags14 = 2 and starts the next room's music
 // (func_8001F6C4). The field state, Game_play (Game_main_tbl[3], game.c) in its state 2,
@@ -70,7 +70,7 @@ static void field_hook(uint32_t wp)
     if (pending_on && MODS_PEEK8(wp + 1) == 2 && MODS_PEEK8(ENTRY + 0x14) == 0 && MODS_PEEK8(SCENE_WORK) == 0 &&
         MODS_PEEK16(FADE_BUSY) == 0)
     {
-        // As func_80050C2C does for a door (its kinds 2, 4-6 and 8).
+        // As Scr_event_check does for a door (its kinds 2, 4-6 and 8).
         POKE16(ENTRY + 0x08, pending.x);
         POKE16(ENTRY + 0x0A, pending.y);
         POKE16(ENTRY + 0x0C, pending.z);

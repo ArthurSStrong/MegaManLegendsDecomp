@@ -107,7 +107,7 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
         }
         VectorNormalS(&d, &unit);
         Vec_turn_toward(&dir, &unit, &wp->dir_CC, stcom23_D_0000[wp->variant_3].turn_8,
-                      stcom23_D_0000[wp->variant_3].turn_C);
+                        stcom23_D_0000[wp->variant_3].turn_C);
         wp->dir_CC     = dir;
         speed          = wp->speed_6E;
         wp->velocity.x = (dir.x * speed) >> 4;

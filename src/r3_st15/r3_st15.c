@@ -384,7 +384,7 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
     {
         case 0:
             pl = &Player_work;
-            if (func_80042238(pl) != 0)
+            if (Player_control_off(pl) != 0)
             {
                 pl->flags_0 &= 0xFC;
                 Cd_xa_play_id(0x2001000A);
@@ -419,7 +419,7 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
                 Cd_subcmd(0, 1, 0);
                 wp->flags_0 = 0;
                 Player_work.flags_0 |= 1;
-                func_80042314(&Player_work);
+                Player_control_on(&Player_work);
                 D_800A395C = 1;
                 func_80039820();
                 *(uint32 *)&Code800133D8_work[0] = 0;
