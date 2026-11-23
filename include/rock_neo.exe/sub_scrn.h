@@ -172,7 +172,7 @@ typedef void (*SUB_FUNC)(SUB_WORK *wp);
 extern SUB_PLAYER Player_work;
 extern SUB_OT *D_80098934;
 extern SUB_WORK D_800A38F0;
-extern SUB_FUNC D_8008DBB0[];
+extern SUB_FUNC Sub_screen_routine_tbl[];
 extern SUB_BYTE Rock_buster_parts_tbl[][8];
 extern SUB_BYTE D_8008FE65[][8];
 extern SUB_BYTE D_8008FE66[][8];
@@ -195,8 +195,8 @@ uint32 Sce_flag_test(uint32 flag);
 sint32 Cd_read_sync2(void);
 void Cd_seek_file(sint32 arg);
 void Pl_key_type_set(SUB_PLAYER *pl, sint32 arg);
-void func_800605DC(void);
-void func_80060248(SUB_WORK *wp);
+void sub_screen_rb_parts_draw(void);
+void sub_screen_gauge_start(SUB_WORK *wp);
 void Sub_screen_shift_check(SUB_WORK *wp);
 void Sub_screen_rb_parts_calc_sub00(SUB_WORK *wp, sint32 idx);
 void Sub_screen_rb_parts_calc_sub01(SUB_WORK *wp, sint32 idx);
@@ -230,7 +230,7 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 #else
 void Sound_call(sint32 sound, ...);
 #endif
-void func_8003B140(void);
+void Map_obj_state_save(void);
 void Fade_start(sint32 arg);
 void Sound_fade_start(sint32 arg);
 void Sound_fade_wait(void);
@@ -253,10 +253,10 @@ void Sub_screen_status_calc(SUB_WORK *wp, sint32 slot);
 extern uint8 D_8008D7E8[][5][4];
 extern uint16 D_8008DB08[];
 extern uint8 D_8008D7EC[];
-// Defined as uint8 in code_8005C258.c; func_8005ED9C tests v0 without an andi, so it saw int.
+// Defined as uint8 in code_8005C258.c; Sub_screen_item tests v0 without an andi, so it saw int.
 sint32 func_8005D95C(void);
 void Gauge_show_release(void);
-void func_80037594(void);
+void Player_weapon_refill(void);
 void func_8005EBA4(sint32 arg);
 void func_8005EBB4(sint32 arg);
 #define SUB_PLAYER_BYTE_4F4(slot, i) (*((sint8 *)&Player_work + 0x4F4 + (slot) * 8 + (i)))
@@ -266,7 +266,7 @@ sint32 Player_weapon_bullet_calc(SUB_PLAYER *pl, sint32 slot);
 void Sub_screen_basic_param_set(void);
 SUB_PRIM *Sub_screen_status_param_set_sub(SUB_PRIM *prim, sint32 x, sint32 value, sint32 flags);
 SUB_PRIM *Sub_screen_basic_param_set_sub(SUB_PRIM *prim, sint32 x, sint32 value, sint32 flags);
-void func_800602A4(SUB_WORK *wp, sint32 arg);
+void sub_screen_gauge_update(SUB_WORK *wp, sint32 arg);
 #ifdef __wasm32__
 // WebAssembly calls require the callee's fixed parameter signature.
 void Sound_call(sint16 id, uint32 arg1, uint32 arg2);

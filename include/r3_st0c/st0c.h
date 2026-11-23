@@ -490,14 +490,14 @@ void func_8010122C(STAGE_OBJ *wp);
 void func_80101280(STAGE_OBJ *wp);
 void func_8001EB98(void *entry);
 void func_8010ACA4(ST0C_SHOT *wp, sint32 arg);
-sint32 func_800375D4(void *pl, sint32 arg);
+sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 void func_8010AB60(ST0C_SHOT *wp);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
-void func_8003786C(sint32 id);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
+void Map_obj_remove(sint32 id);
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_8010A5E0(ST0C_SHL *wp);
 
 // The player's second position (STAGE_PL_VIEW's fixed_428) read by its integer halves.

@@ -10,7 +10,7 @@ void func_8011AD8C(STAGE_OBJ *wp)
 {
     uint32 temp_v0;
 
-    temp_v0                = func_8003AC24(0x200000);
+    temp_v0                = Stage_hed_model_get(0x200000);
     D_8012BB18             = 0;
     wp->position_fixed.v.x = (sint32)temp_v0;
     wp->routine_0++;
@@ -25,10 +25,10 @@ void func_8011ADD0(ST06_EVENT *wp)
 
     wrap = 0;
     D_8012BB18++;
-    unpack = func_8002DC84(wp->slot_1C, 0, 2);
+    unpack = Model_poly_group_get(wp->slot_1C, 0, 2);
     for (i = 0; i < 8; i++)
     {
-        uv = func_8002DD1C(unpack.c, i);
+        uv = Quad_uv_get(unpack.c, i);
         if (wrap || (i == 0 && uv.b[0] >= 0xA0))
         {
             wrap = 1;
@@ -44,12 +44,12 @@ void func_8011ADD0(ST06_EVENT *wp)
             uv.b[4]++;
             uv.b[6]++;
         }
-        func_8002DE04(unpack.c, i, uv.w);
+        Quad_uv_set(unpack.c, i, uv.w);
     }
-    unpack = func_8002DC84(wp->slot_1C, 1, 2);
+    unpack = Model_poly_group_get(wp->slot_1C, 1, 2);
     for (i = 0; i < 4; i++)
     {
-        uv = func_8002DD1C(unpack.c, i);
+        uv = Quad_uv_get(unpack.c, i);
         if (wrap)
         {
             uv.b[0] -= 0x1F;
@@ -64,7 +64,7 @@ void func_8011ADD0(ST06_EVENT *wp)
             uv.b[4]++;
             uv.b[6]++;
         }
-        func_8002DE04(unpack.c, i, uv.w);
+        Quad_uv_set(unpack.c, i, uv.w);
     }
 }
 
@@ -122,7 +122,7 @@ void func_8011B00C(ST06_EVENT *wp)
     }
     for (i = 0; i < 7; i++)
     {
-        D_8012BB3C[i] = func_80037C14(Scr_cell_get(&D_80125A80[i]));
+        D_8012BB3C[i] = Map_obj_life(Scr_cell_get(&D_80125A80[i]));
     }
     wp->routine_1 = 0;
     wp->routine_0++;
@@ -209,7 +209,7 @@ sint32 func_8011B444(void)
     best = 0xBB;
     for (; i < 7; i++)
     {
-        d = func_80037C14(Scr_cell_get(&D_80125A80[i]));
+        d = Map_obj_life(Scr_cell_get(&D_80125A80[i]));
         if (d < D_8012BB3C[i] && d < best)
         {
             best = d;

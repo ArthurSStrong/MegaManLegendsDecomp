@@ -163,7 +163,7 @@ void func_8010BFB4(ST0E_PANEL *wp)
     wp->value_A            = (wp->variant_3 - 1) * 16;
     wp->cell_44            = Scr_cell_get(&wp->pos_38);
     wp->cell_C             = STAGE_CELLS[wp->cell_44].value;
-    wp->matrix_18.f.key_14 = func_8003AC24(D_80110698[0]);
+    wp->matrix_18.f.key_14 = Stage_hed_model_get(D_80110698[0]);
     wp->routine_0          = 1;
     wp->routine_1          = 0;
     wp->routine_3          = 0;
@@ -205,7 +205,7 @@ void func_8010C1C0(ST0E_PANEL *wp)
             vec.x = -0x2100;
             vec.y = -0xC81;
             vec.z = 0x1500;
-            func_8003AC9C(Scr_map_cell_get(0, &vec), 0x71202);
+            Map_obj_model_swap(Scr_map_cell_get(0, &vec), 0x71202);
             wp->matrix_18.f.lit_1C = 0;
         }
         if (Sce_flag_test(0x606))
@@ -276,7 +276,7 @@ void func_8010C1C0(ST0E_PANEL *wp)
             vec.x                  = -0x2100;
             vec.y                  = -0xC81;
             vec.z                  = 0x1500;
-            func_8003AC9C(Scr_map_cell_get(0, &vec), 0x70202);
+            Map_obj_model_swap(Scr_map_cell_get(0, &vec), 0x70202);
         }
     }
     if (pl->position.x >= -0x211F)

@@ -223,7 +223,7 @@ void Close_EFFECT_WORK(void *wp);
 uint32 Obj_id_class(uint8 id);
 void Model_work_init(void *wp, uint8 *arg);
 void Money_add(uint32 id, sint32 arg1, sint32 arg2);
-void func_80043340(uint32 id, sint32 arg1);
+void Pl_life_add(uint32 id, sint32 arg1);
 sint32 Scr_height_calc(void *snd, CODE456_REC12 *rec, sint32 arg2, sint32 arg3);
 sint32 func_8004B5CC(void *snd, PL_SHORT_VECTOR *old, sint32 arg2, CODE456_REC12 *rec);
 void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg);

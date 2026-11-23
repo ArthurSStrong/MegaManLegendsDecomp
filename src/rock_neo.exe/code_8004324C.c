@@ -1,7 +1,7 @@
 #include "common.h"
 #include "code_8004324c.h"
 
-sint32 func_8004324C(CODE43_FLAGS *wp)
+sint32 Pl_shot_busy(CODE43_FLAGS *wp)
 {
     if ((wp->flags_174 & 0xC0) || wp->value_177)
     {
@@ -46,7 +46,7 @@ void Money_add(sint32 amount, sint32 arg1, sint32 alt)
     }
 }
 
-void func_80043340(sint32 amount, sint32 index)
+void Pl_life_add(sint32 amount, sint32 index)
 {
     CODE43_PLAYER *pl = &Player_work[index];
 
@@ -61,12 +61,12 @@ void func_80043340(sint32 amount, sint32 index)
     }
 }
 
-void func_800433C0(CODE43_WORK *wp)
+void Pl_shl_normal_arm(CODE43_WORK *wp)
 {
-    D_8008A0CC[wp->routine_8](wp);
+    Pl_shl_normal_arm_tbl[wp->routine_8](wp);
 }
 
-void func_800433FC(CODE43_WORK *wp)
+void Pl_shl_normal_arm_init(CODE43_WORK *wp)
 {
     CODE43_SVECTOR unused[3];
     CODE43_TARGET *target;
@@ -89,11 +89,11 @@ void func_800433FC(CODE43_WORK *wp)
         wp->pos_2c = target->pos_418;
     }
     wp->pos_14 = wp->pos_2c;
-    func_800435F8(wp);
+    normal_arm_atari_set(wp);
     Sound_call2(0x96, &wp->pos_14);
 }
 
-void func_800434F0(CODE43_WORK *wp)
+void Pl_shl_normal_arm_main(CODE43_WORK *wp)
 {
     CODE43_TARGET *target;
 
@@ -103,25 +103,25 @@ void func_800434F0(CODE43_WORK *wp)
     {
         Close_PL_SHL_WORK(wp);
     }
-    else if (func_80037694(wp, 0))
+    else if (Shot_map_check(wp, 0))
     {
-        func_80043740(wp);
+        normal_arm_hit_effect(wp);
         wp->routine_8++;
         target->state_198 = 1;
     }
     else
     {
-        func_800435F8(wp);
+        normal_arm_atari_set(wp);
     }
 }
 
-void func_800435BC(CODE43_WORK *wp)
+void Pl_shl_normal_arm_end(CODE43_WORK *wp)
 {
     Obj_id_work(wp->index_c)->state_198 = 0;
     Close_PL_SHL_WORK(wp);
 }
 
-void func_800435F8(CODE43_WORK *wp)
+void normal_arm_atari_set(CODE43_WORK *wp)
 {
     sint32 id;
     CODE43_TARGET *target;
@@ -159,7 +159,7 @@ void func_800435F8(CODE43_WORK *wp)
     wp->pos_2c = wp->pos_14;
 }
 
-void func_80043740(CODE43_WORK *wp)
+void normal_arm_hit_effect(CODE43_WORK *wp)
 {
     CODE43_FX *fx;
 
@@ -175,13 +175,13 @@ void func_80043740(CODE43_WORK *wp)
     }
 }
 
-void func_800437A8(CODE43_WORK *wp)
+void Pl_shl_buster(CODE43_WORK *wp)
 {
-    D_8008A0D8[wp->routine_8](wp);
+    Pl_shl_buster_tbl[wp->routine_8](wp);
     Solid_mover_set(wp);
 }
 
-void func_800437F8(CODE43_WORK *wp)
+void Pl_shl_buster_init(CODE43_WORK *wp)
 {
     CODE43_SVECTOR rot;
     CODE43_VECTOR vec;
@@ -206,7 +206,7 @@ void func_800437F8(CODE43_WORK *wp)
     rot.vy       = vec.vy;
     rot.vx       = vec.vx;
     rot.vz       = vec.vz;
-    speed        = D_80097DD4[Player_work[0].speed_idx_4fe];
+    speed        = Buster_speed_tbl[Player_work[0].speed_idx_4fe];
     wp->vel_44   = (rot.vx * speed) >> 4;
     wp->vel_46   = (rot.vy * speed) >> 4;
     wp->vel_48   = (rot.vz * speed) >> 4;
@@ -225,7 +225,7 @@ void func_800437F8(CODE43_WORK *wp)
     wp->pos_2c              = wp->pos_14;
     wp->value_96            = 0xC0;
     wp->value_97            = 0x60;
-    wp->value_98            = D_80097DCC[Player_work[0].speed_idx_4fc];
+    wp->value_98            = Buster_size_tbl[Player_work[0].speed_idx_4fc];
     wp->value_7c            = 0;
     wp->timer_b             = 0;
     func_80043DF8(wp, &mtx);
@@ -244,14 +244,14 @@ void func_800437F8(CODE43_WORK *wp)
         Homing_target_clear(wp->bit_d);
         wp->value_3 = 0;
     }
-    func_80043E78(wp);
+    buster_atari_set(wp);
     Sound_call2(0x9A, &wp->pos_14);
 }
 
 // The first arm ends with its own copy of the timeout tail (Close_PL_SHL_WORK and the
-// Homing_target_clear check); cross-jumping then merges the two func_80043E00 calls into one, as in
-// retail.
-void func_80043A8C(CODE43_WORK *wp)
+// Homing_target_clear check); cross-jumping then merges the two buster_hit_effect calls into one,
+// as in retail.
+void Pl_shl_buster_main(CODE43_WORK *wp)
 {
     sint32 result;
     sint32 timer;
@@ -260,16 +260,16 @@ void func_80043A8C(CODE43_WORK *wp)
     CODE43_SVECTOR dir;
     CODE43_VECTOR delta;
 
-    result = func_80037694(wp, 0);
+    result = Shot_map_check(wp, 0);
     if (result != 0 || wp->value_7c != 0)
     {
         if (result == 0x7FFF)
         {
-            func_80043E00(wp, 0);
+            buster_hit_effect(wp, 0);
         }
         else
         {
-            func_80043E00(wp, 1);
+            buster_hit_effect(wp, 1);
         }
         Close_PL_SHL_WORK(wp);
         if (wp->value_3 >= 0x80)
@@ -283,7 +283,7 @@ void func_80043A8C(CODE43_WORK *wp)
         wp->vec_34 = wp->pos_1c.v;
         wp->pos_2c = wp->pos_14;
         timer      = wp->timer_b++;
-        if (timer < func_80037634(Player_work, 1))
+        if (timer < Player_weapon_dist_calc(Player_work, 1))
         {
             if (wp->value_3 >= 0x80)
             {
@@ -316,7 +316,7 @@ void func_80043A8C(CODE43_WORK *wp)
                         wp->value_3 = 0;
                     }
                     wp->pos_a4 = step;
-                    speed      = D_80097DD4[Player_work[0].speed_idx_4fe];
+                    speed      = Buster_speed_tbl[Player_work[0].speed_idx_4fe];
                     wp->vel_44 = (step.vx * speed) >> 4;
                     wp->vel_46 = (step.vy * speed) >> 4;
                     wp->vel_48 = (step.vz * speed) >> 4;
@@ -344,14 +344,14 @@ void func_80043A8C(CODE43_WORK *wp)
     }
     return;
 move:
-    func_80043E78(wp);
+    buster_atari_set(wp);
 }
 
 void func_80043DF8(CODE43_WORK *wp, CODE43_MATRIX *mtx)
 {
 }
 
-void func_80043E00(CODE43_WORK *wp, sint32 value)
+void buster_hit_effect(CODE43_WORK *wp, sint32 value)
 {
     CODE43_FX *fx;
 
@@ -368,13 +368,13 @@ void func_80043E00(CODE43_WORK *wp, sint32 value)
     }
 }
 
-void func_80043E78(CODE43_WORK *wp)
+void buster_atari_set(CODE43_WORK *wp)
 {
     sint32 size;
     sint32 flags;
 
     size  = wp->value_98;
-    flags = func_800375D4(Player_work, 1);
+    flags = Player_weapon_attack_calc(Player_work, 1);
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos_14, size, &wp->pos_2c, size, 0x200, 0x6000, wp->value_1,

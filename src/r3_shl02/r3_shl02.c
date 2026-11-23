@@ -91,7 +91,7 @@ void func_800D8854(SHL_WORK *wp)
     wp->old_pos                      = wp->pos;
     wp->draw.mdl.color_b4            = 0x02808080;
     Model_work_init(wp, 0);
-    wp->timer_b = func_80037634(&Player_work, 2);
+    wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
     func_800D8F08(wp, 0);
     func_800D8DC4(wp);
@@ -100,7 +100,7 @@ void func_800D8854(SHL_WORK *wp)
 
 void func_800D8C4C(SHL_WORK *wp)
 {
-    if (func_80037694(wp, 0) || wp->hit_7c)
+    if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
         if (wp->type_3 & 0x40)
         {
@@ -144,7 +144,7 @@ void func_800D8DC4(SHL_WORK *wp)
     SVECTOR p;
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 2);
+    flags = Player_weapon_attack_calc(&Player_work, 2);
     p.vx  = wp->pos.vx * 2 - wp->old_pos.vx;
     p.vy  = wp->pos.vy * 2 - wp->old_pos.vy;
     p.vz  = wp->pos.vz * 2 - wp->old_pos.vz;

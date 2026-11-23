@@ -53,14 +53,14 @@ objects: **185 `$gp` variables, 46 groups of functions** (functions sharing a va
 - **Confirmed: `.sbss` is in file order from `0x80098158` to `0x80098728`**, then a pool from about
   `0x8009878C` to `0x80098B6C` where files alternate (`moji`, `code_8005C258`, `code_8006430C`, `main`
   ...): presumably small non-`static` uninitialized globals, allocated like `.bss`'s pool.
-- **One inversion, row 14:** in the ordered `.sbss`, `func_80037440`'s variables
+- **One inversion, row 14:** in the ordered `.sbss`, `Pl_special_shot_check`'s variables
   (`0x8009856C`–`0x80098578`) sit inside `code_8002E7A8`'s (`0x80098560`–`0x80098568`,
   `0x8009857C`–`0x80098654`), and its `.data` variable `0x800899E0` sits between `code_8002E7A8`'s
-  (`0x800899AC`, `0x80089A8B`). Every other file's variables are contiguous, so `func_80037440` is
+  (`0x800899AC`, `0x80089A8B`). Every other file's variables are contiguous, so `Pl_special_shot_check` is
   in the same file as `0x80033EBC`–`0x80036D40`, and row 14's start is wrong.
 - **`lui` + `%lo` on a `$gp` variable means another file only for direct loads and stores.**
   Taking the address (`lui`/`addiu`, e.g. `Map_screen_work` in `Map_screen_task`) and indexing a
-  small array (`lui`, `addu $at, $at, ...`, load `%lo`: `D_8009856C` in `func_80037440`) use `lui` in
+  small array (`lui`, `addu $at, $at, ...`, load `%lo`: `pl_shl_count` in `Pl_special_shot_check`) use `lui` in
   the defining file too. The 42 direct `lui` accesses from other functions are all in other yaml
   files, but each is far from the owner, so none narrows a boundary.
 
@@ -70,7 +70,7 @@ objects: **185 `$gp` variables, 46 groups of functions** (functions sharing a va
 | `scene` | | `0x80098198`–`0x80098199` (2) | |
 | `code_8001F828` | `0x80097C3C`–`0x80097C40` (2) | `0x800981BC`–`0x8009834C` (32) | 2 |
 | `code_80027678` | | `0x80098550`–`0x80098554` (2) | |
-| `code_8002E7A8` (with `func_80037440`) | `0x80097CFC`–`0x80097D08` (4) | `0x80098560`–`0x80098654` (34) | 1 |
+| `code_8002E7A8` (with `Pl_special_shot_check`) | `0x80097CFC`–`0x80097D08` (4) | `0x80098560`–`0x80098654` (34) | 1 |
 | `code_80037534` | `0x80097D24` (1) | | |
 | `code_80037FB4` | `0x80097D28`–`0x80097D70` (14) | `0x80098660`–`0x80098698` (15) | |
 | `code_8003A3B4` | | | 3 |
@@ -138,7 +138,7 @@ address.
   `moji` variable at `0x8008A91C`, one `code_80043F34` variable at `0x8008A358`, and `code_8001786C`'s
   `0x8008F168`. These read as globals defined in one file and used by another, not as boundary errors;
   no stray pins a boundary.
-- **Row 14** fails again (`func_80037440`'s `0x800899E0` among `code_8002E7A8`'s); see the
+- **Row 14** fails again (`Pl_special_shot_check`'s `0x800899E0` among `code_8002E7A8`'s); see the
   small-data section.
 - **Rows 24–29 (`moji` ... `code_8006430C`) interleave**, for two identified reasons:
   - **Shared message data.** Pointer tables of `moji` and of `code_8006430C`'s code point to the same
@@ -220,7 +220,7 @@ piece of evidence.
 | 11 | `0x80027678` | `0x17E78` | `0x8002D9A0` | 0x6328 | `code_80027678` | low | yes | Atom edge only: gap cost 0 and `.data` 0x800898D0..0x80089938 first used inside it. Contains `Model_Shadow_Trans` (0x8002C8CC); `Model_` prefix suggests a model file. |
 | 12 | `0x8002D9A0` | `0x1E1A0` | `0x8002E7A8` | 0xE08 | `code_8002D9A0` | low | yes | Atom edge only: gap cost 0; first user of `.sdata` 0x80097CD4; a run of small cost-0 functions up to 0x8002E7A8. |
 | 13 | `0x8002E7A8` | `0x1EFA8` | `0x80037534` | 0x8D8C | `code_8002E7A8` | low | yes | Rodata block `1294` (3 jump-table functions at 0x800320B8..0x800329D4) is inside; names `Obj_work_flag_change`, `Close_EVE_WORK` (an `Obj_`/`EVE` file). Both ends are atom edges only; likely several files. |
-| 14 | `0x80037534` | `0x27D34` | `0x80037FB4` | 0xA80 | `code_80037534` | low | yes | **Start moved** from `0x80037440`: `func_80037440` is in row 13's file, by both its `.sbss` and its `.data` (`0x800899E0`, the cluster this row was first based on; see "Small data ownership"). `0x80037534` is the earliest possible start; the boundary lies in `0x80037534`–`0x80037FB4`, or the row merges into 13. Left: the `0x80089EAC` table used by six tiny 0x30-byte functions. No rodata. |
+| 14 | `0x80037534` | `0x27D34` | `0x80037FB4` | 0xA80 | `code_80037534` | low | yes | **Start moved** from `0x80037440`: `Pl_special_shot_check` is in row 13's file, by both its `.sbss` and its `.data` (`0x800899E0`, the cluster this row was first based on; see "Small data ownership"). `0x80037534` is the earliest possible start; the boundary lies in `0x80037534`–`0x80037FB4`, or the row merges into 13. Left: the `0x80089EAC` table used by six tiny 0x30-byte functions. No rodata. |
 | 15 | `0x80037FB4` | `0x287B4` | `0x8003A3B4` | 0x2400 | `code_80037FB4` | low | no | Rodata block `1330` (users `func_80038894`, `_80039A60`) + `.sdata` 0x80097D28..0x80097D70 cluster (`func_80038648`..); contains `Swing_Camera2` (0x800398F8), so possibly a camera file. |
 | 16 | `0x8003A3B4` | `0x2ABB4` | `0x8003AC24` | 0x870 | `code_8003A3B4` | low | yes | Atom edges only (both gaps cost 0); no data of its own except bss. Could be merged with neighbours. |
 | 17 | `0x8003AC24` | `0x2B424` | `0x8003BE40` | 0x121C | `code_8003AC24` | low | yes | Atom edge + `.data` 0x80089F04..0x80089F90 cluster; ends at the 8-byte stub `func_8003BE38`. |
@@ -232,7 +232,7 @@ piece of evidence.
 | 23 | `0x80048620` | `0x38E20` | `0x80053788` | 0xB168 | `code_80048620` | low | no | Rodata block `156C` first five tables (users 0x80048704..0x80051BE4); `.data` jumps from 0x8008A778 to 0x8008A9D4 exactly here (first user 0x80048620). End = Chris `moji`. |
 | 24 | `0x80053788` | `0x43F88` | `0x8005C258` | 0x8AD0 | `moji` | medium | no | ChrisNonyminus `moji` 0x43F88; `MojiTaskExec/Exec2/Kill` at 0x8005382C..0x80053A30; gap cost 0. No rodata of its own. End 0x8005C258: cost-0 gap with data/sdata/bss separation; the 0xC-byte setter `func_8005C24C` writes `D_800989D4`, used only by `moji` code, so it stays in this file. |
 | 25 | `0x8005C258` | `0x4CA58` | `0x8005EC34` | 0x29DC | `code_8005C258` | low | no | Cost-0 gap (`.data`, `.sdata` and bss clusters all separate there); rodata block `156C` tables for `Gauge_update` and `_8005E144`. Chris has no boundary here (he runs `moji` on to 0x4F434). |
-| 26 | `0x8005EC34` | `0x4F434` | `0x800629E0` | 0x3DAC | `sub_scrn` | medium | no | **End confirmed** (Capcom's source: `sub_scrn.c` ends with `map_cursor_set`; row 27 merged in). ChrisNonyminus `sub_scrn` 0x4F434; rodata block `156C` tables for `func_8005ECE0`..`_80060618`; `Sub_screen_*` names (0x80060E64..0x80062490). Conflict: call graph prefers 0x8005EBA4 (two 0x10-byte accessors only called from `_8005ED9C`). |
+| 26 | `0x8005EC34` | `0x4F434` | `0x800629E0` | 0x3DAC | `sub_scrn` | medium | no | **End confirmed** (Capcom's source: `sub_scrn.c` ends with `map_cursor_set`; row 27 merged in). ChrisNonyminus `sub_scrn` 0x4F434; rodata block `156C` tables for `Sub_screen_top`..`_80060618`; `Sub_screen_*` names (0x80060E64..0x80062490). Conflict: call graph prefers 0x8005EBA4 (two 0x10-byte accessors only called from `_8005ED9C`). |
 | 27 | `0x8006259C` | `0x52D9C` | `0x800629E0` | 0x444 | `map_screen` | **not a file** | | **Confirmed part of `sub_scrn.c`** by Capcom's source (TCRF, `ST1E.BIN`): `Map_screen_init`, `Map_screen_task`, `map_screen_set` and `map_cursor_set` are its last four functions, then "End of File". Its `.data` interleaves with `sub_scrn`'s (step 3). Merged into row 26 in the yaml. |
 | 28 | `0x800629E0` | `0x531E0` | `0x8006430C` | 0x192C | `debug` | **start confirmed** | no | `sub_scrn.c` ends at `map_cursor_set`, i.e. at 0x800629E0 (Capcom's source); ChrisNonyminus `debug` 0x531E0; the last named function (`map_cursor_set`) ends exactly at 0x800629E0; gap cost 0; new `.data` cluster 0x8008DBD4..0x8008ECE0 (17 variables). Holds `Game_logo_kill`. |
 | 29 | `0x8006430C` | `0x54B0C` | `0x80067FF8` | 0x3CEC | `code_8006430C` | low | yes | Rodata block `1BD8` (first user `func_8006430C`) is a new rodata-owning file; the gap lies in 0x800629E0..0x8006430C. Might be the same file as `debug`. Ends at `2MBYTE.OBJ` (0x80067FF8, certain). |
@@ -246,7 +246,7 @@ evidence column, not the file names.
 ### Open conflicts
 
 - **`sub_scrn` start:** Chris says `0x8005EC34`; the call graph prefers `0x8005EBA4` (cost 2.0 vs 4.0).
-  The two functions at `0x8005EBA4`/`0x8005EBB4` are tiny accessors only called from `func_8005ED9C`.
+  The two functions at `0x8005EBA4`/`0x8005EBB4` are tiny accessors only called from `Sub_screen_item`.
   The boundary lies in `0x8005EAA8`-`0x8005ECE0` (`0x8005EAA8` is called from `moji` code).
 - **`debug` vs `code_8006430C`:** the rodata window allows both to be one file starting at `0x800629E0`.
   `.data` doesn't settle it: `debug`'s 17 variables (`0x8008DBD4`–`0x8008ECE0`) lie inside the range of
@@ -261,7 +261,7 @@ evidence column, not the file names.
 
 `0x8001326C` (row 1; calls `Cd_read_comb`, a moji function and `GetTPage`), `0x80020A40`/`0x80020A4C` (row 10),
 `0x8002DC84`-`0x8002DE5C` (row 12: seven tiny atoms), `0x80037534`-`0x80037694` (row 14: six 0x30-byte
-routines sharing `D_80089EAC`), `0x8003C07C`, `0x8003C7B0`, `0x8003C88C`, `0x8003CB20`, `0x8003CD4C`
+routines sharing `Weapon_param_tbl`), `0x8003C07C`, `0x8003C7B0`, `0x8003C88C`, `0x8003CB20`, `0x8003CD4C`
 (row 18, each with its own `.data`), `0x80044998`-`0x80044AB0` and `0x80044D5C`-`0x80044F44` (row 21,
 runs of 0xF4-byte look-alikes), `0x800542FC`-`0x80054424` (row 24, fourteen 0x14-byte accessors),
 `0x80062CF0`..`0x800638D8` (row 28, five 0x2D0-byte look-alikes), `0x80063EF0`/`0x80063F28` (`Game_logo_kill`),

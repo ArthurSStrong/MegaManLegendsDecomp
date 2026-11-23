@@ -249,10 +249,10 @@ void Gauge_buster_recharge(CODE5C_REPEAT *wp)
 
     pl     = &Player_work;
     target = Player_weapon_bullet_calc(pl, 1);
-    limit  = (pl->parts[Player_work.weapon_left_no].selected != 7) ? 0x11 : 0;
+    limit  = (pl->weapon_data[Player_work.weapon_left_no].bullet_level != 7) ? 0x11 : 0;
     if (Player_work.weapon_left_no == 1)
     {
-        if (Player_work.parts[1].value06 == 0)
+        if (Player_work.weapon_data[1].bullet_left == 0)
         {
             if (target < 2)
             {
@@ -268,8 +268,8 @@ void Gauge_buster_recharge(CODE5C_REPEAT *wp)
         {
             return;
         }
-        wp->count_0F                          = 0;
-        pl->parts[pl->weapon_left_no].value06 = target;
+        wp->count_0F                                    = 0;
+        pl->weapon_data[pl->weapon_left_no].bullet_left = target;
     }
 }
 
@@ -401,15 +401,15 @@ void func_8005CCF4(CODE5C_SLOT *wp)
         dy = wp->y_1A;
     }
     func_8005D298(&D_8008D610, x, y, 0);
-    tbl = D_80089EAC;
+    tbl = Weapon_param_tbl;
     lim = 0x7FFF;
     if (x != 0x118)
     {
         level = 0; // dead store; see above
     }
     shift = D_80089A8C[pl->weapon_right_no].shift;
-    level = pl->parts[pl->weapon_right_no].value06 - 1;
-    max   = tbl[pl->weapon_right_no][pl->parts[pl->weapon_right_no].selected].value1;
+    level = pl->weapon_data[pl->weapon_right_no].bullet_left - 1;
+    max   = tbl[pl->weapon_right_no][pl->weapon_data[pl->weapon_right_no].bullet_level].value1;
     fill  = ((level + ((1 << shift) >> 16)) << 16) >> shift;
     if (max == lim)
     {
@@ -901,16 +901,16 @@ sint32 Pl_energy_refill(sint32 arg0)
     }
     if (arg0 != 0)
     {
-        cur = pl->parts[Player_work.part_index].value06;
+        cur = pl->weapon_data[Player_work.part_index].bullet_left;
         if (cur + 0x10 >= target)
         {
-            pl->parts[Player_work.part_index].value06 = target;
+            pl->weapon_data[Player_work.part_index].bullet_left = target;
             return 1;
         }
-        pl->parts[Player_work.part_index].value06 = cur + 0x10;
+        pl->weapon_data[Player_work.part_index].bullet_left = cur + 0x10;
         return 0;
     }
-    return pl->parts[Player_work.part_index].value06 == target;
+    return pl->weapon_data[Player_work.part_index].bullet_left == target;
 }
 
 void func_8005DBB4(sint32 arg0)

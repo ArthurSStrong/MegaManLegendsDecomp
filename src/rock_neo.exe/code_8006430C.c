@@ -558,7 +558,7 @@ void func_80065064(void)
     {
         save->data_101[i] = (&D_80097FD4)[i];
     }
-    func_8003B140();
+    Map_obj_state_save();
     save->gw_10       = MEM_W(gw, 0x10);
     save->gw_14       = gw->timer_14;
     save->gw_18       = MEM_H(gw, 0x18);
@@ -619,7 +619,7 @@ void func_80065064(void)
     func_800176DC(&MEM_B(pl, 0x474), save->pl_474, 4);
     func_800176DC(&MEM_B(pl, 0x4F4), save->pl_4f4, 8);
     func_800176DC(Sce_flag, save->sce_flag, 8);
-    func_800176DC(D_800BD3B8, save->block_480, 0x70);
+    func_800176DC(Map_obj_state, save->block_480, 0x70);
     func_800176DC(D_800BC9B8, save->block_1280, 0x50);
     func_800176A4(gw->records_84, save->records, 15);
 }

@@ -28,7 +28,7 @@ void func_800D8840(SHL0D_WORK *wp)
     wp->beam.value_be = D_800D9260[level];
     wp->beam.value_bf = D_800D9258[level];
     wp->beam.size_c0  = D_800D9268[level];
-    wp->beam.flags_c4 = func_800375D4(&Player_work, 0xD);
+    wp->beam.flags_c4 = Player_weapon_attack_calc(&Player_work, 0xD);
     wp->beam.scale_c8 = D_800D9288[level];
     func_800D8AB8(wp);
     wp->color_b4 = 0x02808080;
@@ -86,7 +86,7 @@ void func_800D8988(SHL0D_WORK *wp)
 
 uint8 func_800D8A6C(SHL0D_WORK *wp)
 {
-    if ((PLAYER_WORK_PTR->pad_11c & PLAYER_WORK_PTR->value_13c) && func_8004324C(&Player_work))
+    if ((PLAYER_WORK_PTR->pad_11c & PLAYER_WORK_PTR->value_13c) && Pl_shot_busy(&Player_work))
     {
         return 0;
     }

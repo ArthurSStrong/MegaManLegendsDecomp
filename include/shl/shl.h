@@ -260,11 +260,11 @@ void func_8004AC8C(SVECTOR *vel, sint32 flags);
 sint32 Scr_cell_get(SVECTOR *pos);
 sint32 Scr_height_check(void *obj);
 sint32 Scr_event_check(void *obj);
-sint32 func_8004324C(SHL_PLAYER *pl);
+sint32 Pl_shot_busy(SHL_PLAYER *pl);
 void Homing_target_clear(sint32 bit);
-sint32 func_80037634(void *pl, sint32 arg);
-sint32 func_80037694(void *obj, sint32 arg);
-sint32 func_800375D4(void *pl, sint32 arg);
+sint32 Player_weapon_dist_calc(void *pl, sint32 arg);
+sint32 Shot_map_check(void *obj, sint32 arg);
+sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 sint16 func_80039B80(void);
 void Solid_mover_set(void *obj);
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,

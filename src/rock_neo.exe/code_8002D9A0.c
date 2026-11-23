@@ -3,11 +3,11 @@
 #include "rock_neo.exe/gte_inline.h"
 
 // Point sprites: each queued poly's centre is transformed with the scratchpad matrix, then
-// with D_80097CD4 as a quad of half-size r. One matrix pointer serves both loads, so the
+// with Matrix_identity as a quad of half-size r. One matrix pointer serves both loads, so the
 // scratchpad one is reloaded every pass (retail's lui in the loop branch's delay slot). The
-// first two words go through scalar casts and D_800BE6D8[i]: a fixed-address scalar store
+// first two words go through scalar casts and Billboard_queue[i]: a fixed-address scalar store
 // and an array load don't alias for GCC 2.7, so both loads are scheduled first.
-void func_8002D9A0(void)
+void billboard_draw(void)
 {
     sint32 pos[3];
     C8002D9A0_VERTS v;
@@ -22,15 +22,15 @@ void func_8002D9A0(void)
     sint32 *m;
     C8002D9A0_POLY *p;
 
-    n          = D_800988FC;
-    D_800988FC = 0;
+    n               = Billboard_count;
+    Billboard_count = 0;
     for (i = 0; i < n; i++)
     {
         m = (sint32 *)0x1F800008;
         GTE_SET_MATRIX(m);
-        *(sint32 *)&v.h[0] = D_800BE6D8[i]->w8;
-        *(sint32 *)&v.h[2] = D_800BE6D8[i]->w10;
-        pp                 = &D_800BE6D8[i];
+        *(sint32 *)&v.h[0] = Billboard_queue[i]->w8;
+        *(sint32 *)&v.h[2] = Billboard_queue[i]->w10;
+        pp                 = &Billboard_queue[i];
         GTE_LDV0(&v);
         GTE_NOP2();
         GTE_RTV0();
@@ -38,7 +38,7 @@ void func_8002D9A0(void)
         z = pos[2];
         if ((*(uint16 *)0x1F800006 << 2) >= z && z >= 0xC0)
         {
-            m = D_80097CD4;
+            m = Matrix_identity;
             GTE_SET_MATRIX(m);
             p      = *pp;
             r      = p->w18;
@@ -60,7 +60,7 @@ void func_8002D9A0(void)
             }
             else
             {
-                *(uint32 *)0x1F8000E0 = D_800C0DC0[(z / 512) & 0x1F] << 16;
+                *(uint32 *)0x1F8000E0 = Fog_clut_tbl[(z / 512) & 0x1F] << 16;
                 GTE_LWC2(6, &(*pp)->rgb);
                 GTE_NOP2();
                 GTE_DPCS_RUN();
@@ -81,7 +81,7 @@ void func_8002D9A0(void)
 }
 
 // One variable holds the header word and then the second entry word.
-C8002D9A0_UNPACK func_8002DC84(C8002D9A0_OBJ *obj, sint32 i, sint32 j)
+C8002D9A0_UNPACK Model_poly_group_get(C8002D9A0_OBJ *obj, sint32 i, sint32 j)
 {
     C8002D9A0_UNPACK r;
     uint32 w;
@@ -100,7 +100,7 @@ C8002D9A0_UNPACK func_8002DC84(C8002D9A0_OBJ *obj, sint32 i, sint32 j)
 
 // Copied word by word: a struct assignment is one block-move insn, which keeps the
 // prologue's stack adjustment ahead of the loads.
-C8002D9A0_B8 func_8002DD1C(C8002D9A0_ENT8 *tbl, sint32 idx)
+C8002D9A0_B8 Quad_uv_get(C8002D9A0_ENT8 *tbl, sint32 idx)
 {
     C8002D9A0_W8 tmp;
     sint32 w0;
@@ -121,7 +121,7 @@ C8002D9A0_B4 func_8002DD68(C8002D9A0_ENT16 *tbl, sint32 idx)
     return *(C8002D9A0_B4 *)&tmp;
 }
 
-// Copied word by word, like func_8002DD1C; the store order sets retail's schedule.
+// Copied word by word, like Quad_uv_get; the store order sets retail's schedule.
 C8002D9A0_B12 func_8002DDA0(C8002D9A0_ENT16 *tbl, sint32 idx)
 {
     C8002D9A0_W12 tmp;
@@ -138,7 +138,7 @@ C8002D9A0_B12 func_8002DDA0(C8002D9A0_ENT16 *tbl, sint32 idx)
     return *(C8002D9A0_B12 *)&tmp;
 }
 
-void func_8002DE04(C8002D9A0_ENT8 *tbl, sint32 idx, sint32 *src)
+void Quad_uv_set(C8002D9A0_ENT8 *tbl, sint32 idx, sint32 *src)
 {
     tbl[idx].w[0] = src[0];
     tbl[idx].w[1] = src[1];
@@ -156,7 +156,7 @@ void func_8002DE34(C8002D9A0_ENT16 *tbl, sint32 idx, sint32 *src)
     tbl[idx].w[3] = src[2];
 }
 
-void func_8002DE5C(void)
+void parts_model_draw_all(void)
 {
     C8002D9A0_REC *p;
     uint32 i;
@@ -169,7 +169,7 @@ void func_8002DE5C(void)
         p--;
         if (p->flags & 2)
         {
-            func_8002DEEC(p);
+            parts_model_draw(p);
         }
     } while (i != 0);
     i = 16;
@@ -180,13 +180,13 @@ void func_8002DE5C(void)
         p--;
         if (p->flags & 2)
         {
-            func_8002DEEC(p);
+            parts_model_draw(p);
         }
     } while (i != 0);
 }
 
 // The fog-table load uses ASPSX 2.34's constant-address expansion (tools/patches/maspsx-*).
-void func_8002DEEC(C8002D9A0_REC *rec)
+void parts_model_draw(C8002D9A0_REC *rec)
 {
     sint32 v[4];
     sint16 unused[4];
@@ -260,7 +260,7 @@ void func_8002DEEC(C8002D9A0_REC *rec)
             GTE_MTC2(8, C8002D9A0_DEPTH);
             C8002D9A0_GTE_DPCS(&C8002D9A0_COLOR);
         }
-        func_8002E3D0((C8002D9A0_LOD *)(rec->parts[i].index * sizeof(C8002D9A0_LOD) +
-                                        (uint32)C8002D9A0_LOD_PTR));
+        Mesh_draw((C8002D9A0_LOD *)(rec->parts[i].index * sizeof(C8002D9A0_LOD) +
+                                    (uint32)C8002D9A0_LOD_PTR));
     }
 }

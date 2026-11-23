@@ -92,7 +92,7 @@ void func_8010A5E0(ST0C_SHL *wp)
     wp->kind_2             = 0x82;
     Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
-    wp->timer_b = func_80037634(&Player_work, 2);
+    wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
     func_8010ACA4(wp, 0);
     func_8010AB60(wp);
@@ -101,7 +101,7 @@ void func_8010A5E0(ST0C_SHL *wp)
 
 void func_8010A9E8(ST0C_SHOT *wp)
 {
-    if (func_80037694((STCOM23_WORK *)wp, 0) || wp->hit_7C)
+    if (Shot_map_check((STCOM23_WORK *)wp, 0) || wp->hit_7C)
     {
         if (wp->type_3 & 0x40)
         {
@@ -145,7 +145,7 @@ void func_8010AB60(ST0C_SHOT *wp)
     STCOM_SVECTOR p;
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 2);
+    flags = Player_weapon_attack_calc(&Player_work, 2);
     p.x   = wp->pos.x * 2 - wp->old_pos.x;
     p.y   = wp->pos.y * 2 - wp->old_pos.y;
     p.z   = wp->pos.z * 2 - wp->old_pos.z;

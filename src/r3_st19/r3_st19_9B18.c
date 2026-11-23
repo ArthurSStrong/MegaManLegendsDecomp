@@ -146,7 +146,7 @@ void func_80109D78(STCOM18_WORK *wp)
         }
         if (!(wp->flags_F & 4))
         {
-            func_80037738(hit, 0x28);
+            Map_obj_hit_damage(hit, 0x28);
         }
     }
 }
@@ -248,7 +248,7 @@ void func_8010A298(ST19_10C_B *wp)
     hit = Scr_line_check(wp);
     if (hit != 0)
     {
-        func_80037738(hit, D_80118088[wp->byte_D]);
+        Map_obj_hit_damage(hit, D_80118088[wp->byte_D]);
         wp->routine_3 = 0x18;
         wp->count_CC  = 0;
         wp->routine_0++;

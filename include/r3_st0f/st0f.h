@@ -149,7 +149,7 @@ void func_801004AC(STAGE_ROOM_WORK *wp);
 sint32 func_80100DD0(void);
 void func_8010025C(void);
 
-sint32 func_8003B2D4(sint32 row, sint32 bit);
+sint32 Map_obj_state_get(sint32 row, sint32 bit);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_80105900[][8];

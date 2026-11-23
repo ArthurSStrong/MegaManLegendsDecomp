@@ -816,7 +816,7 @@ extern void *D_8012E1F4[];
 extern uint8 D_8012E208[][0x28];
 extern uint8 D_8012E2D0[][8];
 extern STCOM_SVECTOR D_8012E44C[];
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
@@ -1057,7 +1057,7 @@ typedef struct
 
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_80126990(ST05_SHL *wp);
 
 extern ST05_ACTOR_FUNC D_80131974[];
@@ -1802,14 +1802,14 @@ typedef struct
     uint32 *color_1C[2]; // 1C
 } ST05_EVENT;
 
-// A model part as func_80127190 reads it from a func_8003AC24 record: its colors at +0x24.
+// A model part as func_80127190 reads it from a Stage_hed_model_get record: its colors at +0x24.
 typedef struct
 {
     uint8 reserved00[0x24]; // 00
     uint32 *color_24;       // 24: four words of two colors each
 } ST05_MODEL_PART;
 
-// The model record func_8003AC24 returns (key & 0xFFFFFF).
+// The model record Stage_hed_model_get returns (key & 0xFFFFFF).
 typedef struct
 {
     uint8 reserved00[0x18];      // 00

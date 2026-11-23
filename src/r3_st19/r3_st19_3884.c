@@ -1553,8 +1553,8 @@ void func_80107040(STCOM_PL_WORK *arg0)
     temp_v0 = Scr_line_check(arg0);
     if (temp_v0 != 0)
     {
-        func_80037BB4(arg0);
-        func_80037738(temp_v0, 0x8000);
+        Map_obj_hit_life(arg0);
+        Map_obj_hit_damage(temp_v0, 0x8000);
     }
 }
 

@@ -145,7 +145,7 @@ void func_801121D0(ST14_PROP *wp)
     sint32 level;
 
     model = &wp->model;
-    if (func_80037694(wp, 0) || ++wp->count_F == 0x40)
+    if (Shot_map_check(wp, 0) || ++wp->count_F == 0x40)
     {
         Close_SHL_WORK(wp);
         return;

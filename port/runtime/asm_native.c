@@ -1,6 +1,6 @@
 // Native equivalents of ROCK_NEO.EXE's hand-written assembly (asm/rock_neo.exe/asm_fastmem.s).
 // These routines stay assembly in the matching build; the port needs C with the same effect.
-// asm_8002E3D0 (func_8002E3D0, a hand-scheduled renderer loop) is not done yet and still gets
+// asm_8002E3D0 (Mesh_draw, a hand-scheduled renderer loop) is not done yet and still gets
 // a generated stub.
 #include <stdint.h>
 

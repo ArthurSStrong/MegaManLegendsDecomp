@@ -24,7 +24,7 @@ typedef struct
 typedef struct
 {
     uint8 reserved00[6];
-    sint16 h06;
+    sint16 bullet_left;
 } C800425FC_PART;
 
 // Local view of the actor fields touched by the routines in this file
@@ -68,14 +68,14 @@ typedef struct
     uint8 reserved19c[0x2B0];
     sint8 s44c;
     uint8 reserved44d[0xA7];
-    C800425FC_PART parts[16];
+    C800425FC_PART weapon_data[16];
 } C800425FC_ACT;
 
 extern uint8 D_80089A84[];
 extern uint8 Game_work[];
 void Pl_move(C800425FC_ACT *ap, sint32 b, sint32 c, sint32 d);
-void func_80042A40(C800425FC_ACT *ap);
-void func_80042DF8(C800425FC_ACT *ap);
+void Pl_special_recoil(C800425FC_ACT *ap);
+void Pl_special_lunge(C800425FC_ACT *ap);
 extern uint8 D_80089A85[];
 extern uint8 D_80089A86[];
 extern uint8 D_80089A87[];
@@ -83,7 +83,7 @@ extern uint8 D_80089A87[];
 // Defined with the player's work type elsewhere; declared without parameters here.
 void Pl_Char_Set();
 void Pl_Char_Set_Upper();
-sint32 func_80037664();
+sint32 Player_weapon_repeat_calc();
 void Pl00_shot_enable_off();
 uint8 Pl_anim_special(C800425FC_ACT *ap);
 uint8 Pl_anim_buster(C800425FC_ACT *ap);

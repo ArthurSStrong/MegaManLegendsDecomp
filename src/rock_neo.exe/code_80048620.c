@@ -4222,7 +4222,7 @@ sint32 scr_check_press(PL_WORK *pl)
             {
                 return 0;
             }
-            if (func_8004324C(pl) == 0)
+            if (Pl_shot_busy(pl) == 0)
             {
                 return 1;
             }

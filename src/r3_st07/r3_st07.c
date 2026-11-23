@@ -749,7 +749,7 @@ void func_80101430(STAGE_ROOM *wp)
             {
                 D_800C356C = 2;
                 D_800C356E = 6;
-                if (func_8003B2D4(6, 0x205) == 3)
+                if (Map_obj_state_get(6, 0x205) == 3)
                 {
                     D_800C356F = 1;
                 }

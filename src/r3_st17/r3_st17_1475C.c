@@ -19,7 +19,7 @@ void func_8011475C(STAGE_OBJ *wp)
             ep->step_D    = 0;
             ep->timer_C   = 0;
             ep->value_F   = 1;
-            ep->key_1C    = func_8003AC24(D_8011C590[i + base]);
+            ep->key_1C    = Stage_hed_model_get(D_8011C590[i + base]);
             if (wp->flags_6 & 0x20)
             {
                 ep->flags_6 |= 0x20;
@@ -35,14 +35,14 @@ void func_80114854(STAGE_OBJ *wp)
     STAGE_UNPACK u;
     sint32 u0;
 
-    u       = func_8002DC84((void *)wp->position_fixed.v.x, 0, 4);
-    uv      = func_8002DD1C(u.c, 0);
+    u       = Model_poly_group_get((void *)wp->position_fixed.v.x, 0, 4);
+    uv      = Quad_uv_get(u.c, 0);
     u0      = (++wp->u_C.b.byte_C & 0x18) * 8;
     uv.b[0] = u0 + 6;
     uv.b[2] = u0 + 1;
     uv.b[4] = u0 + 0x3D;
     uv.b[6] = u0 + 0x3F;
-    func_8002DE04(u.c, 0, uv.w);
+    Quad_uv_set(u.c, 0, uv.w);
 }
 
 void func_801148E0(STAGE_OBJ *wp)
@@ -51,8 +51,8 @@ void func_801148E0(STAGE_OBJ *wp)
     STAGE_UNPACK u;
     sint32 u0;
 
-    u  = func_8002DC84((void *)wp->position_fixed.v.x, 0, 4);
-    uv = func_8002DD1C(u.c, 0);
+    u  = Model_poly_group_get((void *)wp->position_fixed.v.x, 0, 4);
+    uv = Quad_uv_get(u.c, 0);
     if (++wp->u_C.b.byte_C == D_8011C5B8[wp->u_C.b.byte_D].hold)
     {
         wp->u_C.b.byte_D++;
@@ -67,7 +67,7 @@ void func_801148E0(STAGE_OBJ *wp)
     uv.b[2] = u0 + 0x2E;
     uv.b[4] = u0 + 1;
     uv.b[6] = u0 + 0x2E;
-    func_8002DE04(u.c, 0, uv.w);
+    Quad_uv_set(u.c, 0, uv.w);
 }
 
 void func_801149C0(STAGE_OBJ *wp)
@@ -76,8 +76,8 @@ void func_801149C0(STAGE_OBJ *wp)
     STAGE_UNPACK u;
     sint32 u0;
 
-    u  = func_8002DC84((void *)wp->position_fixed.v.x, 0, 5);
-    uv = func_8002DD1C(u.c, 0);
+    u  = Model_poly_group_get((void *)wp->position_fixed.v.x, 0, 5);
+    uv = Quad_uv_get(u.c, 0);
     if (++wp->u_C.b.byte_C == D_8011C5D4[wp->u_C.b.byte_D].hold)
     {
         wp->u_C.b.byte_D++;
@@ -92,7 +92,7 @@ void func_801149C0(STAGE_OBJ *wp)
     uv.b[2] = u0 + 0x2E;
     uv.b[4] = u0 + 1;
     uv.b[6] = u0 + 1;
-    func_8002DE04(u.c, 0, uv.w);
+    Quad_uv_set(u.c, 0, uv.w);
 }
 
 void func_80114AA0(STAGE_OBJ *wp)
@@ -101,8 +101,8 @@ void func_80114AA0(STAGE_OBJ *wp)
     STAGE_UNPACK u;
     uint8 u0;
 
-    u  = func_8002DC84((void *)wp->position_fixed.v.x, 0, 6);
-    uv = func_8002DD1C(u.c, 0);
+    u  = Model_poly_group_get((void *)wp->position_fixed.v.x, 0, 6);
+    uv = Quad_uv_get(u.c, 0);
     if (++wp->u_C.b.byte_C == D_8011C5E0[wp->u_C.b.byte_D].hold)
     {
         wp->u_C.b.byte_D++;
@@ -117,7 +117,7 @@ void func_80114AA0(STAGE_OBJ *wp)
     uv.b[2] = u0 + 0x2F;
     uv.b[4] = u0;
     uv.b[6] = u0 + 0x2F;
-    func_8002DE04(u.c, 0, uv.w);
+    Quad_uv_set(u.c, 0, uv.w);
 }
 
 void func_80114B80(STAGE_EV *wp)
@@ -138,8 +138,8 @@ void func_80114B80(STAGE_EV *wp)
     }
     x       = (uint8)(D_8011C5F4[wp->step_D].frame % 6) * 0x28;
     y       = (uint8)(D_8011C5F4[wp->step_D].frame / 6) * 0x28;
-    u       = func_8002DC84((void *)wp->key_1C, 0, 7);
-    uv      = func_8002DD1C(u.c, 0);
+    u       = Model_poly_group_get((void *)wp->key_1C, 0, 7);
+    uv      = Quad_uv_get(u.c, 0);
     uv.b[0] = x + 0x23;
     uv.b[2] = x + 0x26;
     uv.b[4] = x + 4;
@@ -148,8 +148,8 @@ void func_80114B80(STAGE_EV *wp)
     uv.b[3] = y + 0x67;
     uv.b[5] = y + 0x54;
     uv.b[7] = y + 0x67;
-    func_8002DE04(u.c, 0, uv.w);
-    uv      = func_8002DD1C(u.c, 1);
+    Quad_uv_set(u.c, 0, uv.w);
+    uv      = Quad_uv_get(u.c, 1);
     uv.b[0] = x + 0x20;
     uv.b[2] = x + 0x23;
     uv.b[4] = x + 7;
@@ -158,7 +158,7 @@ void func_80114B80(STAGE_EV *wp)
     uv.b[3] = y + 0x54;
     uv.b[5] = y + 0x41;
     uv.b[7] = y + 0x54;
-    func_8002DE04(u.c, 1, uv.w);
+    Quad_uv_set(u.c, 1, uv.w);
 }
 
 void func_80114D30(void)

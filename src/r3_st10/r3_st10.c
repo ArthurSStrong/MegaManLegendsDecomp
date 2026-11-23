@@ -44,12 +44,12 @@ void func_80100354(void)
         if (Sce_flag_test(0x21B))
         {
             D_8010F5D4 = D_8010F604;
-            func_8003AC9C(Scr_cell_get(&D_8010F90C), 0x180300);
+            Map_obj_model_swap(Scr_cell_get(&D_8010F90C), 0x180300);
         }
         else if (Sce_flag_test(0x218))
         {
             D_8010F5D4 = D_8010F5EC;
-            func_8003AC9C(Scr_cell_get(&D_8010F90C), 0x180200);
+            Map_obj_model_swap(Scr_cell_get(&D_8010F90C), 0x180200);
         }
         pl->value_44E = 1;
     }

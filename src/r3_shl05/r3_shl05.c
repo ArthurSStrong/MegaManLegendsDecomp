@@ -91,7 +91,7 @@ void func_800D8B90(SHL_WORK *wp)
     SHL_FX *fx;
 
     func_800D94C0(wp);
-    if (func_80037694(wp, 0) || wp->hit_7c)
+    if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
         wp->draw.spr.value_9c = 0;
         fx                    = Open_EFFECT_WORK();
@@ -165,7 +165,7 @@ void func_800D8DF4(SHL_WORK *wp)
     SHL_FX *fx;
     sint16 mask;
 
-    if (func_80037694(wp, 0) || wp->hit_7c)
+    if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
         wp->draw.spr.value_9c = 0;
         goto end;

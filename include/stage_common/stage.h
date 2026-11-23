@@ -229,7 +229,7 @@ void func_80039820(void);
 void Thread_change(STAGE_THREAD_FUNC entry);
 sint32 func_8002D404(sint32 id, sint32 a1, sint32 a2, sint32 a3);
 void func_8002D320(void *model, uint32 idx, sint32 delta);
-uint32 func_8003AC24(uint32 key);
+uint32 Stage_hed_model_get(uint32 key);
 // Allocates a 0x24-byte event slot; NULL when none is free.
 void *Open_EVE_WORK(void);
 
@@ -405,7 +405,7 @@ typedef struct
     uint8 reserved20[4];   // 20
 } STAGE_EVENT;
 
-// The record func_8002DC84 returns.
+// The record Model_poly_group_get returns.
 typedef struct
 {
     uint32 head;
@@ -420,8 +420,8 @@ STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 STCOM_MATRIX *MulMatrix(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
 void ApplyMatrixLV(STCOM_MATRIX *m, STCOM_FIXED_VECTOR *v0, STCOM_FIXED_VECTOR *v1);
-STAGE_UNPACK func_8002DC84(void *obj, sint32 i, sint32 j);
-void func_8002DE04(void *tbl, sint32 idx, sint32 *src);
+STAGE_UNPACK Model_poly_group_get(void *obj, sint32 i, sint32 j);
+void Quad_uv_set(void *tbl, sint32 idx, sint32 *src);
 
 // A pair of faces' lip-sync cue lists (mouth and eyes, or two speakers). A struct, not two
 // pointers: GCC keeps the stores in order with the work slot's, and increments each directly.
@@ -738,14 +738,14 @@ typedef struct
     sint16 x, y, z;
 } STAGE_XYZ;
 
-// The eight bytes func_8002DD1C returns: four (u, v) corners, also passed on as words.
+// The eight bytes Quad_uv_get returns: four (u, v) corners, also passed on as words.
 typedef union
 {
     uint8 b[8];
     sint32 w[2];
 } STAGE_UV4;
 
-STAGE_UV4 func_8002DD1C(void *tbl, sint32 idx);
+STAGE_UV4 Quad_uv_get(void *tbl, sint32 idx);
 
 // A 0x24-byte event slot as STAGE_EVENT, with more fields named.
 typedef struct
@@ -1265,7 +1265,7 @@ typedef struct
     uint8 reserved44[4];
 } STAGE_SHOT_FX;
 
-sint32 func_800375D4(void *pl, sint32 arg);
+sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
                 void *hit, sint32 flags, sint32 a9, sint32 a10);
 

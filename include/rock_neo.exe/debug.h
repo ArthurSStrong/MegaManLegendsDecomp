@@ -130,17 +130,17 @@ typedef struct
     uint32 flags;
     char text[12];
 } DEBUG_MENU_LINE;
-extern DEBUG_MENU_LINE D_8008DCD4[];
-extern DEBUG_MENU_LINE D_8008DBF4[];
+extern DEBUG_MENU_LINE Debug_weapon_left_tbl[];
+extern DEBUG_MENU_LINE Debug_weapon_right_tbl[];
 extern uint32 D_80098700; // held-direction repeat counter for the stage menu
-sint32 func_80063058(DEBUG_WORK *wp);
-extern DEBUG_MENU_LINE D_8008DCF4[];
-sint32 func_80063334(DEBUG_WORK *wp);
-extern DEBUG_MENU_LINE D_8008DD14[];
+sint32 Debug_item_weapon_left(DEBUG_WORK *wp);
+extern DEBUG_MENU_LINE Debug_helmet_tbl[];
+sint32 Debug_item_helmet(DEBUG_WORK *wp);
+extern DEBUG_MENU_LINE Debug_key_type_tbl[];
 sint32 Debug_item_key_type(DEBUG_WORK *wp);
-extern DEBUG_MENU_LINE D_8008DD34[];
+extern DEBUG_MENU_LINE Debug_size_tbl[];
 extern sint32 D_80097864;
-sint32 func_800638D8(DEBUG_WORK *wp);
+sint32 Debug_item_size(DEBUG_WORK *wp);
 void Pl_key_type_set(void *pl, sint32 arg);
 #define DEBUG_GAME_54 (*((sint8 *)&Game_work + 0x54))
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);

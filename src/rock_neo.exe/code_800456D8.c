@@ -559,7 +559,7 @@ void func_80046A0C(CODE456_WORK *wp)
         }
         else
         {
-            func_80043340(D_8008A680[Game_work.option_5b][idx], 0);
+            Pl_life_add(D_8008A680[Game_work.option_5b][idx], 0);
         }
     }
 }

@@ -256,7 +256,7 @@ void Sce_stage_load(void);
 void Sce_room_load(void);
 void Sce_pl_parts_load(void);
 void func_8002FA10(void *obj, void *arg);
-void func_80037594(void);
+void Player_weapon_refill(void);
 void Model_work_init(void *obj, void *arg);
 
 void func_800177CC(void *start, void *end);
@@ -285,7 +285,7 @@ void func_801DB5B8(void);
 void func_801D8B68(void);
 void func_801DBBE0(void);
 void func_801DB800(void);
-void func_8003B140(void);
+void Map_obj_state_save(void);
 void Moji_task_kill(sint32 arg);
 void Moji_amount_set(sint32 price);
 void func_8005C24C(sint32 kind);

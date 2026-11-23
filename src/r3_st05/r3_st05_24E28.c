@@ -822,7 +822,7 @@ void func_80126990(ST05_SHL *wp)
     wp->kind_2             = 0x82;
     Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
-    wp->timer_b = func_80037634(&Player_work, 2);
+    wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
     func_80127054(wp, 0);
     func_80126F10(wp);
@@ -831,7 +831,7 @@ void func_80126990(ST05_SHL *wp)
 
 void func_80126D98(STAGE_SHOT *wp)
 {
-    if (func_80037694(wp, 0) || wp->hit_7c)
+    if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
         if (wp->type_3 & 0x40)
         {
@@ -875,7 +875,7 @@ void func_80126F10(STAGE_SHOT *wp)
     STCOM_SVECTOR p;
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 2);
+    flags = Player_weapon_attack_calc(&Player_work, 2);
     p.x   = wp->pos.x * 2 - wp->old_pos.x;
     p.y   = wp->pos.y * 2 - wp->old_pos.y;
     p.z   = wp->pos.z * 2 - wp->old_pos.z;
@@ -947,7 +947,7 @@ void func_80127190(ST05_EVENT *wp)
 {
     ST05_MODEL *model;
 
-    model = (ST05_MODEL *)func_8003AC24(0x50000);
+    model = (ST05_MODEL *)Stage_hed_model_get(0x50000);
     if (model == NULL)
     {
         Close_EVE_WORK(wp);

@@ -309,7 +309,7 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2)
 {
     SOUND_CALL *call;
 
-    if (Sound_call_ptr != D_800BE6D8)
+    if (Sound_call_ptr != Billboard_queue)
     {
         Sound_call_ptr->kind      = 0;
         Sound_call_ptr->id        = id;
@@ -323,7 +323,7 @@ void Sound_call2(sint16 id, SOUND_ARGS *args)
 {
     SOUND_CALL *call;
 
-    if (Sound_call_ptr != D_800BE6D8)
+    if (Sound_call_ptr != Billboard_queue)
     {
         Sound_call_ptr->kind = 1;
         call             = Sound_call_ptr;

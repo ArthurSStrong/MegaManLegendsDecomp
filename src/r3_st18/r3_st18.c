@@ -794,8 +794,8 @@ void func_80101CE8(STAGE_EVENT *wp)
             return;
         }
     }
-    u = func_8002DC84((void *)wp->key_1C, 0, 5);
-    func_8002DE04(u.c, 0, D_801027F4[wp->step_D]);
+    u = Model_poly_group_get((void *)wp->key_1C, 0, 5);
+    Quad_uv_set(u.c, 0, D_801027F4[wp->step_D]);
 }
 
 void func_80101D94(void)
@@ -809,6 +809,6 @@ void func_80101D94(void)
         ep->kind_2  = 0xB;
         ep->step_D  = 0;
         ep->timer_C = 0;
-        ep->key_1C  = func_8003AC24(0xC0000);
+        ep->key_1C  = Stage_hed_model_get(0xC0000);
     }
 }

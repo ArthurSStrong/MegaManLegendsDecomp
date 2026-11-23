@@ -260,7 +260,7 @@ typedef struct
 #define C8001F828_MODEL_ENTRIES ((C8001F828_MODEL_ENTRY *)0x80139F00)
 
 extern C8001F828_MODEL_SLOT D_80139F04[];
-extern uint8 D_800C0DC0[];
+extern uint8 Fog_clut_tbl[];
 
 void func_8002235C(uint8 *data, C8001F828_SVEC *pos, uint32 id);
 // Ordering-table head record; the per-layer tags start at +0x70

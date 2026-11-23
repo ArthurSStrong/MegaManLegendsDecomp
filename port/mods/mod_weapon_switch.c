@@ -11,7 +11,7 @@
 //   special weapon is out (the pause menu's special-weapon screen puts it away and back), and
 //   +0x44E > 0 says weapons are usable in this area (0 in towns: the room loader sets +0x170
 //   from +0x172 and +0x44F on the way out, scene.c).
-// - Energy: PL_WORK.parts[id].value06 (+0x4F4 + id * 8 + 6), kept per weapon.
+// - Energy: PL_WORK.weapon_data[id].bullet_left (+0x4F4 + id * 8 + 6), kept per weapon.
 //
 // Equipping does what Roll's equip does (func_801D952C): +0x172 = id; where weapons are
 // usable, Obj_work_flag_change(8, 0x80) (removes the old weapon's shots before its code goes
@@ -21,7 +21,7 @@
 // state 4 hands the field back only when the CD queue is empty (Cd_read_sync2), so the new
 // weapon's code is in memory before Mega Man can fire it. The page therefore only changes
 // Player_work while the pause menu is up and leaves the loading to the game's own exit path.
-// Roll also refills the weapon's energy (func_80037594); here that is the setting "Refill
+// Roll also refills the weapon's energy (Player_weapon_refill); here that is the setting "Refill
 // energy" (off by default: weapons keep the energy they had).
 #include "mods.h"
 
@@ -32,7 +32,7 @@
 #include <stdio.h>
 
 #define FUNC_OBJ_FLAG_CHANGE 0x8002EE90u // void Obj_work_flag_change(sint32 mask, sint32 flags)
-#define FUNC_REFILL          0x80037594u // void func_80037594(void): parts[+0x172] energy full
+#define FUNC_REFILL          0x80037594u // void Player_weapon_refill(void): fills parts[+0x172]
 #define FUNC_ENERGY_MAX      0x80037604u // sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 id)
 #define SCE_FLAG             0x800BE378u // Sce_flag[]
 #define SUB_WORK             0x800A38F0u // D_800A38F0, the sub-screen's state word
@@ -43,7 +43,7 @@
 #define PL_SHOT      (MODS_PLAYER_WORK + 0x174) // shot_status_flag: 0x40 special / 0x80 buster
 #define PL_ARMED     (MODS_PLAYER_WORK + 0x44E) // sint8: > 0 where weapons are usable
 #define PL_OUT       (MODS_PLAYER_WORK + 0x44F) // the special weapon is out
-#define PL_ENERGY(i) (MODS_PLAYER_WORK + 0x4F4 + (i) * 8 + 6) // parts[i].value06
+#define PL_ENERGY(i) (MODS_PLAYER_WORK + 0x4F4 + (i) * 8 + 6) // weapon_data[i].bullet_left
 
 #define POKE8(a, v) MODS_POKE8(a, v)
 

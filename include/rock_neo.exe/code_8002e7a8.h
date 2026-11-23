@@ -960,7 +960,7 @@ sint32 model_dir_search(RES_OWNER *wp, sint32 *dir, uint8 *key);
 void func_80017684(void *src, void *dst, sint32 count);
 void func_800176DC(void *src, void *dst, sint32 count);
 extern uint32 D_800BADB0[];
-extern uint8 D_800C0DC0[];
+extern uint8 Fog_clut_tbl[];
 extern FOGSAVE_WORK D_800BC7F8;
 #define FOG_FAR_MODE (*(uint8 *)0x1F800078)
 #define DEBUG_TRAP   (*(sint32 *)0x87654321)

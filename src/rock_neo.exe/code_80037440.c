@@ -3,21 +3,21 @@
 #include "game.h"
 
 // Small data reached through $gp
-uint16 D_80097D24;
-static uint8 D_8009856C[16];
+uint16 Cell_stack_idx;
+static uint8 pl_shl_count[16];
 
-sint32 func_80037440(void)
+sint32 Pl_special_shot_check(void)
 {
     sint32 i;
     sint32 part;
     sint32 level;
     sint32 kind;
 
-    part                      = Player_work.weapon_right_no;
-    ((sint32 *)D_8009856C)[0] = 0;
-    ((sint32 *)D_8009856C)[1] = 0;
-    ((sint32 *)D_8009856C)[2] = 0;
-    ((sint32 *)D_8009856C)[3] = 0;
+    part                        = Player_work.weapon_right_no;
+    ((sint32 *)pl_shl_count)[0] = 0;
+    ((sint32 *)pl_shl_count)[1] = 0;
+    ((sint32 *)pl_shl_count)[2] = 0;
+    ((sint32 *)pl_shl_count)[3] = 0;
     for (i = 0; i < 16; i++)
     {
         if (Pl_shl_work_tbl[i].flags & 1)
@@ -25,75 +25,75 @@ sint32 func_80037440(void)
             kind = Pl_shl_work_tbl[i].kind - 0x80;
             if (kind < 16)
             {
-                D_8009856C[kind]++;
+                pl_shl_count[kind]++;
             }
         }
     }
     if (part == 6)
     {
-        level = Player_work.parts[6].value04;
+        level = Player_work.weapon_data[6].sp_perform;
     }
     else
     {
-        level = Player_work.parts[part].value03;
+        level = Player_work.weapon_data[part].repeat_level;
     }
     if (level >= 4)
     {
         level = 3;
     }
-    return D_800899E0[level][part] > D_8009856C[part];
+    return Weapon_shot_max_tbl[level][part] > pl_shl_count[part];
 }
 
-void func_80037534(PL_WORK *wp)
+void Player_weapon_init(PL_WORK *wp)
 {
     sint32 i;
     PL_PART_STATE *part;
     CODE374_VALUES *values;
 
-    part = wp->parts;
+    part = wp->weapon_data;
     i    = 0;
     for (; i < 16; i++, part++)
     {
-        part->current  = 0;
-        part->selected = 0;
-        part->value02  = 0;
-        part->value03  = 0;
-        part->value04  = 0;
-        values         = D_80089EAC[i];
-        part->value06  = values[part->selected].value1;
+        part->attack_level = 0;
+        part->bullet_level = 0;
+        part->dist_level   = 0;
+        part->repeat_level = 0;
+        part->sp_perform   = 0;
+        values             = Weapon_param_tbl[i];
+        part->bullet_left  = values[part->bullet_level].value1;
     }
 }
 
-void func_80037594(void)
+void Player_weapon_refill(void)
 {
     PL_WORK *wp;
 
     wp = &Player_work;
-    wp->parts[wp->part_index].value06 =
-        D_80089EAC[wp->part_index][wp->parts[wp->part_index].selected].value1;
+    wp->weapon_data[wp->part_index].bullet_left =
+        Weapon_param_tbl[wp->part_index][wp->weapon_data[wp->part_index].bullet_level].value1;
 }
 
-sint32 func_800375D4(PL_WORK *wp, sint32 index)
+sint32 Player_weapon_attack_calc(PL_WORK *wp, sint32 index)
 {
-    return D_80089EAC[index][wp->parts[index].current].value0;
+    return Weapon_param_tbl[index][wp->weapon_data[index].attack_level].value0;
 }
 
 sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 index)
 {
-    return D_80089EAC[index][wp->parts[index].selected].value1;
+    return Weapon_param_tbl[index][wp->weapon_data[index].bullet_level].value1;
 }
 
-sint32 func_80037634(PL_WORK *wp, sint32 index)
+sint32 Player_weapon_dist_calc(PL_WORK *wp, sint32 index)
 {
-    return D_80089EAC[index][wp->parts[index].value02].value2;
+    return Weapon_param_tbl[index][wp->weapon_data[index].dist_level].value2;
 }
 
-sint32 func_80037664(PL_WORK *wp, sint32 index)
+sint32 Player_weapon_repeat_calc(PL_WORK *wp, sint32 index)
 {
-    return D_80089EAC[index][wp->parts[index].value03].value3;
+    return Weapon_param_tbl[index][wp->weapon_data[index].repeat_level].value3;
 }
 
-sint32 func_80037694(PL_WORK *wp, sint32 amount)
+sint32 Shot_map_check(PL_WORK *wp, sint32 amount)
 {
     sint32 value;
 
@@ -106,7 +106,7 @@ sint32 func_80037694(PL_WORK *wp, sint32 amount)
     {
         if (value > 0 && (value & 0xFFFF) <= 0x7FFF && (value & CODE374_GROUP_MASK))
         {
-            func_8003777C(value & 0xFFFF, amount);
+            map_obj_damage(value & 0xFFFF, amount);
         }
         Scr_collision_check(wp);
         return value;
@@ -114,15 +114,15 @@ sint32 func_80037694(PL_WORK *wp, sint32 amount)
     return 0;
 }
 
-void func_80037738(sint32 value, uint32 amount)
+void Map_obj_hit_damage(sint32 value, uint32 amount)
 {
     if (value > 0 && (value & 0xFFFF) <= 0x7FFF && (value & CODE374_GROUP_MASK))
     {
-        func_8003777C((uint16)value, amount);
+        map_obj_damage((uint16)value, amount);
     }
 }
 
-void func_8003777C(uint16 index, uint32 amount)
+void map_obj_damage(uint16 index, uint32 amount)
 {
     CODE374_STATUS *status;
     uint32 flags;
@@ -135,11 +135,11 @@ void func_8003777C(uint16 index, uint32 amount)
     {
         if (**(sint32 **)(0x8015C008 + index * 12) < 0)
         {
-            func_80037818(index);
+            map_obj_break(index);
         }
         else
         {
-            func_80037C50(index);
+            map_obj_break_push(index);
         }
     }
     else
@@ -148,7 +148,7 @@ void func_8003777C(uint16 index, uint32 amount)
     }
 }
 
-void func_80037818(uint16 index)
+void map_obj_break(uint16 index)
 {
     uint16 flags;
     CODE374_STATUS *status;
@@ -158,20 +158,20 @@ void func_80037818(uint16 index)
     status->flags = 0;
     if ((flags >> 12) == 0)
     {
-        func_80037890(0, 4, index);
+        map_obj_debris(0, 4, index);
     }
     else
     {
-        func_80037890(4, 4, index);
+        map_obj_debris(4, 4, index);
     }
 }
 
-void func_8003786C(uint16 index)
+void Map_obj_remove(uint16 index)
 {
     CODE374_STATUS_PTR[index].flags = 0;
 }
 
-void func_80037890(sint32 mode, sint32 count, uint16 index)
+void map_obj_debris(sint32 mode, sint32 count, uint16 index)
 {
     CODE374_VALUES pos;
     CODE374_VALUES ofs;
@@ -249,7 +249,7 @@ void func_80037890(sint32 mode, sint32 count, uint16 index)
     }
 }
 
-sint32 func_80037BB4(sint32 value)
+sint32 Map_obj_hit_life(sint32 value)
 {
     uint32 index;
     sint32 amount;
@@ -270,7 +270,7 @@ sint32 func_80037BB4(sint32 value)
     return -1;
 }
 
-sint32 func_80037C14(sint32 value)
+sint32 Map_obj_life(sint32 value)
 {
     uint32 index;
     sint32 result;
@@ -283,18 +283,18 @@ sint32 func_80037C14(sint32 value)
     return -1;
 }
 
-void func_80037C50(uint16 index)
+void map_obj_break_push(uint16 index)
 {
     if (index < 0x800)
     {
-        D_8009A378[D_80097D24] =
+        Cell_stack[Cell_stack_idx] =
             (((CODE374_ENTRY_PTR[index].x + 0x8000) >> 9) - CODE374_MAP_X) +
             ((((CODE374_ENTRY_PTR[index].z + 0x8000) >> 9) - CODE374_MAP_Z) << 8);
-        D_80097D24++;
+        Cell_stack_idx++;
     }
 }
 
-void func_80037CD8(uint16 cell)
+void map_obj_break_spread(uint16 cell)
 {
     CODE374_VALUES unused; // never referenced; retail's frame reserves it
     uint32 x;
@@ -312,27 +312,27 @@ void func_80037CD8(uint16 cell)
     {
         for (i = 0; i < 8; i++)
         {
-            nx = x + D_80089EEC[i];
-            nz = z + D_80089EF4[i];
+            nx = x + Cell_nbr8_x_tbl[i];
+            nz = z + Cell_nbr8_z_tbl[i];
             if (nx < CODE374_MAP_W && nz < CODE374_MAP_H)
             {
                 n = *(CODE374_MAP + nx + nz * CODE374_MAP_W);
                 if ((uint32)(n - 1) < 0x7FF && n == id)
                 {
-                    D_8009A378[D_80097D24] = nx + (nz << 8);
-                    D_80097D24++;
+                    Cell_stack[Cell_stack_idx] = nx + (nz << 8);
+                    Cell_stack_idx++;
                 }
             }
         }
-        func_80037818(id);
+        map_obj_break(id);
     }
     else
     {
-        D_80097D24--;
+        Cell_stack_idx--;
         for (i = 0; i < 4; i++)
         {
-            nx = x + D_80089EFC[i];
-            nz = z + D_80089F00[i];
+            nx = x + Cell_nbr4_x_tbl[i];
+            nz = z + Cell_nbr4_z_tbl[i];
             if (nx < CODE374_MAP_W && nz < CODE374_MAP_H)
             {
                 n = *(CODE374_MAP + nx + nz * CODE374_MAP_W);
@@ -341,18 +341,18 @@ void func_80037CD8(uint16 cell)
                         ((uint16 *)CODE374_ENTRY_PTR[id].data)[1] &&
                     (CODE374_STATUS_PTR[n].flags & CODE374_STATUS_MASK))
                 {
-                    D_8009A378[D_80097D24] = nx + (nz << 8);
-                    D_80097D24++;
+                    Cell_stack[Cell_stack_idx] = nx + (nz << 8);
+                    Cell_stack_idx++;
                 }
             }
         }
     }
 }
 
-void func_80037F60(void)
+void Map_obj_break_update(void)
 {
-    while (D_80097D24 != 0)
+    while (Cell_stack_idx != 0)
     {
-        func_80037CD8(D_8009A378[D_80097D24 - 1]);
+        map_obj_break_spread(Cell_stack[Cell_stack_idx - 1]);
     }
 }

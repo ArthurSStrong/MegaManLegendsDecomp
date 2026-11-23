@@ -341,7 +341,7 @@ void func_80100BA4(sint32 arg)
             }
             break;
     }
-    func_8003AC9C(Scr_cell_get(&pos), key);
+    Map_obj_model_swap(Scr_cell_get(&pos), key);
 }
 
 void func_80100D54(uint8 arg0, uint8 arg1)

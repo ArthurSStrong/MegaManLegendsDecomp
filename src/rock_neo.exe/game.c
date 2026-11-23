@@ -45,7 +45,7 @@ void Game_init(GAME_WORK *wp)
     }
     Player_init(mode);
     Sce_flag_init(mode);
-    func_8003B278(mode);
+    Map_obj_state_reset(mode);
     func_8005DBB4(mode);
     func_80067E6C(mode);
     Message_event_clear();
@@ -267,7 +267,7 @@ void Game_play(GAME_WORK *wp)
                     wp->routine_0 = 2;
                     wp->routine_1 = 0;
                 }
-                func_8003B140();
+                Map_obj_state_save();
                 MojiTaskKill();
                 Game_logo_kill(-1);
                 Message_event_clear();
@@ -307,7 +307,7 @@ void game_update(void)
     effect_common_move();
     func_80038894();
     Atari_check();
-    func_80037F60();
+    Map_obj_break_update();
     func_8005DCB4();
     func_800238B4();
     func_80023144();
@@ -369,7 +369,7 @@ void Game_sub_screen(GAME_WORK *wp)
             wp->routine_1++;
             break;
         case 2:
-            wp->routine_1 += func_8005EC34();
+            wp->routine_1 += Sub_screen_main();
             break;
         case 3:
             D_80098810 = 1;

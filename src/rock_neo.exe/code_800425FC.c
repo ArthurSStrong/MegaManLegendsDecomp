@@ -67,9 +67,9 @@ void Pl_special_std(C800425FC_ACT *ap)
             break;
         case 2:
             ap->b174 &= 0xCF;
-            if (D_80089A87[act * 12] != 0 && ap->parts[act].h06 > 0)
+            if (D_80089A87[act * 12] != 0 && ap->weapon_data[act].bullet_left > 0)
             {
-                if (ap->b100 != D_80089A85[act * 12] + func_80037664(ap, act))
+                if (ap->b100 != D_80089A85[act * 12] + Player_weapon_repeat_calc(ap, act))
                 {
                     break;
                 }
@@ -129,7 +129,7 @@ void Pl_special_std(C800425FC_ACT *ap)
     }
 }
 
-void func_80042A40(C800425FC_ACT *ap)
+void Pl_special_recoil(C800425FC_ACT *ap)
 {
     sint32 act;
 
@@ -204,7 +204,7 @@ void Pl_special_hold(C800425FC_ACT *ap)
                 Pl_Char_Set(ap, ap->b0ac, D_80089A85[act * 12]);
                 Pl_Char_Set_Upper(ap, ap->b174 & 3, ap->b104, D_80089A84[act * 12 + 1]);
             }
-            if (!(pad & ap->h13c) || ap->parts[act].h06 <= 0)
+            if (!(pad & ap->h13c) || ap->weapon_data[act].bullet_left <= 0)
             {
                 ap->b110 = 0;
                 ap->b178++;
@@ -265,7 +265,7 @@ void Pl_special_hold(C800425FC_ACT *ap)
     }
 }
 
-void func_80042DF8(C800425FC_ACT *ap)
+void Pl_special_lunge(C800425FC_ACT *ap)
 {
     sint32 act;
 
@@ -351,9 +351,9 @@ void Pl_buster_std(C800425FC_ACT *ap)
             break;
         case 2:
             ap->b174 &= 0xCF;
-            if (D_80089A87[act * 12] != 0 && ap->parts[act].h06 > 0)
+            if (D_80089A87[act * 12] != 0 && ap->weapon_data[act].bullet_left > 0)
             {
-                if (ap->b100 != D_80089A85[act * 12] + func_80037664(ap, act))
+                if (ap->b100 != D_80089A85[act * 12] + Player_weapon_repeat_calc(ap, act))
                 {
                     break;
                 }

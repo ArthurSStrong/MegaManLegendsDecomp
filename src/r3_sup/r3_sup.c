@@ -597,7 +597,7 @@ void func_801D952C(void)
         D_801DC208.anim_94    = 8;
         D_801DC208.value_90   = 1;
         Player_work.value_172 = D_801DC0C8[D_801DC268];
-        func_80037594();
+        Player_weapon_refill();
         if (Player_work.value_44e > 0)
         {
             Obj_work_flag_change(8, 0x80);
@@ -1199,7 +1199,7 @@ void func_801DAB58(void)
             (*(Player_work.level_4f4[D_801DC0C8[D_801DC208.value_60]] + D_801DC208.value_96))++;
             Money_add(-D_801DC208.value_98, 0, 0);
             func_801DB1C0();
-            func_80037594();
+            Player_weapon_refill();
             MojiTaskExec(0, SUP_SCRIPT, 0x87);
             Sound_call(0x89, 0, 0);
             D_801DC208.routine_3++;
@@ -1402,7 +1402,7 @@ void func_801DB5B8(void)
                 }
                 else
                 {
-                    func_8003B140();
+                    Map_obj_state_save();
                     D_801DC208.routine_2++;
                 }
             }
@@ -1618,7 +1618,7 @@ void func_801DBD78(void)
             Player_work.value_44e                         = 1;
             Player_work.value_44f                         = 1;
             Sce_pl_parts_load();
-            func_80037594();
+            Player_weapon_refill();
             *(uint32 *)&D_801DC208.routine_0 = 2;
             break;
     }

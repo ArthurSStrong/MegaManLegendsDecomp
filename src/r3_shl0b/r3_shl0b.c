@@ -24,7 +24,7 @@ void func_800D8854(SHL_WORK *wp)
     wp->flags_0 |= 6;
     wp->flags_6 |= 0x20;
     wp->value_d0 = Player_work.value_54c;
-    wp->value_d4 = func_800375D4(&Player_work, 0xB);
+    wp->value_d4 = Player_weapon_attack_calc(&Player_work, 0xB);
     rot.vx       = 0;
     rot.vy       = wp->rot_y & 0xFFF;
     rot.vz       = 0;
@@ -76,7 +76,7 @@ void func_800D8AAC(SHL_WORK *wp)
 {
     sint32 hit;
 
-    if (func_80037694(wp, 0) == 0x7FFF || wp->hit_7c || !Scr_cell_get(&wp->pos))
+    if (Shot_map_check(wp, 0) == 0x7FFF || wp->hit_7c || !Scr_cell_get(&wp->pos))
     {
         func_800D8EF4(wp);
         Close_PL_SHL_WORK(wp);
@@ -111,7 +111,7 @@ void func_800D8AAC(SHL_WORK *wp)
 
 void func_800D8C1C(SHL_WORK *wp)
 {
-    if (func_80037694(wp, 0) == 0x7FFF)
+    if (Shot_map_check(wp, 0) == 0x7FFF)
     {
         func_800D8EF4(wp);
         Close_PL_SHL_WORK(wp);
@@ -139,7 +139,7 @@ void func_800D8D14(SHL_WORK *wp)
     sint32 *timer; // retail keeps &wp->value_cc in a saved register from the start
 
     timer = &wp->value_cc;
-    if (func_80037694(wp, 0) == 0x7FFF)
+    if (Shot_map_check(wp, 0) == 0x7FFF)
     {
         goto end;
     }

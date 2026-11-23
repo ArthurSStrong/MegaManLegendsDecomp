@@ -116,7 +116,7 @@ sint32 Debug_menu_apply(DEBUG_WORK *wp)
     return 1;
 }
 
-sint32 func_80062CF0(DEBUG_WORK *wp)
+sint32 Debug_item_weapon_right(DEBUG_WORK *wp)
 {
     DEBUG_ENTRY *e;
     sint32 i;
@@ -130,10 +130,10 @@ sint32 func_80062CF0(DEBUG_WORK *wp)
         case 0:
             for (i = 0; i < 14; i++)
             {
-                D_8008DBF4[i].flags &= 0xFFFBFFFF;
+                Debug_weapon_right_tbl[i].flags &= 0xFFFBFFFF;
             }
             e->index_6 = (sint8)pl[0x170];
-            D_8008DBF4[(sint16)e->index_6].flags |= 0x40000;
+            Debug_weapon_right_tbl[(sint16)e->index_6].flags |= 0x40000;
             // fall through
         case 2:
             if (wp->value_d >= 14)
@@ -149,14 +149,14 @@ sint32 func_80062CF0(DEBUG_WORK *wp)
         case 1:
             for (i = 13; i >= 0; i--)
             {
-                D_8008DBF4[i].text[0] = 0x20;
+                Debug_weapon_right_tbl[i].text[0] = 0x20;
             }
             if (wp->sel_c == 1)
             {
                 if (wp->pad_4 & 0x2000)
                 {
-                    D_8008DBF4[e->index_6].flags &= 0xFFFBFFFF;
-                    D_8008DBF4[e->value_4].flags |= 0x40000;
+                    Debug_weapon_right_tbl[e->index_6].flags &= 0xFFFBFFFF;
+                    Debug_weapon_right_tbl[e->value_4].flags |= 0x40000;
                     e->index_6 = e->value_4;
                     D_80098700 = 0;
                 }
@@ -200,13 +200,13 @@ sint32 func_80062CF0(DEBUG_WORK *wp)
                 {
                     e->value_4 = 0;
                 }
-                wp->value_d                    = e->value_4;
-                D_8008DBF4[e->value_4].text[0] = 0x3E;
+                wp->value_d                                = e->value_4;
+                Debug_weapon_right_tbl[e->value_4].text[0] = 0x3E;
             }
             for (i = 0; i < 14; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(D_8008DBF4[i].flags, D_8008DBF4[i].text);
+                func_8001FE38(Debug_weapon_right_tbl[i].flags, Debug_weapon_right_tbl[i].text);
             }
             return 0;
         case 3:
@@ -227,7 +227,7 @@ sint32 func_80062CF0(DEBUG_WORK *wp)
     }
 }
 
-sint32 func_80063058(DEBUG_WORK *wp)
+sint32 Debug_item_weapon_left(DEBUG_WORK *wp)
 {
     DEBUG_ENTRY *e;
     sint32 i;
@@ -241,10 +241,10 @@ sint32 func_80063058(DEBUG_WORK *wp)
         case 0:
             for (i = 0; i < 2; i++)
             {
-                D_8008DCD4[i].flags &= 0xFFFBFFFF;
+                Debug_weapon_left_tbl[i].flags &= 0xFFFBFFFF;
             }
             e->index_6 = (sint8)pl[0x171];
-            D_8008DCD4[(sint16)e->index_6].flags |= 0x40000;
+            Debug_weapon_left_tbl[(sint16)e->index_6].flags |= 0x40000;
             // fall through
         case 2:
             if (wp->value_d >= 2)
@@ -260,7 +260,7 @@ sint32 func_80063058(DEBUG_WORK *wp)
         case 1:
             for (i = 1; i >= 0; i--)
             {
-                D_8008DCD4[i].text[0] = 0x20;
+                Debug_weapon_left_tbl[i].text[0] = 0x20;
             }
             if (wp->sel_c == 0)
             {
@@ -281,18 +281,18 @@ sint32 func_80063058(DEBUG_WORK *wp)
                         }
                         break;
                     case 0x2000:
-                        D_8008DCD4[e->index_6].flags &= 0xFFFBFFFF;
-                        D_8008DCD4[e->value_4].flags |= 0x40000;
+                        Debug_weapon_left_tbl[e->index_6].flags &= 0xFFFBFFFF;
+                        Debug_weapon_left_tbl[e->value_4].flags |= 0x40000;
                         e->index_6 = e->value_4;
                         break;
                 }
-                wp->value_d                    = e->value_4;
-                D_8008DCD4[e->value_4].text[0] = 0x3E;
+                wp->value_d                               = e->value_4;
+                Debug_weapon_left_tbl[e->value_4].text[0] = 0x3E;
             }
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(D_8008DCD4[i].flags, D_8008DCD4[i].text);
+                func_8001FE38(Debug_weapon_left_tbl[i].flags, Debug_weapon_left_tbl[i].text);
             }
             return 0;
         case 3:
@@ -309,7 +309,7 @@ sint32 func_80063058(DEBUG_WORK *wp)
     }
 }
 
-sint32 func_80063334(DEBUG_WORK *wp)
+sint32 Debug_item_helmet(DEBUG_WORK *wp)
 {
     DEBUG_ENTRY *e;
     sint32 i;
@@ -323,10 +323,10 @@ sint32 func_80063334(DEBUG_WORK *wp)
         case 0:
             for (i = 0; i < 2; i++)
             {
-                D_8008DCF4[i].flags &= 0xFFFBFFFF;
+                Debug_helmet_tbl[i].flags &= 0xFFFBFFFF;
             }
             e->index_6 = (sint8)pl[0x16A];
-            D_8008DCF4[(sint16)e->index_6].flags |= 0x40000;
+            Debug_helmet_tbl[(sint16)e->index_6].flags |= 0x40000;
             // fall through
         case 2:
             if (wp->value_d >= 2)
@@ -342,7 +342,7 @@ sint32 func_80063334(DEBUG_WORK *wp)
         case 1:
             for (i = 0; i < 2; i++)
             {
-                D_8008DCF4[i].text[0] = 0x20;
+                Debug_helmet_tbl[i].text[0] = 0x20;
             }
             if (wp->sel_c == 2)
             {
@@ -363,18 +363,18 @@ sint32 func_80063334(DEBUG_WORK *wp)
                         }
                         break;
                     case 0x2000:
-                        D_8008DCF4[e->index_6].flags &= 0xFFFBFFFF;
-                        D_8008DCF4[e->value_4].flags |= 0x40000;
+                        Debug_helmet_tbl[e->index_6].flags &= 0xFFFBFFFF;
+                        Debug_helmet_tbl[e->value_4].flags |= 0x40000;
                         e->index_6 = e->value_4;
                         break;
                 }
-                wp->value_d                    = e->value_4;
-                D_8008DCF4[e->value_4].text[0] = 0x3E;
+                wp->value_d                          = e->value_4;
+                Debug_helmet_tbl[e->value_4].text[0] = 0x3E;
             }
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(D_8008DCF4[i].flags, D_8008DCF4[i].text);
+                func_8001FE38(Debug_helmet_tbl[i].flags, Debug_helmet_tbl[i].text);
             }
             return 0;
         case 3:
@@ -403,10 +403,10 @@ sint32 Debug_item_key_type(DEBUG_WORK *wp)
         case 0:
             for (i = 0; i < 2; i++)
             {
-                D_8008DD14[i].flags &= 0xFFFBFFFF;
+                Debug_key_type_tbl[i].flags &= 0xFFFBFFFF;
             }
             e->index_6 = DEBUG_GAME_54;
-            D_8008DD14[(uint16)e->index_6].flags |= 0x40000;
+            Debug_key_type_tbl[(uint16)e->index_6].flags |= 0x40000;
             // fall through
         case 2:
             if (wp->value_d >= 2)
@@ -422,7 +422,7 @@ sint32 Debug_item_key_type(DEBUG_WORK *wp)
         case 1:
             for (i = 0; i < 2; i++)
             {
-                D_8008DD14[i].text[0] = 0x20;
+                Debug_key_type_tbl[i].text[0] = 0x20;
             }
             if (wp->sel_c == 3)
             {
@@ -443,18 +443,18 @@ sint32 Debug_item_key_type(DEBUG_WORK *wp)
                         }
                         break;
                     case 0x2000:
-                        D_8008DD14[(uint16)e->index_6].flags &= 0xFFFBFFFF;
-                        D_8008DD14[e->value_4].flags |= 0x40000;
+                        Debug_key_type_tbl[(uint16)e->index_6].flags &= 0xFFFBFFFF;
+                        Debug_key_type_tbl[e->value_4].flags |= 0x40000;
                         e->index_6 = e->value_4;
                         break;
                 }
-                wp->value_d                    = e->value_4;
-                D_8008DD14[e->value_4].text[0] = 0x3E;
+                wp->value_d                            = e->value_4;
+                Debug_key_type_tbl[e->value_4].text[0] = 0x3E;
             }
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(D_8008DD14[i].flags, D_8008DD14[i].text);
+                func_8001FE38(Debug_key_type_tbl[i].flags, Debug_key_type_tbl[i].text);
             }
             return 0;
         case 3:
@@ -470,7 +470,7 @@ sint32 Debug_item_key_type(DEBUG_WORK *wp)
     }
 }
 
-sint32 func_800638D8(DEBUG_WORK *wp)
+sint32 Debug_item_size(DEBUG_WORK *wp)
 {
     DEBUG_ENTRY *e;
     sint32 i;
@@ -484,10 +484,10 @@ sint32 func_800638D8(DEBUG_WORK *wp)
         case 0:
             for (i = 0; i < 2; i++)
             {
-                D_8008DD34[i].flags &= 0xFFFBFFFF;
+                Debug_size_tbl[i].flags &= 0xFFFBFFFF;
             }
             e->index_6 = (sint8)pl[0x16B];
-            D_8008DD34[(sint16)e->index_6].flags |= 0x40000;
+            Debug_size_tbl[(sint16)e->index_6].flags |= 0x40000;
             // fall through
         case 2:
             if (wp->value_d >= 2)
@@ -503,7 +503,7 @@ sint32 func_800638D8(DEBUG_WORK *wp)
         case 1:
             for (i = 1; i >= 0; i--)
             {
-                D_8008DD34[i].text[0] = 0x20;
+                Debug_size_tbl[i].text[0] = 0x20;
             }
             if (4 == wp->sel_c)
             {
@@ -524,18 +524,18 @@ sint32 func_800638D8(DEBUG_WORK *wp)
                         }
                         break;
                     case 0x2000:
-                        D_8008DD34[e->index_6].flags &= 0xFFFBFFFF;
-                        D_8008DD34[e->value_4].flags |= 0x40000;
+                        Debug_size_tbl[e->index_6].flags &= 0xFFFBFFFF;
+                        Debug_size_tbl[e->value_4].flags |= 0x40000;
                         e->index_6 = e->value_4;
                         break;
                 }
-                wp->value_d                    = e->value_4;
-                D_8008DD34[e->value_4].text[0] = 0x3E;
+                wp->value_d                        = e->value_4;
+                Debug_size_tbl[e->value_4].text[0] = 0x3E;
             }
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(D_8008DD34[i].flags, D_8008DD34[i].text);
+                func_8001FE38(Debug_size_tbl[i].flags, Debug_size_tbl[i].text);
             }
             return 0;
         case 3:

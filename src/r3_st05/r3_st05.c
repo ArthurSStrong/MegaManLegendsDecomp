@@ -57,8 +57,8 @@ void func_801008F4(void)
             if (Sce_flag_test(0x214) && !Sce_flag_test(0x24A))
             {
                 pos = D_8012E44C;
-                func_8003AC9C(Scr_cell_get(&pos[0]), 0xF0000);
-                func_8003AC9C(Scr_cell_get(&pos[1]), 0xF0100);
+                Map_obj_model_swap(Scr_cell_get(&pos[0]), 0xF0000);
+                Map_obj_model_swap(Scr_cell_get(&pos[1]), 0xF0100);
             }
             break;
         case 1:

@@ -228,8 +228,8 @@ void Cd_xa_seek_id(sint32 arg);
 void Obj_pos_move(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
                   sint32 z);
 sint32 Scr_line_check(void *wp);
-sint32 func_80037BB4(void *wp);
-void func_80037738(sint32 value, uint32 amount);
+sint32 Map_obj_hit_life(void *wp);
+void Map_obj_hit_damage(sint32 value, uint32 amount);
 // Distance between two positions.
 sint32 Calc_distance(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 // Frees a 0x10C-byte work slot.

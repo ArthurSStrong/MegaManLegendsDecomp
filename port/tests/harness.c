@@ -19,7 +19,7 @@
 void Sce_flag_on(uint32_t flag);                                       // scene.c
 uint32_t Sce_flag_test(uint32_t flag);                                 // scene.c
 int32_t Sce_point_angle(int16_t x0, int16_t y0, int16_t x1, int16_t y1); // scene.c
-uint32_t func_8003AC24(uint32_t key);                                  // code_8003AC24.c
+uint32_t Stage_hed_model_get(uint32_t key);                                  // code_8003AC24.c
 int16_t half_get(uint8_t *p);                                     // scene.c (file static)
 void Vsync_handler(void);                                              // main.c
 void main_task(void);                                              // main.c
@@ -159,16 +159,16 @@ static void test_literal_alias(void)
 {
     uint32_t *tbl = (uint32_t *)0x8013A000; // the stage HED area (disc.md, "Load addresses")
 
-    printf("-- func_8003AC24 (key lookup: symbol D_8013A004 and literal 0x8013A000 alias)\n");
+    printf("-- Stage_hed_model_get (key lookup: symbol D_8013A004 and literal 0x8013A000 alias)\n");
     memset(tbl, 0, 0x40);
     tbl[0] = 0x11;
     tbl[1] = 0xAA;
     tbl[2] = 0x22;
     tbl[3] = 0xBB;
     CHECK(&D_8013A004 == (uint32_t *)0x8013A004, "&D_8013A004 = %p", (void *)&D_8013A004);
-    CHECK(func_8003AC24(0x11) == 0xAA, "key 0x11 -> 0x%X", func_8003AC24(0x11));
-    CHECK(func_8003AC24(0x22) == 0xBB, "key 0x22 -> 0x%X", func_8003AC24(0x22));
-    CHECK(func_8003AC24(0x33) == 0, "key 0x33 -> 0x%X", func_8003AC24(0x33));
+    CHECK(Stage_hed_model_get(0x11) == 0xAA, "key 0x11 -> 0x%X", Stage_hed_model_get(0x11));
+    CHECK(Stage_hed_model_get(0x22) == 0xBB, "key 0x22 -> 0x%X", Stage_hed_model_get(0x22));
+    CHECK(Stage_hed_model_get(0x33) == 0, "key 0x33 -> 0x%X", Stage_hed_model_get(0x33));
 }
 
 static void test_gte(void)

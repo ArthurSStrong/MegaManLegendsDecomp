@@ -1616,7 +1616,7 @@ extern ST19_SMOKE D_80117B84[];
 
 void Sce_script_next(void);
 
-void func_8003786C(sint32 id);
+void Map_obj_remove(sint32 id);
 
 extern uint8 D_80117ACC[];
 

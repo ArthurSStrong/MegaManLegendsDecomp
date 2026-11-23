@@ -71,8 +71,8 @@ extern C80027678_ENT12 D_800ACE00[];
 extern C80027678_UVAL12 D_800ACE08[];
 extern C80027678_VAL12 D_800ACE0A[];
 extern sint32 D_800987D8;
-extern uint32 D_800988FC;
-extern uint8 *D_800BE6D8[];
+extern uint32 Billboard_count;
+extern uint8 *Billboard_queue[];
 
 // Model with a table of 0x14-byte part records at +0x70
 typedef struct
@@ -299,7 +299,7 @@ typedef struct
     uint32 *tex;
 } C80027678_OBJ;
 
-extern uint8 D_800C0DC0[];
+extern uint8 Fog_clut_tbl[];
 
 #define C80027678_LOD_PTR (*(C80027678_LOD **)0x1F8000E8)
 #define C80027678_VTX_BUF ((C80027678_VTX8 *)0x1F800100)

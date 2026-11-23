@@ -185,7 +185,7 @@ void func_8010FEC4(STCOM23_WORK *wp)
     sint32 speed;
     sint32 result;
 
-    result = func_80037694(wp, D_8011BF8C[wp->variant_3].value_22);
+    result = Shot_map_check(wp, D_8011BF8C[wp->variant_3].value_22);
     if (result != 0)
     {
         if (result != 0x7FFF)
@@ -506,7 +506,7 @@ void func_80110938(STCOM18_WORK *wp)
         }
         if (!(wp->flags_F & 4))
         {
-            func_80037738(hit, 0x28);
+            Map_obj_hit_damage(hit, 0x28);
         }
     }
 }
@@ -607,7 +607,7 @@ void func_80110E58(ST17_10C_B *wp)
     hit = Scr_line_check(wp);
     if (hit != 0)
     {
-        func_80037738(hit, D_8011C11C[wp->byte_D]);
+        Map_obj_hit_damage(hit, D_8011C11C[wp->byte_D]);
         wp->routine_3 = 0x18;
         wp->count_CC  = 0;
         wp->routine_0++;
@@ -1379,7 +1379,7 @@ void func_801128C4(ST17_SHL *wp)
     wp->kind_2             = 0x82;
     Model_work_init(wp, 0);
     wp->kind_2  = 0x2E;
-    wp->timer_b = func_80037634(&Player_work, 2);
+    wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
     func_80112F88(wp, 0);
     func_80112E44(wp);
@@ -1388,7 +1388,7 @@ void func_801128C4(ST17_SHL *wp)
 
 void func_80112CCC(ST17_SHL *wp)
 {
-    if (func_80037694((STCOM23_WORK *)wp, 0) || wp->hit_7c)
+    if (Shot_map_check((STCOM23_WORK *)wp, 0) || wp->hit_7c)
     {
         if (wp->type_3 & 0x40)
         {
@@ -1432,7 +1432,7 @@ void func_80112E44(ST17_SHL *wp)
     STCOM_SVECTOR p;
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 2);
+    flags = Player_weapon_attack_calc(&Player_work, 2);
     p.x   = wp->pos.x * 2 - wp->old_pos.x;
     p.y   = wp->pos.y * 2 - wp->old_pos.y;
     p.z   = wp->pos.z * 2 - wp->old_pos.z;

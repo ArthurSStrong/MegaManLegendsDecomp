@@ -3025,9 +3025,9 @@ void func_8011CC64(ST05_BOSS *wp)
                         0xFFFF);
     if (hit != 0)
     {
-        if ((sint16)func_80037BB4((void *)hit) != 0)
+        if ((sint16)Map_obj_hit_life((void *)hit) != 0)
         {
-            func_80037738(hit, 0x190);
+            Map_obj_hit_damage(hit, 0x190);
             ctl->flags_0 &= ~0x40;
         }
         else if (Scr_height_calc(&((STCOM_SPRITE *)work)->position, NULL, 0, fx->reserved01) <

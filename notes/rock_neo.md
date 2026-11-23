@@ -346,7 +346,7 @@ shared code takes the generic `WORK_48`, and callers cast at the boundary (`Clos
 |---|---|---|---|---|
 | 0x80 | `W48_80_WORK` | `func_80043F34` | model | `sound_C`/`size_D`/`variant_E`/`level_F`, `hw_44` |
 | 0x81 | `W48_81_WORK` | `func_8004495C` | model | `ptr_44` |
-| 0x82 | `W48_82_WORK` | `func_80044AB0` | sprite | `field_C` (byte, from the spawner `func_80043E00`) |
+| 0x82 | `W48_82_WORK` | `func_80044AB0` | sprite | `field_C` (byte, from the spawner `buster_hit_effect`) |
 | 0x83 | `W48_83_WORK` | `func_80044C58` | sprite | |
 | 0x84 | `W48_84_WORK` | `func_80045074` | sprite | `field_C` (byte) |
 | 0x85 | `W48_85_WORK` | `func_80045238` | sprite | `add` 0x28, `spd` 0x30, `dir_40` |
@@ -362,7 +362,7 @@ of `routine_0` set) and `EFC_SPRITE` (`code`, `rgbc`, `pos[3]`, two bytes and tw
 The kinds' own structs write them out at their offsets (`data_14`, `mtx`, `pos_38`, `rgbc_40`; `code_14`, `rgbc_18`,
 `pos_1C[3]`, `field_22..26`). `shift_effect` moves `efc.model.pos` or `efc.sprite.pos` by that bit. The name follows Capcom's shot code (`wk_p->efc.model.m`, `.sv`, `.rgbc`). The debris kinds copy the whole
 matrix as a `MATRIX` (`func_80045AB4`), but keep their speed and acceleration in its `t` bytes, so their struct has
-`m[3][3]` plus `vx_2C..az_36` and passes `(MATRIX *)wp->m`. `func_80037890` creates kinds 0x80 and 0x83 through one
+`m[3][3]` plus `vx_2C..az_36` and passes `(MATRIX *)wp->m`. `map_obj_debris` creates kinds 0x80 and 0x83 through one
 reused local, so it stays generic. `func_80045CE8` and `func_80046B34` are spawners (of 0x86 and 0x87), not
 handlers. The overlays' kinds (below 0x80) use the generic type until they are decompiled. Older entries below use
 the names from before this split (`u_18.s`, `u_18.mtx`, `field_C.rec`, `u_44`, `field_2`/`flag_3` = `id_2`/`type_3`).
@@ -384,7 +384,7 @@ The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `Open_PL_SHL_WORK` / 
 have their own struct, `PL_SHL_WORK`: same layout, with the sprite `EFC` and the free block written out, because a
 player's shot keeps its own bytes in both (the flight direction `dir_A4` in the EFC's kind bytes, `tgt_BC` and
 `owner_C4` in the free block). Its `id_2` is byte 0xB of the player's action record (`D_80089A8B`); the handlers are
-`func_800433C0` and `func_800437A8` (`code_8004324C`, tables `D_8008A0CC`/`D_8008A0D8`, `PL_SHL_FUNC`).
+`Pl_shl_normal_arm` and `Pl_shl_buster` (`code_8004324C`, tables `Pl_shl_normal_arm_tbl`/`Pl_shl_buster_tbl`, `PL_SHL_FUNC`).
 
 `SHL_WORK.field_C` stays a byte: `Open_SHL_WORK` clears 0x0C-0x0F with `*(uint32 *)&wp->field_C = 0`, and with a
 `uint32` field the cast folds away and the store is scheduled one slot later.
@@ -414,22 +414,22 @@ player's shot keeps its own bytes in both (the flight direction `dir_A4` in the 
   delay slot after `SsSeqSetVol` gets `i++` instead. `D_80098AFC` is GCC's second giv
   (`&chan->seq_num`), not a separate array.
 
-`code_80037534` (`src/rock_neo.exe/code_80037534.c`): banked `func_800375D4`, `_80037604`,
-`_80037634`, `_80037664` (four field readers of `D_80089EAC[n][owner->rec[n].idx[k]].val[k]`).
-`func_8003786C`, `func_80037C14` and `func_80037BB4` were parked over the `addu at,v0,at` operand
+`code_80037534` (`src/rock_neo.exe/code_80037534.c`): banked `Player_weapon_attack_calc`, `_80037604`,
+`_80037634`, `_80037664` (four field readers of `Weapon_param_tbl[n][owner->rec[n].idx[k]].val[k]`).
+`Map_obj_remove`, `Map_obj_life` and `Map_obj_hit_life` were parked over the `addu at,v0,at` operand
 order; all three matched once the table was addressed by literal address (see the third pass).
 
-`code_80037534` (second pass): banked `func_80037534` (clears the 16 `TBL_IDX` records of an owner, then
-reloads each `val`), `func_80037738`, `func_80037F60` (pops `D_8009A376[Cell_stack_idx]` into `func_80037CD8`
-until `Cell_stack_idx` is 0). Parked: `func_80037594` (target reads `Player_work+0x172` with its own `lui`,
-then builds `&Player_work` again; ours folds both into one base), `func_80037818` (target keeps arg in a2,
+`code_80037534` (second pass): banked `Player_weapon_init` (clears the 16 `TBL_IDX` records of an owner, then
+reloads each `val`), `Map_obj_hit_damage`, `Map_obj_break_update` (pops `D_8009A376[Cell_stack_idx]` into `map_obj_break_spread`
+until `Cell_stack_idx` is 0). Parked: `Player_weapon_refill` (target reads `Player_work+0x172` with its own `lui`,
+then builds `&Player_work` again; ours folds both into one base), `map_obj_break` (target keeps arg in a2,
 `li a0,4` in the delay slot, then `move a0,zero` on the fall-through; the address, `&Stage_idx_tbl[arg0].val`,
 matches. Also tried `?:` (becomes `sltu`/`sll`) and an if/else with two calls).
 `PL_WORK` gained `tbl_sel` (0x172) and `rec[16]` (0x4F4); `TBL_IDX` gained `val` (0x06). The functions
 that take the record owner are passed `&Player_work`, so their parameter is `PL_WORK *`.
 
-`code_80037534` (third pass): banked `func_80037C50`, `func_8003777C`, `func_80037694`, `func_80037CD8`,
-`func_80037890` (3 args: `kind`, count exponent, table index; `func_80037818` passes its `arg0` as the third).
+`code_80037534` (third pass): banked `map_obj_break_push`, `map_obj_damage`, `Shot_map_check`, `map_obj_break_spread`,
+`map_obj_debris` (3 args: `kind`, count exponent, table index; `map_obj_break` passes its `arg0` as the third).
 - **`addu at,idx,at` operand order = literal address.** maspsx only emits `addu $at,reg,$at` when the
   operand is a numeric constant > 32767 (`maspsx/__init__.py`, "lhu $2,49344($2)" case); an `extern`
   symbol gives `addu $at,$at,reg`. So the 12-byte table at `0x8015C000` is accessed as
@@ -437,9 +437,9 @@ that take the record owner are passed `&Player_work`, so their parameter is `PL_
   (`notes/disc.md`). The "table at `0x8015C006`" is the same entries' `val` field: `&Stage_idx_tbl[n].val`
   gives the target's literal `lui`/`ori 0x8015C006` (taking `&Stage_idx_tbl[n]` and adding 6 later does not).
 - Scratchpad map window (`Map_org_x/y` 0x40/0x41, `Map_w/h` 0x44/0x46, `Map_cells` 0x48) in `stage.h`.
-- `func_80037CD8` needs an unused 8-byte local (frame 0x20).
+- `map_obj_break_spread` needs an unused 8-byte local (frame 0x20).
 - `func_80039A38` (`code_80037FB4`) takes one argument and passes it on to `func_800399EC`: its callers
-  load an address into `a0`, and nothing in between touches `a0`, so the call has no argument setup. `func_80037890` angle `j * step` is
+  load an address into `a0`, and nothing in between touches `a0`, so the call has no argument setup. `map_obj_debris` angle `j * step` is
   strength-reduced by GCC (a separate `ang` accumulator puts its init before the zero-trip test).
 - `Cell_stack` (`Cell_stack`) / `Cell_stack_idx` (`Cell_stack_idx`): stack of packed cells, see `renames.txt`.
 
@@ -488,8 +488,8 @@ macros local to the parked block) leaves one extra `move`. The flag test has to 
 
 `code_8002E7A8.c` (batch 2): banked `func_800355F0` (view matrix from `Player_work[n]`; `Player_work` is
 now an array, the target indexes it by symbol; `unk56` read as `(uint16)` for `lhu`), `func_80033D80`
-(scratchpad matrix `0x1F8000C0` + `ApplyMatrix`/`RotMatrix`/`MulMatrix`), `func_80037440` (counts
-`Pl_shl_work_tbl[n]` by id into `D_8009856C[16]`; `D_800BFB22` is declared as a second `SHL_WORK` array so
+(scratchpad matrix `0x1F8000C0` + `ApplyMatrix`/`RotMatrix`/`MulMatrix`), `Pl_special_shot_check` (counts
+`Pl_shl_work_tbl[n]` by id into `pl_shl_count[16]`; `D_800BFB22` is declared as a second `SHL_WORK` array so
 the access keeps its own `lui`), `Angle_xz_vector`, `Angle_xz_svector` (`catan` of the x/z delta).
 Parked `lockon_probe_set` (`NON_MATCHING`; 4-entry table at `D_8009A306`, stride 0x14): the target keeps
 `&D_8009A306` in a3 for the first compare and the loop; ours folds the first compare to `lui`+`%lo` and
@@ -629,7 +629,7 @@ two AND tests with `beqz`/`li 1`/`move 0`, GCC emits `sltu` for `hit != 0` (trie
 local with `goto fail`, and `== 0` forms).
 
 Batch (`func_80046A0C`, `_8004602C`, `_80047EC8`): banked `func_80046A0C` (proximity test like `func_80045BC8`, then
-calls `Money_add`/`func_80043340` with `D_8008A678`/`D_8008A680[Game_work 0x5B][field_A]`; `field_A` is kept in a
+calls `Money_add`/`Pl_life_add` with `D_8008A678`/`D_8008A680[Game_work 0x5B][field_A]`; `field_A` is kept in a
 local) and `func_8004602C` (per-frame draw of the effect: `D_8008A6A8[routine_8]`, then one `func_8002D464` primitive
 filled from the four columns `D_80097EC0/C2/C4/C6`, each its own symbol). Parked `func_80047EC8` (`NON_MATCHING`;
 eight spark lines around the player's position at `Player_work+0x400`/`+0x418`): structure matches; the else-branch
@@ -683,37 +683,37 @@ wrong register), `func_80047354` (4: if/else-if with its own call, value local `
 GCC always cross-jumps the identical `sub` stores the target keeps separate), `func_80045CE8` (clamp order: worse),
 `func_80046B34` and `func_80047228` (unchanged).
 
-`code_8004324C.c` (batch 1): banked `func_8004324C` (player `unk174 & 0xC0 || unk177`; must be `if (a || b)
+`code_8004324C.c` (batch 1): banked `Pl_shot_busy` (player `unk174 & 0xC0 || unk177`; must be `if (a || b)
 return 1; return 0;`: two separate `if`s fold the second test to `sltu`, a bare `return a || b` uses a temp),
 `Money_check` (`-(Game_work.money < -amount)`: -1 when `money` can't cover a negative change; `money` at
-`Game_work+0x1C`, capped at 999999 by `Money_add`), `func_800433C0` (`D_8008A0CC[wp->routine_8](wp)` on a
-`SHL_WORK` of the `Pl_shl_work_tbl` pool), `func_800435BC`, `func_80043740` and `func_80043E00` (spawn a `WORK_48`
-at the slot's position; in `func_80043E00` the `flag_3`/`field_C` stores are written after the position).
+`Game_work+0x1C`, capped at 999999 by `Money_add`), `Pl_shl_normal_arm` (`Pl_shl_normal_arm_tbl[wp->routine_8](wp)` on a
+`SHL_WORK` of the `Pl_shl_work_tbl` pool), `Pl_shl_normal_arm_end`, `normal_arm_hit_effect` and `buster_hit_effect` (spawn a `WORK_48`
+at the slot's position; in `buster_hit_effect` the `flag_3`/`field_C` stores are written after the position).
 Batch 2: banked `Money_add` (0x80043294; `amount` added to `money`, clamped to 999999 when positive, reset to 0
 on underflow when not, which also adds it to `Game_work+0x20`/`+0x24` by `c`; does nothing unless `b == 0`),
-`func_80043340` (`Player_work[n].unk6E += amount`, capped at `unkB0`; player 0's losses are added to
-`Game_work+0x4C`), `func_800435F8` and `func_80043E78` (queue `x_14`/`pos_2C` with `Set_Atari2`; the source
-has one call per value of the `0x6000`/`0x4000` argument, and `func_800435F8` repeats that `if` in both arms of
+`Pl_life_add` (`Player_work[n].unk6E += amount`, capped at `unkB0`; player 0's losses are added to
+`Game_work+0x4C`), `normal_arm_atari_set` and `buster_atari_set` (queue `x_14`/`pos_2C` with `Set_Atari2`; the source
+has one call per value of the `0x6000`/`0x4000` argument, and `normal_arm_atari_set` repeats that `if` in both arms of
 its `field_E` test: the target duplicates the `0x6000` setup). `field_C` is `sint8` (read with `lb`; the
-`(uint8)` casts give the `andi`/`lbu` before `Obj_id_work`), and `func_800375D4` returns `sint32` (the caller
+`(uint8)` casts give the `andi`/`lbu` before `Obj_id_work`), and `Player_weapon_attack_calc` returns `sint32` (the caller
 doesn't re-extend it).
 `SHL_WORK.field_8` is split into `routine_8`/`field_9`/`field_A`/`timer_B`; `field_C` holds the owning player's
-id (`Obj_id_work` returns a `PL_WORK`: `func_800433FC` reads its `joint_pos[11]`/`[14]`; `+0x198` is that
+id (`Obj_id_work` returns a `PL_WORK`: `Pl_shl_normal_arm_init` reads its `joint_pos[11]`/`[14]`; `+0x198` is that
 player's state flag for the slot).
-Batch 3: banked `func_800433FC` (frame has 0x18 bytes of unused locals: an `SVECTOR` + `VECTOR`, like
-`func_800437F8`'s), `func_800434F0` (calls `Obj_id_work` twice: once kept for `unk198`, once for the copy of
-`pos` to `old`), `func_800437F8` (launch: direction `(0, 0, -0x1000)` rotated by `func_80039B80()`/`field_64`,
-speed `dir * D_80097DD4[idx[2]] >> 4`, collision box `hit_78 = &D_80097DA0`; `field_88` is stored twice, the
+Batch 3: banked `Pl_shl_normal_arm_init` (frame has 0x18 bytes of unused locals: an `SVECTOR` + `VECTOR`, like
+`Pl_shl_buster_init`'s), `Pl_shl_normal_arm_main` (calls `Obj_id_work` twice: once kept for `unk198`, once for the copy of
+`pos` to `old`), `Pl_shl_buster_init` (launch: direction `(0, 0, -0x1000)` rotated by `func_80039B80()`/`field_64`,
+speed `dir * Buster_speed_tbl[idx[2]] >> 4`, collision box `hit_78 = &D_80097DA0`; `field_88` is stored twice, the
 constant first; `x_90 = pos.vx = pos_l.vx >> 16` is Capcom's chained form, cf. `efc.model.sv` in
-`EM09_49.C`). `func_80043DF8` is empty but takes `(wp, &m)`: `func_800437F8` passes both. `func_80037634`
-now returns `sint32` (as `func_800375D4`): `func_80043A8C` compares it without re-extending.
-Parked `func_80043A8C` (homing flight toward `tgt_BC`, `+0xBC`, the vector `func_80035508` projects): GCC
-store-flags the 0/1 argument of `func_80043E00` (`id != 0x7FFF`) into `xori`/`sltu` where the target
+`EM09_49.C`). `func_80043DF8` is empty but takes `(wp, &m)`: `Pl_shl_buster_init` passes both. `Player_weapon_dist_calc`
+now returns `sint32` (as `Player_weapon_attack_calc`): `Pl_shl_buster_main` compares it without re-extending.
+Parked `Pl_shl_buster_main` (homing flight toward `tgt_BC`, `+0xBC`, the vector `func_80035508` projects): GCC
+store-flags the 0/1 argument of `buster_hit_effect` (`id != 0x7FFF`) into `xori`/`sltu` where the target
 branches; if/else, switch, ternary, goto and two calls (not cross-jumped) all tried. The speed multiplies
 also differ by a v0/v1 swap (target loads the table byte before `dir.vx`). The rest, including the
-`if (...) {...} else { close: ...; return; } func_80043E78(wp);` layout, matches.
-Banked `func_800437A8` (the shot's update: `D_8008A0D8[wp->routine_8](wp)`, a table of `func_800437F8` and
-`func_80043A8C`, then `Solid_mover_set(wp)`, which the player code also calls: it pushes the object on the
+`if (...) {...} else { close: ...; return; } buster_atari_set(wp);` layout, matches.
+Banked `Pl_shl_buster` (the shot's update: `Pl_shl_buster_tbl[wp->routine_8](wp)`, a table of `Pl_shl_buster_init` and
+`Pl_shl_buster_main`, then `Solid_mover_set(wp)`, which the player code also calls: it pushes the object on the
 list at `Solid_mover_ptr` when `routine_0 & 3`, and clears `+0x7C`).
 `SHL_WORK` fields from these: `spd`/`add` (0x44/0x4C, MODEL_WORK's), `hit_78` (`HIT_ENT *`, read by
 `Scr_line_check`), `field_7C`, `field_88`, `rgbc_8C`, `x_90`..`z_94`, `field_96`/`97`, `field_9A`, `dir_A4`,
@@ -905,11 +905,11 @@ Moji_list[arg] < 4`, else `unk062[9 - i] * D_8008AF00[i] - unk028[9 - i]`, at `c
 `D_8008AF00[i]`; ours recomputes it (best form `(&arr[9])[-i]`, which at least folds the 9 into the
 symbol offset as the target does).
 
-`code_8002D9A0.c`: banked `func_8002DC84` (overlay accessor: returns a 16-byte `BLK_ENT` from block
+`code_8002D9A0.c`: banked `Model_poly_group_get` (overlay accessor: returns a 16-byte `BLK_ENT` from block
 `src->blk_tbl[blk]`, entry `idx` after the header; needs one reused `uint32 *p` and one reused word
-local) and `billboard_draw` (projects the `BILLBOARD`s queued by `func_8002D464` in `D_800BE6D8`, links
+local) and `billboard_draw` (projects the `BILLBOARD`s queued by `func_8002D464` in `Billboard_queue`, links
 them as POLY_FT4 into `Scratch_ot[z / 8]`, depth cue and fog CLUT unless flag 8; the list entry is
-re-read through `D_800BE6D8[i]` for the flag and `rgbc`, and the three `vz` stores are one chained
+re-read through `Billboard_queue[i]` for the flag and `rgbc`, and the three `vz` stores are one chained
 assignment). Neither function has a caller in the code or data (dead, or reached some other way).
 Parked `mesh_draw` (`NON_MATCHING`; draws a textured `MESH`: RTPT three vertices at a time into
 scratchpad sxy/sz arrays, then back-face-culled POLY_FT3/FT4 from its triangle and quad lists). The
@@ -926,7 +926,7 @@ walks from `D_800C3580` (4) and `Em_work_tbl` (16): projects `pos` (culls by dep
 bounds), picks a level of detail of `model_80` by z (> 0x708, > 0x2BC), depth-cues the RGB555
 colour `col_55E`, then per visible part `gte_MulMatrix0`s the view matrix by `part_mtx[i]`, adds the
 rotated `part_pos[i]` to the view translation and calls `mesh_draw`). Everything matches except
-the fog CLUT lookup in `D_800C0DC0`: the target builds the address with `lui`/`ori` in `$at`, then
+the fog CLUT lookup in `Fog_clut_tbl`: the target builds the address with `lui`/`ori` in `$at`, then
 `addu $at,$at,v0` and `lbu 0($at)`, the only such sequence in ROCK_NEO. maspsx gives a constant base
 `lui`, `addu $at,v0,$at`, `lbu %lo($at)` (one instruction shorter) and a symbol `%hi`/`%lo`; neither
 fits, so matching needs a toolchain change (an ASPSX expansion maspsx doesn't model). Found on the way:

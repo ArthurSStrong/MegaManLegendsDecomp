@@ -79,7 +79,7 @@ typedef struct
 } GAME_WORK_SOUND_VIEW;
 #define GAME_WORK_VIEW  ((GAME_WORK_SOUND_VIEW *)&Game_work)
 #define GAME_WORK_SLOTS ((SOUND_ENTRY *)((uint8 *)&Game_work + 0x1BA))
-extern SOUND_CALL D_800BE6D8[];
+extern SOUND_CALL Billboard_queue[];
 
 extern uint32 D_800821F8[];
 extern sint16 D_80082274;

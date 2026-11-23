@@ -13,7 +13,7 @@
 // Mega Man with player_entry_set and set Game_work's stage and room (+0x50, +0x51).
 //
 // From the panel: choosing a destination closes the game's pause menu the way Start does on its
-// top screen (the sub-screen's state word D_800A38F0 = 8, func_80060DB8: returns 1, and
+// top screen (the sub-screen's state word D_800A38F0 = 8, Sub_screen_exit: returns 1, and
 // Game_sub_screen takes the field back) and closes the panel. The mod hooks Game_play; once
 // the field is back in its normal state 2 with no request, no cutscene and no fade, it writes
 // the request and calls the music function exactly as a door does, then lets the state run.
@@ -95,7 +95,7 @@ static void go(const TP_DEST *d)
 {
     TP_DEST t = *d; // d may be `back`, rewritten below
 
-    // The sub-screen's top screen is state 1 (func_8005ECE0); another screen (items, parts,
+    // The sub-screen's top screen is state 1 (Sub_screen_top); another screen (items, parts,
     // ...) has its own way out, so ask the player to go back to the top first.
     if (MODS_PEEK8(SUB_WORK) != 1)
     {

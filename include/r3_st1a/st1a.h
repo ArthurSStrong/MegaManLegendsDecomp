@@ -4131,7 +4131,7 @@ sint32 Fog_color_set(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 
 void Sce_slot_open_list(uint8 *script);
 
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 
 // The timers at +0x1D8 of the turning enemy (func_80110778; STCOM16_STUN's place in stcom16).
 typedef struct

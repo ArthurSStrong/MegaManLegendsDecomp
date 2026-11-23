@@ -384,7 +384,7 @@ void func_80100ED4(STAGE_ROOM *wp)
         pos.x = 0xB00;
         pos.y = 0;
         pos.z = 0x900;
-        func_8003AC9C(Scr_cell_get(&pos), 0xE0100);
+        Map_obj_model_swap(Scr_cell_get(&pos), 0xE0100);
         wp->routine_4 = 0xFF;
     }
 }
@@ -433,7 +433,7 @@ void func_80101000(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x30))
             {
-                func_8003786C(0x19D);
+                Map_obj_remove(0x19D);
                 Sce_exit_lock_list(D_8010CB98, D_8010CBC0);
                 wp->routine_4 = 0xFF;
             }
@@ -456,7 +456,7 @@ void func_801010DC(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB48);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }
@@ -466,7 +466,7 @@ void func_80101130(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB48);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }
@@ -476,7 +476,7 @@ void func_80101184(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB50);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }
@@ -486,7 +486,7 @@ void func_801011D8(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB58);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }
@@ -496,7 +496,7 @@ void func_8010122C(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB60);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }
@@ -506,7 +506,7 @@ void func_80101280(STAGE_OBJ *wp)
     if (wp->value_4 == 0)
     {
         Sce_slot_open_list(&D_8010CB68);
-        func_8003786C(0x19D);
+        Map_obj_remove(0x19D);
         wp->value_4 = 0xFF;
     }
 }

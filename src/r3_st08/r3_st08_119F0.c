@@ -8,7 +8,7 @@ void func_801119F0(STAGE_WORK *wp)
 
 void func_80111A2C(ST08_EV *wp)
 {
-    wp->key_20 = func_8003AC24(0x40100);
+    wp->key_20 = Stage_hed_model_get(0x40100);
     if (wp->key_20 == 0)
     {
         Close_EVE_WORK(wp);
@@ -29,7 +29,7 @@ void func_80111B08(ST08_ANIM_EV *wp)
     STAGE_UNPACK unpack;
     sint16 i;
 
-    unpack = func_8002DC84((void *)wp->key_20, 0, 6);
+    unpack = Model_poly_group_get((void *)wp->key_20, 0, 6);
     for (i = 0; i < 5; i++)
     {
         if (--wp->timer_19[i] == 0)
@@ -40,12 +40,12 @@ void func_80111B08(ST08_ANIM_EV *wp)
                 wp->step_14[i] = 0;
             }
             wp->timer_19[i] = D_80118344[i][wp->step_14[i]][1];
-            uv              = func_8002DD1C(unpack.c, i);
+            uv              = Quad_uv_get(unpack.c, i);
             uv.b[0]         = D_80118468[i][0] + D_80118344[i][wp->step_14[i]][0] * 0x30;
             uv.b[2]         = D_80118468[i][1] + D_80118344[i][wp->step_14[i]][0] * 0x30;
             uv.b[4]         = D_80118468[i][2] + D_80118344[i][wp->step_14[i]][0] * 0x30;
             uv.b[6]         = D_80118468[i][3] + D_80118344[i][wp->step_14[i]][0] * 0x30;
-            func_8002DE04(unpack.c, i, uv.w);
+            Quad_uv_set(unpack.c, i, uv.w);
         }
     }
 }
@@ -57,7 +57,7 @@ void func_80111D24(STAGE_WORK *wp)
 
 void func_80111D60(ST08_EV1C *wp)
 {
-    wp->key_1C = func_8003AC24(0x30100);
+    wp->key_1C = Stage_hed_model_get(0x30100);
     if (wp->key_1C == 0)
     {
         Close_EVE_WORK(wp);
@@ -89,8 +89,8 @@ void func_80111E3C(ST08_ANIM2_EV *wp)
                 wp->step_14[i] = 0;
             }
             wp->timer_16[i] = D_80118484[i][wp->step_14[i]][1];
-            unpack          = func_8002DC84((void *)wp->key_1C, 0, 5);
-            uv              = func_8002DD1C(unpack.c, i);
+            unpack          = Model_poly_group_get((void *)wp->key_1C, 0, 5);
+            uv              = Quad_uv_get(unpack.c, i);
             frame           = D_80118484[i][wp->step_14[i]][0] << 16;
             uv.b[0]         = D_801184F8[i][0] + (frame >> 10);
             uv.b[2]         = D_801184F8[i][1] + (frame >> 10);
@@ -100,7 +100,7 @@ void func_80111E3C(ST08_ANIM2_EV *wp)
             uv.b[3]         = D_80118500[i][1] + (frame >> 18) * 0x30;
             uv.b[5]         = D_80118500[i][2] + (frame >> 18) * 0x30;
             uv.b[7]         = D_80118500[i][3] + (frame >> 18) * 0x30;
-            func_8002DE04(unpack.c, i, uv.w);
+            Quad_uv_set(unpack.c, i, uv.w);
         }
     }
 }

@@ -2630,7 +2630,7 @@ typedef struct
 
 extern ST0B_KIND_B **D_8009884C;
 
-sint32 func_8004324C(void *pl);
+sint32 Pl_shot_busy(void *pl);
 sint32 Sce_flag_test(sint32 flag);
 
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);

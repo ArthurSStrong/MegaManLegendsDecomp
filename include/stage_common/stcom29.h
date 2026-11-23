@@ -26,7 +26,7 @@ typedef struct
     sint8 step_D;           // 0D
     sint8 timer_E;          // 0E
     uint8 reserved0F[0x11]; // 0F
-    uint32 key_20;          // 20: the model (func_8003AC24)
+    uint32 key_20;          // 20: the model (Stage_hed_model_get)
 } STCOM29_WORK;
 
 // The 0x24-byte event slot of the five-layer texture animation.
@@ -42,10 +42,10 @@ typedef struct
     uint8 step_C[5];     // 0C: each layer's step in stcom29_D_0110
     uint8 timer_11[5];   // 11
     uint8 reserved16[6]; // 16
-    uint32 key_1C[2];    // 1C: the models (func_8003AC24)
+    uint32 key_1C[2];    // 1C: the models (Stage_hed_model_get)
 } STCOM29_ANIM_WORK;
 
-// The record func_8002DC84 returns.
+// The record Model_poly_group_get returns.
 typedef struct
 {
     uint32 head;
@@ -54,7 +54,7 @@ typedef struct
     uint32 d;
 } STCOM29_UNPACK;
 
-// The eight bytes func_8002DD1C returns: four (u, v) corners, also passed on as words.
+// The eight bytes Quad_uv_get returns: four (u, v) corners, also passed on as words.
 typedef union
 {
     uint8 b[8];
@@ -83,15 +83,15 @@ uint8 stcom29_func_055C(void);
 // ROCK_NEO.EXE.
 extern uint8 *D_8008CE04; // a message script
 extern uint8 *D_8008CE3C; // a message script
-uint32 func_8003AC24(uint32 key);
+uint32 Stage_hed_model_get(uint32 key);
 sint32 Sce_flag_test(sint32 flag);
 void Sce_flag_off(sint32 flag);
-sint32 func_8003B2D4(sint32 row, sint32 bit);
-STCOM29_UNPACK func_8002DC84(void *obj, sint32 i, sint32 j);
-STCOM29_UV4 func_8002DD1C(void *tbl, sint32 idx);
-void func_8002DE04(void *tbl, sint32 idx, sint32 *src);
+sint32 Map_obj_state_get(sint32 row, sint32 bit);
+STCOM29_UNPACK Model_poly_group_get(void *obj, sint32 i, sint32 j);
+STCOM29_UV4 Quad_uv_get(void *tbl, sint32 idx);
+void Quad_uv_set(void *tbl, sint32 idx, sint32 *src);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
-void func_80043340(sint32 id, sint32 arg1);
+void Pl_life_add(sint32 id, sint32 arg1);
 
 #endif // STCOM29_H

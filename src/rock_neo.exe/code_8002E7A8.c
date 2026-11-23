@@ -3100,7 +3100,7 @@ void pl_shot_aim(void)
     n = Atari_count;
     if (Player_work.weapon_right_no == 8)
     {
-        zone = Player_work.parts[8].value04;
+        zone = Player_work.weapon_data[8].sp_perform;
     }
     else
     {
@@ -4047,6 +4047,6 @@ void func_800371A0(uint32 *blocks, uint32 *arg1)
     D_8009A350 = D_800BC7F8;
     SetFarColor(fog->b[0x20], fog->b[0x21], fog->b[0x22]);
     SetFogNear(*(uint16 *)&fog->b[0x24], 0x180);
-    *(FOGSAVE_WORK *)D_800C0DC0 = *fog;
-    FOG_FAR_MODE                = fog->b[0x23];
+    *(FOGSAVE_WORK *)Fog_clut_tbl = *fog;
+    FOG_FAR_MODE                  = fog->b[0x23];
 }

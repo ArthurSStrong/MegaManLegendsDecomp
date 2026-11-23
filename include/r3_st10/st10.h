@@ -431,11 +431,11 @@ void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
 void func_8001EB98(void *entry);
 void func_8010B660(ST10_SHOT *wp, sint32 arg);
-sint32 func_800375D4(void *pl, sint32 arg);
+sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 void func_8010B51C(ST10_SHOT *wp);
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_8010AF9C(ST10_SHL *wp);
 
 #endif

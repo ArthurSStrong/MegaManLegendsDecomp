@@ -111,10 +111,10 @@ void func_80031A4C(STCOM21_WORK *wp);
 STCOM21_OBJ *Open_EM_WORK(void);
 sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
                      sint32 target_angle, sint32 target_range);
-sint32 func_8004324C(STCOM_PL_WORK *pl);
+sint32 Pl_shot_busy(STCOM_PL_WORK *pl);
 sint32 Money_check(sint32 a0);
 void Money_add(sint32 a0, sint32 a1, sint32 a2);
-void func_80043340(sint32 a0, sint32 a1);
+void Pl_life_add(sint32 a0, sint32 a1);
 void Sce_flag_select(sint32 a0);
 void func_8001E3F0(sint32 a0);
 STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);

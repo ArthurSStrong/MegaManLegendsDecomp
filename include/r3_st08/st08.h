@@ -201,7 +201,7 @@ sint32 func_80101360(STAGE_ROOM_WORK *wp);
 
 void func_80110C28(STAGE_OBJ50 *wp);
 
-uint32 func_8003AC24(uint32 key);
+uint32 Stage_hed_model_get(uint32 key);
 void Close_EVE_WORK(void *wp);
 extern uint8 D_80118345;
 extern uint8 D_8011837F[];
@@ -289,7 +289,7 @@ extern ST08_MUSIC D_8011297C[];
 extern uint8 D_801131A4[];
 void func_80101424(void);
 void func_80101478(sint16 x, sint16 y, sint16 z, sint16 angle);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 // A ranking entry: a score (time) and four values kept with it.

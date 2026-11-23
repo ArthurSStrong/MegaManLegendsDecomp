@@ -1128,8 +1128,8 @@ void func_80112E44(ST17_SHL *wp);
 void func_80112F88(ST17_SHL *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
-sint32 func_800375D4(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
+sint32 Player_weapon_attack_calc(void *player, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
 
 // A work slot's fields STAGE_OBJ leaves unnamed: +0x80 is ROCK_NEO's distance to the player
@@ -1350,7 +1350,7 @@ typedef struct
 } ST17_10C_B;
 
 extern uint32 D_8011C110[]; // hit kinds, by byte_D
-extern uint32 D_8011C11C[]; // func_80037738's amounts, by byte_D
+extern uint32 D_8011C11C[]; // Map_obj_hit_damage's amounts, by byte_D
 
 void func_80110E58(ST17_10C_B *wp);
 

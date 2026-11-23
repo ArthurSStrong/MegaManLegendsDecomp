@@ -111,7 +111,7 @@ void func_800D8A88(SHL_WORK *wp)
 
 uint8 func_800D8D28(void)
 {
-    if ((PLAYER_WORK_PTR->pad_11c & PLAYER_WORK_PTR->value_13c) && func_8004324C(&Player_work))
+    if ((PLAYER_WORK_PTR->pad_11c & PLAYER_WORK_PTR->value_13c) && Pl_shot_busy(&Player_work))
     {
         return 0;
     }

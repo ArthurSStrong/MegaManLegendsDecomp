@@ -94,7 +94,7 @@ void func_800D8A98(SHL_WORK *wp)
     Model_work_init(wp, &wp->type_3);
     func_800D9398(wp);
     wp->value_e   = 4;
-    wp->value_f   = func_80037634(&Player_work, 9) / 50;
+    wp->value_f   = Player_weapon_dist_calc(&Player_work, 9) / 50;
     wp->routine_0 = 1;
 }
 
@@ -105,7 +105,7 @@ void func_800D8C64(SHL_WORK *wp)
         wp->routine_0 = 2;
         return;
     }
-    if (func_80037694(wp, 0))
+    if (Shot_map_check(wp, 0))
     {
         wp->routine_0 = 2;
         return;
@@ -179,7 +179,7 @@ void func_800D8F50(SHL_WORK *wp)
     sint32 flags;
 
     level = Player_work.value_53c;
-    flags = func_800375D4(&Player_work, 9);
+    flags = Player_weapon_attack_calc(&Player_work, 9);
     m     = Player_work.mtx_248;
     p     = Player_work.pos_3c8;
     // Identity, written a word at a time.
@@ -229,7 +229,7 @@ void func_800D922C(SHL_WORK *wp)
     f = Player_work.fpos;
     f.w.y -= 0x500000;
     size  = D_800D97D8[Player_work.value_53c];
-    flags = func_800375D4(&Player_work, 9);
+    flags = Player_weapon_attack_calc(&Player_work, 9);
     func_800D9608(&d, 0x3C);
     a.vx = (f.w.x + (d.vx << 9)) >> 16;
     a.vy = (f.w.y + (d.vy << 9)) >> 16;

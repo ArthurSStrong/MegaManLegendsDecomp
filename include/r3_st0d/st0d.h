@@ -830,6 +830,6 @@ void func_8010288C(STAGE_OBJ *wp, STAGE_FACE *face);
 void func_801036E0(STAGE_OBJ *wp, STAGE_FACE *face);
 
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 
 #endif

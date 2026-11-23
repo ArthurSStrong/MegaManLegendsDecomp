@@ -716,14 +716,14 @@ sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FI
 
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
-// A model part as func_801170EC reads it from a func_8003AC24 record: its colors at +0x24.
+// A model part as func_801170EC reads it from a Stage_hed_model_get record: its colors at +0x24.
 typedef struct
 {
     uint8 reserved00[0x24]; // 00
     uint32 *color_24;       // 24: four words of two colors each
 } ST09_MODEL_PART;
 
-// The model record func_8003AC24 returns (key & 0xFFFFFF).
+// The model record Stage_hed_model_get returns (key & 0xFFFFFF).
 typedef struct
 {
     uint8 reserved00[0x18];      // 00
@@ -1050,8 +1050,8 @@ typedef struct
 #define ST09_PATROL_DATA (*(ST09_PATROL *)D_8011E1C8)
 
 // ROCK_NEO's sprite list (func_8002D464 fills it the same way).
-extern uint32 D_800988FC;
-extern uint32 *D_800BE6D8[];
+extern uint32 Billboard_count;
+extern uint32 *Billboard_queue[];
 #define ST09_PACKET_PTR ((uint32 **)0x1F800070)
 
 // A slot's part records from +0x100 (value_3 -1 hides a part).

@@ -229,7 +229,7 @@ typedef struct
         struct
         {
             uint8 reserved00[0x14];
-            uint32 key_14;   // 2C: the model (func_8003AC24)
+            uint32 key_14;   // 2C: the model (Stage_hed_model_get)
             sint32 value_18; // 30
             sint32 lit_1C;   // 34: nonzero once all three flags lit the panel
         } f;
@@ -799,7 +799,7 @@ void func_80105AB0(ST0E_PROP *wp);
 
 extern sint16 D_800BBCF8[]; // ROCK_NEO.EXE: a sine table
 sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 void func_8010BD90(ST0E_LEVER *wp);
 sint32 Search_Player(void *track, void *wp);
 

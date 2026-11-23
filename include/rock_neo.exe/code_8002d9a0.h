@@ -173,7 +173,7 @@ typedef struct
 #define C8002D9A0_GTE_GET(n, v)     __asm__ volatile("mfc2 %0, $" #n : "=r"(v))
 #define C8002D9A0_GTE_GET_NOP(n, v) __asm__ volatile("mfc2 %0, $" #n "; nop" : "=r"(v))
 
-// The scratchpad as func_8002E3D0 reaches it: one symbol, so GCC relates every field address to
+// The scratchpad as Mesh_draw reaches it: one symbol, so GCC relates every field address to
 // the screen-XY table's (retail keeps 0x1F800100 in one register and reaches the rest from it).
 typedef struct
 {
@@ -191,7 +191,7 @@ typedef struct
 
 extern C8002D9A0_SCRATCH D_1F800000;
 
-void func_8002E3D0(C8002D9A0_LOD *lod);
+void Mesh_draw(C8002D9A0_LOD *lod);
 
 // Unpacked primitive header returned by value
 typedef struct
@@ -209,7 +209,7 @@ typedef struct
     uint32 *list[1];
 } C8002D9A0_OBJ;
 
-// Polygon record rewritten in place by func_8002D9A0 (input fields reused as output)
+// Polygon record rewritten in place by billboard_draw (input fields reused as output)
 typedef struct
 {
     uint32 tag;
@@ -223,26 +223,26 @@ typedef struct
     uint32 w20;
 } C8002D9A0_POLY;
 
-// Local scratch for func_8002D9A0: three short vertices, then the screen XY readback
+// Local scratch for billboard_draw: three short vertices, then the screen XY readback
 typedef union
 {
     sint16 h[12];
     sint32 w[6];
 } C8002D9A0_VERTS;
 
-extern uint32 D_800988FC;
-extern C8002D9A0_POLY *D_800BE6D8[];
-extern sint32 D_80097CD4[];
-extern uint8 D_800C0DC0[];
+extern uint32 Billboard_count;
+extern C8002D9A0_POLY *Billboard_queue[];
+extern sint32 Matrix_identity[];
+extern uint8 Fog_clut_tbl[];
 
-C8002D9A0_UNPACK func_8002DC84(C8002D9A0_OBJ *obj, sint32 i, sint32 j);
-void func_8002DEEC(C8002D9A0_REC *rec);
-void func_8002DE5C(void);
+C8002D9A0_UNPACK Model_poly_group_get(C8002D9A0_OBJ *obj, sint32 i, sint32 j);
+void parts_model_draw(C8002D9A0_REC *rec);
+void parts_model_draw_all(void);
 void func_8002DE20(C8002D9A0_ENT16 *tbl, sint32 idx, sint32 *src);
-void func_8002DE04(C8002D9A0_ENT8 *tbl, sint32 idx, sint32 *src);
+void Quad_uv_set(C8002D9A0_ENT8 *tbl, sint32 idx, sint32 *src);
 void func_8002DE34(C8002D9A0_ENT16 *tbl, sint32 idx, sint32 *src);
 C8002D9A0_B4 func_8002DD68(C8002D9A0_ENT16 *tbl, sint32 idx);
-C8002D9A0_B8 func_8002DD1C(C8002D9A0_ENT8 *tbl, sint32 idx);
+C8002D9A0_B8 Quad_uv_get(C8002D9A0_ENT8 *tbl, sint32 idx);
 C8002D9A0_B12 func_8002DDA0(C8002D9A0_ENT16 *tbl, sint32 idx);
 
 #endif // CODE_8002D9A0_H

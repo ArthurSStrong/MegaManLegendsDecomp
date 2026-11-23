@@ -34,16 +34,16 @@ typedef struct
     uint32 v08;
 } C8003AC24_ENTRY;
 #define C8003AC24_ENTRIES ((C8003AC24_ENTRY *)0x8015C000)
-extern sint8 D_80089F04[];
-extern uint32 D_800BD3B8[][0x80];
+extern sint8 Map_obj_state_row_tbl[];
+extern uint32 Map_obj_state[][0x80];
 
 extern uint8 Game_work[];
 #define C8003AC24_GAME_ROW (*(sint8 *)(Game_work + 0x50))
 
-sint32 func_8003B2D4(sint32 row, sint32 bit);
-sint32 func_8003B360(sint32 bit);
-sint32 func_8003B420(sint32 bit);
-sint32 func_8003B4BC(sint32 row, sint32 bit);
+sint32 Map_obj_state_get(sint32 row, sint32 bit);
+sint32 Map_obj_state_alive(sint32 bit);
+sint32 map_obj_state_cur(sint32 bit);
+sint32 map_obj_state_inc(sint32 row, sint32 bit);
 void func_8003BD0C(uint32 *out, uint32 key);
 extern uint32 D_80089F7C;
 extern uint32 D_80089F80;
@@ -76,10 +76,10 @@ extern sint16 D_8015D7A4;
 extern uint32 D_800B6230[];
 void func_800176DC(void *src, void *dst, sint32 count);
 void func_8003B5B4(void);
-uint32 func_8003AC24(uint32 key);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
-void func_8003ACF4(sint32 idx, uint32 val);
-sint32 func_8003B540(sint32 a0, sint32 bit, uint32 val);
+uint32 Stage_hed_model_get(uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
+void map_obj_model_put(sint32 idx, uint32 val);
+sint32 map_obj_state_set(sint32 a0, sint32 bit, uint32 val);
 void func_8003BDC0(uint8 *count, uint32 a1, uint32 a2);
 void func_8003BE38(void);
 

@@ -1306,7 +1306,7 @@ void func_8002196C(sint32 x, sint32 y, uint16 id)
         }
         return;
     }
-    scr[2] = D_800C0DC0[(out[2] / 512) & 0x1F] << 16;
+    scr[2] = Fog_clut_tbl[(out[2] / 512) & 0x1F] << 16;
     GTE_SET_TR(C8001F828_TR_A);
     func_80021B14(data + 8, &sv, id);
     GTE_SET_TR(C8001F828_TR_B);
@@ -1608,7 +1608,7 @@ void func_800221E0(void)
         }
         data = hdr->data;
         GTE_STLVNL(out);
-        scr[2] = D_800C0DC0[(out[2] / 512) & 0x1F] << 16;
+        scr[2] = Fog_clut_tbl[(out[2] / 512) & 0x1F] << 16;
         GTE_SET_TR(C8001F828_TR_A);
         func_8002235C(data + 8, &sv, id);
         GTE_SET_TR(C8001F828_TR_B);
@@ -2275,7 +2275,7 @@ void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3
             C8001F828_SCR_7C = 0x2000000;
         }
         C8001F828_SCR_1BC = C8001F828_SCR_1C0 + 0x172;
-        func_800176DC(D_800C0DC0, (void *)0x1F800100, 1);
+        func_800176DC(Fog_clut_tbl, (void *)0x1F800100, 1);
         func_800176DC(D_80097C90, (void *)0x1F800120, 1);
         C8001F828_SCR_04 = 0;
         scr->vxy         = 0;
@@ -2345,7 +2345,7 @@ void func_800238B4(void)
         C8001F828_SCR_7C = 0x2000000;
     }
     C8001F828_SCR_1BC = C8001F828_SCR_1C0 + 0x172;
-    func_800176DC(D_800C0DC0, (void *)0x1F800100, 1);
+    func_800176DC(Fog_clut_tbl, (void *)0x1F800100, 1);
     func_800176DC(D_80097C90, (void *)0x1F800120, 1);
     C8001F828_TIME_START = VSync(1);
     func_80023C08();

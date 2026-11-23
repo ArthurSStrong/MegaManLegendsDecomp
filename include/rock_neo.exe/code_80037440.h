@@ -18,7 +18,7 @@ typedef struct
 #define CODE374_STATUS_MASK 0x0FFF
 #define CODE374_GROUP_MASK  0x000F0000
 
-extern CODE374_VALUES *D_80089EAC[];
+extern CODE374_VALUES *Weapon_param_tbl[];
 extern CODE374_STATUS D_8015C006[];
 extern uint8 D_8015C008[];
 
@@ -36,15 +36,15 @@ extern CODE374_ENTRY D_8015C000[];
 #define CODE374_ENTRY_PTR ((CODE374_ENTRY *)0x8015C000)
 
 // Small data ($gp-addressed in retail).
-extern uint16 D_80097D24;
+extern uint16 Cell_stack_idx;
 
-extern uint16 D_8009A378[];
+extern uint16 Cell_stack[];
 // Neighbour offsets: eight x/z pairs, then four.
-extern sint8 D_80089EEC[8];
-extern sint8 D_80089EF4[8];
-extern sint8 D_80089EFC[4];
-extern sint8 D_80089F00[4];
-extern uint8 D_800899E0[][16];
+extern sint8 Cell_nbr8_x_tbl[8];
+extern sint8 Cell_nbr8_z_tbl[8];
+extern sint8 Cell_nbr4_x_tbl[4];
+extern sint8 Cell_nbr4_z_tbl[4];
+extern uint8 Weapon_shot_max_tbl[][16];
 
 #define CODE374_MAP_W (*(uint16 *)0x1F800044)
 #define CODE374_MAP_H (*(uint16 *)0x1F800046)
@@ -81,11 +81,11 @@ typedef struct
 
 sint32 Scr_line_check(PL_WORK *wp);
 sint32 Scr_collision_check(PL_WORK *wp);
-void func_80037818(uint16 index);
-void func_80037C50(uint16 index);
-void func_80037CD8(uint16 cell);
-void func_8003777C(uint16 index, uint32 amount);
-void func_80037890(sint32 mode, sint32 count, uint16 index);
+void map_obj_break(uint16 index);
+void map_obj_break_push(uint16 index);
+void map_obj_break_spread(uint16 cell);
+void map_obj_damage(uint16 index, uint32 amount);
+void map_obj_debris(sint32 mode, sint32 count, uint16 index);
 sint32 rsin(sint32 a);
 sint32 rcos(sint32 a);
 

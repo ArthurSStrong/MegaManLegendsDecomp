@@ -964,22 +964,22 @@ sint16 func_8010EB68(void)
     sint16 changed;
 
     changed = 0;
-    if (func_8003B2D4(6, 0x205) != 3 && STAGE_GAME.value_28 != 500)
+    if (Map_obj_state_get(6, 0x205) != 3 && STAGE_GAME.value_28 != 500)
     {
         changed = 1;
         Sce_flag_on(0x23D);
     }
-    if (func_8003B2D4(6, 0xFC) != 3 && STAGE_GAME.value_2C != 200)
+    if (Map_obj_state_get(6, 0xFC) != 3 && STAGE_GAME.value_2C != 200)
     {
         changed = 1;
         Sce_flag_on(0x23E);
     }
-    if (func_8003B2D4(6, 0x120) != 3 && STAGE_GAME.value_30 != 250)
+    if (Map_obj_state_get(6, 0x120) != 3 && STAGE_GAME.value_30 != 250)
     {
         changed = 1;
         Sce_flag_on(0x23F);
     }
-    if (func_8003B2D4(5, 0x26) != 3 && STAGE_GAME.value_34 != 200)
+    if (Map_obj_state_get(5, 0x26) != 3 && STAGE_GAME.value_34 != 200)
     {
         changed = 1;
         Sce_flag_on(0x240);
@@ -1387,7 +1387,7 @@ void func_8010F8B0(ST06_CRAB *wp)
         hit = Scr_line_check(wp);
         if (hit != 0)
         {
-            count = func_80037BB4((void *)hit);
+            count = Map_obj_hit_life((void *)hit);
             if (count > 0)
             {
                 done = 1;
@@ -1543,10 +1543,10 @@ void func_8010FD0C(ST06_CRAB *wp)
                     hit = (void *)Scr_line_check(wp);
                     if (hit != NULL)
                     {
-                        count = func_80037BB4(hit);
+                        count = Map_obj_hit_life(hit);
                         if (STAGE_SCENE_BYTE(0) == 0)
                         {
-                            func_80037738((sint32)hit, 5);
+                            Map_obj_hit_damage((sint32)hit, 5);
                             if (count != 0)
                             {
                                 if (ctl->value_A & 1)
@@ -1679,10 +1679,10 @@ void func_8010FF90(ST06_CRAB *wp)
             hit = Scr_line_check(wp);
             if (hit != 0)
             {
-                count = func_80037BB4((void *)hit);
+                count = Map_obj_hit_life((void *)hit);
                 if (STAGE_SCENE_BYTE(0) == 0)
                 {
-                    func_80037738(hit, 0xF);
+                    Map_obj_hit_damage(hit, 0xF);
                     if (count != 0)
                     {
                         pos = wp->joint_180[0];

@@ -27,15 +27,17 @@ typedef struct
     PL_BYTES8 value38;
 } PL_CMD;
 
+// One weapon's record in PL_WORK.weapon_data (Capcom's field names, from tcrf's sub_scrn.c): the
+// level of each stat (an index into Weapon_param_tbl[weapon]) and the energy left.
 typedef struct
 {
-    sint8 current;
-    sint8 selected;
-    sint8 value02;
-    sint8 value03;
-    sint8 value04;
+    sint8 attack_level;
+    sint8 bullet_level;
+    sint8 dist_level;
+    sint8 repeat_level;
+    sint8 sp_perform;
     uint8 reserved05;
-    sint16 value06;
+    sint16 bullet_left;
 } PL_PART_STATE;
 
 typedef struct
@@ -175,7 +177,7 @@ typedef struct PL_WORK
     uint8 reserved44C[0x1];
     uint8 value44d;
     uint8 reserved44E[0xA6];
-    PL_PART_STATE parts[16];
+    PL_PART_STATE weapon_data[16];
     uint8 reserved574[0xE0];
 } PL_WORK;
 
@@ -240,7 +242,7 @@ void Pl_Char_Set_Upper(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 void Pl_Char_Move_Upper(PL_WORK *pl, sint32 a1, sint32 a2);
 void Pl_Char_Set(PL_WORK *pl, sint32 a1, sint32 a2);
 void Pl_Char_Move(); // signature differs between callers; see code_8002e7a8.h
-uint32 func_8004324C(PL_WORK *pl);
+uint32 Pl_shot_busy(PL_WORK *pl);
 sint32 Scr_collision_check(PL_WORK *pl);
 sint32 pl_turn_l1r1(PL_WORK *pl, sint32 a1, sint32 a2);
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
@@ -264,7 +266,7 @@ void pl_damage_check(PL_WORK *pl);
 void Pl_shot_special(PL_WORK *pl);
 void Pl_shot_buster(PL_WORK *pl);
 sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3);
-sint32 func_80037440();
+sint32 Pl_special_shot_check();
 void Ride_carry(PL_WORK *pl, uint32 arg);
 void Ride_carry_saved(PL_WORK *pl, uint32 arg);
 sint32 Scr_event_check(PL_WORK *pl);
@@ -283,8 +285,8 @@ void pl_pitch_accel(PL_WORK *pl, sint32 a1, sint32 a2, uint16 mask);
 sint32 Pl_anim_buster(PL_WORK *pl);
 sint32 Pl_anim_special(PL_WORK *pl);
 void Pl_key_type_set(); // signature differs between callers
-void func_80037534(PL_WORK *wp);
-void func_80037594(void);
+void Player_weapon_init(PL_WORK *wp);
+void Player_weapon_refill(void);
 void func_800177CC(void *start, void *end);
 extern uint32 D_8009888C;
 extern PL_HEIGHT_INFO D_80097D90;

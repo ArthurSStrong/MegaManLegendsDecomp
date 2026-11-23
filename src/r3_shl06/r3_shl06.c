@@ -68,7 +68,7 @@ void func_800D8A6C(SHL_WORK *wp)
 {
     MATRIX unused;
 
-    if (func_80037694(wp, 0x20) || wp->hit_7c)
+    if (Shot_map_check(wp, 0x20) || wp->hit_7c)
     {
         func_800D8C2C(wp);
         Close_PL_SHL_WORK(wp);
@@ -147,7 +147,7 @@ void func_800D8D28(SHL_WORK *wp)
 {
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 6);
+    flags = Player_weapon_attack_calc(&Player_work, 6);
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos, 0x20, &wp->old_pos, 0x20, 0x200, 0x6000, wp->value_1, &wp->col_c4,
@@ -194,7 +194,7 @@ void func_800D8E44(SHL_WORK *wp, sint32 rx, sint32 ry)
     dir.vx                = v.vx;
     dir.vy                = v.vy;
     dir.vz                = v.vz;
-    speed                 = func_80037634(&Player_work, 6) + (rand() & 0x1F);
+    speed                 = Player_weapon_dist_calc(&Player_work, 6) + (rand() & 0x1F);
     wp->vel.vx            = (uint32)(dir.vx * speed) >> 4;
     wp->vel.vy            = (uint32)(dir.vy * speed) >> 4;
     wp->vel.vz            = (uint32)(dir.vz * speed) >> 4;

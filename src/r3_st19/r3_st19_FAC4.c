@@ -398,12 +398,12 @@ void func_801106C4(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 5:
-            func_8003786C(0x1B);
-            func_8003786C(0x1C);
-            func_8003786C(0x1D);
-            func_8003786C(0x25);
-            func_8003786C(0x26);
-            func_8003786C(0x27);
+            Map_obj_remove(0x1B);
+            Map_obj_remove(0x1C);
+            Map_obj_remove(0x1D);
+            Map_obj_remove(0x25);
+            Map_obj_remove(0x26);
+            Map_obj_remove(0x27);
             func_80111D50();
             Sound_call(0x26, 0, 0);
             Fade_start(2);
@@ -903,12 +903,12 @@ void func_801117A8(STAGE_ROOM_WORK *wp)
                 STAGE_PL.pos_438.z   = -0xA00;
                 STAGE_PL.fixed_428.x = 0xF4480000;
                 STAGE_PL.fixed_428.z = 0xF6000000;
-                func_8003786C(0x1B);
-                func_8003786C(0x1C);
-                func_8003786C(0x1D);
-                func_8003786C(0x25);
-                func_8003786C(0x26);
-                func_8003786C(0x27);
+                Map_obj_remove(0x1B);
+                Map_obj_remove(0x1C);
+                Map_obj_remove(0x1D);
+                Map_obj_remove(0x25);
+                Map_obj_remove(0x26);
+                Map_obj_remove(0x27);
                 func_80111DE4(0);
                 Fade_start(6);
                 wp->routine_5++;

@@ -636,7 +636,7 @@ void func_801226E4(ST1A_DART *wp)
     sint32 hit;
     sint32 speed;
 
-    hit = func_80037694((STCOM23_WORK *)wp, 0);
+    hit = Shot_map_check((STCOM23_WORK *)wp, 0);
     if (hit != 0 && (hit != 0x7FFF || (wp->value_BC[2] & 0xFF000000)))
     {
         wp->routine_1 = 0;

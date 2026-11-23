@@ -102,7 +102,7 @@ void func_801005BC(STAGE_ROOM_WORK *wp)
     {
         for (i = 0; i < 4; i++)
         {
-            func_8003AC9C(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
+            Map_obj_model_swap(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
         }
         Sce_slot_open_list(D_801087A8);
         wp->routine_4++;
@@ -117,7 +117,7 @@ void func_80100664(STAGE_ROOM_WORK *wp)
     {
         for (i = 0; i < 4; i++)
         {
-            func_8003AC9C(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
+            Map_obj_model_swap(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
         }
         Sce_slot_open_list(D_801087B0);
         wp->routine_4++;
@@ -132,7 +132,7 @@ void func_8010070C(STAGE_ROOM_WORK *wp)
     {
         for (i = 0; i < 4; i++)
         {
-            func_8003AC9C(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
+            Map_obj_model_swap(Scr_cell_get(&D_801087C0[i]), D_801087E0[i]);
         }
         Sce_slot_open_list(D_801087B8);
         wp->routine_4++;
@@ -294,7 +294,7 @@ void func_80100B60(STAGE_ROOM *wp)
         wp->child_28->flags_0 = 0;
         for (i = 0; i < 4; i++)
         {
-            func_8003AC9C(Scr_map_cell_get(0, &D_80108AC0[i]), D_80108AE0[i]);
+            Map_obj_model_swap(Scr_map_cell_get(0, &D_80108AC0[i]), D_80108AE0[i]);
         }
         func_80100828(0);
     }

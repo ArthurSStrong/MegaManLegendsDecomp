@@ -882,7 +882,7 @@ extern void *D_8011638C[];
 extern void *D_80116398[];
 extern STCOM_SVECTOR D_801163A4[]; // the six grid origins' offsets (func_8010FBD0)
 extern uint32 D_801163F8[];        // hit kinds, by byte_D
-extern uint32 D_80116404[];        // func_80037738's amounts, by byte_D
+extern uint32 D_80116404[];        // Map_obj_hit_damage's amounts, by byte_D
 extern sint16 D_80116422[];
 extern uint16 D_80116424[];
 extern sint16 D_80116426[];
@@ -929,13 +929,13 @@ void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
 void *func_80031498(void);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
-sint32 func_800375D4(void *pl, sint32 arg);
+sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
 void func_80113744(ST0A_SHOT *wp);
 void func_80113888(ST0A_SHOT *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_801131C4(ST0A_SHL *wp);
 void func_80110298(ST0A_10C_B *wp);
 void func_80110878(ST0A_10C_B *wp);

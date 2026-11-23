@@ -173,10 +173,10 @@ extern CODE43_GAME Game_work;
 extern CODE43_PLAYER Player_work[];
 extern uint8 D_80097DA0[];
 extern uint32 D_80097DAC[];
-extern uint8 D_80097DCC[];
-extern uint8 D_80097DD4[];
-extern CODE43_FUNC D_8008A0CC[];
-extern CODE43_FUNC D_8008A0D8[];
+extern uint8 Buster_size_tbl[];
+extern uint8 Buster_speed_tbl[];
+extern CODE43_FUNC Pl_shl_normal_arm_tbl[];
+extern CODE43_FUNC Pl_shl_buster_tbl[];
 
 #define CODE43_MONEY_MAX 999999
 
@@ -185,10 +185,10 @@ CODE43_TARGET *Obj_id_work(uint8 id);
 CODE43_FX *Open_EFFECT_WORK(void);
 void Close_PL_SHL_WORK(CODE43_WORK *wp);
 void Solid_mover_set(CODE43_WORK *wp);
-sint32 func_80037694(CODE43_WORK *wp, sint32 arg);
+sint32 Shot_map_check(CODE43_WORK *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
-void func_80043740(CODE43_WORK *wp);
-sint32 func_80037634(void *player, sint32 arg);
+void normal_arm_hit_effect(CODE43_WORK *wp);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void VectorNormalS(CODE43_VECTOR *v, CODE43_SVECTOR *out);
 #ifdef __wasm32__
 CODE43_SVECTOR *Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43_SVECTOR *cur, sint32 a3,
@@ -202,10 +202,10 @@ void func_8005D97C(void);
 sint16 func_80039B80(void);
 void RotMatrixYXZ(CODE43_SVECTOR *r, CODE43_MATRIX *m);
 void ApplyMatrix(CODE43_MATRIX *m, CODE43_SVECTOR *v, CODE43_VECTOR *out);
-void func_800435F8(CODE43_WORK *wp);
-void func_80043E78(CODE43_WORK *wp);
-void func_80043E00(CODE43_WORK *wp, sint32 value);
-sint32 func_800375D4(void *player, sint32 arg);
+void normal_arm_atari_set(CODE43_WORK *wp);
+void buster_atari_set(CODE43_WORK *wp);
+void buster_hit_effect(CODE43_WORK *wp, sint32 value);
+sint32 Player_weapon_attack_calc(void *player, sint32 arg);
 #ifdef __wasm32__
 sint32 Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
                    sint32 *a7, sint32 a8, sint32 a9, sint32 a10);

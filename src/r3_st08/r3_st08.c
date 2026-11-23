@@ -37,7 +37,7 @@ void func_80100384(void)
             pl->value_44E = 0;
             if (STAGE_GAME_VALUE_52 >= 5)
             {
-                func_8003AC9C(Scr_cell_get(&D_80112974), 0x93300);
+                Map_obj_model_swap(Scr_cell_get(&D_80112974), 0x93300);
             }
             break;
         case 4:
@@ -529,7 +529,7 @@ void func_80101424(void)
 {
     STCOM_SVECTOR pos = {0x1900, 0, 0x300, 0};
 
-    func_8003AC9C(Scr_cell_get(&pos), 0x80100000);
+    Map_obj_model_swap(Scr_cell_get(&pos), 0x80100000);
 }
 
 // Puts the player at (x, y, z) facing `angle`.

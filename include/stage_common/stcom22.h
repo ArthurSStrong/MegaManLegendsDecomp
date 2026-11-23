@@ -152,6 +152,6 @@ void Ride_clear(STCOM22_WORK *wp);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range,
                      STCOM_FIXED_VECTOR *target, sint32 target_angle, sint32 target_range);
 sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 
 #endif // STCOM22_H

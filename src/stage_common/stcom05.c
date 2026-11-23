@@ -495,8 +495,8 @@ void stcom05_func_0E64(STCOM05_WORK *wp)
     value = Scr_line_check(wp);
     if (value != 0)
     {
-        func_80037BB4(wp);
-        func_80037738(value, 0x8000);
+        Map_obj_hit_life(wp);
+        Map_obj_hit_damage(value, 0x8000);
         Sce_flag_on(0x30);
         Sce_flag_on(0x31C);
         Sound_call2(0x17F, &wp->position);

@@ -267,7 +267,7 @@ sint32 func_80027F78(void *work, void *arg)
         }
     }
     C80027678_GTE_DPCS(&C80027678_SCRATCH_E4);
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     if (z > C80027678_FAR_Z)
     {
         return 0;
@@ -330,7 +330,7 @@ void func_8002831C(void *rec)
         }
     }
     wp->draw |= 0x80;
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     if (z >= 0x709)
     {
         C80027678_LOD_PTR = (C80027678_LOD *)(wp->model->lod[2] + 0x14);
@@ -620,7 +620,7 @@ void func_80028F90(void *rec)
         }
     }
     wp->draw |= 0x80;
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     if (z >= 0x709)
     {
         C80027678_LOD_PTR = (C80027678_LOD *)(wp->model->lod[2] + 0x14);
@@ -973,7 +973,7 @@ void func_80029C18(C80027678_SPRITE *obj, uint32 flags)
     }
     else
     {
-        C80027678_SCRATCH_E0 = D_800C0DC0[(z / 512) & 0x1F] << 16;
+        C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 512) & 0x1F] << 16;
         GTE_LWC2(6, &obj->color);
         GTE_NOP2();
         GTE_DPCS_RUN();
@@ -1062,11 +1062,12 @@ void func_8002A160(C80027678_OBJ *obj, uint32 flags)
     else if (flags & 0x80)
     {
         C80027678_SCRATCH_E0 =
-            (((D_800C0DC0[(z / 128) & 0x1F] >> 2) << 6) + (D_800C0DC0[(z / 128) & 0x1F] & 3)) << 16;
+            (((Fog_clut_tbl[(z / 128) & 0x1F] >> 2) << 6) + (Fog_clut_tbl[(z / 128) & 0x1F] & 3))
+            << 16;
     }
     else
     {
-        C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+        C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     }
     C80027678_GTE_SET_ROT(C80027678_ROT_A);
     C80027678_GTE_LDCLMV(&rot.m[0][0]);
@@ -1245,7 +1246,7 @@ void func_8002AB70(C80027678_OBJ *obj, uint32 flags)
     {
         C80027678_LOD_PTR = (C80027678_LOD *)(obj->model->lod[0] + 0x14);
     }
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     C80027678_GTE_SET_ROT(C80027678_ROT_A);
     C80027678_GTE_LDCLMV(obj->rot);
     C80027678_GTE_RTIR();
@@ -1395,7 +1396,7 @@ void func_8002B2C8(C80027678_OBJ *obj, uint32 flags)
     {
         C80027678_LOD_PTR = (C80027678_LOD *)(obj->model->lod[0] + 0x14);
     }
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     C80027678_GTE_SET_ROT(C80027678_ROT_A);
     C80027678_GTE_LDCLMV(obj->rot);
     C80027678_GTE_RTIR();
@@ -1591,7 +1592,7 @@ void func_8002BD48(C80027678_OBJ *obj, uint32 flags)
     {
         C80027678_LOD_PTR = (C80027678_LOD *)(obj->model->lod[0] + 0x14);
     }
-    C80027678_SCRATCH_E0 = D_800C0DC0[(z / 128) & 0x1F] << 16;
+    C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 128) & 0x1F] << 16;
     C80027678_GTE_SET_ROT(C80027678_ROT_A);
     C80027678_GTE_LDCLMV(obj->rot);
     C80027678_GTE_RTIR();
@@ -1957,7 +1958,7 @@ void func_8002CFA4(void)
     C80027678_SCRATCH_75 = 0;
     C80027678_SCRATCH_04 = 0;
     C80027678_SCRATCH_06 = 0xE00;
-    D_800988FC           = 0;
+    Billboard_count      = 0;
     C80027678_SCRATCH_76 = 0xE00;
 }
 
@@ -2106,13 +2107,13 @@ uint8 *func_8002D464(void)
 {
     uint8 *p;
 
-    if (D_800988FC >= 0x100)
+    if (Billboard_count >= 0x100)
     {
         return 0;
     }
-    p                        = *C80027678_PRIM_PTR;
-    D_800BE6D8[D_800988FC++] = p;
-    *C80027678_PRIM_PTR      = p + 0x28;
+    p                                  = *C80027678_PRIM_PTR;
+    Billboard_queue[Billboard_count++] = p;
+    *C80027678_PRIM_PTR                = p + 0x28;
     return p;
 }
 
@@ -2120,13 +2121,13 @@ uint8 *func_8002D4B8(void)
 {
     uint8 *p;
 
-    if (D_800988FC >= 0x100)
+    if (Billboard_count >= 0x100)
     {
         return 0;
     }
-    p                        = *C80027678_PRIM_PTR;
-    D_800BE6D8[D_800988FC++] = p;
-    *C80027678_PRIM_PTR      = p + 0x20;
+    p                                  = *C80027678_PRIM_PTR;
+    Billboard_queue[Billboard_count++] = p;
+    *C80027678_PRIM_PTR                = p + 0x20;
     return p;
 }
 
@@ -2146,21 +2147,21 @@ void func_8002D50C(void)
     sint32 z;
     sint32 *mat;
 
-    mat        = C80027678_MAT_ID;
-    mat[0]     = 0x1000;
-    mat[1]     = 0;
-    mat[2]     = 0x1000;
-    mat[3]     = 0;
-    mat[4]     = 0x1000;
-    mat[5]     = 0;
-    mat[6]     = 0;
-    mat[7]     = 0;
-    n          = D_800988FC;
-    D_800988FC = 0;
+    mat             = C80027678_MAT_ID;
+    mat[0]          = 0x1000;
+    mat[1]          = 0;
+    mat[2]          = 0x1000;
+    mat[3]          = 0;
+    mat[4]          = 0x1000;
+    mat[5]          = 0;
+    mat[6]          = 0;
+    mat[7]          = 0;
+    n               = Billboard_count;
+    Billboard_count = 0;
     GTE_SET_MATRIX(C80027678_ROT_A);
     for (i = 0; i < n; i++)
     {
-        p = (C80027678_BB *)D_800BE6D8[i];
+        p = (C80027678_BB *)Billboard_queue[i];
         if ((p->rgbc.c.code >> 5) == 1)
         {
             *(uint32 *)&pts[0].vx = p->xy0;
@@ -2202,7 +2203,7 @@ void func_8002D50C(void)
             }
             else
             {
-                C80027678_SCRATCH_E0 = D_800C0DC0[(z / 512) & 0x1F] << 16;
+                C80027678_SCRATCH_E0 = Fog_clut_tbl[(z / 512) & 0x1F] << 16;
                 GTE_LWC2(6, &p->rgbc);
                 GTE_NOP2();
                 GTE_DPCS_RUN();

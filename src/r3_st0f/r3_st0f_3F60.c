@@ -293,7 +293,7 @@ uint8 func_80104798(void)
 {
     if (Sce_flag_test(0x1E))
     {
-        return func_8003B2D4(6, 0x120) == 3;
+        return Map_obj_state_get(6, 0x120) == 3;
     }
     return 0;
 }
@@ -302,7 +302,7 @@ uint8 func_801047D8(void)
 {
     if (Sce_flag_test(0x27))
     {
-        return func_8003B2D4(5, 0x26) == 3;
+        return Map_obj_state_get(5, 0x26) == 3;
     }
     return 0;
 }

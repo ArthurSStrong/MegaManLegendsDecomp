@@ -69,7 +69,7 @@ void func_800D8A7C(SHL_WORK *wp)
 {
     MATRIX unused;
 
-    if (func_80037694(wp, 0x20) || wp->hit_7c)
+    if (Shot_map_check(wp, 0x20) || wp->hit_7c)
     {
         func_800D8C6C(wp);
         Swing_Camera2(0x14, 0x64, 0xFA0, &wp->pos);
@@ -84,7 +84,7 @@ void func_800D8A7C(SHL_WORK *wp)
         wp->vel.vy += wp->ay;
         wp->vel.vz += wp->az;
     }
-    if (wp->timer_b++ < func_80037634(&Player_work, 3))
+    if (wp->timer_b++ < Player_weapon_dist_calc(&Player_work, 3))
     {
         if (wp->timer_b & 1)
         {
@@ -154,7 +154,7 @@ void func_800D8D5C(SHL_WORK *wp)
     sint32 flags;
 
     size  = wp->draw.spr.size_98;
-    flags = func_800375D4(&Player_work, 3);
+    flags = Player_weapon_attack_calc(&Player_work, 3);
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos, size, &wp->old_pos, size, 0x200, 0x6000, wp->value_1, &wp->col_c4,

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "rock_neo.exe/code_8003ac24.h"
 
-uint32 func_8003AC24(uint32 key)
+uint32 Stage_hed_model_get(uint32 key)
 {
     uint32 i;
     uint32 *p;
@@ -28,18 +28,18 @@ uint32 func_8003AC24(uint32 key)
     return 0;
 }
 
-uint32 func_8003AC9C(sint32 idx, uint32 key)
+uint32 Map_obj_model_swap(sint32 idx, uint32 key)
 {
     uint32 old;
     sint32 off;
 
     off                           = idx * 12;
     old                           = *(uint32 *)(0x8015C008 + off);
-    *(uint32 *)(0x8015C008 + off) = func_8003AC24(key);
+    *(uint32 *)(0x8015C008 + off) = Stage_hed_model_get(key);
     return old;
 }
 
-void func_8003ACF4(sint32 idx, uint32 val)
+void map_obj_model_put(sint32 idx, uint32 val)
 {
     C8003AC24_SLOTS[idx].v = val;
 }
@@ -47,7 +47,7 @@ void func_8003ACF4(sint32 idx, uint32 val)
 // FAKE MATCH: one dead conditional store (`map = NULL`), kept only for register allocation.
 // The dead store in the key loop is needed: its test survives until jump2 and adds
 // weighted references to k, which ranks k above j and i (retail's s3/s4/s5).
-void func_8003AD14(void)
+void Map_obj_state_load(void)
 {
     uint32 keys[2][2][4];
     sint32 row;
@@ -64,7 +64,7 @@ void func_8003AD14(void)
         func_8003B5B4();
     }
     game_row = C8003AC24_GAME_ROW;
-    row      = D_80089F04[game_row];
+    row      = Map_obj_state_row_tbl[game_row];
     if (row < 0)
     {
         return;
@@ -80,13 +80,13 @@ void func_8003AD14(void)
                 {
                     map = NULL; // dead: map is set before use
                 }
-                keys[i][j][k] = func_8003AC24(D_80089F24[i][j][k]);
+                keys[i][j][k] = Stage_hed_model_get(D_80089F24[i][j][k]);
             }
         }
     }
     if (C8003AC24_GAME_ROW == 6)
     {
-        if ((uint32)(func_8003B2D4(6, 0x1C7) - 1) < 2)
+        if ((uint32)(Map_obj_state_get(6, 0x1C7) - 1) < 2)
         {
             D_8015D554 = -0x1200;
             D_8015D556 = -0x300;
@@ -98,7 +98,7 @@ void func_8003AD14(void)
             D_8015D556 = -0x300;
             D_8015D558 = 0xA10;
         }
-        if ((uint32)(func_8003B2D4(6, 0x1F8) - 1) < 2)
+        if ((uint32)(Map_obj_state_get(6, 0x1F8) - 1) < 2)
         {
             D_8015D7A0 = 0x2000;
             D_8015D7A2 = -0x300;
@@ -111,7 +111,7 @@ void func_8003AD14(void)
             D_8015D7A4 = 0xE10;
         }
     }
-    map     = D_800BD3B8[row];
+    map     = Map_obj_state[row];
     special = (uint32)(game_row - 5) < 2;
     for (k = 0; k < 0x800; k += 16)
     {
@@ -183,7 +183,7 @@ void func_8003AD14(void)
 
 // The slot table is read as whole records from 0x8015C000 (C8003AC24_ENTRIES), which gives
 // retail's lui at / addu at,reg,at loads without hoisting.
-void func_8003B140(void)
+void Map_obj_state_save(void)
 {
     sint32 row;
     uint32 *map;
@@ -195,11 +195,11 @@ void func_8003B140(void)
     uint32 entry;
 
     func_8003BC44();
-    row = D_80089F04[C8003AC24_GAME_ROW];
+    row = Map_obj_state_row_tbl[C8003AC24_GAME_ROW];
     if (row >= 0)
     {
         D_8015C008[0].v = 1;
-        map             = D_800BD3B8[row];
+        map             = Map_obj_state[row];
         for (base = 0; base < 0x800; base += 0x10)
         {
             bits = map[base >> 4];
@@ -229,7 +229,7 @@ void func_8003B140(void)
     }
 }
 
-void func_8003B278(sint32 mode)
+void Map_obj_state_reset(sint32 mode)
 {
     sint32 i;
 
@@ -237,16 +237,16 @@ void func_8003B278(sint32 mode)
     {
         for (i = 0; i < 0x380; i++)
         {
-            D_800BD3B8[0][i] = -1; // all seven rows
+            Map_obj_state[0][i] = -1; // all seven rows
         }
     }
     else
     {
-        func_800176DC(D_800B6230, D_800BD3B8, 0x70);
+        func_800176DC(D_800B6230, Map_obj_state, 0x70);
     }
 }
 
-sint32 func_8003B2D4(sint32 idx, sint32 bit)
+sint32 Map_obj_state_get(sint32 idx, sint32 bit)
 {
     sint32 row;
     uint32 bits;
@@ -255,12 +255,12 @@ sint32 func_8003B2D4(sint32 idx, sint32 bit)
     {
         return -1;
     }
-    row = D_80089F04[idx];
+    row = Map_obj_state_row_tbl[idx];
     if (row < 0)
     {
         return -1;
     }
-    bits = D_800BD3B8[row][bit >> 4];
+    bits = Map_obj_state[row][bit >> 4];
     switch ((bits >> ((bit & 0xF) * 2)) & 3)
     {
         case 0:
@@ -276,7 +276,7 @@ sint32 func_8003B2D4(sint32 idx, sint32 bit)
     }
 }
 
-sint32 func_8003B360(sint32 bit)
+sint32 Map_obj_state_alive(sint32 bit)
 {
     sint32 row;
     uint32 bits;
@@ -285,14 +285,14 @@ sint32 func_8003B360(sint32 bit)
     {
         return -1;
     }
-    row = D_80089F04[C8003AC24_GAME_ROW];
+    row = Map_obj_state_row_tbl[C8003AC24_GAME_ROW];
     if (row < 0)
     {
         return -1;
     }
     if ((*(uint16 *)(0x8015C006 + bit * 12) & 0xFFF) != 0)
     {
-        bits = D_800BD3B8[row][bit >> 4];
+        bits = Map_obj_state[row][bit >> 4];
         switch ((bits >> ((bit & 0xF) * 2)) & 3)
         {
             case 0:
@@ -310,7 +310,7 @@ sint32 func_8003B360(sint32 bit)
     return 0;
 }
 
-sint32 func_8003B420(sint32 bit)
+sint32 map_obj_state_cur(sint32 bit)
 {
     sint32 row;
     uint32 bits;
@@ -319,12 +319,12 @@ sint32 func_8003B420(sint32 bit)
     {
         return -1;
     }
-    row = D_80089F04[C8003AC24_GAME_ROW];
+    row = Map_obj_state_row_tbl[C8003AC24_GAME_ROW];
     if (row < 0)
     {
         return -1;
     }
-    bits = D_800BD3B8[row][bit >> 4];
+    bits = Map_obj_state[row][bit >> 4];
     switch ((bits >> ((bit & 0xF) * 2)) & 3)
     {
         case 0:
@@ -340,7 +340,7 @@ sint32 func_8003B420(sint32 bit)
     }
 }
 
-sint32 func_8003B4BC(sint32 idx, sint32 bit)
+sint32 map_obj_state_inc(sint32 idx, sint32 bit)
 {
     sint32 row;
     uint32 *wp;
@@ -350,12 +350,12 @@ sint32 func_8003B4BC(sint32 idx, sint32 bit)
     {
         return -1;
     }
-    row = D_80089F04[idx];
+    row = Map_obj_state_row_tbl[idx];
     if (row < 0)
     {
         return -1;
     }
-    wp = D_800BD3B8[row];
+    wp = Map_obj_state[row];
     v  = (wp[bit >> 4] >> ((bit & 0xF) * 2)) & 3;
     if (v == 3)
     {
@@ -366,7 +366,7 @@ sint32 func_8003B4BC(sint32 idx, sint32 bit)
     return 1;
 }
 
-sint32 func_8003B540(sint32 idx, sint32 bit, uint32 val)
+sint32 map_obj_state_set(sint32 idx, sint32 bit, uint32 val)
 {
     uint32 *wp;
     sint32 row;
@@ -375,12 +375,12 @@ sint32 func_8003B540(sint32 idx, sint32 bit, uint32 val)
     {
         return -1;
     }
-    row = D_80089F04[idx];
+    row = Map_obj_state_row_tbl[idx];
     if (row < 0)
     {
         return -1;
     }
-    wp           = D_800BD3B8[row];
+    wp           = Map_obj_state[row];
     wp[bit >> 4] = (wp[bit >> 4] & ~(3 << ((bit & 0xF) * 2))) | (val << ((bit & 0xF) * 2));
     return 1;
 }
@@ -412,7 +412,7 @@ void func_8003B5B4(void)
                 if ((*slot & 0xFFFF0000) == key)
                 {
                     state = 0;
-                    switch (func_8003B360(i))
+                    switch (Map_obj_state_alive(i))
                     {
                         case 0:
                         default:
@@ -432,7 +432,7 @@ void func_8003B5B4(void)
                             state = 3;
                             break;
                     }
-                    func_8003B540(5, i, state);
+                    map_obj_state_set(5, i, state);
                 }
             }
         }
@@ -455,7 +455,7 @@ void func_8003B5B4(void)
                 if ((*slot & 0xFFFF0000) == key)
                 {
                     state = 0;
-                    switch (func_8003B360(i))
+                    switch (Map_obj_state_alive(i))
                     {
                         case 0:
                         default:
@@ -475,7 +475,7 @@ void func_8003B5B4(void)
                             state = 3;
                             break;
                     }
-                    func_8003B540(6, i, state);
+                    map_obj_state_set(6, i, state);
                 }
             }
         }
@@ -521,7 +521,7 @@ void func_8003B8B0(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32
             if (first != 0)
             {
                 first = 0;
-                switch (func_8003B360(i))
+                switch (Map_obj_state_alive(i))
                 {
                     case 0:
                     default:
@@ -548,7 +548,7 @@ void func_8003B8B0(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32
                         return;
                 }
             }
-            func_8003B540(row, i, state);
+            map_obj_state_set(row, i, state);
         }
     }
     if (state < 3)
@@ -605,7 +605,7 @@ void func_8003BA58(uint32 *remain, uint32 amount, uint32 key, sint32 unused)
             if (*(uint32 *)entry->v == 0x40400 && first != 0)
             {
                 first = 0;
-                switch (func_8003B360(i))
+                switch (Map_obj_state_alive(i))
                 {
                     case 0:
                     default:
@@ -636,7 +636,7 @@ void func_8003BA58(uint32 *remain, uint32 amount, uint32 key, sint32 unused)
     }
     for (i = 0; i < 7; i++)
     {
-        func_8003B540(6, tmp[i], D_80097D74[state][i]);
+        map_obj_state_set(6, tmp[i], D_80097D74[state][i]);
     }
     if (state < 3)
     {
@@ -689,7 +689,7 @@ void func_8003BD0C(uint32 *out, uint32 key)
         }
         if ((*ptr & mask) == key && *(sint16 *)p == 0)
         {
-            if (func_8003B420(i) > 0)
+            if (map_obj_state_cur(i) > 0)
             {
                 *out = 0;
                 break;

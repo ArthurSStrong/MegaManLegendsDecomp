@@ -301,7 +301,7 @@ void func_80019F94(uint16 arg);
 void func_800177CC(void *a, void *b);
 void func_8001D928(sint32 arg);
 void Light_stage_init(void);
-void func_8003AD14(void);
+void Map_obj_state_load(void);
 void func_80017944(void);
 extern uint8 *D_80098B60;
 extern uint8 D_800B6130[];

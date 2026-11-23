@@ -1052,7 +1052,7 @@ typedef struct
     uint8 life_8;  // 08: in units of 8 or 16
     uint8 limit_9; // 09: a damage threshold (func_80118B2C)
     uint8 value_A; // 0A
-    uint8 value_B; // 0B: func_80037738's amount (func_801180F8)
+    uint8 value_B; // 0B: Map_obj_hit_damage's amount (func_801180F8)
 } ST06_KIND;
 
 extern ST06_KIND **D_80098844;
@@ -1582,7 +1582,7 @@ void Sce_flag_select(sint32 id);
 
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
-sint32 func_80037C14(sint32 cell);
+sint32 Map_obj_life(sint32 cell);
 
 void func_80114880(ST06_ACTOR *wp);
 
@@ -1616,7 +1616,7 @@ void func_8005D4C0(void);
 
 void Gauge_close(void *wp);
 
-sint32 func_8003B360(sint32 area);
+sint32 Map_obj_state_alive(sint32 area);
 
 sint32 Player_atari_off(void);
 
@@ -1656,7 +1656,7 @@ sint32 func_80114F10(ST06_BEAM *wp);
 void func_80114F48(ST06_BEAM *wp);
 void func_80114FA8(ST06_BEAM *wp, uint8 index);
 
-sint32 func_8003B2D4(sint32 row, sint32 bit);
+sint32 Map_obj_state_get(sint32 row, sint32 bit);
 
 sint16 func_8010EB68(void);
 

@@ -260,7 +260,7 @@ void Sce_room_load(void);
 #endif
 void func_80038648(void);
 void Sce_flag_init(sint32 mode);
-void func_8003B278(sint32 mode);
+void Map_obj_state_reset(sint32 mode);
 void Player_init(sint32 mode);
 void func_8005DBB4(sint32 mode);
 void func_80067E6C(sint32 mode);
@@ -283,7 +283,7 @@ void Sub_screen_sound_reinit(PL_WORK *wp);
 void Game_logo_kill(sint32 index);
 
 void func_8005EBE4(void);
-sint32 func_8005EC34(void);
+sint32 Sub_screen_main(void);
 void Sce_pl_parts_load(void);
 
 void func_800175D8(void);
@@ -303,7 +303,7 @@ void pl_shl_work_move(void);
 void effect_common_move(void);
 void func_80038894(void);
 void Atari_check(void);
-void func_80037F60(void);
+void Map_obj_break_update(void);
 void func_8005DCB4(void);
 void func_800238B4(void);
 void func_80023144(void);
@@ -331,7 +331,7 @@ void func_80039D38(GAME_DELTA *delta);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void Work_room_change(sint32 flag, GAME_DELTA *delta);
 void Sound_bgm_change_check(void);
-void func_8003B140(void);
+void Map_obj_state_save(void);
 
 // Game_work by its fixed address: GCC 2.7 rebuilds a literal address with lui at each
 // access instead of keeping the symbol's address in a register (Sound_bgm_start).

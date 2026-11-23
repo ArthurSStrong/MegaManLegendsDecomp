@@ -151,7 +151,7 @@ void stcom18_func_0260(STCOM18_WORK *wp)
         }
         if (!(wp->flags_F & 4))
         {
-            func_80037738(hit, 0x28);
+            Map_obj_hit_damage(hit, 0x28);
         }
     }
 }

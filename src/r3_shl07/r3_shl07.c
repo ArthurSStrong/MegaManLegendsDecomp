@@ -35,7 +35,7 @@ void func_800D888C(SHL_WORK *wp)
     wp->timer_b++;
     tp   = Obj_id_work(wp->index_c);
     p    = tp->pos;
-    r    = func_80037634(&Player_work, 7);
+    r    = Player_weapon_dist_calc(&Player_work, 7);
     r2   = r * 2;
     push = D_800D8C30[Player_work.value_530];
     for (i = 0; i < 64; i++)

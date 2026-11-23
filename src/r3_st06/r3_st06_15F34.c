@@ -622,7 +622,7 @@ void func_80117290(ST06_CRAB *wp)
         func_80118B2C(wp);
     }
     if (!(wp->body.flags_0 & 0x400) && func_80118884(wp) != 0 &&
-        func_8003B360(wp->body.area_8C) > 0)
+        Map_obj_state_alive(wp->body.area_8C) > 0)
     {
         wp->body.timer_E = 0xB4;
         wp->body.flags_0 |= 0x400;
@@ -1033,7 +1033,7 @@ void func_801180F8(ST06_CRAB *wp)
                 else
                 {
                     Swing_Camera2(0x10, 0x400, 0x2000, &wp->position);
-                    func_80037738(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
+                    Map_obj_hit_damage(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
                     func_801187D4(wp);
                 }
             }
@@ -1051,7 +1051,7 @@ void func_801180F8(ST06_CRAB *wp)
                 else
                 {
                     Swing_Camera2(0x10, 0x400, 0x2000, &wp->position);
-                    func_80037738(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
+                    Map_obj_hit_damage(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
                     func_801187D4(wp);
                 }
             }
@@ -1213,7 +1213,7 @@ sint32 func_80118708(ST06_CRAB *wp)
     wp->body.probe_fixed_40 = wp->position_fixed.v;
     Obj_pos_move(&wp->body.probe_38.v, &wp->body.probe_fixed_40, wp->rotation.y, 0x800, 0, 0);
     wp->body.hit_7C = Scr_line_calc(&wp->body.probe_38.v, &wp->position, wp->data_78, wp->value_1);
-    if (wp->body.hit_7C != 0 && func_80037BB4((void *)wp->body.hit_7C) > 0)
+    if (wp->body.hit_7C != 0 && Map_obj_hit_life((void *)wp->body.hit_7C) > 0)
     {
         return 1;
     }

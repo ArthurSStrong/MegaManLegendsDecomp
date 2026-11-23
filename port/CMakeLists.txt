@@ -51,7 +51,7 @@ set(M32 -m32)
 # strict aliasing; the code type-puns freely), absolute addressing (no PIC), and no builtins
 # (the game has its own catan, ccos, ...). One section per function and object, and no common
 # symbols, so tools/gen_link.py can place each at its retail address. No loop bounds inferred from
-# array sizes (the game indexes past a row on purpose, e.g. func_8003B278), and no assumption
+# array sizes (the game indexes past a row on purpose, e.g. Map_obj_state_reset), and no assumption
 # that a file static is untouched by calls (retail data and literal addresses reach them too).
 # Uninitialized locals start at zero: retail reads stack garbage in places (EM_World_Pos_Calc's
 # MATRIX translation), and zero keeps this build and the 64-bit one (port/aot) in step.

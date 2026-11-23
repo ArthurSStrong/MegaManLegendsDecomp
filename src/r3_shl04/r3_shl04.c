@@ -29,7 +29,7 @@ void func_800D8894(SHL_WORK *wp)
     wp->pos.vx = tp->pos_3c8.vx + (tp->pos_3c8.vx - tp->pos_3c0.vx) * 4;
     wp->pos.vy = tp->pos_3c8.vy + (tp->pos_3c8.vy - tp->pos_3c0.vy) * 4;
     wp->pos.vz = tp->pos_3c8.vz + (tp->pos_3c8.vz - tp->pos_3c0.vz) * 4;
-    if (func_80037694(wp, 0x80))
+    if (Shot_map_check(wp, 0x80))
     {
         func_800D8ADC(wp, 1);
         Sound_call(0x125, 0, 0);
@@ -67,7 +67,7 @@ void func_800D89F8(SHL_WORK *wp)
     SVECTOR pos;
     sint32 flags;
 
-    flags  = func_800375D4(&Player_work, 4);
+    flags  = Player_weapon_attack_calc(&Player_work, 4);
     tp     = Obj_id_work(wp->index_c);
     pos.vx = tp->pos_3c8.vx + (tp->pos_3c8.vx - tp->pos_3c0.vx) * 4;
     pos.vy = tp->pos_3c8.vy + (tp->pos_3c8.vy - tp->pos_3c0.vy) * 4;

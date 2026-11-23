@@ -1,4 +1,4 @@
-// C version of func_8002E3D0 for the native port.
+// C version of Mesh_draw for the native port.
 //
 // In the matching build this routine is Capcom's hand-written assembly (subsegment
 // asm_8002E3D0, rock_neo.exe.yaml): a hand-scheduled mesh drawer that transforms a detail
@@ -14,7 +14,7 @@
 #include "rock_neo.exe/code_8002d9a0.h"
 #include "rock_neo.exe/gte_inline.h"
 
-void func_8002E3D0(C8002D9A0_LOD *lod)
+void Mesh_draw(C8002D9A0_LOD *lod)
 {
     uint32 otz;
     uint32 *base;

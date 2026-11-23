@@ -74,7 +74,7 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
     sint32 speed;
     sint32 result;
 
-    result = func_80037694(wp, stcom23_D_0000[wp->variant_3].value_22);
+    result = Shot_map_check(wp, stcom23_D_0000[wp->variant_3].value_22);
     if (result != 0)
     {
         if (result != 0x7FFF)

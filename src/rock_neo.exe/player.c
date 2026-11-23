@@ -70,7 +70,7 @@ void pl_init(PL_WORK *pl, sint32 arg)
         PL_AT(pl, 0x450, uint32) = 0;
         func_800177CC((uint8 *)pl + 0x454, (uint8 *)pl + 0x458);
         func_800177CC((uint8 *)pl + 0x474, (uint8 *)pl + 0x4B0);
-        func_80037534(pl);
+        Player_weapon_init(pl);
     }
     else
     {
@@ -89,7 +89,7 @@ void pl_init(PL_WORK *pl, sint32 arg)
         func_800176DC(save + 0x20C, (uint8 *)pl + 0x454, 1);
         func_800176DC(save + 0x1C80, (uint8 *)pl + 0x474, 4);
         func_800176DC(save + 0x22C, (uint8 *)pl + 0x4F4, 8);
-        func_80037594();
+        Player_weapon_refill();
     }
 }
 #undef PL_AT
@@ -182,7 +182,7 @@ void Player_atari_set(void)
 void pl_move_exec(PL_WORK *pl)
 {
     Pl_move_tbl[pl->kind](pl);
-    if (func_8004324C(pl) == 0)
+    if (Pl_shot_busy(pl) == 0)
     {
         pl->value104 = pl->value_ac;
         pl->value100 = pl->value_a4;
@@ -3018,7 +3018,7 @@ sint32 pl_shot_start(PL_WORK *pl, sint32 arg)
         if ((pl->value177 == 1 && ((pl->key_shot_l & pad) || (pl->value176 & 3) == 2) &&
              (pl->value175 & 5) == 5 && pl_shot_mode_set(pl, 0, dist, reload1) != 0) ||
             (pl->value177 == 2 && ((pl->key_shot_r & pad) || (pl->value176 & 3) == 1) &&
-             (pl->value175 & 3) == 3 && func_80037440() != 0 &&
+             (pl->value175 & 3) == 3 && Pl_special_shot_check() != 0 &&
              pl_shot_mode_set(pl, 2, dist, reload2) != 0))
         {
             pl->value178 = 1;
@@ -3027,14 +3027,14 @@ sint32 pl_shot_start(PL_WORK *pl, sint32 arg)
             return 1;
         }
         if (((pl->key_shot_l & pad) || (pl->value176 & 3) == 2) &&
-            pl->parts[pl->weapon_left_no].value06 > 0 && (pl->value175 & 5) == 5)
+            pl->weapon_data[pl->weapon_left_no].bullet_left > 0 && (pl->value175 & 5) == 5)
         {
             pl->value176 = 0;
             return pl_shot_mode_set(pl, 4, dist, reload1);
         }
         if (((pl->key_shot_r & pad) || (pl->value176 & 3) == 1) &&
-            pl->parts[pl->weapon_right_no].value06 > 0 && (pl->value175 & 3) == 3 &&
-            func_80037440() != 0)
+            pl->weapon_data[pl->weapon_right_no].bullet_left > 0 && (pl->value175 & 3) == 3 &&
+            Pl_special_shot_check() != 0)
         {
             pl->value176 = 0;
             return pl_shot_mode_set(pl, 6, dist, reload2);
@@ -3764,7 +3764,7 @@ sint32 Player_control_off(PL_WORK *pl)
                     if (Game_work.flags_83 != 0)
                     {
                         case 0:
-                            if (func_8004324C(pl) == 0)
+                            if (Pl_shot_busy(pl) == 0)
                             {
                                 goto reset;
                             }

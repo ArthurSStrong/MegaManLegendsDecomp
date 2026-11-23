@@ -381,11 +381,11 @@ typedef struct
 
 extern uint8 D_800B5EB0;
 extern uint8 Sce_flag[];
-extern uint32 D_800BD3B8[][0x80];
+extern uint32 Map_obj_state[][0x80];
 extern sint32 D_800BC9B8[0x280];
 void func_80064CB8(uint8 *buf, uint8 *src);
 void func_80067D10(void);
-void func_8003B140(void);
+void Map_obj_state_save(void);
 extern uint32 D_800B5ED8;
 extern uint32 D_800B5EDC;
 extern uint16 D_800B5EE0;

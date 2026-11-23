@@ -93,7 +93,8 @@ void func_8011864C(STAGE_PANEL_WORK *wp)
     wp->routine_0++;
     wp->matrix.words[5] = STAGE_CELLS[wp->cell_44].value;
     // The cell's record pointer, kept without its segment bits.
-    wp->matrix.words[6] = func_8003AC24(*(uint32 *)(wp->matrix.words[5] & 0xFFFFFF) & ~0x1000);
+    wp->matrix.words[6] =
+        Stage_hed_model_get(*(uint32 *)(wp->matrix.words[5] & 0xFFFFFF) & ~0x1000);
 }
 
 // Starts the panel turning when the player stands on it; panel 4 also draws a sprite.
@@ -118,10 +119,10 @@ void func_80118704(STAGE_PANEL_WORK *wp)
     }
     if ((sint8)wp->value_D == 4 && wp->value_3 != 0 && Sce_flag_test(0x7E1) != 0)
     {
-        p                      = *ST09_PACKET_PTR;
-        D_800BE6D8[D_800988FC] = p;
-        *ST09_PACKET_PTR       = p + 10;
-        D_800988FC++;
+        p                                = *ST09_PACKET_PTR;
+        Billboard_queue[Billboard_count] = p;
+        *ST09_PACKET_PTR                 = p + 10;
+        Billboard_count++;
         frame             = wp->reserved09[0];
         color             = D_8011E4B0[frame];
         wp->reserved09[0] = (frame + 1) & 0xF;
@@ -631,7 +632,7 @@ void func_801196C0(void)
                                 RotMatrixY(wp->dir_C << 10, &wp->matrix.m);
                                 wp->cell_44         = cell;
                                 wp->matrix.words[5] = (uint32)STAGE_CELL_TBL[cell].info;
-                                wp->matrix.words[6] = func_8003AC24(list[k].key_0);
+                                wp->matrix.words[6] = Stage_hed_model_get(list[k].key_0);
                             }
                         }
                         count++;

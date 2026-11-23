@@ -32,7 +32,7 @@ void func_800D8854(SHL_WORK *wp)
     rot.vx                = v.vx;
     rot.vy                = v.vy;
     rot.vz                = v.vz;
-    speed                 = func_80037634(&Player_work, 0xA);
+    speed                 = Player_weapon_dist_calc(&Player_work, 0xA);
     wp->vel.vx            = (rot.vx * speed) >> 4;
     wp->vel.vy            = (rot.vy * speed) >> 4;
     wp->vel.vz            = (rot.vz * speed) >> 4;
@@ -66,7 +66,7 @@ void func_800D8A88(SHL_WORK *wp)
     sint32 i;
     sint32 hit;
 
-    hit = func_80037694(wp, 0x40);
+    hit = Shot_map_check(wp, 0x40);
     if (hit || wp->hit_7c)
     {
         if (wp->hit_7c || hit)
@@ -168,7 +168,7 @@ void func_800D8E48(SHL_WORK *wp)
     sint32 flags;
 
     size  = wp->draw.spr.size_98;
-    flags = func_800375D4(&Player_work, 1);
+    flags = Player_weapon_attack_calc(&Player_work, 1);
     if (wp->index_c)
     {
         Set_Atari2(&wp->pos, size, &wp->old_pos, size, 0x200, 0x6000, wp->value_1, &wp->col_c4,

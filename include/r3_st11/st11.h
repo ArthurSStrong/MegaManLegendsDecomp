@@ -101,7 +101,7 @@ typedef struct
 
 void Homing_target_clear(sint32 bit);
 sint16 func_80039B80(void);
-sint32 func_80037634(void *player, sint32 arg);
+sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_801076F8(ST11_SHL *wp);
 
 #endif // ST11_H

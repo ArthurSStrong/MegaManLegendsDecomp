@@ -215,7 +215,7 @@ void stcom21_func_0460(STCOM21_WORK *wp)
                 pl->value_0a  = 0;
                 MojiTaskExec(0, D_8008CE04, -1);
                 Sound_call2(0x13F, &wp->pos_38);
-                func_80043340(pl->value_B0, 0);
+                Pl_life_add(pl->value_B0, 0);
                 wp->value_C |= 1;
                 stcom21_func_0E48(wp->value_D, 2);
                 wp->routine_2++;
@@ -280,7 +280,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
     {
         case 0:
             pl->flags_bd |= 0x40;
-            if (func_8004324C(pl) == 0)
+            if (Pl_shot_busy(pl) == 0)
             {
                 pl->routine_1 = 0x10;
                 pl->value_0a  = 0;
@@ -334,7 +334,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
                 pl->value_0a  = 0;
                 MojiTaskExec(0, D_8008CE04, -1);
                 Sound_call2(0x13F, &wp->pos_38);
-                func_80043340(pl->value_B0, 0);
+                Pl_life_add(pl->value_B0, 0);
                 wp->routine_2++;
             }
             break;

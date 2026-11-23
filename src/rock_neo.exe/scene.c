@@ -921,7 +921,7 @@ sint32 Sce_stage_load(void)
         }
         Sce_cd_read_wait(0);
         Light_stage_init();
-        func_8003AD14();
+        Map_obj_state_load();
     }
     D_80089714[routine]();
     func_8001D928(SCENE_GAME_FIXED.flags_82 & 1);

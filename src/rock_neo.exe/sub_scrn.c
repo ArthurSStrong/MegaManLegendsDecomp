@@ -2,20 +2,20 @@
 #include "sub_scrn.h"
 
 #ifdef __wasm32__
-sint32 func_8005EC34(void)
+sint32 Sub_screen_main(void)
 #else
-void func_8005EC34(void)
+void Sub_screen_main(void)
 #endif
 {
     Sub_screen_back_ground_set();
 #ifdef __wasm32__
-    return D_8008DBB0[D_800A38F0.routine_0](&D_800A38F0);
+    return Sub_screen_routine_tbl[D_800A38F0.routine_0](&D_800A38F0);
 #else
-    D_8008DBB0[D_800A38F0.routine_0](&D_800A38F0);
+    Sub_screen_routine_tbl[D_800A38F0.routine_0](&D_800A38F0);
 #endif
 }
 
-sint32 func_8005EC80(sint32 *wp)
+sint32 Sub_screen_init(sint32 *wp)
 {
     MojiTaskKill();
     MojiTaskExec(0, D_8008CB94, -1);
@@ -25,7 +25,7 @@ sint32 func_8005EC80(sint32 *wp)
     return 0;
 }
 
-sint32 func_8005ECE0(sint32 *wp)
+sint32 Sub_screen_top(sint32 *wp)
 {
     Sub_screen_basic_param_set();
     if (Moji_flag & 0x40000000)
@@ -65,7 +65,7 @@ sint32 func_8005ECE0(sint32 *wp)
 
 // The parts record offset is written as slot << 3: slot * 8 makes GCC put the offset first in the
 // addu (retail adds pl first).
-sint32 func_8005ED9C(SUB_WORK *wp)
+sint32 Sub_screen_item(SUB_WORK *wp)
 {
     sint32 slot;
     SUB_PLAYER *pl;
@@ -176,7 +176,7 @@ sint32 func_8005ED9C(SUB_WORK *wp)
                             break;
                         case 0x41:
                             MojiTaskExec(0, (uint8 *)0x801F2000, 0x53);
-                            func_80037594();
+                            Player_weapon_refill();
                             wp->flag_C = 0x541;
                             break;
                         case 0x42:
@@ -220,7 +220,7 @@ sint32 func_8005ED9C(SUB_WORK *wp)
     return 0;
 }
 
-sint32 func_8005F210(SUB_SEL *wp)
+sint32 Sub_screen_key_item(SUB_SEL *wp)
 {
     switch (wp->routine_1)
     {
@@ -598,7 +598,7 @@ void func_8005FBB4(SUB_SEL *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8003B140();
+                Map_obj_state_save();
                 gw->value_50 = gw->value_79;
                 gw->value_51 = gw->value_7A;
                 Fade_start(0x17);
@@ -738,7 +738,7 @@ void func_8005FFBC(SUB_SEL *wp)
     }
 }
 
-sint32 func_800600CC(SUB_WORK *wp)
+sint32 Sub_screen_rb_parts(SUB_WORK *wp)
 {
 
     switch (wp->routine_1)
@@ -757,7 +757,7 @@ sint32 func_800600CC(SUB_WORK *wp)
             Cd_seek_file(0x16);
             MojiTaskExec(0, (uint8 *)0x801F2000, 0x1D);
             Game_logo_set(2, 0x20007);
-            func_800605DC();
+            sub_screen_rb_parts_draw();
             wp->routine_1++;
             break;
         case 2:
@@ -773,15 +773,15 @@ sint32 func_800600CC(SUB_WORK *wp)
                 {
                     if (Moji_flag3 & 0x40000)
                     {
-                        func_80060248(wp);
+                        sub_screen_gauge_start(wp);
                     }
                 }
                 else if (Moji_flag3 & 0x80000)
                 {
-                    func_80060248(wp);
+                    sub_screen_gauge_start(wp);
                 }
             }
-            func_800605DC();
+            sub_screen_rb_parts_draw();
             Sub_screen_shift_check(wp);
             return 0;
         case 3:
@@ -795,7 +795,7 @@ sint32 func_800600CC(SUB_WORK *wp)
     return 0;
 }
 
-void func_80060248(SUB_WORK *wp)
+void sub_screen_gauge_start(SUB_WORK *wp)
 {
     wp->mode_6         = 3;
     wp->entry[0].dst_0 = wp->entry[0].src_2;
@@ -810,7 +810,7 @@ void func_80060248(SUB_WORK *wp)
     wp->entry[4].dst_3 = wp->entry[4].src_5;
 }
 
-void func_800602A4(SUB_WORK *wp, sint32 arg)
+void sub_screen_gauge_update(SUB_WORK *wp, sint32 arg)
 {
     sint8 step;
 
@@ -875,15 +875,15 @@ void func_800602A4(SUB_WORK *wp, sint32 arg)
     }
 }
 
-void func_800605DC(void)
+void sub_screen_rb_parts_draw(void)
 {
     Sub_screen_rb_parts_calc(&D_800A38F0);
-    func_800602A4(&D_800A38F0, 0);
+    sub_screen_gauge_update(&D_800A38F0, 0);
 }
 
 // Case 2's menu switch sits one loop level deeper in retail (do { } while (0), likely a
 // Capcom macro): the doubled weight of pl's uses there gives pl s1 and slot s2.
-sint32 func_80060618(SUB_WORK *wp)
+sint32 Sub_screen_weapon(SUB_WORK *wp)
 {
     SUB_PLAYER *pl;
     uint16 pad;
@@ -927,7 +927,7 @@ sint32 func_80060618(SUB_WORK *wp)
                 Game_logo_set(3, 0x20008);
                 Sub_screen_status_calc(wp, 0);
             }
-            func_800602A4(wp, 1);
+            sub_screen_gauge_update(wp, 1);
             wp->routine_1++;
             break;
         case 2:
@@ -979,7 +979,7 @@ sint32 func_80060618(SUB_WORK *wp)
             {
                 Sub_screen_shift_check(wp);
             }
-            func_800602A4(wp, 1);
+            sub_screen_gauge_update(wp, 1);
             break;
         case 3:
             n                = D_80098B2D;
@@ -1011,7 +1011,7 @@ sint32 func_80060618(SUB_WORK *wp)
             }
             if (Moji_flag3 & 0x40000)
             {
-                func_80060248(wp);
+                sub_screen_gauge_start(wp);
             }
             if (Moji_flag & 0x40000000)
             {
@@ -1040,7 +1040,7 @@ sint32 func_80060618(SUB_WORK *wp)
             {
                 Sub_screen_shift_check(wp);
             }
-            func_800602A4(wp, 1);
+            sub_screen_gauge_update(wp, 1);
             break;
         case 4:
             if (!(Moji_flag & 0x08000000))
@@ -1048,7 +1048,7 @@ sint32 func_80060618(SUB_WORK *wp)
                 wp->routine_1 = 3;
                 wp->routine_2 = 0;
             }
-            func_800602A4(wp, 1);
+            sub_screen_gauge_update(wp, 1);
             break;
         case 5:
             if (!(Moji_flag & 0x08000000))
@@ -1056,7 +1056,7 @@ sint32 func_80060618(SUB_WORK *wp)
                 wp->routine_1 = 1;
                 wp->routine_2 = 0;
             }
-            func_800602A4(wp, 1);
+            sub_screen_gauge_update(wp, 1);
             break;
         case 6:
             if (Cd_read_sync2() == 0)
@@ -1068,7 +1068,7 @@ sint32 func_80060618(SUB_WORK *wp)
     return 0;
 }
 
-sint32 func_80060B00(SUB_WORK *wp)
+sint32 Sub_screen_option(SUB_WORK *wp)
 {
     switch (wp->routine_1)
     {
@@ -1116,7 +1116,7 @@ sint32 func_80060B00(SUB_WORK *wp)
     return 0;
 }
 
-sint32 func_80060C70(SUB_SEL *wp)
+sint32 Sub_screen_quit(SUB_SEL *wp)
 {
     Sub_screen_basic_param_set();
     switch (wp->routine_1)
@@ -1165,7 +1165,7 @@ sint32 func_80060C70(SUB_SEL *wp)
     return 0;
 }
 
-sint32 func_80060DB8(SUB_PARTS *wp)
+sint32 Sub_screen_exit(SUB_PARTS *wp)
 {
     SUB_PLAYER *pl;
 

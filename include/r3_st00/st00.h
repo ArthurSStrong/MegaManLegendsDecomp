@@ -716,9 +716,9 @@ extern STAGE_SLOT_FUNC D_8011A6CC[];
 // Used by functions still in assembly (types from their accesses).
 
 extern sint32 D_8009888C;
-extern sint32 D_800988FC;
+extern sint32 Billboard_count;
 extern sint32 D_800BC744[];
-extern uint32 *D_800BE6D8[];
+extern uint32 *Billboard_queue[];
 extern uint8 D_800C3588;
 extern uint8 D_801000CC[];
 extern sint32 D_8011A0FC[];      // by room (func_8005DC10)
@@ -2011,7 +2011,8 @@ typedef struct
     uint32 data_8;       // 08
 } ST00_TEX_REC;
 
-// A loaded texture set (func_8003AC24): the two CLUT records the scroller copies and animates.
+// A loaded texture set (Stage_hed_model_get): the two CLUT records the scroller copies and
+// animates.
 typedef struct
 {
     uint8 reserved00[0x18]; // 00
@@ -2033,8 +2034,8 @@ typedef struct
     ST00_TEX_SET *set_18[3]; // 18
 } ST00_CLUT_SCROLL;
 
-// A texture-coordinate animation (func_8011917C): the model key, func_8002DC84's two arguments
-// and how many quads to shift.
+// A texture-coordinate animation (func_8011917C): the model key, Model_poly_group_get's two
+// arguments and how many quads to shift.
 typedef struct
 {
     uint32 key;   // 0

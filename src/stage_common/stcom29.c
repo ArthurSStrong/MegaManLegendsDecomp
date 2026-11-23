@@ -15,7 +15,7 @@ void stcom29_func_0000(STCOM29_WORK *wp)
 
 void stcom29_func_0048(STCOM29_WORK *wp)
 {
-    wp->key_20 = func_8003AC24(stcom29_D_0000[wp->variant_3]);
+    wp->key_20 = Stage_hed_model_get(stcom29_D_0000[wp->variant_3]);
     if (wp->key_20 == 0)
     {
         Close_EVE_WORK(wp);
@@ -109,7 +109,7 @@ void stcom29_func_0294(STCOM29_WORK *wp)
     {
         return;
     }
-    unpack = func_8002DC84((void *)wp->key_20, 0, stcom29_D_010C[wp->variant_3]);
+    unpack = Model_poly_group_get((void *)wp->key_20, 0, stcom29_D_010C[wp->variant_3]);
     if (--wp->timer_E == 0)
     {
         step++;
@@ -125,7 +125,7 @@ void stcom29_func_0294(STCOM29_WORK *wp)
         }
         wp->timer_E = stcom29_D_00BC[wp->script_C]->time_0;
     }
-    uv      = func_8002DD1C(unpack.c, 0);
+    uv      = Quad_uv_get(unpack.c, 0);
     uv.b[0] = stcom29_D_000C[step->frame_1][0];
     uv.b[1] = stcom29_D_000C[step->frame_1][1];
     uv.b[2] = stcom29_D_000C[step->frame_1][2];
@@ -134,7 +134,7 @@ void stcom29_func_0294(STCOM29_WORK *wp)
     uv.b[5] = stcom29_D_000C[step->frame_1][5];
     uv.b[6] = stcom29_D_000C[step->frame_1][6];
     uv.b[7] = stcom29_D_000C[step->frame_1][7];
-    func_8002DE04(unpack.c, 0, uv.w);
+    Quad_uv_set(unpack.c, 0, uv.w);
 }
 
 void stcom29_func_04B4(void)
@@ -174,11 +174,11 @@ uint8 stcom29_func_055C(void)
     {
         return 0;
     }
-    if (Sce_flag_test(0x522) == 0 || func_8003B2D4(6, 0xFC) != 3)
+    if (Sce_flag_test(0x522) == 0 || Map_obj_state_get(6, 0xFC) != 3)
     {
         return 0;
     }
-    return func_8003B2D4(6, 0x120) == 3;
+    return Map_obj_state_get(6, 0x120) == 3;
 }
 
 // Five texture layers, each stepping its own script.
@@ -189,8 +189,8 @@ void stcom29_func_05E0(STCOM29_ANIM_WORK *wp)
 
 void stcom29_func_061C(STCOM29_ANIM_WORK *wp)
 {
-    wp->key_1C[0] = func_8003AC24(0x130000);
-    if (wp->key_1C[0] == 0 || (wp->key_1C[1] = func_8003AC24(0x130200)) == 0)
+    wp->key_1C[0] = Stage_hed_model_get(0x130000);
+    if (wp->key_1C[0] == 0 || (wp->key_1C[1] = Stage_hed_model_get(0x130200)) == 0)
     {
         Close_EVE_WORK(wp);
         return;
@@ -224,13 +224,13 @@ void stcom29_func_0708(STCOM29_ANIM_WORK *wp)
                 wp->step_C[i] = 0;
             }
             wp->timer_11[i] = stcom29_D_0110[i][wp->step_C[i]][1];
-            unpack          = func_8002DC84((void *)wp->key_1C[stcom29_D_0250[i]], 0, 2);
-            uv              = func_8002DD1C(unpack.c, stcom29_D_0248[i]);
+            unpack          = Model_poly_group_get((void *)wp->key_1C[stcom29_D_0250[i]], 0, 2);
+            uv              = Quad_uv_get(unpack.c, stcom29_D_0248[i]);
             uv.b[0]         = stcom29_D_0234[i][0] + (stcom29_D_0110[i][wp->step_C[i]][0] << 6);
             uv.b[2]         = stcom29_D_0234[i][1] + (stcom29_D_0110[i][wp->step_C[i]][0] << 6);
             uv.b[4]         = stcom29_D_0234[i][2] + (stcom29_D_0110[i][wp->step_C[i]][0] << 6);
             uv.b[6]         = stcom29_D_0234[i][3] + (stcom29_D_0110[i][wp->step_C[i]][0] << 6);
-            func_8002DE04(unpack.c, stcom29_D_0248[i], uv.w);
+            Quad_uv_set(unpack.c, stcom29_D_0248[i], uv.w);
         }
     }
 }
@@ -287,7 +287,7 @@ void stcom29_func_09A4(STCOM29_WORK *wp)
         case 3:
             if (pl->flags_A7 < 0)
             {
-                func_80043340(pl->value_B0, 0);
+                Pl_life_add(pl->value_B0, 0);
                 wp->routine_1++;
             }
             break;

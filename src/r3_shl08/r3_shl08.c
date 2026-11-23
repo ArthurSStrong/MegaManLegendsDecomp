@@ -50,7 +50,7 @@ void func_800D8854(SHL08_WORK *wp)
         Homing_target_clear(wp->bit_d);
         wp->type_3 = 0;
     }
-    wp->timer_b = func_80037634(&Player_work, 8);
+    wp->timer_b = Player_weapon_dist_calc(&Player_work, 8);
     wp->routine_0++;
     func_800D8E38(wp);
     Sound_call2(0x12D, &wp->pos);
@@ -64,7 +64,7 @@ void func_800D8AE0(SHL08_WORK *wp)
     SHL_MODEL *mp;
     sint32 speed;
 
-    if (func_80037694(wp, 0x20) || wp->hit_7c)
+    if (Shot_map_check(wp, 0x20) || wp->hit_7c)
     {
         Close_PL_SHL_WORK(wp);
         if (wp->type_3 >= 0x80)
@@ -132,7 +132,7 @@ void func_800D8E38(SHL08_WORK *wp)
     SVECTOR p;
     sint32 flags;
 
-    flags = func_800375D4(&Player_work, 8);
+    flags = Player_weapon_attack_calc(&Player_work, 8);
     p.vx  = wp->old_pos.vx;
     p.vy  = wp->old_pos.vy;
     p.vz  = wp->old_pos.vz;

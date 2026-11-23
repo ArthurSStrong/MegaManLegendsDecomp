@@ -164,7 +164,7 @@ void func_80116A88(ST0B_EVENT *wp)
             }
             break;
         case 3:
-            if (func_8004324C(pl) == 0)
+            if (Pl_shot_busy(pl) == 0)
             {
                 Sound_call(0x101, 0, 0);
                 MojiTaskExec2(0, 0x18);
@@ -469,7 +469,7 @@ void func_80117300(ST0B_EVENT *wp)
             }
             break;
         case 1:
-            if (func_8004324C(pl) == 0)
+            if (Pl_shot_busy(pl) == 0)
             {
                 Obj_work_flag_change(0x7F, 1);
                 if (Moji_flag & 0x08000000)

@@ -77,7 +77,7 @@ void func_8001EB98(void *entry);
 extern STCOM_SVECTOR D_80108AC0[];
 extern uint32 D_80108AE0[];
 sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
-uint32 func_8003AC9C(sint32 idx, uint32 key);
+uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 extern uint8 D_801088F4[];
 extern STAGE_ROOM2_FUNC D_80108AF0[];
 extern STAGE_SCRIPT_ENTRY D_80108804[];

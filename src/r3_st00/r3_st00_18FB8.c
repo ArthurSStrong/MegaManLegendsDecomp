@@ -15,7 +15,7 @@ void func_80118FF4(STAGE_EVENT *ep)
     wp = (ST00_CLUT_SCROLL *)ep;
     for (i = 0; i < 3; i++)
     {
-        set = func_8003AC24(D_8011CE7C[i]);
+        set = Stage_hed_model_get(D_8011CE7C[i]);
         if (set == 0)
         {
             Close_EVE_WORK(ep);
@@ -74,11 +74,11 @@ void func_8011917C(ST00_CLUT_SCROLL *wp)
     }
     for (i = 0; i < 4; i++)
     {
-        u = func_8002DC84((void *)func_8003AC24(D_8011CE88[i].key), D_8011CE88[i].i,
+        u = Model_poly_group_get((void *)Stage_hed_model_get(D_8011CE88[i].key), D_8011CE88[i].i,
                           D_8011CE88[i].j);
         for (k = 0; k < D_8011CE88[i].count; k++)
         {
-            uv = func_8002DD1C(u.c, k);
+            uv = Quad_uv_get(u.c, k);
             uv.b[0]++;
             uv.b[2]++;
             uv.b[4]++;
@@ -90,7 +90,7 @@ void func_8011917C(ST00_CLUT_SCROLL *wp)
                 uv.b[4] -= 0x40;
                 uv.b[6] -= 0x40;
             }
-            func_8002DE04(u.c, k, uv.w);
+            Quad_uv_set(u.c, k, uv.w);
         }
     }
 }
