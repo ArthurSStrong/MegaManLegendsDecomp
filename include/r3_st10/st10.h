@@ -429,7 +429,7 @@ void func_80100E38(void);
 void func_8010AF4C(STAGE_OBJ *wp);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
-void func_8001EB98(void *entry);
+void Sce_slot_open_keep(void *entry);
 void func_8010B660(ST10_SHOT *wp, sint32 arg);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 void func_8010B51C(ST10_SHOT *wp);

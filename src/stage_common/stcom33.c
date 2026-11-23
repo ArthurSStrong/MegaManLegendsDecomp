@@ -41,14 +41,14 @@ void stcom33_func_0058(STCOM33_WORK *wp)
         rect.w = 0x10;
         rect.h = 0x40 - ofs;
         SetDrawMove(p, &rect, stcom33_D_0000[v].x0, stcom33_D_0000[v].y0 - 0x40);
-        addPrim(&D_80098934->ot_88, p);
+        addPrim(&Disp_env_ptr->ot_88, p);
         if (ofs != 0)
         {
             p      = STCOM33_PACKET_PTR++;
             rect.y = stcom33_D_0000[v].y0;
             rect.h = ofs;
             SetDrawMove(p, &rect, stcom33_D_0000[v].x0, stcom33_D_0000[v].y0 - ofs);
-            addPrim(&D_80098934->ot_88, p);
+            addPrim(&Disp_env_ptr->ot_88, p);
         }
     }
     ofs >>= 1;
@@ -60,14 +60,14 @@ void stcom33_func_0058(STCOM33_WORK *wp)
         rect.w = 8;
         rect.h = 0x20 - ofs;
         SetDrawMove(p, &rect, stcom33_D_0000[v].x1, stcom33_D_0000[v].y1 - 0x20);
-        addPrim(&D_80098934->ot_88, p);
+        addPrim(&Disp_env_ptr->ot_88, p);
         if (ofs != 0)
         {
             p      = STCOM33_PACKET_PTR++;
             rect.y = stcom33_D_0000[v].y1;
             rect.h = ofs;
             SetDrawMove(p, &rect, stcom33_D_0000[v].x1, stcom33_D_0000[v].y1 - ofs);
-            addPrim(&D_80098934->ot_88, p);
+            addPrim(&Disp_env_ptr->ot_88, p);
         }
     }
     if (wp->reverse_B != 0)

@@ -791,7 +791,7 @@ void func_8010B6D8(ST0B_OBJ *wp, ST0B_BOB *bob)
     }
     wp->anim_prev_AD     = 0xFF;
     wp->anim_AC          = 0;
-    life                 = D_80098844[wp->kind_2]->life_8 * 4;
+    life                 = Em_param_tbl[wp->kind_2]->life_8 * 4;
     wp->value_78         = 0;
     wp->value_44.half[0] = 0;
     wp->routine_1        = 0;
@@ -1650,7 +1650,7 @@ void func_8010D118(ST0B_OBJ *wp, ST0B_HIT_B *ctl)
     ctl->flags_14 = 2;
     ctl->timer_18 = 0;
     ctl->value_1A = 0;
-    ctl->life_1E  = D_80098844[wp->kind_2]->value_A;
+    ctl->life_1E  = Em_param_tbl[wp->kind_2]->value_A;
     if (wp->u_C.b.byte_C == 1)
     {
         ctl->angle_26 = wp->u_C.b.byte_D * 512;
@@ -1677,7 +1677,7 @@ void func_8010D118(ST0B_OBJ *wp, ST0B_HIT_B *ctl)
     wp->anim_prev_AD         = 0xFF;
     *(uint32 *)&wp->value_64 = 0; // a cast word store (0x64 is a pair of halfwords elsewhere)
     wp->anim_AC              = 0;
-    life                     = D_80098844[wp->kind_2]->life_B * 16;
+    life                     = Em_param_tbl[wp->kind_2]->life_B * 16;
     wp->value_78             = (sint32)D_8011B454;
     wp->routine_0            = 1;
     wp->routine_1            = 0;

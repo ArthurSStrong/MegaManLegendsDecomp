@@ -68,7 +68,7 @@ typedef struct
 } DEBUG_PRIM;
 
 // Ordering-table words of the current display buffer, from +0x70.
-#define DEBUG_OT ((uint32 *)((uint8 *)D_80098934 + 0x70))
+#define DEBUG_OT ((uint32 *)((uint8 *)Disp_env_ptr + 0x70))
 
 // Logo sprite record (0x10 bytes); a negative head ends the list.
 typedef struct

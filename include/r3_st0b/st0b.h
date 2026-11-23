@@ -1280,7 +1280,7 @@ extern ST0B_10C_FUNC D_8011BC58[];
 void func_80113120(ST0B_10C *wp);
 void func_801131F0(ST0B_10C *wp);
 
-// A ROCK_NEO record per 0x10C-slot kind (D_80098928).
+// A ROCK_NEO record per 0x10C-slot kind (Shl_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -1289,7 +1289,7 @@ typedef struct
     uint8 value_A; // 0A
 } ST0B_KIND10C;
 
-extern ST0B_KIND10C **D_80098928;
+extern ST0B_KIND10C **Shl_param_tbl;
 
 // A 0x3C0-byte slot whose handlers also get the word at +0x380 (func_801070D0).
 typedef struct
@@ -2538,7 +2538,7 @@ void func_80115E9C(ST0B_FLAMES *wp);
 
 void func_8011602C(ST0B_FLAMES *wp, sint16 angle, sint32 frame);
 
-// A ROCK_NEO record per kind (D_80098844), as the floating object reads it.
+// A ROCK_NEO record per kind (Em_param_tbl), as the floating object reads it.
 typedef struct
 {
     uint8 reserved00[8]; // 00
@@ -2548,7 +2548,7 @@ typedef struct
     uint8 life_B;        // 0B: times 16
 } ST0B_KIND;
 
-extern ST0B_KIND **D_80098844;
+extern ST0B_KIND **Em_param_tbl;
 
 #define ST0B_ABS(x) ((x) < 0 ? -(x) : (x))
 
@@ -2615,7 +2615,7 @@ sint32 Scr_height_check(void *wp);
 // colors (pal[i] is joint[i].pad).
 #define ST0B_OBJ_JOINT(wp) ((STCOM_SVECTOR *)((uint8 *)(wp) + 0x180))
 
-// A ROCK_NEO record per kind (D_8009884C), as the shooting objects read it.
+// A ROCK_NEO record per kind (Work_5A4_param_tbl), as the shooting objects read it.
 typedef struct
 {
     uint8 reserved00[0x8]; // 00
@@ -2628,7 +2628,7 @@ typedef struct
     uint8 hit_E;           // 0E: or'd into Set_Atari's flags
 } ST0B_KIND_B;
 
-extern ST0B_KIND_B **D_8009884C;
+extern ST0B_KIND_B **Work_5A4_param_tbl;
 
 sint32 Pl_shot_busy(void *pl);
 sint32 Sce_flag_test(sint32 flag);
@@ -2720,7 +2720,7 @@ typedef struct
     u_long ot_88;
 } ST0B_LINK;
 
-#define ST0B_LINK_PTR ((ST0B_LINK *)D_80098934)
+#define ST0B_LINK_PTR ((ST0B_LINK *)Disp_env_ptr)
 
 // Where the next primitive goes (scratchpad).
 #define ST0B_PACKET_PTR (*(ST0B_DR_MOVE **)0x1F800070)

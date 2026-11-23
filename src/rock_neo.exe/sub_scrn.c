@@ -1151,7 +1151,7 @@ sint32 Sub_screen_quit(SUB_SEL *wp)
                     MojiTaskKill();
                     Message_event_clear();
                     Game_logo_init();
-                    func_800665E8();
+                    Card_screen_init();
                     func_8001B314();
                     Sound_seq_stop_all();
                     Cd_subcmd(0, 1, 0);
@@ -1617,7 +1617,7 @@ void Sub_screen_gauge_set(sint32 x, sint32 y, sint32 width, sint32 row)
         }
     }
     *(POLY_FT4 **)0x1F800070 = p;
-    addPrims(&((SUB_OT78 *)D_80098934)->tag_78, start, p - 1);
+    addPrims(&((SUB_OT78 *)Disp_env_ptr)->tag_78, start, p - 1);
 }
 
 void Sub_screen_gauge_set2(sint32 x, sint32 y, sint32 width, sint32 flag)
@@ -1667,7 +1667,7 @@ void Sub_screen_gauge_set2(sint32 x, sint32 y, sint32 width, sint32 flag)
         p++;
     }
     *(POLY_FT4 **)0x1F800070 = p;
-    addPrims(&((SUB_OT78 *)D_80098934)->tag_78, start, p - 1);
+    addPrims(&((SUB_OT78 *)Disp_env_ptr)->tag_78, start, p - 1);
 }
 
 void Sub_screen_basic_param_set(void)
@@ -1716,7 +1716,7 @@ void Sub_screen_basic_param_set(void)
     p = Sub_screen_basic_param_set_sub(p, 0x240106, Game_work.play_time / 108000, 2);
     p = Sub_screen_basic_param_set_sub(p, 0x24011A, (Game_work.play_time / 1800) % 60, 2);
     *(SUB_PRIM **)0x1F800070 = p;
-    addPrims(&((SUB_OT78 *)D_80098934)->tag_78, start, p - 1);
+    addPrims(&((SUB_OT78 *)Disp_env_ptr)->tag_78, start, p - 1);
 }
 
 // The draw test recomputes the first index ((flags & 0xFF) - 1) inside the loop. The larger
@@ -1768,9 +1768,9 @@ void Sub_screen_status_param_set(sint32 slot)
         p->uv_clut = 0x3E82F040;
         p          = Sub_screen_status_param_set_sub(
             Sub_screen_status_param_set_sub(p + 1, 0x8C00B4, cur, 4), 0x8C00D8, max, 4);
-        p[-1].tag = (p[-1].tag & 0xFF000000) | (((SUB_OT78 *)D_80098934)->tag_78 & 0xFFFFFF);
-        ((SUB_OT78 *)D_80098934)->tag_78 =
-            (((SUB_OT78 *)D_80098934)->tag_78 & 0xFF000000) | ((uint32)start & 0xFFFFFF);
+        p[-1].tag = (p[-1].tag & 0xFF000000) | (((SUB_OT78 *)Disp_env_ptr)->tag_78 & 0xFFFFFF);
+        ((SUB_OT78 *)Disp_env_ptr)->tag_78 =
+            (((SUB_OT78 *)Disp_env_ptr)->tag_78 & 0xFF000000) | ((uint32)start & 0xFFFFFF);
         *(SUB_PRIM **)0x1F800070 = p;
     }
 }
@@ -1832,7 +1832,7 @@ void Sub_screen_back_ground_set(void)
         }
     }
     *(SUB_PRIM **)0x1F800070 = p;
-    addPrims(&D_80098934->tag_8C, start, p - 1);
+    addPrims(&Disp_env_ptr->tag_8C, start, p - 1);
 }
 
 void Sub_screen_sound_reinit(SUB_SND *wp)

@@ -15,7 +15,7 @@ typedef struct
     uint8 reserved02[0x76]; // 34A
 } ST0F_CTL;
 
-// A scene slot as func_8001EB98 returns it (ROCK_NEO's SCENE_SLOT).
+// A scene slot as Sce_slot_open_keep returns it (ROCK_NEO's SCENE_SLOT).
 typedef struct
 {
     uint8 reserved00[3]; // 00
@@ -134,7 +134,7 @@ void func_80100D78(STAGE_ROOM_WORK *wp);
 
 extern STAGE_ROOM_FUNC *D_80104DE4[];
 extern STAGE_ROOM_FUNC D_80104E24[];
-ST0F_SCENE_SLOT *func_8001EB98(void *entry);
+ST0F_SCENE_SLOT *Sce_slot_open_keep(void *entry);
 void func_80100400(STAGE_ROOM_WORK *wp);
 void func_801004D4(STAGE_ROOM_WORK *wp);
 void func_801005D8(STAGE_ROOM_WORK *wp);

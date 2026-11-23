@@ -28,7 +28,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06
@@ -75,7 +75,7 @@ typedef struct
     uint8 reserved380[0x40];                // 380
 } STCOM13_WORK;
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[0x18];
@@ -93,10 +93,10 @@ extern uint8 stcom13_D_0030[4][4];    // joints to drop from, by routine_3
 extern uint8 stcom13_D_0040[];        // joints to drop from when it dies
 
 // ROCK_NEO.EXE.
-extern STCOM13_KIND **D_80098844;
+extern STCOM13_KIND **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
-void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
+void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
 void stcom13_func_01D8(STCOM13_WORK *wp);
 sint32 stcom13_func_0DA8(STCOM13_WORK *wp);

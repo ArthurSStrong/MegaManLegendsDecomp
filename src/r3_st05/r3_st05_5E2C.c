@@ -390,7 +390,7 @@ void func_80106934(STAGE_ROOM *wp)
                 wp->routine_4++;
                 Close_EM_WORK(wp->child_24);
                 Obj_work_flag_change(0x56, 0xA);
-                func_8001E3F0(0xF);
+                Sce_light_add(0xF);
                 Camera_reset();
             }
             break;
@@ -907,9 +907,9 @@ sint32 func_801079D0(STAGE_ROOM *wp)
             }
             if (Sce_flag_test(0x204) != 0 && Sce_flag_test(0x206) == 0)
             {
-                func_8001EB98(D_8013776C);
-                func_8001EB98(&D_80137780[STAGE_FRAME & 3]);
-                func_8001EB98(&D_801377D0[(STAGE_FRAME & 0x30) >> 4]);
+                Sce_slot_open_keep(D_8013776C);
+                Sce_slot_open_keep(&D_80137780[STAGE_FRAME & 3]);
+                Sce_slot_open_keep(&D_801377D0[(STAGE_FRAME & 0x30) >> 4]);
                 stcom36_func_0028(0x16);
                 Sce_flag_on(0x7E0);
                 wp->routine_4 = 0xFE;
@@ -917,8 +917,8 @@ sint32 func_801079D0(STAGE_ROOM *wp)
             }
             if (Sce_flag_test(0x212) != 0 && Sce_flag_test(0x213) == 0)
             {
-                obj            = func_8001EB98(&D_8013232C[0]);
-                obj->u_B8.part = func_8001EB98(&D_8013232C[1]);
+                obj            = Sce_slot_open_keep(&D_8013232C[0]);
+                obj->u_B8.part = Sce_slot_open_keep(&D_8013232C[1]);
                 stcom36_func_0028(0x17);
                 Sce_flag_on(0x235);
                 Sce_flag_on(0x7E0);
@@ -927,10 +927,10 @@ sint32 func_801079D0(STAGE_ROOM *wp)
             }
             if (Sce_flag_test(0x209) != 0 && Sce_flag_test(0x211) == 0)
             {
-                func_8001EB98(&D_8013098C[0]);
+                Sce_slot_open_keep(&D_8013098C[0]);
                 if (Sce_flag_test(0x20D) != 0)
                 {
-                    func_8001EB98(&D_8013098C[1]);
+                    Sce_slot_open_keep(&D_8013098C[1]);
                 }
                 wp->routine_4 = 0xFF;
                 break;
@@ -956,7 +956,7 @@ sint32 func_801079D0(STAGE_ROOM *wp)
                     Sce_flag_on(0x213);
                     Sce_flag_on(0x214);
                     Sce_flag_select(0x2E4);
-                    func_8001E3F0(6);
+                    Sce_light_add(6);
                     STAGE_GAME.value_78 = 1;
                 }
                 else
@@ -1099,7 +1099,7 @@ void func_80107FF0(ST05_VILLAGER *wp)
     ctl->value_18            = 0;
     Search_Player_Init(ctl->track_24, 0, -0x60);
     ctl->range_34 = 0x7FFFFFFF;
-    life          = D_80098844[wp->kind_2]->life_8;
+    life          = Em_param_tbl[wp->kind_2]->life_8;
     wp->value_78  = 0;
     wp->value_6E  = life;
     wp->value_B0  = life;
@@ -1304,7 +1304,7 @@ void func_801085CC(ST05_VILLAGER *wp)
             wp->value_107 = -1;
             wp->value_10B = -1;
             wp->value_10F = -1;
-            func_80047148(wp, wp->value_180);
+            Obj_item_drop(wp, wp->value_180);
             // fall through
         case 1:
             t            = (uint16)ctl->timer_4 - 1;
@@ -1728,7 +1728,7 @@ void func_80109288(ST05_VILLAGER *wp)
             wp->anim_AC      = 0x18;
             wp->velocity.v.x = 0xF;
             ctl->timer_4     = 0xF;
-            ctl->value_8     = D_80098844[wp->kind_2]->life_A[0];
+            ctl->value_8     = Em_param_tbl[wp->kind_2]->life_A[0];
             // fall through
         case 2:
             ctl->timer_4--;
@@ -2417,12 +2417,12 @@ sint32 func_8010A608(ST05_VILLAGER *wp)
     if (wp->value_6E <= 0)
     {
         wp->ctl.flags_0 = (wp->ctl.flags_0 & ~4) | 8;
-        damage          = D_80098844[wp->kind_2]->limit_9;
+        damage          = Em_param_tbl[wp->kind_2]->limit_9;
     }
     if (wp->ctl.flags_0 & 8)
     {
         wp->ctl.timer_A += damage;
-        if ((wp->ctl.hit_14 & 0x20000000) || wp->ctl.timer_A >= D_80098844[wp->kind_2]->limit_9 ||
+        if ((wp->ctl.hit_14 & 0x20000000) || wp->ctl.timer_A >= Em_param_tbl[wp->kind_2]->limit_9 ||
             wp->position.y != Scr_height_check(wp))
         {
             if (ctl->from_1C.pad & 1)

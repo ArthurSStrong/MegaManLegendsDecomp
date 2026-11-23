@@ -1194,11 +1194,11 @@ void func_8010F35C(ST06_CRAB *wp)
     wp->ctl.u_38.h.lo           = 0;
     if (wp->variant_3 == 0)
     {
-        wp->life_6E = D_80098844[wp->kind_2]->life_8 * 16;
+        wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 * 16;
     }
     else
     {
-        wp->life_6E = D_80098844[wp->kind_2]->life_8 * 8;
+        wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 * 8;
     }
     wp->data_78      = D_80125240;
     wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E;
@@ -1259,7 +1259,7 @@ void func_8010F53C(ST06_CRAB *wp)
             if (wp->ctl.timer_8 == 0)
             {
                 Ride_clear(wp);
-                func_80047148(wp, &wp->joint_180[0]);
+                Obj_item_drop(wp, &wp->joint_180[0]);
                 wp->u_C.b.byte_C |= 1;
                 wp->routine_2++;
             }
@@ -2003,7 +2003,7 @@ void func_801107A0(ST06_CRAB *wp)
 
 sint32 func_80110A54(ST06_CRAB *wp)
 {
-    wp->ctl.kind_C     = D_80098844[wp->kind_2]->value_A;
+    wp->ctl.kind_C     = Em_param_tbl[wp->kind_2]->value_A;
     wp->ctl.hit_pos_10 = wp->joint_180[0];
     Set_Atari(&wp->ctl.hit_pos_10, 0x80, 0, 0x8000, wp->value_1, &wp->ctl.hit_18,
                   wp->ctl.kind_C | 0x4880000, 0x800000, 0);
@@ -2087,7 +2087,7 @@ void func_80110CFC(ST06_CRAB *wp)
     wp->ctl.u_3C.b.value_7      = 0;
     wp->ctl.u_3C.b.rec_0        = D_80125278[wp->variant_3];
     wp->ctl.u_3C.b.flag_6       = wp->ctl.random_6 & 1;
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 * 16;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 * 16;
     wp->data_78                                      = D_8012526C;
     if (wp->u_C.b.byte_C & 0x10)
     {
@@ -2176,7 +2176,7 @@ void func_80110F18(ST06_CRAB *wp)
             pos.x = wp->joint_180[0].x;
             pos.y = wp->joint_180[0].y - 0x80;
             pos.z = wp->joint_180[0].z;
-            func_80047148(wp, &pos);
+            Obj_item_drop(wp, &pos);
             wp->u_C.b.byte_C |= 1;
             break;
     }
@@ -2620,7 +2620,7 @@ void func_80111CF8(ST06_CRAB *wp)
 
 sint32 func_80111D54(ST06_CRAB *wp)
 {
-    wp->ctl.kind_C     = D_80098844[wp->kind_2]->value_A;
+    wp->ctl.kind_C     = Em_param_tbl[wp->kind_2]->value_A;
     wp->ctl.hit_pos_10 = wp->joint_180[0];
     Set_Atari(&wp->ctl.hit_pos_10, 0x80, 0, 0x8000, wp->value_1, &wp->ctl.hit_18,
                   wp->ctl.kind_C | 0x4880000, 0x800000, 0);

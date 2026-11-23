@@ -667,7 +667,7 @@ void func_80113120(ST0B_10C *wp)
 void func_801131F0(ST0B_10C *wp)
 {
     Set_Atari(&wp->position, 0x64, 0, 0x8000, wp->value_1, &wp->value_C4,
-                  D_80098928[wp->kind_2]->value_9 | 0x4000000, 0, 0);
+                  Shl_param_tbl[wp->kind_2]->value_9 | 0x4000000, 0, 0);
 }
 
 void func_8011325C(STAGE_OBJ *wp)

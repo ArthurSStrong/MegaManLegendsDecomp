@@ -152,7 +152,7 @@ sint32 func_80101250(ST1B_VIEW *wp)
         {
             if ((Sce_flag_test(0x22C) != 0) && (Sce_flag_test(0x22E) == 0))
             {
-                func_8001EB98(D_8010D974);
+                Sce_slot_open_keep(D_8010D974);
             }
         }
         else if ((Sce_flag_test(0x22C) != 0) && (Sce_flag_test(0x22E) == 0))
@@ -202,14 +202,14 @@ sint32 func_80101400(STAGE_ROOM *wp)
             }
             if (Sce_flag_test(0x2A) && !Sce_flag_test(0x249))
             {
-                func_8001EB98(D_8010DA8C);
+                Sce_slot_open_keep(D_8010DA8C);
                 Sce_flag_on(0x249);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0x238) && !Sce_flag_test(0x239))
             {
                 Sce_flag_on(0x239);
-                func_8001EB98(D_8010D988);
+                Sce_slot_open_keep(D_8010D988);
             }
             break;
         case 0xFF:
@@ -288,7 +288,7 @@ void func_8010157C(void)
     }
     for (i = 0; i < *count; i++)
     {
-        func_8001EB98(&D_8010D974[base + i]);
+        Sce_slot_open_keep(&D_8010D974[base + i]);
     }
 }
 

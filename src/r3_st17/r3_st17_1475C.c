@@ -617,7 +617,7 @@ void func_80115C24(STAGE_OBJ *wp)
     sint32 one;
     uint8 v;
 
-    ST17_GAME.value_5E = D_80098844[10]->life_8 << 5;
+    ST17_GAME.value_5E = Em_param_tbl[10]->life_8 << 5;
     op_48              = (ST17_SLOT *)Open_EM_WORK();
     if (op_48 != NULL)
     {
@@ -656,7 +656,7 @@ void func_80115C24(STAGE_OBJ *wp)
         }
         else
         {
-            Game_work_5C[0] += D_80098844[10]->life_B << 5;
+            Game_work_5C[0] += Em_param_tbl[10]->life_B << 5;
             if (Game_work_5C[0] > ST17_GAME.value_5E)
             {
                 Game_work_5C[0] = ST17_GAME.value_5E;
@@ -667,7 +667,7 @@ void func_80115C24(STAGE_OBJ *wp)
         }
         D_80122B48 = (STAGE_OBJ *)op_48;
     }
-    func_8005D844(0, 0, D_80098844[10]->value_A);
+    func_8005D844(0, 0, Em_param_tbl[10]->value_A);
     if (wp->variant_3 == 0)
     {
         op_4C = (ST17_SLOT *)Open_EM_WORK();
@@ -2120,8 +2120,8 @@ void func_801189F0(STAGE_ROOM *wp)
     mode = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(mode, 0, 0, 0x4F, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80118B44(sint32 index)

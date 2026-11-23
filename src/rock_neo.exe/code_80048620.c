@@ -411,7 +411,7 @@ sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, si
 // Scalar scratch stores and the do/while hit loop give retail's order. The box corners sit
 // one do/while (0) level deeper (see func_8004AF28): GCC weights references by loop depth,
 // and only this ranks the area giv above left and hit (s1/s2/s3).
-sint16 func_8004920C(PL_SHORT_VECTOR *pos)
+sint16 Scr_point_height(PL_SHORT_VECTOR *pos)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -2978,7 +2978,7 @@ sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
             {
                 pos->z += push.z;
                 CODE486_SP_PUSH[8] = -push.z;
-                func_80050BB4(&push);
+                push_flag_z(&push);
             } while (0);
             goto done;
         }
@@ -2989,7 +2989,7 @@ sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
         {
             pos->x += push.x;
             CODE486_SP_PUSH[6] = -push.x;
-            func_80050B74(&push);
+            push_flag_x(&push);
             goto done;
         }
     }
@@ -2999,7 +2999,7 @@ sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
     }
     pos->y += push.y;
     CODE486_SP_PUSH[1] = -push.y;
-    return func_80050BF4(&push);
+    return push_flag_y(&push);
 
 both:
     if (hit_y != 0)
@@ -3013,19 +3013,19 @@ both:
             {
                 CODE486_SP_PUSH[1] = -push.y;
             }
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
     }
     if (CODE486_ABS_NEG(push.x) < CODE486_ABS_NEG(push.z))
     {
         pos->x += push.x;
         CODE486_SP_PUSH[6] = CODE486_SP_PUSH[0] = -push.x;
-        func_80050B74(&push);
+        push_flag_x(&push);
         goto done;
     }
     pos->z += push.z;
     CODE486_SP_PUSH[8] = CODE486_SP_PUSH[2] = -push.z;
-    func_80050BB4(&push);
+    push_flag_z(&push);
 done:
     return 0;
 }
@@ -3060,11 +3060,11 @@ sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
         {
             pos->y += push.y;
             CODE486_SP_PUSH[1] = -push.y;
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
         pos->z += push.z;
         CODE486_SP_PUSH[2] = -push.z;
-        func_80050BB4(&push);
+        push_flag_z(&push);
         return 0;
     }
     else
@@ -3091,11 +3091,11 @@ sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
         {
             pos->y += push.y;
             prev->y += push.y;
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
         pos->z += push.z;
         prev->z += push.z;
-        func_80050BB4(&push);
+        push_flag_z(&push);
         return 0;
     }
 }
@@ -3130,11 +3130,11 @@ sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
         {
             pos->y += push.y;
             CODE486_SP_PUSH[1] = -push.y;
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
         pos->x += push.x;
         CODE486_SP_PUSH[0] = -push.x;
-        func_80050B74(&push);
+        push_flag_x(&push);
         return 0;
     }
     else
@@ -3161,11 +3161,11 @@ sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
         {
             pos->y += push.y;
             prev->y += push.y;
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
         pos->x += push.x;
         prev->x += push.x;
-        func_80050B74(&push);
+        push_flag_x(&push);
         return 0;
     }
 }
@@ -3232,8 +3232,8 @@ sint32 func_8004FF14(PL_SHORT_VECTOR *pos, sint32 corner)
         pos->z += push.z;
         CODE486_SP_PUSH[6] = -push.x;
         CODE486_SP_PUSH[8] = -push.z;
-        func_80050B74(&push);
-        func_80050BB4(&push);
+        push_flag_x(&push);
+        push_flag_z(&push);
         return 0;
     }
     pos->y += push.y;
@@ -3313,8 +3313,8 @@ sint32 func_800501E8(PL_SHORT_VECTOR *pos, sint32 corner)
     {
         pos->x += push.x;
         pos->z += push.z;
-        func_80050B74(&push);
-        func_80050BB4(&push);
+        push_flag_x(&push);
+        push_flag_z(&push);
         return 0;
     }
     pos->y += push.y;
@@ -3366,7 +3366,7 @@ sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
             pos->y += push.y;
             prev->y += push.y;
             CODE486_SP_PUSH[1] = -push.y;
-            return func_80050BF4(&push);
+            return push_flag_y(&push);
         }
     }
     if (!(CODE486_ABS_NEG(push.x) > CODE486_ABS_NEG(push.z)) && !(CODE486_MOVE_FLAGS & 3))
@@ -3382,13 +3382,13 @@ sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
     push_x:
         pos->x += push.x;
         prev->x += push.x;
-        func_80050B74(&push);
+        push_flag_x(&push);
         return 0;
     }
 push_z:
     pos->z += push.z;
     prev->z += push.z;
-    func_80050BB4(&push);
+    push_flag_z(&push);
     return 0;
 }
 
@@ -3658,7 +3658,7 @@ sint32 func_80050B68(PL_SHORT_VECTOR *vec)
     return vec->y != 0;
 }
 
-void func_80050B74(PL_SHORT_VECTOR *vec)
+void push_flag_x(PL_SHORT_VECTOR *vec)
 {
     if (CODE486_MOVE_FLAGS & 3)
     {
@@ -3674,7 +3674,7 @@ void func_80050B74(PL_SHORT_VECTOR *vec)
     }
 }
 
-void func_80050BB4(PL_SHORT_VECTOR *vec)
+void push_flag_z(PL_SHORT_VECTOR *vec)
 {
     if (CODE486_MOVE_FLAGS & 0xC)
     {
@@ -3690,7 +3690,7 @@ void func_80050BB4(PL_SHORT_VECTOR *vec)
     }
 }
 
-sint32 func_80050BF4(PL_SHORT_VECTOR *vec)
+sint32 push_flag_y(PL_SHORT_VECTOR *vec)
 {
     if (vec->y > 0)
     {

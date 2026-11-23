@@ -1418,7 +1418,7 @@ void Search_Player_Reset(void *track);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Scr_height_check(void *wp);
 
-// A ROCK_NEO record per kind (D_80098844), as the walker reads it.
+// A ROCK_NEO record per kind (Em_param_tbl), as the walker reads it.
 typedef struct
 {
     uint8 reserved00[8]; // 00
@@ -1431,8 +1431,8 @@ typedef struct
     uint8 limit_19;      // 19: the damage it guards before it backs away
 } ST05_KIND;
 
-extern ST05_KIND **D_80098844;
-extern ST05_KIND **D_8009884C; // the boss's kinds (func_8011D830 reads life_A[0])
+extern ST05_KIND **Em_param_tbl;
+extern ST05_KIND **Work_5A4_param_tbl; // the boss's kinds (func_8011D830 reads life_A[0])
 
 // The walkers' shared state outside the module.
 extern STAGE_10C *Mixer_key;
@@ -1444,7 +1444,7 @@ extern STAGE_OBJ *D_801380A4;   // D_801380A0[1]
 extern ST05_WALKER *D_801380B8[];
 
 // The walker passes only two arguments (retail leaves a2 as the call before left it).
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 sint32 func_80115E98(ST05_WALKER *wp); // callers copy v0 unextended: an int result
 sint16 func_801160F8(ST05_WALKER *wp);
 
@@ -2403,7 +2403,7 @@ void func_8012BB3C(void);
 
 STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 
-sint16 func_8004920C(STCOM_SVECTOR *pos);
+sint16 Scr_point_height(STCOM_SVECTOR *pos);
 
 void func_80030934(void *a0, void *a1, sint16 a2,
                    sint32 a3); // a3 passed without narrowing (func_8011C9B0)
@@ -2434,9 +2434,9 @@ typedef struct
 
 void Moji_item_set(sint32 arg);
 
-void func_8005C24C(sint32 arg);
+void Moji_weapon_set(sint32 arg);
 
-void func_8001E3F0(sint32 arg);
+void Sce_light_add(sint32 arg);
 
 sint32 Search_Player(void *track, void *wp);
 
@@ -2502,7 +2502,7 @@ void Moji_task_kill(sint32 arg);
 void func_80039C54(STCOM_FIXED_VECTOR *vec, sint32 dist, sint32 angle,
                    sint32 arg3); // ROCK_NEO.EXE: places the camera
 
-void *func_8001EB98(STAGE_SCRIPT_ENTRY *entry); // ROCK_NEO.EXE: runs a room script command
+void *Sce_slot_open_keep(STAGE_SCRIPT_ENTRY *entry); // ROCK_NEO.EXE: runs a room script command
 
 void func_80101330(STAGE_ROOM *wp);
 void func_801013E0(STAGE_ROOM_WORK *wp);

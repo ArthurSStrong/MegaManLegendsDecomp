@@ -26,8 +26,8 @@
 // Text position for Print: x in 8-pixel columns, y in rows, colour
 #define DEBUG_TEXT_POS(x, y, c) (((x) << 3) | ((y) << 12) | ((c) << 17))
 
-// The current display buffer, D_80098934, seen as a whole DISP_ENV.
-#define CURRENT_DISP_ENV ((DISP_ENV *)D_80098934)
+// The current display buffer, Disp_env_ptr, seen as a whole DISP_ENV.
+#define CURRENT_DISP_ENV ((DISP_ENV *)Disp_env_ptr)
 
 // BIOS thread control block (0xC0 bytes)
 typedef struct
@@ -83,7 +83,7 @@ void StopCallback(void);
 void Cd_init(void);
 void exception_init(void);
 void func_80012988(uint32 *value);
-void func_80012A5C(DEBUG_MEMORY_ROW *rows, uint32 mode);
+void debug_mem_dump(DEBUG_MEMORY_ROW *rows, uint32 mode);
 void func_80020A40(void);
 void System_init(void);
 void main_task(void);

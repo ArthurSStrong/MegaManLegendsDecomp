@@ -31,7 +31,7 @@ sint32 func_80100ADC(void)
 {
     if (D_800989F8.routine_4 == 0 && Sce_flag_test(0x21B) && !Sce_flag_test(0x229))
     {
-        func_8001EB98(D_801149C0);
+        Sce_slot_open_keep(D_801149C0);
     }
     Sce_flag_on(0x1FF);
     return 0;
@@ -41,9 +41,9 @@ sint32 func_80100B38(void)
 {
     if (Sce_flag_test(0x1E))
     {
-        func_8001EB98(&D_801100FC[0]);
-        func_8001EB98(&D_801100FC[1]);
-        func_8001EB98(&D_801100FC[2]);
+        Sce_slot_open_keep(&D_801100FC[0]);
+        Sce_slot_open_keep(&D_801100FC[1]);
+        Sce_slot_open_keep(&D_801100FC[2]);
     }
     Sce_flag_on(0x1FF);
     return 0;

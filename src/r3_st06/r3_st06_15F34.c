@@ -591,7 +591,7 @@ void func_80117160(ST06_CRAB *wp)
     wp->body.timer_82         = 0;
     wp->body.value_88         = 0;
     wp->body.area_8C          = Scr_cell_get(&D_801258B8);
-    life                      = D_8009884C[wp->kind_2]->life_8 << 5;
+    life                      = Work_5A4_param_tbl[wp->kind_2]->life_8 << 5;
     wp->data_78               = D_801258AC;
     wp->routine_0             = 1;
     wp->value_10              = 0;
@@ -722,13 +722,13 @@ void func_80117290(ST06_CRAB *wp)
         {
             body->hit_pos_68 = wp->joint_180[10];
             Set_Atari(&body->hit_pos_68, 0x60, 0, 0x8000, wp->value_1, &body->hit_70,
-                          D_8009884C[wp->kind_2]->value_A | 0x5000000, 0, 0x80);
+                          Work_5A4_param_tbl[wp->kind_2]->value_A | 0x5000000, 0, 0x80);
         }
         if (body->flags_0 & 0x80)
         {
             body->hit_pos_58 = wp->joint_180[5];
             Set_Atari(&body->hit_pos_58, 0x60, 0, 0x8000, wp->value_1, &body->hit_60,
-                          D_8009884C[wp->kind_2]->value_A | 0x5000000, 0, 0x80);
+                          Work_5A4_param_tbl[wp->kind_2]->value_A | 0x5000000, 0, 0x80);
         }
     }
     body->ground_78 = Scr_collision_check(wp);
@@ -1033,7 +1033,7 @@ void func_801180F8(ST06_CRAB *wp)
                 else
                 {
                     Swing_Camera2(0x10, 0x400, 0x2000, &wp->position);
-                    Map_obj_hit_damage(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
+                    Map_obj_hit_damage(body->hit_7C, Work_5A4_param_tbl[wp->kind_2]->value_B);
                     func_801187D4(wp);
                 }
             }
@@ -1051,7 +1051,7 @@ void func_801180F8(ST06_CRAB *wp)
                 else
                 {
                     Swing_Camera2(0x10, 0x400, 0x2000, &wp->position);
-                    Map_obj_hit_damage(body->hit_7C, D_8009884C[wp->kind_2]->value_B);
+                    Map_obj_hit_damage(body->hit_7C, Work_5A4_param_tbl[wp->kind_2]->value_B);
                     func_801187D4(wp);
                 }
             }
@@ -1352,7 +1352,7 @@ sint32 func_80118B2C(ST06_CRAB *wp)
                     wp->body.flags_0 &= ~0xC;
                     wp->life_prev_B2          = 0;
                     wp->life_6E               = 0;
-                    damage                    = D_8009884C[wp->kind_2]->limit_9;
+                    damage                    = Work_5A4_param_tbl[wp->kind_2]->limit_9;
                     wp->routine_1             = 4;
                     *(uint16 *)&wp->routine_2 = 0;
                 }
@@ -1365,7 +1365,7 @@ sint32 func_80118B2C(ST06_CRAB *wp)
             {
                 body->u_8.h.timer_A += damage;
                 if ((body->hit_18 & 0x20000000) ||
-                    body->u_8.h.timer_A >= D_8009884C[wp->kind_2]->limit_9)
+                    body->u_8.h.timer_A >= Work_5A4_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     body->u_8.h.timer_A = 0;

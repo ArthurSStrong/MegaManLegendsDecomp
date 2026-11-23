@@ -152,7 +152,7 @@ void title_obj_update(void)
     func_800175FC();
     func_80028DE0();
     index = CODE800133D8_DISPLAY_INDEX;
-    link  = D_80098934;
+    link  = Disp_env_ptr;
     setaddr(D_800A4D40[index], getaddr(&link->tag));
     setaddr(&link->tag, &D_800A4D40[index][0x1000] - 1);
 }
@@ -307,12 +307,12 @@ void Title_continue(CODE800133D8_STATE *wp)
         case 2:
             D_800C0C2A = 0;
             D_800C0C26 = 0;
-            func_800665FC(0);
+            Card_screen_exec(0);
             title_obj_update();
             title_fade_wait_next(wp);
             break;
         case 3:
-            wp->routine_1 += func_800665FC(0);
+            wp->routine_1 += Card_screen_exec(0);
             title_obj_update();
             break;
         case 4:
@@ -442,7 +442,7 @@ void title_logo_draw(void)
     prim->g0    = 0x80;
     prim->b0    = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag8c, prim);
+    AddPrim(&Disp_env_ptr->tag8c, prim);
     prim++;
     setPolyFT4(prim);
     prim->tpage = GetTPage(1, 2, 0x240, 0x100);
@@ -467,7 +467,7 @@ void title_logo_draw(void)
     prim->g0    = 0x80;
     prim->b0    = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag8c, prim);
+    AddPrim(&Disp_env_ptr->tag8c, prim);
     prim++;
     setPolyG4((POLY_G4 *)prim);
     ((POLY_G4 *)prim)->x0 = 0;
@@ -491,10 +491,10 @@ void title_logo_draw(void)
     ((POLY_G4 *)prim)->g3 = 0xFF;
     ((POLY_G4 *)prim)->b3 = 0xFF;
     ((POLY_G4 *)prim)->code |= 2;
-    AddPrim(&D_80098934->tag88, prim);
+    AddPrim(&Disp_env_ptr->tag88, prim);
     prim++;
     SetDrawMode((DR_MODE *)prim, 0, 0, GetTPage(1, 2, 0, 0) & 0xFFFF, NULL);
-    AddPrim(&D_80098934->tag88, prim);
+    AddPrim(&Disp_env_ptr->tag88, prim);
     prim++;
     setPolyG4((POLY_G4 *)prim);
     ((POLY_G4 *)prim)->x0 = 0;
@@ -518,7 +518,7 @@ void title_logo_draw(void)
     ((POLY_G4 *)prim)->g3 = 0xFF;
     ((POLY_G4 *)prim)->b3 = 0xE0;
     ((POLY_G4 *)prim)->code &= 0xFD;
-    AddPrim(&D_80098934->tag8c, prim);
+    AddPrim(&Disp_env_ptr->tag8c, prim);
     prim++;
     *CODE800133D8_PACKET_PTR = prim;
     title_obj_update();
@@ -552,7 +552,7 @@ void func_80014394(void)
     prim->g0    = 0x80;
     prim->b0    = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     setPolyFT4(prim);
     prim->tpage = GetTPage(0, 0, 0x140, 0x100);
@@ -577,7 +577,7 @@ void func_80014394(void)
     prim->g0    = 0x80;
     prim->b0    = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     *CODE800133D8_PACKET_PTR = prim;
 }
@@ -615,7 +615,7 @@ void title_menu_draw(sint32 arg0)
     prim->g0             = 0x80;
     prim->b0             = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     ((P_TAG *)prim)->len = 9;
     prim->code           = 0x2C;
@@ -641,7 +641,7 @@ void title_menu_draw(sint32 arg0)
     prim->g0             = 0x80;
     prim->b0             = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     ((P_TAG *)prim)->len = 9;
     prim->code           = 0x2C;
@@ -667,7 +667,7 @@ void title_menu_draw(sint32 arg0)
     prim->g0             = 0x80;
     prim->b0             = 0x80;
     prim->code &= 0xFD;
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     if (Game_work.flags_18 != 0)
     {
@@ -746,7 +746,7 @@ void title_menu_draw(sint32 arg0)
                 prim->v3 = 0xF8;
                 break;
         }
-        AddPrim(&D_80098934->tag78, prim);
+        AddPrim(&Disp_env_ptr->tag78, prim);
         prim++;
     }
     ((POLY_F4 *)prim)->code = 0x28;
@@ -777,7 +777,7 @@ void title_menu_draw(sint32 arg0)
         ((POLY_F4 *)prim)->x3 = 0xE0;
         ((POLY_F4 *)prim)->y3 = 0xC8;
     }
-    AddPrim(&D_80098934->tag78, prim);
+    AddPrim(&Disp_env_ptr->tag78, prim);
     prim++;
     *CODE800133D8_PACKET_PTR = prim;
 }

@@ -46,9 +46,9 @@ void func_801039B8(ST19_OBJ *wp)
     wp->value_330   = 0;
     wp->value_332   = 0;
     wp->data_78     = D_801179CC;
-    wp->u_70.b[3]   = D_80098844[0x41]->value_A;
-    wp->u_32C.h[0]  = D_80098844[0x41]->life_C * 16;
-    wp->u_32C.h[1]  = D_80098844[0x41]->life_C * 16;
+    wp->u_70.b[3]   = Em_param_tbl[0x41]->value_A;
+    wp->u_32C.h[0]  = Em_param_tbl[0x41]->life_C * 16;
+    wp->u_32C.h[1]  = Em_param_tbl[0x41]->life_C * 16;
     wp->value_34B   = 0;
     wp->value_34C   = 0;
     wp->value_2C8   = 0;
@@ -806,10 +806,10 @@ void func_8010556C(ST19_OBJ *wp)
     wp->data_78        = D_80117ACC;
     Search_Player_Init(ST19_OBJ_CTL(wp)->track_4C, 0, -0x60);
     ctl           = ST19_OBJ_CTL(wp);
-    wp->u_70.b[3] = D_80098844[wp->kind_2]->value_A;
-    wp->value_B2 = wp->value_B0 = wp->value_6E = D_80098844[wp->kind_2]->value_8 << 6;
-    ctl->life_70[0]                            = D_80098844[wp->kind_2]->value_B << 4;
-    ctl->life_70[1]                            = D_80098844[wp->kind_2]->value_B << 4;
+    wp->u_70.b[3] = Em_param_tbl[wp->kind_2]->value_A;
+    wp->value_B2 = wp->value_B0 = wp->value_6E = Em_param_tbl[wp->kind_2]->value_8 << 6;
+    ctl->life_70[0]                            = Em_param_tbl[wp->kind_2]->value_B << 4;
+    ctl->life_70[1]                            = Em_param_tbl[wp->kind_2]->value_B << 4;
     wp->routine_0                              = 1;
     wp->routine_1                              = 0;
     wp->scale.v.pad                            = 0;

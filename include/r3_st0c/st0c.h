@@ -488,7 +488,7 @@ void func_80101184(STAGE_OBJ *wp);
 void func_801011D8(STAGE_OBJ *wp);
 void func_8010122C(STAGE_OBJ *wp);
 void func_80101280(STAGE_OBJ *wp);
-void func_8001EB98(void *entry);
+void Sce_slot_open_keep(void *entry);
 void func_8010ACA4(ST0C_SHOT *wp, sint32 arg);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 void func_8010AB60(ST0C_SHOT *wp);

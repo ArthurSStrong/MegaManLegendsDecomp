@@ -238,7 +238,7 @@ extern uint8 D_800C356E;
 extern uint8 D_800C356F;
 extern uint8 D_800C3570;
 
-sint32 func_800665FC(sint32 arg);
+sint32 Card_screen_exec(sint32 arg);
 void game_update(void);
 void func_8001B314(void);
 void Work_close_apply(void);
@@ -262,9 +262,9 @@ void func_80038648(void);
 void Sce_flag_init(sint32 mode);
 void Map_obj_state_reset(sint32 mode);
 void Player_init(sint32 mode);
-void func_8005DBB4(sint32 mode);
+void Automap_reset(sint32 mode);
 void func_80067E6C(sint32 mode);
-void func_8006471C(void);
+void Param_tbl_select(void);
 void func_80065AA8(void);
 void func_800664BC(void);
 void Work_init_all(sint32 mode);
@@ -272,7 +272,7 @@ void Message_event_clear(void);
 void Sound_bgm_tbl_set(void);
 
 void Sound_seq_stop_all(void);
-void func_800665E8(void);
+void Card_screen_init(void);
 void Sce_flag_off(sint32 flag);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 
@@ -304,7 +304,7 @@ void effect_common_move(void);
 void func_80038894(void);
 void Atari_check(void);
 void Map_obj_break_update(void);
-void func_8005DCB4(void);
+void Automap_update(void);
 void func_800238B4(void);
 void Map_layer_draw(void);
 void func_80027678(void);

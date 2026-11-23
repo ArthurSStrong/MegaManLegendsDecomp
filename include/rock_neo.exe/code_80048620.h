@@ -364,12 +364,12 @@ typedef union
 } PL_SHORT_BYTES;
 
 // The real arguments are (step, dx, adx, vec); the callees only read step.
-void func_80050B74();
-void func_80050BB4();
+void push_flag_x();
+void push_flag_z();
 sint32 func_80050A24(PL_SHORT_VECTOR *vec);
 sint32 func_80050A90(PL_SHORT_VECTOR *vec);
 sint32 func_80050AFC(PL_SHORT_VECTOR *vec);
-sint32 func_80050BF4(PL_SHORT_VECTOR *vec);
+sint32 push_flag_y(PL_SHORT_VECTOR *vec);
 sint32 func_80050808(PL_SHORT_VECTOR *vec);
 sint32 func_800508BC(PL_SHORT_VECTOR *vec);
 sint32 func_80050970(PL_SHORT_VECTOR *vec);

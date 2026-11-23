@@ -432,12 +432,12 @@ void Sce_flag_select(sint32 arg)
     }
 }
 
-void func_8001E3F0(sint32 arg)
+void Sce_light_add(sint32 arg)
 {
     sint16 *value = &Game_work.value_60;
 
     arg = (sint16)arg * 2;
-    *value += *(uint16 *)((uint8 *)D_800891B4 + arg);
+    *value += *(uint16 *)((uint8 *)Sce_light_tbl + arg);
     if (*value < 0)
     {
         *value = 0;
@@ -447,9 +447,9 @@ void func_8001E3F0(sint32 arg)
         *value = 0xFF;
     }
 #ifdef __wasm32__
-    func_800179FC();
+    Clut_light_apply();
 #else
-    func_800179FC(arg, value);
+    Clut_light_apply(arg, value);
 #endif
 }
 
@@ -664,7 +664,7 @@ SCENE_SLOT *Sce_slot_open(SCENE_CMD *cmd)
     return slot;
 }
 
-SCENE_SLOT *func_8001EB98(SCENE_CMD *cmd)
+SCENE_SLOT *Sce_slot_open_keep(SCENE_CMD *cmd)
 {
     SCENE_SLOT *saved;
     SCENE_SLOT *slot;
@@ -902,7 +902,7 @@ sint32 Sce_stage_load(void)
 
     routine = SCENE_GAME_FIXED.stage_no;
     sub     = SCENE_GAME_FIXED.area_no;
-    func_8001F740();
+    sce_stage_init();
     id = D_800896D4[routine];
     func_80019F94(id);
     cur = SCENE_GAME_FIXED.value_68;
@@ -950,7 +950,7 @@ sint32 Sce_room_load(void)
 
     routine = SCENE_GAME_FIXED.stage_no;
     sub     = SCENE_GAME_FIXED.area_no;
-    func_8001F740();
+    sce_stage_init();
     gw = &Game_work;
     pw = (uint8 *)&Player_work;
     if (D_800C356C != -1)
@@ -1000,7 +1000,7 @@ sint32 Sce_room_load(void)
     Solid_init();
     Atari_init();
     Debug_init();
-    ((SCENE_FUNC)func_800179FC)(); // retail passes no arguments here
+    ((SCENE_FUNC)Clut_light_apply)(); // retail passes no arguments here
     ((uint8 *)gw)[0x7E] = 0;
     Sce_flag_off(0x1FF);
     return 0;
@@ -1063,10 +1063,10 @@ void func_8001F6C4(void)
     }
 }
 
-void func_8001F740(void)
+void sce_stage_init(void)
 {
     func_8001F798(Game_work.stage_no);
-    D_8008980C[Game_work.stage_no]();
+    Sce_stage_init_tbl[Game_work.stage_no]();
 }
 
 void func_8001F798(sint32 arg)

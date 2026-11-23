@@ -12,10 +12,10 @@ sint32 D_80098720;
 sint32 D_80098724;
 sint16 D_80098728;
 uint16 D_80098910;
-void **D_80098844;
-void **D_8009884C;
-void **D_80098928;
-void **D_8009892C;
+void **Em_param_tbl;
+void **Work_5A4_param_tbl;
+void **Shl_param_tbl;
+void **Work_50_param_tbl;
 uint8 D_80098A04;
 uint8 D_80098A48;
 
@@ -181,26 +181,26 @@ void func_8006430C(CODE643_ICON_SET *set)
         }
         icon++;
     } while (id = (sint16)icon->id >= 0);
-    setaddr(&prim[-1], getaddr(&D_80098934->layer[set->layer]));
-    setaddr(&D_80098934->layer[set->layer], head);
+    setaddr(&prim[-1], getaddr(&Disp_env_ptr->layer[set->layer]));
+    setaddr(&Disp_env_ptr->layer[set->layer], head);
     CODE643_PRIM_PTR = prim;
 }
 
-void func_8006471C(void)
+void Param_tbl_select(void)
 {
     if ((sint8)MEM_GWB(0x5B) == 2)
     {
-        D_80098844 = D_8008F060;
-        D_8009884C = D_8008F200;
-        D_80098928 = D_8008F260;
-        D_8009892C = D_8008F2E4;
+        Em_param_tbl       = D_8008F060;
+        Work_5A4_param_tbl = D_8008F200;
+        Shl_param_tbl      = D_8008F260;
+        Work_50_param_tbl  = D_8008F2E4;
     }
     else
     {
-        D_80098844 = D_8008EDC4;
-        D_8009884C = D_8008EF64;
-        D_80098928 = D_8008EFC4;
-        D_8009892C = D_8008F048;
+        Em_param_tbl       = D_8008EDC4;
+        Work_5A4_param_tbl = D_8008EF64;
+        Shl_param_tbl      = D_8008EFC4;
+        Work_50_param_tbl  = D_8008F048;
     }
 }
 
@@ -229,7 +229,7 @@ void func_8006479C(void)
     _bu_init();
 }
 
-sint32 func_8006491C(void)
+sint32 card_sw_event_wait(void)
 {
     for (;;)
     {
@@ -252,7 +252,7 @@ sint32 func_8006491C(void)
     }
 }
 
-sint32 func_80064984(void)
+sint32 card_hw_event_wait(void)
 {
     for (;;)
     {
@@ -275,7 +275,7 @@ sint32 func_80064984(void)
     }
 }
 
-void func_800649EC(void)
+void card_sw_event_clear(void)
 {
     TestEvent(D_80098708);
     TestEvent(D_80098710);
@@ -283,7 +283,7 @@ void func_800649EC(void)
     TestEvent(D_80098714);
 }
 
-void func_80064A34(void)
+void card_hw_event_clear(void)
 {
     TestEvent(D_80098718);
     TestEvent(D_80098720);
@@ -291,15 +291,15 @@ void func_80064A34(void)
     TestEvent(D_80098724);
 }
 
-sint32 func_80064A7C(sint32 port)
+sint32 card_check(sint32 port)
 {
     sint32 r;
 
     VSync(0);
 retry:
-    func_800649EC();
+    card_sw_event_clear();
     _card_info(port << 4);
-    r = func_8006491C();
+    r = card_sw_event_wait();
     if (r == 3)
     {
         return 3;
@@ -310,20 +310,20 @@ retry:
     }
     if (r == 2)
     {
-        func_80064A34();
+        card_hw_event_clear();
         if (_card_clear(port << 4) != 1)
         {
             goto retry;
         }
-        if (func_80064984() != 0)
+        if (card_hw_event_wait() != 0)
         {
             return 3;
         }
     }
-    func_800649EC();
+    card_sw_event_clear();
     _card_load(port << 4);
     VSync(0x48);
-    r = func_8006491C();
+    r = card_sw_event_wait();
     if (r == 2)
     {
         return 4;
@@ -336,7 +336,7 @@ sint32 func_80064B60(sint32 port)
     sint32 r;
 
     _card_info(port << 4);
-    r = func_8006491C();
+    r = card_sw_event_wait();
     if (r == 1)
     {
         return 0;
@@ -353,7 +353,7 @@ sint32 func_80064BB4(sint32 port)
     sint32 r;
 
     _card_info(port << 4);
-    r = func_8006491C();
+    r = card_sw_event_wait();
     if (r == 1)
     {
         return 0;
@@ -369,7 +369,7 @@ sint32 func_80064BB4(sint32 port)
     return -1;
 }
 
-uint32 func_80064C08(sint32 port)
+uint32 card_free_blocks(sint32 port)
 {
     struct DIRENTRY dir;
     char path[24];
@@ -430,7 +430,7 @@ void func_80064CB8(uint8 *buf, uint8 *src)
     }
 }
 
-sint32 func_80064D74(sint32 port, char *name, void *buf, uint32 size)
+sint32 card_file_write(sint32 port, char *name, void *buf, uint32 size)
 {
     char path[0x20];
     sint32 fd;
@@ -438,13 +438,13 @@ sint32 func_80064D74(sint32 port, char *name, void *buf, uint32 size)
     uint32 free_blocks;
     uint32 blocks;
 
-    r = func_80064A7C(port);
+    r = card_check(port);
     if (r != 0)
     {
         return r;
     }
     blocks      = (size + 0x1FFF) >> 13;
-    free_blocks = func_80064C08(port);
+    free_blocks = card_free_blocks(port);
     strcpy(path, D_8008FA5C[port]);
     strcat(path, name);
     fd = open(path, 2);
@@ -477,7 +477,7 @@ sint32 func_80064D74(sint32 port, char *name, void *buf, uint32 size)
     return 0;
 }
 
-sint32 func_80064EA4(sint32 port, char *name, void *buf, uint32 size)
+sint32 card_file_read(sint32 port, char *name, void *buf, uint32 size)
 {
     char path[0x20];
     sint32 fd;
@@ -485,13 +485,13 @@ sint32 func_80064EA4(sint32 port, char *name, void *buf, uint32 size)
     uint32 free_blocks;
     uint32 blocks;
 
-    r = func_80064A7C(port);
+    r = card_check(port);
     if (r != 0)
     {
         return r;
     }
     blocks      = (size + 0x1FFF) >> 13;
-    free_blocks = func_80064C08(port);
+    free_blocks = card_free_blocks(port);
     strcpy(path, D_8008FA5C[port]);
     strcat(path, name);
     fd = open(path, 1);
@@ -511,24 +511,24 @@ sint32 func_80064EA4(sint32 port, char *name, void *buf, uint32 size)
     return 0;
 }
 
-sint32 func_80064F8C(sint32 port)
+sint32 card_format(sint32 port)
 {
     sint32 r;
 
-    r = func_80064A7C(port);
+    r = card_check(port);
     if (r == 1)
     {
         return -1;
     }
     format(D_8008FA5C[port]);
-    return -(func_80064A7C(port) == 1);
+    return -(card_check(port) == 1);
 }
 
 sint32 func_80064FF0(sint32 arg)
 {
     D_8009AB31    = 0xFF;
     D_8009AB30[0] = 0xFF;
-    func_80064A34();
+    card_hw_event_clear();
     _new_card();
     if (arg == 0)
     {
@@ -538,7 +538,7 @@ sint32 func_80064FF0(sint32 arg)
     {
         _card_write(0x10, 0, D_8009AB30);
     }
-    return func_80064984() == 0;
+    return card_hw_event_wait() == 0;
 }
 
 void func_80065064(void)
@@ -620,7 +620,7 @@ void func_80065064(void)
     func_800176DC(&MEM_B(pl, 0x4F4), save->pl_4f4, 8);
     func_800176DC(Sce_flag, save->sce_flag, 8);
     func_800176DC(Map_obj_state, save->block_480, 0x70);
-    func_800176DC(D_800BC9B8, save->block_1280, 0x50);
+    func_800176DC(Automap_visited, save->block_1280, 0x50);
     func_800176A4(gw->records_84, save->records, 15);
 }
 
@@ -895,7 +895,7 @@ void func_800664BC(void)
     ep->flag_15 = 1;
 }
 
-void func_800665E8(void)
+void Card_screen_init(void)
 {
     D_80098910             = 0;
     *(uint32 *)&D_80098914 = 0;
@@ -903,12 +903,12 @@ void func_800665E8(void)
 
 // Returns the screen handler's result (1 once the screen is done): the in-game save screen
 // (game.c, r3_sup) adds it to its routine.
-sint32 func_800665FC(sint16 arg)
+sint32 Card_screen_exec(sint16 arg)
 {
     D_80098912    = arg;
     D_80098918[1] = D_800C0C2A;
     D_80098918[0] = D_800C0C26;
-    return D_8008FD10[D_80098914]((MEM_WORK *)&D_80098910);
+    return Card_screen_tbl[D_80098914]((MEM_WORK *)&D_80098910);
 }
 
 sint32 func_80066664(MEM_WORK *wp)
@@ -1037,7 +1037,7 @@ sint32 func_8006689C(MEM_WORK *wp)
             for (i = 0; i < 5; i++)
             {
                 slot = &D_800BAF38[i];
-                switch ((sint16)func_80064EA4(D_80098A48, D_800980AC[i], slot, 0x180))
+                switch ((sint16)card_file_read(D_80098A48, D_800980AC[i], slot, 0x180))
                 {
                     case -1:
                         slot->byte_109 = 1;
@@ -1234,7 +1234,7 @@ sint32 func_80066F40(MEM_WORK *wp)
         case 2:
             if (--wp->timer_0c == 0)
             {
-                wp->step_6 += 2 + func_80064F8C(D_80098A48);
+                wp->step_6 += 2 + card_format(D_80098A48);
             }
             break;
         case 3:
@@ -1387,7 +1387,7 @@ sint32 func_80067174(MEM_WORK *wp)
             func_80065064();
             func_80065384();
             slot = &MEM_SAVE;
-            switch ((sint16)func_80064D74(D_80098A48, D_800980AC[D_80098A04], slot, 0x1F00))
+            switch ((sint16)card_file_write(D_80098A48, D_800980AC[D_80098A04], slot, 0x1F00))
             {
                 case 0:
                     for (j = 0; j < 13; j++)
@@ -1432,7 +1432,7 @@ sint32 func_80067174(MEM_WORK *wp)
             {
                 break;
             }
-            r = func_80064EA4(D_80098A48, D_800980AC[D_80098A04], &MEM_SAVE, 0x1F00);
+            r = card_file_read(D_80098A48, D_800980AC[D_80098A04], &MEM_SAVE, 0x1F00);
             if (r == 0)
             {
                 r = func_80065E08();

@@ -51,7 +51,7 @@ extern uint32 D_800979DC[];
 extern uint32 D_800979EC[];
 extern uint32 D_800A4D40[][0x1000];
 extern uint32 D_800A4F50[][0x1000];
-extern CODE800133D8_LINK *D_80098934;
+extern CODE800133D8_LINK *Disp_env_ptr;
 
 extern CODE800133D8_FUNC Code800133D8_main_tbl[];
 extern sint16 D_80098A70;

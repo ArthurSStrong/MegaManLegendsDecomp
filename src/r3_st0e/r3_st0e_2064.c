@@ -23,7 +23,7 @@ void func_80102104(ST0E_ACTOR *wp)
     Model_work_init(wp, NULL);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
-    life               = D_80098844[wp->kind_2]->life_8;
+    life               = Em_param_tbl[wp->kind_2]->life_8;
     wp->routine_0      = 1;
     wp->value_6E       = life;
     wp->scale.v.pad    = 0x4210;

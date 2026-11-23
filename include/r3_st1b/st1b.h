@@ -539,7 +539,7 @@ void func_80101B30(STAGE_ROOM *wp);
 void func_80101FBC(STAGE_ROOM *wp);
 void func_8010706C(ST1B_VIEW *wp);
 void func_80108E2C(ST1B_VIEW *wp);
-void func_8001EB98(uint8 *);
+void Sce_slot_open_keep(uint8 *);
 sint32 func_80101250(ST1B_VIEW *wp);
 void func_80106604(ST1B_VIEW *wp);
 

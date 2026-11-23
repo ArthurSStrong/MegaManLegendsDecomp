@@ -305,7 +305,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
                     wp->routine_1++;
                     break;
                 }
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 if (!Sce_flag_test(0x315))
                 {
                     if (ST08_GAME_WORD(0x150) == 3)
@@ -353,7 +353,7 @@ void func_801105AC(STAGE_OBJ50 *wp)
             {
                 if (D_80118598 < 3)
                 {
-                    func_8005C24C(D_80118598 + 0xC);
+                    Moji_weapon_set(D_80118598 + 0xC);
                     MojiTaskExec2(0, 0x24);
                 }
                 else

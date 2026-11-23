@@ -29,7 +29,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 index_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06: 0x80 shakes the camera when it hits a wall
@@ -70,7 +70,7 @@ typedef struct
     STCOM27_CTL ctl;                        // 348
 } STCOM27_WORK;
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -102,16 +102,16 @@ void stcom27_func_0E78(STCOM27_WORK *wp);
 void stcom27_func_0EAC(STCOM27_WORK *wp);
 
 // ROCK_NEO.EXE.
-extern STCOM27_KIND **D_80098844;
+extern STCOM27_KIND **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 

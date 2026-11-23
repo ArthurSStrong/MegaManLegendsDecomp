@@ -154,7 +154,7 @@ typedef struct
 
 #define STAGE_PACKET_PTR ((POLY_FT4 **)0x1F800070)
 
-extern STAGE_LINK *D_80098934;
+extern STAGE_LINK *Disp_env_ptr;
 
 // Game_work's byte at +0x82 (STCOM_GAME_WORK stops at +0x81). The pointer-plus form keeps
 // its address in a register for a read-modify-write; ((uint8 *)&Game_work)[0x82] does not.
@@ -206,7 +206,7 @@ void Title_task(void); // ROCK_NEO.EXE
 void Map_layer_set(void *tbl);
 void Obj_spawn_list(void *spawn, sint32 spawn_player);
 void Fog_room_set(void *blocks, void *arg1);
-void func_8005DC10(sint32 arg);
+void Automap_room_set(sint32 arg);
 void Sce_event_start(sint32 id);
 void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
 // Spawns a scene command's object; returns its work slot (ROCK_NEO's SCENE_SLOT, any slot size).
@@ -1518,7 +1518,7 @@ typedef struct
     uint16 flags_0;          // 00
     uint16 rand_2;           // 02: a new random number every frame
     sint16 timer_4;          // 04
-    sint16 level_6;          // 06: row of the kind's table (D_80098844)
+    sint16 level_6;          // 06: row of the kind's table (Em_param_tbl)
     uint16 value_8;          // 08: or'd into the hit block's kind bits
     sint16 timer_A;          // 0A
     STCOM_SVECTOR pos_C;     // 0C: the hit box's center
@@ -1548,7 +1548,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: flags
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
@@ -1599,7 +1599,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: flags
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08

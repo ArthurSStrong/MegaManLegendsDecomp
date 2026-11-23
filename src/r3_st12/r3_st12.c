@@ -32,7 +32,7 @@ void func_8010023C(void)
     STAGE_MAP_EXITS      = D_801081D4[Game_work.value_51];
     Obj_spawn_list(D_80108160[Game_work.value_51], D_800C356D);
     Fog_room_set(D_801082B0[D_80108330[Game_work.value_51]], D_801081E8[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_801003B8();
 }
 
@@ -145,7 +145,7 @@ sint32 func_801007B4(void)
     {
         if (!Sce_flag_test(0x238))
         {
-            func_8001EB98(D_801087F0);
+            Sce_slot_open_keep(D_801087F0);
         }
     }
     Sce_flag_on(0x1FF);

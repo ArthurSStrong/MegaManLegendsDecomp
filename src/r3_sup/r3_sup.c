@@ -107,7 +107,7 @@ void func_801D8490(void)
     func_801D8524();
     func_801D8564();
     index = SUP_DISPLAY_INDEX;
-    link  = D_80098934;
+    link  = Disp_env_ptr;
     setaddr(D_800A4D40[index], getaddr(&link->tag));
     setaddr(&link->tag, &D_800A4D40[index][0x1000] - 1);
 }
@@ -650,7 +650,7 @@ void func_801D9794(void)
         D_801DC208.value_0a = D_801DC208.value_92 * 16;
         D_801DC208.value_92 = 0;
         Moji_task_kill(0);
-        func_8005C24C(D_801DC208.value_60);
+        Moji_weapon_set(D_801DC208.value_60);
         MojiTaskExec(0, SUP_SCRIPT, 0x83);
         D_801DC208.rot_88.vz = 0;
         D_801DC208.rot_88.vy = 0;
@@ -806,7 +806,7 @@ void func_801D9C74(void)
         p->clut       = 0x3D09;
         p->u0 = p->u2 = 0;
         p->tpage      = 0xC;
-        addPrim(&D_80098934->ot_78, p);
+        addPrim(&Disp_env_ptr->ot_78, p);
     }
     if (Sce_flag_test(D_801DC0C8[D_801DC208.value_60] + 0x4C0))
     {
@@ -836,7 +836,7 @@ void func_801D9C74(void)
         p->v2 = p->v3 = D_801DC158[D_801DC208.value_60][1] + 7;
         p->clut       = 0x3D08;
         p->tpage      = 0xC;
-        addPrim(&D_80098934->ot_78, p);
+        addPrim(&Disp_env_ptr->ot_78, p);
     }
     if (D_801DC208.routine_2 == 3 && D_801DC208.routine_3 >= 5 && D_801DC208.routine_3 < 8)
     {
@@ -861,7 +861,7 @@ void func_801D9C74(void)
     p->v2 = p->v3 = 0x5D;
     p->clut       = 0x3D09;
     p->tpage      = 0xC;
-    addPrim(&D_80098934->ot_78, p);
+    addPrim(&Disp_env_ptr->ot_78, p);
 
     p                 = (*SUP_PACKET_PTR)++;
     *(u_long *)p      = 0x09000000;
@@ -876,7 +876,7 @@ void func_801D9C74(void)
     p->v2 = p->v3 = 0x50;
     p->clut       = 0x3D09;
     p->tpage      = 0xC;
-    addPrim(&D_80098934->ot_78, p);
+    addPrim(&Disp_env_ptr->ot_78, p);
 
     p                 = (*SUP_PACKET_PTR)++;
     *(u_long *)p      = 0x09000000;
@@ -891,7 +891,7 @@ void func_801D9C74(void)
     p->v2 = p->v3 = 0x9C;
     p->clut       = 0x3D09;
     p->tpage      = 0xC;
-    addPrim(&D_80098934->ot_78, p);
+    addPrim(&Disp_env_ptr->ot_78, p);
 
     for (j = 0; j < 13; j++)
     {
@@ -1021,7 +1021,7 @@ void func_801DA7DC(sint32 w, sint32 y, sint32 v)
             p->clut       = 0x3D09;
             p->u0 = p->u2 = 0;
             p->tpage      = 0xC;
-            addPrim(&D_80098934->ot_78, p);
+            addPrim(&Disp_env_ptr->ot_78, p);
         }
         w = 0x58;
     }
@@ -1051,7 +1051,7 @@ void func_801DA7DC(sint32 w, sint32 y, sint32 v)
         p->v2 = p->v3 = v * 8 + 8;
         p->clut       = 0x3D09;
         p->tpage      = 0xC;
-        addPrim(&D_80098934->ot_78, p);
+        addPrim(&Disp_env_ptr->ot_78, p);
 
         p                 = (*SUP_PACKET_PTR)++;
         *(u_long *)p      = 0x09000000;
@@ -1066,7 +1066,7 @@ void func_801DA7DC(sint32 w, sint32 y, sint32 v)
         p->v2 = p->v3 = v * 8 + 8;
         p->clut       = 0x3D09;
         p->tpage      = 0xC;
-        addPrim(&D_80098934->ot_78, p);
+        addPrim(&Disp_env_ptr->ot_78, p);
     }
 }
 
@@ -1122,7 +1122,7 @@ void func_801DAB58(void)
             if (D_801DC208.value_64 >= 0)
             {
                 D_801DC208.routine_3++;
-                func_8005C24C(D_801DC208.value_60);
+                Moji_weapon_set(D_801DC208.value_60);
                 MojiTaskExec(0, SUP_SCRIPT, 0x83);
                 MojiTaskExec(1, SUP_SCRIPT, 0x82);
                 D_801DC208.anim_94  = 8;
@@ -1165,7 +1165,7 @@ void func_801DAB58(void)
                     Moji_task_kill(1);
                     break;
                 case 2:
-                    func_8005C24C(D_801DC208.value_60);
+                    Moji_weapon_set(D_801DC208.value_60);
                     MojiTaskExec(0, SUP_SCRIPT, 0x83);
                     MojiTaskExec(1, SUP_SCRIPT, 0x82);
                     D_801DC208.anim_94   = 8;
@@ -1561,7 +1561,7 @@ void func_801DBBE0(void)
     switch (D_801DC208.routine_2)
     {
         case 0:
-            D_801DC208.routine_2 += func_800665FC(1);
+            D_801DC208.routine_2 += Card_screen_exec(1);
             break;
         case 1:
             MojiTaskKill();

@@ -34,7 +34,7 @@ void func_8010059C(void)
     STAGE_MAP_WORK_PTR->exits = D_8011AD44[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8011ADF4[D_8011AE74[Game_work.value_51]], D_8011AD54[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80100704();
 }
 
@@ -1392,7 +1392,7 @@ void func_801033E4(STAGE_OBJ *wp, ST17_PART28 *part)
     part->value_10 = 0;
     part->timer_A  = 0;
     part->value_C  = -1;
-    part->value_8  = D_80098844[wp->kind_2]->value_A;
+    part->value_8  = Em_param_tbl[wp->kind_2]->value_A;
     part->vx_12 = part->vy_14 = part->vz_16 = part->value_18 = 0;
     part->value_1A                                           = 0;
     part->value_1C                                           = 0;
@@ -1411,7 +1411,7 @@ void func_801033E4(STAGE_OBJ *wp, ST17_PART28 *part)
     wp->value_48.half[0]    = 0;
     wp->value_44.half[1]    = 0;
     wp->value_44.half[0]    = 0;
-    life                    = D_80098844[wp->kind_2]->life_C * 16;
+    life                    = Em_param_tbl[wp->kind_2]->life_C * 16;
     wp->value_78            = (sint32)D_8011B054;
     wp->routine_0           = 1;
     wp->routine_1           = 0;
@@ -5026,7 +5026,7 @@ void func_8010A530(STAGE_OBJ *wp)
     func_8005D4D4();
     wp->u_C.b.byte_C       = 0;
     wp->value_78           = 0;
-    life                   = D_8009884C[wp->kind_2]->life_8 * 16;
+    life                   = Work_5A4_param_tbl[wp->kind_2]->life_8 * 16;
     wp->life_prev_B2       = 0;
     ST17_VALUE_74(wp)      = 1;
     hw->vec_8.x            = 0;

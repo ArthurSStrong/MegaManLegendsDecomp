@@ -836,7 +836,7 @@ void func_801188C0(ST05_ACTOR *wp)
             wp->value_F++;
             STAGE_PL.flags_bd |= 0x20;
             Sound_fade_start(0x10);
-            func_8001E3F0(3);
+            Sce_light_add(3);
             Sound_work.volume_6 = 100;
             break;
         case 1:
@@ -1030,7 +1030,7 @@ void func_80118FF8(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     ctl->timer_6   = 0;
     ctl->count_8   = 0;
     ctl->roll_C    = -1;
-    ctl->value_10  = D_80098844[wp->kind_2]->life_A[0];
+    ctl->value_10  = Em_param_tbl[wp->kind_2]->life_A[0];
     ctl->hit_20    = 0;
     ctl->rise_14   = 8;
     ctl->value_24  = 0;
@@ -1055,7 +1055,7 @@ void func_80118FF8(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
     wp->anim_prev_AD     = 0xFF;
     wp->turn_64.w        = 0;
     wp->anim_AC          = 0;
-    life                 = D_80098844[wp->kind_2]->life_8 * 16;
+    life                 = Em_param_tbl[wp->kind_2]->life_8 * 16;
     wp->data_78          = D_80131920;
     wp->routine_0        = 1;
     wp->routine_1        = 0;
@@ -1762,7 +1762,7 @@ void func_8011A194(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
                     piece->rotation           = wp->rotation;
                     Obj_pos_set(piece, -0x300, -0x400, 0);
                 }
-                func_80047148(wp, &wp->position);
+                Obj_item_drop(wp, &wp->position);
             }
             if (!(ctl->timer_4 & 3))
             {
@@ -1993,7 +1993,7 @@ void func_8011ADB4(ST05_BOSS *wp)
         ctl->hit_10[i].value_4 = 0;
     }
     Search_Player_Init(ctl->track_A0, 0xA, -0x1F4);
-    wp->value_B2 = wp->value_B0 = wp->value_6E = D_8009884C[wp->kind_2]->life_8 << 6;
+    wp->value_B2 = wp->value_B0 = wp->value_6E = Work_5A4_param_tbl[wp->kind_2]->life_8 << 6;
     wp->value_78                               = (sint32)D_801319C8;
     switch (wp->variant_3)
     {
@@ -3352,7 +3352,7 @@ sint32 func_8011D830(ST05_BOSS *wp)
     sint16 i;
 
     ctl             = &wp->ctl;
-    wp->ctl.value_8 = D_8009884C[wp->kind_2]->life_A[0];
+    wp->ctl.value_8 = Work_5A4_param_tbl[wp->kind_2]->life_A[0];
     for (i = 0; i < 8; i++)
     {
         if (i < 4)
@@ -3466,18 +3466,18 @@ sint32 func_8011DA0C(ST05_BOSS *wp)
         if (ctl->flags_0 & 4)
         {
             ctl->timer_A += total;
-            if (ctl->timer_A >= D_8009884C[wp->kind_2]->limit_9 * 4)
+            if (ctl->timer_A >= Work_5A4_param_tbl[wp->kind_2]->limit_9 * 4)
             {
                 wp->routine_1             = 0xA;
                 *(uint16 *)&wp->routine_2 = 0;
                 ctl->timer_A              = 0;
             }
         }
-        if (wp->value_6E <= D_8009884C[wp->kind_2]->life_A[1] << 6)
+        if (wp->value_6E <= Work_5A4_param_tbl[wp->kind_2]->life_A[1] << 6)
         {
             ctl->flags_0 |= 0x200;
         }
-        if (wp->value_6E <= D_8009884C[wp->kind_2]->life_A[2] << 6)
+        if (wp->value_6E <= Work_5A4_param_tbl[wp->kind_2]->life_A[2] << 6)
         {
             ctl->flags_0 |= 0x400;
         }

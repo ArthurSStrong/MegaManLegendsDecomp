@@ -758,7 +758,7 @@ void func_800203A8(void)
                     sp->v0   = (*p & 0xFE) << 2;
                     sp->clut = D_80097C44[c];
                     x += 8;
-                    addPrim(&D_80098934->layer[0], sp);
+                    addPrim(&Disp_env_ptr->layer[0], sp);
                     break;
             }
             p++;
@@ -768,7 +768,7 @@ void func_800203A8(void)
     dm                 = (DR_MODE *)C8001F828_PRIM_PTR;
     C8001F828_PRIM_PTR = (uint8 *)(dm + 1);
     SetDrawMode(dm, 0, 0, 0x1F, NULL);
-    addPrim(&D_80098934->layer[0], dm);
+    addPrim(&Disp_env_ptr->layer[0], dm);
     D_8009893C = D_800BEAD8;
 }
 
@@ -2209,9 +2209,9 @@ void Map_layer_draw(void)
                     dist = 0;
                 }
             }
-            work = getaddr(&D_80098934->layer[m->body.w2c.b.layer]);
+            work = getaddr(&Disp_env_ptr->layer[m->body.w2c.b.layer]);
             setaddr(p - 5, work);
-            setaddr(&D_80098934->layer[m->body.w2c.b.layer], start);
+            setaddr(&Disp_env_ptr->layer[m->body.w2c.b.layer], start);
             start = p;
         }
     }
@@ -4406,7 +4406,7 @@ void func_800272D0(sint32 cx, sint32 cy, sint32 r0, sint32 r1)
                                         if (v < lim)
                                         {
                                             p->v3 = v;
-                                            addPrim(&D_80098934->layer[2], p);
+                                            addPrim(&Disp_env_ptr->layer[2], p);
                                         }
                                     }
                                 }

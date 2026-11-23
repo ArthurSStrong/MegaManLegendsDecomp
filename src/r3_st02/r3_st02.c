@@ -32,7 +32,7 @@ void func_801000B0(void)
     mw->exits = D_80106968[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_80106A18[D_80106C18[Game_work.value_51]], D_80106978[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
 }
 
 void func_80100204(void)
@@ -94,8 +94,8 @@ void func_8010032C(uint8 r, uint8 g, uint8 b, uint16 abr)
     mode = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(mode, 0, 0, (abr << 5) | 0xF, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80100450(STAGE_ROOM *wp)
@@ -2203,7 +2203,7 @@ void func_8010469C(STAGE_OBJ *wp)
                 p->v2 = p->v3 = 0xFF;
                 p->clut       = 0x7F48;
                 p->tpage      = 0x3B;
-                addPrim(&D_80098934->ot_78, p);
+                addPrim(&Disp_env_ptr->ot_78, p);
             }
         }
     }
@@ -2769,7 +2769,7 @@ void func_8010592C(ST02_PIECE *piece)
 
     p->u0 = p->u2 = u + 0x20;
     p->u1 = p->u3 = u + 0x3F;
-    addPrim(&D_80098934->ot_78, p);
+    addPrim(&Disp_env_ptr->ot_78, p);
 }
 
 void func_80105A48(sint16 x, sint16 y, sint16 h)

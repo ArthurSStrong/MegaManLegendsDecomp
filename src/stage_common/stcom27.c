@@ -30,14 +30,14 @@ void stcom27_func_003C(STCOM27_WORK *wp)
     Model_work_init(wp, NULL);
     Search_Player_Init(wp->ctl.track_0, 4, -0x60);
     wp->data_78 = stcom27_D_000C;
-    wp->life_6E = wp->life_max_B0 = D_80098844[wp->kind_2]->life_8 << 4;
+    wp->life_6E = wp->life_max_B0 = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->jump_74                   = 0;
     wp->damage_B2                 = 0;
     wp->ctl.sees_10               = 0;
     wp->ctl.flags_14              = 0;
     wp->ctl.hit_20                = 0;
     wp->ctl.value_24              = 0;
-    wp->ctl.kind_30               = D_80098844[wp->kind_2]->value_B | 0x1000000;
+    wp->ctl.kind_30               = Em_param_tbl[wp->kind_2]->value_B | 0x1000000;
     wp->ctl.timer_34              = 0x100;
     wp->ctl.timer_36              = 0x40;
     EM_Char_Set(wp, 0, 0);
@@ -108,7 +108,7 @@ void stcom27_func_02B4(STCOM27_WORK *wp)
         Sound_call2(0xA3, &wp->position);
         return;
     }
-    limit = D_80098844[wp->kind_2]->limit_9;
+    limit = Em_param_tbl[wp->kind_2]->limit_9;
     if (wp->routine_1 == 7)
     {
         pos = &wp->position;
@@ -126,9 +126,9 @@ void stcom27_func_02B4(STCOM27_WORK *wp)
                 effect->sprite.position = wp->position;
             }
 #ifdef __wasm32__
-            func_80047148(wp, pos);
+            Obj_item_drop(wp, pos);
 #else
-            func_80047148(wp, pos, effect);
+            Obj_item_drop(wp, pos, effect);
 #endif
             wp->routine_0 = 2;
             wp->routine_1 = 0;
@@ -151,7 +151,7 @@ void stcom27_func_02B4(STCOM27_WORK *wp)
         wp->anim_AC       = 3;
         wp->damage_B2     = 0;
         wp->ctl.damage_3E = 0;
-        wp->ctl.kind_30   = D_80098844[wp->kind_2]->value_B | 0x1000000;
+        wp->ctl.kind_30   = Em_param_tbl[wp->kind_2]->value_B | 0x1000000;
         stcom27_func_04E4(wp);
         wp->routine_1 = 6;
         wp->routine_2 = 0;
@@ -338,7 +338,7 @@ void stcom27_func_0990(STCOM27_WORK *wp)
         wp->velocity.x   = 0x200;
         wp->velocity.y   = 0;
         wp->accel.y      = 0;
-        wp->ctl.kind_30  = D_80098844[wp->kind_2]->value_A | 0x1000000;
+        wp->ctl.kind_30  = Em_param_tbl[wp->kind_2]->value_A | 0x1000000;
         wp->routine_2++;
     }
 }
@@ -379,7 +379,7 @@ void stcom27_func_0A70(STCOM27_WORK *wp)
     if (stop)
     {
         wp->anim_AC   = 0;
-        ctl->kind_30  = D_80098844[wp->kind_2]->value_B | 0x1000000;
+        ctl->kind_30  = Em_param_tbl[wp->kind_2]->value_B | 0x1000000;
         ctl->timer_38 = 0x30;
         wp->routine_2++;
         return;

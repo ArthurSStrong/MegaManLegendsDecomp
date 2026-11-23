@@ -97,7 +97,7 @@ void map_screen_set(void)
     *(u_short *)&p->u3 = 0xF0FF;
     p->y0 = p->y1 = 0;
     p->clut       = 0x3E80;
-    AddPrim(&D_80098934->tag78, p);
+    AddPrim(&Disp_env_ptr->tag78, p);
 }
 
 void map_cursor_set(void)
@@ -153,5 +153,5 @@ void map_cursor_set(void)
     *(u_short *)&p->u2 = u | 0xFF00;
     *(u_short *)&p->u3 = (u + 0xF) | 0xFF00;
     p->clut            = 0x3E80;
-    AddPrim(&D_80098934->tag78, p);
+    AddPrim(&Disp_env_ptr->tag78, p);
 }

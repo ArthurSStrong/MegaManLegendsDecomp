@@ -32,7 +32,7 @@ void func_801000B0(void)
     mw->exits = D_80105760[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_801058C0[D_80105B00[Game_work.value_51]], D_80105780[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_8010020C();
 }
 

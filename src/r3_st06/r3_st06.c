@@ -42,7 +42,7 @@ void func_8010051C(void)
     STAGE_MAP_WORK_PTR->exits = D_80122208[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_80122310[D_801224F0[Game_work.value_51]], D_80122220[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_801006B8();
 }
 
@@ -1674,7 +1674,7 @@ void func_80103438(STAGE_ROOM *wp)
                 wp->routine_4++;
                 if (!Sce_flag_test(0x629))
                 {
-                    func_8001E3F0(0x12);
+                    Sce_light_add(0x12);
                 }
             }
             break;
@@ -3371,7 +3371,7 @@ void func_801068BC(STAGE_ROOM *wp)
             Camera_return_set2();
             D_800989F8.routine_5 = 1;
             wp->flags_0          = 0;
-            func_8001E3F0(0x16);
+            Sce_light_add(0x16);
             func_8001D974();
             break;
     }
@@ -3985,15 +3985,15 @@ void func_80107E8C(STAGE_ROOM *wp)
 {
     if (wp->routine_5 & 1)
     {
-        func_8001E3F0((sint32)D_8012462C);
+        Sce_light_add((sint32)D_8012462C);
     }
     if (wp->routine_5 & 2)
     {
-        func_8001E3F0((sint32)D_8012462E);
+        Sce_light_add((sint32)D_8012462E);
     }
     if (wp->routine_5 & 4)
     {
-        func_8001E3F0((sint32)D_80124630);
+        Sce_light_add((sint32)D_80124630);
     }
 }
 

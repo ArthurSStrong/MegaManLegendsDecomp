@@ -721,7 +721,7 @@ extern sint32 D_800BC744[];
 extern uint32 *Billboard_queue[];
 extern uint8 D_800C3588;
 extern uint8 D_801000CC[];
-extern sint32 D_8011A0FC[];      // by room (func_8005DC10)
+extern sint32 D_8011A0FC[];      // by room (Automap_room_set)
 extern void *D_8011A6F0[];       // model table by room (Map_layer_set)
 extern void *D_8011AB3C[];       // spawn list by room
 extern void *D_8011AC40[];       // exit list by room
@@ -1648,7 +1648,7 @@ STAGE_OBJ *Obj_id_work(sint32 id);
 
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -1660,7 +1660,7 @@ typedef struct
     uint8 value_F;       // 0F
 } ST00_KIND;
 
-extern ST00_KIND **D_80098844;
+extern ST00_KIND **Em_param_tbl;
 
 // The boss a part follows (Obj_id_work of the part's parent_C): its joints' positions and
 // matrices.
@@ -1741,7 +1741,7 @@ void func_80110D24(ST00_PART *wp);
 typedef struct
 {
     uint16 flags_0; // 2C: 2 hittable, 4 registers its hit box, 8 resets the color
-    uint16 value_2; // 2E: rand(); bit 0 picks func_80047228's drop
+    uint16 value_2; // 2E: rand(); bit 0 picks Obj_item_drop_n's drop
     uint32 hit_4;   // 30: damage (low 24 bits) and kind bits
     uint32 value_8; // 34
 } ST00_BOX_CTL;
@@ -2002,7 +2002,7 @@ typedef struct
 extern ST00_AREA D_8011C0B4[];
 #define ST00_AREA_TBL D_8011C0B4
 
-extern ST00_KIND **D_8009884C; // by kind, then by param_D
+extern ST00_KIND **Work_5A4_param_tbl; // by kind, then by param_D
 
 // A texture record of a loaded set: its CLUT at data_8 (with segment bits above 24).
 typedef struct

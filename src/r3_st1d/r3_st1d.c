@@ -35,7 +35,7 @@ void func_801002F8(void)
     STAGE_MAP_WORK_PTR->exits = D_80114858[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80114960[D_801149E0[Game_work.value_51]], D_80114870[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80100460();
 }
 
@@ -161,11 +161,12 @@ void func_80100720(ST1D_VIEW *wp)
     EM_Char_Set(wp, 0, 0);
     wp->u_15C.h[1] = 0x4210;
     wp->data_78    = NULL;
-    life           = (D_8009884C[wp->kind_2]->life_8 << 6) + (D_80098844[0x48]->life_8 << 7);
+    life           =
+        (Work_5A4_param_tbl[wp->kind_2]->life_8 << 6) + (Em_param_tbl[0x48]->life_8 << 7);
     wp->value_6E   = life;
     wp->value_B0   = life;
     wp->value_B2   = life;
-    wp->u_70.b[3]  = D_8009884C[wp->kind_2]->value_A;
+    wp->u_70.b[3]  = Work_5A4_param_tbl[wp->kind_2]->value_A;
     wp->value_C |= 2;
     wp->value_D   = -1;
     wp->value_E   = -1;
@@ -230,7 +231,7 @@ void func_80100920(ST1D_VIEW *wp)
             else
             {
                 wp->value_434 += damage;
-                if (wp->value_434 >= D_8009884C[wp->kind_2]->limit_9)
+                if (wp->value_434 >= Work_5A4_param_tbl[wp->kind_2]->limit_9)
                 {
                     wp->value_434 = 0;
                     wp->value_C |= 0x40;
@@ -1600,7 +1601,7 @@ void func_80102F24(ST1D_VIEW *wp)
 
 void func_8010329C(ST1D_VIEW *wp)
 {
-    // D_80098844 is declared with stcom16's shorter record; this one reads its byte 0xF.
+    // Em_param_tbl is declared with stcom16's shorter record; this one reads its byte 0xF.
     sint16 life;
 
     wp->rotation.x = 0;
@@ -1617,7 +1618,7 @@ void func_8010329C(ST1D_VIEW *wp)
     *(sint32 *)&wp->ext.value_8 = 0;
     wp->ext.value_14            = 0;
     wp->ext.value_18            = 0;
-    Search_Player_Init(wp->ext.u_24.track, ((ST1D_KIND *)D_80098844[wp->kind_2])->value_F, -0x60);
+    Search_Player_Init(wp->ext.u_24.track, ((ST1D_KIND *)Em_param_tbl[wp->kind_2])->value_F, -0x60);
     wp->ext.u_34.h[0]         = 0;
     wp->ext.u_34.h[1]         = 0;
     wp->ext.u_3C.h[0]         = 0;
@@ -1625,7 +1626,7 @@ void func_8010329C(ST1D_VIEW *wp)
     wp->ext.obj_40            = Obj_id_work(wp->value_D);
     wp->ext.u_44.fx[0]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_C.b.byte_D);
     wp->ext.u_44.fx[1]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_E.b.byte_E);
-    life                      = D_80098844[wp->kind_2]->life_8 << 4;
+    life                      = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->data_78               = D_80114BEC;
     wp->value_10              = 0;
     wp->routine_0             = 1;
@@ -1727,7 +1728,7 @@ void func_801033E4(ST1D_VIEW *wp)
             Close_EFFECT_WORK(ext->u_44.fx[0]);
             Close_EFFECT_WORK(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
-            func_80047228(wp, &wp->vec_180[0], 0);
+            Obj_item_drop_n(wp, &wp->vec_180[0], 0);
             Sound_call2(0xA1, &wp->vec_180[0]);
         }
     }
@@ -1781,7 +1782,7 @@ void func_801036B0(ST1D_VIEW *wp)
             Close_EFFECT_WORK(ext->u_44.fx[0]);
             Close_EFFECT_WORK(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
-            func_80047228(wp, &wp->vec_180[0], 1);
+            Obj_item_drop_n(wp, &wp->vec_180[0], 1);
             Sound_call2(0xA1, &wp->vec_180[0]);
         }
     }
@@ -1953,7 +1954,7 @@ void func_80103D6C(ST1D_VIEW *wp)
         case 0:
             wp->routine_2   = 1;
             wp->value_AC    = 2;
-            wp->ext.value_8 = D_80098844[wp->kind_2]->value_A;
+            wp->ext.value_8 = Em_param_tbl[wp->kind_2]->value_A;
             // fall through
         case 1:
             if (wp->value_A6 == 2)
@@ -2694,13 +2695,13 @@ sint32 func_80105318(ST1D_VIEW *wp)
             if (wp->value_6E <= 0)
             {
                 wp->ext.flags_0 = (wp->ext.flags_0 & ~2) | 0x820;
-                wp->ext.u_4C.i  = D_80098844[wp->kind_2]->limit_9;
+                wp->ext.u_4C.i  = Em_param_tbl[wp->kind_2]->limit_9;
             }
             if (wp->ext.flags_0 & 0x20)
             {
                 wp->ext.value_A += wp->ext.u_4C.i;
                 if ((wp->ext.value_14 & 0x20000000) ||
-                    wp->ext.value_A >= D_80098844[wp->kind_2]->limit_9)
+                    wp->ext.value_A >= Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     if (wp->ext.from_1C.pad & 1)
@@ -2740,7 +2741,7 @@ sint32 func_80105318(ST1D_VIEW *wp)
                 }
             }
             else if ((wp->ext.value_14 & 0x20000000) ||
-                     wp->ext.value_A >= D_80098844[wp->kind_2]->limit_9)
+                     wp->ext.value_A >= Em_param_tbl[wp->kind_2]->limit_9)
             {
                 Sound_call2(0xA2, &wp->position);
             }

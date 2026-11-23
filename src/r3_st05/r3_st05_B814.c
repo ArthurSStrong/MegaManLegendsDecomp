@@ -2,7 +2,7 @@
 #include "st05.h"
 
 #ifdef __wasm32__
-void func_80047228(void *wp, void *obj, sint32 n);
+void Obj_item_drop_n(void *wp, void *obj, sint32 n);
 #endif
 
 void func_8010B814(STAGE_OBJ *wp)
@@ -317,7 +317,7 @@ void func_8010C1F4(ST05_GUARD *wp)
     *(sint32 *)&wp->ctl.value_18 = 0;
     wp->ctl.sparks_34            = 0;
     Search_Player_Init(wp->ctl.track_24, 0, -0x60);
-    life         = D_80098844[wp->kind_2]->life_18;
+    life         = Em_param_tbl[wp->kind_2]->life_18;
     wp->data_78  = D_80130B60;
     wp->value_6E = life;
     wp->value_B0 = life;
@@ -665,7 +665,7 @@ void func_8010CA98(ST05_GUARD *wp)
                         if ((ctl->flags_0 & 0x80) && ctl->sparks_34 < 3)
                         {
                             ctl->sparks_34++;
-                            func_80047228(wp, &wp->position, 1);
+                            Obj_item_drop_n(wp, &wp->position, 1);
                         }
                         ctl->flags_0 |= 0x80;
                     }
@@ -821,7 +821,7 @@ sint32 func_8010D1A8(ST05_GUARD *wp)
             {
                 wp->value_6E = wp->value_B2 = -1;
                 wp->ctl.flags_0 &= ~0xC;
-                dmg = D_80098844[wp->kind_2]->limit_19;
+                dmg = Em_param_tbl[wp->kind_2]->limit_19;
                 for (i = 0; i < 4; i++)
                 {
                     fx = Open_EFFECT_WORK();
@@ -842,7 +842,8 @@ sint32 func_8010D1A8(ST05_GUARD *wp)
             if (ctl->flags_0 & 8)
             {
                 ctl->timer_A += dmg;
-                if ((ctl->hit_14 & 0x20000000) || ctl->timer_A >= D_80098844[wp->kind_2]->limit_19)
+                if ((ctl->hit_14 & 0x20000000) ||
+                    ctl->timer_A >= Em_param_tbl[wp->kind_2]->limit_19)
                 {
                     Sound_call2(0xA2, &wp->position);
                     r              = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);

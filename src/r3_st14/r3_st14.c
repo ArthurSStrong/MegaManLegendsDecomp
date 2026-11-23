@@ -33,7 +33,7 @@ void func_80100250(void)
     STAGE_MAP_WORK_PTR->exits = D_80114E70[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80114F4C[D_80114F7C[Game_work.value_51]], D_80114E84[Game_work.value_51]);
-    func_8005DC10(D_80113F94[Game_work.value_51]);
+    Automap_room_set(D_80113F94[Game_work.value_51]);
     func_801003B0();
 }
 
@@ -290,7 +290,7 @@ void func_80100A54(STAGE_ROOM *wp)
             case 2:
                 Obj_work_flag_change(0x56, 0xA);
                 Sce_flag_on(0x529);
-                func_8001E3F0(0xE);
+                Sce_light_add(0xE);
                 Sound_fade_start(0x20);
                 wp->flags_0 = 0;
                 Fade_start(2);

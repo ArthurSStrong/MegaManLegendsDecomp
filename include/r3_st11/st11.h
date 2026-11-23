@@ -41,7 +41,7 @@ void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_80109BBC[][8];
 extern STAGE_ROOM_FUNC D_80109944[];
 extern STAGE_ROOM_FUNC *D_80109904[];
-void func_8001EB98(void *entry);
+void Sce_slot_open_keep(void *entry);
 extern uint8 D_8010E1CC[];
 void func_80100284(void);
 void func_801002D0(void);

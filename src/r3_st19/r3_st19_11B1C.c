@@ -2,7 +2,7 @@
 #include "st19.h"
 
 #ifdef __wasm32__
-void func_8001E3F0(sint32 arg);
+void Sce_light_add(sint32 arg);
 #endif
 
 void func_80111B1C(sint32 index, uint8 arg1)
@@ -808,7 +808,7 @@ void func_80112D00(STAGE_ROOM *wp)
                 D_8011F4E0    = pl->value_171;
                 pl->value_171 = 0;
                 pl->value_170 = 0;
-                func_8001E3F0(0xF);
+                Sce_light_add(0xF);
                 Sce_camera_start(0, 0, 0);
                 Obj_work_flag_change(0x56, 0x80);
                 MojiTaskKill();

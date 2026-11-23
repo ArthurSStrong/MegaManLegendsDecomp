@@ -44,12 +44,12 @@ void func_8010C70C(ST14_ACTOR *wp)
     wp->ctl.flags_4         = 0x5A;
     *(sint32 *)&wp->ctl.u_8 = 0; // a cast store: the union field lets the table load move above it
     *(sint32 *)&wp->ctl.u_C = 0;
-    Search_Player_Init(wp->ctl.u_28.track, D_80098844[wp->kind_2]->value_F, -0x60);
+    Search_Player_Init(wp->ctl.u_28.track, Em_param_tbl[wp->kind_2]->value_F, -0x60);
     wp->ctl.hit_18    = 0;
     wp->ctl.value_1C  = 0;
     wp->ctl.u_28.w[1] = 0;
     wp->ctl.value_3E  = 0;
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 * 16;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 * 16;
     wp->data_78                                      = D_80115C4C;
     wp->routine_0                                    = 1;
     wp->routine_1                                    = 1;
@@ -832,14 +832,14 @@ sint32 func_8010DDD0(ST14_ACTOR *wp)
 {
     if (wp->routine_1 == 6 && wp->routine_3 == 1)
     {
-        wp->ctl.u_C.h.kind_C = D_80098844[wp->kind_2]->value_B;
+        wp->ctl.u_C.h.kind_C = Em_param_tbl[wp->kind_2]->value_B;
         wp->ctl.pos_10       = wp->joint_180[8];
         Set_Atari(&wp->ctl.pos_10, 0x80, 0, 0x8000, wp->value_1, &wp->ctl.hit_18,
                       wp->ctl.u_C.h.kind_C | 0x5880000, 0x800000, 0);
     }
     else
     {
-        wp->ctl.u_C.h.kind_C = D_80098844[wp->kind_2]->value_A;
+        wp->ctl.u_C.h.kind_C = Em_param_tbl[wp->kind_2]->value_A;
         wp->ctl.pos_10       = wp->joint_180[0];
         Set_Atari(&wp->ctl.pos_10, 0x80, 0, 0x8000, wp->value_1, &wp->ctl.hit_18,
                       wp->ctl.u_C.h.kind_C | 0x4880000, 0x800000, 0);
@@ -881,7 +881,7 @@ sint32 func_8010DEF8(ST14_ACTOR *wp)
         if (ctl->flags_4 & 4)
         {
             ctl->u_C.h.timer_E += damage;
-            if (ctl->u_C.h.timer_E >= D_80098844[wp->kind_2]->value_9 * 4)
+            if (ctl->u_C.h.timer_E >= Em_param_tbl[wp->kind_2]->value_9 * 4)
             {
                 ctl->u_C.h.timer_E = 0;
                 ctl->flags_4 |= 0x201;
@@ -1223,7 +1223,7 @@ void func_8010EA18(ST14_VILLAGER *wp)
     ext = &wp->ext;
     func_8005D4D4();
     wp->data_78 = D_80115DBC;
-    wp->life_6E = wp->life_max_B0 = D_8009884C[wp->kind_2]->life_8 * 16;
+    wp->life_6E = wp->life_max_B0 = Work_5A4_param_tbl[wp->kind_2]->life_8 * 16;
     wp->value_B2                  = 0;
     wp->value_74                  = 0;
     wp->ext.flags_0               = 0;
@@ -1336,7 +1336,7 @@ void func_8010ED0C(ST14_VILLAGER *wp)
         MojiTaskExec2(0, 0xF);
         ext->value_92 = 1;
     }
-    if (wp->value_B2 >= D_8009884C[wp->kind_2]->value_9 * 16)
+    if (wp->value_B2 >= Work_5A4_param_tbl[wp->kind_2]->value_9 * 16)
     {
         ext->value_8E = 1;
     }
@@ -1489,8 +1489,8 @@ void func_8010F268(ST14_VILLAGER *wp)
     {
         Sound_call2(0x19C, &wp->position);
         wp->velocity.x      = (wp->ext.value_8C + 1) * 0x140;
-        wp->ext.value_6C[0] = D_8009884C[wp->kind_2]->value_A | 0x1000000;
-        wp->ext.value_6C[1] = D_8009884C[wp->kind_2]->value_A | 0x1000000;
+        wp->ext.value_6C[0] = Work_5A4_param_tbl[wp->kind_2]->value_A | 0x1000000;
+        wp->ext.value_6C[1] = Work_5A4_param_tbl[wp->kind_2]->value_A | 0x1000000;
     }
     if (wp->value_A4 == 0x20)
     {
@@ -1525,7 +1525,7 @@ void func_8010F424(ST14_VILLAGER *wp)
         if (wp->value_A4 == 0xD)
         {
             Sound_call2(0x199, &wp->position);
-            wp->ext.value_6C[5] = D_8009884C[wp->kind_2]->value_B | 0x1000000;
+            wp->ext.value_6C[5] = Work_5A4_param_tbl[wp->kind_2]->value_B | 0x1000000;
         }
         if (wp->value_A7 != 0)
         {
@@ -1559,9 +1559,9 @@ void func_8010F4F4(ST14_VILLAGER *wp)
             effect->value_D         = 2;
         }
 #ifdef __wasm32__
-        func_80047148(wp, &wp->position);
+        Obj_item_drop(wp, &wp->position);
 #else
-        func_80047148(wp, &wp->position, effect);
+        Obj_item_drop(wp, &wp->position, effect);
 #endif
         func_8005D4E8();
         Gauge_close(wp);

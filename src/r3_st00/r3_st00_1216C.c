@@ -2,7 +2,7 @@
 #include "st00.h"
 
 #ifdef __wasm32__
-void func_80047228(void *wp, void *obj, sint32 n);
+void Obj_item_drop_n(void *wp, void *obj, sint32 n);
 #endif
 
 void func_8011216C(ST00_STCOM19_WORK *wp)
@@ -986,7 +986,7 @@ void func_80114170(ST00_BOX_B *wp)
                 Close_WORK_50(wp);
                 if ((wp->variant_3 & 0xF) == 1)
                 {
-                    func_80047228(wp, &wp->pos_38, 2);
+                    Obj_item_drop_n(wp, &wp->pos_38, 2);
                     Sce_flag_on(wp->flag_46);
                     break;
                 }
@@ -994,7 +994,7 @@ void func_80114170(ST00_BOX_B *wp)
                 {
                     Sce_flag_on(wp->flag_46);
                 }
-                func_80047228(wp, &wp->pos_38, ctl->value_2 & 1);
+                Obj_item_drop_n(wp, &wp->pos_38, ctl->value_2 & 1);
                 break;
             }
             wp->color_40 -= 0x202020;

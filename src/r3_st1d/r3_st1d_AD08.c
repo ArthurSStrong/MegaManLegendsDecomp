@@ -35,8 +35,8 @@ void func_8010ADCC(ST1D_ARM *wp)
     EM_World_Pos_Calc_Mtx(wp, (STCOM_MATRIX *)((uint8 *)owner + (wp->variant_3 * 32 + 0x208)));
     wp->scale.v.pad  = 0x4210;
     wp->value_78     = 0;
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 6;
-    wp->power_73                                     = D_80098844[wp->kind_2]->value_A;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 << 6;
+    wp->power_73                                     = Em_param_tbl[wp->kind_2]->value_A;
     wp->flags_E |= 2;
 }
 
@@ -92,7 +92,7 @@ void func_8010AF10(ST1D_ARM *wp)
                 else
                 {
                     ctl->value_42 += damage;
-                    if (ctl->value_42 >= D_80098844[wp->kind_2]->limit_9)
+                    if (ctl->value_42 >= Em_param_tbl[wp->kind_2]->limit_9)
                     {
                         ctl->value_42 = 0;
                         parent->flags_C |= 0x40;
@@ -344,9 +344,9 @@ void func_8010B988(ST1D_VIEW *wp)
     }
     ctl->value_66  = 0;
     stun->damage_0 = 0;
-    wp->u_70.b[3]  = D_80098844[wp->kind_2]->value_A;
+    wp->u_70.b[3]  = Em_param_tbl[wp->kind_2]->value_A;
     Search_Player_Init(ctl->track_18, 7, -0x60);
-    wp->value_B2 = wp->value_B0 = wp->value_6E = D_80098844[wp->kind_2]->life_8 << 5;
+    wp->value_B2 = wp->value_B0 = wp->value_6E = Em_param_tbl[wp->kind_2]->life_8 << 5;
     wp->routine_1                              = 0;
     wp->routine_0                              = 1;
     wp->u_74.b[0]                              = 0;
@@ -398,7 +398,7 @@ void func_8010BAEC(ST1D_VIEW *wp)
         else
         {
             ctl->value_66 += damage;
-            if (!(ctl->flags_6C & 4) && ctl->value_66 >= D_80098844[wp->kind_2]->limit_9 * 16)
+            if (!(ctl->flags_6C & 4) && ctl->value_66 >= Em_param_tbl[wp->kind_2]->limit_9 * 16)
             {
                 ctl->flags_6C |= 4;
                 ctl->value_66 = 0;
@@ -1201,15 +1201,15 @@ void func_8010D27C(STCOM16_WORK *wp)
     *(uint32 *)wp->value_70 = 0;
     *(uint32 *)&wp->jump_74 = 0;
     wp->ctl.timer_3E        = 0;
-    wp->power_73            = D_80098844[wp->kind_2]->value_A;
-    wp->ground.value_4      = D_80098844[wp->kind_2]->value_B;
+    wp->power_73            = Em_param_tbl[wp->kind_2]->value_A;
+    wp->ground.value_4      = Em_param_tbl[wp->kind_2]->value_B;
     wp->stun.hits_4         = 0;
     wp->stun.damage_0       = 0;
     wp->stun.timer_5        = 30;
     wp->fade.on_3           = 0;
     wp->ground.flags_6      = 0;
     Search_Player_Init(wp->ctl.track_20, 5, -0x60);
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 4;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 << 4;
     ctl                                              = &wp->ctl;
     wp->routine_0                                    = 1;
     if (wp->variant_3 == 0)
@@ -1285,7 +1285,7 @@ void func_8010D424(STCOM16_WORK *wp)
         {
             wp->scale.v.pad = 0x7FFF;
             if ((!(wp->ground.flags_6 & 0x10) &&
-                 wp->stun.damage_0 >= D_80098844[wp->kind_2]->limit_9) ||
+                 wp->stun.damage_0 >= Em_param_tbl[wp->kind_2]->limit_9) ||
                 (wp->ctl.hit_8 & 0x20000000))
             {
                 if (wp->routine_1 != 5)
@@ -1846,7 +1846,7 @@ void func_8010E5AC(STCOM16_WORK *wp)
             wp->routine_1 = 2;
             wp->ground.flags_6 |= 2;
             EM_Char_Set(wp, wp->anim_AC, 0);
-            wp->ground.value_4 = D_80098844[wp->kind_2]->value_C;
+            wp->ground.value_4 = Em_param_tbl[wp->kind_2]->value_C;
             func_8010E838(wp);
         }
         else
@@ -1970,7 +1970,7 @@ void func_8010E9C8(STCOM16_WORK *wp)
         wp->anim_AC = 3;
         wp->ground.flags_6 |= 2;
         EM_Char_Set(wp, wp->anim_AC, 0);
-        wp->ground.value_4 = D_80098844[wp->kind_2]->value_B;
+        wp->ground.value_4 = Em_param_tbl[wp->kind_2]->value_B;
         wp->routine_2      = 1;
     }
 }
@@ -2331,9 +2331,9 @@ void func_8010F454(STCOM16_WORK *wp)
         effect->variant_3       = 0x40;
         effect->sprite.position = wp->joints_180[0];
 #ifdef __wasm32__
-        func_80047148(wp, &wp->joints_180[0]);
+        Obj_item_drop(wp, &wp->joints_180[0]);
 #else
-        func_80047148(wp, &wp->joints_180[0], effect);
+        Obj_item_drop(wp, &wp->joints_180[0], effect);
 #endif
     }
     wp->routine_0 = 2;

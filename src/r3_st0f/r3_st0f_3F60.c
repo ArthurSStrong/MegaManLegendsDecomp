@@ -146,7 +146,7 @@ void func_80104264(ST0F_OBJ *wp)
                 Sce_flag_on(0x24C);
                 Sce_flag_select(0x2E3);
                 STAGE_GAME_BYTE(0x78) = 1;
-                func_8001E3F0(0xA);
+                Sce_light_add(0xA);
                 wp->routine_0 = 1;
                 wp->variant_3 = 0;
             }
@@ -273,7 +273,7 @@ sint32 func_801045C0(void)
             Sce_flag_off(0x20E);
             Sce_flag_off(0x545);
             Sce_flag_select(0x2E7);
-            func_8001E3F0(9);
+            Sce_light_add(9);
             Sce_flag_on(0x211);
             Sce_flag_on(0x223);
             Sce_flag_on(0x568);

@@ -213,9 +213,9 @@ void stcom20_func_05FC(STCOM20_WORK *wp)
         }
         wp->routine_0 = 2;
 #ifdef __wasm32__
-        func_80047148(wp, &wp->position);
+        Obj_item_drop(wp, &wp->position);
 #else
-        func_80047148(wp, &wp->position, effect);
+        Obj_item_drop(wp, &wp->position, effect);
 #endif
     }
     Scr_collision_check(wp);

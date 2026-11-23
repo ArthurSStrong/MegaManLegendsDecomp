@@ -10,7 +10,7 @@ void func_80100DF4(ST09_VIEW *wp);
 #endif
 
 #ifdef __wasm32__
-void func_80047148(void *wp, void *obj);
+void Obj_item_drop(void *wp, void *obj);
 #endif
 
 void func_80105658(STAGE_STCOM15_WORK_348 *wp)
@@ -80,8 +80,8 @@ void func_80105870(STAGE_STCOM15_WORK_348 *wp)
     *(uint32 *)&wp->ctl.u_3C     = 0x1000;
     *(uint32 *)&wp->ctl.timer_4  = 0;
     *(uint32 *)&wp->ctl.value_8  = 0;
-    Search_Player_Init(wp->ctl.track_24, D_80098844[wp->kind_2]->value_F, -0x60);
-    life                      = D_80098844[wp->kind_2]->life_8;
+    Search_Player_Init(wp->ctl.track_24, Em_param_tbl[wp->kind_2]->value_F, -0x60);
+    life                      = Em_param_tbl[wp->kind_2]->life_8;
     wp->data_78               = D_8011DEE4;
     wp->data_10               = NULL;
     wp->life_6E               = life;
@@ -158,7 +158,7 @@ void func_801059D4(STAGE_STCOM15_WORK_348 *wp)
             case 4:
             case 5:
             case 8:
-                func_80047148(wp, &wp->joints_180[0]);
+                Obj_item_drop(wp, &wp->joints_180[0]);
                 Close_EM_WORK(wp);
                 *(uint16 *)&wp->routine_2 = 0;
                 break;
@@ -705,13 +705,13 @@ sint32 func_80106D1C(STAGE_STCOM15_WORK_348 *wp)
             if (wp->life_6E <= 0)
             {
                 wp->ctl.flags_0 = (wp->ctl.flags_0 & ~2) | 8;
-                damage          = D_80098844[wp->kind_2]->limit_9;
+                damage          = Em_param_tbl[wp->kind_2]->limit_9;
             }
             if (wp->ctl.flags_0 & 8)
             {
                 wp->ctl.timer_A += damage;
                 if (!(wp->ctl.flags_0 & 0x200) && !(wp->ctl.hit_14 & 0x20000000) &&
-                    wp->ctl.timer_A < D_80098844[wp->kind_2]->limit_9)
+                    wp->ctl.timer_A < Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA0, &wp->position);
                     if (wp->routine_1 != 3)
@@ -756,7 +756,7 @@ sint32 func_80106D1C(STAGE_STCOM15_WORK_348 *wp)
             {
                 id = 0xA2;
                 if (!(wp->ctl.flags_0 & 0x200) && !(wp->ctl.hit_14 & 0x20000000) &&
-                    wp->ctl.timer_A < D_80098844[wp->kind_2]->limit_9)
+                    wp->ctl.timer_A < Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     id = 0xA0;
                 }
@@ -934,7 +934,7 @@ void func_80107334(ST09_VIEW_B *wp)
     ext->value_14            = 0;
     ext->value_18            = 0;
     ext->u_24.w[1]           = 0;
-    life                     = D_80098844[wp->kind_2]->life_8 << 4;
+    life                     = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->data_78              = D_8011DF24;
     wp->value_6E             = life;
     wp->value_B0             = life;
@@ -1092,9 +1092,9 @@ void func_80107A14(ST09_VIEW *wp)
                     effect->sprite.position = wp->vec_188;
                 }
 #ifdef __wasm32__
-                func_80047148(wp, &wp->vec_180);
+                Obj_item_drop(wp, &wp->vec_180);
 #else
-                func_80047148(wp, &wp->vec_180, effect);
+                Obj_item_drop(wp, &wp->vec_180, effect);
 #endif
                 if (!(wp->u_C.b[3] & 0x42))
                 {
@@ -1501,11 +1501,11 @@ void func_801088B0(STAGE_STCOM15_WORK_348 *wp)
     *(uint32 *)&wp->ctl.value_8 = 0;
     wp->ctl.hit_14              = 0;
     wp->ctl.value_18            = 0;
-    Search_Player_Init(wp->ctl.track_24, D_80098844[wp->kind_2]->value_F, -0x60);
+    Search_Player_Init(wp->ctl.track_24, Em_param_tbl[wp->kind_2]->value_F, -0x60);
     wp->ctl.timer_36 = 4;
     wp->ctl.timer_34 = wp->position.pad;
     wp->position.pad = 0;
-    life             = D_80098844[wp->kind_2]->life_8;
+    life             = Em_param_tbl[wp->kind_2]->life_8;
     wp->data_78      = D_8011DFAC;
     wp->data_10      = NULL;
     wp->life_6E      = life;
@@ -1610,7 +1610,7 @@ void func_80108A8C(ST09_ACTOR *wp)
                 fx->sprite.position = wp->position;
             }
             Close_EM_WORK(wp);
-            func_80047148(wp, &wp->value_180);
+            Obj_item_drop(wp, &wp->value_180);
             Sound_call2(0xA1, &wp->value_180);
         }
     }
@@ -1973,7 +1973,7 @@ void func_8010981C(STAGE_STCOM15_WORK_348 *wp)
             wp->routine_2 = 1;
             wp->anim_AC   = 7;
             ctl->timer_4  = 9;
-            ctl->value_8  = D_80098844[wp->kind_2]->value_A;
+            ctl->value_8  = Em_param_tbl[wp->kind_2]->value_A;
             ctl->flags_0 &= ~0x20;
             // fall through
         case 1:
@@ -2115,13 +2115,13 @@ sint32 func_80109C94(ST09_ACTOR *wp)
             if (wp->value_6E <= 0)
             {
                 wp->ctl.flags_0 = (wp->ctl.flags_0 & ~2) | 0x88;
-                damage          = D_80098844[wp->kind_2]->limit_9;
+                damage          = Em_param_tbl[wp->kind_2]->limit_9;
             }
             if (wp->ctl.flags_0 & 8)
             {
                 wp->ctl.timer_A += damage;
                 if (!(wp->ctl.hit_14 & 0x20000000) &&
-                    wp->ctl.timer_A < D_80098844[wp->kind_2]->limit_9)
+                    wp->ctl.timer_A < Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA0, &wp->position);
                 }
@@ -2156,7 +2156,7 @@ sint32 func_80109C94(ST09_ACTOR *wp)
                 if (!(wp->ctl.hit_14 & 0x20000000))
                 {
                     id = 0xA0;
-                    if (wp->ctl.timer_A >= D_80098844[wp->kind_2]->limit_9)
+                    if (wp->ctl.timer_A >= Em_param_tbl[wp->kind_2]->limit_9)
                     {
                         id = 0xA2;
                     }

@@ -140,7 +140,7 @@ typedef struct
 
 #define CODE643_PRIM_PTR (*(CODE643_PRIM **)0x1F800070)
 
-extern CODE643_OT *D_80098934;
+extern CODE643_OT *Disp_env_ptr;
 sint32 Sce_flag_test(sint32 flag);
 
 extern MEM_GAME_VIEW Game_work;
@@ -152,7 +152,7 @@ extern uint16 D_80098910;
 extern sint16 D_80098912;
 extern sint8 D_80098914;
 extern uint16 D_80098918[2];
-extern MEM_FUNC D_8008FD10[];
+extern MEM_FUNC Card_screen_tbl[];
 extern MEM_FUNC D_8008FD20[];
 extern char *D_8008FA5C[];
 extern uint16 D_800C0C2A;
@@ -238,11 +238,11 @@ sint32 _card_info(sint32 chan);
 sint32 format(char *path);
 sint32 _new_card(void);
 sint32 _card_write(sint32 chan, sint32 block, uint8 *buf);
-void func_80064A34(void);
-void func_800649EC(void);
+void card_hw_event_clear(void);
+void card_sw_event_clear(void);
 sint32 _card_clear(sint32 chan);
 sint32 _card_load(sint32 chan);
-uint32 func_80064C08(sint32 port);
+uint32 card_free_blocks(sint32 port);
 sint32 VSync(sint32 mode);
 char *strcpy(char *dst, const char *src);
 char *strcat(char *dst, const char *src);
@@ -250,7 +250,7 @@ sint32 open(char *name, sint32 flags);
 sint32 read(sint32 fd, void *buf, uint32 size);
 sint32 close(sint32 fd);
 sint32 write(sint32 fd, void *buf, uint32 size);
-sint32 func_80064984(void);
+sint32 card_hw_event_wait(void);
 void func_80067884(void);
 sint32 func_80066714(MEM_WORK *wp);
 sint32 func_800666D8(MEM_WORK *wp);
@@ -382,7 +382,7 @@ typedef struct
 extern uint8 D_800B5EB0;
 extern uint8 Sce_flag[];
 extern uint32 Map_obj_state[][0x80];
-extern sint32 D_800BC9B8[0x280];
+extern sint32 Automap_visited[0x280];
 void func_80064CB8(uint8 *buf, uint8 *src);
 void func_80067D10(void);
 void Map_obj_state_save(void);
@@ -435,7 +435,7 @@ extern uint8 D_800C356F;
 extern uint8 D_800C356D;
 extern sint16 D_800C356A;
 #define MEM_GWB(off) (*((uint8 *)&Game_work + (off)))
-sint32 func_8006491C(void);
+sint32 card_sw_event_wait(void);
 extern sint32 D_8008FF64[9];
 extern MEM_RECORD_INIT D_8008D034[9];
 extern sint32 D_8009813C[3];
@@ -446,10 +446,10 @@ extern MEM_RECORD D_800B7AF0[15];
 void func_800176A4(void *src, void *dst, sint32 count);
 // Entry tables chosen by stage (CODE456_ENTRY * in code_800456d8.h, which this file
 // can't include: its Game_work type differs).
-extern void **D_80098844;
-extern void **D_8009884C;
-extern void **D_80098928;
-extern void **D_8009892C;
+extern void **Em_param_tbl;
+extern void **Work_5A4_param_tbl;
+extern void **Shl_param_tbl;
+extern void **Work_50_param_tbl;
 extern void *D_8008EDC4[];
 extern void *D_8008EF64[];
 extern void *D_8008EFC4[];
@@ -458,8 +458,8 @@ extern void *D_8008F060[];
 extern void *D_8008F200[];
 extern void *D_8008F260[];
 extern void *D_8008F2E4[];
-sint32 func_80064A7C(sint32 port);
+sint32 card_check(sint32 port);
 sint32 func_80064B60(sint32 port);
-sint32 func_80064F8C(sint32 port);
+sint32 card_format(sint32 port);
 
 #endif // ROCK_CODE_8006430C_H

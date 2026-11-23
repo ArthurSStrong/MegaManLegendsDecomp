@@ -574,7 +574,7 @@ sint32 func_80101BB4(sint32 mode)
     dm = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(dm, 0, 0, 0x4F, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, dm);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, dm);
     return done;
 }

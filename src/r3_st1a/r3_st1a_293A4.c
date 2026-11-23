@@ -763,7 +763,7 @@ void func_8012AE60(ST1A_PUFF *wp)
             p->clut  = 0x3E40;
             p->tpage = 7;
             setRGB0(p, 0x80, 0x80, 0x80);
-            addPrim(&D_80098934->ot_74, p);
+            addPrim(&Disp_env_ptr->ot_74, p);
             ++*STAGE_PACKET_PTR;
             break;
         case 1:

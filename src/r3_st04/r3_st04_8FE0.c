@@ -660,7 +660,7 @@ void func_8010A32C(ST04_EV *wp)
             {
                 Player_control_on(pl);
                 pl->flags_0 |= 2;
-                func_8001E3F0(0x1A);
+                Sce_light_add(0x1A);
                 wp->routine_1++;
             }
             break;

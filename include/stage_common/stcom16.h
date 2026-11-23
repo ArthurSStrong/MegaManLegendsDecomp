@@ -59,7 +59,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: 2 fades in and out
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
@@ -110,7 +110,7 @@ typedef struct
     STCOM16_CTL ctl;                        // 348
 } STCOM16_WORK;
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -133,7 +133,7 @@ extern STCOM16_FUNC stcom16_D_008C[]; // routine_2 handlers (stcom16_func_1DA0)
 extern STCOM16_FUNC stcom16_D_0098[]; // routine_2 handlers (stcom16_func_2434)
 
 // ROCK_NEO.EXE.
-extern STCOM16_KIND **D_80098844;
+extern STCOM16_KIND **Em_param_tbl;
 void func_8003354C(void *wp);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
@@ -141,9 +141,9 @@ sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 // PsyQ libgte.
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);

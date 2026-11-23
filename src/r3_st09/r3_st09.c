@@ -68,7 +68,7 @@ void func_80100398(void)
     STAGE_MAP_EXITS = D_8011DAAC[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8011DC38[D_8011DC90[Game_work.value_51]], D_8011DAD0[Game_work.value_51]);
-    func_8005DC10(D_8011BBB4[Game_work.value_51]);
+    Automap_room_set(D_8011BBB4[Game_work.value_51]);
     func_801005F4();
 }
 
@@ -380,7 +380,7 @@ void func_8010116C(ST09_VIEW *wp)
     *(sint32 *)&wp->ext.value_8 = 0;
     wp->ext.value_14            = 0;
     wp->ext.value_18            = 0;
-    Search_Player_Init(wp->ext.u_24.track, D_80098844[wp->kind_2]->value_F, -0x60);
+    Search_Player_Init(wp->ext.u_24.track, Em_param_tbl[wp->kind_2]->value_F, -0x60);
     wp->ext.u_34.h[0]         = 0;
     wp->ext.u_34.h[1]         = 0;
     wp->ext.u_3C.h[0]         = 0;
@@ -388,7 +388,7 @@ void func_8010116C(ST09_VIEW *wp)
     wp->ext.obj_40            = Obj_id_work(wp->u_C.b[1]);
     wp->ext.u_44.fx[0]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_C.b.byte_D);
     wp->ext.u_44.fx[1]        = (STAGE_FX *)Obj_id_work(wp->ext.obj_40->u_E.b.byte_E);
-    life                      = D_80098844[wp->kind_2]->life_8 << 4;
+    life                      = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->data_78               = D_8011DE20;
     wp->value_10              = 0;
     wp->routine_0             = 1;
@@ -490,7 +490,7 @@ void func_801012B4(ST09_VIEW *wp)
             Close_EFFECT_WORK(ext->u_44.fx[0]);
             Close_EFFECT_WORK(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
-            func_80047228(wp, &wp->vec_180, 0);
+            Obj_item_drop_n(wp, &wp->vec_180, 0);
             Sound_call2(0xA1, &wp->vec_180);
         }
     }
@@ -544,7 +544,7 @@ void func_80101580(ST09_VIEW *wp)
             Close_EFFECT_WORK(ext->u_44.fx[0]);
             Close_EFFECT_WORK(ext->u_44.fx[1]);
             ext->obj_40->u_E.b.byte_F |= 2;
-            func_80047228(wp, &wp->vec_180, 1);
+            Obj_item_drop_n(wp, &wp->vec_180, 1);
             Sound_call2(0xA1, &wp->vec_180);
         }
     }
@@ -716,7 +716,7 @@ void func_80101C3C(ST09_VIEW *wp)
         case 0:
             wp->routine_2   = 1;
             wp->value_AC    = 2;
-            wp->ext.value_8 = D_80098844[wp->kind_2]->value_A;
+            wp->ext.value_8 = Em_param_tbl[wp->kind_2]->value_A;
             // fall through
         case 1:
             if (wp->u_A4.b[2] == 2)
@@ -1458,13 +1458,13 @@ sint32 func_801031E8(ST09_VIEW *wp)
             if (wp->value_6E <= 0)
             {
                 wp->ext.flags_0 = (wp->ext.flags_0 & ~2) | 0x820;
-                wp->ext.u_4C.i  = D_80098844[wp->kind_2]->limit_9;
+                wp->ext.u_4C.i  = Em_param_tbl[wp->kind_2]->limit_9;
             }
             if (wp->ext.flags_0 & 0x20)
             {
                 wp->ext.value_A += wp->ext.u_4C.i;
                 if ((wp->ext.value_14 & 0x20000000) ||
-                    wp->ext.value_A >= D_80098844[wp->kind_2]->limit_9)
+                    wp->ext.value_A >= Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     if (wp->ext.from_1C.pad & 1)
@@ -1504,7 +1504,7 @@ sint32 func_801031E8(ST09_VIEW *wp)
                 }
             }
             else if ((wp->ext.value_14 & 0x20000000) ||
-                     wp->ext.value_A >= D_80098844[wp->kind_2]->limit_9)
+                     wp->ext.value_A >= Em_param_tbl[wp->kind_2]->limit_9)
             {
                 Sound_call2(0xA2, &wp->position);
             }

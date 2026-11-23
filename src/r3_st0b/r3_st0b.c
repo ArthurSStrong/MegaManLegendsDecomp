@@ -40,7 +40,7 @@ void func_801003E4(void)
     mw->exits = D_801195EC[room];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_8011974C[D_80119774[Game_work.value_51]], D_8011960C[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80100570();
 }
 
@@ -507,8 +507,8 @@ void func_80101110(uint8 r, uint8 g, uint8 b, uint16 abr)
     mode = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(mode, 0, 0, (abr << 5) | 0xF, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80101234(STAGE_ROOM *wp)
@@ -973,8 +973,8 @@ void func_80101E90(uint8 r, uint8 g, uint8 b, uint16 abr)
     mode = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(mode, 0, 0, (abr << 5) | 0xF, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80101FB4(STAGE_ROOM *wp)
@@ -2162,10 +2162,12 @@ void func_801045F8(ST0B_OBJ *wp)
         ctl->hit_10[i].value_C = 0;
         ctl->hit_68[i].hit_8   = 0;
         ctl->hit_68[i].value_C = 0;
-        ctl->hit_10[i].size_10 = ctl->hit_10[i].size_12 = D_8009884C[wp->kind_2]->size_A << 5;
-        ctl->hit_68[i].size_10 = ctl->hit_68[i].size_12 = D_8009884C[wp->kind_2]->size_B << 5;
+        ctl->hit_10[i].size_10 = ctl->hit_10[i].size_12 =
+            Work_5A4_param_tbl[wp->kind_2]->size_A << 5;
+        ctl->hit_68[i].size_10 = ctl->hit_68[i].size_12 =
+            Work_5A4_param_tbl[wp->kind_2]->size_B << 5;
     }
-    life         = D_8009884C[wp->kind_2]->life_8 << 5;
+    life         = Work_5A4_param_tbl[wp->kind_2]->life_8 << 5;
     wp->value_78 = (sint32)D_8011AB48;
     wp->value_10 = 0;
     wp->value_B2 = wp->value_B0 = wp->value_6E = life;
@@ -2579,7 +2581,7 @@ void func_8010552C(ST0B_OBJ *wp)
                 func_80106C90(wp);
                 wp->routine_2++;
                 Set_Atari(&pl->position, 0x60, 0, 0x8000, wp->value_1, &wp->value_464,
-                              D_8009884C[wp->kind_2]->hit_E | 0x04000000, 0, 0x80);
+                              Work_5A4_param_tbl[wp->kind_2]->hit_E | 0x04000000, 0, 0x80);
             }
             break;
         case 3:
@@ -2972,7 +2974,7 @@ void func_80106278(ST0B_OBJ *wp)
                 {
                     wp->value_43D++;
                     shot->value_C -= 0x80;
-                    wp->value_442 = D_8009884C[wp->kind_2]->value_D;
+                    wp->value_442 = Work_5A4_param_tbl[wp->kind_2]->value_D;
                     wp->value_380 &= ~0x800;
                 }
                 shot->position       = wp->position;
@@ -2983,7 +2985,7 @@ void func_80106278(ST0B_OBJ *wp)
             else
             {
                 wp->value_43D++;
-                wp->value_442 = D_8009884C[wp->kind_2]->value_D;
+                wp->value_442 = Work_5A4_param_tbl[wp->kind_2]->value_D;
             }
             break;
         case 3:
@@ -3019,14 +3021,14 @@ sint32 func_80106550(ST0B_OBJ *wp)
                 if (hit->size_10 <= 0)
                 {
                     hit->size_10 = 0;
-                    damage       = D_8009884C[wp->kind_2]->value_9;
+                    damage       = Work_5A4_param_tbl[wp->kind_2]->value_9;
                     ctl->flags_0 &= ~(2 << i);
                     D_8011AB1C[i](wp);
-                    ctl->count_DE = D_8009884C[wp->kind_2]->value_C;
+                    ctl->count_DE = Work_5A4_param_tbl[wp->kind_2]->value_C;
                 }
                 if (ctl->flags_0 & 0x800)
                 {
-                    if (++ctl->count_DE >= D_8009884C[wp->kind_2]->value_C)
+                    if (++ctl->count_DE >= Work_5A4_param_tbl[wp->kind_2]->value_C)
                     {
                         ctl->count_DE = 0;
                         Close_SHL_WORK(ctl->slot_60);
@@ -3037,7 +3039,7 @@ sint32 func_80106550(ST0B_OBJ *wp)
                 {
                     ctl->timer_A += damage;
                     if ((hit->hit_8 & 0x20000000) ||
-                        ctl->timer_A >= D_8009884C[wp->kind_2]->value_9)
+                        ctl->timer_A >= Work_5A4_param_tbl[wp->kind_2]->value_9)
                     {
                         Sound_call2(0xA2, &wp->position);
                         ctl->timer_A = 0;

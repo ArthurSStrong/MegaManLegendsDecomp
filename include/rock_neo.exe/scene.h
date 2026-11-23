@@ -145,7 +145,7 @@ extern SCENE_WORK Scene_work;
 extern SCENE_GAME_VIEW Game_work;
 extern SCENE_PLAYER_VIEW Player_work;
 extern uint8 Sce_flag[];
-extern SCENE_FUNC D_8008980C[];
+extern SCENE_FUNC Sce_stage_init_tbl[];
 extern uint8 Sound_fade_flags;
 extern uint8 D_80098AB8;
 extern uint16 D_800C0C2A;
@@ -163,13 +163,13 @@ extern sint32 D_800BC774;
 extern sint32 D_800BC778;
 extern uint32 D_800BC7F0;
 
-extern uint16 D_800891B4[];
+extern uint16 Sce_light_tbl[];
 void Sce_flag_on(uint32 flag);
 void Sce_flag_off(uint32 flag);
 #ifdef __wasm32__
-void func_800179FC(void);
+void Clut_light_apply(void);
 #else
-void func_800179FC(sint32 arg, sint16 *value);
+void Clut_light_apply(sint32 arg, sint16 *value);
 #endif
 void Work_stage_close(void);
 void Cd_read_comb(sint32 arg);
@@ -296,7 +296,7 @@ void Close_EM_WORK(SCENE_SLOT *slot);
 extern uint16 D_800896D4[];
 extern SCENE_FUNC D_80089714[];
 extern SCENE_FUNC D_80089790[];
-void func_8001F740(void);
+void sce_stage_init(void);
 void func_80019F94(uint16 arg);
 void func_800177CC(void *a, void *b);
 void func_8001D928(sint32 arg);

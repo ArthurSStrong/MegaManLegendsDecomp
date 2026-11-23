@@ -32,7 +32,7 @@ void func_80100098(void)
     mw->exits = D_80100DA4[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_80100E20[D_80100EF8[Game_work.value_51]], D_80100DA8[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
 }
 
 // Runs the current room's script.
@@ -335,5 +335,5 @@ void func_80100A70(void *wp, sint32 y, sint32 v, uint32 color)
     p->x1 = p->x3 = 0x11F;
     p->y2 = p->y3 = y + 1;
     p->y0 = p->y1 = y;
-    addPrim(&D_80098934->ot_78, p);
+    addPrim(&Disp_env_ptr->ot_78, p);
 }

@@ -23,7 +23,7 @@ sint32 Moji_list_count;
 uint8 D_80098930;
 uint8 D_80098B6C;
 sint32 Moji_amount;
-uint8 D_800989D4;
+uint8 Moji_weapon;
 uint32 Moji_time;
 sint32 D_800986F0;
 uint8 D_80098A64;
@@ -238,7 +238,7 @@ void Moji_update(void)
                 }
                 area = (*(DR_AREA **)0x1F800070)++;
                 SetDrawArea(area, &D_80097F50[*(uint8 *)0x1F800000]);
-                addPrim(&D_80098934->ot[(sint8)wp->val_3D], area);
+                addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], area);
                 wp->val_73   = 0;
                 wp->val_78   = 0x80;
                 wp->pos_14   = wp->pos_48;
@@ -265,7 +265,7 @@ void Moji_update(void)
                             sprt->clut = D_80097F30[wp->val_3E];
                             sprt->u0   = (*wp->pos_14 % 21) * 12;
                             sprt->v0   = (*wp->pos_14 / 21) * 12;
-                            addPrim(&D_80098934->ot[(sint8)wp->val_3D], sprt);
+                            addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], sprt);
                             wp->pos_10 += D_8008AE7C[*wp->pos_14];
                         }
                         wp->pos_14++;
@@ -281,7 +281,7 @@ void Moji_update(void)
                 rect.h = wp->val_7F * 12;
                 area   = (*(DR_AREA **)0x1F800070)++;
                 SetDrawArea(area, &rect);
-                addPrim(&D_80098934->ot[(sint8)wp->val_3D], area);
+                addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], area);
                 if (wp->flags_0 & 0x04000000)
                 {
                     D_8008AAE4[wp->val_7C](wp);
@@ -300,7 +300,7 @@ void Moji_update(void)
         mode                    = *(DR_MODE **)0x1F800070;
         *(DR_MODE **)0x1F800070 = mode + 1;
         SetDrawMode(mode, 0, 0, GetTPage(0, 0, 0x3C0, 0x100), NULL);
-        addPrim(&D_80098934->ot[3], mode);
+        addPrim(&Disp_env_ptr->ot[3], mode);
         D_80098960++;
     }
 }
@@ -2230,7 +2230,7 @@ sint32 func_80057DF4(MOJI_WORK *wp)
 
     for (i = 0; i < 3; i++)
     {
-        wp->pos_6C[i + 1] = (MOJI_GAME->value84 + D_800989D4)->value4[i];
+        wp->pos_6C[i + 1] = (MOJI_GAME->value84 + Moji_weapon)->value4[i];
     }
     wp->pos_6C += 1;
     return 1;
@@ -2324,7 +2324,7 @@ sint32 Moji_cmd_name_entry(MOJI_WORK *wp)
         if ((sint8)wp->val_71 >= wp->v_72.skip)
         {
             wp->flags_0 &= ~0x01000000;
-            name = (uint16 *)(MOJI_GAME->value84 + D_800989D4);
+            name = (uint16 *)(MOJI_GAME->value84 + Moji_weapon);
             for (i = 0; i < wp->v_72.skip; i++)
             {
                 name[i + 2] = NAME_REC(wp, i)[2];
@@ -2441,10 +2441,10 @@ sint32 func_8005851C(MOJI_WORK *wp)
     sint32 i;
 
     index = wp->pos_6C[1];
-    row   = D_8008D8EC[D_800989D4][index];
-    if (D_800989D4 != 0)
+    row   = D_8008D8EC[Moji_weapon][index];
+    if (Moji_weapon != 0)
     {
-        level = &((sint8(*)[8])((uint8 *)&Player_work + 0x4FC))[D_800989D4][index];
+        level = &((sint8(*)[8])((uint8 *)&Player_work + 0x4FC))[Moji_weapon][index];
     }
     else
     {
@@ -2481,10 +2481,10 @@ sint32 func_8005861C(MOJI_WORK *wp)
 
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 5);
     index                           = wp->pos_6C[1];
-    row                             = D_8008D8EC[D_800989D4][index];
-    if (D_800989D4 != 0)
+    row                             = D_8008D8EC[Moji_weapon][index];
+    if (Moji_weapon != 0)
     {
-        level = &((sint8(*)[8])((uint8 *)&Player_work + 0x4FC))[D_800989D4][index];
+        level = &((sint8(*)[8])((uint8 *)&Player_work + 0x4FC))[Moji_weapon][index];
     }
     else
     {
@@ -2820,7 +2820,7 @@ void func_80058F18(MOJI_WORK *wp)
             {
                 wp->val_71 = wp->pos_14[2];
                 wp->val_BC = 0;
-                if (old == (sint8)wp->val_71 && Moji_list_top < D_800989D4)
+                if (old == (sint8)wp->val_71 && Moji_list_top < Moji_weapon)
                 {
                     Moji_flag3 |= bit;
                     Sound_call(0x81, 1, 0);
@@ -2833,7 +2833,7 @@ void func_80058F18(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[2];
                     wp->val_BC = 12;
-                    if (old == (sint8)wp->val_71 && Moji_list_top < D_800989D4)
+                    if (old == (sint8)wp->val_71 && Moji_list_top < Moji_weapon)
                     {
                         Moji_flag3 |= bit;
                         Sound_call(0x81, 1, 0);
@@ -2923,7 +2923,7 @@ sint32 func_800592FC(MOJI_WORK *wp)
                 Moji_flag |= 0x400000FF;
             }
         }
-        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x2001A);
             Game_logo_set(1, 0x2001B);
@@ -2932,7 +2932,7 @@ sint32 func_800592FC(MOJI_WORK *wp)
         {
             Game_logo_set(0, 0x2001A);
         }
-        else if (Moji_list_top < D_800989D4)
+        else if (Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x2001B);
         }
@@ -3096,7 +3096,7 @@ sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
             MojiTaskExec(wp->pos_6C[1], script, wp->pos_6C[2]);
             MojiTaskExec(next, script, index);
         }
-        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x20018);
             Game_logo_set(1, 0x20019);
@@ -3105,7 +3105,7 @@ sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
         {
             Game_logo_set(0, 0x20018);
         }
-        else if (Moji_list_top < D_800989D4)
+        else if (Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x20019);
         }
@@ -3457,7 +3457,7 @@ sint32 Moji_cmd_parts_sort(MOJI_WORK *wp)
                 D_80098851 = wp->val_71 + Moji_list_top;
             }
         }
-        else if (Moji_list_top != 0 && Moji_list_top < D_800989D4)
+        else if (Moji_list_top != 0 && Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x20018);
             Game_logo_set(1, 0x20019);
@@ -3466,7 +3466,7 @@ sint32 Moji_cmd_parts_sort(MOJI_WORK *wp)
         {
             Game_logo_set(0, 0x20018);
         }
-        else if (Moji_list_top < D_800989D4)
+        else if (Moji_list_top < Moji_weapon)
         {
             Game_logo_set(0, 0x20019);
         }
@@ -3616,10 +3616,10 @@ void func_8005ACA8(MOJI_WORK *wp)
     wp->prim_A0[3]->y2 = wp->val_A + wp->val_96;
     wp->prim_A0[3]->x3 = wp->val_8 + wp->val_94 + 1;
     wp->prim_A0[3]->y3 = wp->val_A + wp->val_96 + 1;
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_A0[0]);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_A0[1]);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_A0[2]);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_A0[3]);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_A0[0]);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_A0[1]);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_A0[2]);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_A0[3]);
     wp->prim_98->x0 = wp->val_8 + wp->val_88;
     wp->prim_98->y0 = wp->val_A + wp->val_8A;
     wp->prim_98->x1 = wp->val_8 + wp->val_8C;
@@ -3628,11 +3628,11 @@ void func_8005ACA8(MOJI_WORK *wp)
     wp->prim_98->y2 = wp->val_A + wp->val_92;
     wp->prim_98->x3 = wp->val_8 + wp->val_94;
     wp->prim_98->y3 = wp->val_A + wp->val_96;
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_98);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_98);
     mode                    = *(DR_MODE **)0x1F800070;
     *(DR_MODE **)0x1F800070 = mode + 1;
     SetDrawMode(mode, 0, 0, GetTPage(0, 0, 0x3C0, 0x100), NULL);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], mode);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode);
     wp->prim_9C->x0 = wp->val_8 + wp->val_88;
     wp->prim_9C->y0 = wp->val_A + wp->val_8A;
     wp->prim_9C->x1 = wp->val_8 + wp->val_8C;
@@ -3641,11 +3641,11 @@ void func_8005ACA8(MOJI_WORK *wp)
     wp->prim_9C->y2 = wp->val_A + wp->val_92;
     wp->prim_9C->x3 = wp->val_8 + wp->val_94;
     wp->prim_9C->y3 = wp->val_A + wp->val_96;
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_9C);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_9C);
     mode2                   = *(DR_MODE **)0x1F800070;
     *(DR_MODE **)0x1F800070 = mode2 + 1;
     SetDrawMode(mode2, 0, 0, GetTPage(0, 2, 0x3C0, 0x100), NULL);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], mode2);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode2);
 }
 
 void func_8005B454(MOJI_WORK *wp)
@@ -3712,7 +3712,7 @@ void func_8005B5D8(MOJI_WORK *wp)
     mode                    = *(DR_MODE **)0x1F800070;
     *(DR_MODE **)0x1F800070 = mode + 1;
     SetDrawMode(mode, 0, 0, GetTPage(0, 0, 0x3C0, 0x100), NULL);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], mode);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode);
     wp->prim_98->x0 = wp->val_88;
     wp->prim_98->y0 = wp->val_8A;
     wp->prim_98->x1 = wp->val_8C;
@@ -3721,11 +3721,11 @@ void func_8005B5D8(MOJI_WORK *wp)
     wp->prim_98->y2 = wp->val_92;
     wp->prim_98->x3 = wp->val_94;
     wp->prim_98->y3 = wp->val_96;
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], wp->prim_98);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], wp->prim_98);
     mode2                   = *(DR_MODE **)0x1F800070;
     *(DR_MODE **)0x1F800070 = mode2 + 1;
     SetDrawMode(mode2, 0, 0, GetTPage(0, 2, 0x3C0, 0x100), NULL);
-    addPrim(&D_80098934->ot[(sint8)wp->val_3D], mode2);
+    addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode2);
 }
 
 // The flags store comes first, so GCC reloads the counter rather than folding the switch value.
@@ -3969,7 +3969,7 @@ void Moji_num2_set(uint32 value)
     Moji_num2 = value;
 }
 
-void func_8005C24C(sint32 value)
+void Moji_weapon_set(sint32 value)
 {
-    D_800989D4 = value;
+    Moji_weapon = value;
 }

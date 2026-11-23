@@ -35,7 +35,7 @@ static void prepare_palette(void)
 
 static int check_indirect(w2c_game__probe *module)
 {
-    // func_800665FC indexes the retail memory-card routine table with mode_4.
+    // Card_screen_exec indexes the retail memory-card routine table with mode_4.
     // Mode 3 calls func_80066750, which clears the work state and returns 1.
     uint8_t *work = psx_ptr(0x80098910u);
     const uint8_t initial[0x14] = {0x12, 0x34, 0, 0, 3, 5, 7, 9};

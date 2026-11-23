@@ -36,7 +36,7 @@ void stcom13_func_004C(STCOM13_WORK *wp)
     ctl->count_34            = 0;
     Search_Player_Init(ctl->track_24, 0, -0x60);
     ctl->timer_36    = 300;
-    life             = D_80098844[wp->kind_2]->life_18;
+    life             = Em_param_tbl[wp->kind_2]->life_18;
     wp->data_78      = stcom13_D_0020;
     wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = life;
     wp->data_10                                      = NULL;
@@ -375,7 +375,7 @@ void stcom13_func_08B0(STCOM13_WORK *wp)
                         if ((ctl->flags_0 & 0x80) && ctl->count_34 < 3)
                         {
                             ctl->count_34++;
-                            func_80047228(wp, &wp->position, 1);
+                            Obj_item_drop_n(wp, &wp->position, 1);
                         }
                         ctl->flags_0 |= 0x80;
                     }
@@ -457,7 +457,7 @@ sint32 stcom13_func_0DA8(STCOM13_WORK *wp)
             {
                 wp->life_6E = wp->life_prev_B2 = -1;
                 wp->ctl.flags_0 &= ~0xC;
-                damage = D_80098844[wp->kind_2]->stun_19;
+                damage = Em_param_tbl[wp->kind_2]->stun_19;
                 for (i = 0; i < 4; i++)
                 {
                     effect = Open_EFFECT_WORK();
@@ -478,7 +478,8 @@ sint32 stcom13_func_0DA8(STCOM13_WORK *wp)
             if (ctl->flags_0 & 8)
             {
                 ctl->damage_A += damage;
-                if ((ctl->hit_14 & 0x20000000) || ctl->damage_A >= D_80098844[wp->kind_2]->stun_19)
+                if ((ctl->hit_14 & 0x20000000) ||
+                    ctl->damage_A >= Em_param_tbl[wp->kind_2]->stun_19)
                 {
                     Sound_call2(0xA2, &wp->position);
                     angle          = func_80031F84(&wp->position, &ctl->from_1C, wp->rotation.y, 0);

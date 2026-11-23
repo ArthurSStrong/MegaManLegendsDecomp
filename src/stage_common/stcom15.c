@@ -70,7 +70,7 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
     *(uint32 *)&ctl->value_8 = 0;
     ctl->hit_14              = 0;
     ctl->value_18            = 0;
-    Search_Player_Init(ctl->track_24, D_80098844[wp->kind_2][ctl->level_6].track_F, -0x60);
+    Search_Player_Init(ctl->track_24, Em_param_tbl[wp->kind_2][ctl->level_6].track_F, -0x60);
     ctl->timer_34  = 0;
     ctl->timer_36  = 0;
     ctl->timer_38  = 4;
@@ -78,7 +78,7 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
     ctl->effect_40 = NULL;
     ctl->turn_44   = 0;
     ctl->hit_48    = 0;
-    life        = (D_80098844[wp->kind_2][ctl->level_6].life_8 << 4) * ((wp->param_F & 0x7F) + 1);
+    life        = (Em_param_tbl[wp->kind_2][ctl->level_6].life_8 << 4) * ((wp->param_F & 0x7F) + 1);
     wp->data_10 = NULL;
     wp->data_78 = stcom15_D_0038;
     wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = life;
@@ -180,7 +180,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
             ctl->effect_40->sprite.position = wp->position;
         }
         Close_EM_WORK(wp);
-        func_80047228(wp, &wp->joints_180[0], ctl->level_6);
+        Obj_item_drop_n(wp, &wp->joints_180[0], ctl->level_6);
         Sound_call2(0xA1, &wp->joints_180[0]);
     }
 }
@@ -335,7 +335,7 @@ void stcom15_func_0A30(STCOM15_WORK *wp)
             wp->anim_AC   = 2;
             wp->turn_64   = 0;
             ctl->timer_4  = 5;
-            ctl->value_8  = D_80098844[wp->kind_2][ctl->level_6].value_A;
+            ctl->value_8  = Em_param_tbl[wp->kind_2][ctl->level_6].value_A;
             // fall through
         case 1:
             if (--ctl->timer_4 >= 0)
@@ -494,7 +494,7 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
         case 4:
             if (--ctl->timer_4 < 0)
             {
-                ctl->timer_34 = D_80098844[wp->kind_2][ctl->level_6].value_C;
+                ctl->timer_34 = Em_param_tbl[wp->kind_2][ctl->level_6].value_C;
                 ctl->flags_0 |= 1;
             }
             else
@@ -532,7 +532,7 @@ void stcom15_func_0FE0(STCOM15_WORK *wp)
             wp->accel.y      = 0x10;
             wp->velocity.v.z = (-rcos(wp->rotation.y) * 0x20) >> 12;
             wp->ctl.timer_4  = 115;
-            wp->ctl.value_8  = D_80098844[wp->kind_2][wp->ctl.level_6].value_A;
+            wp->ctl.value_8  = Em_param_tbl[wp->kind_2][wp->ctl.level_6].value_A;
             wp->ctl.flags_0 &= ~8;
             // fall through
         case 1:
@@ -733,7 +733,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
                 wp->ctl.steps_3C = stcom15_D_005C;
                 wp->ctl.timer_4  = wp->ctl.steps_3C[0];
                 wp->ctl.rand_2   = 7;
-                wp->ctl.value_8  = D_80098844[wp->kind_2][wp->ctl.level_6].value_B;
+                wp->ctl.value_8  = Em_param_tbl[wp->kind_2][wp->ctl.level_6].value_B;
             }
             else
             {
@@ -887,7 +887,7 @@ void stcom15_func_1B90(STCOM15_WORK *wp)
             wp->routine_2   = 1;
             wp->anim_AC     = 4;
             wp->ctl.timer_4 = 45;
-            wp->ctl.value_8 = D_80098844[wp->kind_2][wp->ctl.level_6].value_A;
+            wp->ctl.value_8 = Em_param_tbl[wp->kind_2][wp->ctl.level_6].value_A;
             // fall through
         case 1:
             if (wp->value_A6 == 1)
@@ -1000,13 +1000,13 @@ sint32 stcom15_func_1F44(STCOM15_WORK *wp)
             if (wp->life_6E <= 0)
             {
                 wp->ctl.flags_0 = (wp->ctl.flags_0 & ~2) | 0x48;
-                damage          = D_80098844[wp->kind_2][wp->ctl.level_6].limit_9;
+                damage          = Em_param_tbl[wp->kind_2][wp->ctl.level_6].limit_9;
             }
             if (wp->ctl.flags_0 & 8)
             {
                 wp->ctl.timer_A += damage;
                 if (!(wp->ctl.hit_14 & 0x20000000) &&
-                    wp->ctl.timer_A < D_80098844[wp->kind_2][wp->ctl.level_6].limit_9)
+                    wp->ctl.timer_A < Em_param_tbl[wp->kind_2][wp->ctl.level_6].limit_9)
                 {
                     if (wp->ctl.level_6 == 0)
                     {
@@ -1058,7 +1058,7 @@ sint32 stcom15_func_1F44(STCOM15_WORK *wp)
                 }
             }
             else if (!(wp->ctl.hit_14 & 0x20000000) &&
-                     wp->ctl.timer_A < D_80098844[wp->kind_2][wp->ctl.level_6].limit_9)
+                     wp->ctl.timer_A < Em_param_tbl[wp->kind_2][wp->ctl.level_6].limit_9)
             {
                 Sound_call2(0xA0, &wp->position);
             }

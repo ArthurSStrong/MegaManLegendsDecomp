@@ -53,7 +53,7 @@ void func_80100384(void)
     STAGE_MAP_WORK_PTR->exits = D_801127DC[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_801128E4[D_8011295C[Game_work.value_51]], D_801127F4[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80100578();
 }
 
@@ -487,11 +487,11 @@ sint32 func_80101280(STAGE_ROOM *wp)
         }
         if (Sce_flag_test(0x22E) && Sce_flag_test(0x22F))
         {
-            func_8001EB98(D_80113190);
+            Sce_slot_open_keep(D_80113190);
         }
         if (Sce_flag_test(0x55) && !Sce_flag_test(0x233))
         {
-            func_8001EB98(D_801131A4);
+            Sce_slot_open_keep(D_801131A4);
         }
         Sce_flag_on(0x7E6);
     }
@@ -505,15 +505,15 @@ sint32 func_80101360(STAGE_ROOM_WORK *wp)
     {
         if (!Sce_flag_test(0x234))
         {
-            func_8001EB98(D_801131B8);
-            func_8001E3F0(0xB);
+            Sce_slot_open_keep(D_801131B8);
+            Sce_light_add(0xB);
         }
         else
         {
-            func_8001EB98(D_801131CC);
+            Sce_slot_open_keep(D_801131CC);
         }
-        func_8001EB98(&D_801131E0[0]);
-        func_8001EB98(&D_801131E0[1]);
+        Sce_slot_open_keep(&D_801131E0[0]);
+        Sce_slot_open_keep(&D_801131E0[1]);
     }
     Sce_flag_on(0x1FF);
     return 0;
@@ -782,7 +782,7 @@ void func_801018CC(STAGE_ROOM *wp)
                     break;
                 }
                 D_80118510 = func_80101508((ST08_RANK *)&ST08_GAME_WORD(0x114), Scene_work.value_A);
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 if (!Sce_flag_test(0x314))
                 {
                     if (D_80118510 == 0)
@@ -842,7 +842,7 @@ void func_801018CC(STAGE_ROOM *wp)
             {
                 if (D_80118510 < 3)
                 {
-                    func_8005C24C(D_80118510 + 9);
+                    Moji_weapon_set(D_80118510 + 9);
                     MojiTaskExec2(0, 0x1C);
                 }
                 else
@@ -1291,7 +1291,7 @@ void func_80102A24(STAGE_ROOM *wp)
             Cd_subcmd(0, 1, 0);
             Sce_flag_off(0x549);
             Sce_flag_on(0x37);
-            func_8001E3F0(0x18);
+            Sce_light_add(0x18);
             Sce_flag_select(0x2E8);
             Player_control_on(&Player_work);
             D_800A395C = 1;

@@ -759,7 +759,7 @@ typedef struct
     STAGE_OBJ *owner_3C0;                   // 3C0
 } ST17_SLOT;
 
-// ROCK_NEO's per-kind records (D_80098844), only the bytes read here.
+// ROCK_NEO's per-kind records (Em_param_tbl), only the bytes read here.
 typedef struct
 {
     uint8 reserved00[8]; // 00
@@ -770,7 +770,7 @@ typedef struct
     uint8 life_C;        // 0C: in units of 16
 } ST17_KIND;
 
-extern ST17_KIND **D_80098844;
+extern ST17_KIND **Em_param_tbl;
 
 // An effect slot (STAGE_FX's layout) with twelve (angle, speed) byte pairs from +0x28: a burst
 // of sparks around a work slot (func_80113C84, func_80114060).
@@ -919,7 +919,7 @@ typedef struct
 
 #define ST17_HITBOX_TBL(wp) (((ST17_HITBOX_OBJ *)(wp))->hitbox_F8)
 
-// The boss's numbers in ROCK_NEO's per-kind table (D_8009884C).
+// The boss's numbers in ROCK_NEO's per-kind table (Work_5A4_param_tbl).
 typedef struct
 {
     uint8 reserved0[8]; // 0
@@ -931,7 +931,7 @@ typedef struct
     uint8 life_D;       // D: the others
 } ST17_BOSS_DATA;
 
-extern ST17_BOSS_DATA **D_8009884C;
+extern ST17_BOSS_DATA **Work_5A4_param_tbl;
 extern STCOM_SVECTOR D_8011BE40[16];
 extern STCOM_SVECTOR D_8011BEC0;
 extern STCOM_SVECTOR D_8011BEC8;

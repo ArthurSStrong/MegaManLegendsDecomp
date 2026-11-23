@@ -181,7 +181,7 @@ sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 extern uint8 Moji_item;
 extern sint32 Moji_amount;
 extern uint32 Moji_time;
-extern uint8 D_800989D4;
+extern uint8 Moji_weapon;
 extern uint8 Moji_list_top;
 extern uint8 *D_8008CCA4[];
 extern uint32 Moji_flag;
@@ -229,7 +229,7 @@ extern uint32 D_80098960;
 
 extern uint8 D_80097FE2; // byte 6 of the D_80097FDC script, written as its own symbol
 
-extern DISP_ENV *D_80098934;
+extern DISP_ENV *Disp_env_ptr;
 extern uint8 D_8008AF18[];
 void func_8005BCE4(MOJI_WORK *wp, sint32 index);
 sint32 Moji_cmd_select(MOJI_WORK *wp);
@@ -245,7 +245,7 @@ extern uint8 D_80098A65;
 extern uint8 D_8008D0AC[];
 extern uint8 D_800986E0;
 extern uint8 D_800986E4;
-extern uint8 D_800989D4;
+extern uint8 Moji_weapon;
 extern uint8 D_800986E8;
 extern uint8 D_800986EC;
 extern uint32 D_800987E0;

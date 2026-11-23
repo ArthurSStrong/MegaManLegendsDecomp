@@ -310,7 +310,7 @@ void func_8005C9BC(CODE5C_SLOT *wp)
     }
     if (wp->byte_0C != 0)
     {
-        func_8005D298(&D_8008D570[D_80098020[wp->anim_08]], x, y, 0);
+        hud_sprite_draw(&D_8008D570[D_80098020[wp->anim_08]], x, y, 0);
     }
     if (wp->byte_0C == 1)
     {
@@ -343,10 +343,10 @@ void func_8005C9BC(CODE5C_SLOT *wp)
             break;
     }
     len = (Player_work.life_max >> 4) * 5 - 10;
-    func_8005D298(&D_8008D37C[face][0], x, y - len, 0);
-    func_8005D298(&D_8008D37C[face][2], x, y, 0);
-    func_8005D298(&D_8008D37C[face][1], x, y - len, D_8008D37C[face][1].width | (len << 8));
-    func_8005D298(&D_8008D37C[face][3], x, y, 0);
+    hud_sprite_draw(&D_8008D37C[face][0], x, y - len, 0);
+    hud_sprite_draw(&D_8008D37C[face][2], x, y, 0);
+    hud_sprite_draw(&D_8008D37C[face][1], x, y - len, D_8008D37C[face][1].width | (len << 8));
+    hud_sprite_draw(&D_8008D37C[face][3], x, y, 0);
     hp = Player_work.life;
     if (hp > 0)
     {
@@ -354,14 +354,14 @@ void func_8005C9BC(CODE5C_SLOT *wp)
         rest = hp - (n << 4);
         for (i = 0; i < n; i++)
         {
-            func_8005D298(&D_8008D5E8, x, y - i * 5, 0);
+            hud_sprite_draw(&D_8008D5E8, x, y - i * 5, 0);
         }
         if (rest != 0)
         {
-            func_8005D298(&D_8008D5FC, x, y - n * 5, 0);
+            hud_sprite_draw(&D_8008D5FC, x, y - n * 5, 0);
         }
     }
-    func_8005D298(&D_8008D37C[face][4], x, y - len, ((len + 0x10) << 8) | 0x10);
+    hud_sprite_draw(&D_8008D37C[face][4], x, y - len, ((len + 0x10) << 8) | 0x10);
 }
 
 // FAKE MATCH: one dead conditional store (`level = 0`), kept only for register allocation.
@@ -400,7 +400,7 @@ void func_8005CCF4(CODE5C_SLOT *wp)
     {
         dy = wp->y_1A;
     }
-    func_8005D298(&D_8008D610, x, y, 0);
+    hud_sprite_draw(&D_8008D610, x, y, 0);
     tbl = Weapon_param_tbl;
     lim = 0x7FFF;
     if (x != 0x118)
@@ -413,20 +413,20 @@ void func_8005CCF4(CODE5C_SLOT *wp)
     fill  = ((level + ((1 << shift) >> 16)) << 16) >> shift;
     if (max == lim)
     {
-        func_8005D298(&D_8008D674, x, y + dy, 0);
+        hud_sprite_draw(&D_8008D674, x, y + dy, 0);
     }
     else
     {
         max = (max << 16) >> shift;
         if (fill != 0)
         {
-            func_8005D298(&D_8008D638[0], x, y + dy - fill + 1,
-                          D_8008D638[0].width | ((fill - 1) << 8));
-            func_8005D298(&D_8008D638[1], x, y + dy - fill, 0);
+            hud_sprite_draw(&D_8008D638[0], x, y + dy - fill + 1,
+                            D_8008D638[0].width | ((fill - 1) << 8));
+            hud_sprite_draw(&D_8008D638[1], x, y + dy - fill, 0);
         }
-        func_8005D298(&D_8008D660, x, y + dy - max, D_8008D660.width | (max << 8));
+        hud_sprite_draw(&D_8008D660, x, y + dy - max, D_8008D660.width | (max << 8));
     }
-    func_8005D298(&D_8008D624, x, y + dy - max, 0);
+    hud_sprite_draw(&D_8008D624, x, y + dy - max, 0);
 }
 
 void func_8005CEFC(CODE5C_SLOT *wp)
@@ -467,16 +467,16 @@ void func_8005CEFC(CODE5C_SLOT *wp)
         x += wp->x_18;
         y += wp->y_1A;
     }
-    func_8005D298(&D_8008D688[set][0], x, y, 0);
-    func_8005D298(&D_8008D688[set][1], x - full, y, 0);
+    hud_sprite_draw(&D_8008D688[set][0], x, y, 0);
+    hud_sprite_draw(&D_8008D688[set][1], x - full, y, 0);
     if (len > 0)
     {
-        func_8005D39C(&D_8008D688[set][3], x - len + 1, y, (D_8008D688[set][3].height << 8) | len,
-                      wp->word_10);
-        func_8005D39C(&D_8008D688[set][4], x - len, y, (D_8008D688[set][4].height << 8) | 1,
-                      wp->word_10);
+        hud_sprite_draw_color(&D_8008D688[set][3], x - len + 1, y,
+                              (D_8008D688[set][3].height << 8) | len, wp->word_10);
+        hud_sprite_draw_color(&D_8008D688[set][4], x - len, y, (D_8008D688[set][4].height << 8) | 1,
+                              wp->word_10);
     }
-    func_8005D298(&D_8008D688[set][2], x - full, y, (D_8008D688[set][2].height << 8) | full);
+    hud_sprite_draw(&D_8008D688[set][2], x - full, y, (D_8008D688[set][2].height << 8) | full);
 }
 
 void func_8005D0FC(CODE5C_SLOT *wp)
@@ -515,17 +515,17 @@ void func_8005D0FC(CODE5C_SLOT *wp)
         x += wp->x_18;
         y += wp->y_1A;
     }
-    func_8005D298(&D_8008D750[0], x, y, 0);
-    func_8005D298(&D_8008D750[1], x + full, y, 0);
+    hud_sprite_draw(&Hud_sprite_tbl[0], x, y, 0);
+    hud_sprite_draw(&Hud_sprite_tbl[1], x + full, y, 0);
     if (len > 0)
     {
-        func_8005D298(&D_8008D750[3], x - 1, y, (D_8008D750[3].height << 8) | len);
-        func_8005D298(&D_8008D750[4], x + len - 1, y, (D_8008D750[4].height << 8) | 1);
+        hud_sprite_draw(&Hud_sprite_tbl[3], x - 1, y, (Hud_sprite_tbl[3].height << 8) | len);
+        hud_sprite_draw(&Hud_sprite_tbl[4], x + len - 1, y, (Hud_sprite_tbl[4].height << 8) | 1);
     }
-    func_8005D298(&D_8008D750[2], x, y, (D_8008D750[2].height << 8) | full);
+    hud_sprite_draw(&Hud_sprite_tbl[2], x, y, (Hud_sprite_tbl[2].height << 8) | full);
 }
 
-void func_8005D298(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size)
+void hud_sprite_draw(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size)
 {
     POLY_FT4 *p;
     sint32 dx;
@@ -573,10 +573,10 @@ void func_8005D298(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size)
     p->v2                    = v + h;
     p->u3                    = u + w;
     p->v3                    = v + h;
-    addPrim(&D_80098934->tag78, p);
+    addPrim(&Disp_env_ptr->tag78, p);
 }
 
-void func_8005D39C(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 color)
+void hud_sprite_draw_color(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 color)
 {
     POLY_FT4 *p;
     sint32 dx;
@@ -624,7 +624,7 @@ void func_8005D39C(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 c
     p->v2                    = v + h;
     p->u3                    = u + w;
     p->v3                    = v + h;
-    addPrim(&D_80098934->tag78, p);
+    addPrim(&Disp_env_ptr->tag78, p);
 }
 
 void func_8005D4C0(void)
@@ -913,7 +913,7 @@ sint32 Pl_energy_refill(sint32 arg0)
     return pl->weapon_data[Player_work.part_index].bullet_left == target;
 }
 
-void func_8005DBB4(sint32 arg0)
+void Automap_reset(sint32 arg0)
 {
     sint32 i;
 
@@ -921,16 +921,16 @@ void func_8005DBB4(sint32 arg0)
     {
         for (i = 0; i < 0x280; i++)
         {
-            D_800BC9B8[i] = -1;
+            Automap_visited[i] = -1;
         }
     }
     else
     {
-        func_800176DC(&D_800B7030, D_800BC9B8, 0x50);
+        func_800176DC(&D_800B7030, Automap_visited, 0x50);
     }
 }
 
-void func_8005DC10(sint32 arg0)
+void Automap_room_set(sint32 arg0)
 {
     sint32 i;
 
@@ -939,31 +939,31 @@ void func_8005DC10(sint32 arg0)
     {
         for (i = 0; i < 0x40; i++)
         {
-            if (D_8008D19C[i].stage == 0xFF)
+            if (Automap_room_tbl[i].stage == 0xFF)
             {
                 return;
             }
-            if (D_8008D19C[i].stage == Game_work.stage_no &&
-                D_8008D19C[i].room == (sint8)Game_work.area_no)
+            if (Automap_room_tbl[i].stage == Game_work.stage_no &&
+                Automap_room_tbl[i].room == (sint8)Game_work.area_no)
             {
                 D_80098004 = 3;
                 D_8009878C = arg0;
                 D_80098794 = i;
-                D_8009882C = D_8008D19C[i].value;
+                D_8009882C = Automap_room_tbl[i].value;
                 return;
             }
         }
     }
 }
 
-void func_8005DCB4(void)
+void Automap_update(void)
 {
-    func_8005DCDC();
-    func_8005DE28();
+    automap_visit();
+    automap_draw();
 }
 
 // The negated room origin comes first so the room x/z loads precede the player loads.
-void func_8005DCDC(void)
+void automap_visit(void)
 {
     CODE5C_OFS9 dx;
     CODE5C_OFS9 dz;
@@ -980,10 +980,10 @@ void func_8005DCDC(void)
     dz = D_80098044;
     if (D_80098004 & 1)
     {
-        width  = D_8008D19C[D_80098794].width;
-        px     = (-D_8008D19C[D_80098794].x + Player_work.position.x) >> 9;
-        height = D_8008D19C[D_80098794].height;
-        pz     = (-D_8008D19C[D_80098794].z + Player_work.position.z) >> 9;
+        width  = Automap_room_tbl[D_80098794].width;
+        px     = (-Automap_room_tbl[D_80098794].x + Player_work.position.x) >> 9;
+        height = Automap_room_tbl[D_80098794].height;
+        pz     = (-Automap_room_tbl[D_80098794].z + Player_work.position.z) >> 9;
         for (i = 0; i < 9; i++)
         {
             x = px + dx.v[i];
@@ -998,7 +998,7 @@ void func_8005DCDC(void)
 }
 
 // Statement order sets retail's load/store schedule.
-void func_8005DE28(void)
+void automap_draw(void)
 {
     CODE5C_POINT pos;
     CODE5C_POINT size;
@@ -1014,8 +1014,8 @@ void func_8005DE28(void)
             D_80098014 = 8;
             D_80098018 = 0x60;
         }
-        room_x     = D_8008D19C[D_80098794].x;
-        room_z     = D_8008D19C[D_80098794].z;
+        room_x     = Automap_room_tbl[D_80098794].x;
+        room_z     = Automap_room_tbl[D_80098794].z;
         pos.x      = D_80098014;
         cell.x     = ((Player_work.position.x - room_x) >> 9) - 5;
         cell.y     = ((Player_work.position.z - room_z) >> 9) - 5;
@@ -1090,8 +1090,8 @@ void func_8005DF4C(void)
         w          = 0x140 / scale;
         h          = 0xF0 / scale;
         D_80098034 = scale;
-        size.x = mw = D_8008D19C[D_80098794].width;
-        size.y = mh = D_8008D19C[D_80098794].height;
+        size.x = mw = Automap_room_tbl[D_80098794].width;
+        size.y = mh = Automap_room_tbl[D_80098794].height;
         cell.x      = 0;
         cell.y      = 0;
         rect.x      = 0;
@@ -1127,8 +1127,8 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
     if ((sint16)rect->x + (sint16)rect->w >= 0)
     {
         arrow                = CODE5C_PRIM(POLY_G4);
-        width                = D_8008D19C[D_80098794].width;
-        height               = D_8008D19C[D_80098794].height;
+        width                = Automap_room_tbl[D_80098794].width;
+        height               = Automap_room_tbl[D_80098794].height;
         CODE5C_PRIM(POLY_G4) = arrow + 1;
         // The tags are stored through plain casts and the colour words through a word
         // view; the different alias classes give retail's load/store order.
@@ -1139,10 +1139,12 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
         ((CODE5C_G4_WORDS *)arrow)->rgb3 = 0xFF;
         angle                            = -Player_work.rotation.y;
         x = pos->x +
-            (((Player_work.position.x - D_8008D19C[D_80098794].x) >> 9) - cell->x) * D_80098034 +
+            (((Player_work.position.x - Automap_room_tbl[D_80098794].x) >> 9) - cell->x) *
+                D_80098034 +
             ((uint32)D_80098034 >> 1);
         y = pos->y -
-            (((Player_work.position.z - D_8008D19C[D_80098794].z) >> 9) - cell->y) * D_80098034 -
+            (((Player_work.position.z - Automap_room_tbl[D_80098794].z) >> 9) - cell->y) *
+                D_80098034 -
             ((uint32)D_80098034 >> 1);
         arrow->x0 = ((rsin(angle - 0x40) * 6 + 0x800) >> 12) + x;
         arrow->y0 = ((rcos(angle - 0x40) * 6 + 0x800) >> 12) + y;
@@ -1152,11 +1154,11 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
         arrow->y2 = ((rcos(angle + 0x600) * 4 + 0x800) >> 12) + y;
         arrow->x3 = ((rsin(angle - 0x600) * 4 + 0x800) >> 12) + x;
         arrow->y3 = ((rcos(angle - 0x600) * 4 + 0x800) >> 12) + y;
-        addPrim(&D_80098934->tag78, arrow);
+        addPrim(&Disp_env_ptr->tag78, arrow);
 
         area = CODE5C_PRIM(DR_AREA)++;
         SetDrawArea(area, &D_80098050[CODE800133D8_DISPLAY_INDEX]);
-        addPrim(&D_80098934->tag78, area);
+        addPrim(&Disp_env_ptr->tag78, area);
 
         for (j = 0; j < size->y; j++)
         {
@@ -1304,7 +1306,7 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
                                 p->uv3 = 0x8F4F;
                                 break;
                         }
-                        addPrim(&D_80098934->tag78, p);
+                        addPrim(&Disp_env_ptr->tag78, p);
                     }
                 }
             }
@@ -1316,7 +1318,7 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
         clip.w = rect->w;
         clip.h = rect->h;
         SetDrawArea(area, &clip);
-        addPrim(&D_80098934->tag78, area);
+        addPrim(&Disp_env_ptr->tag78, area);
     }
 }
 
@@ -1332,7 +1334,7 @@ void func_8005E9F8(CODE5C_RECT *rect)
     p->x1 = p->x3 = rect->x + rect->w;
     p->y0 = p->y1 = rect->y;
     p->y2 = p->y3 = rect->y + rect->h;
-    addPrim(&D_80098934->tag78, p);
+    addPrim(&Disp_env_ptr->tag78, p);
 }
 
 void func_8005EAA8(CODE5C_RECT *rect)
@@ -1352,7 +1354,7 @@ void func_8005EAA8(CODE5C_RECT *rect)
         p->x1 = p->x3 = 0x140;
         p->y0 = p->y1 = i * 0x78;
         p->y2 = p->y3 = (i + 1) * 0x78;
-        addPrim(&D_80098934->tag78, p);
+        addPrim(&Disp_env_ptr->tag78, p);
     }
 }
 

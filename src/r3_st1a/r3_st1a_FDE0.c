@@ -94,9 +94,9 @@ void func_80110090(ST1A_VIEW_H *wp)
     }
     ctl->value_66  = 0;
     stun->damage_0 = 0;
-    wp->u_70.b[3]  = D_80098844[wp->kind_2]->value_A;
+    wp->u_70.b[3]  = Em_param_tbl[wp->kind_2]->value_A;
     Search_Player_Init(ctl->track_18, 7, -0x60);
-    wp->value_B2 = wp->value_B0 = wp->value_6E = D_80098844[wp->kind_2]->life_8 << 5;
+    wp->value_B2 = wp->value_B0 = wp->value_6E = Em_param_tbl[wp->kind_2]->life_8 << 5;
     wp->routine_1                              = 0;
     wp->routine_0                              = 1;
     wp->u_74.b[0]                              = 0;
@@ -148,7 +148,7 @@ void func_801101F4(ST1A_VIEW_I *wp)
         else
         {
             ctl->value_66 += damage;
-            if (!(ctl->flags_6C & 4) && ctl->value_66 >= D_80098844[wp->kind_2]->limit_9 * 16)
+            if (!(ctl->flags_6C & 4) && ctl->value_66 >= Em_param_tbl[wp->kind_2]->limit_9 * 16)
             {
                 ctl->flags_6C |= 4;
                 ctl->value_66 = 0;
@@ -3450,7 +3450,7 @@ void func_80116780(ST1A_STCOM27_WORK_C *wp)
     Model_work_init(wp, &wp->variant_3);
     Search_Player_Init(wp->ctl.track_0, 7, -0x60);
     wp->data_78 = D_80132AE0;
-    wp->life_6E = wp->life_max_B0 = D_8009884C[wp->kind_2]->life_8 << 4;
+    wp->life_6E = wp->life_max_B0 = Work_5A4_param_tbl[wp->kind_2]->life_8 << 4;
     wp->damage_B2                 = 0;
     wp->jump_74                   = 0;
     wp->ctl.sees_10               = 0;
@@ -3530,7 +3530,7 @@ void func_801169B0(ST1A_STCOM27_WORK_D *wp)
                 wp->life_6E = 0;
                 knock       = 1;
             }
-            else if (wp->damage_B2 >= D_8009884C[wp->kind_2]->value_9 * 16)
+            else if (wp->damage_B2 >= Work_5A4_param_tbl[wp->kind_2]->value_9 * 16)
             {
                 knock = 1;
             }
@@ -3931,9 +3931,9 @@ void func_80117548(ST1A_STCOM27_WORK *wp)
                 effect->sprite.position = wp->position;
             }
 #ifdef __wasm32__
-            func_80047148(wp, &wp->position);
+            Obj_item_drop(wp, &wp->position);
 #else
-            func_80047148(wp, &wp->position, effect);
+            Obj_item_drop(wp, &wp->position, effect);
 #endif
             wp->routine_0 = 2;
             wp->routine_1 = 0;
@@ -4032,7 +4032,7 @@ void func_80117820(STAGE_OBJ *wp)
 void func_80117868(ST1A_OBJ *wp)
 {
     EM_Char_Set(wp, 9, 0);
-    wp->value_510        = D_8009884C[wp->kind_2]->value_A | 0x1000000;
+    wp->value_510        = Work_5A4_param_tbl[wp->kind_2]->value_A | 0x1000000;
     wp->value_516        = 0x3C;
     wp->value_44.half[0] = 0x400;
     wp->value_44.half[1] = 0;
@@ -4989,7 +4989,7 @@ void func_80119320(ST1A_OBJ *wp)
         wp->u_F8.part[11].value_3 = -1;
         bp->part_58[3]->value_6 |= 0x20;
     }
-    wp->value_B2 = wp->value_B0 = wp->value_6E = D_8009884C[wp->kind_2]->life_8 << 7;
+    wp->value_B2 = wp->value_B0 = wp->value_6E = Work_5A4_param_tbl[wp->kind_2]->life_8 << 7;
     wp->value_78                               = 0;
     wp->value_10                               = 0;
     D_80139738.life_0[0]                       = (sint16)(wp->value_6E / 10) * 9;
@@ -5150,7 +5150,7 @@ void func_80119B18(ST1A_OBJ *wp)
             wp->value_490       = -0x60;
             wp->anim_AC         = 0;
             wp->hit_440.value_4 = 0;
-            wp->hit_440.value_8 = D_8009884C[wp->kind_2]->value_A;
+            wp->hit_440.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
             wp->value_493       = 0;
             wp->value_492       = 0;
             fp                  = (ST1A_FLASH *)Open_SHL_WORK();
@@ -5197,7 +5197,7 @@ void func_80119CA0(ST1A_OBJ *wp)
             wp->routine_2++;
             bp->hit_0.value_4 = 0;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_B;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_B;
             bp->value_53      = 1;
             bp->value_52      = 0;
             if (bp->value_7A <= 0 && !(bp->hit_0.flags_0.h[1] & 3))
@@ -5261,7 +5261,7 @@ void func_80119CA0(ST1A_OBJ *wp)
                 bp->hit_0.value_4 = 0x10;
                 bp->value_50      = -0x180;
                 bp->value_52      = 0;
-                bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
+                bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
                 Sound_call2(0x1D4, &wp->position);
             }
             break;
@@ -5305,7 +5305,7 @@ void func_8011A080(ST1A_OBJ *wp)
             bp->value_50               = 0x60;
             bp->hit_0.value_4          = 0x10;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
             bp->value_53      = 2;
             bp->value_52      = 0;
             bp->hit_0.flags_0.half &= ~2;
@@ -5384,7 +5384,7 @@ void func_8011A488(ST1A_OBJ *wp)
             bp->value_50      = 0x60;
             bp->hit_0.value_4 = 0;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
             bp->value_53      = 0;
             bp->value_52      = 0;
             bp->value_72[0]   = 0;
@@ -5498,7 +5498,7 @@ void func_8011A8A8(ST1A_OBJ *wp)
             bp->hit_0.value_4 = 0x10;
             bp->value_50      = -0x180;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_E;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_E;
             bp->value_53      = 0;
             bp->value_52      = 0;
             break;
@@ -5683,7 +5683,7 @@ void func_8011B000(ST1A_OBJ *wp)
             wp->value_490     = -0x60;
             bp->hit_0.value_4 = 0x1E;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
             wp->value_493     = 0;
             wp->value_492     = 0;
             if (func_8011E9E8(&Player_work.position) != 0)
@@ -5714,7 +5714,7 @@ void func_8011B000(ST1A_OBJ *wp)
             Obj_pos_set(wp, wp->value_4C.half[0] * 16, wp->value_4C.words.integer * 16, 0);
             if (wp->value_A7 < 0 && wp->anim_AC != 4 && ++wp->anim_AC == 4)
             {
-                bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_C;
+                bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_C;
                 wp->value_492     = 1;
             }
             ground = Scr_height_check(wp);
@@ -5725,7 +5725,7 @@ void func_8011B000(ST1A_OBJ *wp)
                 wp->anim_AC            = 5;
                 wp->routine_2++;
                 bp->hit_0.value_4 = 0;
-                bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_A;
+                bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
                 bp->value_52      = 0;
                 fx                = Open_EFFECT_WORK();
                 if (fx != NULL)
@@ -5790,7 +5790,7 @@ void func_8011B4B4(ST1A_OBJ *wp)
             bp->hit_0.value_4 = 0;
             bp->hit_0.value_6 = 0x10;
             bp->hit_0.flags_0.half |= 0x20;
-            bp->hit_0.value_8 = D_8009884C[wp->kind_2]->value_D;
+            bp->hit_0.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_D;
             bp->value_53      = 0;
             bp->value_52      = 0;
             wp->u_C.b.byte_C  = 0;
@@ -5979,7 +5979,7 @@ void func_8011BA74(ST1A_OBJ *wp)
             wp->value_490       = -0x60;
             wp->anim_AC         = 0;
             wp->hit_440.value_4 = 0;
-            wp->hit_440.value_8 = D_8009884C[wp->kind_2]->value_A;
+            wp->hit_440.value_8 = Work_5A4_param_tbl[wp->kind_2]->value_A;
             wp->value_493       = 0;
             wp->value_492       = 0;
             fp                  = (ST1A_FLASH *)Open_SHL_WORK();
@@ -6226,7 +6226,7 @@ sint32 func_8011C260(ST1A_OBJ *wp)
                     dm->flags_0 &= ~0xC;
                     wp->value_B2 = 0;
                     wp->value_6E = 0;
-                    damage       = D_8009884C[wp->kind_2]->value_9;
+                    damage       = Work_5A4_param_tbl[wp->kind_2]->value_9;
                 }
                 else
                 {
@@ -6270,7 +6270,8 @@ sint32 func_8011C260(ST1A_OBJ *wp)
             if (dm->flags_0 & 8)
             {
                 dm->stagger_A += damage;
-                if ((dm->hit_18 & 0x20000000) || dm->stagger_A >= D_8009884C[wp->kind_2]->value_9)
+                if ((dm->hit_18 & 0x20000000) ||
+                    dm->stagger_A >= Work_5A4_param_tbl[wp->kind_2]->value_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     dm->stagger_A = 0;
@@ -7828,7 +7829,8 @@ STAGE_OBJ *func_8011F27C(void)
         op->position_fixed_prev = op->position_fixed.v;
         op->rotation_prev       = op->rotation;
         Gauge_clear();
-        op->life_prev_B2 = op->life_max_B0 = op->life_6E = D_8009884C[op->kind_2]->life_8 << 8;
+        op->life_prev_B2 = op->life_max_B0 = op->life_6E =
+            Work_5A4_param_tbl[op->kind_2]->life_8 << 8;
         Gauge_open(op, 0, 0, 0x81, 0x806468);
         func_8005D4D4();
         return op;

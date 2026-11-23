@@ -54,7 +54,7 @@ extern STCOM33_SCROLL stcom33_D_0000[]; // by variant_3
 extern STCOM33_FUNC stcom33_D_003C[];   // routine_0 handlers (stcom33_func_0000)
 
 // ROCK_NEO.EXE.
-extern STCOM33_LINK *D_80098934;
+extern STCOM33_LINK *Disp_env_ptr;
 sint32 Sce_flag_test(sint32 flag);
 void SetDrawMove(STCOM33_DR_MOVE *p, RECT *rect, sint32 x, sint32 y);
 

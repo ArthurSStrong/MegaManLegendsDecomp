@@ -155,7 +155,7 @@ typedef struct
     uint8 reserved6C[0xA0];            // 6C
 } ST14_PIECE;
 
-// A record of ROCK_NEO's table at D_8009884C, by kind (ST13_KIND).
+// A record of ROCK_NEO's table at Work_5A4_param_tbl, by kind (ST13_KIND).
 typedef struct
 {
     uint8 reserved0[8]; // 0
@@ -289,7 +289,7 @@ typedef struct
 
 typedef void (*ST14_ACTOR_FUNC)(ST14_ACTOR *wp);
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -413,8 +413,8 @@ struct ST14_PROP
     sint32 hit_C8;                          // C8
 };
 
-extern ST14_KIND **D_8009884C;
-extern ST14_KIND2 **D_80098844;
+extern ST14_KIND **Work_5A4_param_tbl;
+extern ST14_KIND2 **Em_param_tbl;
 extern STAGE_SLOT_FUNC *D_801144F4[];
 extern STAGE_SLOT_FUNC *D_80114634[];
 extern STAGE_SLOT_FUNC D_80114694[];
@@ -551,12 +551,12 @@ void func_8010E0B0(ST14_TALKER *wp);
 void func_8010E304(ST14_TALKER *wp);
 void func_8010E454(ST14_TALKER *wp);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
-// func_80047148 as func_8010C9CC calls it: without the effect (retail passes whatever a2 holds).
-void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
+// Obj_item_drop as func_8010C9CC calls it: without the effect (retail passes whatever a2 holds).
+void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("Obj_item_drop");
 // Obj_pos_set as func_8010CDB0 calls it: without a prototype, so an int result is set in v0.
 sint32 func_8002FEA4_int(void *wp, sint32 x, sint32 y, sint32 z) __asm__("Obj_pos_set");
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);

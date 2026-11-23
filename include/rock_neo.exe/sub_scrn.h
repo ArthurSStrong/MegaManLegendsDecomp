@@ -170,7 +170,7 @@ typedef void (*SUB_FUNC)(SUB_WORK *wp);
 #define SUB_GAME_WORK   ((SUB_GAME *)0x800C1B10)
 
 extern SUB_PLAYER Player_work;
-extern SUB_OT *D_80098934;
+extern SUB_OT *Disp_env_ptr;
 extern SUB_WORK D_800A38F0;
 extern SUB_FUNC Sub_screen_routine_tbl[];
 extern SUB_BYTE Rock_buster_parts_tbl[][8];
@@ -202,7 +202,7 @@ void Sub_screen_rb_parts_calc_sub00(SUB_WORK *wp, sint32 idx);
 void Sub_screen_rb_parts_calc_sub01(SUB_WORK *wp, sint32 idx);
 void Message_event_clear(void);
 void Game_logo_init(void);
-void func_800665E8(void);
+void Card_screen_init(void);
 void func_8001B314(void);
 void Sound_seq_stop_all(void);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);

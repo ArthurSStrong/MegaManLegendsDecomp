@@ -193,8 +193,8 @@ extern uint8 D_80112F78[];
 
 void func_80107AE4(STAGE_ACTOR *wp);
 
-void func_8001EB98(void *entry);
-void func_8001E3F0(sint32 arg);
+void Sce_slot_open_keep(void *entry);
+void Sce_light_add(sint32 arg);
 extern uint8 D_801131CC[];
 extern STAGE_SCRIPT_ENTRY D_801131E0[];
 sint32 func_80101360(STAGE_ROOM_WORK *wp);
@@ -544,7 +544,7 @@ void func_8010C784(ST08_10C *wp, STAGE_OBJ50 *owner);
 extern uint8 D_80118598;
 void Moji_item_set(sint32 arg);
 void Moji_time_set(sint32 score);
-void func_8005C24C(sint32 arg);
+void Moji_weapon_set(sint32 arg);
 sint32 Sound_seq_end_check(sint32 arg);
 
 void Camera_return_set(void);

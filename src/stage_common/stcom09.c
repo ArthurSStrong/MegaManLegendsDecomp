@@ -52,7 +52,7 @@ void stcom09_func_00CC(STCOM09_WORK *wp)
     wp->hit.pos_8.x += wp->position.x;
     wp->hit.pos_8.y += wp->position.y;
     wp->hit.pos_8.z += wp->position.z;
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8;
     wp->routine_1                                    = 0;
 }
 
@@ -359,9 +359,9 @@ void stcom09_func_0A64(STCOM09_WORK *wp)
         effect->variant_3       = 0;
         effect->sprite.position = wp->hit.pos_8;
 #ifdef __wasm32__
-        func_80047148(wp, &wp->position);
+        Obj_item_drop(wp, &wp->position);
 #else
-        func_80047148(wp, &wp->position, effect);
+        Obj_item_drop(wp, &wp->position, effect);
 #endif
         Close_EM_WORK(wp);
     }

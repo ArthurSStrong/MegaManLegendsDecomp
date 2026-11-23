@@ -96,7 +96,7 @@ void func_80102F50(ST1C_OBJ *wp);
 void func_80102FD0(ST1C_OBJ *wp);
 void func_80103178(ST1C_OBJ *wp);
 void Sce_flag_off(sint32 flag);
-void func_8001E3F0(sint32 arg);
+void Sce_light_add(sint32 arg);
 extern STCOM_SVECTOR D_80104484[]; // position and y rotation by value_C (func_801034C8)
 extern uint8 D_801044C4[];         // variant by value_C
 extern uint8 D_801044CC[];

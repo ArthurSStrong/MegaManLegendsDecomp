@@ -263,8 +263,8 @@ void func_80119A78(void)
     mode = (DR_MODE *)++*STAGE_PACKET_PTR;
     SetDrawMode(mode, 0, 0, 0x4F, NULL);
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80119BD4(void)

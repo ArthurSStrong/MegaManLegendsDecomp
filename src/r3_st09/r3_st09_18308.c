@@ -337,7 +337,7 @@ void func_80118DC0(ST09_BOX *wp)
                 Close_WORK_50(wp);
                 if ((wp->variant_3 & 0xF) == 1)
                 {
-                    func_80047228(wp, &wp->pos_38, 2);
+                    Obj_item_drop_n(wp, &wp->pos_38, 2);
                     Sce_flag_on(wp->flag_46);
                     break;
                 }
@@ -345,7 +345,7 @@ void func_80118DC0(ST09_BOX *wp)
                 {
                     Sce_flag_on(wp->flag_46);
                 }
-                func_80047228(wp, &wp->pos_38, ctl->value_2 & 1);
+                Obj_item_drop_n(wp, &wp->pos_38, ctl->value_2 & 1);
                 break;
             }
             wp->color_40 -= 0x202020;

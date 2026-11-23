@@ -41,8 +41,8 @@ void func_801078A8(ST0E_VIEW *wp)
     wp->routine_0      = 1;
     wp->value_B4       = 0x808080;
     wp->value_78       = 0;
-    wp->u_70.b[3]      = D_80098928[wp->kind_2]->value_A;
-    wp->value_6E       = D_80098928[wp->kind_2]->life_8;
+    wp->u_70.b[3]      = Shl_param_tbl[wp->kind_2]->value_A;
+    wp->value_6E       = Shl_param_tbl[wp->kind_2]->life_8;
     wp->hit_CC.flags_8 = 0;
 }
 

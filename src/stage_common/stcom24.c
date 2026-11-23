@@ -88,7 +88,7 @@ void stcom24_func_033C(STCOM24_WORK *wp)
     wp->scale.v.y = 0x200;
     wp->scale.v.z = 0x200;
     Search_Player_Init(wp->ctl.track_40, 3, -200);
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 4;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->data_78                                      = stcom24_D_0000;
     wp->position.y                                   = Scr_height_check(wp);
     wp->position_fixed.y                             = wp->position.y << 16;
@@ -101,8 +101,8 @@ void stcom24_func_033C(STCOM24_WORK *wp)
     wp->ctl.timer_4 = 180;
     wp->ctl.timer_6 = 0;
     wp->ctl.flags_0 |= 1;
-    wp->ctl.kind_10         = D_80098844[wp->kind_2]->value_B;
-    wp->ctl.kind_14         = D_80098844[wp->kind_2]->value_C;
+    wp->ctl.kind_10         = Em_param_tbl[wp->kind_2]->value_B;
+    wp->ctl.kind_14         = Em_param_tbl[wp->kind_2]->value_C;
     wp->ctl.damage_12       = 0;
     wp->ctl.damage_16       = 0;
     wp->ctl.body_20.hit_0   = 0;
@@ -661,13 +661,13 @@ void stcom24_func_1408(STCOM24_WORK *wp)
 
 void stcom24_func_1434(STCOM24_WORK *wp)
 {
-    // Never set: func_80047148 gets whatever a2 holds.
+    // Never set: Obj_item_drop gets whatever a2 holds.
     STCOM_EFFECT *effect;
 
 #ifdef __wasm32__
-    func_80047148(wp, wp->joints_180);
+    Obj_item_drop(wp, wp->joints_180);
 #else
-    func_80047148(wp, wp->joints_180, effect);
+    Obj_item_drop(wp, wp->joints_180, effect);
 #endif
     Close_EM_WORK(wp);
 }
@@ -682,7 +682,7 @@ sint8 stcom24_func_1468(STCOM24_WORK *wp)
     sint32 limit;
 
     result = 0;
-    limit  = D_80098844[wp->kind_2]->limit_9;
+    limit  = Em_param_tbl[wp->kind_2]->limit_9;
     ctl    = &wp->ctl;
     damage = ctl->body_20.hit_0 & 0xFFFFFF;
     if (damage != 0 && (wp->ctl.body_20.hit_0 & 0x38000000))
@@ -734,7 +734,7 @@ sint8 stcom24_func_15E8(STCOM24_WORK *wp)
 
     result = 0;
     damage = wp->ctl.claw_30.hit_0 & 0xFFFFFF;
-    limit  = D_80098844[wp->kind_2]->limit_A;
+    limit  = Em_param_tbl[wp->kind_2]->limit_A;
     if (damage != 0 && (wp->ctl.claw_30.hit_0 & 0x38000000))
     {
         wp->ctl.damage_16 += damage;

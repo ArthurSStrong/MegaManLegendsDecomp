@@ -714,7 +714,7 @@ void func_80104030(ST0A_EN *wp)
     wp->ctl.home_34  = wp->position;
     wp->ctl.held_3C  = NULL;
     wp->ctl.owner_40 = Obj_id_work(wp->byte_C);
-    life             = D_80098844[wp->kind_2]->life_28;
+    life             = Em_param_tbl[wp->kind_2]->life_28;
     wp->data_78      = D_80115988;
     wp->routine_0    = 1;
     wp->data_10      = NULL;
@@ -959,7 +959,8 @@ sint32 func_8010490C(ST0A_EN *wp)
             if (wp->ctl.flags_0 & 8)
             {
                 wp->ctl.damage_A += damage;
-                if ((wp->ctl.hit_14 & 0x20000000) || wp->ctl.damage_A >= D_80098844[wp->kind_2]->stun_29)
+                if ((wp->ctl.hit_14 & 0x20000000) ||
+                    wp->ctl.damage_A >= Em_param_tbl[wp->kind_2]->stun_29)
                 {
                     Sound_call2(0xA2, &wp->position);
                     wp->rotation.y            = (wp->ctl.owner_40->rotation.y + 0x800) & 0xFFF;

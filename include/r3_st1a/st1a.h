@@ -673,7 +673,7 @@ extern sint8 *D_80132D38[];
 extern sint8 *D_80132D64[];
 
 // Used by functions still in assembly (types from their accesses).
-// A record of ROCK_NEO's table at D_8009884C, by kind.
+// A record of ROCK_NEO's table at Work_5A4_param_tbl, by kind.
 typedef struct
 {
     uint8 reserved0[8]; // 0
@@ -687,7 +687,7 @@ typedef struct
     uint8 track_F;      // F: Search_Player_Init's argument
 } ST1A_KIND;
 
-extern ST1A_KIND **D_8009884C;
+extern ST1A_KIND **Work_5A4_param_tbl;
 extern sint32 D_800989FC;
 extern uint8 D_800A395F;
 extern STCOM_FIXED_VECTOR D_800A39F0; // the camera position (ROCK_NEO's PL_FIXED_VECTOR)
@@ -3011,9 +3011,9 @@ typedef struct
 void func_801172D8(ST1A_ACTOR *wp);
 
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void func_80117548(ST1A_STCOM27_WORK *wp);
 
@@ -3191,7 +3191,7 @@ typedef struct
 // The view's control block at +0x348.
 #define ST1A_CTL_OF(wp) ((ST1A_CTL *)((uint8 *)&(wp)->ext + 0x20))
 
-extern STCOM16_KIND **D_80098844;
+extern STCOM16_KIND **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80110090(ST1A_VIEW_H *wp);
 
@@ -3851,8 +3851,8 @@ struct ST1A_VIEW_K
 
 void func_80110F54(ST1A_VIEW_K *wp);
 
-// func_80047148 as func_80110F54 calls it: with two arguments (retail leaves a2 unset).
-void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
+// Obj_item_drop as func_80110F54 calls it: with two arguments (retail leaves a2 unset).
+void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("Obj_item_drop");
 
 void func_801025F4(sint32 x, sint32 y, sint16 radius, sint16 shade);
 

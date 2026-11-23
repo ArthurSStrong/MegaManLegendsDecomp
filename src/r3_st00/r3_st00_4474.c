@@ -2,7 +2,7 @@
 #include "st00.h"
 
 #ifdef __wasm32__
-void func_80047148(void *wp, void *obj);
+void Obj_item_drop(void *wp, void *obj);
 #endif
 
 void func_80104474(STAGE_OBJ *wp)
@@ -150,11 +150,11 @@ void func_80104A08(STAGE_STCOM15_WORK_348 *wp)
     *(uint32 *)&wp->ctl.value_8 = 0;
     wp->ctl.hit_14              = 0;
     wp->ctl.value_18            = 0;
-    Search_Player_Init(wp->ctl.track_24, D_80098844[wp->kind_2]->value_F, -0x60);
+    Search_Player_Init(wp->ctl.track_24, Em_param_tbl[wp->kind_2]->value_F, -0x60);
     wp->ctl.timer_36 = 4;
     wp->ctl.timer_34 = wp->position.pad;
     wp->position.pad = 0;
-    life             = D_80098844[wp->kind_2]->life_8;
+    life             = Em_param_tbl[wp->kind_2]->life_8;
     wp->data_78      = D_8011BF50;
     wp->data_10      = NULL;
     wp->life_6E      = life;
@@ -259,7 +259,7 @@ void func_80104BE4(ST00_ACTOR_B *wp)
                 fx->sprite.position = wp->position;
             }
             Close_EM_WORK(wp);
-            func_80047148(wp, &wp->value_180);
+            Obj_item_drop(wp, &wp->value_180);
             Sound_call2(0xA1, &wp->value_180);
         }
     }
@@ -623,7 +623,7 @@ void func_80105974(STAGE_STCOM15_WORK_348 *wp)
             wp->routine_2 = 1;
             wp->anim_AC   = 7;
             ctl->timer_4  = 9;
-            ctl->value_8  = D_80098844[wp->kind_2]->value_A;
+            ctl->value_8  = Em_param_tbl[wp->kind_2]->value_A;
             ctl->flags_0 &= ~0x20;
             // fall through
         case 1:
@@ -763,13 +763,13 @@ sint32 func_80105DEC(ST00_ACTOR_B *wp)
             if (wp->value_6E <= 0)
             {
                 wp->ctl.flags_0 = (wp->ctl.flags_0 & ~2) | 0x88;
-                damage          = D_80098844[wp->kind_2]->limit_9;
+                damage          = Em_param_tbl[wp->kind_2]->limit_9;
             }
             if (wp->ctl.flags_0 & 8)
             {
                 wp->ctl.timer_A += damage;
                 if ((wp->ctl.hit_14 & 0x20000000) ||
-                    wp->ctl.timer_A >= D_80098844[wp->kind_2]->limit_9)
+                    wp->ctl.timer_A >= Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     if (wp->ctl.target_1C.pad & 1)
@@ -801,7 +801,7 @@ sint32 func_80105DEC(ST00_ACTOR_B *wp)
             else
             {
                 Sound_call2(((wp->ctl.hit_14 & 0x20000000) ||
-                             wp->ctl.timer_A >= D_80098844[wp->kind_2]->limit_9)
+                             wp->ctl.timer_A >= Em_param_tbl[wp->kind_2]->limit_9)
                                 ? 0xA2
                                 : 0xA0,
                             &wp->position);
@@ -916,7 +916,7 @@ void func_8010648C(ST00_OBJ *wp)
     wp->value_35C      = 0;
     wp->value_360      = 0;
     Search_Player_Init(wp->track_36C, 0, -0x60);
-    life                      = D_80098844[wp->kind_2]->life_8;
+    life                      = Em_param_tbl[wp->kind_2]->life_8;
     wp->value_78              = D_8011C014;
     wp->value_10              = 0;
     wp->routine_0             = 1;

@@ -55,7 +55,7 @@ void func_80017994(void)
     func_800176DC(D_800AD168 + 0x980, D_80098B70 + 0x200, 8);
 }
 
-void func_800179FC(void)
+void Clut_light_apply(void)
 {
     uint32 i, j;
     sint32 r, g, b;
@@ -116,8 +116,8 @@ void Fade_draw(void)
     {
         setRGB0(&D_80098A28[CODE800133D8_DISPLAY_INDEX], CODE178_FADE_WORK.value,
                 CODE178_FADE_WORK.value, CODE178_FADE_WORK.value);
-        addPrim(&D_80098934->tag74, &D_80098A28[CODE800133D8_DISPLAY_INDEX]);
-        addPrim(&D_80098934->tag74, &D_80098A10[CODE800133D8_DISPLAY_INDEX]);
+        addPrim(&Disp_env_ptr->tag74, &D_80098A28[CODE800133D8_DISPLAY_INDEX]);
+        addPrim(&Disp_env_ptr->tag74, &D_80098A10[CODE800133D8_DISPLAY_INDEX]);
     }
 }
 
@@ -494,7 +494,7 @@ void func_80018534(void)
         p->y2             = D_80099192[CODE178_QUAD_CORNER(i, 2)].value;
         p->x3             = D_80099190[CODE178_QUAD_CORNER(i, 3)].value;
         p->y3             = D_80099192[CODE178_QUAD_CORNER(i, 3)].value;
-        addPrim(&D_80098934->tag78, p);
+        addPrim(&Disp_env_ptr->tag78, p);
     }
     if (++D_80098A6C >= 64)
     {
@@ -543,7 +543,7 @@ void func_80018850(void)
         case 1:
             D_80098810 = 0;
             j          = CODE178_FADE_WORK.flags04 * 4;
-            link       = D_80098934;
+            link       = Disp_env_ptr;
             for (i = 0; i < 32; i++)
             {
                 index = CODE800133D8_DISPLAY_INDEX;
@@ -558,7 +558,7 @@ void func_80018850(void)
                 p->y3 = ((D_80099ADA[(i + 1) & 0x1F].value * j) >> 12) + 120;
                 addPrim(&link->tag78, p);
             }
-            addPrim(&D_80098934->tag78, &D_80098160[index]);
+            addPrim(&Disp_env_ptr->tag78, &D_80098160[index]);
             if (++CODE178_FADE_WORK.flags04 >= 64)
             {
                 CODE178_FADE_WORK.enabled   = 1;
@@ -612,7 +612,7 @@ void func_80018BB8(void)
         case 1:
             D_80098810 = 0;
             j          = CODE178_FADE_WORK.flags04 * 4;
-            link       = D_80098934;
+            link       = Disp_env_ptr;
             for (i = 0; i < 32; i++)
             {
                 index = CODE800133D8_DISPLAY_INDEX;
@@ -627,7 +627,7 @@ void func_80018BB8(void)
                 p->y3 = ((D_80099ADA[(i + 1) & 0x1F].value * 105) >> 11) + 120;
                 addPrim(&link->tag78, p);
             }
-            addPrim(&D_80098934->tag78, &D_80098160[index]);
+            addPrim(&Disp_env_ptr->tag78, &D_80098160[index]);
             if (--CODE178_FADE_WORK.flags04 == 0)
             {
                 CODE178_FADE_WORK.flags04 = 5;
@@ -645,7 +645,7 @@ void func_80018BB8(void)
             }
             j     = CODE178_FADE_WORK.flags04 * 4;
             outer = CODE178_FADE_WORK.flags04 * 16 + 16;
-            for (i = 0, ot = D_80098934; i < 32; i++)
+            for (i = 0, ot = Disp_env_ptr; i < 32; i++)
             {
                 index = CODE800133D8_DISPLAY_INDEX;
                 p     = &D_800991D8[index][i];
@@ -659,7 +659,7 @@ void func_80018BB8(void)
                 p->y3 = ((D_80099ADA[(i + 1) & 0x1F].value * outer) >> 12) + 120;
                 addPrim(&ot->tag78, p);
             }
-            addPrim(&D_80098934->tag78, &D_80098160[index]);
+            addPrim(&Disp_env_ptr->tag78, &D_80098160[index]);
             break;
     }
 }
@@ -696,7 +696,7 @@ void func_80019210(void)
             break;
         case 1:
             index      = CODE800133D8_DISPLAY_INDEX;
-            link       = D_80098934;
+            link       = Disp_env_ptr;
             D_80098810 = 0;
             p          = &D_800991D8[index][0];
             i          = (60 - CODE178_FADE_WORK.flags04) * 3;
@@ -756,7 +756,7 @@ void func_800194C4(void)
             break;
         case 1:
             index = CODE800133D8_DISPLAY_INDEX;
-            link  = D_80098934;
+            link  = Disp_env_ptr;
             addPrim(&link->tag78, &D_80098178[index]);
             addPrim(&link->tag78, &D_80098160[index]);
             D_80098810 = 0;

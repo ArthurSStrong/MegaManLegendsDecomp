@@ -225,22 +225,22 @@ sint32 func_8012AFA0(void)
         {
             if (Sce_flag_test(0x575))
             {
-                func_8001E3F0(4);
+                Sce_light_add(4);
             }
             else if (!Sce_flag_test(0x576))
             {
-                func_8001E3F0(5);
+                Sce_light_add(5);
             }
             else
             {
-                func_8001E3F0(4);
+                Sce_light_add(4);
             }
             Sce_flag_on(0x205);
             Sce_flag_select(0x2E6);
         }
         else
         {
-            func_8001E3F0(8);
+            Sce_light_add(8);
             Sce_flag_select(0x2E5);
         }
         Sce_flag_off(0x7E0);
@@ -289,7 +289,7 @@ void func_8012B15C(STAGE_OBJ50 *wp)
             wp->routine_1++;
             // fall through
         case 1:
-            floor = func_8004920C(&wp->pos_38) - 0x14;
+            floor = Scr_point_height(&wp->pos_38) - 0x14;
             wp->value_48 -= wp->value_4C;
             wp->pos_38.y = y = ((STAGE_FIXED *)&wp->value_48)->words.integer;
             wp->value_4C -= 0x40000;
@@ -848,7 +848,7 @@ void func_8012C344(STAGE_OBJ50 *wp)
             if (Player_control_off(&Player_work))
             {
                 func_8012B948(wp);
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 MojiTaskExec2(0, 0x35);
                 if (Game_work_90[wp->value_F].kind_0 < 3)
                 {
@@ -862,7 +862,7 @@ void func_8012C344(STAGE_OBJ50 *wp)
             {
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8005C24C(wp->value_F * 3 + D_80138018);
+                    Moji_weapon_set(wp->value_F * 3 + D_80138018);
                     MojiTaskExec2(0, 2);
                     wp->routine_3++;
                 }
@@ -897,7 +897,7 @@ void func_8012C4F4(STAGE_OBJ *wp)
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
                 Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 MojiTaskExec2(0, 0x36);
                 wp->routine_3++;
             }
@@ -907,7 +907,7 @@ void func_8012C4F4(STAGE_OBJ *wp)
             {
                 if (!(Moji_flag & 0x08000000))
                 {
-                    func_8005C24C(wp->u_E.b.byte_F * 3 + D_80138018);
+                    Moji_weapon_set(wp->u_E.b.byte_F * 3 + D_80138018);
                     MojiTaskExec2(0, 2);
                     wp->routine_3++;
                 }
@@ -942,7 +942,7 @@ void func_8012C6A0(STAGE_OBJ50 *wp)
             if (Player_control_off(&Player_work))
             {
                 func_8012B948(wp);
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 MojiTaskExec2(0, 0x37);
                 if (Game_work_90[wp->value_F].kind_0 < 3)
                 {
@@ -954,7 +954,7 @@ void func_8012C6A0(STAGE_OBJ50 *wp)
         case 1:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8005C24C(wp->value_F * 3 + D_80138018);
+                Moji_weapon_set(wp->value_F * 3 + D_80138018);
                 MojiTaskExec2(0, 2);
                 wp->routine_3++;
             }
@@ -984,7 +984,7 @@ void func_8012C830(STAGE_OBJ *wp)
             {
                 Sce_flag_on(wp->u_E.b.byte_F + 0x201);
                 Moji_item_set(D_801379F8[wp->u_E.b.byte_F].value_14[0]);
-                func_8001E3F0(7);
+                Sce_light_add(7);
                 MojiTaskExec2(0, 0x4D);
                 wp->routine_3++;
             }
@@ -992,7 +992,7 @@ void func_8012C830(STAGE_OBJ *wp)
         case 1:
             if (!(Moji_flag & 0x08000000))
             {
-                func_8005C24C(wp->u_E.b.byte_F * 3 + D_80138018);
+                Moji_weapon_set(wp->u_E.b.byte_F * 3 + D_80138018);
                 MojiTaskExec2(0, 2);
                 wp->routine_3++;
             }

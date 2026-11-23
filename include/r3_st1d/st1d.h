@@ -432,7 +432,7 @@ extern STAGE_OBJ_FUNC D_80114EA8[];
 extern STCOM16_FUNC D_80114E44[]; // routine_0 handlers (func_8010D0A4)
 extern STCOM16_FUNC D_80114E78[]; // routine_2 handlers (func_8010DE14)
 extern STCOM16_FUNC D_80114E94[]; // routine_2 handlers (func_8010E384)
-extern STCOM16_KIND **D_80098844;
+extern STCOM16_KIND **Em_param_tbl;
 extern STCOM16_FUNC D_80114EC4[]; // routine_2 handlers (func_8010EE48)
 extern STCOM16_FUNC D_80114ED0[]; // routine_2 handlers (func_8010F4DC)
 extern ST1D_SPAWN_REC D_80113FC0[];
@@ -516,12 +516,12 @@ sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed)
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
-// func_80047148 as func_8010C84C calls it: with two arguments (retail leaves a2 unset).
-void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
+// Obj_item_drop as func_8010C84C calls it: with two arguments (retail leaves a2 unset).
+void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("Obj_item_drop");
 void func_8010B75C(STAGE_OBJ *wp);
 void func_80111BA8(STAGE_OBJ *wp);
 void func_80102B08(STAGE_OBJ *wp);
@@ -556,14 +556,14 @@ void func_801038B0(ST1D_VIEW *wp);
 void func_801040F8(ST1D_VIEW *wp);
 sint32 func_801052A0(ST1D_VIEW *wp);
 
-void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
+void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 void func_801036B0(ST1D_VIEW *wp);
 
 void func_80103FD8(ST1D_VIEW *wp);
 
 void func_80104B20(ST1D_VIEW *wp);
 
-// A ROCK_NEO record per object kind (D_80098844), past stcom16's fields.
+// A ROCK_NEO record per object kind (Em_param_tbl), past stcom16's fields.
 typedef struct
 {
     uint8 reserved00[0xF];
@@ -601,7 +601,7 @@ void Gauge_close(void *wp);
 
 void Sound_key_off_voice(sint32 voice);
 void func_80111D78(void);
-extern STCOM16_KIND **D_8009884C; // a second record per kind
+extern STCOM16_KIND **Work_5A4_param_tbl; // a second record per kind
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 a4);
 void func_80017684(void *src, void *dst, sint32 count);
 void func_8010C9AC(ST1D_VIEW *wp, uint8 kind);

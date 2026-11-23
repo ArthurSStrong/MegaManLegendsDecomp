@@ -40,7 +40,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 index_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: nonzero: stays near home
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
@@ -98,7 +98,7 @@ typedef struct
     uint8 reserved66[0xA6];            // 66
 } STCOM24_SHOT;
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -122,14 +122,14 @@ sint8 stcom24_func_1468(STCOM24_WORK *wp);
 sint8 stcom24_func_15E8(STCOM24_WORK *wp);
 
 // ROCK_NEO.EXE.
-extern STCOM24_KIND **D_80098844;
+extern STCOM24_KIND **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 sint32 func_80031F84(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 STCOM24_SHOT *Open_SHL_WORK(void);
 

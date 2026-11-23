@@ -832,7 +832,7 @@ extern uint8 D_80122310[][8];
 void Sound_key_off_voice(sint32 voice);
 void Close_WORK_5A4(void *wp);
 void Sce_flag_off(sint32 flag);
-void func_8001E3F0(sint32 arg);
+void Sce_light_add(sint32 arg);
 void Draw_dist_far(void);
 void func_801006B8(void);
 
@@ -1045,7 +1045,7 @@ extern ST06_ACTOR_FUNC D_8012556C[];
 void func_801158B8(ST06_ACTOR *wp);
 void func_8010EF94(ST06_ACTOR *wp);
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -1055,7 +1055,7 @@ typedef struct
     uint8 value_B; // 0B: Map_obj_hit_damage's amount (func_801180F8)
 } ST06_KIND;
 
-extern ST06_KIND **D_80098844;
+extern ST06_KIND **Em_param_tbl;
 
 void func_80105AF0(STAGE_ROOM *wp);
 
@@ -1349,7 +1349,7 @@ extern ST06_CRAB_FUNC D_8012524C[];
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 sint32 SquareRoot0(sint32 v);
 // The crabs pass only two arguments (retail leaves a2 as the call before left it).
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 
 // The 0x10C-byte slot func_80111C4C spawns at the crab (kind 6: stcom06's emitter, like
 // stcom15's STCOM15_SHOT).
@@ -1604,7 +1604,7 @@ void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 
 uint8 *Model_face_get(void *model, sint32 id);
 
-extern ST06_KIND **D_8009884C; // the same record layout as D_80098844 (func_80117160)
+extern ST06_KIND **Work_5A4_param_tbl; // the same record layout as Em_param_tbl (func_80117160)
 
 extern ST06_CRAB_FUNC D_80125890[];
 

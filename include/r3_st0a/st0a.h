@@ -615,7 +615,7 @@ typedef struct
 
 typedef void (*ST0A_EM_FUNC)(ST0A_EM *wp);
 
-// A record of ROCK_NEO's table at D_8009884C, by kind (r3_st13's ST13_KIND).
+// A record of ROCK_NEO's table at Work_5A4_param_tbl, by kind (r3_st13's ST13_KIND).
 typedef struct
 {
     uint8 reserved0[8]; // 0
@@ -629,7 +629,7 @@ typedef struct
     uint8 value_F;      // F
 } ST0A_KIND;
 
-extern ST0A_KIND **D_8009884C;
+extern ST0A_KIND **Work_5A4_param_tbl;
 
 // A model's draw record at a 0x10C-byte slot's +0x88.
 typedef struct
@@ -759,7 +759,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06
@@ -808,7 +808,7 @@ typedef struct
 
 typedef void (*ST0A_EN_FUNC)(ST0A_EN *wp);
 
-// A ROCK_NEO record per kind (D_80098844; stcom13's STCOM13_KIND has the same at 0x18).
+// A ROCK_NEO record per kind (Em_param_tbl; stcom13's STCOM13_KIND has the same at 0x18).
 typedef struct
 {
     uint8 reserved00[0x28];
@@ -816,7 +816,7 @@ typedef struct
     uint8 stun_29; // damage that ends a stun
 } ST0A_EN_KIND;
 
-extern ST0A_EN_KIND **D_80098844;
+extern ST0A_EN_KIND **Em_param_tbl;
 void *Obj_id_work(sint32 kind);
 sint32 Search_Player(void *track, void *wp);
 

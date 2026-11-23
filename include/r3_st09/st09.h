@@ -40,7 +40,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06
@@ -686,7 +686,7 @@ void func_80101E84(ST09_VIEW *wp);
 
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -697,7 +697,7 @@ typedef struct
     uint8 value_F;       // 0F
 } ST09_KIND;
 
-extern ST09_KIND **D_80098844;
+extern ST09_KIND **Em_param_tbl;
 void *Obj_id_work(sint32 id); // the spawned slot with this id; callers use their own view
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 // The scale vector r3_st09's stcom15 enemies keep in their block's +0x34 (ScaleMatrix).
@@ -705,7 +705,7 @@ void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint16 Scr_height_check(void *wp);
 
 sint32 func_801031E8(ST09_VIEW *wp);
-void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
+void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
                      sint32 target_rot, sint32 target_range);
@@ -778,7 +778,7 @@ void func_80117354(ST09_EVENT *wp);
 typedef struct
 {
     uint16 flags_0; // 2C: 2 hittable, 4 registers its hit box, 8 resets the color
-    uint16 value_2; // 2E: rand(); bit 0 picks func_80047228's drop
+    uint16 value_2; // 2E: rand(); bit 0 picks Obj_item_drop_n's drop
     uint32 hit_4;   // 30: damage (low 24 bits) and kind bits
     uint32 value_8; // 34
 } ST09_BOX_CTL;
@@ -1012,7 +1012,7 @@ void func_80111508(STAGE_OBJ *wp);
 sint32 func_80112918(STAGE_STCOM15_WORK_4E0 *wp);
 sint32 Player_atari_off(void);
 
-// A ROCK_NEO record per kind and variant (D_8009884C): 16 bytes each.
+// A ROCK_NEO record per kind and variant (Work_5A4_param_tbl): 16 bytes each.
 typedef struct
 {
     uint8 reserved00[8];
@@ -1022,7 +1022,7 @@ typedef struct
     uint8 value_F; // Search_Player_Init's second argument
 } ST09_KIND_REC;
 
-extern ST09_KIND_REC **D_8009884C;
+extern ST09_KIND_REC **Work_5A4_param_tbl;
 
 // stcom15's control block as the paired object uses it (func_80112918): its two parts at +0x34.
 typedef struct

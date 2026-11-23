@@ -73,7 +73,7 @@ void func_80100468(STAGE_ROOM *wp);
 
 extern STAGE_ROOM_FUNC D_80108410[];  // room scripts by room (scene flag 0x1FF clear)
 extern STAGE_ROOM_FUNC *D_801083D0[]; // room scripts by script set, then room
-void func_8001EB98(void *entry);
+void Sce_slot_open_keep(void *entry);
 extern STCOM_SVECTOR D_80108AC0[];
 extern uint32 D_80108AE0[];
 sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);

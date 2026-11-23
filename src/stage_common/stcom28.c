@@ -280,7 +280,7 @@ void stcom28_func_07F4(STCOM28_WORK *wp)
     wp->jump_74 = 1;
     Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
     wp->velocity.y += wp->accel.y;
-    wp->ctl.kind_3C = D_80098928[wp->kind_2]->value_A;
+    wp->ctl.kind_3C = Shl_param_tbl[wp->kind_2]->value_A;
     wp->routine_1   = 5;
     wp->routine_2   = 0;
 }
@@ -505,9 +505,9 @@ void stcom28_func_0D40(STCOM28_WORK *wp)
             effect->sprite.position = wp->position;
         }
 #ifdef __wasm32__
-        func_80047148(wp, &wp->position);
+        Obj_item_drop(wp, &wp->position);
 #else
-        func_80047148(wp, &wp->position, effect);
+        Obj_item_drop(wp, &wp->position, effect);
 #endif
         wp->routine_0 = 2;
         wp->routine_1 = 0;

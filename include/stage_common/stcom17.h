@@ -69,7 +69,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: mode in the low nibble
     uint8 value_4;                          // 04
     uint8 reserved05;                       // 05
@@ -152,7 +152,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03
     uint8 value_4;                          // 04
     uint8 reserved05[3];                    // 05
@@ -189,7 +189,7 @@ typedef struct
     STCOM17_GUN_CTL ctl;                    // 308
 } STCOM17_GUN_WORK;
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -210,7 +210,7 @@ extern STCOM17_GUN_FUNC stcom17_D_0034[]; // routine_0 handlers (stcom17_func_16
 extern STCOM17_GUN_FUNC stcom17_D_0040[]; // routine_1 handlers (stcom17_func_1990)
 
 // ROCK_NEO.EXE.
-extern STCOM17_KIND **D_80098844;
+extern STCOM17_KIND **Em_param_tbl;
 extern uint8 Scene_work; // nonzero while a scene runs
 STCOM17_SHOT *Open_SHL_WORK(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
@@ -224,9 +224,9 @@ uint32 View_check_ang(void *wp, void *other, STCOM_SVECTOR *range, STCOM_FIXED_V
 sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void Ride_clear(void *wp);
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);

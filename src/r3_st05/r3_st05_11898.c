@@ -115,7 +115,7 @@ void func_80111CEC(ST05_WAGON *wp)
     ctl->value_18            = 0;
     ctl->flags_0 |= 0xB2;
     ctl->link_34 = Obj_id_work(wp->u_C.b.byte_D);
-    Search_Player_Init(ctl->track_24, D_80098844[ctl->link_34->kind_2]->track_F, -0x60);
+    Search_Player_Init(ctl->track_24, Em_param_tbl[ctl->link_34->kind_2]->track_F, -0x60);
     ctl->value_3C          = ctl->value_40;
     ctl->value_40[0]       = 0;
     ctl->value_40[1]       = 0;
@@ -970,7 +970,7 @@ void func_801139EC(ST05_WALKER *wp)
     wp->u_C.b.byte_C &= 0xF0;
     // Pointer arithmetic, not life_A[...]: it keeps retail's addu operand order.
     wp->value_B2 = wp->value_B0 = wp->value_6E =
-        *(D_80098844[wp->kind_2]->life_A + wp->variant_3) * 32;
+        *(Em_param_tbl[wp->kind_2]->life_A + wp->variant_3) * 32;
     wp->data_78            = D_8013143C;
     wp->value_10           = 0;
     wp->position.y         = Scr_height_check(wp);
@@ -984,7 +984,7 @@ void func_801139EC(ST05_WALKER *wp)
     ctl->hit_14                 = 0;
     *(sint32 *)&ctl->reserved18 = 0;
     ctl->flags_0 |= 6;
-    Search_Player_Init(ctl->track_24, D_80098844[wp->kind_2]->track_F, -0x200);
+    Search_Player_Init(ctl->track_24, Em_param_tbl[wp->kind_2]->track_F, -0x200);
     if (!(ctl->flags_0 & 0x200))
     {
         ctl->node_38              = &D_80131790[wp->variant_3][D_801317B4[wp->variant_3]];
@@ -1944,7 +1944,7 @@ void func_80115CA4(ST05_WALKER *wp)
                 wp->u_E.b.byte_E = 0;
                 wp->u_E.b.byte_F = 0;
                 wp->flags_0 &= ~3;
-                func_80047148(wp, &wp->position);
+                Obj_item_drop(wp, &wp->position);
             }
             break;
     }

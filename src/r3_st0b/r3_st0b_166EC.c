@@ -24,7 +24,7 @@ void func_80116728(ST0B_EVENT *wp)
         return;
     }
     ST0B_GAME_174       = 0;
-    STAGE_GAME.value_5E = D_80098928[0x12]->value_8 << 4;
+    STAGE_GAME.value_5E = Shl_param_tbl[0x12]->value_8 << 4;
     wp->flags_6 |= 0x20;
     if (Sce_flag_test(0x1B) == 0)
     {
@@ -47,7 +47,7 @@ void func_80116728(ST0B_EVENT *wp)
         Sound_call(0x10, 0, 0);
     }
     Sound_call(0x100, 0, 0);
-    func_8005D844(0, 0, D_80098928[0x12]->value_A);
+    func_8005D844(0, 0, Shl_param_tbl[0x12]->value_A);
     func_80117938((STAGE_OBJ *)wp);
     if (wp->variant_3 != 0)
     {

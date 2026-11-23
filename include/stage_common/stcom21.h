@@ -116,7 +116,7 @@ sint32 Money_check(sint32 a0);
 void Money_add(sint32 a0, sint32 a1, sint32 a2);
 void Pl_life_add(sint32 a0, sint32 a1);
 void Sce_flag_select(sint32 a0);
-void func_8001E3F0(sint32 a0);
+void Sce_light_add(sint32 a0);
 STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);

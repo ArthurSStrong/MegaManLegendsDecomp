@@ -47,7 +47,7 @@ void main(void)
         }
         Pad_update_all();
         SCRATCH_BUFFER_INDEX ^= 1;
-        D_80098934       = (CODE800133D8_LINK *)&Joy1.disp_env[SCRATCH_BUFFER_INDEX];
+        Disp_env_ptr     = (CODE800133D8_LINK *)&Joy1.disp_env[SCRATCH_BUFFER_INDEX];
         SCRATCH_PRIM_PTR = D_800A4D40[SCRATCH_BUFFER_INDEX];
         ClearOTagR(CURRENT_DISP_ENV->ot, OT_LEN);
         ClearOTagR((u_long *)D_800A4D40[SCRATCH_BUFFER_INDEX], 0x1000);
@@ -95,7 +95,7 @@ void System_init(void)
     ChangeClearPAD(0);
     Disp_env_set();
     thread_init();
-    D_80098934           = (CODE800133D8_LINK *)D_800C0C48;
+    Disp_env_ptr         = (CODE800133D8_LINK *)D_800C0C48;
     D_800D9B00           = 0;
     SCRATCH_BUFFER_INDEX = 0;
     SCRATCH_VSYNC_WAIT   = 2;
@@ -272,7 +272,7 @@ long exception_viewer(void)
         DrawOTag(&CURRENT_DISP_ENV->ot[OT_LEN - 1]);
         Pad_update_all();
         SCRATCH_BUFFER_INDEX ^= 1;
-        D_80098934       = (CODE800133D8_LINK *)&D_800C0C48[SCRATCH_BUFFER_INDEX];
+        Disp_env_ptr     = (CODE800133D8_LINK *)&D_800C0C48[SCRATCH_BUFFER_INDEX];
         SCRATCH_PRIM_PTR = D_800A4D40[SCRATCH_BUFFER_INDEX];
         ClearOTagR(CURRENT_DISP_ENV->ot, OT_LEN);
         ClearOTagR((u_long *)D_800A4D40[SCRATCH_BUFFER_INDEX], 0x1000);
@@ -335,7 +335,7 @@ long exception_viewer(void)
         else
         {
             func_80012988(&bank[sel]);
-            func_80012A5C((DEBUG_MEMORY_ROW *)bank[sel], page - 1);
+            debug_mem_dump((DEBUG_MEMORY_ROW *)bank[sel], page - 1);
         }
     }
 }
@@ -408,7 +408,7 @@ void func_80012988(uint32 *value)
     }
 }
 
-void func_80012A5C(DEBUG_MEMORY_ROW *rows, uint32 mode)
+void debug_mem_dump(DEBUG_MEMORY_ROW *rows, uint32 mode)
 {
     uint32 i;
     DEBUG_MEMORY_ROW *row;
@@ -658,7 +658,7 @@ void func_8001326C(sint8 *state)
     }
     Game_logo_init();
     Moji_init();
-    func_800665E8();
+    Card_screen_init();
     Cd_read_comb(0x1D);
     Game_work.option_5b  = 1;
     *(uint8 *)0x1F800074 = 0;

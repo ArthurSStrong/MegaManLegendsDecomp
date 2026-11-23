@@ -33,7 +33,7 @@ void func_8010011C(void)
     STAGE_MAP_WORK_PTR->exits  = D_80109820[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010984C[D_801098E4[Game_work.value_51]], D_80109824[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80100284();
 }
 
@@ -119,11 +119,11 @@ sint32 func_80100578(void)
     {
         if (Sce_flag_test(0x21B) && !Sce_flag_test(0x22B))
         {
-            func_8001EB98(D_8010E1B8);
+            Sce_slot_open_keep(D_8010E1B8);
         }
         if (!Sce_flag_test(0x23C))
         {
-            func_8001EB98(D_8010E1CC);
+            Sce_slot_open_keep(D_8010E1CC);
         }
     }
     Sce_flag_on(0x1FF);

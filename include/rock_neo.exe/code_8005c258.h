@@ -149,7 +149,7 @@ extern sint16 D_800BBE46;
 extern uint32 D_800BBE48;
 
 extern uint8 D_800B7030;
-extern CODE5C_ROOM D_8008D19C[];
+extern CODE5C_ROOM Automap_room_tbl[];
 // Map view clip rectangles, one per display buffer.
 extern RECT D_80098050[];
 extern sint32 D_80098008;
@@ -165,7 +165,7 @@ extern sint32 D_80098794;
 extern sint32 D_8009882C;
 extern sint32 Gauge_count;
 extern sint32 D_80098B18;
-extern CODE5C_SPRITE D_8008D750[5];
+extern CODE5C_SPRITE Hud_sprite_tbl[5];
 extern CODE5C_SPRITE D_8008D688[][5];
 extern CODE5C_SPRITE D_8008D37C[][5];
 extern CODE5C_SPRITE D_8008D570[];
@@ -224,14 +224,14 @@ extern sint32 D_80098010;
 extern CODE5C_OFS9 D_80098038; // {-1, 0, 1, -1, 0, 1, -1, 0, 1}
 extern CODE5C_OFS9 D_80098044; // {-1, -1, -1, 0, 0, 0, 1, 1, 1}
 extern uint8 D_800BBD9C;
-extern sint32 D_800BC9B8[0x280];
+extern sint32 Automap_visited[0x280];
 
 sint32 Player_weapon_bullet_calc(PL_WORK *wp, sint32 index);
 // Hand-written 32-byte block copy in asm_fastmem.s.
 void func_800176DC(void *src, void *dst, sint32 blocks);
 void func_800177CC(void *start, void *end);
-void func_8005D298(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size);
-void func_8005D39C(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 color);
+void hud_sprite_draw(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size);
+void hud_sprite_draw_color(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 color);
 void func_8005C720(CODE5C_WORK *wp);
 void func_8005C868(CODE5C_WORK *wp);
 void func_8005C978(CODE5C_WORK *wp);
@@ -242,8 +242,8 @@ void func_8005D0FC(CODE5C_SLOT *wp);
 void gauge_show(void);
 void Gauge_hide(void);
 void Gauge_show_release(void);
-void func_8005DCDC(void);
-void func_8005DE28(void);
+void automap_visit(void);
+void automap_draw(void);
 void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect);
 void func_8005E9F8(CODE5C_RECT *rect);
 void func_8005EAA8(CODE5C_RECT *rect);

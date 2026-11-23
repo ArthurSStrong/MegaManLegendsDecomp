@@ -203,7 +203,7 @@ extern uint32 Sound_flags;
 extern uint8 D_800C356E;
 extern uint8 D_800C356F;
 extern uint32 D_800A4D40[][0x1000];
-extern SUP_LINK *D_80098934;
+extern SUP_LINK *Disp_env_ptr;
 extern uint32 D_801DC190[]; // routine word by Moji_flag
 // Scenario flag combinations (flags 0x500 + n) and the flag (0x2F4 + n) they set.
 typedef struct
@@ -244,7 +244,7 @@ void MojiTaskKill(void);
 uint32 Sce_flag_test(uint32 flag);
 void Sce_flag_off(uint32 flag);
 void Sce_flag_on(uint32 flag);
-sint32 func_800665FC(sint32 arg);
+sint32 Card_screen_exec(sint32 arg);
 void Sound_call(sint32 sound, ...);
 void func_8001B314(void);
 void Sound_seq_stop_all(void);
@@ -288,7 +288,7 @@ void func_801DB800(void);
 void Map_obj_state_save(void);
 void Moji_task_kill(sint32 arg);
 void Moji_amount_set(sint32 price);
-void func_8005C24C(sint32 kind);
+void Moji_weapon_set(sint32 kind);
 void Obj_work_flag_change(sint32 a0, sint32 a1);
 sint32 Money_check(sint32 amount);
 void func_801D8F68(void);

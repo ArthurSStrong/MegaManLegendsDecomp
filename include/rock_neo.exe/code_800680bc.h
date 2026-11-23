@@ -74,7 +74,7 @@ typedef struct
 
 #define CODE68_PACKET_PTR ((POLY_FT4 **)0x1F800070)
 
-extern CODE68_LINK *D_80098934;
+extern CODE68_LINK *Disp_env_ptr;
 
 typedef struct CODE68_WORK CODE68_WORK;
 typedef void (*CODE68_FUNC)(CODE68_WORK *wp);
@@ -135,8 +135,8 @@ extern sint16 D_800C356A;
 extern sint16 Fade_busy;
 
 void func_800680BC(sint32 arg);
-void func_80068508(CODE68_CHILD *child, sint32 index);
-void func_80068120(sint32 r, sint32 g, sint32 b, uint16 tpage);
+void part_col_step(CODE68_CHILD *child, sint32 index);
+void screen_tile_draw(sint32 r, sint32 g, sint32 b, uint16 tpage);
 void func_80101D94(void);
 void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
 #ifdef __wasm32__
@@ -145,7 +145,7 @@ void *Sce_slot_open(CODE68_ENTRY *entry);
 void Sce_slot_open(CODE68_ENTRY *entry);
 #endif
 void func_80068CE0(CODE68_WORK *wp);
-void func_80068D64(CODE68_WORK *wp);
+void event_step_call(CODE68_WORK *wp);
 void func_80068DA4(void);
 void Fade_start(sint32 arg);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);

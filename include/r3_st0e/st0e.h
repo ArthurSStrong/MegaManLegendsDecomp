@@ -790,9 +790,9 @@ void func_80108AE4(ST0E_VIEW *);
 void func_80108820(ST0E_VIEW *wp);
 void func_80108980(ST0E_VIEW *wp);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 
 void func_80105AB0(ST0E_PROP *wp);
@@ -809,7 +809,7 @@ void func_8010DC00(sint32 textured, sint32 type, sint32 count, STCOM_SVECTOR *po
 void Scr_event_check(void *wp);
 void Ride_clear(void *wp);
 
-// A ROCK_NEO record per 0x10C-slot kind (D_80098928).
+// A ROCK_NEO record per 0x10C-slot kind (Shl_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -818,7 +818,7 @@ typedef struct
     uint8 value_A;    // 0A: its hit kind
 } ST0E_KIND10C;
 
-extern ST0E_KIND10C **D_80098928;
+extern ST0E_KIND10C **Shl_param_tbl;
 
 void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 

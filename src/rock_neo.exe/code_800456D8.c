@@ -263,16 +263,16 @@ void func_80045FE4(CODE456_WORK *wp)
     switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
-            ent = D_8009884C[wp->index_2];
+            ent = Work_5A4_param_tbl[wp->index_2];
             break;
         case 0x20:
-            ent = D_80098844[wp->index_2];
+            ent = Em_param_tbl[wp->index_2];
             break;
         case 0x60:
-            ent = D_80098928[wp->index_2];
+            ent = Shl_param_tbl[wp->index_2];
             break;
         case 0xE0:
-            ent = D_8009892C[wp->index_2];
+            ent = Work_50_param_tbl[wp->index_2];
             break;
     }
 }
@@ -286,21 +286,21 @@ void func_80046008(CODE456_WORK *wp)
     switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
-            ent = D_8009884C[wp->index_2];
+            ent = Work_5A4_param_tbl[wp->index_2];
             break;
         case 0x20:
-            ent = D_80098844[wp->index_2];
+            ent = Em_param_tbl[wp->index_2];
             break;
         case 0x60:
-            ent = D_80098928[wp->index_2];
+            ent = Shl_param_tbl[wp->index_2];
             break;
         case 0xE0:
-            ent = D_8009892C[wp->index_2];
+            ent = Work_50_param_tbl[wp->index_2];
             break;
     }
 }
 
-void func_8004602C(CODE456_WORK *wp)
+void Item_drop_move(CODE456_WORK *wp)
 {
     uint16 uv0;
     uint16 uv1;
@@ -313,7 +313,7 @@ void func_8004602C(CODE456_WORK *wp)
     {
         func_80046F38();
     }
-    D_8008A6A8[wp->routine_8](wp);
+    Item_drop_tbl[wp->routine_8](wp);
     if (wp->flag_3 != 0 && (wp->routine_0 & 2) && wp->routine_8 < 5)
     {
         if (++wp->routine_9 >= 4)
@@ -350,9 +350,9 @@ void func_800461A4(CODE456_WORK *wp)
     }
     else
     {
-        func_800469A4(wp);
+        item_drop_spin(wp);
     }
-    func_80046A0C(wp);
+    item_drop_get(wp);
     wp->timer_b = 0xFF;
 }
 
@@ -376,7 +376,7 @@ void func_8004622C(CODE456_WORK *wp)
     }
     else
     {
-        func_800469A4(wp);
+        item_drop_spin(wp);
     }
     hit = func_8004B5CC(&cur, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
     if (hit)
@@ -404,7 +404,7 @@ void func_8004622C(CODE456_WORK *wp)
         }
         func_8004AC8C(&wp->mtx_18.tr.h.tx_lo, hit);
     }
-    func_80046A0C(wp);
+    item_drop_get(wp);
 }
 
 // The difference gets its own variable (it then takes r's register), computed before the
@@ -433,10 +433,10 @@ void func_80046438(CODE456_WORK *wp)
         wp->snd_38.pos.y += wp->mtx_18.tr.h.value_2e;
     }
     func_8004B5CC(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
-    func_80046A0C(wp);
+    item_drop_get(wp);
     if (wp->flag_3 == 0)
     {
-        func_800469A4(wp);
+        item_drop_spin(wp);
     }
 }
 
@@ -465,10 +465,10 @@ void func_800465C8(CODE456_WORK *wp)
         wp->snd_38.pos.y += wp->mtx_18.tr.h.value_2e;
     }
     func_8004B5CC(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
-    func_80046A0C(wp);
+    item_drop_get(wp);
     if (wp->flag_3 == 0)
     {
-        func_800469A4(wp);
+        item_drop_spin(wp);
     }
 }
 
@@ -528,7 +528,7 @@ void func_80046890(CODE456_WORK *wp)
     wp->mtx_18 = m;
 }
 
-void func_800469A4(CODE456_WORK *wp)
+void item_drop_spin(CODE456_WORK *wp)
 {
     wp->mtx_18.m[2][1] = 0;
     wp->mtx_18.m[2][0] = 0;
@@ -541,7 +541,7 @@ void func_800469A4(CODE456_WORK *wp)
     wp->rot_c += 0x100;
 }
 
-void func_80046A0C(CODE456_WORK *wp)
+void item_drop_get(CODE456_WORK *wp)
 {
     uint32 r;
     uint8 idx = wp->value_a;
@@ -555,18 +555,18 @@ void func_80046A0C(CODE456_WORK *wp)
         wp->routine_8 = 5;
         if (wp->flag_3 == 0)
         {
-            Money_add(D_8008A678[Game_work.option_5b][idx], 0, 0);
+            Money_add(Item_zenny_tbl[Game_work.option_5b][idx], 0, 0);
         }
         else
         {
-            Pl_life_add(D_8008A680[Game_work.option_5b][idx], 0);
+            Pl_life_add(Item_life_tbl[Game_work.option_5b][idx], 0);
         }
     }
 }
 
 // The count's mask is written in the test and again in the assignment: CSE keeps it in v0 and
 // copies it to s7, as retail does (a plain count = arg & 0xFF folds the andi into s7).
-void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
+void item_drop_set(PL_SHORT_VECTOR *pos, uint32 arg)
 {
     uint32 count;
     CODE456_WORK *wp;
@@ -607,7 +607,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
         wp->snd_38.pos = *pos;
         wp->snd_38.half[1] -= 20;
         r    = rand();
-        size = D_8008A5A8[kind][r & 0xF];
+        size = Item_size_tbl[kind][r & 0xF];
         if (size >= 5)
         {
             Close_EFFECT_WORK(wp);
@@ -655,7 +655,7 @@ void func_80046B34(PL_SHORT_VECTOR *pos, uint32 arg)
         wp->routine_9  = 0;
         wp->snd_38.pos = *pos;
         r              = rand();
-        size           = D_8008A5A8[kind2][r & 0xF];
+        size           = Item_size_tbl[kind2][r & 0xF];
         if (size >= 5)
         {
             Close_EFFECT_WORK(wp);
@@ -718,47 +718,47 @@ void func_80046F38(void)
     }
 }
 
-void func_80047148(CODE456_WORK *wp, void *obj)
+void Obj_item_drop(CODE456_WORK *wp, void *obj)
 {
     switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
-            func_80046B34(obj, D_8009884C[wp->index_2][0].word);
+            item_drop_set(obj, Work_5A4_param_tbl[wp->index_2][0].word);
             break;
         case 0x20:
-            func_80046B34(obj, D_80098844[wp->index_2][0].word);
+            item_drop_set(obj, Em_param_tbl[wp->index_2][0].word);
             break;
         case 0x60:
-            func_80046B34(obj, D_80098928[wp->index_2][0].word);
+            item_drop_set(obj, Shl_param_tbl[wp->index_2][0].word);
             break;
         case 0xE0:
-            func_80046B34(obj, D_8009892C[wp->index_2][0].word);
+            item_drop_set(obj, Work_50_param_tbl[wp->index_2][0].word);
             break;
     }
 }
 
-void func_80047228(CODE456_WORK *wp, void *obj, sint32 n)
+void Obj_item_drop_n(CODE456_WORK *wp, void *obj, sint32 n)
 {
     CODE456_ENTRY *ent;
 
     switch (Obj_id_class(wp->id_1))
     {
         case 0x40:
-            ent = D_8009884C[wp->index_2] + n;
+            ent = Work_5A4_param_tbl[wp->index_2] + n;
             break;
         case 0x20:
-            ent = D_80098844[wp->index_2] + n;
+            ent = Em_param_tbl[wp->index_2] + n;
             break;
         case 0x60:
-            ent = D_80098928[wp->index_2] + n;
+            ent = Shl_param_tbl[wp->index_2] + n;
             break;
         case 0xE0:
-            ent = D_8009892C[wp->index_2] + n;
+            ent = Work_50_param_tbl[wp->index_2] + n;
             break;
         default:
             return;
     }
-    func_80046B34(obj, ent->word);
+    item_drop_set(obj, ent->word);
 }
 
 void func_80047318(CODE456_WORK *wp)
@@ -889,7 +889,7 @@ void func_80047354(CODE456_BOX *wp)
                 Model_work_init(wp, (uint8 *)&arg);
                 break;
             default:
-                if (func_8004920C(&wp->snd_38) - wp->snd_38.pos.y < 30)
+                if (Scr_point_height(&wp->snd_38) - wp->snd_38.pos.y < 30)
                 {
                     arg = 0;
                     Model_work_init(wp, (uint8 *)&arg);

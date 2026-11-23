@@ -1902,7 +1902,7 @@ void Pl_r1_aim(PL_WORK *pl)
     {
         pl_turn_to(pl, dir, 1);
     }
-    else if (func_80041044(pl) == 0)
+    else if (pl_shot_button_held(pl) == 0)
     {
         pl_turn_to(pl, dir, 0);
     }
@@ -2133,7 +2133,7 @@ void Pl_r1_stand_check(PL_WORK *pl)
         pl->value44a = 0;
         if (func_800410D4(pl) != 0 ||
             ((pl_shot_start(pl, 0), pl_jump_start(pl) == 0) &&
-             (func_80041044(pl) != 0 || func_80040FA8(pl) == 0 || pl->routine_3 != 0 ||
+             (pl_shot_button_held(pl) != 0 || pl_shot_anim_done(pl) == 0 || pl->routine_3 != 0 ||
               (pl_run_start(pl) == 0 && pl_run_left_start(pl, pl->routine_3) == 0 &&
                pl_run_right_start(pl, pl->routine_3) == 0 &&
                pl_run_back_start(pl, pl->routine_3) == 0)) &&
@@ -2253,7 +2253,7 @@ void Pl_r1_run_check(PL_WORK *pl)
                          (pl->key_forward | pl->key_back | (pl->key_run_l | pl->key_run_r)) |
                          (pl->key_shot_l | pl->key_shot_r))) ||
                 (pad & (pl->key_run_l | pl->key_run_r)) == (pl->key_run_l | pl->key_run_r) ||
-                func_80041044(pl))
+                pl_shot_button_held(pl))
             {
                 break;
             }
@@ -2338,7 +2338,7 @@ void Pl_r1_run_check(PL_WORK *pl)
                          (pl->key_forward | pl->key_back | (pl->key_run_l | pl->key_run_r)) |
                          (pl->key_shot_l | pl->key_shot_r))) ||
                 (pad & (pl->key_run_l | pl->key_run_r)) == (pl->key_run_l | pl->key_run_r) ||
-                func_80041044(pl))
+                pl_shot_button_held(pl))
             {
                 break;
             }
@@ -2410,7 +2410,7 @@ void Pl_r1_turn_check(PL_WORK *pl)
     {
         return;
     }
-    if (func_80041044(pl) == 0)
+    if (pl_shot_button_held(pl) == 0)
     {
         if (pl_run_left_start(pl, 0) != 0 || pl_run_right_start(pl, 0) != 0 ||
             pl_run_start(pl) != 0)
@@ -3114,7 +3114,7 @@ void pl_shot_status_set(PL_WORK *pl, sint16 arg)
     }
 }
 
-sint32 func_80040FA8(PL_WORK *pl)
+sint32 pl_shot_anim_done(PL_WORK *pl)
 {
     sint32 type;
 
@@ -3127,7 +3127,7 @@ sint32 func_80040FA8(PL_WORK *pl)
     return 0;
 }
 
-sint32 func_80041044(PL_WORK *pl)
+sint32 pl_shot_button_held(PL_WORK *pl)
 {
     uint16 pad;
 

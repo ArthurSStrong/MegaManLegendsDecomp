@@ -92,7 +92,7 @@ void func_8010C994(STAGE_OBJ *wp, ST17_BOSS *ext)
     Model_work_init2(wp, 0);
     wp->scale.words[0] = 0x0C000C00;
     wp->scale.words[1] = 0xC00;
-    data               = D_8009884C[wp->kind_2];
+    data               = Work_5A4_param_tbl[wp->kind_2];
     for (i = 0; i < 12; i++)
     {
         switch (i)

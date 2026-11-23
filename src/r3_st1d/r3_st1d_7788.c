@@ -160,7 +160,7 @@ void func_80107AF0(ST1D_VIEW *wp)
     ext->value_14            = 0;
     ext->value_18            = 0;
     ext->u_24.w[1]           = 0;
-    life                     = D_80098844[wp->kind_2]->life_8 << 4;
+    life                     = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->data_78              = D_80114C94;
     wp->value_6E             = life;
     wp->value_B0             = life;
@@ -318,9 +318,9 @@ void func_801081D0(ST1D_VIEW *wp)
                     effect->sprite.position = wp->vec_180[1];
                 }
 #ifdef __wasm32__
-                func_80047148(wp, &wp->vec_180[0]);
+                Obj_item_drop(wp, &wp->vec_180[0]);
 #else
-                func_80047148(wp, &wp->vec_180[0], effect);
+                Obj_item_drop(wp, &wp->vec_180[0], effect);
 #endif
                 if (!(wp->value_F & 0x42))
                 {

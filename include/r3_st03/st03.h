@@ -448,7 +448,7 @@ struct ST03_VIEW
     uint8 reserved449[0x15B]; // 449
 };
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -707,7 +707,7 @@ extern sint16 D_8011CA84;
 extern ST03_ACTOR Em_work_tbl[]; // ROCK_NEO: the 0x3C0-byte work slots
 extern ST03_CAM D_800BC730;
 extern uint8 D_8011CA88;
-extern ST03_KIND **D_80098844;
+extern ST03_KIND **Em_param_tbl;
 extern uint16 Pl_demo_pad[]; // an array: GCC keeps its address in a register (func_80103EBC)
 extern sint16 D_800C0F9A;
 extern uint8 D_8011CA90;
@@ -730,7 +730,7 @@ void func_8001B314(void);
 void Sce_script_timer_clear(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
                          STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 void Sce_script_next(void);
@@ -807,7 +807,7 @@ void func_8010093C(STAGE_OBJ *wp);
 sint32 func_80101778(STAGE_OBJ *wp);
 sint32 func_801017D8(STAGE_OBJ *wp);
 void func_8010A9A8(STAGE_OBJ *wp);
-void func_8001EB98(uint8 *);
+void Sce_slot_open_keep(uint8 *);
 sint32 func_80101838(ST03_VIEW *wp);
 void func_8010D020(ST03_ACTOR *wp);
 void func_8010B2CC(ST03_ACTOR *wp);

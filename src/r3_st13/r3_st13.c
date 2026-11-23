@@ -38,7 +38,7 @@ void func_80100350(void)
     STAGE_MAP_WORK_PTR->exits = D_80116F78[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_801171E0[D_80117220[Game_work.value_51]], D_80116FB0[Game_work.value_51]);
-    func_8005DC10(D_80115C64[Game_work.value_51]);
+    Automap_room_set(D_80115C64[Game_work.value_51]);
     func_801004D8();
 }
 
@@ -177,7 +177,7 @@ sint32 func_801008A8(STAGE_ROOM *wp)
         else
         {
             Sce_flag_on(0x239);
-            func_8001EB98(D_8011738C);
+            Sce_slot_open_keep(D_8011738C);
         }
     }
     Sce_flag_on(0x1FF);
@@ -258,7 +258,7 @@ void func_801009C8(void)
     }
     for (i = 0; i < *count; i++)
     {
-        func_8001EB98(&D_8011738C[base + i]);
+        Sce_slot_open_keep(&D_8011738C[base + i]);
     }
 }
 
@@ -285,7 +285,7 @@ void func_80100BAC(ST13_STCOM27_WORK *wp)
     Model_work_init(wp, &wp->variant_3);
     Search_Player_Init(wp->ctl.track_0, 7, -0x60);
     wp->data_78 = D_8011750C;
-    wp->life_6E = wp->life_max_B0 = D_8009884C[wp->kind_2]->life_8 << 4;
+    wp->life_6E = wp->life_max_B0 = Work_5A4_param_tbl[wp->kind_2]->life_8 << 4;
     wp->damage_B2                 = 0;
     wp->jump_74                   = 0;
     wp->ctl.sees_10               = 0;
@@ -364,7 +364,7 @@ void func_80100DDC(ST13_STCOM27_WORK *wp)
                 wp->life_6E = 0;
                 knock       = 1;
             }
-            else if (wp->damage_B2 >= D_8009884C[wp->kind_2]->value_9 * 16)
+            else if (wp->damage_B2 >= Work_5A4_param_tbl[wp->kind_2]->value_9 * 16)
             {
                 knock = 1;
             }
@@ -755,9 +755,9 @@ void func_80101974(ST13_STCOM27_WORK *wp)
                 effect->sprite.position = wp->position;
             }
 #ifdef __wasm32__
-            func_80047148(wp, &wp->position);
+            Obj_item_drop(wp, &wp->position);
 #else
-            func_80047148(wp, &wp->position, effect);
+            Obj_item_drop(wp, &wp->position, effect);
 #endif
             wp->routine_0 = 2;
             wp->routine_1 = 0;
@@ -856,7 +856,7 @@ void func_80101C4C(STAGE_OBJ *wp)
 void func_80101C94(ST13_VIEW *wp)
 {
     EM_Char_Set(wp, 9, 0);
-    wp->value_510  = D_8009884C[wp->kind_2]->value_A | 0x1000000;
+    wp->value_510  = Work_5A4_param_tbl[wp->kind_2]->value_A | 0x1000000;
     wp->u_514.h[1] = 0x3C;
     wp->value_44   = 0x400;
     wp->value_46   = 0;

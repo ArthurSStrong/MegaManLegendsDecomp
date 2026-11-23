@@ -371,6 +371,6 @@ void func_8010320C(uint8 column, uint8 ch, sint16 y)
                 p->y3 = xy;
                 break;
         }
-        addPrim(&D_80098934->ot_78, p);
+        addPrim(&Disp_env_ptr->ot_78, p);
     }
 }

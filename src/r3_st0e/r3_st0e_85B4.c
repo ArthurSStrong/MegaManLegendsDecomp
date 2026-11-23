@@ -77,7 +77,7 @@ void func_80108820(ST0E_VIEW *wp)
         wp->value_6E += damage;
         Sound_call2(0xA0, &wp->position);
         wp->value_B4 = 0xFFFFFF;
-        if (wp->value_6E >= D_80098928[wp->kind_2]->life_8 * 16)
+        if (wp->value_6E >= Shl_param_tbl[wp->kind_2]->life_8 * 16)
         {
             fx = Open_EFFECT_WORK();
             if (fx != NULL)
@@ -88,9 +88,9 @@ void func_80108820(ST0E_VIEW *wp)
                 fx->sprite.position = wp->position;
             }
 #ifdef __wasm32__
-            func_80047148(wp, &wp->position);
+            Obj_item_drop(wp, &wp->position);
 #else
-            func_80047148(wp, &wp->position, fx);
+            Obj_item_drop(wp, &wp->position, fx);
 #endif
             while (D_80110504 < 8)
             {

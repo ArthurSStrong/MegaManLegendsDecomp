@@ -58,7 +58,7 @@ void func_80100268(void)
     STAGE_MAP_WORK_PTR->exits = D_8010AC4C[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010AD54[D_8010AD9C[Game_work.value_51]], D_8010AC64[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_8010044C();
 }
 
@@ -143,12 +143,12 @@ void func_80100594(STAGE_ROOM *wp)
                 stcom36_func_0028(2);
                 if (!Sce_flag_test(0x20))
                 {
-                    lead            = func_8001EB98(&D_8010C9DC[0]);
-                    ep              = func_8001EB98(&D_8010C9DC[1]);
+                    lead            = Sce_slot_open_keep(&D_8010C9DC[0]);
+                    ep              = Sce_slot_open_keep(&D_8010C9DC[1]);
                     ep->value_C4    = lead->position;
-                    ep              = func_8001EB98(&D_8010C9DC[2]);
+                    ep              = Sce_slot_open_keep(&D_8010C9DC[2]);
                     ep->value_C4    = lead->position;
-                    func_8001EB98(&D_8010C9DC[3]);
+                    Sce_slot_open_keep(&D_8010C9DC[3]);
                     wp->routine_4 = 10;
                 }
                 else

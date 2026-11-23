@@ -229,7 +229,7 @@ void func_80125724(ST05_PROP *wp)
     wp->rotation.z       = 0;
     wp->value_CC         = 0;
     wp->data_78          = NULL;
-    wp->position.y       = func_8004920C(&wp->position);
+    wp->position.y       = Scr_point_height(&wp->position);
     wp->draw_88.pos_24   = wp->position;
     RotMatrix(&wp->rotation, &wp->draw_88.matrix_4.m);
     scale.x = 0x200;
@@ -284,7 +284,7 @@ void func_80125880(ST05_PROP *wp)
                 {
                     msg         = D_801323A8[wp->value_F];
                     wp->value_F = (wp->value_F + 1) % 4;
-                    func_8001E3F0(0x1C);
+                    Sce_light_add(0x1C);
                 }
                 if (msg != 0)
                 {
@@ -514,22 +514,22 @@ void func_80126160(ST05_OBJ *wp)
 
     if (wp->value_44.half[0] < 0x20 || Scr_collision_check(wp) != 0)
     {
-        obj                 = func_8001EB98(&D_80132354[0]);
+        obj                 = Sce_slot_open_keep(&D_80132354[0]);
         obj->position       = wp->position;
         obj->position_fixed = wp->position_fixed;
         obj->rotation       = wp->rotation;
         obj->rotation.y += STAGE_FRAME & 0x1FF;
         obj->value_44.words.integer = -0xC0;
-        obj                         = func_8001EB98(&D_80132354[0]);
+        obj                         = Sce_slot_open_keep(&D_80132354[0]);
         obj->position               = wp->position;
         obj->position_fixed         = wp->position_fixed;
         obj->rotation               = wp->rotation;
         obj->rotation.y -= STAGE_FRAME & 0x1FF;
         obj->value_44.words.integer = -0xC0;
-        mark                        = func_8001EB98(&D_80132354[1]);
+        mark                        = Sce_slot_open_keep(&D_80132354[1]);
         mark->sprite.position       = wp->position;
         mark->value_F               = (uint8)wp->rotation.y >> 6;
-        obj                         = func_8001EB98(&D_80132354[2]);
+        obj                         = Sce_slot_open_keep(&D_80132354[2]);
         obj->position               = wp->u_B8.part->position;
         obj->position_fixed         = wp->u_B8.part->position_fixed;
         obj->rotation               = wp->u_B8.part->rotation;

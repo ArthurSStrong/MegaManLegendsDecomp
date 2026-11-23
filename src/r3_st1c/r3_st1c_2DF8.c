@@ -181,7 +181,7 @@ void func_80103178(ST1C_OBJ *wp)
                 {
                     Sce_flag_on(slot + 0x38);
                     Sce_flag_off(slot + 0x54B);
-                    func_8001E3F0(0x19);
+                    Sce_light_add(0x19);
                 }
                 pl->flags_0 |= 2;
                 wp->routine_2++;

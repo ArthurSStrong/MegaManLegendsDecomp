@@ -347,7 +347,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
         case 14:
             if (!(Moji_flag & 0x8000000))
             {
-                func_8001E3F0(0);
+                Sce_light_add(0);
                 wp->routine_2++;
             }
             break;
@@ -443,7 +443,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
                 {
                     stcom21_func_0D9C();
                 }
-                func_8001E3F0(1);
+                Sce_light_add(1);
                 wp->value_C |= 4;
                 stcom21_func_0E48(wp->value_D, 0);
                 wp->routine_2++;

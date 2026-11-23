@@ -108,7 +108,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
     ctl = &wp->ctl;
     if (ctl->hit_C & 0x20000000)
     {
-        func_8001E3F0(2);
+        Sce_light_add(2);
         wp->routine_0 = 6;
         wp->routine_1 = 0;
         return;

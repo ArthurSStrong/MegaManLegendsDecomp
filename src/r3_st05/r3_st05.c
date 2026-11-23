@@ -72,7 +72,7 @@ void func_801008F4(void)
     STAGE_MAP_WORK_PTR->exits = D_8012E1F4[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_8012E2D0[D_8012E438[Game_work.value_51]], D_8012E208[Game_work.value_51]);
-    func_8005DC10(0);
+    Automap_room_set(0);
     func_80106B28();
 }
 
@@ -1124,8 +1124,8 @@ void func_80102944(void)
     mode = (DR_MODE *)(poly + 1);
     func_800176DC(&D_80137DE0[ST05_BUFFER_INDEX], mode, 3);
     SetDrawMode(mode, 0, 0, GetTPage(2, 2, 0, 0), NULL);
-    addPrim(&D_80098934->ot_74, poly);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, poly);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80102A6C(STAGE_ROOM *wp)

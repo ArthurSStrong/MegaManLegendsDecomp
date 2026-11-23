@@ -27,7 +27,7 @@ typedef struct
     uint16 flags_0;          // 328
     uint16 rand_2;           // 32A: a new random number every frame
     sint16 timer_4;          // 32C
-    sint16 level_6;          // 32E: row of the kind's table (D_80098844)
+    sint16 level_6;          // 32E: row of the kind's table (Em_param_tbl)
     uint16 value_8;          // 330: or'd into the hit block's kind bits
     sint16 timer_A;          // 332
     STCOM_SVECTOR pos_C;     // 334: the hit box's center
@@ -52,7 +52,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 variant_3;                        // 03: flags
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
@@ -96,7 +96,7 @@ typedef struct
     uint8 reserved378[0x48];                // 378
 } STCOM15_WORK;
 
-// A ROCK_NEO record per kind and level (D_80098844).
+// A ROCK_NEO record per kind and level (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -121,10 +121,10 @@ extern uint8 stcom15_D_0068[4];       // turn chances out of 16 (stcom15_func_1D
 extern STCOM_SVECTOR stcom15_D_006C;  // a fixed point it turns from
 
 // ROCK_NEO.EXE.
-extern STCOM15_LEVEL **D_80098844;
+extern STCOM15_LEVEL **Em_param_tbl;
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
-void func_80047228(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
+void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 sint32 Sce_flag_test(sint32 flag);
 
 STCOM15_SHOT *Open_SHL_WORK(void);

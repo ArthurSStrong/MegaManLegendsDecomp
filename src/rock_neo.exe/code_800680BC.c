@@ -15,7 +15,7 @@ void func_800680BC(sint32 arg)
     D_800C3570 = 0xFF;
 }
 
-void func_80068120(sint32 r, sint32 g, sint32 b, uint16 tpage)
+void screen_tile_draw(sint32 r, sint32 g, sint32 b, uint16 tpage)
 {
     CODE68_TILE *tile;
     POLY_FT4 *packet;
@@ -37,8 +37,8 @@ void func_80068120(sint32 r, sint32 g, sint32 b, uint16 tpage)
     *CODE68_PACKET_PTR = mode;
     SetDrawMode((DR_MODE *)mode, 0, 0, (tpage << 5) | 0xF, NULL);
     (*CODE68_PACKET_PTR)++;
-    addPrim(&D_80098934->tag74, tile);
-    addPrim(&D_80098934->tag74, mode);
+    addPrim(&Disp_env_ptr->tag74, tile);
+    addPrim(&Disp_env_ptr->tag74, mode);
 }
 
 void func_80068244(CODE68_WORK *wp)
@@ -162,7 +162,7 @@ void func_8006849C(CODE68_WORK *wp)
     }
 }
 
-void func_80068508(CODE68_CHILD *child, sint32 index)
+void part_col_step(CODE68_CHILD *child, sint32 index)
 {
     CODE68_PAL *pal = (CODE68_PAL *)((uint8 *)child + index * 8);
 
@@ -204,16 +204,16 @@ void func_8006854C(CODE68_WORK *wp)
     if (wp->timer_10 >= 0xE && wp->timer_10 < 0x15)
     {
         child = wp->child_28;
-        func_80068508(child, 1);
-        func_80068508(child, 3);
-        func_80068508(child, 6);
-        func_80068508(child, 7);
-        func_80068508(child, 4);
-        func_80068508(child, 0xF);
-        func_80068508(child, 0x10);
-        func_80068508(child, 0x11);
-        func_80068508(child, 0x12);
-        func_80068508(child, 0x13);
+        part_col_step(child, 1);
+        part_col_step(child, 3);
+        part_col_step(child, 6);
+        part_col_step(child, 7);
+        part_col_step(child, 4);
+        part_col_step(child, 0xF);
+        part_col_step(child, 0x10);
+        part_col_step(child, 0x11);
+        part_col_step(child, 0x12);
+        part_col_step(child, 0x13);
     }
     if (wp->timer_10 == 0x39)
     {
@@ -500,7 +500,7 @@ void func_80068CE0(CODE68_WORK *wp)
     wp->word_64 = 0;
 }
 
-void func_80068D64(CODE68_WORK *wp)
+void event_step_call(CODE68_WORK *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -512,7 +512,7 @@ void func_80068DA4(void)
 {
 }
 
-void func_80068DAC(CODE68_WORK *wp)
+void Event_scene_main(CODE68_WORK *wp)
 {
     PL_WORK *pl;
 
@@ -553,10 +553,10 @@ void func_80068DAC(CODE68_WORK *wp)
             }
             // fall through
         case 5:
-            func_80068D64(wp);
+            event_step_call(wp);
             if (wp->word_64 != 0)
             {
-                func_80068120((uint8)wp->word_68, (uint8)wp->word_6c, (uint8)wp->word_70,
+                screen_tile_draw((uint8)wp->word_68, (uint8)wp->word_6c, (uint8)wp->word_70,
                               wp->word_74);
             }
             Sce_camera_script_exec();

@@ -218,8 +218,8 @@ set(AOT_GAME_CHECK_C "${GEN}/game/game_probe.c")
 set(AOT_GAME_CHECK_H "${GEN}/game/game_probe.h")
 add_custom_command(
     OUTPUT "${AOT_GAME_CHECK_WASM}"
-    COMMAND ${PORT_WASM_LD} --fatal-warnings --no-entry --export=func_8001E3F0
-            --export=func_800665FC --export=func_80066750
+    COMMAND ${PORT_WASM_LD} --fatal-warnings --no-entry --export=Sce_light_add
+            --export=Card_screen_exec --export=func_80066750
             --no-stack-first --global-base=${SHIM_MEMORY} -z stack-size=65536
             --initial-memory=${AOT_GAME_MEMORY} --max-memory=${AOT_GAME_MEMORY}
             ${AOT_GAME_OBJECTS} -o "${AOT_GAME_CHECK_WASM}"

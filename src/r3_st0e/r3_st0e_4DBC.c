@@ -21,7 +21,7 @@ void func_80104DF8(ST0E_ACTOR *wp)
     Model_work_init(wp, NULL);
     Search_Player_Init(&wp->ctl, 9, -0x60);
     wp->data_78          = D_801103A4;
-    wp->value_6E = wp->value_B0 = D_80098844[wp->kind_2]->life_8 * 16;
+    wp->value_6E = wp->value_B0 = Em_param_tbl[wp->kind_2]->life_8 * 16;
     wp->position.y       = -0x200;
     wp->value_74         = 1;
     wp->ctl.value_10     = 0;
@@ -155,7 +155,7 @@ void func_80105228(ST0E_ACTOR *wp)
             wp->velocity.v.x    = 0x180;
             wp->velocity.v.y    = 0;
             wp->value_4E        = 0;
-            wp->ctl.hit.value_8 = D_80098844[wp->kind_2]->value_A;
+            wp->ctl.hit.value_8 = Em_param_tbl[wp->kind_2]->value_A;
             wp->routine_2       = 1;
         }
         ctl->hit.timer_10 = 0x3C;
@@ -210,7 +210,7 @@ void func_80105414(ST0E_ACTOR *wp)
         wp->anim_AC = 2;
         if (wp->routine_1 == 3)
         {
-            wp->ctl.hit.value_8 = D_80098844[wp->kind_2]->value_A;
+            wp->ctl.hit.value_8 = Em_param_tbl[wp->kind_2]->value_A;
         }
         wp->velocity.v.y = 0;
         wp->routine_2++;
@@ -292,9 +292,9 @@ void func_801055F8(ST0E_ACTOR *wp)
             effect->sprite.position = wp->position;
         }
 #ifdef __wasm32__
-        func_80047148(wp, &wp->position);
+        Obj_item_drop(wp, &wp->position);
 #else
-        func_80047148(wp, &wp->position, effect);
+        Obj_item_drop(wp, &wp->position, effect);
 #endif
         wp->routine_0 = 2;
         wp->routine_1 = 0;

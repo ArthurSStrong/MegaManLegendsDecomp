@@ -111,7 +111,7 @@ typedef struct
     uint8 reservedD0[0x2F0];                // D0
 } ST13_EMITTER;
 
-// A record of ROCK_NEO's table at D_8009884C, by kind.
+// A record of ROCK_NEO's table at Work_5A4_param_tbl, by kind.
 typedef struct
 {
     uint8 reserved0[8]; // 0
@@ -561,7 +561,7 @@ extern STAGE_OBJ_FUNC D_80117838[];
 extern STAGE_OBJ_FUNC D_801184E4[];
 extern STCOM16_FUNC D_80118480[]; // routine_0 handlers (func_8010C764)
 extern uint8 D_80118474[];        // data_78
-extern STCOM16_KIND **D_80098844;
+extern STCOM16_KIND **Em_param_tbl;
 extern STCOM16_FUNC D_80118490[]; // routine_1 handlers (func_8010CAD4)
 extern STCOM16_FUNC D_801184B4[]; // routine_2 handlers (func_8010D4C4)
 extern STCOM16_FUNC D_801184D0[]; // routine_2 handlers (func_8010DA34)
@@ -679,9 +679,9 @@ void func_8010D928(STCOM16_WORK *wp);
 void func_8010DDCC(STCOM16_WORK *wp);
 void func_8010DEF4(STCOM16_WORK *wp);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 void func_80100988(void);
 void func_801150B0(STAGE_OBJ *wp);
@@ -694,12 +694,12 @@ void func_801079DC(STAGE_OBJ *wp);
 void func_80100664(STAGE_OBJ *wp);
 // Open_WORK_50_index is declared in stage_common/stage.h.
 void Sce_exit_lock_list(void *a, void *b);
-void func_8001EB98(void *entry);
+void Sce_slot_open_keep(void *entry);
 
 // Game_work's four halfwords at +0x194 that this stage's room script clears.
 #define ST13_GAME_HALF(offset) (*(uint16 *)((uint8 *)&Game_work + (offset)))
 
-extern ST13_KIND **D_8009884C;
+extern ST13_KIND **Work_5A4_param_tbl;
 
 extern uint32 Work_5A4_used; // ROCK_NEO.EXE
 

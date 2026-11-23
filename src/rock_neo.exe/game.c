@@ -46,7 +46,7 @@ void Game_init(GAME_WORK *wp)
     Player_init(mode);
     Sce_flag_init(mode);
     Map_obj_state_reset(mode);
-    func_8005DBB4(mode);
+    Automap_reset(mode);
     func_80067E6C(mode);
     Message_event_clear();
     Sound_bgm_tbl_set();
@@ -56,7 +56,7 @@ void Game_init(GAME_WORK *wp)
     {
         wp->slots[i] = 0;
     }
-    func_8006471C();
+    Param_tbl_select();
     Sce_flag_on(0x1FE);
     Sce_flag_on(0x38A);
     Sce_flag_on(0x3C7);
@@ -308,14 +308,14 @@ void game_update(void)
     func_80038894();
     Atari_check();
     Map_obj_break_update();
-    func_8005DCB4();
+    Automap_update();
     func_800238B4();
     Map_layer_draw();
     func_80027678();
     func_800175FC();
     func_80028DE0();
     index = CODE800133D8_DISPLAY_INDEX;
-    link  = D_80098934;
+    link  = Disp_env_ptr;
     setaddr(D_800A4D40[index], getaddr(&link->tag));
     setaddr(&link->tag, &D_800A4D40[index][0x1000] - 1);
 }
@@ -541,7 +541,7 @@ void Game_mem_card(GAME_WORK *wp)
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            wp->routine_1 += func_800665FC(1);
+            wp->routine_1 += Card_screen_exec(1);
             break;
         case 1:
             wp->routine_0 = 3;
@@ -791,7 +791,7 @@ void soft_reset_check(void)
                 MojiTaskKill();
                 Message_event_clear();
                 Game_logo_init();
-                func_800665E8();
+                Card_screen_init();
                 func_8001B314();
                 Sound_seq_stop_all();
                 Cd_subcmd(0, 1, 0);
@@ -863,7 +863,7 @@ void game_over_draw(void)
     p->r0    = 128;
     p->g0    = 128;
     p->b0    = 128;
-    AddPrim(&D_80098934->tag78, p);
+    AddPrim(&Disp_env_ptr->tag78, p);
 }
 
 void shutter_draw(void)
@@ -886,7 +886,7 @@ void shutter_draw(void)
     p->g0 = 0;
     p->b0 = 0;
     p->code &= ~2;
-    AddPrim(&D_80098934->tag74, packet++);
+    AddPrim(&Disp_env_ptr->tag74, packet++);
     p = (POLY_F4 *)packet;
     setPolyF4(p);
     p->x0 = 0;
@@ -901,7 +901,7 @@ void shutter_draw(void)
     p->g0 = 0;
     p->b0 = 0;
     p->code &= ~2;
-    AddPrim(&D_80098934->tag74, packet++);
+    AddPrim(&Disp_env_ptr->tag74, packet++);
     *CODE800133D8_PACKET_PTR = packet;
 }
 

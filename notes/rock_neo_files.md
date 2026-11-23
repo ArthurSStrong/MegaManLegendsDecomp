@@ -160,7 +160,7 @@ address.
 ## What the evidence showed
 
 - **Rodata blocks are not files.** Block `1BD8` holds jump tables for functions on *both* sides of
-  `2MBYTE.OBJ` (`func_8006689C` ... `func_80068DAC`), so one splat block can span objects. Block `9E4`
+  `2MBYTE.OBJ` (`func_8006689C` ... `Event_scene_main`), so one splat block can span objects. Block `9E4`
   (jump tables + stage-file path strings) **holds three files' data** (`0x80017C30`, `0x8001BB4C`,
   `0x8001F23C`); the yaml splits it at `0xA44` and `0xAB0` so that `cd`'s part travels with its C.
   Block `156C` holds at least four. So "13 blocks" means *at least* 13 rodata-owning files; a block's
@@ -230,13 +230,13 @@ piece of evidence.
 | 21 | `0x80043F34` | `0x34734` | `0x800456D8` | 0x17A4 | `code_80043F34` | low | no | Rodata block `1514` (one user, `func_8004441C`); `.data` cluster 0x8008A208.. starts at 0x80043F34 and `.sdata` 0x80097DDC..0x80097E0A. |
 | 22 | `0x800456D8` | `0x35ED8` | `0x80048620` | 0x2F48 | `code_800456D8` | low | no | Rodata block `1530` (users `func_80047354`, `_800477A0`); both ends are cost-0 gaps; `.data` 0x8008A2B0..0x8008A778 and `.sdata` 0x80097E64..0x80097F24 are contiguous clusters used only here. |
 | 23 | `0x80048620` | `0x38E20` | `0x80053788` | 0xB168 | `code_80048620` | low | no | Rodata block `156C` first five tables (users 0x80048704..0x80051BE4); `.data` jumps from 0x8008A778 to 0x8008A9D4 exactly here (first user 0x80048620). End = Chris `moji`. |
-| 24 | `0x80053788` | `0x43F88` | `0x8005C258` | 0x8AD0 | `moji` | medium | no | ChrisNonyminus `moji` 0x43F88; `MojiTaskExec/Exec2/Kill` at 0x8005382C..0x80053A30; gap cost 0. No rodata of its own. End 0x8005C258: cost-0 gap with data/sdata/bss separation; the 0xC-byte setter `func_8005C24C` writes `D_800989D4`, used only by `moji` code, so it stays in this file. |
+| 24 | `0x80053788` | `0x43F88` | `0x8005C258` | 0x8AD0 | `moji` | medium | no | ChrisNonyminus `moji` 0x43F88; `MojiTaskExec/Exec2/Kill` at 0x8005382C..0x80053A30; gap cost 0. No rodata of its own. End 0x8005C258: cost-0 gap with data/sdata/bss separation; the 0xC-byte setter `Moji_weapon_set` writes `Moji_weapon`, used only by `moji` code, so it stays in this file. |
 | 25 | `0x8005C258` | `0x4CA58` | `0x8005EC34` | 0x29DC | `code_8005C258` | low | no | Cost-0 gap (`.data`, `.sdata` and bss clusters all separate there); rodata block `156C` tables for `Gauge_update` and `_8005E144`. Chris has no boundary here (he runs `moji` on to 0x4F434). |
 | 26 | `0x8005EC34` | `0x4F434` | `0x800629E0` | 0x3DAC | `sub_scrn` | medium | no | **End confirmed** (Capcom's source: `sub_scrn.c` ends with `map_cursor_set`; row 27 merged in). ChrisNonyminus `sub_scrn` 0x4F434; rodata block `156C` tables for `Sub_screen_top`..`_80060618`; `Sub_screen_*` names (0x80060E64..0x80062490). Conflict: call graph prefers 0x8005EBA4 (two 0x10-byte accessors only called from `_8005ED9C`). |
 | 27 | `0x8006259C` | `0x52D9C` | `0x800629E0` | 0x444 | `map_screen` | **not a file** | | **Confirmed part of `sub_scrn.c`** by Capcom's source (TCRF, `ST1E.BIN`): `Map_screen_init`, `Map_screen_task`, `map_screen_set` and `map_cursor_set` are its last four functions, then "End of File". Its `.data` interleaves with `sub_scrn`'s (step 3). Merged into row 26 in the yaml. |
 | 28 | `0x800629E0` | `0x531E0` | `0x8006430C` | 0x192C | `debug` | **start confirmed** | no | `sub_scrn.c` ends at `map_cursor_set`, i.e. at 0x800629E0 (Capcom's source); ChrisNonyminus `debug` 0x531E0; the last named function (`map_cursor_set`) ends exactly at 0x800629E0; gap cost 0; new `.data` cluster 0x8008DBD4..0x8008ECE0 (17 variables). Holds `Game_logo_kill`. |
 | 29 | `0x8006430C` | `0x54B0C` | `0x80067FF8` | 0x3CEC | `code_8006430C` | low | yes | Rodata block `1BD8` (first user `func_8006430C`) is a new rodata-owning file; the gap lies in 0x800629E0..0x8006430C. Might be the same file as `debug`. Ends at `2MBYTE.OBJ` (0x80067FF8, certain). |
-| 30 | `0x800680BC` | `0x588BC` | `0x80069038` | 0xF7C | `code_800680BC` | high | no | `2MBYTE.OBJ` sits between Capcom objects, so a new file starts here; rodata block `1BD8` last table (`func_80068DAC`). Ends at the first libgcc object `ADDDF3` (0x80069038). `func_800680BC` (0x64 bytes) is probably a separate tiny file from `screen_tile_draw` on. |
+| 30 | `0x800680BC` | `0x588BC` | `0x80069038` | 0xF7C | `code_800680BC` | high | no | `2MBYTE.OBJ` sits between Capcom objects, so a new file starts here; rodata block `1BD8` last table (`Event_scene_main`). Ends at the first libgcc object `ADDDF3` (0x80069038). `func_800680BC` (0x64 bytes) is probably a separate tiny file from `screen_tile_draw` on. |
 
 Row 1's start and row 30's end are fixed by the ranges; `0x80067FF8` (end of row 29) is the start of
 `2MBYTE.OBJ`. Names: ChrisNonyminus's where he has one, `code_<address>` otherwise (renames are the

@@ -116,9 +116,9 @@ void func_8010BECC(ST0A_EM *wp)
     Search_Player_Init(ext->track_24, 0, -0x320);
     ext->angle_42 = 0xC00;
     ext->value_44 = (wp->rotation.y + 0xC00) & 0xFFF;
-    ext->value_46 = ext->value_F4 = D_8009884C[wp->kind_2]->value_E << 5;
+    ext->value_46 = ext->value_F4 = Work_5A4_param_tbl[wp->kind_2]->value_E << 5;
     ext->value_F0                 = 0;
-    life                          = D_8009884C[wp->kind_2]->life_8 << 5;
+    life                          = Work_5A4_param_tbl[wp->kind_2]->life_8 << 5;
     wp->life_6E                   = life;
     wp->value_78                  = 0;
     wp->value_10                  = 0;
@@ -154,26 +154,26 @@ void func_8010C0A0(ST0A_EM *wp)
     func_8005D4C0();
     if (ext->flags_0 & 0x400)
     {
-        if (wp->life_6E - D_8009884C[wp->kind_2]->value_B > 0)
+        if (wp->life_6E - Work_5A4_param_tbl[wp->kind_2]->value_B > 0)
         {
-            wp->life_6E -= D_8009884C[wp->kind_2]->value_B;
+            wp->life_6E -= Work_5A4_param_tbl[wp->kind_2]->value_B;
             ext->flags_0 &= ~0x400;
         }
         else
         {
-            ext->hit_C.hit_8 |= 0x10000000 | D_8009884C[wp->kind_2]->value_B;
+            ext->hit_C.hit_8 |= 0x10000000 | Work_5A4_param_tbl[wp->kind_2]->value_B;
         }
     }
     if (ext->flags_0 & 0x4000)
     {
-        if (wp->life_6E - D_8009884C[wp->kind_2]->value_F > 0)
+        if (wp->life_6E - Work_5A4_param_tbl[wp->kind_2]->value_F > 0)
         {
-            wp->life_6E -= D_8009884C[wp->kind_2]->value_F;
+            wp->life_6E -= Work_5A4_param_tbl[wp->kind_2]->value_F;
             ext->flags_0 &= ~0x4000;
         }
         else
         {
-            ext->hit_C.hit_8 |= 0x10000000 | D_8009884C[wp->kind_2]->value_F;
+            ext->hit_C.hit_8 |= 0x10000000 | Work_5A4_param_tbl[wp->kind_2]->value_F;
         }
     }
     if (ext->flags_0 & 0x1000)
@@ -283,7 +283,7 @@ void func_8010C0A0(ST0A_EM *wp)
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0x200, 0x200, 1);
-        Solid_set(wp, 1, 0, D_8009884C[wp->kind_2]->value_C | 0x1000000);
+        Solid_set(wp, 1, 0, Work_5A4_param_tbl[wp->kind_2]->value_C | 0x1000000);
     }
     if (ext->flags_0 & 0x200)
     {
@@ -313,8 +313,8 @@ void func_8010C0A0(ST0A_EM *wp)
                              (wp->rotation.y + ext->angle_42) & 0xFFF, D_80116260[i].x << 4,
                              D_80116260[i].y << 4, D_80116260[i].z << 4);
                 Set_Atari(&ext->hit_C.pos_0, 0x40, 0, 0x8000, wp->value_1,
-                              &ext->hit_88[i].hit_8, D_8009884C[wp->kind_2]->value_D | 0x4080000, 0,
-                              0x80);
+                          &ext->hit_88[i].hit_8,
+                          Work_5A4_param_tbl[wp->kind_2]->value_D | 0x4080000, 0, 0x80);
                 if (!(ext->flags_0 & 0x1000) && i < 2)
                 {
                     if (ext->flags_0 & 0x8000)
@@ -341,13 +341,13 @@ void func_8010C0A0(ST0A_EM *wp)
         {
             ext->hit_58.pos_0 = wp->joint_180[8];
             Set_Atari(&ext->hit_58.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_58.hit_8,
-                          D_8009884C[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
+                          Work_5A4_param_tbl[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
         }
         if (ext->flags_0 & 0x40)
         {
             ext->hit_48.pos_0 = wp->joint_180[3];
             Set_Atari(&ext->hit_48.pos_0, 0x100, 0, 0x8000, wp->value_1, &ext->hit_48.hit_8,
-                          D_8009884C[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
+                          Work_5A4_param_tbl[wp->kind_2]->value_A | 0x4000000, 0, 0x80);
         }
     }
     if (!(ext->flags_0 & 0x200) && (sint32)Moji_flag >= 0)
@@ -1361,7 +1361,7 @@ sint32 func_8010EBE8(ST0A_EM *wp)
                 {
                     wp->ext.flags_0 &= ~0xC;
                     wp->life_6E               = 0;
-                    damage                    = D_8009884C[wp->kind_2]->value_9;
+                    damage                    = Work_5A4_param_tbl[wp->kind_2]->value_9;
                     wp->routine_1             = 8;
                     *(uint16 *)&wp->routine_2 = 0;
                 }
@@ -1374,7 +1374,7 @@ sint32 func_8010EBE8(ST0A_EM *wp)
             {
                 ext->value_A += damage;
                 if ((ext->hit_C.hit_8 & 0x20000000) ||
-                    ext->value_A >= D_8009884C[wp->kind_2]->value_9)
+                    ext->value_A >= Work_5A4_param_tbl[wp->kind_2]->value_9)
                 {
                     Sound_call2(0xA2, &wp->position);
                     ext->value_A = 0;

@@ -905,8 +905,8 @@ void func_801022DC(void *wp, sint32 arg)
         mode = (DR_MODE *)++*STAGE_PACKET_PTR;
         SetDrawMode(mode, 0, 0, (((v >> 7) + 1) << 5) | 0xF, NULL);
         ++*STAGE_PACKET_PTR;
-        addPrim(&D_80098934->ot_74, tile);
-        addPrim(&D_80098934->ot_74, mode);
+        addPrim(&Disp_env_ptr->ot_74, tile);
+        addPrim(&Disp_env_ptr->ot_74, mode);
     }
 }
 
@@ -999,12 +999,12 @@ void func_801025F4(sint32 x, sint32 y, sint16 radius, sint16 shade)
         p->b1 = 0;
         p->b2 = 0;
         ++*ST1A_POLY_G3_PTR;
-        addPrim(&D_80098934->ot_74, p);
+        addPrim(&Disp_env_ptr->ot_74, p);
     }
     mode = *ST1A_MODE_PTR;
     SetDrawMode(mode, 0, 0, 0x2F, NULL);
     ++*ST1A_MODE_PTR;
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_8010282C(ST1A_ROOM_FX *wp, uint8 variant)
@@ -1685,8 +1685,8 @@ void func_80103B9C(uint8 shade)
     mode = (DR_MODE *)++*ST1A_TILE_PTR;
     SetDrawMode(mode, 0, 0, 0x4F, NULL);
     ++*ST1A_MODE_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
 }
 
 void func_80103CB8(STAGE_ROOM *wp)
@@ -3402,7 +3402,7 @@ sint32 func_80107110(sint32 arg)
         SetDrawMode(mode, 0, 0, 0x2F, NULL);
     }
     ++*STAGE_PACKET_PTR;
-    addPrim(&D_80098934->ot_74, tile);
-    addPrim(&D_80098934->ot_74, mode);
+    addPrim(&Disp_env_ptr->ot_74, tile);
+    addPrim(&Disp_env_ptr->ot_74, mode);
     return done;
 }

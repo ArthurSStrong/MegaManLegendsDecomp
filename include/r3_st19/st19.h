@@ -1447,7 +1447,7 @@ extern ST19_SPIRAL D_801180A4[24];
 void func_8010A924(ST19_10C_C *wp);
 void func_8010ABC0(ST19_10C_C *wp);
 
-// A ROCK_NEO record per kind (D_80098844).
+// A ROCK_NEO record per kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
@@ -1458,7 +1458,7 @@ typedef struct
     uint8 life_C;  // 0C: life, in sixteenths
 } ST19_KIND;
 
-extern ST19_KIND **D_80098844;
+extern ST19_KIND **Em_param_tbl;
 extern uint8 D_801179CC[];
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 

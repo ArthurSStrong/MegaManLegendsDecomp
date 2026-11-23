@@ -58,7 +58,7 @@ void stcom17_func_00B0(STCOM17_WORK *wp)
     }
     ctl->power_42 = 0;
     Search_Player_Init(ctl->track_18, 11, -0x60);
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 4;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->anim_AC                                      = 0;
     wp->routine_0                                    = 1;
     wp->scale.v.pad                                  = 0x4210;
@@ -115,7 +115,7 @@ void stcom17_func_021C(STCOM17_WORK *wp)
             if (!held)
             {
                 ctl->damage_40 += damage;
-                if (!(ctl->flags_4A & 4) && ctl->damage_40 >= D_80098844[wp->kind_2]->limit_9)
+                if (!(ctl->flags_4A & 4) && ctl->damage_40 >= Em_param_tbl[wp->kind_2]->limit_9)
                 {
                     ctl->flags_4A |= 4;
                     ctl->damage_40  = 0;
@@ -632,9 +632,9 @@ void stcom17_func_1168(STCOM17_WORK *wp)
         effect->variant_3       = 0x40;
         effect->sprite.position = wp->joints_180[1];
 #ifdef __wasm32__
-        func_80047148(wp, &wp->joints_180[0]);
+        Obj_item_drop(wp, &wp->joints_180[0]);
 #else
-        func_80047148(wp, &wp->joints_180[0], effect);
+        Obj_item_drop(wp, &wp->joints_180[0], effect);
 #endif
     }
     Ride_clear(wp);
@@ -870,9 +870,9 @@ void stcom17_func_1854(STCOM17_GUN_WORK *wp)
     wp->ctl.timer_68             = 0;
     wp->ctl.angle_60             = wp->ctl.angle_20;
     wp->ctl.dist_40              = wp->value_80;
-    wp->ctl.power_5C             = D_80098844[wp->kind_2]->value_A;
+    wp->ctl.power_5C             = Em_param_tbl[wp->kind_2]->value_A;
     Search_Player_Init(wp->ctl.track_30, 12, -0x60);
-    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = D_80098844[wp->kind_2]->life_8 << 4;
+    wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E = Em_param_tbl[wp->kind_2]->life_8 << 4;
     wp->routine_0                                    = 1;
     wp->routine_1                                    = 0;
     wp->routine_2                                    = 0;
@@ -1090,9 +1090,9 @@ void stcom17_func_1FFC(STCOM17_GUN_WORK *wp)
         effect->variant_3       = 0x40;
         effect->sprite.position = wp->joints_180[2];
 #ifdef __wasm32__
-        func_80047148(wp, &wp->joints_180[0]);
+        Obj_item_drop(wp, &wp->joints_180[0]);
 #else
-        func_80047148(wp, &wp->joints_180[0], effect);
+        Obj_item_drop(wp, &wp->joints_180[0], effect);
 #endif
     }
     if (wp->variant_3 == 0)

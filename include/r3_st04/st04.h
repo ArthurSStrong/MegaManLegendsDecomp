@@ -540,14 +540,14 @@ typedef struct
     uint8 reserved388[0x38];                // 388
 } ST04_GUARD;
 
-// A ROCK_NEO record per object kind (D_80098844).
+// A ROCK_NEO record per object kind (Em_param_tbl).
 typedef struct
 {
     uint8 reserved00[8];
     uint8 life_8; // 08
 } ST04_KIND;
 
-extern ST04_KIND **D_80098844;
+extern ST04_KIND **Em_param_tbl;
 extern uint8 D_8010CA64[];
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 
@@ -555,7 +555,7 @@ extern ST04_ACTOR_FUNC D_8010C9B8[];
 sint32 func_80105A8C(ST04_ACTOR *wp);
 void func_801055F0(ST04_ACTOR *wp);
 
-void func_8001E3F0(sint32 arg);
+void Sce_light_add(sint32 arg);
 
 void func_801058CC(ST04_ACTOR *wp);
 
@@ -598,6 +598,6 @@ extern uint32 D_80111CF0[];
 extern uint16 D_800C0C26;
 
 extern STAGE_SCRIPT_ENTRY D_8010C9DC[]; // the villagers func_80100594 places
-ST04_ACTOR *func_8001EB98(STAGE_SCRIPT_ENTRY *entry);
+ST04_ACTOR *Sce_slot_open_keep(STAGE_SCRIPT_ENTRY *entry);
 
 #endif // ST04_H

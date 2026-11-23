@@ -701,7 +701,7 @@ void func_80105360(ST03_ACTOR *wp)
     ctl->value_18            = 0;
     Search_Player_Init(ctl->track_24, 0, -0x60);
     ctl->range_34 = 0x7FFFFFFF;
-    life          = D_80098844[wp->kind_2]->life_8;
+    life          = Em_param_tbl[wp->kind_2]->life_8;
     wp->value_78  = 0;
     wp->value_6E  = life;
     wp->value_B0  = life;
@@ -906,7 +906,7 @@ void func_8010593C(ST03_ACTOR *wp)
             wp->value_107 = -1;
             wp->value_10B = -1;
             wp->value_10F = -1;
-            func_80047148(wp, wp->value_180);
+            Obj_item_drop(wp, wp->value_180);
             // fall through
         case 1:
             t            = (uint16)ctl->timer_4 - 1;
@@ -1328,7 +1328,7 @@ void func_801065F8(ST03_ACTOR *wp)
             wp->anim_AC      = 0x18;
             wp->velocity.v.x = 0xF;
             ctl->timer_4     = 0xF;
-            ctl->value_8     = D_80098844[wp->kind_2]->value_A;
+            ctl->value_8     = Em_param_tbl[wp->kind_2]->value_A;
             // fall through
         case 2:
             ctl->timer_4--;
@@ -2015,12 +2015,12 @@ sint32 func_80107978(ST03_ACTOR *wp)
     if (wp->value_6E <= 0)
     {
         wp->ctl.flags_0 = (wp->ctl.flags_0 & ~4) | 8;
-        damage          = D_80098844[wp->kind_2]->limit_9;
+        damage          = Em_param_tbl[wp->kind_2]->limit_9;
     }
     if (wp->ctl.flags_0 & 8)
     {
         wp->ctl.timer_A += damage;
-        if ((wp->ctl.hit_14 & 0x20000000) || wp->ctl.timer_A >= D_80098844[wp->kind_2]->limit_9 ||
+        if ((wp->ctl.hit_14 & 0x20000000) || wp->ctl.timer_A >= Em_param_tbl[wp->kind_2]->limit_9 ||
             wp->position.y != Scr_height_check(wp))
         {
             if (ctl->from_1C.pad & 1)

@@ -627,7 +627,7 @@ void func_801067A8(ST04_GUARD *wp)
     Search_Player_Init(wp->track_36C, 0, -0x60);
     wp->value_384    = 0;
     wp->value_386    = 0;
-    life             = D_80098844[wp->kind_2]->life_8;
+    life             = Em_param_tbl[wp->kind_2]->life_8;
     wp->data_78      = D_8010CA64;
     wp->data_10      = D_8010CA70;
     wp->life_6E      = life;

@@ -170,7 +170,7 @@ void func_8011EEBC(ST06_BOAT *wp, ST06_BOAT_CTL *ctl)
                 ctl->flags_0 &= ~1;
                 wp->timer_C   = 0;
                 wp->routine_2 = 1;
-                func_8001E3F0(0x1B);
+                Sce_light_add(0x1B);
             }
             Sound_call2(0xA0, &wp->position);
             wp->color_B4 = 0xFFFFFF;

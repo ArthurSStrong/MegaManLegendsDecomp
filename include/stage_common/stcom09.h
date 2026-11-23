@@ -48,7 +48,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
-    uint8 kind_2;                           // 02: index into D_80098844
+    uint8 kind_2;                           // 02: index into Em_param_tbl
     uint8 index_3;                          // 03: stcom09_D_0000 handler
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06
@@ -96,7 +96,7 @@ typedef struct
     uint8 track_328[0x98];                  // 328
 } STCOM09_WORK;
 
-// A ROCK_NEO record per kind (D_80098844): only the life byte.
+// A ROCK_NEO record per kind (Em_param_tbl): only the life byte.
 typedef struct
 {
     uint8 reserved00[8];
@@ -111,15 +111,15 @@ extern uint8 stcom09_D_001C[];        // data_10
 extern uint8 stcom09_D_0028[];        // data_78
 
 // ROCK_NEO.EXE.
-extern STCOM09_KIND **D_80098844;
+extern STCOM09_KIND **Em_param_tbl;
 extern uint8 *D_8008CE74; // a message script
 STCOM09_SHOT *Open_SHL_WORK(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 #ifdef __wasm32__
-void func_80047148(void *wp, STCOM_SVECTOR *pos);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
-void func_80047148(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
+void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 #endif
 sint32 View_check_center(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out);
 sint32 Sce_flag_test(sint32 flag);

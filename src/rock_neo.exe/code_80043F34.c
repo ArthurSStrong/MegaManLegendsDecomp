@@ -6,13 +6,13 @@ uint8 D_80097DE4[4];
 uint8 D_80097DE8[4];
 uint8 D_80097DEC[4];
 
-void func_80043F34(CODE43_WORK *wp)
+void Effect_explosion(CODE43_WORK *wp)
 {
-    D_8008A208[wp->routine_8](wp);
+    Effect_explosion_tbl[wp->routine_8](wp);
 }
 
 // The 4..6 range test is a switch: retail compares i < 7 and i < 4 separately.
-void func_80043F70(CODE43_WORK *wp)
+void Effect_explosion_init(CODE43_WORK *wp)
 {
     sint32 st;
     uint32 i;
@@ -90,7 +90,7 @@ void func_80043F70(CODE43_WORK *wp)
             case 6:
                 break;
             default:
-                if (func_8004920C(&wp->pos_38) - wp->pos_38.y < 0x1E)
+                if (Scr_point_height(&wp->pos_38) - wp->pos_38.y < 0x1E)
                 {
                     st = 0;
                 }
@@ -427,7 +427,7 @@ void func_80044AA8(CODE43_WORK *wp)
 {
 }
 
-void func_80044AB0(CODE43_WORK *wp)
+void Effect_buster_hit(CODE43_WORK *wp)
 {
     D_8008A250[wp->routine_8](wp);
 }
@@ -617,7 +617,7 @@ void func_80045038(CODE43_WORK *wp)
     }
 }
 
-void func_80045074(CODE43_WORK *wp)
+void Effect_arm_hit(CODE43_WORK *wp)
 {
     D_8008A288[wp->routine_8](wp);
 }
