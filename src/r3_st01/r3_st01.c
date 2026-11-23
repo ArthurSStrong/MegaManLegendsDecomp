@@ -19,7 +19,7 @@ void func_80100098(void)
     void *spawns;
 
     mw = STAGE_MAP_WORK_PTR;
-    func_80022FD4(D_80100D5C[Game_work.value_51]);
+    Map_layer_set(D_80100D5C[Game_work.value_51]);
     spawns    = D_80100D88[Game_work.value_51];
     mw->w     = STAGE_MAP_TBL[Game_work.value_51].w;
     mw->h     = STAGE_MAP_TBL[Game_work.value_51].h;
@@ -89,7 +89,7 @@ void func_801002E4(STAGE_ROOM_WORK *wp)
     if (wp->frame_10 == 0)
     {
         D_800BBA9C[0] = 0x82;
-        D_800BBA90[0].flags_0 &= 0xFD;
+        Map_layer_tbl[0].flags_0 &= 0xFD;
         STAGE_MODEL_TBL[2].value_20 -= 0x38;
         STAGE_MODEL_TBL[1].value_20 -= 0x10;
         child            = wp->child_24;
@@ -99,7 +99,7 @@ void func_801002E4(STAGE_ROOM_WORK *wp)
     }
     if (wp->frame_10 == 0x898)
     {
-        D_800BBA90[0].flags_0 |= 2;
+        Map_layer_tbl[0].flags_0 |= 2;
     }
     if (wp->routine_6 == 0 && wp->frame_10 > 0x898)
     {

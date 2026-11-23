@@ -18,7 +18,7 @@ void func_8010009C(void)
     void *spawn;
     sint16 *cells;
 
-    func_80022FD4(D_80102654[Game_work.value_51]);
+    Map_layer_set(D_80102654[Game_work.value_51]);
     STAGE_MAP_WORK_PTR->w     = STAGE_MAP_TBL[Game_work.value_51].w;
     STAGE_MAP_WORK_PTR->h     = STAGE_MAP_TBL[Game_work.value_51].h;
     STAGE_MAP_WORK_PTR->x0    = STAGE_MAP_TBL[Game_work.value_51].x0;
@@ -305,7 +305,7 @@ void func_801008BC(STAGE_ROOM_WORK *wp)
         case 0:
             if (Fade_busy == 0)
             {
-                D_800BBA90[0].flags_0 &= 0xFC;
+                Map_layer_tbl[0].flags_0 &= 0xFC;
                 D_800BBAC8 |= 3;
                 Obj_work_flag_change(0x56, 0x80);
                 Fade_start(2);
@@ -323,7 +323,7 @@ void func_801008BC(STAGE_ROOM_WORK *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                D_800BBA90[1].flags_0 &= 0xFC; // model 1's flags
+                Map_layer_tbl[1].flags_0 &= 0xFC; // model 1's flags
                 D_800BBB00 |= 3;
                 Fade_start(2);
                 wp->timer_C = 0;

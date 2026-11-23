@@ -15,7 +15,7 @@ void func_801001D4(void)
 // Sets up the current room: models, map, spawns.
 void func_8010023C(void)
 {
-    func_80022FD4(D_801080D4[Game_work.value_51]);
+    Map_layer_set(D_801080D4[Game_work.value_51]);
     STAGE_MAP_AREA_SP.w  = STAGE_MAP_TBL[Game_work.value_51].w;
     STAGE_MAP_AREA_SP.h  = STAGE_MAP_TBL[Game_work.value_51].h;
     STAGE_MAP_AREA_SP.x0 = STAGE_MAP_TBL[Game_work.value_51].x0;

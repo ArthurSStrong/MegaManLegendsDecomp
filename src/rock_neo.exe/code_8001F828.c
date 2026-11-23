@@ -428,7 +428,7 @@ void func_8001FDE4(void)
 // into s1 instead of the 0xF7FFF00F mask, as retail does. %c reads the argument's low byte.
 // The flag and conversion characters are their own chars; the '$' escape and the plain
 // character share one trailing fmt++, so jump2 doesn't merge the '$' arms' equal last stores.
-void func_8001FE38(uint32 flags, const char *fmt, ...)
+void Print(uint32 flags, const char *fmt, ...)
 {
     sint32 *ap;
     uint32 mode;
@@ -524,7 +524,7 @@ void func_8001FE38(uint32 flags, const char *fmt, ...)
                 case 'x':
                     mode &= 0xF7FFF00F;
                     val = (mode & 0x10000000) ? (ap += 1)[-1] : (ap += 1)[-1];
-                    D_8009893C += func_800207F8(mode | 0xF, val, D_8009893C, width);
+                    D_8009893C += print_number(mode | 0xF, val, D_8009893C, width);
                     break;
                 case 'd':
                 case 'i':
@@ -535,21 +535,21 @@ void func_8001FE38(uint32 flags, const char *fmt, ...)
                         mode &= ~0xFF0;
                         mode |= 0x2D0;
                     }
-                    D_8009893C += func_800207F8(mode | 9, val, D_8009893C, width);
+                    D_8009893C += print_number(mode | 9, val, D_8009893C, width);
                     break;
                 case 'u':
                     val = (mode & 0x10000000) ? (ap += 1)[-1] : (ap += 1)[-1];
-                    D_8009893C += func_800207F8(mode | 9, val, D_8009893C, width);
+                    D_8009893C += print_number(mode | 9, val, D_8009893C, width);
                     break;
                 case 'o':
                     mode &= 0xF7FFF00F;
                     val = (mode & 0x10000000) ? (ap += 1)[-1] : (ap += 1)[-1];
-                    D_8009893C += func_800207F8(mode | 7, val, D_8009893C, width);
+                    D_8009893C += print_number(mode | 7, val, D_8009893C, width);
                     break;
                 case 'b':
                     mode &= 0xF7FFF00F;
                     val = (mode & 0x10000000) ? (ap += 1)[-1] : (ap += 1)[-1];
-                    D_8009893C += func_800207F8(mode | 1, val, D_8009893C, width);
+                    D_8009893C += print_number(mode | 1, val, D_8009893C, width);
                     break;
                 case 'c':
                     *D_8009893C++ = *(char *)((ap += 1) - 1);
@@ -774,7 +774,7 @@ void func_800203A8(void)
 
 // Number formatter. buf[32] gives retail's frame and 'while (n++ < width - orig)' its pad loop;
 // orig is reused as the pad count of the other two paths.
-sint32 func_800207F8(uint32 flags, sint32 val, uint8 *out, sint32 width)
+sint32 print_number(uint32 flags, sint32 val, uint8 *out, sint32 width)
 {
     uint8 buf[32];
     sint16 n;
@@ -909,7 +909,7 @@ void func_80020A4C(void)
 // fields of the camera block D_800A3958. The locals are reused across roles (cx: yaw sine,
 // window centre x, pitch offset, angle a; cz: yaw cosine, window centre z; w: width, span, map
 // centre and tile). w ending as the tile argument gives it retail's preference for a2.
-void func_80020BB4(void)
+void map_tile_window(void)
 {
     sint16 pos[4];
     sint32 cx;
@@ -1021,7 +1021,7 @@ void func_80020BB4(void)
     {
         C8001F828_S16(0x1F800108) = (c << 12) / -e;
         C8001F828_S16(0x1F80010A) = (d << 12) / -f;
-        func_80021548(x0, x1, y0, y1);
+        map_tile_scan(x0, x1, y0, y1);
     }
     x0     = C8001F828_S16(0x1F800100);
     x1     = C8001F828_S16(0x1F800104);
@@ -1126,7 +1126,7 @@ void func_80021258(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
 }
 
 // Visible-tile scan: walks each map row between the clipped x bounds and draws its tiles.
-void func_80021548(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
+void map_tile_scan(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
 {
     sint16 pos[4];
     sint32 xs;
@@ -1308,7 +1308,7 @@ void func_8002196C(sint32 x, sint32 y, uint16 id)
     }
     scr[2] = Fog_clut_tbl[(out[2] / 512) & 0x1F] << 16;
     GTE_SET_TR(C8001F828_TR_A);
-    func_80021B14(data + 8, &sv, id);
+    map_tile_model_draw(data + 8, &sv, id);
     GTE_SET_TR(C8001F828_TR_B);
 }
 
@@ -1317,7 +1317,7 @@ void func_8002196C(sint32 x, sint32 y, uint16 id)
 // CLUT from the header and the UVs from the face (for the quad splitter), bit 15 the texture with
 // a per-face shade from 0x1F800187. Faces with bit 29 are triangles; bit 28 chains a face behind
 // the previous one instead of depth-sorting it.
-void func_80021B14(uint8 *data, C8001F828_SVEC *pos, uint32 id)
+void map_tile_model_draw(uint8 *data, C8001F828_SVEC *pos, uint32 id)
 {
     C8001F828_TILE_WORK *scr;
     uint32 *hdr;
@@ -1610,15 +1610,15 @@ void func_800221E0(void)
         GTE_STLVNL(out);
         scr[2] = Fog_clut_tbl[(out[2] / 512) & 0x1F] << 16;
         GTE_SET_TR(C8001F828_TR_A);
-        func_8002235C(data + 8, &sv, id);
+        map_tile_model_draw2(data + 8, &sv, id);
         GTE_SET_TR(C8001F828_TR_B);
     }
 }
 
-// Variant of func_80021B14 whose bit-7 faces go to the quad splitter (func_80022A94) instead of
+// Variant of map_tile_model_draw whose bit-7 faces go to the quad splitter (quad_split) instead of
 // being drawn directly. A back face without bit 30 is culled when it is a triangle (bit 29); a
 // back-facing quad ends the whole list (retail returns there).
-void func_8002235C(uint8 *data, C8001F828_SVEC *pos, uint32 id)
+void map_tile_model_draw2(uint8 *data, C8001F828_SVEC *pos, uint32 id)
 {
     C8001F828_TILE_WORK *scr;
     uint32 *hdr;
@@ -1833,7 +1833,7 @@ void func_8002235C(uint8 *data, C8001F828_SVEC *pos, uint32 id)
             scr->uv_50[0] = sz2;
             sz3           = tex[1];
             scr->uv_50[1] = sz3;
-            pk            = func_80022A94();
+            pk            = quad_split();
             if (!C8001F828_BIT(flags, 28))
             {
                 tail = pk;
@@ -1889,7 +1889,7 @@ void func_8002235C(uint8 *data, C8001F828_SVEC *pos, uint32 id)
 // (4, 5, 7, 8, then the centre). Each primitive is taken by advancing the buffer pointer at
 // 0x1F800070 first and stepping back, which gives retail's copy of the old pointer. The
 // triangle loop reuses three of the quad loop's four index variables, and is a do-while.
-uint32 *func_80022A94(void)
+uint32 *quad_split(void)
 {
     C8001F828_SVEC vec[3];
     sint32 clip;
@@ -2019,7 +2019,7 @@ uint32 *func_80022A94(void)
     return last;
 }
 
-void func_80022FD4(uint16 **tbl)
+void Map_layer_set(uint16 **tbl)
 {
     C8001F828_MODEL_BODY *b;
     C8001F828_MODEL *m;
@@ -2038,7 +2038,7 @@ void func_80022FD4(uint16 **tbl)
         D_80098970 = 0;
         D_80098A78 = 0;
     }
-    m                       = D_800BBA90;
+    m                       = Map_layer_tbl;
     *(uint16 ***)0x1F800054 = tbl;
     for (i = 0; i < 11; i++, m++)
     {
@@ -2084,7 +2084,7 @@ void func_80022FD4(uint16 **tbl)
 // make_regs_eqv makes the copy's destination (dist) canonical only when it is referenced after
 // the copy's source, so with `work` referenced last, y is computed from the quotient (v0) and
 // dist gets a copy, as in retail. A dead `work = 0;` after the loop matches too.
-void func_80023144(void)
+void Map_layer_draw(void)
 {
     C8001F828_MODEL *m;
     uint32 *p;
@@ -2132,7 +2132,7 @@ void func_80023144(void)
     }
     D_80098970++;
     D_80098A78 -= (dist * rsin(D_800A3958.work.rot_B8.vy - ratan2(dx, dz))) / 24;
-    for (m = D_800BBA90; m < D_800BBA90 + 11; m++)
+    for (m = Map_layer_tbl; m < Map_layer_tbl + 11; m++)
     {
         if (m->id.b.lo & 1)
         {
@@ -2308,7 +2308,7 @@ void func_800238B4(void)
     }
     else
     {
-        func_80020BB4();
+        map_tile_window();
     }
     C8001F828_TIME_A = (VSync(1) - C8001F828_TIME_START) & 0xFFFF;
     GTE_SET_MATRIX(0x1F800008);
@@ -2395,32 +2395,32 @@ void func_80023CF0(uint8 *list, sint32 limit)
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80023EA8(list);
-            func_80023EA8(list + 0x18);
+            map_quad_draw(list);
+            map_quad_draw(list + 0x18);
         }
         else
         {
-            func_80023EA8(list + 0x10);
-            func_80023EA8(list + 0x18);
+            map_quad_draw(list + 0x10);
+            map_quad_draw(list + 0x18);
         }
     }
     else
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80023EA8(list);
-            func_80023EA8(list + 8);
+            map_quad_draw(list);
+            map_quad_draw(list + 8);
         }
         else
         {
-            func_80023EA8(list + 8);
-            func_80023EA8(list + 0x10);
+            map_quad_draw(list + 8);
+            map_quad_draw(list + 0x10);
         }
     }
-    func_80023EA8(list + 0x20);
+    map_quad_draw(list + 0x20);
     if (!(C8001F828_SCR_1BC < limit))
     {
-        func_80023EA8(list + 0x28);
+        map_quad_draw(list + 0x28);
     }
 }
 
@@ -2442,7 +2442,7 @@ void func_80023E1C(uint32 *list)
     i           = 0;
     do
     {
-        func_80023EA8(&p[i]);
+        map_quad_draw(&p[i]);
         i += 2;
     } while (i < n);
 }
@@ -2453,7 +2453,7 @@ void func_80023E1C(uint32 *list)
 // previous face when bit 28 is set), and hands large faces to the quad splitter. The header
 // words are reused for the CLUT word and the two loop constants (retail keeps each in one
 // register), the skip path has its own increments, and sz1 doubles as the face word.
-void func_80023EA8(void *list)
+void map_quad_draw(void *list)
 {
     C8001F828_QUAD_WORK *scr;
     C8001F828_SVEC unused;
@@ -2680,7 +2680,7 @@ void func_80023EA8(void *list)
             }
             scr->uv_88[0] = sz2;
             scr->uv_88[1] = sz3;
-            pk            = func_8002466C();
+            pk            = quad_split2();
             if (!C8001F828_BIT(flags, 28))
             {
                 tail = pk;
@@ -2727,7 +2727,7 @@ void func_80023EA8(void *list)
 // (4, 5, 7, 8, then the centre). Each primitive is taken by advancing the buffer pointer at
 // 0x1F800070 first and stepping back, which gives retail's copy of the old pointer. The
 // triangle loop reuses three of the quad loop's four index variables, and is a do-while.
-uint32 *func_8002466C(void)
+uint32 *quad_split2(void)
 {
     C8001F828_SVEC vec[3];
     sint32 clip;
@@ -2947,32 +2947,32 @@ void func_80024D4C(uint8 *list, sint32 limit)
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80024F30(list);
-            func_80024F30(list + 0x18);
+            map_quad_draw_near(list);
+            map_quad_draw_near(list + 0x18);
         }
         else
         {
-            func_80024F30(list + 0x10);
-            func_80024F30(list + 0x18);
+            map_quad_draw_near(list + 0x10);
+            map_quad_draw_near(list + 0x18);
         }
     }
     else
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80024F30(list);
-            func_80024F30(list + 8);
+            map_quad_draw_near(list);
+            map_quad_draw_near(list + 8);
         }
         else
         {
-            func_80024F30(list + 8);
-            func_80024F30(list + 0x10);
+            map_quad_draw_near(list + 8);
+            map_quad_draw_near(list + 0x10);
         }
     }
-    func_80024F30(list + 0x20);
+    map_quad_draw_near(list + 0x20);
     if (!(C8001F828_SCR_1BC < limit))
     {
-        func_80024F30(list + 0x28);
+        map_quad_draw_near(list + 0x28);
     }
 }
 
@@ -3007,16 +3007,16 @@ void func_80024E94(uint32 *list, sint32 mode)
     p = &list[count + 1];
     do
     {
-        func_80024F30(p);
+        map_quad_draw_near(p);
         i += 2;
         p += 2;
     } while (i < n);
 }
 
-// Variant of func_80023EA8 without the on-screen test: near faces covering the screen centre
+// Variant of map_quad_draw without the on-screen test: near faces covering the screen centre
 // add the colour at 0x1F80007C (the z extent locals are reused for the x and y extents), and
 // with bit 24 a face starts a new chain at its ordering-table slot.
-void func_80024F30(void *list)
+void map_quad_draw_near(void *list)
 {
     C8001F828_QUAD_WORK *scr;
     C8001F828_SVEC unused;
@@ -3285,7 +3285,7 @@ void func_80024F30(void *list)
             }
             scr->uv_88[0] = sz2;
             scr->uv_88[1] = sz3;
-            pk            = func_8002466C();
+            pk            = quad_split2();
             if (!C8001F828_BIT(flags, 28))
             {
                 tail = pk;
@@ -3346,32 +3346,32 @@ void func_80025748(uint8 *list, sint32 limit)
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80025900(list);
-            func_80025900(list + 0x18);
+            map_quad_draw_twoside(list);
+            map_quad_draw_twoside(list + 0x18);
         }
         else
         {
-            func_80025900(list + 0x10);
-            func_80025900(list + 0x18);
+            map_quad_draw_twoside(list + 0x10);
+            map_quad_draw_twoside(list + 0x18);
         }
     }
     else
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80025900(list);
-            func_80025900(list + 8);
+            map_quad_draw_twoside(list);
+            map_quad_draw_twoside(list + 8);
         }
         else
         {
-            func_80025900(list + 8);
-            func_80025900(list + 0x10);
+            map_quad_draw_twoside(list + 8);
+            map_quad_draw_twoside(list + 0x10);
         }
     }
-    func_80025900(list + 0x20);
+    map_quad_draw_twoside(list + 0x20);
     if (!(C8001F828_SCR_1BC < limit))
     {
-        func_80025900(list + 0x28);
+        map_quad_draw_twoside(list + 0x28);
     }
 }
 
@@ -3393,16 +3393,16 @@ void func_80025874(uint32 *list)
     i           = 0;
     do
     {
-        func_80025900(&p[i]);
+        map_quad_draw_twoside(&p[i]);
         i += 2;
     } while (i < n);
 }
 
-// Variant of func_80023EA8 that keeps back faces: a face seen from behind is drawn only
+// Variant of map_quad_draw that keeps back faces: a face seen from behind is drawn only
 // beyond the depth at 0x1F8001C0, and without bit 30 it is drawn flat in colour 0x010101 at
 // its far depth. Near faces covering the screen centre add the colour at 0x1F80007C as in
-// func_80024F30.
-void func_80025900(void *list)
+// map_quad_draw_near.
+void map_quad_draw_twoside(void *list)
 {
     C8001F828_QUAD_WORK *scr;
     C8001F828_SVEC unused;
@@ -3714,7 +3714,7 @@ void func_80025900(void *list)
             }
             scr->uv_88[0] = sz2;
             scr->uv_88[1] = sz3;
-            pk            = func_8002466C();
+            pk            = quad_split2();
             if (!C8001F828_BIT(flags, 28))
             {
                 tail = pk;
@@ -3761,7 +3761,7 @@ void func_80025900(void *list)
 // (4, 5, 7, 8, then the centre). Each primitive is taken by advancing the buffer pointer at
 // 0x1F800070 first and stepping back, which gives retail's copy of the old pointer. The
 // triangle loop reuses three of the quad loop's four index variables, and is a do-while.
-uint32 *func_8002626C(void)
+uint32 *quad_split3(void)
 {
     C8001F828_SVEC vec[3];
     sint32 clip;
@@ -3979,32 +3979,32 @@ void func_8002694C(uint8 *list, sint32 limit)
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80026B04(list);
-            func_80026B04(list + 0x18);
+            map_quad_draw2(list);
+            map_quad_draw2(list + 0x18);
         }
         else
         {
-            func_80026B04(list + 0x10);
-            func_80026B04(list + 0x18);
+            map_quad_draw2(list + 0x10);
+            map_quad_draw2(list + 0x18);
         }
     }
     else
     {
         if (C8001F828_SCR_2C < (sint16)sc->w44)
         {
-            func_80026B04(list);
-            func_80026B04(list + 8);
+            map_quad_draw2(list);
+            map_quad_draw2(list + 8);
         }
         else
         {
-            func_80026B04(list + 8);
-            func_80026B04(list + 0x10);
+            map_quad_draw2(list + 8);
+            map_quad_draw2(list + 0x10);
         }
     }
-    func_80026B04(list + 0x20);
+    map_quad_draw2(list + 0x20);
     if (!(C8001F828_SCR_1BC < limit))
     {
-        func_80026B04(list + 0x28);
+        map_quad_draw2(list + 0x28);
     }
 }
 
@@ -4026,13 +4026,13 @@ void func_80026A78(uint32 *list)
     i           = 0;
     do
     {
-        func_80026B04(&p[i]);
+        map_quad_draw2(&p[i]);
         i += 2;
     } while (i < n);
 }
 
-// Byte-identical twin of func_80023EA8.
-void func_80026B04(void *list)
+// Byte-identical twin of map_quad_draw.
+void map_quad_draw2(void *list)
 {
     C8001F828_QUAD_WORK *scr;
     C8001F828_SVEC unused;
@@ -4259,7 +4259,7 @@ void func_80026B04(void *list)
             }
             scr->uv_88[0] = sz2;
             scr->uv_88[1] = sz3;
-            pk            = func_8002466C();
+            pk            = quad_split2();
             if (!C8001F828_BIT(flags, 28))
             {
                 tail = pk;

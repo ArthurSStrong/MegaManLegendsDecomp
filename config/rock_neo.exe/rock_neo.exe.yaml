@@ -119,7 +119,7 @@ segments:
       - [0x2B424, c, code_8003AC24]  # low
       - [0x2C640, c, player]  # medium
       - [0x32DFC, c, code_800425FC]  # low
-      - [0x33A4C, c, code_8004324C]  # low
+      - [0x33A4C, c, pl_shl]  # low
       - [0x34734, c, code_80043F34]  # low
       - [0x35ED8, c, code_800456D8]  # low
       - [0x38E20, c, code_80048620]  # low

@@ -21,7 +21,7 @@ void func_8010011C(void)
     void *spawn;
 
     map = &STAGE_MAP_TBL[Game_work.value_51];
-    func_80022FD4(D_80104190[Game_work.value_51]);
+    Map_layer_set(D_80104190[Game_work.value_51]);
     STAGE_MAP_WORK_PTR->w     = map->w;
     STAGE_MAP_WORK_PTR->h     = map->h;
     STAGE_MAP_WORK_PTR->x0    = map->x0;
@@ -609,7 +609,7 @@ void func_80100ED4(STAGE_ROOM *wp)
             if (Fade_busy == 0)
             {
                 wp->child_24->flags_0 &= ~2;
-                D_800BBA90[0].flags_0 &= ~3;
+                Map_layer_tbl[0].flags_0 &= ~3;
                 Cd_read_comb(0xCB);
                 wp->routine_5++;
             }

@@ -305,7 +305,7 @@ target reloads `THREAD_TBL[i].tcb` from memory before storing `->reg[R_SR]` (our
 loop counter/giv are scheduled differently. Tried: `uint32` field with a cast, `[0x25]` word index.
 
 Parked: `debug_mem_dump` (`0x80012A5C`, debug dump of 16 eight-byte lines as words/halfwords/bytes
-through `func_8001FE38`). **The code is byte-identical** (`uint32 mode`: the switch has no lower-bound
+through `Print`). **The code is byte-identical** (`uint32 mode`: the switch has no lower-bound
 test; addresses as `addr[i * 8 + k]`, since a walking `addr += 8` grows a second pointer giv). Only
 the rodata order differs: its 45-byte format string `D_80010040` comes out of `main.o` ahead of
 `D_80010000`, which `exception_handler`'s `INCLUDE_ASM` still supplies (`.rodata` 0x800-0x870 = 0x40 +
@@ -384,7 +384,7 @@ The player's shots, pool `Pl_shl_work_tbl[16]` (kind 0x10, `Open_PL_SHL_WORK` / 
 have their own struct, `PL_SHL_WORK`: same layout, with the sprite `EFC` and the free block written out, because a
 player's shot keeps its own bytes in both (the flight direction `dir_A4` in the EFC's kind bytes, `tgt_BC` and
 `owner_C4` in the free block). Its `id_2` is byte 0xB of the player's action record (`D_80089A8B`); the handlers are
-`Pl_shl_normal_arm` and `Pl_shl_buster` (`code_8004324C`, tables `Pl_shl_normal_arm_tbl`/`Pl_shl_buster_tbl`, `PL_SHL_FUNC`).
+`Pl_shl_normal_arm` and `Pl_shl_buster` (`pl_shl`, tables `Pl_shl_normal_arm_tbl`/`Pl_shl_buster_tbl`, `PL_SHL_FUNC`).
 
 `SHL_WORK.field_C` stays a byte: `Open_SHL_WORK` clears 0x0C-0x0F with `*(uint32 *)&wp->field_C = 0`, and with a
 `uint32` field the cast folds away and the store is scheduled one slot later.
@@ -683,7 +683,7 @@ wrong register), `func_80047354` (4: if/else-if with its own call, value local `
 GCC always cross-jumps the identical `sub` stores the target keeps separate), `func_80045CE8` (clamp order: worse),
 `func_80046B34` and `func_80047228` (unchanged).
 
-`code_8004324C.c` (batch 1): banked `Pl_shot_busy` (player `unk174 & 0xC0 || unk177`; must be `if (a || b)
+`pl_shl.c` (then `code_8004324C.c`; batch 1): banked `Pl_shot_busy` (player `unk174 & 0xC0 || unk177`; must be `if (a || b)
 return 1; return 0;`: two separate `if`s fold the second test to `sltu`, a bare `return a || b` uses a temp),
 `Money_check` (`-(Game_work.money < -amount)`: -1 when `money` can't cover a negative change; `money` at
 `Game_work+0x1C`, capped at 999999 by `Money_add`), `Pl_shl_normal_arm` (`Pl_shl_normal_arm_tbl[wp->routine_8](wp)` on a
@@ -705,7 +705,7 @@ Batch 3: banked `Pl_shl_normal_arm_init` (frame has 0x18 bytes of unused locals:
 `pos` to `old`), `Pl_shl_buster_init` (launch: direction `(0, 0, -0x1000)` rotated by `Camera_pitch_get()`/`field_64`,
 speed `dir * Buster_speed_tbl[idx[2]] >> 4`, collision box `hit_78 = &D_80097DA0`; `field_88` is stored twice, the
 constant first; `x_90 = pos.vx = pos_l.vx >> 16` is Capcom's chained form, cf. `efc.model.sv` in
-`EM09_49.C`). `func_80043DF8` is empty but takes `(wp, &m)`: `Pl_shl_buster_init` passes both. `Player_weapon_dist_calc`
+`EM09_49.C`). `buster_dir_set` is empty but takes `(wp, &m)`: `Pl_shl_buster_init` passes both. `Player_weapon_dist_calc`
 now returns `sint32` (as `Player_weapon_attack_calc`): `Pl_shl_buster_main` compares it without re-extending.
 Parked `Pl_shl_buster_main` (homing flight toward `tgt_BC`, `+0xBC`, the vector `func_80035508` projects): GCC
 store-flags the 0/1 argument of `buster_hit_effect` (`id != 0x7FFF`) into `xori`/`sltu` where the target
@@ -977,6 +977,6 @@ Twins run (one of each all-assembly twin group, then `twins.py --apply`):
   `sxy = 0x1F800100` in s3. Needed: the first row's `&= 0x7FFFFFFF` before the loop, `row_end` set
   inside the `if`, the inner loop as `for (...; bits <<= 1, b++)`, the table indexed inline, and the
   drawn word read back into the `lod` local. Permuter candidate.
-- Not attempted: `func_8002466C`/`func_8002626C` (0x540 bytes) and `func_80023EA8`/`func_80026B04`
+- Not attempted: `quad_split2`/`quad_split3` (0x540 bytes) and `map_quad_draw`/`map_quad_draw2`
   (0x7C4): scratchpad polygon subdivision with GTE, every access off one 0x1F800100 base register, the
   same pattern that parks `mesh_draw`.

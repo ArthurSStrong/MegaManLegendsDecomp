@@ -18,7 +18,7 @@ void func_8010038C(void)
     void *spawns;
     sint32 room;
 
-    func_80022FD4(D_8011A6F0[Game_work.value_51]);
+    Map_layer_set(D_8011A6F0[Game_work.value_51]);
     room                      = Game_work.value_51;
     STAGE_MAP_WORK_PTR->w     = STAGE_MAP_TBL[room].w;
     STAGE_MAP_WORK_PTR->h     = STAGE_MAP_TBL[room].h;

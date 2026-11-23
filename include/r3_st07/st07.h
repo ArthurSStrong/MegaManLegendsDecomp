@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/stage.h"
 
-extern void *D_80105658[];       // model table by room (func_80022FD4)
+extern void *D_80105658[];       // model table by room (Map_layer_set)
 extern void *D_80105728[];       // spawn list by room
 extern void *D_80105760[];       // exit list by room
 extern uint8 D_80105780[][0x28]; // by room (Fog_room_set)
@@ -228,7 +228,7 @@ extern sint16 D_800BBBC8;
 extern sint8 D_800BBBE0;
 extern sint16 D_800BBC00;
 
-// A room model's starting flags and position (func_8010036C copies eight into D_800BBA90).
+// A room model's starting flags and position (func_8010036C copies eight into Map_layer_tbl).
 typedef struct
 {
     uint8 flags_0;       // 0

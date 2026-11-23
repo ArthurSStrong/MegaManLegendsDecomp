@@ -279,8 +279,8 @@ long exception_viewer(void)
         SCRATCH_SCREEN_WORD = (SCRATCH_BUFFER_INDEX << 17) + 0x801B8000;
         func_800203A8();
         D_800987D4 = 0;
-        func_8001FE38(DEBUG_TEXT_POS(D_80080858[0].x, D_80080858[0].y, D_80080858[0].color),
-                      D_80080858[0].text, names[(cause >> 2) & 0xF]);
+        Print(DEBUG_TEXT_POS(D_80080858[0].x, D_80080858[0].y, D_80080858[0].color),
+              D_80080858[0].text, names[(cause >> 2) & 0xF]);
         if (Joy2.pressed & 1)
         {
             page = (page + 1) & 3;
@@ -297,25 +297,25 @@ long exception_viewer(void)
                 switch (brk)
                 {
                     case 0x1C00:
-                        func_8001FE38(
+                        Print(
                             DEBUG_TEXT_POS(D_80080858[1].x, D_80080858[1].y, D_80080858[1].color),
                             D_80080858[1].text);
                         break;
                     case 0x1800:
-                        func_8001FE38(
+                        Print(
                             DEBUG_TEXT_POS(D_80080858[2].x, D_80080858[2].y, D_80080858[2].color),
                             D_80080858[2].text);
                         break;
                     default:
-                        func_8001FE38(DEBUG_TEXT_POS(2, 3, 0), D_800979A4, brk);
+                        Print(DEBUG_TEXT_POS(2, 3, 0), D_800979A4, brk);
                         break;
                 }
             }
-            func_8001FE38(DEBUG_TEXT_POS(22, 2, 0), D_800979A4, epc);
+            Print(DEBUG_TEXT_POS(22, 2, 0), D_800979A4, epc);
             for (i = 0; i < 37; i++)
             {
-                func_8001FE38(DEBUG_TEXT_POS(D_80080730[i].x, D_80080730[i].y, D_80080730[i].color),
-                              D_80080730[i].text);
+                Print(DEBUG_TEXT_POS(D_80080730[i].x, D_80080730[i].y, D_80080730[i].color),
+                      D_80080730[i].text);
             }
             for (i = 0, brk = 0; i < 32; i++)
             {
@@ -323,14 +323,14 @@ long exception_viewer(void)
                 {
                     brk = 1;
                 }
-                func_8001FE38(DEBUG_TEXT_POS(brk * 20 + 7, i - brk * 20 + 4, 0), D_800979A4,
-                              tcb.reg[i]);
+                Print(DEBUG_TEXT_POS(brk * 20 + 7, i - brk * 20 + 4, 0), D_800979A4,
+                      tcb.reg[i]);
             }
-            func_8001FE38(DEBUG_TEXT_POS(27, 16, 0), D_800979A4, tcb.reg[TCB_R_EPC]);
-            func_8001FE38(DEBUG_TEXT_POS(27, 17, 0), D_800979A4, tcb.reg[TCB_R_MDHI]);
-            func_8001FE38(DEBUG_TEXT_POS(27, 18, 0), D_800979A4, tcb.reg[TCB_R_MDLO]);
-            func_8001FE38(DEBUG_TEXT_POS(27, 19, 0), D_800979A4, tcb.reg[TCB_R_SR]);
-            func_8001FE38(DEBUG_TEXT_POS(27, 20, 0), D_800979A4, tcb.reg[TCB_R_CAUSE]);
+            Print(DEBUG_TEXT_POS(27, 16, 0), D_800979A4, tcb.reg[TCB_R_EPC]);
+            Print(DEBUG_TEXT_POS(27, 17, 0), D_800979A4, tcb.reg[TCB_R_MDHI]);
+            Print(DEBUG_TEXT_POS(27, 18, 0), D_800979A4, tcb.reg[TCB_R_MDLO]);
+            Print(DEBUG_TEXT_POS(27, 19, 0), D_800979A4, tcb.reg[TCB_R_SR]);
+            Print(DEBUG_TEXT_POS(27, 20, 0), D_800979A4, tcb.reg[TCB_R_CAUSE]);
         }
         else
         {
@@ -420,27 +420,27 @@ void func_80012A5C(DEBUG_MEMORY_ROW *rows, uint32 mode)
             for (i = 0; i < DEBUG_MEMORY_ROWS; i++)
             {
                 row = &rows[i];
-                func_8001FE38((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
-                              D_800979AC, row, row->words[0], row->words[1]);
+                Print((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
+                      D_800979AC, row, row->words[0], row->words[1]);
             }
             break;
         case 1:
             for (i = 0; i < DEBUG_MEMORY_ROWS; i++)
             {
                 row = &rows[i];
-                func_8001FE38((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
-                              D_800979BC, row, row->halves[0], row->halves[1], row->halves[2],
-                              row->halves[3]);
+                Print((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
+                      D_800979BC, row, row->halves[0], row->halves[1], row->halves[2],
+                      row->halves[3]);
             }
             break;
         case 2:
             for (i = 0; i < DEBUG_MEMORY_ROWS; i++)
             {
                 row = &rows[i];
-                func_8001FE38((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
-                              D_80010040, row, row->bytes[0], row->bytes[1], row->bytes[2],
-                              row->bytes[3], row->bytes[4], row->bytes[5], row->bytes[6],
-                              row->bytes[7]);
+                Print((DEBUG_MEMORY_BASE + i * DEBUG_MEMORY_SLOT_STEP) | DEBUG_MEMORY_FLAGS,
+                      D_80010040, row, row->bytes[0], row->bytes[1], row->bytes[2],
+                      row->bytes[3], row->bytes[4], row->bytes[5], row->bytes[6],
+                      row->bytes[7]);
             }
             break;
     }

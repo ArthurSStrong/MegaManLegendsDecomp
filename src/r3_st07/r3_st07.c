@@ -19,7 +19,7 @@ void func_801000B0(void)
     void *spawns;
 
     mw = STAGE_MAP_WORK_PTR;
-    func_80022FD4(D_80105658[Game_work.value_51]);
+    Map_layer_set(D_80105658[Game_work.value_51]);
     spawns    = D_80105728[Game_work.value_51];
     mw->w     = STAGE_MAP_TBL[Game_work.value_51].w;
     mw->h     = STAGE_MAP_TBL[Game_work.value_51].h;
@@ -93,13 +93,13 @@ void func_8010036C(STAGE_ROOM *wp)
             Sce_slot_open(&D_80105B8C);
             for (i = 0; i < 8; i++)
             {
-                D_800BBA90[i].flags_0  = D_80106124[i].flags_0;
-                D_800BBA90[i].value_20 = D_80106124[i].value_4;
-                D_800BBA90[i].value_22 = D_80106124[i].value_6;
+                Map_layer_tbl[i].flags_0  = D_80106124[i].flags_0;
+                Map_layer_tbl[i].value_20 = D_80106124[i].value_4;
+                Map_layer_tbl[i].value_22 = D_80106124[i].value_6;
             }
-            D_800BBA90[7].pos_C.y  = 0xF0;
-            D_800BBA90[7].fpos_4.y = 0xF00000;
-            D_80108C0C             = 0;
+            Map_layer_tbl[7].pos_C.y  = 0xF0;
+            Map_layer_tbl[7].fpos_4.y = 0xF00000;
+            D_80108C0C                = 0;
             Cd_xa_play_id(0x20000005);
             wp->routine_5++;
             break;
@@ -208,10 +208,10 @@ void func_801007E0(void)
 {
     if (D_80108C0C == 0xDE)
     {
-        D_800BBA90[2].flags_0 = 0;
-        D_800BBA90[4].flags_0 = 0;
-        D_800BBA90[5].flags_0 = 0;
-        D_800BBA90[6].flags_0 = 0;
+        Map_layer_tbl[2].flags_0 = 0;
+        Map_layer_tbl[4].flags_0 = 0;
+        Map_layer_tbl[5].flags_0 = 0;
+        Map_layer_tbl[6].flags_0 = 0;
     }
     D_80108C0C++;
 }
@@ -220,10 +220,10 @@ void func_80100834(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        D_800BBA90[0].flags_0 = 0;
-        D_800BBAC8            = 3;
-        D_800BBB38            = 3;
-        D_800BBC18            = 3;
+        Map_layer_tbl[0].flags_0 = 0;
+        D_800BBAC8               = 3;
+        D_800BBB38               = 3;
+        D_800BBC18               = 3;
     }
 }
 
@@ -372,9 +372,9 @@ void func_80100B98(STAGE_ROOM *wp)
         {
             Close_EFFECT_WORK(ep);
         }
-        D_800BBA90[0].flags_0 = 3;
-        i                     = 0xC;
-        entry                 = D_80105C7C;
+        Map_layer_tbl[0].flags_0 = 3;
+        i                        = 0xC;
+        entry                    = D_80105C7C;
         do
         {
             Sce_slot_open(entry);
@@ -474,7 +474,7 @@ void func_80100D9C(STAGE_ROOM *wp)
         D_800BBB90           = -0x168;
         D_800BBBC8           = -0x168;
         D_800BBC00           = -0x168;
-        D_800BBA90[0].flags_0 |= 3;
+        Map_layer_tbl[0].flags_0 |= 3;
         D_800BBB00 |= 3;
         D_800BBB70 |= 3;
         D_800BBBA8 |= 3;
@@ -489,7 +489,7 @@ void func_80100ED0(STAGE_ROOM *wp)
         func_80100D38(5);
         wp->child_24->flags_0 &= 0xFD;
         // Signed here: the and takes -4, not 0xFC.
-        *(sint8 *)&D_800BBA90[0].flags_0 &= ~3;
+        *(sint8 *)&Map_layer_tbl[0].flags_0 &= ~3;
         *(sint8 *)&D_800BBB00 &= ~3;
         D_800BBB70 &= ~3;
         D_800BBBA8 &= ~3;
@@ -818,7 +818,7 @@ void func_801016DC(STAGE_ROOM *wp)
         D_800BBB90       = -0x168;
         D_800BBBC8       = -0x168;
         D_800BBC00       = -0x168;
-        D_800BBA90[0].flags_0 |= 3;
+        Map_layer_tbl[0].flags_0 |= 3;
         D_800BBB00 |= 3;
         D_800BBB70 |= 3;
         D_800BBBA8 |= 3;
@@ -833,7 +833,7 @@ void func_80101810(STAGE_ROOM *wp)
         func_80101678(5);
         wp->child_24->flags_0 &= 0xFD;
         // Signed here: the and takes -4, not 0xFC.
-        *(sint8 *)&D_800BBA90[0].flags_0 &= ~3;
+        *(sint8 *)&Map_layer_tbl[0].flags_0 &= ~3;
         *(sint8 *)&D_800BBB00 &= ~3;
         D_800BBB70 &= ~3;
         D_800BBBA8 &= ~3;

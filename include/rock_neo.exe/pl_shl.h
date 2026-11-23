@@ -1,5 +1,5 @@
-#ifndef ROCK_NEO_CODE_8004324C_H
-#define ROCK_NEO_CODE_8004324C_H
+#ifndef ROCK_NEO_PL_SHL_H
+#define ROCK_NEO_PL_SHL_H
 
 #include "common.h"
 
@@ -197,7 +197,7 @@ CODE43_SVECTOR *Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43
 void Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43_SVECTOR *cur, sint32 a3,
                      sint32 a4);
 #endif
-void func_80043DF8(CODE43_WORK *wp, CODE43_MATRIX *mtx);
+void buster_dir_set(CODE43_WORK *wp, CODE43_MATRIX *mtx);
 void func_8005D97C(void);
 sint16 Camera_pitch_get(void);
 void RotMatrixYXZ(CODE43_SVECTOR *r, CODE43_MATRIX *m);

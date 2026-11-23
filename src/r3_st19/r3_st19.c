@@ -23,7 +23,7 @@ void func_801005CC(void)
 
     mw  = STAGE_MAP_WORK_PTR;
     map = &STAGE_MAP_TBL[Game_work.value_51];
-    func_80022FD4(D_80116820[Game_work.value_51]);
+    Map_layer_set(D_80116820[Game_work.value_51]);
     mw->w     = map->w;
     mw->h     = map->h;
     mw->x0    = map->x0;

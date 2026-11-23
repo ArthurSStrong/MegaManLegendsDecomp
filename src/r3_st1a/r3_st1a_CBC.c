@@ -1188,11 +1188,11 @@ void func_80102CC8(ST1A_ROOM_FX *wp)
     if (wp->frame_10 == 0)
     {
         func_80102590(0xE);
-        D_800BBA90[0].flags_0 = 3;
-        D_800BBA9E            = 0xE0;
-        D_800BBA9C            = 0;
-        D_800BBA94            = 0;
-        D_800BBA98            = 0xE00000;
+        Map_layer_tbl[0].flags_0 = 3;
+        D_800BBA9E               = 0xE0;
+        D_800BBA9C               = 0;
+        D_800BBA94               = 0;
+        D_800BBA98               = 0xE00000;
         func_8010282C(wp, 0);
         obj             = Sce_slot_open(&D_8012F7B8);
         obj->rotation.z = 0x140;
@@ -1214,7 +1214,7 @@ void func_80102DD8(ST1A_ROOM_FX *wp)
         Close_EFFECT_WORK(wp->fx_A0);
         func_8010282C(wp, 1);
         wp->child_28->rotation.y = 0x80;
-        D_800BBA90[0].flags_0    = 0;
+        Map_layer_tbl[0].flags_0 = 0;
         alpha                    = 0;
     }
     else if (wp->frame_10 < 0x20)
@@ -1350,7 +1350,7 @@ void func_801031C8(STAGE_ROOM *wp)
     switch (wp->frame_10)
     {
         case 0:
-            D_800BBA90[3].flags_0 = 0;
+            Map_layer_tbl[3].flags_0 = 0;
             Close_EM_WORK(wp->child_28);
             Close_EM_WORK(wp->child_2C);
             Close_EM_WORK(wp->child_30);
@@ -1526,24 +1526,24 @@ void func_801036F4(STAGE_ROOM *wp)
         case 0:
             if (Fade_busy == 0)
             {
-                STAGE_PL.routine_0    = 3;
-                STAGE_PL.routine_1    = 1;
-                STAGE_PL.pos_438.y    = -1;
-                STAGE_PL.fixed_428.y  = -1 << 16;
-                D_800BBA90[0].flags_0 = 0;
-                D_800BBAC8            = 0;
-                D_800BBB00            = 0;
-                D_800BBB38            = 0;
-                STAGE_PL.pos_438.x    = 0;
-                STAGE_PL.pos_438.z    = 0;
-                STAGE_PL.fixed_428.x  = 0;
-                STAGE_PL.fixed_428.z  = 0;
-                STAGE_PL.value_444    = 0;
-                STAGE_PL.value_440    = 0;
-                STAGE_PL.value_442    = 0x800;
-                STAGE_PL.value_448    = 0;
-                STAGE_PL.value_168    = 0;
-                STAGE_PL.value_169    = 0;
+                STAGE_PL.routine_0       = 3;
+                STAGE_PL.routine_1       = 1;
+                STAGE_PL.pos_438.y       = -1;
+                STAGE_PL.fixed_428.y     = -1 << 16;
+                Map_layer_tbl[0].flags_0 = 0;
+                D_800BBAC8               = 0;
+                D_800BBB00               = 0;
+                D_800BBB38               = 0;
+                STAGE_PL.pos_438.x       = 0;
+                STAGE_PL.pos_438.z       = 0;
+                STAGE_PL.fixed_428.x     = 0;
+                STAGE_PL.fixed_428.z     = 0;
+                STAGE_PL.value_444       = 0;
+                STAGE_PL.value_440       = 0;
+                STAGE_PL.value_442       = 0x800;
+                STAGE_PL.value_448       = 0;
+                STAGE_PL.value_168       = 0;
+                STAGE_PL.value_169       = 0;
                 STAGE_PL.flags_bd |= 0x10;
                 Cd_subcmd(0, 1, 0);
                 if (D_801396FC & 2)
@@ -2800,7 +2800,7 @@ void func_80105F88(ST1A_ROOM *wp)
         {
             wp->child[i]->flags_0 &= ~2;
         }
-        D_800BBA90[3].flags_0 = 0;
+        Map_layer_tbl[3].flags_0 = 0;
         wp->child[11]->flags_0 |= 2;
         func_80106F38(0xC);
     }
@@ -2834,11 +2834,11 @@ void func_80106018(ST1A_ROOM *wp)
         Sce_slot_open(&D_80130624);
         wp->child[0]->routine_1      = 2;
         wp->child[0]->value_48.value = 0x500;
-        D_800BBA90[2].flags_0        = 3;
-        D_800BBA90[2].pos_C.x        = 0;
-        D_800BBA90[2].pos_C.y        = 0;
-        D_800BBA90[2].fpos_4.x       = 0;
-        D_800BBA90[2].fpos_4.y       = 0;
+        Map_layer_tbl[2].flags_0     = 3;
+        Map_layer_tbl[2].pos_C.x     = 0;
+        Map_layer_tbl[2].pos_C.y     = 0;
+        Map_layer_tbl[2].fpos_4.x    = 0;
+        Map_layer_tbl[2].fpos_4.y    = 0;
         Cd_subcmd(0, 1, 0);
         wp->routine_6 = 0;
         wp->flags_A |= 0x80;

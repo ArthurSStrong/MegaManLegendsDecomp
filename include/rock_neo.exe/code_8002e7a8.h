@@ -543,7 +543,7 @@ typedef struct
 } PLAYER_TAG_SLOT;
 
 extern PLAYER_TAG_SLOT Player_slots[2] __asm__("Player_work");
-extern uint8 D_800BBA90[];
+extern uint8 Map_layer_tbl[];
 void func_800177CC(void *start, void *end);
 
 // Player as the target-seek helper sees it: heading at +0x56 and +0x116, position at +0x14.

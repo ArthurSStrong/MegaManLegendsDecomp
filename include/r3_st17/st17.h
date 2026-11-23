@@ -6,7 +6,7 @@
 #include "stage_common/stcom18.h"
 #include "stage_common/stcom23.h"
 
-extern void *D_8011ABB8[];       // model table by room (func_80022FD4)
+extern void *D_8011ABB8[];       // model table by room (Map_layer_set)
 extern void *D_8011AD1C[];       // spawn list by room
 extern void *D_8011AD44[];       // exit list by room
 extern uint8 D_8011AD54[][0x28]; // by room (Fog_room_set)

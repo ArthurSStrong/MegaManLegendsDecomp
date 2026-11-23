@@ -206,7 +206,7 @@ sint32 Debug_item_weapon_right(DEBUG_WORK *wp)
             for (i = 0; i < 14; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(Debug_weapon_right_tbl[i].flags, Debug_weapon_right_tbl[i].text);
+                Print(Debug_weapon_right_tbl[i].flags, Debug_weapon_right_tbl[i].text);
             }
             return 0;
         case 3:
@@ -292,7 +292,7 @@ sint32 Debug_item_weapon_left(DEBUG_WORK *wp)
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(Debug_weapon_left_tbl[i].flags, Debug_weapon_left_tbl[i].text);
+                Print(Debug_weapon_left_tbl[i].flags, Debug_weapon_left_tbl[i].text);
             }
             return 0;
         case 3:
@@ -374,7 +374,7 @@ sint32 Debug_item_helmet(DEBUG_WORK *wp)
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(Debug_helmet_tbl[i].flags, Debug_helmet_tbl[i].text);
+                Print(Debug_helmet_tbl[i].flags, Debug_helmet_tbl[i].text);
             }
             return 0;
         case 3:
@@ -454,7 +454,7 @@ sint32 Debug_item_key_type(DEBUG_WORK *wp)
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(Debug_key_type_tbl[i].flags, Debug_key_type_tbl[i].text);
+                Print(Debug_key_type_tbl[i].flags, Debug_key_type_tbl[i].text);
             }
             return 0;
         case 3:
@@ -535,7 +535,7 @@ sint32 Debug_item_size(DEBUG_WORK *wp)
             for (i = 0; i < 2; i++)
             {
                 D_800987D4 = 0;
-                func_8001FE38(Debug_size_tbl[i].flags, Debug_size_tbl[i].text);
+                Print(Debug_size_tbl[i].flags, Debug_size_tbl[i].text);
             }
             return 0;
         case 3:

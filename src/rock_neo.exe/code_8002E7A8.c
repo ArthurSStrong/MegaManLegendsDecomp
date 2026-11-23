@@ -104,7 +104,7 @@ void Work_init_all(sint32 mode)
     {
         Work_50_tbl[i].reserved01 = id | i;
     }
-    func_800177CC(D_800BBA90, D_800BBA90 + 0x264);
+    func_800177CC(Map_layer_tbl, Map_layer_tbl + 0x264);
     func_800177CC((void *)0x8015BC00, (void *)0x8015BFFC);
 }
 
@@ -411,7 +411,7 @@ void Obj_work_flag_change(sint32 mask, sint32 flags)
     }
     if (mask & 0x200)
     {
-        flag_slot = D_800BBA90;
+        flag_slot = Map_layer_tbl;
         for (i = 0; i < 11; i++, flag_slot += 0x38)
         {
             if (*flag_slot & 3)
@@ -2839,7 +2839,7 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
     return 1;
 }
 
-// Two-entry hit-queue push (cf. Set_Atari). code_8004324c.h declares a different prototype.
+// Two-entry hit-queue push (cf. Set_Atari). pl_shl.h declares a different prototype.
 sint32 Set_Atari2(POS4_WORK *a, uint32 size_a, POS4_WORK *b, uint32 size_b, sint32 arg5,
                   sint32 arg6, sint32 id, MASK_WORK *tbl, sint32 flags, sint32 arg9,
                   sint32 arg10)

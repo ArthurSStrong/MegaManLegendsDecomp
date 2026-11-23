@@ -23,7 +23,7 @@
 #define TCB_R_CAUSE 36
 #define EXC_BREAK   9
 
-// Text position for func_8001FE38: x in 8-pixel columns, y in rows, colour
+// Text position for Print: x in 8-pixel columns, y in rows, colour
 #define DEBUG_TEXT_POS(x, y, c) (((x) << 3) | ((y) << 12) | ((c) << 17))
 
 // The current display buffer, D_80098934, seen as a whole DISP_ENV.

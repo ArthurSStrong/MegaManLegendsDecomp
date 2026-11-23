@@ -19,7 +19,7 @@ void func_801000B0(void)
     void *spawns;
 
     mw = STAGE_MAP_WORK_PTR;
-    func_80022FD4(D_801068E0[Game_work.value_51]);
+    Map_layer_set(D_801068E0[Game_work.value_51]);
     spawns    = D_80106940[Game_work.value_51];
     mw->w     = STAGE_MAP_TBL[Game_work.value_51].w;
     mw->h     = STAGE_MAP_TBL[Game_work.value_51].h;
@@ -104,14 +104,14 @@ void func_80100450(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        D_800BBB00            = 3;
-        D_8010A5F0            = 0x60;
-        D_8010A5EC            = 0x60;
-        D_8010A5E8            = 0x60;
-        D_800BBAC8            = 0;
-        D_800BBA90[0].flags_0 = 0;
-        D_8010A5E4            = 1;
-        D_8010A5F4            = 1;
+        D_800BBB00               = 3;
+        D_8010A5F0               = 0x60;
+        D_8010A5EC               = 0x60;
+        D_8010A5E8               = 0x60;
+        D_800BBAC8               = 0;
+        Map_layer_tbl[0].flags_0 = 0;
+        D_8010A5E4               = 1;
+        D_8010A5F4               = 1;
     }
     if (wp->frame_10 == 0xBF)
     {
@@ -139,11 +139,11 @@ void func_80100524(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        D_800BBA90[0].flags_0     = 3;
-        D_800BBA90[1].flags_0     = 3;
-        D_800BBA90[2].flags_0     = 0;
-        D_800BBA90[0].fpos_4.y    = 0xF00000;
-        D_800BBA90[1].fpos_4.y    = 0xF00000;
+        Map_layer_tbl[0].flags_0  = 3;
+        Map_layer_tbl[1].flags_0  = 3;
+        Map_layer_tbl[2].flags_0  = 0;
+        Map_layer_tbl[0].fpos_4.y = 0xF00000;
+        Map_layer_tbl[1].fpos_4.y = 0xF00000;
         D_8010A5D8                = 0x500000;
         D_8010A5DC                = 0xFF060000;
         child                     = wp->child_30;
@@ -160,7 +160,7 @@ void func_80100524(STAGE_ROOM *wp)
     {
         // Model 0 through its symbol (its address kept in a register), model 1 through the
         // fixed address (ordered before the store through D_8010A5D4).
-        D_800BBA90[0].fpos_4.y -= 0x15555;
+        Map_layer_tbl[0].fpos_4.y -= 0x15555;
         ST02_MODEL_TBL[1].value_8 -= 0x15555;
         D_8010A5DC += 0x15555;
         D_8010A5D4->position_fixed.f.x.words.integer = D_8010A5DC >> 16;
@@ -204,23 +204,23 @@ void func_80100728(STAGE_ROOM *wp)
     {
         func_801002C8(1);
         Obj_work_flag_change(0x40, 0x80);
-        temp_v1               = wp->child_24;
-        temp_v1->flags_0      = (uint8)temp_v1->flags_0 | 2;
-        temp_v1_2             = wp->child_28;
-        temp_v1_2->flags_0    = (uint8)temp_v1_2->flags_0 | 2;
-        temp_v1_3             = wp->child_2C;
-        temp_v1_3->flags_0    = (uint8)temp_v1_3->flags_0 | 2;
-        temp_v1_4             = wp->child_30;
-        temp_v1_4->flags_0    = (uint8)temp_v1_4->flags_0 & 0xFD;
-        temp_v1_5             = wp->child_34;
-        temp_v1_5->flags_0    = (uint8)temp_v1_5->flags_0 | 2;
-        D_800BBA90[0].flags_0 = 3;
-        D_800BBAD0            = 0;
-        D_800BBA98            = 0;
-        D_800BBAB0            = -0x50;
-        D_800BBAC8            = 3;
-        D_800BBC18            = 0;
-        D_800BBCC0            = 0;
+        temp_v1                  = wp->child_24;
+        temp_v1->flags_0         = (uint8)temp_v1->flags_0 | 2;
+        temp_v1_2                = wp->child_28;
+        temp_v1_2->flags_0       = (uint8)temp_v1_2->flags_0 | 2;
+        temp_v1_3                = wp->child_2C;
+        temp_v1_3->flags_0       = (uint8)temp_v1_3->flags_0 | 2;
+        temp_v1_4                = wp->child_30;
+        temp_v1_4->flags_0       = (uint8)temp_v1_4->flags_0 & 0xFD;
+        temp_v1_5                = wp->child_34;
+        temp_v1_5->flags_0       = (uint8)temp_v1_5->flags_0 | 2;
+        Map_layer_tbl[0].flags_0 = 3;
+        D_800BBAD0               = 0;
+        D_800BBA98               = 0;
+        D_800BBAB0               = -0x50;
+        D_800BBAC8               = 3;
+        D_800BBC18               = 0;
+        D_800BBCC0               = 0;
     }
 }
 
@@ -495,11 +495,11 @@ void func_80100EA4(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        D_800BBC18            = 0;
-        D_800BBB00            = 0;
-        D_800BBAC8            = 0;
-        D_800BBA90[0].flags_0 = 0;
-        D_800BBB38            = 3;
+        D_800BBC18               = 0;
+        D_800BBB00               = 0;
+        D_800BBAC8               = 0;
+        Map_layer_tbl[0].flags_0 = 0;
+        D_800BBB38               = 3;
     }
 }
 
@@ -511,12 +511,12 @@ void func_80100EE4(STAGE_ROOM *wp)
     {
         child = wp->child_24;
         child->flags_0 &= 0xFD;
-        child                 = wp->child_28;
-        child->routine_1      = 2;
-        child->routine_2      = 0;
-        D_800BBB38            = 0;
-        D_800BBAC8            = 3;
-        D_800BBA90[0].flags_0 = 3;
+        child                    = wp->child_28;
+        child->routine_1         = 2;
+        child->routine_2         = 0;
+        D_800BBB38               = 0;
+        D_800BBAC8               = 3;
+        Map_layer_tbl[0].flags_0 = 3;
     }
     if ((ST02_FRAME & 7) == 7)
     {
@@ -701,15 +701,15 @@ void func_80101500(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        D_800BBA90[6].flags_0  = 0;
-        D_800BBA90[8].flags_0  = 3;
-        D_800BBA90[8].fpos_4.x = 0;
-        D_800BBA90[8].fpos_4.y = 0xAE0000;
-        D_800BBA90[8].value_22 = 0x18;
-        D_800BBA90[9].flags_0  = 3;
-        D_800BBA90[9].fpos_4.x = 0;
-        D_800BBA90[9].fpos_4.y = 0xAE0000;
-        D_800BBA90[9].value_22 = 0x10;
+        Map_layer_tbl[6].flags_0  = 0;
+        Map_layer_tbl[8].flags_0  = 3;
+        Map_layer_tbl[8].fpos_4.x = 0;
+        Map_layer_tbl[8].fpos_4.y = 0xAE0000;
+        Map_layer_tbl[8].value_22 = 0x18;
+        Map_layer_tbl[9].flags_0  = 3;
+        Map_layer_tbl[9].fpos_4.x = 0;
+        Map_layer_tbl[9].fpos_4.y = 0xAE0000;
+        Map_layer_tbl[9].value_22 = 0x10;
     }
     if (wp->frame_10 == 0x28)
     {
@@ -762,7 +762,7 @@ void func_801015B0(STAGE_ROOM *wp)
     }
     if (wp->frame_10 < 0x16)
     {
-        D_800BBA90[4].value_22 += 0xFE;
+        Map_layer_tbl[4].value_22 += 0xFE;
         ST02_MODEL_TBL[5].value_22 += 0xFE;
     }
     if (wp->frame_10 == 0x16)
@@ -786,10 +786,10 @@ void func_8010176C(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         func_801002C8(2);
-        D_800BBA90[6].flags_0     = 3;
-        D_800BBA90[4].flags_0     = 0;
-        D_800BBA90[5].flags_0     = 0;
-        D_800BBA90[6].value_22    = 0;
+        Map_layer_tbl[6].flags_0  = 3;
+        Map_layer_tbl[4].flags_0  = 0;
+        Map_layer_tbl[5].flags_0  = 0;
+        Map_layer_tbl[6].value_22 = 0;
         child                     = wp->child_30;
         child->position_fixed.v.x = 0x7D00000;
         child->position_fixed.v.y = -0x5780000;

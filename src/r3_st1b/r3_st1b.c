@@ -199,7 +199,7 @@ void func_80100818(void)
     STAGE_PL_VIEW *pl;
     sint16 *cells;
     void *spawn;
-    func_80022FD4(D_8010C8C4[Game_work.value_51]);
+    Map_layer_set(D_8010C8C4[Game_work.value_51]);
     STAGE_MAP_WORK_PTR->w     = STAGE_MAP_TBL[Game_work.value_51].w;
     STAGE_MAP_WORK_PTR->h     = STAGE_MAP_TBL[Game_work.value_51].h;
     STAGE_MAP_WORK_PTR->x0    = STAGE_MAP_TBL[Game_work.value_51].x0;

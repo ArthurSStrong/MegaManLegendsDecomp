@@ -1,5 +1,5 @@
 #include "common.h"
-#include "code_8004324c.h"
+#include "pl_shl.h"
 
 sint32 Pl_shot_busy(CODE43_FLAGS *wp)
 {
@@ -228,7 +228,7 @@ void Pl_shl_buster_init(CODE43_WORK *wp)
     wp->value_98            = Buster_size_tbl[Player_work[0].speed_idx_4fc];
     wp->value_7c            = 0;
     wp->timer_b             = 0;
-    func_80043DF8(wp, &mtx);
+    buster_dir_set(wp, &mtx);
     wp->routine_9 = 0;
     wp->routine_8++;
     if (wp->mode_a)
@@ -347,7 +347,9 @@ move:
     buster_atari_set(wp);
 }
 
-void func_80043DF8(CODE43_WORK *wp, CODE43_MATRIX *mtx)
+// Empty in retail. Pl_shl_buster_init calls it once with the shot's rotation matrix; the name
+// follows that argument (a guess at its intended job, not something the code shows).
+void buster_dir_set(CODE43_WORK *wp, CODE43_MATRIX *mtx)
 {
 }
 

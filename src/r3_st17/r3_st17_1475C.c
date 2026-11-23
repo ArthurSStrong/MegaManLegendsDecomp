@@ -1138,11 +1138,11 @@ void func_80116B04(STAGE_ROOM *wp)
             Sce_slot_open(&D_8012123C[0]);
             Sce_slot_open(&D_8012123C[1]);
             func_80117BEC(0, 0);
-            D_800BBA90[0].value_20 = 0;
-            D_800BBA90[0].flags_0  = 3;
+            Map_layer_tbl[0].value_20 = 0;
+            Map_layer_tbl[0].flags_0  = 3;
             func_80117BEC(1, 1);
-            D_800BBA90[1].value_20 = 0;
-            D_800BBAC8             = 3;
+            Map_layer_tbl[1].value_20 = 0;
+            D_800BBAC8                = 3;
             wp->routine_5++;
             break;
         case 1:
@@ -1178,13 +1178,13 @@ void func_80116B04(STAGE_ROOM *wp)
             if (Sce_cd_reading() != 0)
             {
                 Sce_script_timer_clear();
-                D_800BC7F0             = D_80121368;
-                wp->tbl_A4             = D_801218E0;
-                D_800BBA90[0].value_20 = 0x8C;
-                D_800BBA90[1].value_20 = -0x3C;
-                wp->routine_5          = 0;
-                wp->routine_6          = 0;
-                wp->routine_7          = 0;
+                D_800BC7F0                = D_80121368;
+                wp->tbl_A4                = D_801218E0;
+                Map_layer_tbl[0].value_20 = 0x8C;
+                Map_layer_tbl[1].value_20 = -0x3C;
+                wp->routine_5             = 0;
+                wp->routine_6             = 0;
+                wp->routine_7             = 0;
                 wp->reserved09[1] &= 1;
                 wp->routine_4++;
             }
@@ -1230,8 +1230,8 @@ void func_80116E28(STAGE_ROOM *wp)
         case 0:
             if (Fade_busy == 0)
             {
-                D_800BBA90[0].flags_0 = 0;
-                D_800BBAC8            = 0;
+                Map_layer_tbl[0].flags_0 = 0;
+                D_800BBAC8               = 0;
                 Obj_work_flag_change(0x5E, 0x80);
                 STAGE_PL.routine_0   = 3;
                 STAGE_PL.routine_1   = 1;
@@ -1313,7 +1313,7 @@ void func_801170D4(STAGE_ROOM *wp)
         case 1:
             D_800BBAC8 = 0;
             func_80117BEC(5, 0);
-            D_800BBA90[0].flags_0      = 3;
+            Map_layer_tbl[0].flags_0   = 3;
             ST17_MODEL_TBL[0].value_2F = 6;
             Close_EM_WORK(wp->child_24);
             Close_WORK_5A4(wp->child_28);
@@ -1350,7 +1350,7 @@ void func_80117264(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        D_800BBA90[0].flags_0 = 0;
+        Map_layer_tbl[0].flags_0 = 0;
         Player_work.flags_0 &= ~2;
         Sce_slot_open(D_80121278);
         func_80117A40(0, 2);
@@ -1428,7 +1428,7 @@ void func_8011748C(STAGE_ROOM *wp)
         case 0:
             D_800BBAC8 = 0;
             func_80117BEC(3, 0);
-            D_800BBA90[0].flags_0      = 3;
+            Map_layer_tbl[0].flags_0   = 3;
             ST17_MODEL_TBL[0].value_2F = 6;
             Close_EM_WORK(wp->child_24);
             Sce_slot_open(&D_801212F0[0]);
@@ -1641,12 +1641,12 @@ void func_80117B08(ST17_PL_FACE *pl)
 
 void func_80117BEC(sint8 index, sint8 model)
 {
-    D_800BBA90[model].pos_C.x      = D_801219C8[index].x;
-    D_800BBA90[model].fpos_4.x     = D_800BBA90[model].pos_C.x << 16;
-    D_800BBA90[model].pos_prev_18  = D_800BBA90[model].pos_C;
-    D_800BBA90[model].fpos_prev_10 = D_800BBA90[model].fpos_4;
-    D_800BBA90[model].value_20     = D_801219C8[index].y;
-    D_800BBA90[model].value_22     = D_801219C8[index].z;
+    Map_layer_tbl[model].pos_C.x      = D_801219C8[index].x;
+    Map_layer_tbl[model].fpos_4.x     = Map_layer_tbl[model].pos_C.x << 16;
+    Map_layer_tbl[model].pos_prev_18  = Map_layer_tbl[model].pos_C;
+    Map_layer_tbl[model].fpos_prev_10 = Map_layer_tbl[model].fpos_4;
+    Map_layer_tbl[model].value_20     = D_801219C8[index].y;
+    Map_layer_tbl[model].value_22     = D_801219C8[index].z;
 }
 
 void func_80117CB0(STAGE_ROOM *wp)

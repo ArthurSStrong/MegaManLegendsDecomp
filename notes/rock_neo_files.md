@@ -117,10 +117,10 @@ Done for every file in the table. The layout and what it rests on:
   `char` arrays, up to 28 bytes. Under `-G32`, a literal that size would also land in `.sdata`.
   It also holds `D_80097864`, a 24-byte object reached through `$gp`. Its `.sbss` static
   `Thread_change_entry` is also where 2MBYTE.OBJ's startup starts clearing the BSS, so it's made global.
-- **`code_8004324C`'s piece** (`0x80097DA0`–`0x80097DDB`) has no `$gp` variable: its four shot
+- **`pl_shl`'s piece** (`0x80097DA0`–`0x80097DDB`) has no `$gp` variable: its four shot
   tables are only read indexed or by address. It's placed by file order: in the asm stretch
   `0x80097D74`–`0x80097DE3` each variable has one user file, in link order (`code_8003AC24`,
-  `player`, `code_8004324C`, `code_80043F34`), so `0x80097DA0`–`0x80097DDB` is `code_8004324C`'s and
+  `player`, `pl_shl`, `code_80043F34`), so `0x80097DA0`–`0x80097DDB` is `pl_shl`'s and
   `code_80043F34`'s piece starts at `0x80097DDC` (`D_80097DDC`, `D_80097DE0`, indexed only).
 
 ## Data order (`.data`, by pointer-linked units)
@@ -226,7 +226,7 @@ piece of evidence.
 | 17 | `0x8003AC24` | `0x2B424` | `0x8003BE40` | 0x121C | `code_8003AC24` | low | yes | Atom edge + `.data` 0x80089F04..0x80089F90 cluster; ends at the 8-byte stub `func_8003BE38`. |
 | 18 | `0x8003BE40` | `0x2C640` | `0x800425FC` | 0x67BC | `player` | medium | no | ChrisNonyminus `player` 0x2C640; new `.sdata` cluster begins at 0x8003BE6C (0x80097D90); gap cost 0; `Pl00_shot_enable_off/on`; rodata block `136C` (11 jump-table functions, 0x8003CD4C..0x80042458). End 0x800425FC is a guess within a window of six cost-1.0 gaps (0x800424D4..0x80042770). |
 | 19 | `0x800425FC` | `0x32DFC` | `0x8004324C` | 0xC50 | `code_800425FC` | low | no | Rodata block `14D0` (users 0x80042770..0x80042F78); first user of `.data` 0x8008A04C (a new cluster) at 0x800425FC. Start is one of six tied gaps; end 0x8004324C is right after the last jump-table function. |
-| 20 | `0x8004324C` | `0x33A4C` | `0x80043F34` | 0xCE8 | `code_8004324C` | low | yes | Window between rodata blocks `14D0` and `1514` (0x80042F78..0x8004441C); many cost-0 gaps. Single guess: edge right after the last `14D0` user. |
+| 20 | `0x8004324C` | `0x33A4C` | `0x80043F34` | 0xCE8 | `pl_shl` | low | yes | Named `pl_shl` by the owner (2026-11-23; was `code_8004324C`): the resident player shots (`Pl_shl_normal_arm`, `Pl_shl_buster`, `PL_SHL_WORK`) plus `Money_*`/`Pl_life_add`; Capcom's file name unknown. Window between rodata blocks `14D0` and `1514` (0x80042F78..0x8004441C); many cost-0 gaps. Single guess: edge right after the last `14D0` user. |
 | 21 | `0x80043F34` | `0x34734` | `0x800456D8` | 0x17A4 | `code_80043F34` | low | no | Rodata block `1514` (one user, `func_8004441C`); `.data` cluster 0x8008A208.. starts at 0x80043F34 and `.sdata` 0x80097DDC..0x80097E0A. |
 | 22 | `0x800456D8` | `0x35ED8` | `0x80048620` | 0x2F48 | `code_800456D8` | low | no | Rodata block `1530` (users `func_80047354`, `_800477A0`); both ends are cost-0 gaps; `.data` 0x8008A2B0..0x8008A778 and `.sdata` 0x80097E64..0x80097F24 are contiguous clusters used only here. |
 | 23 | `0x80048620` | `0x38E20` | `0x80053788` | 0xB168 | `code_80048620` | low | no | Rodata block `156C` first five tables (users 0x80048704..0x80051BE4); `.data` jumps from 0x8008A778 to 0x8008A9D4 exactly here (first user 0x80048620). End = Chris `moji`. |

@@ -145,6 +145,6 @@ void Pl_key_type_set(void *pl, sint32 arg);
 #define DEBUG_GAME_54 (*((sint8 *)&Game_work + 0x54))
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
-void func_8001FE38(uint32 flags, const char *fmt, ...);
+void Print(uint32 flags, const char *fmt, ...);
 
 #endif // ROCK_DEBUG_H

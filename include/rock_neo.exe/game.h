@@ -306,7 +306,7 @@ void Atari_check(void);
 void Map_obj_break_update(void);
 void func_8005DCB4(void);
 void func_800238B4(void);
-void func_80023144(void);
+void Map_layer_draw(void);
 void func_80027678(void);
 void func_800175FC(void);
 void func_80028DE0(void);

@@ -1000,9 +1000,9 @@ sint32 Moji_cmd_key_wait(MOJI_WORK *wp)
             if ((D_80098960 & 0xF) < 8)
             {
                 D_800987D4 = 0;
-                func_8001FE38(((sint16)wp->val_8 + wp->val_7E * 12 - 4) |
+                Print(((sint16)wp->val_8 + wp->val_7E * 12 - 4) |
                                   (((sint16)wp->val_A + wp->val_7F * 12 - 4) << 9),
-                              D_80097F60);
+                      D_80097F60);
             }
         }
         else

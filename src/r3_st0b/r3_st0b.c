@@ -20,7 +20,7 @@ void func_801003E4(void)
     void *spawns;
 
     mw = STAGE_MAP_WORK_PTR;
-    func_80022FD4(D_80119354[Game_work.value_51]);
+    Map_layer_set(D_80119354[Game_work.value_51]);
     room                 = Game_work.value_51;
     mw->w                = STAGE_MAP_TBL[room].w;
     mw->h                = STAGE_MAP_TBL[room].h;

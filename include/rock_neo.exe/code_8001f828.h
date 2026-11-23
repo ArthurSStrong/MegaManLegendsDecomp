@@ -131,7 +131,7 @@ typedef struct
     uint16 *next;
 } C8001F828_MODEL_BODY;
 
-// 0x38-byte record built from a model header by func_80022FD4
+// 0x38-byte record built from a model header by Map_layer_set
 typedef struct
 {
     union
@@ -148,7 +148,7 @@ typedef struct
     C8001F828_MODEL_BODY body;
 } C8001F828_MODEL;
 
-extern C8001F828_MODEL D_800BBA90[11];
+extern C8001F828_MODEL Map_layer_tbl[11];
 extern sint32 D_80098970;
 extern sint32 D_80098A78;
 extern sint8 D_800C356C;
@@ -192,7 +192,7 @@ typedef struct
 // Absolute value as a macro: an argument with a call in it is evaluated twice
 #define C8001F828_ABS(x) ((x) < 0 ? -(x) : (x))
 
-// The same split work area as laid out for func_80022A94, based at 0x1F800130
+// The same split work area as laid out for quad_split, based at 0x1F800130
 typedef struct
 {
     uint8 reserved00[0x10];
@@ -262,7 +262,7 @@ typedef struct
 extern C8001F828_MODEL_SLOT D_80139F04[];
 extern uint8 Fog_clut_tbl[];
 
-void func_8002235C(uint8 *data, C8001F828_SVEC *pos, uint32 id);
+void map_tile_model_draw2(uint8 *data, C8001F828_SVEC *pos, uint32 id);
 // Ordering-table head record; the per-layer tags start at +0x70
 typedef struct
 {
@@ -281,26 +281,26 @@ sint32 SquareRoot0(sint32 v);
 sint32 ratan2(sint32 x, sint32 y);
 sint32 VSync(sint32 mode);
 void func_8002366C(C8001F828_LAYER *lp);
-void func_80023144(void);
-uint32 *func_8002466C(void);
-uint32 *func_8002626C(void);
+void Map_layer_draw(void);
+uint32 *quad_split2(void);
+uint32 *quad_split3(void);
 extern uint32 D_800BADB0[];
-uint32 *func_80022A94(void);
+uint32 *quad_split(void);
 extern sint32 D_80097C78[];
 extern sint32 D_80097C84[];
 sint32 rcos(sint32 angle);
 void func_8001782C(uint32 a, uint32 b);
-void func_80020BB4(void);
+void map_tile_window(void);
 void func_800221E0(void);
 void func_8002196C(sint32 x, sint32 y, uint16 id);
-void func_80021B14(uint8 *data, C8001F828_SVEC *pos, uint32 id);
-void func_80022FD4(uint16 **tbl);
+void map_tile_model_draw(uint8 *data, C8001F828_SVEC *pos, uint32 id);
+void Map_layer_set(uint16 **tbl);
 void func_80021834(sint32 x, sint32 y, sint32 tile, sint16 *pos);
 void func_80021258(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
-void func_80021548(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
+void map_tile_scan(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
 
-sint32 func_800207F8(uint32 flags, sint32 val, uint8 *out, sint32 width);
-void func_80023EA8(void *p);
+sint32 print_number(uint32 flags, sint32 val, uint8 *out, sint32 width);
+void map_quad_draw(void *p);
 typedef void (*C8001F828_DRAW_FUNC)(uint32 data, sint32 z);
 extern C8001F828_DRAW_FUNC D_80089890[][4];
 // Scratchpad block at 0x1F800100 as used by the tile draw loops (vector at +0x40, flags at +0x46)
@@ -382,9 +382,9 @@ typedef struct
 #define C8001F828_BIT(f, n) ((sint32)((f) << (31 - (n))) < 0)
 void func_80024BAC(void *p, sint32 mode);
 void func_800267AC(void *p, sint32 mode);
-void func_80025900(void *p);
-void func_80026B04(void *p);
-void func_80024F30(void *p);
+void map_quad_draw_twoside(void *p);
+void map_quad_draw2(void *p);
+void map_quad_draw_near(void *p);
 
 // Signed byte at Game_work + 0x52 (scene.h's view leaves it reserved)
 #define C8001F828_GAME_52 (*(sint8 *)((uint8 *)&Game_work + 0x52))

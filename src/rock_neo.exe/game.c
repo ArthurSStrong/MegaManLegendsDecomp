@@ -310,7 +310,7 @@ void game_update(void)
     Map_obj_break_update();
     func_8005DCB4();
     func_800238B4();
-    func_80023144();
+    Map_layer_draw();
     func_80027678();
     func_800175FC();
     func_80028DE0();

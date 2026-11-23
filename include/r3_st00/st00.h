@@ -722,7 +722,7 @@ extern uint32 *Billboard_queue[];
 extern uint8 D_800C3588;
 extern uint8 D_801000CC[];
 extern sint32 D_8011A0FC[];      // by room (func_8005DC10)
-extern void *D_8011A6F0[];       // model table by room (func_80022FD4)
+extern void *D_8011A6F0[];       // model table by room (Map_layer_set)
 extern void *D_8011AB3C[];       // spawn list by room
 extern void *D_8011AC40[];       // exit list by room
 extern uint8 D_8011AC54[][0x28]; // by room (Fog_room_set)

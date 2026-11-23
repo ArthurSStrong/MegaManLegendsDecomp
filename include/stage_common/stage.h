@@ -73,7 +73,7 @@ struct STAGE_ROOM_WORK
     STAGE_ROOM_FUNC *tbl_A4; // A4: [0] is also read as a byte (0xFF: no script)
 };
 
-// A room model record (ROCK_NEO's 0x38-byte C8001F828_MODEL, built by func_80022FD4).
+// A room model record (ROCK_NEO's 0x38-byte C8001F828_MODEL, built by Map_layer_set).
 typedef struct
 {
     sint32 x, y;
@@ -101,7 +101,7 @@ typedef struct
 // The room model table (ROCK_NEO's C8001F828_MODEL records) through its symbol: GCC keeps the
 // address in a register for a read-modify-write, and indexes it with the symbol first. Models 1
 // and 2's flags are also reached through their own symbols.
-extern STAGE_MODEL D_800BBA90[];
+extern STAGE_MODEL Map_layer_tbl[];
 extern uint8 D_800BBAC8;
 extern uint8 D_800BBB00;
 
@@ -111,7 +111,7 @@ typedef struct
     uint8 reserved00[0x14];
 } STAGE_SCRIPT_ENTRY;
 
-// D_800BBA90 at its fixed address: GCC treats the records' fields as distinct memory.
+// Map_layer_tbl at its fixed address: GCC treats the records' fields as distinct memory.
 #define STAGE_MODEL_TBL ((STAGE_MODEL *)0x800BBA90)
 
 // ROCK_NEO's sub-mode state (CODE800133D8_STATE).
@@ -203,7 +203,7 @@ extern uint8 D_800A395C;
 extern uint8 *D_800BC7F0;
 void Title_task(void); // ROCK_NEO.EXE
 
-void func_80022FD4(void *tbl);
+void Map_layer_set(void *tbl);
 void Obj_spawn_list(void *spawn, sint32 spawn_player);
 void Fog_room_set(void *blocks, void *arg1);
 void func_8005DC10(sint32 arg);

@@ -198,7 +198,7 @@ extern uint8 Sce_flag[];
 extern uint8 D_80098B2D;
 extern uint8 D_800987D4;
 extern char D_80097F60[];
-void func_8001FE38(uint32 flags, const char *fmt, ...);
+void Print(uint32 flags, const char *fmt, ...);
 void Sub_screen_rb_parts_set(void);
 void time_to_text(uint32 frames, uint8 *out);
 void num2_to_text(uint32 value, uint8 *out);

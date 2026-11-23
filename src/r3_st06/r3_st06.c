@@ -20,7 +20,7 @@ void func_8010051C(void)
     void *spawns;
 
     mw = STAGE_MAP_WORK_PTR;
-    func_80022FD4(D_80121EE4[Game_work.value_51]);
+    Map_layer_set(D_80121EE4[Game_work.value_51]);
     room      = Game_work.value_51;
     mw->w     = STAGE_MAP_TBL[room].w;
     mw->h     = STAGE_MAP_TBL[room].h;
@@ -1716,9 +1716,9 @@ void func_8010374C(STAGE_ROOM *wp)
             D_800BC7F0              = D_80123A30;
             wp->tbl_A4              = D_80123E70;
             Sce_slot_open(D_801239F4);
-            D_800BBA90[0].flags_0  = D_80123EF0;
-            D_800BBA90[0].value_20 = D_80123EF2;
-            D_800BBA90[0].value_22 = D_80123EF4;
+            Map_layer_tbl[0].flags_0  = D_80123EF0;
+            Map_layer_tbl[0].value_20 = D_80123EF2;
+            Map_layer_tbl[0].value_22 = D_80123EF4;
             wp->routine_5++;
             break;
         case 1:
@@ -1795,7 +1795,7 @@ void func_80103998(ST06_OBJ *wp)
                 wp->value_5++;
                 break;
             case 1:
-                *(uint8 *)D_800BBA90 |= 3;
+                *(uint8 *)Map_layer_tbl |= 3;
                 wp->flags_0 = 0;
                 break;
         }
@@ -1817,7 +1817,7 @@ void func_80103A8C(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        D_800BBA90[0].flags_0 = 0;
+        Map_layer_tbl[0].flags_0 = 0;
         Close_EM_WORK(wp->child_24);
         Sce_slot_open(&D_80123A08[0]);
         func_80103ED0(3);
@@ -1916,9 +1916,9 @@ void func_80103C34(STAGE_ROOM *wp)
         child->routine_2 = 0;
         for (i = 1; i < 5; i++)
         {
-            D_800BBA90[i].flags_0  = D_80123EF6[0].flags_0;
-            D_800BBA90[i].value_20 = D_80123EF6[0].value_2;
-            D_800BBA90[i].value_22 = D_80123EF6[0].value_4;
+            Map_layer_tbl[i].flags_0  = D_80123EF6[0].flags_0;
+            Map_layer_tbl[i].value_20 = D_80123EF6[0].value_2;
+            Map_layer_tbl[i].value_22 = D_80123EF6[0].value_4;
         }
     }
 }
@@ -1936,7 +1936,7 @@ void func_80103CD8(STAGE_ROOM *wp)
         var_v1 = 0x38;
         do
         {
-            ((uint8 *)D_800BBA90)[var_v1] = 0;
+            ((uint8 *)Map_layer_tbl)[var_v1] = 0;
             var_a0++;
             var_v1 += 0x38;
         } while (var_a0 < 5);
