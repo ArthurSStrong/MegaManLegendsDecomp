@@ -434,6 +434,6 @@ sint32 scr_event_get(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out);
 sint32 scr_check_press(PL_WORK *pl);
 sint32 scr_exit_locked(CODE486_EXIT *exit);
 sint32 scr_exit_event(CODE486_EXIT *exit);
-void func_8001F6C4(void);
+void Sce_stage_file_seek(void);
 
 #endif

@@ -1792,7 +1792,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         wp->routine_6 = 5;
         wp->timer_C   = 1;
     }
@@ -2689,7 +2689,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         wp->routine_6 = 10;
         wp->timer_C   = 0;
         func_80106098();

@@ -42,7 +42,7 @@ extern uint16 D_800C0C26;
 
 void Pad_update(PAD_WORK *pad);
 void Pad_update_all(void);
-void func_800122D0(PAD_WORK *pad);
-void func_80012350(PAD_WORK *pad, sint32 mask, sint32 index);
+void pad_repeat_update(PAD_WORK *pad);
+void pad_repeat_button(PAD_WORK *pad, sint32 mask, sint32 index);
 
 #endif // ROCK_PAD_H

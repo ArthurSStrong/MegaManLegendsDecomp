@@ -82,7 +82,7 @@ void __main(void);
 void StopCallback(void);
 void Cd_init(void);
 void exception_init(void);
-void func_80012988(uint32 *value);
+void exception_addr_move(uint32 *value);
 void debug_mem_dump(DEBUG_MEMORY_ROW *rows, uint32 mode);
 void func_80020A40(void);
 void System_init(void);

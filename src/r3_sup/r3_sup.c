@@ -33,7 +33,7 @@ void func_801D81B0(void)
             SUP_OBJ_1->value_0               = 0x52003;
             SUP_OBJ_1->value_4               = 0x30000;
             func_801DBC5C(D_801DC138[Game_work.area_50.b.stage]);
-            func_8001B314();
+            Sound_se_stop_all();
             break;
         case 1:
             if (Sound_fade_flags == 0)
@@ -1472,7 +1472,7 @@ void func_801DB800(void)
         case 1:
             Sound_fade_wait();
             Sound_seq_stop_all();
-            func_8001B314();
+            Sound_se_stop_all();
             Sound_flags |= 0x800;
             D_800C356E = Game_work.area_50.b.stage;
             D_800C356F = Game_work.area_50.b.room;

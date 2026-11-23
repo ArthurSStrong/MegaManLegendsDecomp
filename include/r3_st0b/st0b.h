@@ -2727,7 +2727,7 @@ typedef struct
 
 void SetDrawMove(ST0B_DR_MOVE *p, RECT *rect, sint32 x, sint32 y);
 
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 
 // A 0x48-byte effect slot (Open_EFFECT_WORK) as func_80101FB4 sets it up: a spark at a point.
 typedef struct

@@ -6,8 +6,8 @@
 //
 // A teleport goes through the same path as a door. Leaving a room by a door, Scr_event_check
 // (code_80048620.c) fills the room-entry request D_800C3558 (GAME_ENTRY_WORK: arrival x/y/z,
-// facing, stage, room, fades) with flags14 = 2 and starts the next room's music
-// (func_8001F6C4). The field state, Game_play (Game_main_tbl[3], game.c) in its state 2,
+// facing, stage, room, fades) with flags14 = 2 and seeks the CD to the next stage's file
+// (Sce_stage_file_seek). The field state, Game_play (Game_main_tbl[3], game.c) in its state 2,
 // sees the request, fades out, and at state 6 reloads: Game_work.routine_0 = 1 (the stage
 // loader) for another stage, 2 for another room of the same stage. The loaders place
 // Mega Man with player_entry_set and set Game_work's stage and room (+0x50, +0x51).
@@ -31,7 +31,7 @@
 #include <stdio.h>
 
 #define FUNC_FIELD    0x800158F0u // void Game_play(GAME_WORK *wp): Game_main_tbl[3]
-#define FUNC_MUSIC    0x8001F6C4u // void func_8001F6C4(void): the next room's music (exits)
+#define FUNC_MUSIC    0x8001F6C4u // void Sce_stage_file_seek(void): seek to the exit's stage file
 #define ENTRY         0x800C3558u // D_800C3558, GAME_ENTRY_WORK (include/rock_neo.exe/game.h)
 #define SUB_WORK      0x800A38F0u // D_800A38F0, the sub-screen's SUB_WORK (sub_scrn.h)
 #define SCENE_WORK    0x800C4C48u // Scene_work: non-zero during a cutscene

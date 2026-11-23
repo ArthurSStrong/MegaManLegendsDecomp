@@ -123,7 +123,7 @@ void Fade_draw(void)
 
 // Each case is written out in full (retail's shared tails come from cross-jumping), and the
 // fade fields go through CODE178_FADE_WORK so the table reads stay after the stores. The tile
-// loop is written like func_8001326C's (main.c), which keeps the pointer unbiased.
+// loop is written like Main_init's (main.c), which keeps the pointer unbiased.
 void Fade_start(sint32 arg)
 {
     uint32 i;

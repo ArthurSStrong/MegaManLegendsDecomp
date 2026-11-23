@@ -57,7 +57,7 @@ void Sce_flag_init(sint32 arg)
     }
 }
 
-void func_8001D928(sint32 arg)
+void sce_work_reset(sint32 arg)
 {
     sint32 i;
     uint32 *p;
@@ -924,7 +924,7 @@ sint32 Sce_stage_load(void)
         Map_obj_state_load();
     }
     D_80089714[routine]();
-    func_8001D928(SCENE_GAME_FIXED.flags_82 & 1);
+    sce_work_reset(SCENE_GAME_FIXED.flags_82 & 1);
     gw->value_62++;
     if ((uint32)((uint8)gw->stage_no - 5) >= 2 && gw->stage_no != 0xF)
     {
@@ -1048,7 +1048,7 @@ void Sce_pl_parts_load(void)
     }
 }
 
-void func_8001F6C4(void)
+void Sce_stage_file_seek(void)
 {
     sint16 *tbl;
     sint32 value;

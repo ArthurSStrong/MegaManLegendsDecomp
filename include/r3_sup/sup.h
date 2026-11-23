@@ -246,7 +246,7 @@ void Sce_flag_off(uint32 flag);
 void Sce_flag_on(uint32 flag);
 sint32 Card_screen_exec(sint32 arg);
 void Sound_call(sint32 sound, ...);
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 void Sound_seq_stop_all(void);
 void Sound_fade_wait(void);
 void Fade_start(sint32 arg);

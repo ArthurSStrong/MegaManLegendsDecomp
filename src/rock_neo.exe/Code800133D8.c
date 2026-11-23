@@ -125,7 +125,7 @@ void Title_logo(CODE800133D8_STATE *wp)
             break;
         case 3:
             title_logo_draw();
-            func_80014394();
+            title_logo_text_draw();
             if (--wp->timer == 0)
             {
                 wp->routine_1++;
@@ -334,7 +334,7 @@ void Title_continue(CODE800133D8_STATE *wp)
     Sub_screen_back_ground_set();
 }
 
-void func_80013E0C(CODE800133D8_STATE *wp)
+void Title_option(CODE800133D8_STATE *wp)
 {
     switch ((sint8)wp->routine_1)
     {
@@ -524,7 +524,7 @@ void title_logo_draw(void)
     title_obj_update();
 }
 
-void func_80014394(void)
+void title_logo_text_draw(void)
 {
     POLY_FT4 *prim;
 

@@ -1559,7 +1559,7 @@ extern uint8 D_8011856C[];
 extern STAGE_ROOM2_FUNC D_80118D98[];
 extern uint8 D_801185BC[];
 extern STAGE_ROOM2_FUNC D_80118DA8[];
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 void Sce_script_timer_clear(void);
 
 // D_800BC7F0 read as an array (the same symbol): an array store keeps its place among struct

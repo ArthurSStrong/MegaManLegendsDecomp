@@ -261,7 +261,7 @@ void func_801103DC(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x7E, 0x80);
-            func_8001B314();
+            Sound_se_stop_all();
             Sce_camera_start(0, 0, 0);
             wp->reserved09[1] = 0x80;
             wp->timer_C       = 0;

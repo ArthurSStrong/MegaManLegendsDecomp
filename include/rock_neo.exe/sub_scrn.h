@@ -203,7 +203,7 @@ void Sub_screen_rb_parts_calc_sub01(SUB_WORK *wp, sint32 idx);
 void Message_event_clear(void);
 void Game_logo_init(void);
 void Card_screen_init(void);
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 void Sound_seq_stop_all(void);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 void Sce_flag_off(uint32 flag);
@@ -235,7 +235,7 @@ void Fade_start(sint32 arg);
 void Sound_fade_start(sint32 arg);
 void Sound_fade_wait(void);
 void Sound_seq_stop_all(void);
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 void Sound_bgm_change_check(void);
 #ifdef __wasm32__
 sint32 Sce_stage_load(void);

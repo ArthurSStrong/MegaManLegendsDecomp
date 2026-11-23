@@ -964,7 +964,7 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         Sound_call(0x108, 0, 0);
         wp->routine_6 = 0xB;
         wp->timer_C   = 1;
@@ -1096,7 +1096,7 @@ void func_80102224(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 < 4)
         {
@@ -1322,7 +1322,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 >= 2)
         {
@@ -1580,7 +1580,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
         MojiTaskKill();
         Message_event_clear();
         Cd_subcmd(0, 1, 0);
-        func_8001B314();
+        Sound_se_stop_all();
         Sound_call(0x108, 0, 0);
         if (wp->routine_6 >= 2)
         {
@@ -1758,7 +1758,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             MojiTaskKill();
             Message_event_clear();
             Cd_subcmd(0, 1, 0);
-            func_8001B314();
+            Sound_se_stop_all();
             Sound_call(0x108, 0, 0);
             wp->routine_6 = 7;
             wp->timer_C   = 0;

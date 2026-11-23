@@ -609,7 +609,7 @@ void func_8005FBB4(SUB_SEL *wp)
         case 4:
             Sound_fade_wait();
             Sound_seq_stop_all();
-            func_8001B314();
+            Sound_se_stop_all();
             Sound_flags |= 0x800;
             Sound_bgm_change_check();
             Sce_stage_load();
@@ -1152,7 +1152,7 @@ sint32 Sub_screen_quit(SUB_SEL *wp)
                     Message_event_clear();
                     Game_logo_init();
                     Card_screen_init();
-                    func_8001B314();
+                    Sound_se_stop_all();
                     Sound_seq_stop_all();
                     Cd_subcmd(0, 1, 0);
                     Sce_flag_off(0x1FE);

@@ -29,7 +29,7 @@ Evidence:
     in `.rodata`.
   - `code_8006430C`: the 20-byte memory-card names in `.sdata`.
   - `scene`: the 33-byte stage paths in `.rodata`.
-  `main` also reaches a 24-byte object through `$gp` (`D_80097864`). One value for every file fits
+  `main` also reaches a 24-byte object through `$gp` (`Debug_break`). One value for every file fits
   all of it. (`-G8` was assumed at first, from `cc1`'s default; nothing had tested the value.)
 - **Confirmed: ASPSX used `$gp` only for small data defined in the same file.** A global sits in
   `.sdata`/`.sbss` and is reached through `$gp` only from the file that defines it; an `extern` of

@@ -1407,7 +1407,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
             if (Player_control_off(&Player_work) != 0)
             {
                 Sound_fade_start(0x10);
-                func_8001B314();
+                Sound_se_stop_all();
                 if (STAGE_GAME.value_50 == 0xB)
                 {
                     Cd_xa_play_id(0x20010013);

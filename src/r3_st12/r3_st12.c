@@ -375,7 +375,7 @@ void func_80100D88(STAGE_ROOM *wp)
             break;
         case 1:
             Sound_seq_stop_all();
-            func_8001B314();
+            Sound_se_stop_all();
             Cd_xa_play_id(0x20010015);
             wp->routine_4++;
             break;

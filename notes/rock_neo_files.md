@@ -115,7 +115,7 @@ Done for every file in the table. The layout and what it rests on:
   original (`0x80098B2D`, `moji`). Tested in the real build.
 - **`main`'s piece** (`0x80097864`–`0x800979DC`) holds the exception handler's strings, as
   `char` arrays, up to 28 bytes. Under `-G32`, a literal that size would also land in `.sdata`.
-  It also holds `D_80097864`, a 24-byte object reached through `$gp`. Its `.sbss` static
+  It also holds `Debug_break`, a 24-byte object reached through `$gp`. Its `.sbss` static
   `Thread_change_entry` is also where 2MBYTE.OBJ's startup starts clearing the BSS, so it's made global.
 - **`pl_shl`'s piece** (`0x80097DA0`–`0x80097DDB`) has no `$gp` variable: its four shot
   tables are only read indexed or by address. It's placed by file order: in the asm stretch
@@ -178,7 +178,7 @@ address.
   boundary, the rest are mid-file, so they are not a reliable end-of-file marker.
 - **`Sound_key_off_voice` (`0x8001B2F0`) is not `SsSetNck`.** It is a 0x24-byte Capcom wrapper
   (`sll`/`sra` to `short`, then a tail into `SsUtKeyOffV`, which keys off one SPU voice: it
-  range-checks the argument against 24, the voice count). Its neighbours `func_8001B314` (calls `SpuSetKey`) and `Sound_seq_stop_all` (calls
+  range-checks the argument against 24, the voice count). Its neighbours `Sound_se_stop_all` (calls `SpuSetKey`) and `Sound_seq_stop_all` (calls
   `SsSeqStop`/`_8007013C`) are the same kind. I found **no library-like function inside the Capcom
   range**; these three are the tail of `sound` (row 7), right before `cd`.
 - **Names** (`Sound_`, `Cd_`, `Sce_`, `Moji`, `Sub_screen_`, `Map_screen_`, `Pl00_`) all fall inside the

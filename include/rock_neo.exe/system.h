@@ -11,9 +11,9 @@ typedef void (*SYSTEM_STATE_FUNC)(sint8 *state);
 extern THREAD_FUNC Thread_change_entry;
 extern sint32 Thread_change_flag;
 extern long D_800988D8;
-extern sint8 D_80098B1C;
+extern sint8 Main_routine;
 extern sint8 D_80098B1D;
-extern SYSTEM_STATE_FUNC D_80080894[];
+extern SYSTEM_STATE_FUNC Main_routine_tbl[];
 
 long exception_viewer(void);
 

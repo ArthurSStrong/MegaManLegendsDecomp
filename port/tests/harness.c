@@ -31,7 +31,7 @@ extern int32_t D_800891F0[4];
 extern uint32_t D_8013A004;
 extern uint8_t Sce_flag[];
 extern uint32_t Thread_change_entry;   // main.c defines it ($gp tentative definition): placed data
-extern uint32_t D_80080894[]; // retail data: the main thread's state dispatch table
+extern uint32_t Main_routine_tbl[];    // retail data: the main thread's state dispatch table
 
 // PsyQ routines run from the retail image (psyq_emulated.c).
 int rsin(int a);
@@ -230,9 +230,10 @@ static void test_placement(void)
     CHECK((uintptr_t)&Vsync_handler == 0x800123FC, "&Vsync_handler = %p (retail 0x800123FC)",
           (void *)&Vsync_handler);
     CHECK((uintptr_t)&Thread_change_entry == 0x80098158, "C-defined Thread_change_entry at %p", (void *)&Thread_change_entry);
-    CHECK(port_stub_find(D_80080894[0]) != NULL, "retail table D_80080894[0] = 0x%08X is %s",
-          D_80080894[0],
-          port_stub_find(D_80080894[0]) ? port_stub_find(D_80080894[0])->name : "unknown");
+    CHECK(port_stub_find(Main_routine_tbl[0]) != NULL,
+          "retail table Main_routine_tbl[0] = 0x%08X is %s", Main_routine_tbl[0],
+          port_stub_find(Main_routine_tbl[0]) ? port_stub_find(Main_routine_tbl[0])->name
+                                              : "unknown");
     CHECK(port_stub_find((uint32_t)(uintptr_t)&main_task) != NULL &&
               port_stub_find((uint32_t)(uintptr_t)&main_task)->missing == 0,
           "main_task has native code behind its retail address");

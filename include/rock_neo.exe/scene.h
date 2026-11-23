@@ -299,7 +299,7 @@ extern SCENE_FUNC D_80089790[];
 void sce_stage_init(void);
 void func_80019F94(uint16 arg);
 void func_800177CC(void *a, void *b);
-void func_8001D928(sint32 arg);
+void sce_work_reset(sint32 arg);
 void Light_stage_init(void);
 void Map_obj_state_load(void);
 void func_80017944(void);

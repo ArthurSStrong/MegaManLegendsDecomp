@@ -139,7 +139,7 @@ sint32 Debug_item_helmet(DEBUG_WORK *wp);
 extern DEBUG_MENU_LINE Debug_key_type_tbl[];
 sint32 Debug_item_key_type(DEBUG_WORK *wp);
 extern DEBUG_MENU_LINE Debug_size_tbl[];
-extern sint32 D_80097864;
+extern sint32 Debug_break;
 sint32 Debug_item_size(DEBUG_WORK *wp);
 void Pl_key_type_set(void *pl, sint32 arg);
 #define DEBUG_GAME_54 (*((sint8 *)&Game_work + 0x54))

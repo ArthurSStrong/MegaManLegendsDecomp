@@ -819,7 +819,7 @@ void func_80101AF4(STAGE_ROOM *wp)
             MojiTaskKill();
             Message_event_clear();
             Cd_subcmd(0, 1, 0);
-            func_8001B314();
+            Sound_se_stop_all();
             Sce_flag_on(0x604);
             wp->routine_6 = 2;
         }

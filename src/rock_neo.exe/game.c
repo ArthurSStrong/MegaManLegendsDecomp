@@ -296,11 +296,11 @@ void game_update(void)
     Player_move();
     Obj_player_dist_calc();
     Gauge_update();
-    func_80017094();
+    work_5a4_move();
     Em_work_move();
     shl_work_move();
     effect_stage_move();
-    func_80017528();
+    work_50_move();
     Solid_check();
     Player_atari_set();
     pl_shl_work_move();
@@ -436,7 +436,7 @@ void Game_support(GAME_WORK *wp)
             if (Sound_fade_flags == 0)
             {
                 Sound_seq_stop_all();
-                func_8001B314();
+                Sound_se_stop_all();
                 MojiTaskKill();
                 Game_logo_init();
                 if (*(uint16 *)&Game_work.stage_no == 0x603 ||
@@ -658,7 +658,7 @@ void Game_over(GAME_WORK *wp)
             Game_logo_init();
             Cd_subcmd(0, 1, 0);
             Sound_seq_stop_all();
-            func_8001B314();
+            Sound_se_stop_all();
             Cd_read_comb(0x19);
             Cd_read_sync();
             wp->work04.words.timer06 = 150;
@@ -729,7 +729,7 @@ void Game_over2(GAME_WORK *wp)
             Game_logo_init();
             Cd_subcmd(0, 1, 0);
             Sound_seq_stop_all();
-            func_8001B314();
+            Sound_se_stop_all();
             Cd_read_comb(0x19);
             Cd_read_sync();
             wp->work04.words.timer06 = 150;
@@ -792,7 +792,7 @@ void soft_reset_check(void)
                 Message_event_clear();
                 Game_logo_init();
                 Card_screen_init();
-                func_8001B314();
+                Sound_se_stop_all();
                 Sound_seq_stop_all();
                 Cd_subcmd(0, 1, 0);
                 D_80098A70 = 0;
@@ -832,7 +832,7 @@ void Sound_fade_wait(void)
     {
         Thread_wait(1);
     }
-    func_8001B314();
+    Sound_se_stop_all();
 }
 
 void game_over_draw(void)
@@ -916,13 +916,13 @@ void Em_work_move(void)
     }
 }
 
-void func_80017094(void)
+void work_5a4_move(void)
 {
-    for (D_800989D0 = Work_5A4_tbl; (uint32)D_800989D0 < (uint32)&Work_5A4_tbl[4]; D_800989D0++)
+    for (Work_5A4_cur = Work_5A4_tbl; (uint32)Work_5A4_cur < (uint32)&Work_5A4_tbl[4]; Work_5A4_cur++)
     {
-        if (D_800989D0->flags & D_800989D0->active & 1)
+        if (Work_5A4_cur->flags & Work_5A4_cur->active & 1)
         {
-            GAME_TABLE_5A4[D_800989D0->kind][D_800989D0->id2](D_800989D0);
+            GAME_TABLE_5A4[Work_5A4_cur->kind][Work_5A4_cur->id2](Work_5A4_cur);
         }
     }
 }
@@ -995,13 +995,13 @@ void eve_work_move(void)
     }
 }
 
-void func_80017528(void)
+void work_50_move(void)
 {
-    for (D_80098924 = Work_50_tbl; (uint32)D_80098924 < (uint32)&Work_50_tbl[32]; D_80098924++)
+    for (Work_50_cur = Work_50_tbl; (uint32)Work_50_cur < (uint32)&Work_50_tbl[32]; Work_50_cur++)
     {
-        if (D_80098924->flags & D_80098924->active & 1)
+        if (Work_50_cur->flags & Work_50_cur->active & 1)
         {
-            GAME_TABLE_50[D_80098924->kind](D_80098924);
+            GAME_TABLE_50[Work_50_cur->kind](Work_50_cur);
         }
     }
 }

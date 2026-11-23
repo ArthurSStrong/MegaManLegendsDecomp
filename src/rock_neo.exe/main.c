@@ -11,14 +11,14 @@
 // Small data reached through $gp
 THREAD_FUNC Thread_change_entry;
 sint32 Thread_change_flag;
-sint32 D_80097864;
+sint32 Debug_break;
 long D_800988D8;
 uint8 D_80098A8C;
 volatile sint32 D_80098A90;
 
 void main(void)
 {
-    if (D_80097864 == 0)
+    if (Debug_break == 0)
     {
         exception_init();
     }
@@ -63,7 +63,7 @@ void main(void)
         DrawSync(0);
         Fade_draw();
         func_800178FC();
-        if (D_80097864 != 0)
+        if (Debug_break != 0)
         {
             __asm__ volatile("break 0x400");
         }
@@ -152,7 +152,7 @@ void Pad_update(PAD_WORK *pad)
         pad->held        = ~pad->buttons;
         pad->pressed     = pad->held & ~pad->previous;
         pad->released    = pad->previous & ~pad->held;
-        func_800122D0(pad);
+        pad_repeat_update(pad);
         if ((pad->flags & 3) == 1)
         {
             pad->unk36 = 1;
@@ -172,17 +172,17 @@ void Pad_update_all(void)
     Pad_update(&Joy2);
 }
 
-void func_800122D0(PAD_WORK *pad)
+void pad_repeat_update(PAD_WORK *pad)
 {
-    func_80012350(pad, PAD_UP, 0);
-    func_80012350(pad, PAD_DOWN, 1);
-    func_80012350(pad, PAD_LEFT, 2);
-    func_80012350(pad, PAD_RIGHT, 3);
-    func_80012350(pad, PAD_L1, 4);
-    func_80012350(pad, PAD_R1, 5);
+    pad_repeat_button(pad, PAD_UP, 0);
+    pad_repeat_button(pad, PAD_DOWN, 1);
+    pad_repeat_button(pad, PAD_LEFT, 2);
+    pad_repeat_button(pad, PAD_RIGHT, 3);
+    pad_repeat_button(pad, PAD_L1, 4);
+    pad_repeat_button(pad, PAD_R1, 5);
 }
 
-void func_80012350(PAD_WORK *pad, sint32 mask, sint32 index)
+void pad_repeat_button(PAD_WORK *pad, sint32 mask, sint32 index)
 {
     if (!(pad->repeat & mask) && (pad->pressed & mask) == mask)
     {
@@ -212,11 +212,11 @@ void Vsync_handler(void)
     Vsync_count++;
 }
 
-void func_80012424(void)
+void debug_break_toggle(void)
 {
     if ((D_800C0C26 & 0xF00) == 0xF00 && (D_800C0D8E[0] & 0x2000))
     {
-        D_80097864 ^= 1;
+        Debug_break ^= 1;
     }
 }
 
@@ -334,7 +334,7 @@ long exception_viewer(void)
         }
         else
         {
-            func_80012988(&bank[sel]);
+            exception_addr_move(&bank[sel]);
             debug_mem_dump((DEBUG_MEMORY_ROW *)bank[sel], page - 1);
         }
     }
@@ -348,7 +348,7 @@ void exception_init(void)
     func_8007FF80();
 }
 
-void func_80012988(uint32 *value)
+void exception_addr_move(uint32 *value)
 {
     sint32 original;
     sint32 step;
@@ -629,16 +629,16 @@ void func_8001319C(void)
 
 void main_task(void)
 {
-    D_80098B1C = 0;
-    D_80098B1D = 0;
+    Main_routine = 0;
+    D_80098B1D   = 0;
     while (1)
     {
-        D_80080894[D_80098B1C](&D_80098B1C);
+        Main_routine_tbl[Main_routine](&Main_routine);
         Thread_wait(1);
     }
 }
 
-void func_8001326C(sint8 *state)
+void Main_init(sint8 *state)
 {
     uint32 i;
     CODE178_TILE *tile;

@@ -840,7 +840,7 @@ void func_801005F4(void);
 void func_80100BF0(void);
 void Sce_script_timer_clear(void);
 void Message_event_clear(void);
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 
 // The block a sliding platform keeps at +0xCC.
 typedef struct

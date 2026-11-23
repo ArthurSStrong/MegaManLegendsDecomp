@@ -726,7 +726,7 @@ extern void *D_80164008[];
 
 void func_8001D974(void);
 void Message_event_clear(void);
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 void Sce_script_timer_clear(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);

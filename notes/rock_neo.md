@@ -295,10 +295,10 @@ the player). `key_on_tone`'s first parameter is `uint16` (the caller zero-extend
 
 `main` (`src/rock_neo.exe/main.c`), this round: banked `Disp_env_setup` (display buffers at `0x800C0C48`,
 `extern DISP_ENV Disp_env[2]`: the extern symbol is needed, an absolute-address cast loses the shared
-base), `Pad_repeat_update`/`func_80012350` (auto-repeat; ROCK_NEO's `PAD_WORK` adds
+base), `Pad_repeat_update`/`pad_repeat_button` (auto-repeat; ROCK_NEO's `PAD_WORK` adds
 `rep_state[8]` at +0x38 and `rep_count[8]` at +0x40 to the shim's layout; `mask` is `sint32`), `Thread_open`
 (`OpenTh` from the thread record's `sp`/`gp`), `main_task` (thread entry: dispatch through
-`D_80080894[D_80098B1C]`, then `Thread_wait(1)`). Parked: `thread_init` (thread table init). The
+`Main_routine_tbl[Main_routine]`, then `Thread_wait(1)`). Parked: `thread_init` (thread table init). The
 table base `*(TCB **)0x110` must be written via a `TCB **kp = (TCB **)0x100` local (`kp[4]`) to get
 the `li t2,0x100` / `lw 0x10(t2)` split, and `gp` read into a local before the loop. Still different:
 target reloads `THREAD_TBL[i].tcb` from memory before storing `->reg[R_SR]` (ours reuses the register), and the
@@ -772,14 +772,14 @@ the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`Player_control_on`), `Sce_f
 the low bytes of the `uint32` fields with `lbu`), and the stores only match with `D_800C356C = 2`
 written first (its constant is loaded before the others; its store stays in place).
 
-`scene.c` (0x8001D928..0x8001F798): banked `func_8001D928(keep)` (clears `D_800BE438[16]` unless `keep`,
+`scene.c` (0x8001D928..0x8001F798): banked `sce_work_reset(keep)` (clears `D_800BE438[16]` unless `keep`,
 then `Scene_work` bytes 0-3 with one word store and `D_800989F8`/`_9FC`/`_A00`; the clear loop only
 matches as a walking pointer `*p++ = 0`, the indexed loop comes out descending), `Sce_event_start(arg)`
 (unless `Player_work[0].unk6E < 0`: `unk00 = 1`, `unk01 = arg`, clears the event bytes, timers and
 `obj_24[]`; needs a local `sw = &Scene_work` for `unk00` and the `obj_24` loop only, the target's loop base
 is `sw + 0x3C` with offset 0x24), `Sce_skip_check` (1 if `Joy1` START is pressed and `Game_work.unk05A` or
 scene flag `0x380 + Scene_work.unk01` is set; nested `if`s, a single condition gives `sltu`),
-`func_8001F6C4` (seeks `Cd_seek_file` to the stage's first file from `D_800893BC[D_800C356E]` unless
+`Sce_stage_file_seek` (seeks `Cd_seek_file` to the stage's first file from `D_800893BC[D_800C356E]` unless
 `Game_work.unk068` already has it, else to entry `D_800C356F + 1` unless negative or equal to `unk06A`; one
 call with a `file` local; `D_800C356F` is read into a local before the first test), `func_8001F798(n)`
 (halfword copy job `D_80089248[n]`, `HALF_COPY_ENT`). Parked `Sce_event_next` (`NON_MATCHING`; the event-table

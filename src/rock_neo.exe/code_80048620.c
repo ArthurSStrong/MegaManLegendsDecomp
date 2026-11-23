@@ -3780,7 +3780,7 @@ sint32 Scr_event_check(PL_WORK *pl)
                     D_800C3558.flags15  = 0;
                     D_800C3558.fade_out = 0x15;
                     D_800C3558.fade_in  = 2;
-                    func_8001F6C4();
+                    Sce_stage_file_seek();
                     break;
                 }
             }
@@ -3831,7 +3831,7 @@ sint32 Scr_event_check(PL_WORK *pl)
                             D_800C3558.fade_in  = 2;
                             Obj_work_flag_change(0x56, 5);
                             Sce_flag_on(0x7B0);
-                            func_8001F6C4();
+                            Sce_stage_file_seek();
                             break;
                         }
                         Sce_flag_on(0x7B1);
@@ -3861,7 +3861,7 @@ sint32 Scr_event_check(PL_WORK *pl)
                     D_800C3558.flags15  = 0;
                     D_800C3558.fade_out = 0x15;
                     D_800C3558.fade_in  = 2;
-                    func_8001F6C4();
+                    Sce_stage_file_seek();
                     break;
                 }
             }

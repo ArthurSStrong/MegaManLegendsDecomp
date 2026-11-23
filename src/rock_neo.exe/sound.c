@@ -2,7 +2,7 @@
 #include "game.h"
 #include "sound.h"
 
-void func_800198C0(void)
+void Bgm_set_st04(void)
 {
     sint32 i;
     sint32 v;
@@ -21,7 +21,7 @@ void func_800198C0(void)
     }
 }
 
-void func_80019918(void)
+void Bgm_set_st05(void)
 {
     sint32 v;
 
@@ -40,7 +40,7 @@ void func_80019918(void)
     D_8008222C = v;
 }
 
-void func_8001997C(void)
+void Bgm_set_st0A(void)
 {
     if (GAME_WORK_FLAG53 == 1)
     {
@@ -52,7 +52,7 @@ void func_8001997C(void)
     }
 }
 
-void func_800199A4(void)
+void Bgm_set_st0C(void)
 {
     sint32 mode;
 
@@ -81,7 +81,7 @@ void func_800199A4(void)
     }
 }
 
-void func_800199F8(void)
+void Bgm_set_st10(void)
 {
     uint16 value;
     sint32 i;
@@ -93,7 +93,7 @@ void func_800199F8(void)
     }
 }
 
-void func_80019A34(void)
+void Bgm_set_st11(void)
 {
     uint16 value;
     sint32 i;
@@ -105,7 +105,7 @@ void func_80019A34(void)
     }
 }
 
-void func_80019A70(void)
+void Bgm_set_st13(void)
 {
     if (Sce_flag_test(0x1E1))
     {
@@ -117,7 +117,7 @@ void func_80019A70(void)
     }
 }
 
-void func_80019AA4(void)
+void Bgm_set_st1A(void)
 {
     if (Sce_flag_test(0x35))
     {
@@ -131,7 +131,7 @@ void func_80019AA4(void)
     }
 }
 
-void func_80019AE0(void)
+void Bgm_set_st1B(void)
 {
     if (Sce_flag_test(0x1E1))
     {
@@ -143,7 +143,7 @@ void func_80019AE0(void)
     }
 }
 
-void func_80019B14(sint32 arg)
+void Bgm_set_st1D(sint32 arg)
 {
     sint8 idx;
 
@@ -884,7 +884,7 @@ void Sound_key_off_voice(sint32 voice)
     SsUtKeyOffV(voice);
 }
 
-void func_8001B314(void)
+void Sound_se_stop_all(void)
 {
     SpuSetKey(0, 0xFF8000);
 }

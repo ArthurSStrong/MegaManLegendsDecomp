@@ -70,7 +70,7 @@ void func_8002CFA4(void);
 void Fog_room_set(uint32 *arg0, uint32 *arg1);
 void MojiTaskKill(void);
 void title_logo_draw(void);
-void func_80014394(void);
+void title_logo_text_draw(void);
 void title_fade_wait_next(CODE800133D8_STATE *wp);
 void title_fade_wait_routine(CODE800133D8_STATE *wp);
 void func_800175D8(void);

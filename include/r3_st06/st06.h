@@ -1739,7 +1739,7 @@ void func_801023F4(void);
 
 void Message_event_clear(void);
 
-void func_8001B314(void);
+void Sound_se_stop_all(void);
 
 void Gauge_clear(void);
 
