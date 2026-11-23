@@ -628,7 +628,7 @@ void func_80101CB0(STAGE_ROOM *wp)
             {
                 Cd_subcmd(0, 1, 0);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 STAGE_PL.flags_0 |= 2;
                 Player_control_on(&Player_work);
                 STAGE_PL.value_6E = STAGE_PL.value_B0;
@@ -729,8 +729,8 @@ void func_8010208C(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         Fade_start(2);
-        func_8003187C(wp->child_28);
-        func_8003187C(wp->child_2C);
+        Close_WORK_5A4(wp->child_28);
+        Close_WORK_5A4(wp->child_2C);
         Close_EM_WORK(wp->child_34);
         Close_EM_WORK(wp->child_38);
         child             = wp->child_30;

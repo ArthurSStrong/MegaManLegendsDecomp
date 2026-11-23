@@ -382,12 +382,12 @@ void func_80110E58(ST00_PART *wp)
                 {
                     wp->routine_2 = 5;
                     wp->flags_E |= 4;
-                    func_800398E0(0xA);
+                    Swing_Camera(0xA);
                     Sound_call2(0xC6, &wp->position);
                 }
             }
-            if (func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
-                              wp->rotation.y, 0x400))
+            if (Angle_range_check(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
+                                  wp->rotation.y, 0x400))
             {
                 wp->routine_2 = 4;
             }
@@ -400,7 +400,7 @@ void func_80110E58(ST00_PART *wp)
             {
                 wp->routine_2 = 5;
                 wp->flags_E |= 4;
-                func_800398E0(0xA);
+                Swing_Camera(0xA);
                 Sound_call2(0xC6, &wp->position);
             }
             if (wp->velocity.x == 0)

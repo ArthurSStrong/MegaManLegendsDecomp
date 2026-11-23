@@ -42,7 +42,7 @@ void func_801055A4(ST08_ACTOR *wp)
     wp->position_fixed.z = wp->position_fixed_prev.z = wp->position.z << 16;
     wp->position_fixed.y = wp->position_fixed_prev.y = wp->position.y << 16;
     EM_Char_Set(wp, 0, 0);
-    ep = (STAGE_OBJ50 *)func_80031734();
+    ep = (STAGE_OBJ50 *)Open_WORK_50();
     if (ep != NULL)
     {
         ep->flags_0  = 1;
@@ -378,7 +378,7 @@ void func_80106254(ST08_ACTOR *wp)
     wp->rotation_prev                                = wp->rotation.v;
     wp->scale.v.pad                                  = 0x4210;
     EM_Char_Set(wp, 0, 0);
-    ep = (STAGE_OBJ50 *)func_80031734();
+    ep = (STAGE_OBJ50 *)Open_WORK_50();
     if (ep != NULL)
     {
         ep->flags_0   = 1;

@@ -306,7 +306,7 @@ void stcom29_func_09A4(STCOM29_WORK *wp)
             }
             break;
         case 6:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Player_control_on(&Player_work);
                 pl->target_184 = NULL;

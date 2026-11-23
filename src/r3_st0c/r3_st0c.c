@@ -110,7 +110,7 @@ void func_80100168(STAGE_ROOM *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 MojiTaskExec2(0, 9);
                 wp->routine_5++;
             }
@@ -207,7 +207,7 @@ void func_80100168(STAGE_ROOM *wp)
             Player_control_on(&Player_work);
             Obj_work_flag_change(8, 2);
             D_800A395C = 1;
-            func_8003A264();
+            Camera_return_set2();
             wp->flags_0 = 0;
             break;
     }
@@ -218,7 +218,7 @@ void func_80100168(STAGE_ROOM *wp)
         Sound_call2(0x188, &D_801129A0->position);
         Moji_task_kill(0);
         D_800A395C = 1;
-        func_80039820();
+        Camera_reset();
         wp->routine_4 = 2;
         wp->routine_5 = 0;
     }
@@ -348,7 +348,7 @@ void func_80100C18(void)
     spawn                     = D_8010C468[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010C4D8[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8010C588[D_8010C788[Game_work.value_51]], D_8010C4E8[Game_work.value_51]);
+    Fog_room_set(D_8010C588[D_8010C788[Game_work.value_51]], D_8010C4E8[Game_work.value_51]);
     func_8005DC10(0);
     func_80100DE8();
 }

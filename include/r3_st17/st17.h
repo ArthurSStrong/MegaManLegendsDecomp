@@ -9,7 +9,7 @@
 extern void *D_8011ABB8[];       // model table by room (func_80022FD4)
 extern void *D_8011AD1C[];       // spawn list by room
 extern void *D_8011AD44[];       // exit list by room
-extern uint8 D_8011AD54[][0x28]; // by room (func_800371A0)
+extern uint8 D_8011AD54[][0x28]; // by room (Fog_room_set)
 extern uint8 D_8011ADF4[][8];    // by D_8011AE74[room]
 extern sint32 D_8011AE74[];
 void func_80100704(void);
@@ -74,7 +74,7 @@ extern STAGE_SCRIPT_ENTRY D_8012204C[];
 extern STAGE_SCRIPT_ENTRY D_80121AA8[];
 extern STAGE_SCRIPT_ENTRY D_80122060[];
 extern STAGE_SCRIPT_ENTRY D_80122074[];
-void func_8003187C(void *wp); // frees a 0x5A4-byte work slot
+void Close_WORK_5A4(void *wp); // frees a 0x5A4-byte work slot
 void func_80117A40(sint32 unused, uint8 mode);
 void func_80117BEC(sint8 index, sint8 model);
 void func_8011896C(void *camera, uint8 mode);
@@ -1127,7 +1127,7 @@ void func_80112CCC(ST17_SHL *wp);
 void func_80112E44(ST17_SHL *wp);
 void func_80112F88(ST17_SHL *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 sint32 Player_weapon_attack_calc(void *player, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
@@ -1308,7 +1308,7 @@ typedef struct
     uint8 reserved520[0x84]; // 520
 } ST17_MODEL_SLOT;
 
-ST17_MODEL_SLOT *func_80031498(void);
+ST17_MODEL_SLOT *Open_WORK_5A4(void);
 // A 0x10C-byte work slot with a sprite at +0x88 (STCOM06_WORK's layout) and its state at +0xD0.
 typedef struct
 {
@@ -1386,7 +1386,7 @@ extern STAGE_SCRIPT_ENTRY D_80122740[];
 void Sce_script_next(void);
 extern uint8 D_801220E4[];
 extern STAGE_ROOM2_FUNC D_80122628[];
-void func_8003697C(void);
+void Draw_dist_far(void);
 void func_8001D974(void);
 extern STAGE_SCRIPT_ENTRY D_80121FE8[];
 extern STAGE_SCRIPT_ENTRY D_80121FFC[];

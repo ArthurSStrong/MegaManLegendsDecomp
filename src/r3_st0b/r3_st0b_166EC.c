@@ -725,7 +725,7 @@ void func_80117A74(ST0B_EVENT *wp)
 {
     STAGE_OBJ *obj;
 
-    obj = func_80031498();
+    obj = Open_WORK_5A4();
     if (obj != NULL)
     {
         obj->flags_0            = 1;

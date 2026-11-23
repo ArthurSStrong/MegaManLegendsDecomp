@@ -5,7 +5,7 @@
 #include "stage_common/rock_neo.h"
 #include "stage_common/stcom25.h"
 
-// The 0x50-byte work slot (freed through func_80031A4C) that spawns a room's rolling blocks
+// The 0x50-byte work slot (freed through Close_WORK_50) that spawns a room's rolling blocks
 // (stcom25) and keeps them from running into each other.
 typedef struct
 {
@@ -45,6 +45,6 @@ extern STCOM25_WORK Shl_work_tbl[];
 // Allocates a 0x10C-byte work slot; NULL when none is free.
 STCOM25_WORK *Open_SHL_WORK(void);
 // Frees a 0x50-byte work slot.
-void func_80031A4C(STCOM26_WORK *wp);
+void Close_WORK_50(STCOM26_WORK *wp);
 
 #endif // STCOM26_H

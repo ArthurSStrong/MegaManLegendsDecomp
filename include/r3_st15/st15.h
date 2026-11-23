@@ -13,7 +13,7 @@ extern STAGE_SLOT_FUNC D_80102650[];
 extern void *D_80102654[];       // model table by room
 extern void *D_801026C0[];       // spawn list by room
 extern void *D_801026E0[];       // exit list by room
-extern uint8 D_801026E8[][0x28]; // by room (func_800371A0)
+extern uint8 D_801026E8[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80102738[][8];    // by D_80102760[room]
 extern sint32 D_80102760[];
 extern STAGE_ROOM_FUNC *D_80102778[];

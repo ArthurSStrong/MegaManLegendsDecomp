@@ -178,9 +178,9 @@ void func_801010E8(STAGE_ROOM *wp)
                 STAGE_PL.value_169   = 0;
                 pl->flags_0 |= 2;
                 STAGE_PL.flags_bd |= 0x10;
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Cd_subcmd(0, 1, 0);
                 if (wp->reserved09[1] & 1)
                 {
@@ -1114,7 +1114,7 @@ void func_80102A9C(STAGE_ROOM *wp)
         case 0:
             for (i = 0; i < 2; i++)
             {
-                obj = func_80031734();
+                obj = Open_WORK_50();
                 if (obj != NULL)
                 {
                     obj->kind_2    = 0x37;
@@ -1262,7 +1262,7 @@ void func_80102F20(ST1A_ROOM_FX *wp)
     if (wp->frame_10 == 0)
     {
         Close_EM_WORK(wp->child_28);
-        func_80031A4C(wp->child_2C);
+        Close_WORK_50(wp->child_2C);
         Close_EFFECT_WORK(wp->fx_A0);
         func_8010282C(wp, 3);
         obj                 = Sce_slot_open(&D_8012F7E0);
@@ -1286,7 +1286,7 @@ void func_80102FEC(ST1A_ROOM_FX *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_80031A4C(wp->child_28);
+        Close_WORK_50(wp->child_28);
         Close_EFFECT_WORK(wp->fx_A0);
         obj                 = Sce_slot_open(&D_8012F7F4);
         obj->routine_1      = 2;
@@ -1308,7 +1308,7 @@ void func_801030A8(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_80031A4C(wp->child_28);
+        Close_WORK_50(wp->child_28);
         D_800BBB00 = 0;
         func_80102590(10);
     }
@@ -1337,7 +1337,7 @@ void func_8010317C(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_80031A4C(wp->child_40);
+        Close_WORK_50(wp->child_40);
     }
     else if (wp->frame_10 == 0x78)
     {
@@ -1576,9 +1576,9 @@ void func_801036F4(STAGE_ROOM *wp)
             {
                 Obj_work_flag_change(0x17E, 0x80);
             }
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             if (D_801396FC != 0)
             {
                 Fade_start(0);
@@ -1706,7 +1706,7 @@ void func_80103CB8(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 Obj_work_flag_change(0x60, 0x80);
                 wp->reserved09[1] = 0x3C;
                 wp->routine_6++;
@@ -2028,7 +2028,7 @@ void func_801047D0(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            func_80031A4C(wp->child_28);
+            Close_WORK_50(wp->child_28);
             Close_EM_WORK(wp->child_24);
             Sce_slot_open(&D_8012FFA0);
             wp->routine_6++;
@@ -2296,9 +2296,9 @@ void func_80104EC8(ST1A_ROOM_A0 *wp)
             {
                 Obj_work_flag_change(0x17E, 0x80);
             }
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             if (D_80139710 != 0)
             {
                 Fade_start(0);
@@ -2463,9 +2463,9 @@ void func_80105598(STAGE_ROOM *wp)
                 STAGE_PL.value_AC  = 0;
                 STAGE_PL.value_168 = 0;
                 STAGE_PL.value_169 = 0;
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Cd_subcmd(0, 1, 0);
                 Sound_work_view.volume_4 = 0x7F;
                 wp->routine_5++;
@@ -2817,7 +2817,7 @@ void func_80106018(ST1A_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         Close_EM_WORK(wp->child[0]);
-        func_80031A4C(wp->child[1]);
+        Close_WORK_50(wp->child[1]);
         Close_EM_WORK(wp->child[2]);
         Close_EM_WORK(wp->child[3]);
         for (i = 4; i < 10; i++)
@@ -2891,7 +2891,7 @@ void func_80106278(STAGE_ROOM *wp)
     {
         case 1:
             wp->reserved09[1] &= 0x7F;
-            func_80031A4C(wp->child_24);
+            Close_WORK_50(wp->child_24);
             STAGE_PL.routine_0   = 3;
             STAGE_PL.routine_1   = 1;
             STAGE_PL.pos_438.x   = 0x80;
@@ -3119,7 +3119,7 @@ void func_801069CC(STAGE_ROOM *wp)
     switch (wp->frame_10)
     {
         case 0:
-            func_8003187C(wp->child_28);
+            Close_WORK_5A4(wp->child_28);
             Close_EM_WORK(wp->child_2C);
             wp->child_28 = NULL;
             wp->child_2C = NULL;

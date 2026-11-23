@@ -32,7 +32,7 @@ void func_8010009C(void)
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_801026E0[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_80102738[D_80102760[Game_work.value_51]], D_801026E8[Game_work.value_51]);
+    Fog_room_set(D_80102738[D_80102760[Game_work.value_51]], D_801026E8[Game_work.value_51]);
     func_8005DC10(0);
     func_80100200();
 }
@@ -421,7 +421,7 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
                 Player_work.flags_0 |= 1;
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 *(uint32 *)&Code800133D8_work[0] = 0;
                 STAGE_GAME_FLAGS_82 &= 0x7F;
                 Thread_change(Title_task);
@@ -433,13 +433,13 @@ void func_80100B34(STAGE_ROOM_WORK *wp)
 void func_80100CC8(STAGE_WORK *wp)
 {
     D_801084F8[0] = 0;
-    func_8002D320(wp->model_88, 0x10000F, func_8002D404(D_801084F4[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(D_801084F4[0]->id, 0x33, 0x37, 5));
 }
 
 void func_80100D24(STAGE_WORK *wp)
 {
     D_80108500[0] = 0;
-    func_8002D320(wp->model_88, 0x120011, func_8002D404(D_801084FC[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(D_801084FC[0]->id, 0x33, 0x37, 5));
 }
 
 void func_80100D80(STAGE_WORK *wp)
@@ -561,13 +561,13 @@ void func_801011B8(STAGE_WORK *wp)
 void func_801011FC(STAGE_WORK *wp)
 {
     D_80108510[0] = 0;
-    func_8002D320(wp->model_88, 0x110010, func_8002D404(D_8010850C[0]->id, 0x2A, 0x40, 6));
+    Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(D_8010850C[0]->id, 0x2A, 0x40, 6));
 }
 
 void func_80101258(STAGE_WORK *wp)
 {
     D_80108518[0] = 0;
-    func_8002D320(wp->model_88, 0x130012, func_8002D404(D_80108514[0]->id, 0x2A, 0x40, 6));
+    Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(D_80108514[0]->id, 0x2A, 0x40, 6));
 }
 
 void func_801012B4(STAGE_WORK *wp)

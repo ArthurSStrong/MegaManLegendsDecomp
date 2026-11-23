@@ -226,7 +226,7 @@ void stcom04_func_05E0(STCOM04_WORK *wp)
         case 2:
             step = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
-            if (step == 0 && func_8003A13C() == 0)
+            if (step == 0 && Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0x2A);
                 EM_Char_Set(wp, 8, 0);
@@ -237,12 +237,12 @@ void stcom04_func_05E0(STCOM04_WORK *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_0++;
             }
             break;
         case 4:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x40;
                 pl->flags_0 |= 2;
@@ -353,8 +353,8 @@ sint32 stcom04_func_08E0(STCOM04_WORK *wp)
         stcom04_E_0000.x = wp->value_180.x;
         stcom04_E_0000.y = wp->value_180.y - 0x20;
         stcom04_E_0000.z = wp->value_180.z;
-        func_80039FAC(&stcom04_E_0000, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&stcom04_E_0000, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;

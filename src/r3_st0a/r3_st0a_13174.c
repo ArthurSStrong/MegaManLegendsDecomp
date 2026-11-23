@@ -24,7 +24,7 @@ void func_801131C4(ST0A_SHL *wp)
     else
     {
         Homing_target_clear(wp->bit_d);
-        rot.x = func_80039B80();
+        rot.x = Camera_pitch_get();
     }
     rot.y = wp->rot_y & 0xFFF;
     rot.z = 0;

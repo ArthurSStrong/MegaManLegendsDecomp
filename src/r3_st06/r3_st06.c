@@ -41,7 +41,7 @@ void func_8010051C(void)
     spawns                    = D_801220A0[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_80122208[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
-    func_800371A0(D_80122310[D_801224F0[Game_work.value_51]], D_80122220[Game_work.value_51]);
+    Fog_room_set(D_80122310[D_801224F0[Game_work.value_51]], D_80122220[Game_work.value_51]);
     func_8005DC10(0);
     func_801006B8();
 }
@@ -686,9 +686,9 @@ void func_80101470(STAGE_ROOM *wp)
             break;
         case 22:
             Player_control_on(&Player_work);
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             Close_EM_WORK(wp->child_24);
             Close_EM_WORK(wp->child_28);
             func_801010E4(D_8012271C);
@@ -1149,7 +1149,7 @@ void func_801026CC(STAGE_ROOM *wp)
     switch (wp->routine_5)
     {
         case 0:
-            func_8003697C();
+            Draw_dist_far();
             Player_work.routine_0 = 3;
             Player_work.routine_1 = 1;
             STAGE_PL.pos_438.x    = -0x72D;
@@ -1172,7 +1172,7 @@ void func_801026CC(STAGE_ROOM *wp)
             if (wp->reserved09[1] != 0)
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
             }
             wp->routine_5++;
             break;
@@ -1238,7 +1238,7 @@ void func_80102908(STAGE_ROOM *wp)
     else if (wp->frame_10 == 1)
     {
         D_800A395C = 1;
-        func_80039820();
+        Camera_reset();
     }
     Pl_demo_pad[0] = 0;
     if (wp->frame_10 < 0x78)
@@ -1346,10 +1346,10 @@ void func_80102C5C(ST06_OBJ *wp)
 void func_80102CE8(sint8 *arg0)
 {
     Cd_subcmd(0, 1, 0);
-    func_8003697C();
+    Draw_dist_far();
     Player_control_on((STCOM_PL_WORK *)&Player_work);
     D_800A395C = 1;
-    func_80039820();
+    Camera_reset();
     Sce_flag_off(0x621);
     *arg0 = 0;
 }
@@ -1418,7 +1418,7 @@ void func_80102F5C(STAGE_ROOM *wp)
 
     crab = (ST06_CRAB *)wp->child_24;
     Cd_subcmd(0, 1, 0);
-    func_8003697C();
+    Draw_dist_far();
     D_800A395C = 1;
     if (wp->reserved09[1] & 1)
     {
@@ -1431,16 +1431,16 @@ void func_80102F5C(STAGE_ROOM *wp)
         crab->position_fixed.v.x = crab->position.x << 16;
         crab->position_fixed.v.y = crab->position.y << 16;
         crab->position_fixed.v.z = crab->position.z << 16;
-        func_80039820();
+        Camera_reset();
     }
     else
     {
-        func_8003A264();
+        Camera_return_set2();
     }
     Player_control_on(&Player_work);
     Sce_flag_off(0x621);
     func_801188E4(crab);
-    func_8003187C(crab);
+    Close_WORK_5A4(crab);
     wp->flags_0 = 0;
 }
 
@@ -1670,7 +1670,7 @@ void func_80103438(STAGE_ROOM *wp)
             if (Fade_busy == 0 && Sound_fade_flags == 0)
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_4++;
                 if (!Sce_flag_test(0x629))
                 {
@@ -1683,7 +1683,7 @@ void func_80103438(STAGE_ROOM *wp)
             {
                 Cd_subcmd(0, 1, 0);
                 Player_work.routine_1++;
-                func_80039820();
+                Camera_reset();
                 Obj_work_flag_change(0x56, 0x80);
                 D_800C356C = -1;
                 D_800C356E = 6;
@@ -1787,9 +1787,9 @@ void func_80103998(ST06_OBJ *wp)
             case 0:
                 Cd_subcmd(0, 1, 0);
                 Obj_work_flag_change(0x7E, 0x80);
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 func_80103ED0(2);
                 D_800C356C = 2;
                 wp->value_5++;
@@ -3063,9 +3063,9 @@ void func_80105D20(STAGE_ROOM *wp)
             {
                 Player_work.flags_0 |= 2;
                 Player_control_on(&Player_work);
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->child_24->variant_3 = wp->child_30->variant_3 = 1;
                 wp->child_24->routine_0 = wp->child_30->routine_0 = 0;
                 wp->child_24->u_C.b.byte_C                        = 0x46;
@@ -3106,9 +3106,9 @@ void func_80105D20(STAGE_ROOM *wp)
             if (D_800C356C_A[0] == 2)
             {
                 Close_EM_WORK(wp->child_24);
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_4++;
                 D_800C356C_A[0]++;
             }
@@ -3179,9 +3179,9 @@ void func_80105D20(STAGE_ROOM *wp)
             break;
         case 16:
             Player_work.flags_0 |= 2;
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             wp->child_24->position.x         = 0x6F;
             wp->child_24->position.y         = -1;
             wp->child_24->position.z         = -0x65;
@@ -3361,14 +3361,14 @@ void func_801068BC(STAGE_ROOM *wp)
             Moji_task_kill(0);
             Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             Sce_flag_on(0x52B);
             wp->routine_4++;
             break;
         case 11:
             Player_control_on(&Player_work);
             D_800A395C = 1;
-            func_8003A264();
+            Camera_return_set2();
             D_800989F8.routine_5 = 1;
             wp->flags_0          = 0;
             func_8001E3F0(0x16);
@@ -3448,13 +3448,13 @@ void func_80106B98(STAGE_ROOM *wp)
                 vec.x = obj->position.x;
                 vec.y = obj->position.y - 0x80;
                 vec.z = obj->position.z - 0x102;
-                func_80039FFC(&vec, 0, 0, 0);
+                Camera_move_set(&vec, 0, 0, 0);
                 D_8012BA00 = 1;
                 wp->routine_5++;
             }
             break;
         case 2:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 obj->u_E.b.byte_E = 8;
                 obj->u_C.b.byte_D = 1;
@@ -3473,7 +3473,7 @@ void func_80106B98(STAGE_ROOM *wp)
             if (D_800C356C_A[0] == 2)
             {
                 D_800C356C_A[0]++;
-                func_80039E50();
+                Camera_return_set();
                 D_8012BA00 = 0;
                 wp->routine_5++;
             }
@@ -3714,12 +3714,12 @@ void func_80107418(STAGE_ROOM *wp)
             {
                 if (D_8012BA00 != 0)
                 {
-                    func_80039E50();
+                    Camera_return_set();
                 }
                 D_800C356C_A[0]++;
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->flags_0 = 0;
             }
             break;
@@ -3930,12 +3930,12 @@ void func_80107B94(STAGE_ROOM *wp)
                 Sce_flag_off(0x245);
                 Fade_start(1);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_4++;
                 Close_EM_WORK((&wp->child_24)[wp->routine_6]);
                 Obj_work_flag_change(0x56, 0xA);
                 func_80107E8C(wp);
-                func_80039820();
+                Camera_reset();
             }
             break;
         case 5:
@@ -4115,7 +4115,7 @@ void func_801081B0(STAGE_ROOM *wp)
         case 10:
             Moji_task_kill(0);
             Cd_subcmd(0, 1, 0);
-            func_8003697C();
+            Draw_dist_far();
             wp->routine_4++;
             Close_EM_WORK(wp->child_24);
             Close_EM_WORK(wp->child_28);
@@ -4125,7 +4125,7 @@ void func_801081B0(STAGE_ROOM *wp)
             Close_EM_WORK(wp->child_30);
             Player_control_on(&Player_work);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             wp->flags_0 = 0;
             D_800989FC  = 0;
             break;

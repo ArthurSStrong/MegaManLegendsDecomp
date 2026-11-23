@@ -291,7 +291,7 @@ void pl_world_update(PL_WORK *pl)
     Pl_World_Pos_Calc(pl);
     if (pl->routine_0 & 2)
     {
-        func_8002C794(pl, 0x32, 0x2AB, 0);
+        Pl_Shadow_Trans(pl, 0x32, 0x2AB, 0);
     }
 }
 
@@ -1658,7 +1658,7 @@ void Pl_r1_down(PL_WORK *pl)
                 pl->rotation.y -= pl->value116;
                 pl->value112 = 0;
                 pl->value116 = 0;
-                func_80039A38(D_80097D9C);
+                Camera_cmd_set(D_80097D9C);
                 Gauge_hide();
                 pl->routine_1 = 8;
                 pl->routine_2 = 6;
@@ -1703,7 +1703,7 @@ void Pl_r1_down(PL_WORK *pl)
                 pl->rotation.y -= pl->value116;
                 pl->value112 = 0;
                 pl->value116 = 0;
-                func_80039A38(D_80097D9C);
+                Camera_cmd_set(D_80097D9C);
                 Gauge_hide();
                 pl->routine_1 = 8;
                 pl->routine_2 = 6;
@@ -2969,7 +2969,7 @@ sint32 pl_hang_start(PL_WORK *pl)
         pl->rotation.y       = dir << 10;
         pl->value116         = 0;
         pl->value112         = 0;
-        func_80039A38(D_80097D9C);
+        Camera_cmd_set(D_80097D9C);
         pl->routine_1             = 0xD;
         *(uint16 *)&pl->routine_2 = dir << 8;
         return 1;
@@ -3182,7 +3182,7 @@ sint32 pl_investigate_check(PL_WORK *pl)
     uint16 pad;
 
     best_wp = NULL;
-    if (func_8003A13C() != 0 || (pl->shot_status_flag & 0xC0) || pl->value177 != 0)
+    if (Camera_moving() != 0 || (pl->shot_status_flag & 0xC0) || pl->value177 != 0)
     {
         return 0;
     }
@@ -3209,7 +3209,7 @@ sint32 pl_investigate_check(PL_WORK *pl)
                 }
             }
         }
-        for (p5a4 = D_800C3580, i = 0; i < 4; i++, p5a4++)
+        for (p5a4 = Work_5A4_tbl, i = 0; i < 4; i++, p5a4++)
         {
             if ((p5a4->flags & 3) == 3 && ((PL_TARGET *)p5a4)->bounds != NULL)
             {
@@ -3237,7 +3237,7 @@ sint32 pl_investigate_check(PL_WORK *pl)
                 }
             }
         }
-        for (p = D_800BF118, i = 0, p50 = (PL_TARGET50 *)D_800BF118; i < 32; i++, p50++, p++)
+        for (p = Work_50_tbl, i = 0, p50 = (PL_TARGET50 *)Work_50_tbl; i < 32; i++, p50++, p++)
         {
             if ((p->flags & 3) == 3 && p50->bounds != NULL)
             {

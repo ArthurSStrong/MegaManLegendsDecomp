@@ -555,8 +555,8 @@ extern sint32 D_800A3964;
 extern sint32 D_800A3988;
 extern sint16 D_800BBCF8[];
 extern sint32 D_800BC7D4;
-extern STAGE_50 D_800BF118[];
-extern uint32 D_800989CC;
+extern STAGE_50 Work_50_tbl[];
+extern uint32 Work_50_used;
 extern uint16 Pl_demo_pad[];
 extern sint16 D_800C0F9A;
 extern uint8 D_80100384[];
@@ -785,7 +785,7 @@ void func_80110344(ST05_OBJ *wp);
 
 extern STAGE_OBJ_FUNC D_80130AF0[];
 
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 
 void Ride_clear(void *wp);
 
@@ -820,7 +820,7 @@ uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 sint32 Sound_seq_end_check(sint32 arg);
 void stcom36_func_0028(sint8 room);
 void func_801267B0(STAGE_OBJ *wp, uint8 kind);
@@ -1056,7 +1056,7 @@ typedef struct
 #define ST05_PL_SBYTE(offset) (*((sint8 *)&Player_work + (offset)))
 
 void Homing_target_clear(sint32 bit);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_80126990(ST05_SHL *wp);
 
@@ -1972,8 +1972,8 @@ void func_801088F4(ST05_VILLAGER *wp);
 
 void func_80108A54(ST05_VILLAGER *wp);
 
-sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
+                         STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 void func_80108BA4(ST05_VILLAGER *wp);
 
 void func_80108DFC(ST05_VILLAGER *wp);
@@ -2366,7 +2366,7 @@ extern ST05_GAME_REC Game_work_90[] __asm__("Game_work+0x90");
 
 void Moji_amount_set(sint32 price);
 
-STAGE_OBJ *func_80031498(void);
+STAGE_OBJ *Open_WORK_5A4(void);
 
 void func_801037CC(STAGE_PL_VIEW *pl);
 
@@ -2488,7 +2488,7 @@ void func_8011E750(ST05_OBJ *wp);
 // Returns a value here (as an implicit int): the allocation of func_8011B8F8 needs it.
 sint32 Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 
-void func_8003697C(void);
+void Draw_dist_far(void);
 
 void Sce_script_timer_clear(void);
 void Gauge_clear(void);

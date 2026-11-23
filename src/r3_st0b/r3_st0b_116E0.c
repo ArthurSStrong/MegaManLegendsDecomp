@@ -83,7 +83,7 @@ void func_80111A9C(ST0B_ACTOR_B *wp, uint16 *bob)
     wp->flags_0 = (uint8)wp->flags_0 | 6;
     if (STAGE_GAME.value_50 == 0xD)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {
@@ -391,7 +391,7 @@ void func_801127A0(ST0B_ACTOR *wp, uint16 *bob)
     wp->flags_0 = (uint8)wp->flags_0 | 6;
     if (STAGE_GAME.value_50 == 0xD)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {
@@ -707,7 +707,7 @@ void func_80113324(ST0B_TRAIL5 *wp)
     {
         u          = D_8011BC4C[i + 1].u;
         v          = D_8011BC4C[i + 1].v;
-        p          = func_8002D464();
+        p          = Billboard_alloc();
         p->code_4  = 0x2E808080;
         p->xy_8    = (wp->trail_CC + i)->words[0];
         p->z_10    = (wp->trail_CC + i)->words[1];

@@ -32,7 +32,7 @@ void func_8010008C(void)
     STAGE_MAP_WORK_PTR->cells  = cells;
     STAGE_MAP_WORK_PTR->exits  = D_80103940[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_80103998[D_80103A18[Game_work.value_51]], D_80103948[Game_work.value_51]);
+    Fog_room_set(D_80103998[D_80103A18[Game_work.value_51]], D_80103948[Game_work.value_51]);
     func_8005DC10(0);
     func_801001D0();
 }
@@ -78,7 +78,7 @@ void func_801002B0(STAGE_ROOM_WORK *wp)
         {
             if (Sce_flag_test(i + 0x38))
             {
-                op = (ST1C_OBJ50 *)func_80031734();
+                op = (ST1C_OBJ50 *)Open_WORK_50();
                 if (op != NULL)
                 {
                     op->kind_2  = 0x22;

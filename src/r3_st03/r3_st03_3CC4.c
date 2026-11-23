@@ -186,7 +186,7 @@ void func_801041C8(ST03_ROOM_WORK *wp)
         case 1:
             Player_control_on(&Player_work);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             wp->flags_0 = 0;
             break;
     }
@@ -274,7 +274,7 @@ void func_801044A4(ST03_ROOM_WORK *wp)
                 } while (0);
                 wp->child_24->velocity.v.x = 0x320;
                 D_800A395C                 = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_5++;
             }
             break;
@@ -331,7 +331,7 @@ void func_80104778(STAGE_ROOM_WORK *wp)
                 STAGE_PL_BYTE(0xBD) |= 0x10;
                 Close_EM_WORK(wp->child_24);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
             }
             wp->routine_5++;
             break;
@@ -469,9 +469,9 @@ void func_80104B80(STAGE_ROOM_WORK *wp)
         case 0xA:
             Moji_task_kill(0);
             Cd_subcmd(0, 1, 0);
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             ((ST03_ACTOR *)wp->child_24)->flags_6 &= ~1;
             wp->routine_4++;
             break;
@@ -621,7 +621,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
             Moji_task_kill(0);
             Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             child = wp->child_28;
             Close_EM_WORK(child);
             child            = wp->child_24;
@@ -632,7 +632,7 @@ void func_80104FF4(STAGE_ROOM_WORK *wp)
         case 0xB:
             Player_control_on(&Player_work);
             D_800A395C = 1;
-            func_8003A264();
+            Camera_return_set2();
             wp->flags_0 = 0;
             break;
     }
@@ -1088,8 +1088,8 @@ void func_80105F14(ST03_ACTOR *wp)
                 ctl->flags_0 |= 1;
                 break;
             }
-            if (func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
-                              wp->rotation.y, 0x400))
+            if (Angle_range_check(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
+                                  wp->rotation.y, 0x400))
             {
                 wp->spin_66               = 0x80;
                 wp->routine_1             = 5;

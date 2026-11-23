@@ -7,7 +7,7 @@
 extern void *D_801034C4[];       // model table by room (func_80022FD4)
 extern void *D_80103570[];       // spawn list by room
 extern void *D_80103594[];       // exit list by room
-extern uint8 D_801035A0[][0x28]; // by room (func_800371A0)
+extern uint8 D_801035A0[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80103618[][8];    // by D_80103698[room]
 extern sint32 D_80103698[];
 void func_80100270(void);

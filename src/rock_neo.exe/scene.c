@@ -538,7 +538,7 @@ void Sce_camera_start(sint32 arg0, sint32 arg1, sint32 arg2)
     D_800BC770                           = (D_800A3968 & 0xFFF) << 16;
     D_800BC774                           = (D_800A396C & 0xFFF) << 16;
     D_800BC778                           = (D_800A3964 & 0xFFF) << 16;
-    func_800398E0(0);
+    Swing_Camera(0);
 }
 
 void camera_pos_set(sint32 a, sint32 b, sint32 c)
@@ -599,10 +599,10 @@ SCENE_SLOT *slot_alloc(sint32 index, sint32 kind, sint32 type, SCENE_POS *pos)
             wp = Open_EM_WORK();
             break;
         case 0x40:
-            wp = func_80031498();
+            wp = Open_WORK_5A4();
             break;
         case 0xE0:
-            wp = func_80031734();
+            wp = Open_WORK_50();
             if (wp != 0)
             {
                 wp->flags_0 = 1;
@@ -797,15 +797,15 @@ void Sce_camera_script_exec(void)
                     cam->cmd_C0 += 4;
                     break;
                 case 0x20:
-                    func_8003697C();
+                    Draw_dist_far();
                     cam->cmd_C0++;
                     break;
                 case 0x21:
-                    func_800369C0();
+                    Draw_dist_mid();
                     cam->cmd_C0++;
                     break;
                 case 0x22:
-                    func_80036A1C();
+                    Draw_dist_near();
                     cam->cmd_C0++;
                     break;
                 case 0xFF:

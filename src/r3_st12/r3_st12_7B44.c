@@ -35,7 +35,7 @@ void func_80107B44(ST12_ORBITER *wp)
         }
         else
         {
-            func_8002F9EC(wp, 0);
+            Model_work_init2(wp, 0);
         }
         wp->color_B4 = 0x808080;
         wp->routine_0++;

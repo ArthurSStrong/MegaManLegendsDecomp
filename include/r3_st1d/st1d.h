@@ -544,7 +544,7 @@ void func_80102EC0(ST1D_VIEW *wp);
 void func_80102D5C(ST1D_VIEW *wp);
 void func_8010B8D0(ST1D_VIEW *wp);
 void func_801113A4(void);
-// func_800317AC is declared in stage_common/stage.h.
+// Open_WORK_50_index is declared in stage_common/stage.h.
 void func_8010E1DC(STCOM16_WORK *wp);
 void func_8010E710(STCOM16_WORK *wp);
 void func_8010E838(STCOM16_WORK *wp);
@@ -582,8 +582,8 @@ sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_V
                      sint32 target_rot, sint32 target_range);
 void func_80103920(ST1D_VIEW *wp);
 
-sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
+                         STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 void func_80103D6C(ST1D_VIEW *wp);
 
 void func_80105060(ST1D_VIEW *wp);
@@ -611,6 +611,6 @@ void func_8001D974(void);
 void EM_World_Pos_Calc_Mtx(void *wp, STCOM_MATRIX *m);
 
 extern uint32 Em_work_used; // allocation masks: 0x3C0 slots
-extern uint32 D_80098B20; // 0x5A4
+extern uint32 Work_5A4_used; // 0x5A4
 
 #endif

@@ -19,7 +19,7 @@ void func_8010C6DC(STAGE_OBJ *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 0x42;
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
         wp->scale.words[0]   = 0x0C000C00;
         wp->scale.words[1]   = 0xC00;
         wp->scale.v.pad      = 0x4210;
@@ -89,7 +89,7 @@ void func_8010C994(STAGE_OBJ *wp, ST17_BOSS *ext)
     STCOM_SVECTOR *pos;
 
     wp->flags_0 |= 0x42;
-    func_8002F9EC(wp, 0);
+    Model_work_init2(wp, 0);
     wp->scale.words[0] = 0x0C000C00;
     wp->scale.words[1] = 0xC00;
     data               = D_8009884C[wp->kind_2];
@@ -1503,7 +1503,7 @@ void func_8010F23C(STAGE_OBJ *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 2;
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
         wp->scale.words[0] = 0x0C000C00;
         wp->scale.words[1] = 0xC00;
         wp->scale.v.pad    = 0x4210;
@@ -1535,7 +1535,7 @@ void func_8010F35C(STAGE_OBJ *wp)
 void func_8010F41C(STAGE_OBJ *wp, ST17_RIG2 *rig)
 {
     wp->flags_0 |= 2;
-    func_8002F9EC(wp, 0);
+    Model_work_init2(wp, 0);
     wp->scale.words[0]   = 0x0C000C00;
     wp->scale.words[1]   = 0xC00;
     wp->scale.v.pad      = 0x4210;

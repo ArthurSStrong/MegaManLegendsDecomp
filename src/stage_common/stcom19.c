@@ -23,7 +23,7 @@ void stcom19_func_0000(STCOM19_WORK *wp)
     if (wp->value_3 == 0xFF)
     {
         stcom19_func_0640();
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     stcom19_D_0150[wp->routine_0](wp);
@@ -226,7 +226,7 @@ void stcom19_func_0640(void)
                     {
                         for (i = 0; i < 2; i++)
                         {
-                            wp = func_80031734();
+                            wp = Open_WORK_50();
                             if (wp != NULL)
                             {
                                 wp->flags_0 = 5;

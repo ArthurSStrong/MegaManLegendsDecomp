@@ -4,13 +4,13 @@
 void func_80102760(STAGE_OBJ *wp)
 {
     D_80109904[0] = 0;
-    func_8002D320(wp->model_88, 0x110010, func_8002D404(D_80109900[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(D_80109900[0]->id, 0x33, 0x37, 5));
 }
 
 void func_801027BC(STAGE_OBJ *wp)
 {
     D_8010990C[0] = 0;
-    func_8002D320(wp->model_88, 0x130012, func_8002D404(D_80109908[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(D_80109908[0]->id, 0x33, 0x37, 5));
 }
 
 void func_80102818(STAGE_OBJ *wp)
@@ -225,7 +225,7 @@ void func_80102ED8(ST1E_PANEL *wp)
     scale.y         = 0x200;
     scale.x         = 0x200;
     ScaleMatrix(&wp->matrix.m, &scale);
-    func_8002CA10(&wp->pos_38, 0x32, 0x2AB, 0);
+    Pos_Shadow_Trans(&wp->pos_38, 0x32, 0x2AB, 0);
 }
 
 void func_80102F68(STAGE_OBJ *wp)

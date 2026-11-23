@@ -834,7 +834,7 @@ void func_80123154(ST1A_OBJ *wp);
 void func_801022DC(void *wp, sint32 arg);
 
 extern sint8 *D_8013231C[];
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 
 extern sint8 *D_801321B8[];
 extern sint8 *D_80132B2C[];
@@ -877,7 +877,7 @@ extern sint32 D_8012CF28[];
 void Pl00_shot_enable_off(void *pl);
 void Pl00_shot_enable_on(void *pl);
 
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 
 void func_80115828(STAGE_OBJ *wp, STAGE_FACE *face);
 void func_801165FC(STAGE_OBJ *wp, STAGE_FACE *face);
@@ -1763,7 +1763,7 @@ typedef struct
 
 sint32 func_8012C1C0(void *wp, ST1A_AREA *area);
 sint32 func_8012C228(STAGE_EV *wp);
-void *func_80031498(void);
+void *Open_WORK_5A4(void);
 
 typedef struct ST1A_VIEW_D ST1A_VIEW_D;
 
@@ -3890,7 +3890,7 @@ void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 
 extern sint32 D_80139710;
 
-void func_8003697C(void);
+void Draw_dist_far(void);
 
 extern sint32 D_801396FC;
 void Sce_script_timer_clear(void);

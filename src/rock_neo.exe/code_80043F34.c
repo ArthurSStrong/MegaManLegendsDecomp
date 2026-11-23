@@ -61,7 +61,7 @@ void func_80043F70(CODE43_WORK *wp)
         Sound_call2(0xA4, &wp->pos_38);
         wp->sound_flag_c = 0;
         st               = 2;
-        func_800398E0(0x1E);
+        Swing_Camera(0x1E);
         n = Open_EFFECT_WORK();
         if (n != 0)
         {

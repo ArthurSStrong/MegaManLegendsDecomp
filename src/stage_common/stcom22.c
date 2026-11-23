@@ -181,7 +181,7 @@ void stcom22_func_04B4(STCOM22_WORK *wp)
 
 void stcom22_func_0510(STCOM22_WORK *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void stcom22_func_0530(STCOM22_WORK *wp)
@@ -524,7 +524,7 @@ void stcom22_func_0FD4(STCOM22_WORK *wp)
 
 void stcom22_func_1010(STCOM22_WORK *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void stcom22_func_1030(STCOM22_WORK *wp)
@@ -715,7 +715,7 @@ void stcom22_func_1728(void)
 
 void stcom22_func_1730(STCOM22_WORK *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void stcom22_func_1750(void)
@@ -771,7 +771,7 @@ void stcom22_func_1864(STCOM22_WORK *wp)
 
 void stcom22_func_1934(STCOM22_WORK *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void stcom22_func_1954(void)
@@ -875,7 +875,7 @@ void stcom22_func_1B28(STCOM22_WORK *wp)
     wp->routine_1 = 0;
     wp->routine_2 = 0;
     ctl->value    = 0x1000;
-    gate          = func_80031734();
+    gate          = Open_WORK_50();
     if (gate != NULL)
     {
         gate->flags_0   = 1;
@@ -988,5 +988,5 @@ void stcom22_func_1C5C(STCOM22_WORK *wp)
 
 void stcom22_func_1ED0(STCOM22_WORK *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }

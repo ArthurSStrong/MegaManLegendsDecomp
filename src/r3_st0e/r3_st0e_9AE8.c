@@ -30,7 +30,7 @@ void func_80109B24(STAGE_SPIN *wp)
             }
         }
     }
-    child = (STAGE_SPIN *)func_80031734();
+    child = (STAGE_SPIN *)Open_WORK_50();
     if (child != NULL)
     {
         child->flags_0   = wp->flags_0;
@@ -72,10 +72,10 @@ void func_80109D00(STAGE_SPIN *wp)
 {
     uint32 i;
 
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
     if (wp->value_D != 0)
     {
-        func_80031A4C(wp->slot_48);
+        Close_WORK_50(wp->slot_48);
     }
     for (i = 0; i < 7; i++)
     {

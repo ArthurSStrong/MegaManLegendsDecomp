@@ -201,16 +201,16 @@ typedef union
 extern CAM_BLOCK D_800A3958;
 extern CAM_SAVE D_8009A478;
 
-sint32 func_800399EC(uint32 *cmd);
-void func_80039A38(void *data);
+sint32 camera_cmd_push(uint32 *cmd);
+void Camera_cmd_set(void *data);
 void func_800397E8(void);
 void func_800177CC(void *start, void *end);
-void func_80039E50(void);
+void Camera_return_set(void);
 void func_800392CC(void);
-void func_80039A60(void);
-void func_80039FFC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void camera_cmd_exec(void);
+void Camera_move_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
-void func_80037FB4(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Camera_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80038370(CAM_VEC *vec, CAM_VEC *target);
 
 extern uint16 D_800C0D92;

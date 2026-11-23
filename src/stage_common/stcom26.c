@@ -81,7 +81,7 @@ void stcom26_func_003C(STCOM26_WORK *wp)
     }
     if (wp->variant_3 == 0xFF)
     {
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
@@ -116,7 +116,7 @@ void stcom26_func_028C(STCOM26_WORK *wp)
     {
         Close_SHL_WORK(stcom26_E_0000[i]);
     }
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void stcom26_func_033C(void)

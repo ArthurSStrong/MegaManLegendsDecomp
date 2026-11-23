@@ -26,7 +26,7 @@ void stcom17_func_00B0(STCOM17_WORK *wp)
     ctl = &wp->ctl;
     if (STCOM_STAGE_ROOM == 0xA)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {

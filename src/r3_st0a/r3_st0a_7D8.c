@@ -124,11 +124,11 @@ void func_80100B98(STAGE_ROOM *wp)
         case 0:
             if ((wp->reserved09[1] & 1) && wp->reserved09[2] == 0)
             {
-                func_8003187C(wp->child_28);
+                Close_WORK_5A4(wp->child_28);
                 Close_EM_WORK(wp->child_2C);
                 Close_EM_WORK(wp->child_30);
             }
-            func_8003697C();
+            Draw_dist_far();
             Cd_subcmd(0, 1, 0);
             STAGE_PL.routine_0   = 3;
             STAGE_PL.routine_1   = 1;
@@ -150,14 +150,14 @@ void func_80100B98(STAGE_ROOM *wp)
             D_800A395C = 1;
             if (wp->reserved09[1] & 1)
             {
-                func_80039820();
+                Camera_reset();
             }
             else
             {
-                func_8003A264();
+                Camera_return_set2();
             }
             func_8010EB40();
-            func_8003187C(wp->child_24);
+            Close_WORK_5A4(wp->child_24);
             MojiTaskExec2(0, 0xA);
             wp->routine_5++;
             break;

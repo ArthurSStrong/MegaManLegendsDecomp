@@ -175,10 +175,10 @@ void MojiTaskKill(void);
 // ROCK_NEO's prototype takes uint8s, but the stage code passes signed bytes without
 // narrowing them (stcom12_func_0710), so it was compiled against an int prototype.
 void MojiTaskExec2(sint32 a, sint32 b);
-sint32 func_8003A13C(void);
-sint32 func_80039E18(void);
+sint32 Camera_moving(void);
+sint32 Camera_return_resume(void);
 sint32 Calc_degree2(STCOM_SVECTOR *pos, STCOM_SVECTOR *target);
-void func_80039FAC(STCOM_FIXED_VECTOR *pos, sint32 a1, sint32 angle, sint32 a3);
+void Camera_move_set_pause(STCOM_FIXED_VECTOR *pos, sint32 a1, sint32 angle, sint32 a3);
 // Muku (turns the angle `rot` at `pos` toward `target` by at most `speed`, returns the
 // step) is declared by each file's header: stcom15 uses its result without narrowing (int), the
 // others as a sint16.

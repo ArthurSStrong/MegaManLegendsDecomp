@@ -55,7 +55,7 @@ void func_8010F7DC(STAGE_OBJ *wp)
     wp->position.y = pos[i].y;
     wp->position.z = pos[i].z;
     wp->routine_1  = i + 1;
-    func_8002F9EC(wp, (sint32)&wp->variant_3);
+    Model_work_init2(wp, (sint32)&wp->variant_3);
     wp->scale.words[0] = 0x0C000C00;
     wp->scale.words[1] = 0xC00;
     wp->scale.v.pad    = 0x4210;
@@ -349,7 +349,7 @@ void func_801105F8(STCOM23_WORK *wp)
     {
         u          = D_8011C0D8[i].u;
         v          = D_8011C0D8[i].v;
-        p          = func_8002D464();
+        p          = Billboard_alloc();
         p->code_4  = 0x2E808080;
         p->xy_8    = wp->trail[i].words[0];
         p->z_10    = wp->trail[i].words[1];
@@ -469,7 +469,7 @@ void func_80110938(STCOM18_WORK *wp)
             wp->sprite.value_F = D_8011C0F8[frame].b;
         }
         wp->sprite.color_4.word = 0x2C808080;
-        func_8002CA10(&wp->position, 0x30, 0x200, 0);
+        Pos_Shadow_Trans(&wp->position, 0x30, 0x200, 0);
     }
     if (wp->timer_B != 0 && wp->position.y < 0)
     {
@@ -726,7 +726,7 @@ void func_8011142C(ST17_TRAIL *wp)
 
     for (i = 0; i < 6; i++)
     {
-        p         = func_8002D464();
+        p         = Billboard_alloc();
         p->code_4 = 0x2E80C080;
         // Index first: retail adds i * 8 to wp (not wp to it).
         p->xy_8    = (i + wp->point_D4)->xy_0;
@@ -758,7 +758,7 @@ void func_801114E4(ST17_10C *wp)
         t = wp->count_CC;
         if (D_8011C138[i].start_0 < t && t < D_8011C138[i].start_0 + 0x10)
         {
-            p      = func_8002D464();
+            p      = Billboard_alloc();
             t      = wp->count_CC - D_8011C138[i].start_0;
             angle  = (D_8011C138[i].angle_4 + t * 24) & 0xFFF;
             height = D_8011C138[i].height_6 - t * (D_8011C138[i].height_6 / 16);
@@ -813,7 +813,7 @@ void func_80111780(ST17_10C *wp)
     {
         if (wp->count_CC < D_8011C138[i].start_0 + 0x10)
         {
-            p = func_8002D464();
+            p = Billboard_alloc();
             if (wp->count_CC < D_8011C138[i].start_0)
             {
                 r      = 0x60;
@@ -1311,7 +1311,7 @@ void func_801128C4(ST17_SHL *wp)
     else
     {
         Homing_target_clear(wp->bit_d);
-        rot.x = func_80039B80();
+        rot.x = Camera_pitch_get();
     }
     rot.y = wp->rot_y & 0xFFF;
     rot.z = 0;
@@ -1977,7 +1977,7 @@ void func_80114060(STAGE_FX *wp)
         pos.v.x   = wp->x_1C + ((rcos(longitude) * dist) >> 12);
         pos.v.z   = wp->z_20 + ((rsin(longitude) * dist) >> 12);
         pos.v.y   = wp->y_1E + h;
-        p         = func_8002D464();
+        p         = Billboard_alloc();
         uv        = 0x3D480000 | (v << 8) | u;
         p->code_4 = (c << 16) | ((c << 8) | (color = 0x2E000000)) | c;
         p->uv_C   = uv;

@@ -43,7 +43,7 @@ typedef struct
     STCOM_SVECTOR rotation;            // 54
 } STCOM30_OBJ;
 
-// A 0x50-byte slot (func_80031734).
+// A 0x50-byte slot (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -61,7 +61,7 @@ typedef struct
     STCOM_SVECTOR pos_38;   // 38
 } STCOM30_OBJ50;
 
-// The 0x50-byte slot stcom30 runs on (freed through func_80031A4C).
+// The 0x50-byte slot stcom30 runs on (freed through Close_WORK_50).
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -82,9 +82,9 @@ void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
 // ROCK_NEO.EXE.
 sint32 Sce_flag_test(sint32 flag);
 void Sce_flag_off(sint32 flag);
-void func_80031A4C(STCOM30_WORK *wp);
+void Close_WORK_50(STCOM30_WORK *wp);
 STCOM30_OBJ *Open_EM_WORK(void);
 STCOM30_OBJ *Open_SHL_WORK(void);
-STCOM30_OBJ50 *func_80031734(void);
+STCOM30_OBJ50 *Open_WORK_50(void);
 
 #endif // STCOM30_H

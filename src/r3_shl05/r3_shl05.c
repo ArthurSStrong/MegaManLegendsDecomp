@@ -40,7 +40,7 @@ void func_800D8928(SHL_WORK *wp)
     wp->col_c8    = 0;
     wp->flags_0 |= 0; // stored back unchanged in retail
     wp->flags_6 |= 0x20;
-    rot.vx = func_80039B80();
+    rot.vx = Camera_pitch_get();
     rot.vy = wp->rot_y & 0xFFF;
     rot.vz = 0;
     RotMatrixYXZ(&rot, &m);

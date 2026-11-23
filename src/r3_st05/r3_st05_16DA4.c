@@ -78,7 +78,7 @@ void func_80116F7C(ST05_ACTOR *wp)
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
-                if (func_8003A13C() == 0)
+                if (Camera_moving() == 0)
                 {
                     Message_event_set(&wp->position, 3, 0, func_80117300());
                     EM_Char_Set(wp, 8, 0);
@@ -90,7 +90,7 @@ void func_80116F7C(ST05_ACTOR *wp)
         case 3:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 if (D_800987B5 == 0x48)
                 {
                     Sce_flag_off(0x546);
@@ -102,7 +102,7 @@ void func_80116F7C(ST05_ACTOR *wp)
             }
             break;
         case 4:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x40;
                 pl->flags_0 |= 2;
@@ -159,8 +159,8 @@ sint32 func_801171D0(ST05_ACTOR *wp)
         D_80137F68.x = wp->value_180.x;
         D_80137F68.y = wp->value_180.y - 0x20;
         D_80137F68.z = wp->value_180.z;
-        func_80039FAC(&D_80137F68, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_80137F68, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
@@ -533,11 +533,11 @@ void func_80117DFC(ST05_ACTOR *wp)
             cam.x = wp->value_180.x;
             cam.y = wp->value_180.y - 0x20;
             cam.z = wp->value_180.z;
-            func_80039FAC(&cam, 0x100, 0x400, D_800A396C + 0x40);
+            Camera_move_set_pause(&cam, 0x100, 0x400, D_800A396C + 0x40);
             wp->routine_1++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0xB);
                 wp->routine_1++;
@@ -547,11 +547,11 @@ void func_80117DFC(ST05_ACTOR *wp)
             if (!(Moji_flag & 0x08000000))
             {
                 wp->routine_1++;
-                func_80039E18();
+                Camera_return_resume();
             }
             break;
         case 3:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 D_800A395A = D_80138084;
                 D_800A395B = D_80138034;
@@ -609,7 +609,7 @@ void func_80118090(ST05_ACTOR *wp)
     do
     {
         back = Calc_degree2(&wp->position, &Player_work.position);
-        func_80039FAC(&cam, 0x180, angle - 0x500, D_800A396C);
+        Camera_move_set_pause(&cam, 0x180, angle - 0x500, D_800A396C);
     } while (0);
     wp->turn_B4 = Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
     EM_Char_Set(wp, 0x14, 0);
@@ -632,7 +632,7 @@ void func_8011822C(ST05_ACTOR *wp)
     sint32 angle;
 
     pl = &ST05_PL;
-    if (func_8003A13C() == 0 && (uint32)func_80118D74(&pl->position, &wp->position) >= 0x80)
+    if (Camera_moving() == 0 && (uint32)func_80118D74(&pl->position, &wp->position) >= 0x80)
     {
         wp->routine_1++;
         pl->value_448 = 0x82;
@@ -643,7 +643,7 @@ void func_8011822C(ST05_ACTOR *wp)
         wp->rotation.y = angle - 0x800;
         return;
     }
-    if (func_8003A13C() != 0)
+    if (Camera_moving() != 0)
     {
         if ((ST05_ABS(wp->rotation.y - Calc_degree2(&wp->position, &pl->position)) & 0xFFF) < 0x83)
         {
@@ -754,7 +754,7 @@ void func_80118640(STAGE_OBJ *wp)
 
 void func_80118684(STAGE_OBJ *wp)
 {
-    if (!func_8003A13C())
+    if (!Camera_moving())
     {
         STAGE_PL.flags_bd &= ~0x20;
         wp->routine_0       = 1;
@@ -1946,7 +1946,7 @@ void func_8011A9EC(ST05_BOSS *wp)
     {
         pos = wp->joint_180[0];
         pos.y += 0x1E0;
-        func_8002CA10(&pos, 0x12C, 0x200, 0);
+        Pos_Shadow_Trans(&pos, 0x12C, 0x200, 0);
     }
     if (ctl->flags_0 & 0x80)
     {
@@ -1954,7 +1954,7 @@ void func_8011A9EC(ST05_BOSS *wp)
         {
             pos = wp->joint_180[i];
             pos.y += 0xA0;
-            func_8002CA10(&pos, 0xC8, 0x155, wp->rotation.y);
+            Pos_Shadow_Trans(&pos, 0xC8, 0x155, wp->rotation.y);
         }
     }
 }
@@ -1976,7 +1976,7 @@ void func_8011ADB4(ST05_BOSS *wp)
     wp->u_C.b.byte_C &= 0xF0;
     if (wp->variant_3 == 1)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {
@@ -2060,7 +2060,7 @@ void func_8011AFA0(ST05_BOSS *wp)
 
 void func_8011B094(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_8011B0B4(ST05_BOSS *wp)
@@ -3588,8 +3588,10 @@ void func_8011DFD4(ST05_HOLDER *wp)
     {
         EM_Char_Move(wp);
     }
-    func_8002D320(wp->model_88, 0x10000F, func_8002D404(D_80131B00[D_8013807C * 2], 0x33, 0x37, 5));
-    func_8002D320(wp->model_88, 0x120011, func_8002D404(D_80131B01[D_8013807C * 2], 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x10000F,
+                  Uv_cell_offset(D_80131B00[D_8013807C * 2], 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x120011,
+                  Uv_cell_offset(D_80131B01[D_8013807C * 2], 0x33, 0x37, 5));
     if (pl->target_184 == wp)
     {
         wp->routine_1    = 1;
@@ -3762,12 +3764,12 @@ void func_8011E750(ST05_OBJ *wp)
             cam.x = wp->joint_180[0].x;
             cam.y = wp->joint_180[0].y + 0x10;
             cam.z = wp->joint_180[0].z;
-            func_80039FAC(&cam, 0x100, 0xC00, D_800A396C);
+            Camera_move_set_pause(&cam, 0x100, 0xC00, D_800A396C);
             wp->u_E.b.byte_F = 0;
             wp->routine_2++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 1);
                 wp->routine_2++;
@@ -3781,11 +3783,11 @@ void func_8011E750(ST05_OBJ *wp)
                 cam.x = D_8013808C->value_180.x;
                 cam.y = D_8013808C->value_180.y;
                 cam.z = D_8013808C->value_180.z;
-                func_80039FAC(&cam, 0x100, 0x400, 0x100);
+                Camera_move_set_pause(&cam, 0x100, 0x400, 0x100);
             }
             break;
         case 3:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0xB);
                 wp->routine_2++;
@@ -3795,11 +3797,11 @@ void func_8011E750(ST05_OBJ *wp)
             if (!(Moji_flag & 0x08000000))
             {
                 wp->routine_2++;
-                func_80039E18();
+                Camera_return_resume();
             }
             break;
         case 5:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x20;
                 pl->flags_0 |= 2;
@@ -3856,11 +3858,11 @@ void func_8011E92C(ST05_OBJ *wp)
     }
     if (talk->eyes_prev_E != talk->eyes_C)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(talk->eyes_C, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(talk->eyes_C, 0x33, 0x37, 5));
     }
     if (talk->mouth_prev_12 != talk->mouth_10)
     {
-        func_8002D320(wp->model_88, 0x120011, func_8002D404(talk->mouth_10, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(talk->mouth_10, 0x33, 0x37, 5));
     }
 }
 
@@ -3891,7 +3893,7 @@ void func_8011EBAC(ST05_OBJ *wp)
 
 void func_8011EBFC(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_8011EC1C(ST05_OBJ *wp)
@@ -4567,7 +4569,7 @@ void func_80120050(ST05_OBJ *wp, STAGE_FACE16 *face)
     {
         if (wp->value_A7 == -1)
         {
-            func_8003187C(wp);
+            Close_WORK_5A4(wp);
         }
         EM_Char_Move(wp);
     }
@@ -4598,7 +4600,7 @@ void func_80120120(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(face->shape_0, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(face->shape_0, 0x33, 0x37, 5));
     }
     face->prev_8 = face->shape_6;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -4615,7 +4617,7 @@ void func_80120120(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x120011, func_8002D404(face->shape_6, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(face->shape_6, 0x33, 0x37, 5));
     }
 }
 

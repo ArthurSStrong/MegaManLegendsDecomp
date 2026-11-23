@@ -390,7 +390,7 @@ void func_80116AD4(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_0, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_0, 0x2A, 0x40, 6));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -407,7 +407,7 @@ void func_80116AD4(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_6, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_6, 0x2A, 0x40, 6));
     }
     face->prev_8 = face->shape_6;
 }
@@ -436,7 +436,7 @@ void func_80116C20(STAGE_OBJ *wp)
 void func_80116D28(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, ST06_FLOAT *fl)
 {
     wp->flags_0 |= 2;
-    func_8002F9EC(wp, 0);
+    Model_work_init2(wp, 0);
     wp->scale.words[0] = 0x2000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0x4210;
@@ -633,7 +633,7 @@ void func_80117290(ST06_CRAB *wp)
         switch (wp->routine_1)
         {
             case 4:
-                func_8003187C(wp);
+                Close_WORK_5A4(wp);
                 Gauge_close(wp);
                 obj = Open_EM_WORK();
                 if (obj != NULL)
@@ -708,7 +708,7 @@ void func_80117290(ST06_CRAB *wp)
     wp->value_48.half[0] = (wp->position.z - wp->position_prev.z) << 4;
     if (wp->flags_0 & 2)
     {
-        func_8002CA10(&wp->position, 0x80, 0x200, wp->rotation.y);
+        Pos_Shadow_Trans(&wp->position, 0x80, 0x200, wp->rotation.y);
     }
     if (wp->flags_0 & 1)
     {
@@ -736,7 +736,7 @@ void func_80117290(ST06_CRAB *wp)
 
 void func_80117784(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_801177A4(ST06_OBJ *wp)
@@ -1260,7 +1260,7 @@ sint32 func_801188E4(ST06_CRAB *wp)
 {
     STAGE_OBJ *obj;
 
-    obj = func_80031498();
+    obj = Open_WORK_5A4();
     if (obj != NULL)
     {
         obj->flags_0            = 1;
@@ -1412,7 +1412,7 @@ void func_80118D9C(ST06_MATRIX_OBJ *wp)
     wp->value_D += 4;
     for (i = 0; i < 0x20; i++)
     {
-        uv = func_8002D22C(wp->model_14, i + 0x10000);
+        uv = Model_face_get(wp->model_14, i + 0x10000);
         if (wrap != 0 || (i == 0 && uv[0] >= 0xA0))
         {
             wrap = 1;
@@ -1433,5 +1433,5 @@ void func_80118D9C(ST06_MATRIX_OBJ *wp)
 
 void func_80118E90(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }

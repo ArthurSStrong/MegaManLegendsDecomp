@@ -534,8 +534,8 @@ typedef struct
     ST0A_EM_HIT hit_C;          // 0C
     uint8 reserved1C[8];        // 1C
     uint8 track_24[0x10];       // 24: Search_Player_Init
-    uint8 *uv_34;               // 34: a face's texture coordinates (func_8002D22C)
-    sint16 *vtx_38;             // 38: vertices (func_8002D2DC)
+    uint8 *uv_34;               // 34: a face's texture coordinates (Model_face_get)
+    sint16 *vtx_38;             // 38: vertices (Model_vertex_get)
     sint16 *vtx_3C;             // 3C
     sint16 value_40;            // 40
     uint16 angle_42;            // 42
@@ -927,14 +927,14 @@ void func_80102F58(STAGE_OBJ *wp, STAGE_OBJ *arg1);
 void func_80103530(STAGE_OBJ *wp, STAGE_ROOM *arg1, sint16 *arg2);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
-void *func_80031498(void);
+void *Open_WORK_5A4(void);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
 void func_80113744(ST0A_SHOT *wp);
 void func_80113888(ST0A_SHOT *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_801131C4(ST0A_SHL *wp);
 void func_80110298(ST0A_10C_B *wp);
@@ -975,7 +975,7 @@ sint32 func_8010E95C(ST0A_EM *wp);
 void func_8010ED90(ST0A_EM *wp, sint32 index);
 void func_8010E9C8(ST0A_EM *wp, sint32 side);
 sint32 func_8010EE60(ST0A_EM *wp, sint32 index);
-uint8 *func_8002D22C(void *model, sint32 id);
+uint8 *Model_face_get(void *model, sint32 id);
 sint32 Player_atari_off(void);
 void func_8005D4C0(void);
 void func_80111788(ST0A_PIECE *wp);
@@ -989,19 +989,19 @@ void Gauge_close(void *wp);
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 sint32 func_8010EBE8(ST0A_EM *wp);
 sint32 func_8010EF3C(ST0A_EM *wp);
-sint16 *func_8002D2DC(void *model, sint32 id);
+sint16 *Model_vertex_get(void *model, sint32 id);
 
 sint32 func_80101BB4(sint32 arg);
 sint32 func_80101A78(sint32 down);
-void func_8003187C(void *wp);
-void func_80031A4C(void *wp);
+void Close_WORK_5A4(void *wp);
+void Close_WORK_50(void *wp);
 
 void Gauge_clear(void);
 void Sce_script_timer_clear(void);
-void func_8003697C(void);
+void Draw_dist_far(void);
 void Moji_task_kill(sint32 arg);
 void Game_logo_kill(sint32 index);
-void func_8003A264(void);
+void Camera_return_set2(void);
 extern sint16 D_8011B5FC; // the gate's height (func_80101A78)
 extern sint16 D_8011B600; // its step
 

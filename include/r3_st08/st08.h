@@ -107,7 +107,7 @@ void func_80107560(STAGE_ACTOR *wp);
 
 void func_801104C8(STAGE_OBJ *wp);
 
-extern uint8 D_801127F4[][0x28]; // by room (func_800371A0)
+extern uint8 D_801127F4[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80112F70[];
 extern uint8 D_80112F80[];
 extern uint8 D_80112F88[];
@@ -308,7 +308,7 @@ extern uint16 D_800C0C2A_A[] __asm__("D_800C0C2A");
 
 extern uint8 D_80113238[];
 extern uint8 D_8011324C[];
-void func_8003697C(void);
+void Draw_dist_far(void);
 
 extern uint8 D_80118514;
 
@@ -547,8 +547,8 @@ void Moji_time_set(sint32 score);
 void func_8005C24C(sint32 arg);
 sint32 Sound_seq_end_check(sint32 arg);
 
-void func_80039E50(void);
-void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Camera_return_set(void);
+void Camera_move_set(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
 // The shooting game's script (func_801018CC): its place in the ranking (0xFF: none).
 extern uint8 D_80118510;

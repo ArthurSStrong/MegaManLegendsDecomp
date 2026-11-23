@@ -208,7 +208,7 @@ extern uint8 D_800C0C24;
 extern uint8 Scene_work;
 extern GAME_WORK_3C0 Em_work_tbl[16];
 extern GAME_WORK_3C0 *Em_work_cur;
-extern GAME_WORK_5A4 D_800C3580[4];
+extern GAME_WORK_5A4 Work_5A4_tbl[4];
 extern GAME_WORK_5A4 *D_800989D0;
 extern GAME_WORK_10C Pl_shl_work_tbl[16];
 extern GAME_WORK_10C Shl_work_tbl[32];
@@ -219,7 +219,7 @@ extern GAME_WORK_48 *Effect_work_cur;
 extern GAME_FUNC_48 D_80089858[];
 extern GAME_WORK_24 Eve_work_tbl[16];
 extern GAME_WORK_24 *Eve_work_cur;
-extern GAME_WORK_50 D_800BF118[32];
+extern GAME_WORK_50 Work_50_tbl[32];
 extern GAME_WORK_50 *D_80098924;
 
 extern GAME_FUNC Game_main_tbl[];

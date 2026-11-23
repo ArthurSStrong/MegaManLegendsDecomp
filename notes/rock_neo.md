@@ -438,7 +438,7 @@ that take the record owner are passed `&Player_work`, so their parameter is `PL_
   gives the target's literal `lui`/`ori 0x8015C006` (taking `&Stage_idx_tbl[n]` and adding 6 later does not).
 - Scratchpad map window (`Map_org_x/y` 0x40/0x41, `Map_w/h` 0x44/0x46, `Map_cells` 0x48) in `stage.h`.
 - `map_obj_break_spread` needs an unused 8-byte local (frame 0x20).
-- `func_80039A38` (`code_80037FB4`) takes one argument and passes it on to `func_800399EC`: its callers
+- `Camera_cmd_set` (`code_80037FB4`) takes one argument and passes it on to `camera_cmd_push`: its callers
   load an address into `a0`, and nothing in between touches `a0`, so the call has no argument setup. `map_obj_debris` angle `j * step` is
   strength-reduced by GCC (a separate `ang` accumulator puts its init before the zero-trip test).
 - `Cell_stack` (`Cell_stack`) / `Cell_stack_idx` (`Cell_stack_idx`): stack of packed cells, see `renames.txt`.
@@ -523,17 +523,17 @@ which gives the shared `ori`; this probably also fixes parked `view_cone_check`.
 registers (a1/a2) are swapped. `func_80035508` stays assembly (GTE, same decision as above).
 
 `code_8002E7A8.c` (small functions): banked `Obj_id_class`, `Obj_pos_adj_round` (16.16 vector rounded to
-`SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `Atari_init`, `func_8003697C`
+`SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `Atari_init`, `Draw_dist_far`
 (scratchpad fog setup, `SetFogNear(D_800BC81C, 0x180)`). Parked `Fog_color_get` (`NON_MATCHING`): copies
 `Fog_color..74` into an `SVECTOR`; the target does load/store pair by pair, GCC hoists the later loads
 above the earlier stores (struct, `sint16 *`, `*v++` and `volatile` forms tried).
 Banked `Angle_diff_clamp` (signed angle difference on a 0x1000 circle, clamped to +-limit; `r = limit`
 first, and the else-branch test written `limit > 0x1000 - d`). Parked (`NON_MATCHING`): `Pl_Char_Move_Upper`
 (steps a `KEY_ENT` table; target loads `lbu 0x101` before `lw 0xFC` and keeps `ctl` in a2 with a copy in a1)
-and the slot allocators `Open_EVE_WORK`, `func_80031734` (pool bitmask scan; only the store order
+and the slot allocators `Open_EVE_WORK`, `Open_WORK_50` (pool bitmask scan; only the store order
 differs: the target keeps the stores in source order around the mask update). A scratch test with the
 mask as a struct member (`MEM_IN_STRUCT_P`, so the store aliases the `wp->` stores) gave exactly the
-target order, so the mask words (`Eve_work_used`, `D_800989CC`) may be members of a pool struct; a scalar
+target order, so the mask words (`Eve_work_used`, `Work_50_used`) may be members of a pool struct; a scalar
 `uint32` lets the scheduler hoist the `wp->` stores. The model-pool allocators `Open_EM_WORK`,
 `Open_SHL_WORK` and `Open_PL_SHL_WORK` are banked: they matched once `field_74` (a `sint8`, read with `lb`
 everywhere) was cleared with one word store over 0x74-0x77, like their other multi-field clears.
@@ -542,12 +542,12 @@ Banked `func_80031324` (initialises a child object from slot n of a parent: copi
 parent+0x240+n*32, position from parent+0x180+n*8, takes and clears the id at parent+0xF9+n*4; the id
 field is `sint8` so the `-1` store is `li -1`) and `homing_target_set` (claims a free bit of `Homing_target_used`,
 24 slots, records it in owner+4 and stores the value in `Homing_target_tbl[slot]`). Parked (`NON_MATCHING`):
-`func_80031498` (the `WORK_5A4` allocator: only its `field_2` halfword store is scheduled before the
-`D_80098B20` update, where its three matched twins keep source order),
+`Open_WORK_5A4` (the `WORK_5A4` allocator: only its `field_2` halfword store is scheduled before the
+`Work_5A4_used` update, where its three matched twins keep source order),
 `Muku_elevation` (clamped angle step toward a target; target keeps the `limit` parameter in s2 and a copy
 in s1, GCC merges them) and `Calc_local_vec` (rotates an offset (x, y, z) by an angle into a VECTOR; same
-param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `Angle_ck`, `func_80031E60`,
-`func_80031EF0` (two-sector angle test, 1 if within +-half1 of center1 and +-half2 of center2; target
+param/copy pair issue for x and z). Also parked (`NON_MATCHING`): `Angle_ck`, `Angle_range_check`,
+`Angle_range_check2` (two-sector angle test, 1 if within +-half1 of center1 and +-half2 of center2; target
 keeps the result in v0 and a copy of the angle in v1, GCC uses a scratch register), `Muku`
 (`Muku_elevation` on `Angle_xz_svector`, same s2/s1 issue), `view_cone_check` (GTE view-cone test:
 RotMatrixY/RotTrans, returns 0x10 behind, 2 inside; target stores `m[0]` late and shares one `ori 2`
@@ -630,7 +630,7 @@ local with `goto fail`, and `== 0` forms).
 
 Batch (`func_80046A0C`, `_8004602C`, `_80047EC8`): banked `func_80046A0C` (proximity test like `func_80045BC8`, then
 calls `Money_add`/`Pl_life_add` with `D_8008A678`/`D_8008A680[Game_work 0x5B][field_A]`; `field_A` is kept in a
-local) and `func_8004602C` (per-frame draw of the effect: `D_8008A6A8[routine_8]`, then one `func_8002D464` primitive
+local) and `func_8004602C` (per-frame draw of the effect: `D_8008A6A8[routine_8]`, then one `Billboard_alloc` primitive
 filled from the four columns `D_80097EC0/C2/C4/C6`, each its own symbol). Parked `func_80047EC8` (`NON_MATCHING`;
 eight spark lines around the player's position at `Player_work+0x400`/`+0x418`): structure matches; the else-branch
 angle `- 0x100 + rand` becomes `li 0xff00; addu` (as in `func_80047DD8`), the `y - (sin - 0x10)` is folded to
@@ -702,7 +702,7 @@ id (`Obj_id_work` returns a `PL_WORK`: `Pl_shl_normal_arm_init` reads its `joint
 player's state flag for the slot).
 Batch 3: banked `Pl_shl_normal_arm_init` (frame has 0x18 bytes of unused locals: an `SVECTOR` + `VECTOR`, like
 `Pl_shl_buster_init`'s), `Pl_shl_normal_arm_main` (calls `Obj_id_work` twice: once kept for `unk198`, once for the copy of
-`pos` to `old`), `Pl_shl_buster_init` (launch: direction `(0, 0, -0x1000)` rotated by `func_80039B80()`/`field_64`,
+`pos` to `old`), `Pl_shl_buster_init` (launch: direction `(0, 0, -0x1000)` rotated by `Camera_pitch_get()`/`field_64`,
 speed `dir * Buster_speed_tbl[idx[2]] >> 4`, collision box `hit_78 = &D_80097DA0`; `field_88` is stored twice, the
 constant first; `x_90 = pos.vx = pos_l.vx >> 16` is Capcom's chained form, cf. `efc.model.sv` in
 `EM09_49.C`). `func_80043DF8` is empty but takes `(wp, &m)`: `Pl_shl_buster_init` passes both. `Player_weapon_dist_calc`
@@ -828,9 +828,9 @@ their own call stacks: `mes_ptr_14`/`call_stk_18`/`call_sp_BE` (text) and `cmd_p
 digits from `D_8008D028`, leading 0 replaced by font code 0x4F).
 `Moji_cmd_se` zero-extends the id (`andi 0xFFFF`), so `Sound_call`'s `id` is `uint16`, not `sint16`
 (`sound.c` still matches). Parked `Moji_cmd_camera_end` (`NON_MATCHING`; if `flags_0 & 0x10000`, call
-`func_80039E18` and clear the bit; then step 1): only the tail differs, the read pointer gets `$v0` where the
+`Camera_return_resume` and clear the bit; then step 1): only the tail differs, the read pointer gets `$v0` where the
 target has `$v1` and `li $v0,1` in the load delay slot. Banked later: the cause was the callee's return
-type (see the `Money_add` paragraph below); `func_80039E18` is now declared `sint32`.
+type (see the `Money_add` paragraph below); `Camera_return_resume` is now declared `sint32`.
 Also banked, matching at once: `func_80058EA0` (the `func_80058788` twin with flags `0x402800`; sets pool
 byte `D_80098851` to 0xFF), `Moji_cmd_sync` (fails, returns 0, while `Moji_work[arg]` has bit 31 set and
 bit 17 clear), `Moji_cmd_window` and `Moji_cmd_window_close` (call `D_8008AAC0[unk_7C]`, a handler table splat
@@ -856,7 +856,7 @@ unk07D` in each branch (the target duplicates the tail), step 2). Only the tail 
 where the target has `$v1` with `li $v0,1` in the load delay slot. **Cause: the callee's return type.** With
 a `void` prototype GCC 2.7 treats `$v0` as free right after the `jal` and loads the pointer into it; with an
 `int`-returning callee (`call_value`) it picks `$v1`. So Capcom's `moji.c` called `Money_add` and
-`func_80039E18` as `int` functions (undeclared, implicit `int`), although neither returns a value. Both are now
+`Camera_return_resume` as `int` functions (undeclared, implicit `int`), although neither returns a value. Both are now
 declared `sint32` (no `return`); all four functions match, as do `Money_add`'s other callers. Watch for this
 tail pattern (`$v0`/`$v1` swap right after a call to a `void` function) elsewhere.
 Banked, matching: `Moji_init` (moji init: `Cd_read_comb(30)` + `Cd_read_sync`, then for each of the 5
@@ -907,7 +907,7 @@ symbol offset as the target does).
 
 `code_8002D9A0.c`: banked `Model_poly_group_get` (overlay accessor: returns a 16-byte `BLK_ENT` from block
 `src->blk_tbl[blk]`, entry `idx` after the header; needs one reused `uint32 *p` and one reused word
-local) and `billboard_draw` (projects the `BILLBOARD`s queued by `func_8002D464` in `Billboard_queue`, links
+local) and `billboard_draw` (projects the `BILLBOARD`s queued by `Billboard_alloc` in `Billboard_queue`, links
 them as POLY_FT4 into `Scratch_ot[z / 8]`, depth cue and fog CLUT unless flag 8; the list entry is
 re-read through `Billboard_queue[i]` for the flag and `rgbc`, and the three `vz` stores are one chained
 assignment). Neither function has a caller in the code or data (dead, or reached some other way).
@@ -922,7 +922,7 @@ register (t6); the target hoists `0x07000000`, `0xFFFFFF` and the OT address int
 registers, frame 0x38, `otz` at sp+0x14); loop 1 walks copies of the sxy/sz bases; and the face pointer
 is a plain `f` with offsets 0/2/4/8 where ours strength-reduces it to `&f->uv[2]`.
 Parked `parts_model_draw` (`NON_MATCHING`; draws a `PARTS_WORK`, the 0x560-byte objects `parts_model_draw_all`
-walks from `D_800C3580` (4) and `Em_work_tbl` (16): projects `pos` (culls by depth and screen
+walks from `Work_5A4_tbl` (4) and `Em_work_tbl` (16): projects `pos` (culls by depth and screen
 bounds), picks a level of detail of `model_80` by z (> 0x708, > 0x2BC), depth-cues the RGB555
 colour `col_55E`, then per visible part `gte_MulMatrix0`s the view matrix by `part_mtx[i]`, adds the
 rotated `part_pos[i]` to the view translation and calls `mesh_draw`). Everything matches except
@@ -930,7 +930,7 @@ the fog CLUT lookup in `Fog_clut_tbl`: the target builds the address with `lui`/
 `addu $at,$at,v0` and `lbu 0($at)`, the only such sequence in ROCK_NEO. maspsx gives a constant base
 `lui`, `addu $at,v0,$at`, `lbu %lo($at)` (one instruction shorter) and a symbol `%hi`/`%lo`; neither
 fits, so matching needs a toolchain change (an ASPSX expansion maspsx doesn't model). Found on the way:
-the 0x560 stride conflicts with `WORK_5A4 D_800C3580[]` and `WORK_3C0 Em_work_tbl[]` (settled: dead
+the 0x560 stride conflicts with `WORK_5A4 Work_5A4_tbl[]` and `WORK_3C0 Em_work_tbl[]` (settled: dead
 code, see below); the per-part
 colour needs a `sint32` local (`lh`, not `lhu`); the `mesh_draw` argument is an integer sum with the
 offset first (`addu a0,a0,v0`); `gte_lddp` is passed `&Scratch_dp`, the address, not the value.
@@ -945,8 +945,8 @@ object with its own assembler setting. Matching needs a per-file toolchain chang
 **`parts_model_draw_all`, `parts_model_draw` and `mesh_draw` are dead code.** Nothing calls
 `parts_model_draw_all`: no `jal`, no data table, no stage overlay (`tools/callers.py`), and it is
 `parts_model_draw`'s only caller, which is `mesh_draw`'s only caller. Its arrays are not the live
-pools: `D_800C3580` and `Em_work_tbl` hold `WORK_5A4[4]` and `WORK_3C0[16]` (cleared as 0x168C and
-0x3BFC bytes and allocated by `func_80031498`/`Open_EM_WORK` at those sizes), while the 0x560 stride
+pools: `Work_5A4_tbl` and `Em_work_tbl` hold `WORK_5A4[4]` and `WORK_3C0[16]` (cleared as 0x168C and
+0x3BFC bytes and allocated by `Open_WORK_5A4`/`Open_EM_WORK` at those sizes), while the 0x560 stride
 would put the 16th entry's end at 0x800A4708, over `Cd_cmd_queue` (0x800A3A40). So `PARTS_WORK` is
 the layout of an older build, not a view of `WORK_5A4`/`WORK_3C0`; the stale object would also
 explain the two functions' `ori` encodings.

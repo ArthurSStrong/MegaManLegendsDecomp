@@ -22,7 +22,7 @@ void func_800D8840(SHL_WORK *wp)
     wp->flags_6 |= 0x20;
     Homing_target_clear(wp->bit_d);
     wp->value_f = Player_work.value_558;
-    rot.vx      = func_80039B80();
+    rot.vx      = Camera_pitch_get();
     rot.vy      = Player_work.rot.vy & 0xFFF;
     rot.vz      = 0;
     RotMatrixYXZ(&rot, &wp->draw.mdl.mtx_8c);
@@ -84,7 +84,7 @@ void func_800D8A88(SHL_WORK *wp)
     {
         Player_work.timer_55a--;
     }
-    rot.vx = func_80039B80();
+    rot.vx = Camera_pitch_get();
     rot.vy = Player_work.rot.vy & 0xFFF;
     rot.vz = 0;
     RotMatrixYXZ(&rot, &wp->draw.mdl.mtx_8c);

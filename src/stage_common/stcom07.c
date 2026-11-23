@@ -24,7 +24,7 @@ void stcom07_func_003C(STCOM07_WORK *wp)
     RotMatrixY(wp->rot_C << 10, &wp->matrix.m);
     wp->color_40 = 0x808080;
     wp->routine_0++;
-    wp->quad_44 = func_8002D22C(wp->model_14, 0x10000);
+    wp->quad_44 = Model_face_get(wp->model_14, 0x10000);
     switch (wp->type_3)
     {
         case 0:

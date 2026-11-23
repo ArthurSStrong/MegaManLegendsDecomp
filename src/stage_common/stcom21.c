@@ -43,7 +43,7 @@ void stcom21_func_00C0(STCOM21_WORK *wp)
         flag = wp->value_D * 4 + 0x681;
         if (Sce_flag_test(flag))
         {
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
         }
         else if (Sce_flag_test(flag + 1))
         {
@@ -110,7 +110,7 @@ void stcom21_func_0310(STCOM21_WORK *wp)
             }
             break;
         case 3:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Player_work.target_184 = NULL;
                 Player_work.routine_1  = 0;
@@ -249,7 +249,7 @@ void stcom21_func_0460(STCOM21_WORK *wp)
             }
             break;
         case 21:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->routine_1  = 0;
                 pl->value_0a   = 0;
@@ -457,7 +457,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             }
             break;
         case 40:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 if (!(wp->value_C & 8))
                 {
@@ -475,7 +475,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             wp->routine_2 = 0;
             if (wp->value_C & 4)
             {
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             break;
     }
@@ -489,7 +489,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
         wp->routine_2 = 0;
         if (wp->value_C & 4)
         {
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
         }
     }
 }
@@ -497,8 +497,8 @@ void stcom21_func_0768(STCOM21_WORK *wp)
 // Whether the player faces the villager from the front.
 uint8 stcom21_func_0CE8(STCOM21_WORK *wp, STCOM_PL_WORK *pl)
 {
-    return func_80031EF0(&wp->pos_38, ((wp->variant_3 << 10) - 0x400) & 0xC00, 0x1FF, &pl->position,
-                         pl->rotation.y, 0x1FF);
+    return Angle_range_check2(&wp->pos_38, ((wp->variant_3 << 10) - 0x400) & 0xC00, 0x1FF,
+                              &pl->position, pl->rotation.y, 0x1FF);
 }
 
 // Whether the player talks to the villager: picks the conversation.
@@ -616,7 +616,7 @@ void stcom21_func_1044(STCOM21_WORK *wp)
         effect->variant_3         = 0x41;
         effect->sprite.position   = wp->pos_38;
         effect->sprite.position.y = wp->pos_38.y - 0x28;
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
     }
 }
 
@@ -764,7 +764,7 @@ void stcom21_func_1524(STCOM21_WORK *wp)
 {
     STCOM21_WORK *lid;
 
-    lid = func_80031734();
+    lid = Open_WORK_50();
     if (lid != NULL)
     {
         lid->flags_0    = wp->flags_0;
@@ -829,7 +829,7 @@ void stcom21_func_1688(STCOM21_WORK *wp)
                 RotMatrixX(0, &chest->matrix.m);
                 RotMatrixY(chest->value_B << 6, &chest->matrix.m);
                 RotMatrixZ(0, &chest->matrix.m);
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             else
             {
@@ -999,7 +999,7 @@ void stcom21_func_1D60(STCOM21_WORK *wp)
         effect->variant_3         = 0x41;
         effect->sprite.position   = wp->pos_38;
         effect->sprite.position.y = wp->pos_38.y - 0x28;
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
     }
 }
 

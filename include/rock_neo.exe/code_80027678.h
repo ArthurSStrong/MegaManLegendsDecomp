@@ -64,13 +64,13 @@ typedef void (*C80027678_FUNC)(void *work, sint32 flags);
 
 extern C80027678_FUNC D_800898D0[];
 extern C80027678_SLOT48 Effect_work_tbl[0x40];
-extern C80027678_SLOT50 D_800BF118[0x20];
+extern C80027678_SLOT50 Work_50_tbl[0x20];
 extern C80027678_SLOT10C Pl_shl_work_tbl[0x10];
 extern C80027678_SLOT10C Shl_work_tbl[0x20];
-extern C80027678_ENT12 D_800ACE00[];
+extern C80027678_ENT12 Shadow_queue[];
 extern C80027678_UVAL12 D_800ACE08[];
 extern C80027678_VAL12 D_800ACE0A[];
-extern sint32 D_800987D8;
+extern sint32 Shadow_count;
 extern uint32 Billboard_count;
 extern uint8 *Billboard_queue[];
 
@@ -89,7 +89,7 @@ typedef struct
     uint8 *parts;
 } C80027678_MODEL;
 
-// Queue record at D_800ACE00 (12 bytes, six halfwords) and its source record
+// Queue record at Shadow_queue (12 bytes, six halfwords) and its source record
 typedef struct
 {
     uint16 f0;
@@ -126,8 +126,8 @@ typedef struct
 
 sint32 Scr_height_check(C80027678_MODEL_OBJ *o);
 void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
-void func_8002C794(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
-void func_8002CA10(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3);
+void Pl_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3);
+void Pos_Shadow_Trans(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3);
 typedef struct
 {
     uint32 counts;
@@ -161,7 +161,7 @@ typedef struct
     uint8 mask;
     uint8 reserved07[0x3B9];
 } C80027678_REC3C0;
-extern C80027678_REC5A4 D_800C3580[];
+extern C80027678_REC5A4 Work_5A4_tbl[];
 extern C80027678_REC3C0 Em_work_tbl[];
 
 extern uint32 D_80098824;
@@ -190,11 +190,11 @@ void func_8002786C(void *work, void *arg);
 void func_80029A38(void);
 void func_80029B10(void);
 void func_80029B94(void);
-void func_8002CB18(void);
-void func_8002D50C(void);
+void shadow_draw_all(void);
+void billboard_list_draw(void);
 void func_80027678(void);
 void func_80028DE0(void);
-void func_8002D320(C80027678_MODEL *m, uint32 idx, sint32 delta);
+void Model_uv_copy(C80027678_MODEL *m, uint32 idx, sint32 delta);
 void func_800177CC(void *, void *);
 
 // Mesh header: triangle and quad counts, then their double-buffered primitive blocks.
@@ -420,7 +420,7 @@ typedef struct
                      : "r"(p)                                                                      \
                      : "$12", "$13", "$14")
 
-void func_8002CBDC(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint32 dist);
+void shadow_draw(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint32 dist);
 extern sint32 rsin(sint32 a);
 extern sint32 rcos(sint32 a);
 

@@ -901,7 +901,7 @@ void func_8010E198(ST03_ACTOR *wp)
             wp->routine_1++;
             break;
         case 2:
-            if (func_8003A13C() != 0)
+            if (Camera_moving() != 0)
             {
                 break;
             }
@@ -913,11 +913,11 @@ void func_8010E198(ST03_ACTOR *wp)
             {
                 break;
             }
-            func_80039E18();
+            Camera_return_resume();
             wp->routine_1++;
             break;
         case 4:
-            if (func_8003A13C() != 0)
+            if (Camera_moving() != 0)
             {
                 break;
             }
@@ -986,8 +986,8 @@ sint32 func_8010E3A8(ST03_ACTOR *wp)
         D_8011CAE8.x = wp->value_180[0].x;
         D_8011CAE8.y = wp->value_180[0].y - 0x20;
         D_8011CAE8.z = wp->value_180[0].z;
-        func_80039FAC(&D_8011CAE8, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_8011CAE8, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;

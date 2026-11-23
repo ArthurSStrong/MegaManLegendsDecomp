@@ -88,7 +88,7 @@ void func_80100524(void)
     spawns                    = D_80114918[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_80114B7C[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
-    func_800371A0(D_80114D08[D_80114F08[Game_work.value_51]], D_80114BA0[Game_work.value_51]);
+    Fog_room_set(D_80114D08[D_80114F08[Game_work.value_51]], D_80114BA0[Game_work.value_51]);
     func_8005DC10(0);
     func_801007B4();
 }
@@ -1129,14 +1129,14 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
             vec.x = obj->position.x;
             vec.y = obj->position.y - 0x50;
             vec.z = obj->position.z;
-            func_80039FFC(&vec, 0x12C, Calc_degree2(&pos, &pl->position) + 0x20,
-                          D_800A396C + 0x61);
+            Camera_move_set(&vec, 0x12C, Calc_degree2(&pos, &pl->position) + 0x20,
+                            D_800A396C + 0x61);
             pl->flags_BD |= 0x40;
             pl->flags_0 &= ~2;
             wp->routine_6++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 wp->routine_6++;
                 MojiTaskExec2(0, 0x2D);
@@ -1145,7 +1145,7 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         case 2:
             if (!(Moji_flag & 0x08000000) && Player_control_off(pl))
             {
-                func_80039E50();
+                Camera_return_set();
                 pl->flags_BD &= ~0x40;
                 wp->routine_6++;
                 Sce_script_timer_clear();
@@ -1295,13 +1295,13 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
         case 11:
             Player_control_on(pl);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             func_80103CC4(5);
             wp->flags_0 = 0;
             Sce_flag_on(0);
             break;
         case 12:
-            func_80039E50();
+            Camera_return_set();
             Player_control_on(pl);
             wp->flags_0 = 0;
             Sce_flag_on(0);
@@ -1363,13 +1363,13 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             vec.x   = spawned->position.x;
             vec.y   = spawned->position.y - 0x80;
             vec.z   = spawned->position.z;
-            func_80039FFC(&vec, 0x140, Calc_degree2(&pos, &pl->position), D_800A396C - 0x30);
+            Camera_move_set(&vec, 0x140, Calc_degree2(&pos, &pl->position), D_800A396C - 0x30);
             pl->flags_BD |= 0x40;
             pl->flags_0 &= ~2;
             wp->routine_6++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 wp->routine_6++;
                 MojiTaskExec2(0, 0x5F);
@@ -1378,7 +1378,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
         case 2:
             if (!(Moji_flag & 0x08000000) && Player_control_off(pl))
             {
-                func_80039E50();
+                Camera_return_set();
                 Sce_script_timer_clear();
                 Sce_camera_start(0, 0, 0);
                 D_800BC7F0      = D_8011644C;
@@ -1549,7 +1549,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 Player_control_on(pl);
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
-                func_80039820();
+                Camera_reset();
                 stcom36_func_0118();
                 Sce_flag_on(6);
                 Sce_flag_on(0xB);
@@ -1560,7 +1560,7 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             if (Sce_flag_test(0x607))
             {
                 Sce_flag_off(0x607);
-                func_80039E50();
+                Camera_return_set();
                 Player_control_on(pl);
                 wp->flags_0 = 0;
                 stcom36_func_0118();

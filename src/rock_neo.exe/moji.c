@@ -1056,21 +1056,21 @@ sint32 Moji_cmd_camera(MOJI_WORK *wp)
         vec[2] = D_800987B8->z;
         if (Scene_work == 0)
         {
-            func_80039FAC(vec, get_le16(wp->pos_6C + 3),
-                          Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
-                          D_800A396C + get_le16(wp->pos_6C + 7));
+            Camera_move_set_pause(vec, get_le16(wp->pos_6C + 3),
+                                  Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                                  D_800A396C + get_le16(wp->pos_6C + 7));
         }
         else
         {
-            func_80039FFC(vec, get_le16(wp->pos_6C + 3),
-                          Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
-                          D_800A396C + get_le16(wp->pos_6C + 7));
+            Camera_move_set(vec, get_le16(wp->pos_6C + 3),
+                            Calc_degree2(&pos, &pl->position) + get_le16(wp->pos_6C + 5),
+                            D_800A396C + get_le16(wp->pos_6C + 7));
         }
         wp->flags_0 |= 0x10000;
         state[1] = get_le16(wp->pos_6C + 1);
     }
     wp->flags_0 |= 0x10000000;
-    if (func_8003A13C() == 0)
+    if (Camera_moving() == 0)
     {
         wp->flags_0 &= 0xEEFFFFFF;
         wp->pos_6C += 0xB;
@@ -1138,7 +1138,7 @@ sint32 Moji_cmd_camera_end(MOJI_WORK *wp)
 {
     if (wp->flags_0 & 0x10000)
     {
-        func_80039E18();
+        Camera_return_resume();
         wp->flags_0 &= ~0x10000;
     }
     wp->pos_6C += 1;

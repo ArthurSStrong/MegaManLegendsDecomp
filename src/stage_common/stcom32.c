@@ -38,7 +38,7 @@ void stcom32_func_004C(STCOM32_WORK *wp)
         {
             if (stcom32_D_0078[i].stage_0 < 0)
             {
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
                 return;
             }
             i++;
@@ -189,7 +189,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
             Player_control_on(pl);
             pl->target_184 = NULL;
             pl->flags_0 |= 2;
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
             break;
     }
 }

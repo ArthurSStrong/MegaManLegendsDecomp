@@ -6,7 +6,7 @@ void Sce_flag_off(sint32 flag);
 #endif
 
 #ifdef __wasm32__
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 #endif
 
 #ifdef __wasm32__
@@ -291,7 +291,7 @@ void func_80118C3C(ST09_BOX *wp)
 
 void func_80118D98(STAGE_OBJ *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80118DB8(void)
@@ -334,7 +334,7 @@ void func_80118DC0(ST09_BOX *wp)
         case 2:
             if (++wp->timer_C == 5)
             {
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
                 if ((wp->variant_3 & 0xF) == 1)
                 {
                     func_80047228(wp, &wp->pos_38, 2);
@@ -406,7 +406,7 @@ void func_80119074(STAGE_PANEL_WORK *wp)
     if (wp->value_3 == 0xFF)
     {
         func_801196C0();
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     D_8011E5CC[wp->routine_0](wp);
@@ -609,7 +609,7 @@ void func_801196C0(void)
                     {
                         for (i = 0; i < 2; i++)
                         {
-                            wp = func_80031734();
+                            wp = Open_WORK_50();
                             if (wp != NULL)
                             {
                                 wp->flags_0 = 5;

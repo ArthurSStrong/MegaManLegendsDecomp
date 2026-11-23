@@ -7,7 +7,7 @@
 extern void *D_80105658[];       // model table by room (func_80022FD4)
 extern void *D_80105728[];       // spawn list by room
 extern void *D_80105760[];       // exit list by room
-extern uint8 D_80105780[][0x28]; // by room (func_800371A0)
+extern uint8 D_80105780[][0x28]; // by room (Fog_room_set)
 extern uint8 D_801058C0[][8];    // by D_80105B00[room]
 extern sint32 D_80105B00[];
 void func_8010020C(void);
@@ -122,7 +122,7 @@ void func_80101678(uint8 mode);
 void func_80103A24(STAGE_OBJ *wp, ST07_FACE *face, sint32 index);
 void func_80103A6C(STAGE_OBJ *wp, ST07_FACE *face);
 STAGE_FX *func_80104E7C(STCOM_SVECTOR *pos);
-void func_8003697C(void);
+void Draw_dist_far(void);
 
 extern STAGE_LIP_CUES D_80108C20;
 extern STAGE_LIP_CUES D_80108C38;

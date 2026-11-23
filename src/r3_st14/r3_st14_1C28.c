@@ -2,7 +2,7 @@
 #include "st14.h"
 
 #ifdef __wasm32__
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 #endif
 
 void func_80101C28(STAGE_OBJ *wp)
@@ -34,7 +34,7 @@ void func_80101C64(STAGE_SPIN *wp)
             }
         }
     }
-    child = (STAGE_SPIN *)func_80031734();
+    child = (STAGE_SPIN *)Open_WORK_50();
     if (child != NULL)
     {
         child->flags_0   = wp->flags_0;
@@ -76,10 +76,10 @@ void func_80101E40(STAGE_SPIN *wp)
 {
     uint32 i;
 
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
     if (wp->value_D != 0)
     {
-        func_80031A4C(wp->slot_48);
+        Close_WORK_50(wp->slot_48);
     }
     for (i = 0; i < 7; i++)
     {

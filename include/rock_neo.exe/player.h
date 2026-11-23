@@ -276,9 +276,9 @@ void Pl_key_unpack(void *arg, sint32 unused);
 void Pl_key_unpack(); // signature differs between callers; see code_8002e7a8.h
 #endif
 void Pl_World_Pos_Calc(); // signature differs between callers; see code_8002e7a8.h
-void func_8002C794(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
+void Pl_Shadow_Trans(PL_WORK *pl, sint32 a1, sint32 a2, sint32 a3);
 extern uint8 D_80097D9C[];
-void func_80039A38(void *data);
+void Camera_cmd_set(void *data);
 sint32 Scr_wall_dist_check(PL_WORK *pl);
 void Pl_move(PL_WORK *pl, sint32 x, sint32 y, sint32 z);
 void pl_pitch_accel(PL_WORK *pl, sint32 a1, sint32 a2, uint16 mask);

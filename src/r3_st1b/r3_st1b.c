@@ -144,7 +144,7 @@ void func_801004B4(STAGE_ROOM *wp)
             {
                 req->state_14++;
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_5++;
             }
             break;
@@ -238,7 +238,7 @@ void func_80100818(void)
     spawn                     = D_8010CB18[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010CD7C[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8010CF08[D_8010D108[Game_work.value_51]], D_8010CDA0[Game_work.value_51]);
+    Fog_room_set(D_8010CF08[D_8010D108[Game_work.value_51]], D_8010CDA0[Game_work.value_51]);
     func_8005DC10(0);
     func_80100A20();
 }

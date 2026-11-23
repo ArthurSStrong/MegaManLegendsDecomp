@@ -1091,7 +1091,7 @@ void func_8010E5DC(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_0, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_0, 0x2A, 0x33, 6));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -1108,7 +1108,7 @@ void func_8010E5DC(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_6, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_6, 0x2A, 0x33, 6));
     }
     face->prev_8 = face->shape_6;
 }
@@ -1753,6 +1753,6 @@ void func_8010F9F8(STAGE_OBJ *wp)
     {
         Sce_flag_on(0x50);
         Sound_call(0x27, 0, 0);
-        func_8003187C(wp);
+        Close_WORK_5A4(wp);
     }
 }

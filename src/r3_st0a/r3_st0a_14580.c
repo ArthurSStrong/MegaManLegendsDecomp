@@ -8,7 +8,7 @@ void func_80114580(ST0A_PROP *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 6;
-        func_8002F9EC(wp, (sint32)&wp->variant_3);
+        Model_work_init2(wp, (sint32)&wp->variant_3);
         wp->color_40 = 0x808080;
         wp->routine_0++;
     }
@@ -23,6 +23,6 @@ void func_80114580(ST0A_PROP *wp)
     ScaleMatrix(&wp->matrix.m, &scale);
     if (wp->variant_3 == 0)
     {
-        func_8002CA10(&wp->position, 0x140, 0x200, 0);
+        Pos_Shadow_Trans(&wp->position, 0x140, 0x200, 0);
     }
 }

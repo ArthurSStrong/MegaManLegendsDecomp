@@ -67,7 +67,7 @@ void func_80100398(void)
     spawn           = D_8011D488[Game_work.value_51];
     STAGE_MAP_EXITS = D_8011DAAC[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8011DC38[D_8011DC90[Game_work.value_51]], D_8011DAD0[Game_work.value_51]);
+    Fog_room_set(D_8011DC38[D_8011DC90[Game_work.value_51]], D_8011DAD0[Game_work.value_51]);
     func_8005DC10(D_8011BBB4[Game_work.value_51]);
     func_801005F4();
 }
@@ -750,8 +750,8 @@ void func_80101C3C(ST09_VIEW *wp)
                 break;
             }
             if ((uint32)wp->value_80 > 0x480000 &&
-                func_80031E60(&ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x800,
-                              &wp->position_fixed, wp->rotation.y, 0x400))
+                Angle_range_check(&ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y,
+                                  0x800, &wp->position_fixed, wp->rotation.y, 0x400))
             {
                 wp->routine_1             = 13;
                 *(uint16 *)&wp->routine_2 = 0;

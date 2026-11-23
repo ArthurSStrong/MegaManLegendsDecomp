@@ -17,7 +17,7 @@ void func_800D8854(SHL_WORK *wp)
     SHL_WORK *np;
 
     Homing_target_clear(wp->bit_d);
-    rot.vx = func_80039B80();
+    rot.vx = Camera_pitch_get();
     func_800D8E44(wp, rot.vx, wp->rot_y);
     np = Open_PL_SHL_WORK();
     if (np)

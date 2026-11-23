@@ -31,7 +31,7 @@ void func_801000B0(void)
     mw->info  = STAGE_CELL_INFO;
     mw->exits = D_80106968[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
-    func_800371A0(D_80106A18[D_80106C18[Game_work.value_51]], D_80106978[Game_work.value_51]);
+    Fog_room_set(D_80106A18[D_80106C18[Game_work.value_51]], D_80106978[Game_work.value_51]);
     func_8005DC10(0);
 }
 
@@ -1326,14 +1326,14 @@ void func_801029F4(STAGE_OBJ *wp, sint32 index)
 {
     D_8010A5F8[0] = D_801075F0[index];
     D_8010A5FC[0] = 0;
-    func_8002D320(wp->model_88, 0x110010, func_8002D404(D_8010A5F8[0]->id, 0x2A, 0x33, 6));
+    Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(D_8010A5F8[0]->id, 0x2A, 0x33, 6));
 }
 
 void func_80102A68(STAGE_OBJ *wp, sint32 index)
 {
     D_8010A600[0] = D_80107614[index];
     D_8010A604[0] = 0;
-    func_8002D320(wp->model_88, 0x130012, func_8002D404(D_8010A600[0]->id, 0x2A, 0x33, 6));
+    Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(D_8010A600[0]->id, 0x2A, 0x33, 6));
 }
 
 void func_80102ADC(STAGE_OBJ *wp)
@@ -1355,7 +1355,7 @@ void func_80102ADC(STAGE_OBJ *wp)
     {
         D_8010A5F8_S = p + 1;
         *cnt         = 0;
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(p[1].id, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(p[1].id, 0x2A, 0x33, 6));
     }
     count = D_8010A600_S->count;
     if (count <= 0)
@@ -1370,7 +1370,7 @@ void func_80102ADC(STAGE_OBJ *wp)
     {
         D_8010A600_S = p + 1;
         *cnt         = 0;
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(p[1].id, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(p[1].id, 0x2A, 0x33, 6));
     }
 }
 
@@ -1592,14 +1592,14 @@ void func_801033A4(STAGE_OBJ *wp, sint32 index)
 {
     D_8010A610[0] = D_8010781C[index];
     D_8010A614[0] = 0;
-    func_8002D320(wp->model_88, 0x110010, func_8002D404(D_8010A610[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(D_8010A610[0]->id, 0x33, 0x37, 5));
 }
 
 void func_80103418(STAGE_OBJ *wp, sint32 index)
 {
     D_8010A618[0] = D_80107844[index];
     D_8010A61C[0] = 0;
-    func_8002D320(wp->model_88, 0x130012, func_8002D404(D_8010A618[0]->id, 0x33, 0x37, 5));
+    Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(D_8010A618[0]->id, 0x33, 0x37, 5));
 }
 
 // this keeps their address in t0 for both.
@@ -1622,7 +1622,7 @@ void func_8010348C(STAGE_OBJ *wp)
     {
         D_8010A610_S = p + 1;
         *cnt         = 0;
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(p[1].id, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(p[1].id, 0x33, 0x37, 5));
     }
     count = D_8010A618_S->count;
     if (count <= 0)
@@ -1637,7 +1637,7 @@ void func_8010348C(STAGE_OBJ *wp)
     {
         D_8010A618_S = p + 1;
         *cnt         = 0;
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(p[1].id, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(p[1].id, 0x33, 0x37, 5));
     }
 }
 
@@ -2821,7 +2821,7 @@ void func_80105AB8(ST02_SPINNER *wp)
     wp->pos_38.z -= 0x34;
     wp->angle_E += 0x40;
     wp->roll_10 -= 0x28;
-    func_8002CA10(&wp->pos_38, 0x1F4, 0x200, 0);
+    Pos_Shadow_Trans(&wp->pos_38, 0x1F4, 0x200, 0);
 }
 
 void func_80105C28(STAGE_OBJ *wp, sint32 x, sint32 y, sint32 z)
@@ -2830,7 +2830,7 @@ void func_80105C28(STAGE_OBJ *wp, sint32 x, sint32 y, sint32 z)
     STCOM_SVECTOR v;
     STAGE_50 *ep;
 
-    ep = func_80031734();
+    ep = Open_WORK_50();
     if (ep != NULL)
     {
         ep->flags_0 = 1;

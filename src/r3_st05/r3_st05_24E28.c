@@ -561,7 +561,7 @@ void func_80126440(ST05_OBJ *wp)
     if (*wp->u_B8.flag == 0)
     {
         D_800A395C = 1;
-        func_80039820();
+        Camera_reset();
         wp->routine_3++;
     }
 }
@@ -571,7 +571,7 @@ void func_8012649C(STAGE_OBJ *wp)
     STCOM_PL_WORK *pl;
 
     pl = &Player_work;
-    if (!func_8003A13C())
+    if (!Camera_moving())
     {
         Player_control_on(pl);
         pl->flags_0 |= 2;
@@ -754,7 +754,7 @@ void func_80126990(ST05_SHL *wp)
     else
     {
         Homing_target_clear(wp->bit_d);
-        rot.x = func_80039B80();
+        rot.x = Camera_pitch_get();
     }
     rot.y = wp->rot_y & 0xFFF;
     rot.z = 0;

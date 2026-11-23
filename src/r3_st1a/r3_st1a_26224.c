@@ -497,7 +497,7 @@ void func_801272F8(STAGE_FX *wp)
 
 void func_80127380(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_801273A0(ST1A_50 *wp)
@@ -529,7 +529,7 @@ void func_8012748C(ST1A_50 *wp)
 {
     ST1A_50 *child;
 
-    child = (ST1A_50 *)func_80031734();
+    child = (ST1A_50 *)Open_WORK_50();
     if (child != NULL)
     {
         child->flags_0   = 1;
@@ -867,7 +867,7 @@ void func_80127F14(void)
 
 void func_80127F1C(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80127F3C(STAGE_OBJ50 *wp)
@@ -916,7 +916,7 @@ void func_8012806C(ST1A_50 *wp)
 {
     ST1A_50 *child;
 
-    child = (ST1A_50 *)func_80031734();
+    child = (ST1A_50 *)Open_WORK_50();
     if (child != NULL)
     {
         child->flags_0   = 1;
@@ -934,7 +934,7 @@ void func_801280DC(ST1A_50 *wp)
 {
     ST1A_50 *child;
 
-    child = (ST1A_50 *)func_80031734();
+    child = (ST1A_50 *)Open_WORK_50();
     if (child != NULL)
     {
         child->flags_0   = 1;

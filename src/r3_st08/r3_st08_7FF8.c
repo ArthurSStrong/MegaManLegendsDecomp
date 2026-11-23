@@ -102,13 +102,13 @@ void func_801082F0(ST08_ACTOR *wp)
             cam.x = other->position.x + 0x20;
             cam.y = other->position.y - 0x79;
             cam.z = other->position.z + 0x18;
-            func_80039FAC(&cam, 0x107, other->rotation.y - 0x800, 0x12);
+            Camera_move_set_pause(&cam, 0x107, other->rotation.y - 0x800, 0x12);
             pl->flags_0 &= ~2;
             wp->flags_0 &= ~2;
             wp->routine_2++;
             break;
         case 1:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 Message_event_set(&wp->position, 1, 0, 0x14);
                 wp->routine_2++;
@@ -117,14 +117,14 @@ void func_801082F0(ST08_ACTOR *wp)
         case 2:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 pl->flags_0 |= 2;
                 wp->flags_0 |= 2;
                 wp->routine_2++;
             }
             break;
         case 3:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 pl->flags_bd &= ~0x40;
                 wp->index_35A = 0;

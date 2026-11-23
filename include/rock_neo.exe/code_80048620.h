@@ -88,7 +88,7 @@ extern CODE486_REQ *Solid_ptr;
 extern PL_WORK **Solid_mover_ptr;
 
 void Player_control_on(PL_WORK *pl);
-void func_80039820(void);
+void Camera_reset(void);
 void Sce_flag_off(sint32 flag);
 uint32 Obj_id_class(uint32 id);
 sint32 scr_wall_dist_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir, sint32 kind);
@@ -131,10 +131,10 @@ typedef struct
 
 extern uint32 D_8009888C;
 extern uint32 Em_work_used;
-extern uint32 D_80098B20;
+extern uint32 Work_5A4_used;
 extern uint32 Shl_work_used;
 extern PL_WORK3C0 Em_work_tbl[];
-extern PL_WORK5A4 D_800C3580[];
+extern PL_WORK5A4 Work_5A4_tbl[];
 extern PL_WORK10C Shl_work_tbl[];
 void ride_clear_one(sint32 key, CODE486_LINK *link);
 extern uint32 D_8008A9D4[];

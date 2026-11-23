@@ -35,10 +35,10 @@ void func_80027678(void)
         func_80029B94();
         D_800D9BF8           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
         C80027678_VSYNC_MARK = VSync(1);
-        func_8002CB18();
+        shadow_draw_all();
         D_800D9BEC           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
         C80027678_VSYNC_MARK = VSync(1);
-        func_8002D50C();
+        billboard_list_draw();
         D_800D9BE8 = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
     }
 }
@@ -550,7 +550,7 @@ void func_80028DE0(void)
         while (i != 0)
         {
             i--;
-            a = &D_800C3580[i];
+            a = &Work_5A4_tbl[i];
             if (C80027678_ROOM == 0x17)
             {
                 if (a->flags & a->mask & 2)
@@ -861,7 +861,7 @@ void func_80029B94(void)
 
     for (i = 0; i < 32; i++)
     {
-        p = &D_800BF118[i];
+        p = &Work_50_tbl[i];
         f = p->flags;
         if (f & p->mask & 2)
         {
@@ -1756,30 +1756,30 @@ void func_8002C0C4(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
     }
 }
 
-void func_8002C794(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
+void Pl_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
 {
     sint32 r;
     uint32 n;
 
-    n = D_800987D8;
+    n = Shadow_count;
     if (n < 0x40)
     {
-        D_800ACE00[n].f0 = o->f14;
+        Shadow_queue[n].f0 = o->f14;
         if (o->f76 != 0)
         {
-            r                = o->f16;
-            D_800ACE00[n].f2 = r;
+            r                  = o->f16;
+            Shadow_queue[n].f2 = r;
         }
         else
         {
-            r                = Scr_height_check(o);
-            D_800ACE00[n].f2 = r;
+            r                  = Scr_height_check(o);
+            Shadow_queue[n].f2 = r;
         }
-        D_800ACE00[n].f4 = o->f18;
-        D_800ACE00[n].f6 = ((o->f56 - o->f116) & 0xFFF) | ((a2 >> 6) << 12);
-        D_800ACE00[n].f8 = a1 | (a3 << 14);
-        D_800987D8++;
-        D_800ACE00[n].fA = r - o->f16;
+        Shadow_queue[n].f4 = o->f18;
+        Shadow_queue[n].f6 = ((o->f56 - o->f116) & 0xFFF) | ((a2 >> 6) << 12);
+        Shadow_queue[n].f8 = a1 | (a3 << 14);
+        Shadow_count++;
+        Shadow_queue[n].fA = r - o->f16;
     }
 }
 
@@ -1788,14 +1788,14 @@ void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
     sint32 r;
     uint32 n;
 
-    n = D_800987D8;
+    n = Shadow_count;
     if (n < 0x40)
     {
-        D_800ACE00[n].f0 = o->f14;
+        Shadow_queue[n].f0 = o->f14;
         if (o->f76 != 0)
         {
-            r                = o->f16;
-            D_800ACE00[n].f2 = r;
+            r                  = o->f16;
+            Shadow_queue[n].f2 = r;
         }
         else
         {
@@ -1804,37 +1804,37 @@ void Model_Shadow_Trans(C80027678_MODEL_OBJ *o, sint32 a1, sint32 a2, sint32 a3)
             {
                 r = o->f16;
             }
-            D_800ACE00[n].f2 = r;
+            Shadow_queue[n].f2 = r;
         }
-        D_800ACE00[n].f4 = o->f18;
-        D_800ACE00[n].f6 = (o->f56 & 0xFFF) | ((a2 >> 6) << 12);
-        D_800ACE00[n].f8 = a1 | (a3 << 14);
-        D_800987D8++;
-        D_800ACE00[n].fA = r - o->f16;
+        Shadow_queue[n].f4 = o->f18;
+        Shadow_queue[n].f6 = (o->f56 & 0xFFF) | ((a2 >> 6) << 12);
+        Shadow_queue[n].f8 = a1 | (a3 << 14);
+        Shadow_count++;
+        Shadow_queue[n].fA = r - o->f16;
     }
 }
 
-void func_8002CA10(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3)
+void Pos_Shadow_Trans(C80027678_SRC *p, sint32 a1, sint32 a2, sint32 a3)
 {
     sint16 r;
     uint32 n;
 
-    n = D_800987D8;
+    n = Shadow_count;
     if (n < 0x40)
     {
-        D_800ACE00[n].f0 = p->f0;
-        r                = Scr_height_calc(p, 0, 0, 0xFFFF);
-        D_800ACE00[n].f2 = r;
-        D_800ACE00[n].f4 = p->f4;
-        D_800ACE00[n].f6 = (a3 & 0xFFF) | ((a2 >> 6) << 12);
-        D_800ACE00[n].f8 = a1 | (p->f6 << 14);
-        D_800987D8++;
-        D_800ACE00[n].fA = r - p->f2;
+        Shadow_queue[n].f0 = p->f0;
+        r                  = Scr_height_calc(p, 0, 0, 0xFFFF);
+        Shadow_queue[n].f2 = r;
+        Shadow_queue[n].f4 = p->f4;
+        Shadow_queue[n].f6 = (a3 & 0xFFF) | ((a2 >> 6) << 12);
+        Shadow_queue[n].f8 = a1 | (p->f6 << 14);
+        Shadow_count++;
+        Shadow_queue[n].fA = r - p->f2;
     }
 }
 
 // One variable holds the f6 word and then the D_800ACE08 width (retail reuses a1 for both).
-void func_8002CB18(void)
+void shadow_draw_all(void)
 {
     sint32 i;
     sint32 n;
@@ -1842,20 +1842,20 @@ void func_8002CB18(void)
     sint32 rx;
     sint32 ry;
 
-    n = D_800987D8;
+    n = Shadow_count;
     for (i = 0; i < n; i++)
     {
-        w                = D_800ACE00[i].f6;
-        rx               = (w & 0xF000) >> 6;
-        ry               = w & 0xFFF;
-        w                = D_800ACE08[i].v;
-        D_800ACE00[i].f6 = w >> 14;
-        func_8002CBDC((C80027678_SHADOW *)&D_800ACE00[i], w & 0x3FFF, rx, ry, D_800ACE0A[i].v);
+        w                  = Shadow_queue[i].f6;
+        rx                 = (w & 0xF000) >> 6;
+        ry                 = w & 0xFFF;
+        w                  = D_800ACE08[i].v;
+        Shadow_queue[i].f6 = w >> 14;
+        shadow_draw((C80027678_SHADOW *)&Shadow_queue[i], w & 0x3FFF, rx, ry, D_800ACE0A[i].v);
     }
-    D_800987D8 = 0;
+    Shadow_count = 0;
 }
 
-void func_8002CBDC(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint32 dist)
+void shadow_draw(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint32 dist)
 {
     sint16 v[4][4];
     sint32 z;
@@ -1954,7 +1954,7 @@ void func_8002CBDC(C80027678_SHADOW *rec, sint32 r, uint32 da, uint32 ang, sint3
 void func_8002CFA4(void)
 {
     func_800177CC((void *)0x8015BC00, (void *)0x8015BFFC);
-    D_800987D8           = 0;
+    Shadow_count         = 0;
     C80027678_SCRATCH_75 = 0;
     C80027678_SCRATCH_04 = 0;
     C80027678_SCRATCH_06 = 0xE00;
@@ -2027,14 +2027,14 @@ void func_8002D0D0(C80027678_COUNTS *c, sint32 delta)
 }
 
 // The id packs model, detail level, face list (tri/quad) and face index.
-uint8 *func_8002D22C(C80027678_TBL *tbl, uint32 id)
+uint8 *Model_face_get(C80027678_TBL *tbl, uint32 id)
 {
     return (uint8 *)(&((C80027678_LOD *)(tbl->block[id >> 24] + 0x14))[(id >> 8) & 0xFF]
                           .tri)[(id >> 16) & 0xFF] +
            (id & 0xFF) * 12;
 }
 
-void func_8002D27C(C80027678_TBL *tbl, uint32 id, uint32 *src)
+void Model_face_uv_set(C80027678_TBL *tbl, uint32 id, uint32 *src)
 {
     uint32 *dst;
 
@@ -2045,7 +2045,7 @@ void func_8002D27C(C80027678_TBL *tbl, uint32 id, uint32 *src)
     dst[1] = src[1];
 }
 
-uint8 *func_8002D2DC(C80027678_TBL *tbl, uint32 id)
+uint8 *Model_vertex_get(C80027678_TBL *tbl, uint32 id)
 {
     return *(uint8 **)(tbl->block[id >> 24] + ((id >> 8) & 0xFF) * 20 + 0x24) + (id & 0xFF) * 8;
 }
@@ -2056,7 +2056,7 @@ void func_8002D318(void)
 
 // The header word is read once into the loop counter (retail keeps both in t0), and both part
 // indices are taken from idx before the first record is read.
-void func_8002D320(C80027678_MODEL *m, uint32 idx, sint32 delta)
+void Model_uv_copy(C80027678_MODEL *m, uint32 idx, sint32 delta)
 {
     C80027678_PART *dst;
     C80027678_PART *src;
@@ -2093,7 +2093,7 @@ void func_8002D320(C80027678_MODEL *m, uint32 idx, sint32 delta)
     }
 }
 
-uint32 func_8002D404(uint32 a, uint32 b, uint32 c, uint32 d)
+uint32 Uv_cell_offset(uint32 a, uint32 b, uint32 c, uint32 d)
 {
     uint32 q;
     uint32 r;
@@ -2103,7 +2103,7 @@ uint32 func_8002D404(uint32 a, uint32 b, uint32 c, uint32 d)
     return (q * c) << 24 | r << 16 | (q * c) << 8 | r;
 }
 
-uint8 *func_8002D464(void)
+uint8 *Billboard_alloc(void)
 {
     uint8 *p;
 
@@ -2133,7 +2133,7 @@ uint8 *func_8002D4B8(void)
 
 // Billboard and line renderer. The identity matrix is loaded with separate rotation and
 // translation macros (two asm statements): the extra uses give its pointer retail's t3.
-void func_8002D50C(void)
+void billboard_list_draw(void)
 {
     sint32 v[3];
     C80027678_SVEC pts[3];

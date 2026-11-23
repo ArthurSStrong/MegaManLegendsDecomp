@@ -164,7 +164,7 @@ sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, vo
 sint32 Scr_line_calc(void *a, void *b, sint32 c, uint8 d);
 void Model_work_init(CODE43_WORK *wp, void *arg);
 CODE43_WORK *Open_EFFECT_WORK(void);
-void func_800398E0(sint32 arg);
+void Swing_Camera(sint32 arg);
 sint32 func_8004920C(void *pos);
 void Sound_call2(sint16 id, void *args);
 void ScaleMatrix(void *matrix, CODE43_VEC *scale);

@@ -2,7 +2,7 @@
 #include "st08.h"
 
 #ifdef __wasm32__
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 #endif
 
 // A shadow under its owner (value_44), scaled by the owner's variant.
@@ -14,7 +14,7 @@ void func_8010FE78(STAGE_OBJ50 *wp)
 
     if (((STAGE_OBJ *)wp->value_44)->flags_0 == 0)
     {
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     switch (wp->routine_0)
@@ -57,7 +57,7 @@ void func_8010FFB0(STAGE_OBJ50 *wp)
 
     if (STAGE_SCENE_BYTE(4) == 0xB)
     {
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     if (wp->routine_0 == 0)
@@ -431,7 +431,7 @@ void func_80110A54(STAGE_OBJ50 *wp)
                 D_800C356C++;
                 Player_control_on(&Player_work);
                 Sound_work.volume_6 = 0x7F;
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             break;
     }

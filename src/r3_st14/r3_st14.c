@@ -32,7 +32,7 @@ void func_80100250(void)
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_80114E70[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_80114F4C[D_80114F7C[Game_work.value_51]], D_80114E84[Game_work.value_51]);
+    Fog_room_set(D_80114F4C[D_80114F7C[Game_work.value_51]], D_80114E84[Game_work.value_51]);
     func_8005DC10(D_80113F94[Game_work.value_51]);
     func_801003B0();
 }
@@ -275,14 +275,14 @@ void func_80100A54(STAGE_ROOM *wp)
         switch (wp->routine_5)
         {
             case 0:
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 wp->routine_5++;
                 break;
             case 1:
                 Cd_subcmd(0, 1, 0);
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Player_control_on(&Player_work);
                 Player_work.flags_0 |= 3;
                 wp->routine_5++;
@@ -471,14 +471,14 @@ void func_80100F7C(STAGE_ROOM *wp)
 
     Cd_subcmd(0, 1, 0);
     Obj_work_flag_change(0x56, 0xA);
-    func_8003187C(wp->child_24);
+    Close_WORK_5A4(wp->child_24);
     func_801010F4();
     pl = &Player_work;
     Player_control_on(pl);
     pl->flags_0 |= 3;
-    func_8003697C();
+    Draw_dist_far();
     D_800A395C = 1;
-    func_80039820();
+    Camera_reset();
     Sound_call(0x28, 0, 0);
     wp->flags_0 = 0;
 }
@@ -537,7 +537,7 @@ void func_801010F4(void)
 {
     STAGE_OBJ *wp;
 
-    wp = func_80031498();
+    wp = Open_WORK_5A4();
     if (wp != NULL)
     {
         wp->flags_0            = 1;

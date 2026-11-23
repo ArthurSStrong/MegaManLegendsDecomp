@@ -74,12 +74,12 @@ void func_80102FD0(ST1C_OBJ *wp)
             pos.x = wp->position.x;
             pos.y = wp->position.y - 0x92;
             pos.z = wp->position.z;
-            func_80039FAC(&pos, 0xD4, 0, 0);
+            Camera_move_set_pause(&pos, 0xD4, 0, 0);
             pl->flags_0 &= ~2;
             wp->routine_2++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Message_event_set(&wp->position, 1, 0, 1);
                 EM_Char_Set(wp, 8, 0);
@@ -90,13 +90,13 @@ void func_80102FD0(ST1C_OBJ *wp)
         case 2:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 pl->flags_0 |= 2;
                 wp->routine_2++;
             }
             break;
         case 3:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Player_work.flags_bd &= ~0x40;
                 EM_Char_Set(wp, 0, 0);
@@ -128,12 +128,12 @@ void func_80103178(ST1C_OBJ *wp)
             pos.x = wp->position.x;
             pos.y = wp->position.y - 0x92;
             pos.z = wp->position.z;
-            func_80039FAC(&pos, 0xD4, 0, 0);
+            Camera_move_set_pause(&pos, 0xD4, 0, 0);
             pl->flags_0 &= ~2;
             wp->routine_2++;
             break;
         case 1:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 if (func_80102DF8() == 0xFF)
                 {
@@ -175,7 +175,7 @@ void func_80103178(ST1C_OBJ *wp)
         case 4:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 slot = func_80102DF8();
                 if (slot != 0xFF && *(uint8 *)&Moji_flag == 0)
                 {
@@ -188,7 +188,7 @@ void func_80103178(ST1C_OBJ *wp)
             }
             break;
         case 5:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x40;
                 EM_Char_Set(wp, 0, 0);

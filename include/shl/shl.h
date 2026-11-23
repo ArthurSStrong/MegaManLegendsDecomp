@@ -265,7 +265,7 @@ void Homing_target_clear(sint32 bit);
 sint32 Player_weapon_dist_calc(void *pl, sint32 arg);
 sint32 Shot_map_check(void *obj, sint32 arg);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 void Solid_mover_set(void *obj);
 void Set_Atari2(void *pos_a, sint32 a1, void *pos_b, sint32 a3, sint32 a4, sint32 a5, sint32 a6,
                 uint32 *a7, sint32 a8, sint32 a9, sint32 a10);

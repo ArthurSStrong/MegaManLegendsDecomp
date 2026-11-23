@@ -46,7 +46,7 @@ void func_80103A74(ST0F_OBJ *wp)
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
-                if (func_8003A13C() == 0)
+                if (Camera_moving() == 0)
                 {
                     Message_event_set(&wp->position, 3, 0, func_80103E08());
                     EM_Char_Set(wp, 8, 0);
@@ -58,7 +58,7 @@ void func_80103A74(ST0F_OBJ *wp)
         case 3:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_1++;
             }
             break;
@@ -67,7 +67,7 @@ void func_80103A74(ST0F_OBJ *wp)
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
-                if (func_8003A13C() == 0)
+                if (Camera_moving() == 0)
                 {
                     pl->flags_bd &= ~0x40;
                     pl->flags_0 |= 2;
@@ -116,8 +116,8 @@ sint32 func_80103CD8(ST0F_OBJ *wp)
         D_801061A0.x = wp->value_180.x;
         D_801061A0.y = wp->value_180.y - 0x20;
         D_801061A0.z = wp->value_180.z;
-        func_80039FAC(&D_801061A0, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_801061A0, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;

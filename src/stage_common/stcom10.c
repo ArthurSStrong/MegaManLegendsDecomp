@@ -91,7 +91,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 break;
                             case 0x40:
                                 obj_5A4 = Obj_id_work(pair->flag);
-                                mask    = (D_80098B20 ^ stcom10_E_0000) & stcom10_E_0000;
+                                mask    = (Work_5A4_used ^ stcom10_E_0000) & stcom10_E_0000;
                                 dx      = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
                                 {
@@ -119,7 +119,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                                 break;
                             case 0xE0:
                                 obj_50 = Obj_id_work(pair->flag);
-                                mask   = (D_800989CC ^ stcom10_E_000C) & stcom10_E_000C;
+                                mask   = (Work_50_used ^ stcom10_E_000C) & stcom10_E_000C;
                                 dx     = pair->flag & 0x1F;
                                 if (mask & (0x80000000 >> dx))
                                 {
@@ -153,7 +153,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                         }
                         break;
                     case 0x40:
-                        mask = (D_80098B20 ^ stcom10_E_0000) & stcom10_E_0000;
+                        mask = (Work_5A4_used ^ stcom10_E_0000) & stcom10_E_0000;
                         dx   = pair->flag & 0x1F;
                         if (mask & (0x80000000 >> dx))
                         {
@@ -169,7 +169,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
                         }
                         break;
                     case 0xE0:
-                        mask = (D_800989CC ^ stcom10_E_000C) & stcom10_E_000C;
+                        mask = (Work_50_used ^ stcom10_E_000C) & stcom10_E_000C;
                         dx   = pair->flag & 0x1F;
                         if (mask & (0x80000000 >> dx))
                         {
@@ -181,9 +181,9 @@ void stcom10_func_0134(STCOM10_WORK *wp)
         }
     }
     stcom10_E_0004 = Em_work_used;
-    stcom10_E_0000 = D_80098B20;
+    stcom10_E_0000 = Work_5A4_used;
     stcom10_E_0008 = Shl_work_used;
-    stcom10_E_000C = D_800989CC;
+    stcom10_E_000C = Work_50_used;
 }
 
 void stcom10_func_05F4(STCOM10_WORK *wp)
@@ -232,7 +232,7 @@ void stcom10_func_05F4(STCOM10_WORK *wp)
                 pair++;
                 break;
             case 0x40:
-                obj = func_80031498();
+                obj = Open_WORK_5A4();
                 if (obj == NULL)
                 {
                     break;
@@ -276,7 +276,7 @@ void stcom10_func_05F4(STCOM10_WORK *wp)
                 pair++;
                 break;
             case 0xE0:
-                obj50 = func_80031734();
+                obj50 = Open_WORK_50();
                 if (obj50 == NULL)
                 {
                     break;

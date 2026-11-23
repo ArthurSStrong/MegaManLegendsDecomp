@@ -2,7 +2,7 @@
 #include "st13.h"
 
 #ifdef __wasm32__
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 #endif
 
 void func_801078D4(STAGE_OBJ *wp)
@@ -19,7 +19,7 @@ void func_801078D4(STAGE_OBJ *wp)
         case 0:
             if (rec == NULL)
             {
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
                 break;
             }
             wp->routine_1++;
@@ -133,13 +133,13 @@ void func_80107C48(STAGE_OBJ *wp)
             wp->routine_2++;
             // fall through
         case 1:
-            if (D_80098B20 != 0)
+            if (Work_5A4_used != 0)
             {
                 wp->routine_2++;
             }
             break;
         case 2:
-            if (D_80098B20 == 0)
+            if (Work_5A4_used == 0)
             {
                 Sce_flag_on(0x64A);
                 MojiTaskExec2(0, 0x10);

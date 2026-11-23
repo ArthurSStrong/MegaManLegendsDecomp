@@ -36,7 +36,7 @@ void func_80100174(void)
     spawn                     = D_8010FC8C[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010FE18[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8010FE9C[D_8010FED4[Game_work.value_51]], D_8010FE24[Game_work.value_51]);
+    Fog_room_set(D_8010FE9C[D_8010FED4[Game_work.value_51]], D_8010FE24[Game_work.value_51]);
     func_8005DC10(D_8010F294[Game_work.value_51]);
     func_8010030C();
 }
@@ -244,14 +244,14 @@ void func_80100870(STAGE_ROOM *wp)
         switch (wp->routine_5)
         {
             case 0:
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 wp->routine_5++;
                 break;
             case 1:
                 Cd_subcmd(0, 1, 0);
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Player_control_on(&Player_work);
                 Player_work.flags_0 |= 3;
                 wp->routine_5++;
@@ -545,7 +545,7 @@ void func_801010D8(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_0, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_0, 0x2A, 0x33, 6));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -562,7 +562,7 @@ void func_801010D8(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_6, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_6, 0x2A, 0x33, 6));
     }
     face->prev_8 = face->shape_6;
 }

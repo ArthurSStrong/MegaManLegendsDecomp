@@ -255,7 +255,7 @@ void Sound_bgm_change_check(void);
 void Sce_stage_load(void);
 void Sce_room_load(void);
 void Sce_pl_parts_load(void);
-void func_8002FA10(void *obj, void *arg);
+void Model_work_init3(void *obj, void *arg);
 void Player_weapon_refill(void);
 void Model_work_init(void *obj, void *arg);
 

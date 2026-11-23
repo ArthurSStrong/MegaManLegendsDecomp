@@ -73,12 +73,12 @@ void func_80111E7C(ST14_PROP *wp)
         case 2:
             if (Message_event[0] == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_1++;
             }
             break;
         case 3:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Player_control_on(pl);
                 pl->flags_0 |= 2;

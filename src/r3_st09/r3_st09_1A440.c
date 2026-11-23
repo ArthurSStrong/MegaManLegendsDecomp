@@ -8,7 +8,7 @@ void func_8011A440(STAGE_EV *wp)
 
     for (i = 0x1F; i >= 0; i--)
     {
-        ev = func_800317AC(i);
+        ev = Open_WORK_50_index(i);
         if (ev != NULL)
         {
             ev->flags_0 = 1;

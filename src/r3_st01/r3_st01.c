@@ -31,7 +31,7 @@ void func_80100098(void)
     mw->info  = STAGE_CELL_INFO;
     mw->exits = D_80100DA4[Game_work.value_51];
     Obj_spawn_list(spawns, D_800C356D);
-    func_800371A0(D_80100E20[D_80100EF8[Game_work.value_51]], D_80100DA8[Game_work.value_51]);
+    Fog_room_set(D_80100E20[D_80100EF8[Game_work.value_51]], D_80100DA8[Game_work.value_51]);
     func_8005DC10(0);
 }
 
@@ -184,7 +184,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
                 Cd_subcmd(0, 1, 0);
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 STAGE_GAME_FLAGS_82 &= 0x7F;
                 wp->flags_0 = 0;
                 Code800133D8_work[0].routine_0++;

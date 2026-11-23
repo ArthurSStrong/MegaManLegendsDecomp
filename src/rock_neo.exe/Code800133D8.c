@@ -83,9 +83,9 @@ void Title_init(CODE800133D8_STATE *wp)
                 D_80098810 = 1;
                 D_80098864 = 0;
                 Work_init_all(1);
-                func_8003697C();
+                Draw_dist_far();
                 func_8002CFA4();
-                func_800371A0(D_800808D0, D_800808A8);
+                Fog_room_set(D_800808D0, D_800808A8);
                 *CODE800133D8_SCRATCH_TABLE = D_800808A4;
                 wp->routine_1++;
             }

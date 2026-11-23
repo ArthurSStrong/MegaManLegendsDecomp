@@ -205,7 +205,7 @@ void Title_task(void); // ROCK_NEO.EXE
 
 void func_80022FD4(void *tbl);
 void Obj_spawn_list(void *spawn, sint32 spawn_player);
-void func_800371A0(void *blocks, void *arg1);
+void Fog_room_set(void *blocks, void *arg1);
 void func_8005DC10(sint32 arg);
 void Sce_event_start(sint32 id);
 void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
@@ -225,10 +225,10 @@ void Sce_camera_script_exec(void);
 void Sce_script_update(void);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
-void func_80039820(void);
+void Camera_reset(void);
 void Thread_change(STAGE_THREAD_FUNC entry);
-sint32 func_8002D404(sint32 id, sint32 a1, sint32 a2, sint32 a3);
-void func_8002D320(void *model, uint32 idx, sint32 delta);
+sint32 Uv_cell_offset(sint32 id, sint32 a1, sint32 a2, sint32 a3);
+void Model_uv_copy(void *model, uint32 idx, sint32 delta);
 uint32 Stage_hed_model_get(uint32 key);
 // Allocates a 0x24-byte event slot; NULL when none is free.
 void *Open_EVE_WORK(void);
@@ -728,7 +728,7 @@ void Cd_read_comb(sint32 id);
 sint32 Cd_read_sync2(void);
 void Sound_fade_start(sint32 arg);
 void EM_Char_Set2(void *wp, sint32 anim, sint32 arg);
-void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
+void Pos_Shadow_Trans(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 void Model_key_unpack(void *wp);
 void EM_World_Pos_Calc(void *wp);
 
@@ -770,7 +770,7 @@ typedef struct
     uint8 reserved20[4];   // 20
 } STAGE_EV;
 
-// A 0x50-byte slot (func_80031734).
+// A 0x50-byte slot (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -787,7 +787,7 @@ typedef struct
     uint8 reserved44[0xC];  // 44
 } STAGE_50;
 
-STAGE_50 *func_80031734(void);
+STAGE_50 *Open_WORK_50(void);
 
 // A 0x3C0-byte work slot as the stage-unique actors use it: STAGE_OBJ with the words and halves
 // from +0x44 on named (velocity, the turn speed at +0x64, the talk camera point at +0x180).
@@ -856,7 +856,7 @@ typedef union
     sint32 words[8];
 } STAGE_MATRIX_W;
 
-// A 0x50-byte slot (func_80031734) as the stage-unique objects use it (STCOM21_WORK's layout).
+// A 0x50-byte slot (Open_WORK_50) as the stage-unique objects use it (STCOM21_WORK's layout).
 typedef struct STAGE_OBJ50 STAGE_OBJ50;
 typedef void (*STAGE_OBJ50_FUNC)(STAGE_OBJ50 *wp);
 
@@ -900,7 +900,7 @@ typedef struct
     uint8 hold;
 } STAGE_ANIM;
 
-void func_8002F9EC(void *wp, sint32 arg);
+void Model_work_init2(void *wp, sint32 arg);
 // Allocates a 0x3C0-byte work slot; NULL when none is free.
 STAGE_OBJ *Open_EM_WORK(void);
 // The scratchpad's copy of the current room's map bounds (0x1F800040): STAGE_MAP_X0..STAGE_MAP_H
@@ -1316,7 +1316,7 @@ struct STAGE_SPAWNED
 sint32 Obj_id_class(uint8 id);
 
 // Returns a work slot by index, or NULL (r3_st00, r3_st1a: tried from 0x1F down).
-void *func_800317AC(sint32 index); // returns the slot; callers use it as their own view
+void *Open_WORK_50_index(sint32 index); // returns the slot; callers use it as their own view
 
 // Scene_work's object table at +0x24 (stcom36's obj_24): the scene's objects by slot.
 #define STAGE_SCENE_OBJ(i) (((void **)((uint8 *)&Scene_work + 0x24))[i])
@@ -1329,7 +1329,7 @@ typedef union
     sint32 words[8];
 } STAGE_PANEL_MATRIX;
 
-// The 0x50-byte work slot of a floor panel that turns over (func_80031734).
+// The 0x50-byte work slot of a floor panel that turns over (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;             // 00
@@ -1689,7 +1689,7 @@ typedef struct
 // Game_work's halfword at +0x62: a counter the r3_st03, r3_st13 and r3_st1b room scripts compare.
 #define STAGE_GAME_COUNT_62 (*(uint16 *)((uint8 *)&Game_work + 0x62))
 
-// A 0x50-byte slot (func_80031734) that spins a model: a matrix at +0x18 turned by the angle at
+// A 0x50-byte slot (Open_WORK_50) that spins a model: a matrix at +0x18 turned by the angle at
 // +0x4C (r3_st0e and r3_st14).
 typedef struct
 {

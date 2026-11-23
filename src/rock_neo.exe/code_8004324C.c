@@ -195,7 +195,7 @@ void Pl_shl_buster_init(CODE43_WORK *wp)
     wp->word_c4 = 0;
     wp->word_c8 = 0;
     wp->ptr_78  = D_80097DA0;
-    rot.vx      = func_80039B80();
+    rot.vx      = Camera_pitch_get();
     rot.vy      = wp->angle_64 & 0xFFF;
     rot.vz      = 0;
     RotMatrixYXZ(&rot, &mtx);

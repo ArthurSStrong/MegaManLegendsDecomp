@@ -109,7 +109,7 @@ void func_8010F6F8(STCOM18_WORK *wp)
             wp->sprite.value_F = D_8011B628[frame].b;
         }
         wp->sprite.color_4.word = 0x2C808080;
-        func_8002CA10(&wp->position, 0x30, 0x200, 0);
+        Pos_Shadow_Trans(&wp->position, 0x30, 0x200, 0);
     }
     if (wp->timer_B != 0 && wp->position.y < 0)
     {
@@ -366,7 +366,7 @@ void func_801101EC(ST0B_10C_B *wp)
 
     for (i = 0; i < 6; i++)
     {
-        p          = func_8002D464();
+        p          = Billboard_alloc();
         p->code_4  = 0x2E80C080;
         p->xy_8    = *(uint32 *)&wp->trail_D4[i].x;
         p->z_10    = *(uint32 *)&wp->trail_D4[i].z;
@@ -397,7 +397,7 @@ void func_801102A4(ST0B_10C_F *wp)
         t = wp->count_CC;
         if (D_8011B668[i].start_0 < t && t < D_8011B668[i].start_0 + 0x10)
         {
-            p      = func_8002D464();
+            p      = Billboard_alloc();
             t      = wp->count_CC - D_8011B668[i].start_0;
             angle  = (D_8011B668[i].angle_4 + t * 24) & 0xFFF;
             height = D_8011B668[i].height_6 - t * (D_8011B668[i].height_6 / 16);
@@ -452,7 +452,7 @@ void func_80110540(ST0B_10C_G *wp)
     {
         if (wp->count_CC < D_8011B668[i].start_0 + 0x10)
         {
-            p = func_8002D464();
+            p = Billboard_alloc();
             if (wp->count_CC < D_8011B668[i].start_0)
             {
                 r      = 0x60;

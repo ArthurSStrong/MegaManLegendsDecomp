@@ -817,7 +817,7 @@ extern sint16 *D_80125810[];
 
 void func_80116A8C(void *wp, STAGE_FACE16 *face, sint32 index);
 
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 
 void func_801011D8(ST06_SPAWN *rec);
 extern ST06_SPAWN D_80122688[];
@@ -830,10 +830,10 @@ extern uint8 D_80122220[][0x28];
 extern uint8 D_80122310[][8];
 
 void Sound_key_off_voice(sint32 voice);
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 void Sce_flag_off(sint32 flag);
 void func_8001E3F0(sint32 arg);
-void func_8003697C(void);
+void Draw_dist_far(void);
 void func_801006B8(void);
 
 // A 0x20-byte control block of ST06_ACTOR (at +0x348 and +0x368).
@@ -1586,23 +1586,23 @@ sint32 Map_obj_life(sint32 cell);
 
 void func_80114880(ST06_ACTOR *wp);
 
-STAGE_OBJ *func_80031498(void);
+STAGE_OBJ *Open_WORK_5A4(void);
 
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 
 sint32 Scr_line_calc(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
 
-void func_80039E50(void);
+void Camera_return_set(void);
 
 void func_8010214C(sint8 index);
 
 extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
 
-void func_8003A264(void);
+void Camera_return_set2(void);
 
 void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 
-uint8 *func_8002D22C(void *model, sint32 id);
+uint8 *Model_face_get(void *model, sint32 id);
 
 extern ST06_KIND **D_8009884C; // the same record layout as D_80098844 (func_80117160)
 
@@ -1668,7 +1668,7 @@ void Moji_amount_set(sint32 price);
 
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *arg1, sint32 arg2, sint32 arg3);
 
-// A 0x50-byte slot (func_80031734) as func_8011B00C starts it.
+// A 0x50-byte slot (Open_WORK_50) as func_8011B00C starts it.
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -1743,7 +1743,7 @@ void func_8001B314(void);
 
 void Gauge_clear(void);
 
-// A smoke puff's sprite packet (func_8002D464; stcom23's STCOM23_PACKET).
+// A smoke puff's sprite packet (Billboard_alloc; stcom23's STCOM23_PACKET).
 typedef struct
 {
     uint32 tag_0;   // 00
@@ -1758,7 +1758,7 @@ typedef struct
     uint32 uv_24;   // 24
 } ST06_PUFF;
 
-ST06_PUFF *func_8002D464(void); // ROCK_NEO.EXE: a smoke puff packet
+ST06_PUFF *Billboard_alloc(void); // ROCK_NEO.EXE: a smoke puff packet
 
 // The room-entry request at D_800C3558 (stcom22's STCOM22_ENTRY; only the fields used here).
 typedef struct
@@ -1774,7 +1774,7 @@ extern ST06_ENTRY D_800C3558; // ROCK_NEO.EXE
 
 void func_8001D974(void); // ROCK_NEO.EXE
 
-void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2,
-                   sint32 arg3); // ROCK_NEO.EXE: moves the camera
+void Camera_move_set(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2,
+                     sint32 arg3); // ROCK_NEO.EXE: moves the camera
 
 #endif

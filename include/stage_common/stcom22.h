@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The 0x50-byte work slot (func_80031734) of the objects in stcom22, by variant_3: a lift that
+// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom22, by variant_3: a lift that
 // carries the player (0, 003C..0EA8), a breakable crate (1 and 2, 0F00..13F0), a lever (4,
 // 1434..1730), a gate and its switch (6 and 7, 1758..1ED0).
 typedef struct STCOM22_WORK STCOM22_WORK;
@@ -145,8 +145,8 @@ void func_8010D9F8(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 extern STCOM22_ENTRY D_800C3558;
 sint32 Sce_flag_test(sint32 flag);
 void Sce_flag_off(sint32 flag);
-STCOM22_WORK *func_80031734(void);
-void func_80031A4C(STCOM22_WORK *wp);
+STCOM22_WORK *Open_WORK_50(void);
+void Close_WORK_50(STCOM22_WORK *wp);
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
 void Ride_clear(STCOM22_WORK *wp);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range,

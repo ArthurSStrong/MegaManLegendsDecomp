@@ -97,7 +97,7 @@ void stcom30_func_0000(STCOM30_WORK *wp)
         if (Game_work.value_50 == 0xE)
         {
             stcom30_func_02B4(wp, spawn);
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
         }
         else if (Game_work.value_50 == 0x14 && wp->spawned_9 == 0)
         {
@@ -106,7 +106,7 @@ void stcom30_func_0000(STCOM30_WORK *wp)
         }
         return;
     }
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 // Spawns the objects whose switches are not on yet.
@@ -197,7 +197,7 @@ void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
             }
             else if (spawn->kind_1 == 0xE0)
             {
-                obj50 = func_80031734();
+                obj50 = Open_WORK_50();
                 if (obj50 != NULL)
                 {
                     obj50->flags_0   = spawn->flags_0;
@@ -252,7 +252,7 @@ void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
         }
         else if (spawn->kind_1 == 0xE0)
         {
-            obj50 = func_80031734();
+            obj50 = Open_WORK_50();
             if (obj50 != NULL)
             {
                 obj50->flags_0   = spawn->flags_0;

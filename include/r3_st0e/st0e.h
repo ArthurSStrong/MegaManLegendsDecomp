@@ -159,7 +159,7 @@ typedef union
     } f;
 } ST0E_ROT_MATRIX;
 
-// A 0x50-byte slot (func_80031734) like stcom22's lever, with its rotation at +0x2C.
+// A 0x50-byte slot (Open_WORK_50) like stcom22's lever, with its rotation at +0x2C.
 typedef struct ST0E_LEVER ST0E_LEVER;
 typedef void (*ST0E_LEVER_FUNC)(ST0E_LEVER *wp);
 
@@ -182,7 +182,7 @@ struct ST0E_LEVER
     uint8 reserved44[0xC];  // 44
 };
 
-// Eight bytes of texture coordinates of a model face (func_8002D22C, func_8002D27C).
+// Eight bytes of texture coordinates of a model face (Model_face_get, Model_face_uv_set).
 typedef struct
 {
     uint8 b[8];
@@ -775,9 +775,9 @@ void func_80105490(ST0E_ACTOR *wp);
 void func_801053AC(STAGE_OBJ *wp);
 void func_80100CA8(STAGE_OBJ *wp);
 void func_801010D8(STAGE_OBJ *wp, STAGE_FACE16 *face);
-// func_800317AC is declared in stage_common/stage.h.
+// Open_WORK_50_index is declared in stage_common/stage.h.
 void func_8010571C(ST0E_ACTOR *wp);
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 void func_80105228(ST0E_ACTOR *wp);
 void func_801056B8(ST0E_ACTOR *wp);
 void func_801021D4(ST0E_ACTOR *wp);
@@ -822,8 +822,8 @@ extern ST0E_KIND10C **D_80098928;
 
 void Sce_exit_lock(sint32 a0, sint32 a1, sint32 a2);
 
-ST0E_UV8 *func_8002D22C(void *model, sint32 id);
-void func_8002D27C(void *model, sint32 id, ST0E_UV8 *uv);
+ST0E_UV8 *Model_face_get(void *model, sint32 id);
+void Model_face_uv_set(void *model, sint32 id, ST0E_UV8 *uv);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 
 #endif

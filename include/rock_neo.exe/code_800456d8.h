@@ -240,7 +240,7 @@ void func_80046A0C(CODE456_WORK *wp);
 void func_80047CD8(CODE456_ANIM *wp);
 void func_80047C84(CODE456_ANIM *wp);
 sint32 func_80047BF8(CODE456_SVECTOR *a, CODE456_SVECTOR *b);
-void func_800398E0(sint32 arg);
+void Swing_Camera(sint32 arg);
 uint32 *func_8002D4B8(void);
 sint32 func_8004920C(void *pos);
 uint8 func_800482A8(void *wp);
@@ -256,6 +256,6 @@ void RotMatrix(CODE456_SVECTOR *r, CODE456_MTX *m);
 void ScaleMatrix(CODE456_MTX *m, CODE456_VECTOR *v);
 sint32 SquareRoot0(sint32 a);
 void func_80046F38(void);
-uint32 *func_8002D464(void);
+uint32 *Billboard_alloc(void);
 
 #endif

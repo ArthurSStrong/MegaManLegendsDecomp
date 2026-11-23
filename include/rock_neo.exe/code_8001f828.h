@@ -455,7 +455,7 @@ typedef struct
 } C8001F828_CAM_VEC;
 
 // Camera setup; func_80023728 passes its own four arguments through unchanged
-void func_80037FB4(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Camera_set(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
 // Camera block D_800A3958 (code_80037fb4.h's CAM_BLOCK and CAM_WORK, which can't be co-included

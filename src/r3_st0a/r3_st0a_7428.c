@@ -11,7 +11,7 @@ void func_80107428(ST0A_VIEW *wp)
     {
         case 0:
             wp->flags_0 |= 2;
-            func_8002F9EC(wp, 0);
+            Model_work_init2(wp, 0);
             wp->value_158  = 0x02000200;
             wp->u_15C.w[0] = 0x200;
             wp->u_15C.h[1] = 0x4210;

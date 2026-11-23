@@ -37,7 +37,7 @@ void func_80100350(void)
     spawn                     = D_80116AF0[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_80116F78[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_801171E0[D_80117220[Game_work.value_51]], D_80116FB0[Game_work.value_51]);
+    Fog_room_set(D_801171E0[D_80117220[Game_work.value_51]], D_80116FB0[Game_work.value_51]);
     func_8005DC10(D_80115C64[Game_work.value_51]);
     func_801004D8();
 }
@@ -868,7 +868,7 @@ void func_80101C94(ST13_VIEW *wp)
 
 void func_80101D1C(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_80101D3C(STAGE_OBJ *wp)

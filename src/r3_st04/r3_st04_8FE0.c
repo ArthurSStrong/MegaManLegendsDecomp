@@ -62,7 +62,7 @@ void func_8010919C(STAGE_OBJ50 *wp)
         ep->variant_3 = 0x41;
         ep->pos_38    = wp->pos_38;
         ep->pos_38.y  = wp->pos_38.y - 0x28;
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
     }
 }
 
@@ -215,7 +215,7 @@ void func_8010967C(STAGE_OBJ50 *wp)
 {
     STAGE_OBJ50 *ep;
 
-    ep = (STAGE_OBJ50 *)func_80031734();
+    ep = (STAGE_OBJ50 *)Open_WORK_50();
     if (ep != NULL)
     {
         ep->flags_0   = wp->flags_0;
@@ -287,7 +287,7 @@ void func_801097E0(STAGE_OBJ50 *wp)
                 RotMatrixX(0, &chest->matrix.m);
                 RotMatrixY(chest->routine_3 << 6, &chest->matrix.m);
                 RotMatrixZ(0, &chest->matrix.m);
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             else
             {
@@ -470,7 +470,7 @@ void func_80109EB8(STAGE_OBJ50 *wp)
         ep->variant_3 = 0x41;
         ep->pos_38    = wp->pos_38;
         ep->pos_38.y  = wp->pos_38.y - 0x28;
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
     }
 }
 
@@ -575,7 +575,7 @@ void func_8010A044(STAGE_OBJ50 *wp)
             wp->routine_1 = 10;
             break;
         case 10:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 Player_control_on(&Player_work);
                 pl->target_184 = NULL;
@@ -656,7 +656,7 @@ void func_8010A32C(ST04_EV *wp)
             }
             break;
         case 6:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 Player_control_on(pl);
                 pl->flags_0 |= 2;

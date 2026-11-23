@@ -447,5 +447,5 @@ void func_80110A00(ST05_ACTOR *wp)
 
 void func_80110B78(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }

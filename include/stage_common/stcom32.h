@@ -29,7 +29,7 @@ typedef struct
     sint16 h_12;    // 26
 } STCOM32_SPRITE;
 
-// The 0x50-byte work slot (func_80031734) of an item the player picks up: a model (variant 0)
+// The 0x50-byte work slot (Open_WORK_50) of an item the player picks up: a model (variant 0)
 // or a sprite (1..3).
 typedef struct
 {
@@ -82,7 +82,7 @@ extern sint32 stcom32_D_00A8[];          // the item given, by variant_3
 void stcom32_func_0678(STCOM32_WORK *wp);
 
 // ROCK_NEO.EXE.
-void func_80031A4C(STCOM32_WORK *wp);
+void Close_WORK_50(STCOM32_WORK *wp);
 STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);

@@ -20,7 +20,7 @@ void func_80114BC8(STAGE_OBJ *wp)
     D_80118D50[2] = NULL;
     for (i = 0; i < 3; i++)
     {
-        obj = func_80031498();
+        obj = Open_WORK_5A4();
         if (obj != NULL)
         {
             obj->flags_0            = 1;
@@ -180,7 +180,7 @@ void func_80115268(STAGE_EV *wp)
 
     for (i = 0x1F; i >= 0; i--)
     {
-        ev = func_800317AC(i);
+        ev = Open_WORK_50_index(i);
         if (ev != NULL)
         {
             ev->flags_0 = 1;

@@ -247,8 +247,9 @@ void func_80106810(ST1B_ACTOR *wp)
                 cam.x         = wp->value_180.x;
                 cam.y         = wp->value_180.y - 0x20;
                 cam.z         = wp->value_180.z;
-                func_80039FAC(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                              D_800A396C);
+                Camera_move_set_pause(&cam, 0x100,
+                                      Calc_degree2(&pl->position, &wp->position) + 0x800,
+                                      D_800A396C);
                 pl->flags_0 &= ~2;
                 wp->routine_2++;
             }
@@ -258,7 +259,7 @@ void func_80106810(ST1B_ACTOR *wp)
             pl_step = Muku(&pl->position, &wp->position, pl->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
             pl->value_442  = (pl->value_442 + pl_step) & 0xFFF;
-            if (step + pl_step == 0 && !func_8003A13C())
+            if (step + pl_step == 0 && !Camera_moving())
             {
                 MojiTaskExec2(0, 0x35);
                 EM_Char_Set(wp, 8, 0);
@@ -269,12 +270,12 @@ void func_80106810(ST1B_ACTOR *wp)
         case 3:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_2++;
             }
             break;
         case 4:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 Player_control_on(pl);
                 pl->flags_0 |= 2;
@@ -437,7 +438,7 @@ void func_80106F04(ST1B_ACTOR *wp)
             wp->routine_1++;
             break;
         case 2:
-            if (func_8003A13C() != 0)
+            if (Camera_moving() != 0)
             {
                 break;
             }
@@ -449,11 +450,11 @@ void func_80106F04(ST1B_ACTOR *wp)
             {
                 break;
             }
-            func_80039E18();
+            Camera_return_resume();
             wp->routine_1++;
             break;
         case 4:
-            if (func_8003A13C() != 0)
+            if (Camera_moving() != 0)
             {
                 break;
             }
@@ -522,8 +523,8 @@ sint32 func_80107114(ST1B_ACTOR *wp)
         D_80113E74.x = wp->value_180.x;
         D_80113E74.y = wp->value_180.y - 0x20;
         D_80113E74.z = wp->value_180.z;
-        func_80039FAC(&D_80113E74, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_80113E74, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;

@@ -731,11 +731,11 @@ void Sce_script_timer_clear(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
 void func_80047148(void *wp, STCOM_SVECTOR *pos);
-sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
+                         STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 void Sce_script_next(void);
 void Moji_task_kill(sint32 arg);
-void func_8003697C(void);
+void Draw_dist_far(void);
 void Pl_pos_set(void *wp, sint32 x, sint32 y, sint32 z);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
@@ -849,8 +849,8 @@ typedef void (*ST03_DRAW3_FUNC)(void *wp, sint32 a1, sint32 a2);
 // stcom36's first spawned object as an actor.
 #define ST03_SPAWNED_0 ((ST03_ACTOR *)stcom36_E2_0000[0])
 
-void func_80039E50(void);
-void func_80039FFC(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Camera_return_set(void);
+void Camera_move_set(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
 // A timed sound of a cutscene: at frame time_0 (counting down), play se_2 (func_80102DBC).
 typedef struct

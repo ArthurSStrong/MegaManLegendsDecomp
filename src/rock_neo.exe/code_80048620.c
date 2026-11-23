@@ -150,7 +150,7 @@ void func_80048A40(PL_WORK *pl)
     Player_control_on(&Player_work);
     *(uint32 *)&Player_work.kind = 0;
     D_800A395C                   = 1;
-    func_80039820();
+    Camera_reset();
     Sce_flag_off(0x7B3);
     pl->routine_0 = 0;
 }
@@ -4625,8 +4625,8 @@ void Ride_clear(sint32 key)
             ride_clear_one(key, &objs3c0->link);
         }
     }
-    objs5a4 = D_800C3580;
-    mask    = D_80098B20;
+    objs5a4 = Work_5A4_tbl;
+    mask    = Work_5A4_used;
     for (i = 0; i < 4; i++, objs5a4++)
     {
         if ((sint32)(mask << i) < 0)

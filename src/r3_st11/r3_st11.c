@@ -32,7 +32,7 @@ void func_8010011C(void)
     STAGE_MAP_WORK_PTR->cells  = cells;
     STAGE_MAP_WORK_PTR->exits  = D_80109820[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8010984C[D_801098E4[Game_work.value_51]], D_80109824[Game_work.value_51]);
+    Fog_room_set(D_8010984C[D_801098E4[Game_work.value_51]], D_80109824[Game_work.value_51]);
     func_8005DC10(0);
     func_80100284();
 }

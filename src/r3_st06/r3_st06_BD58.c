@@ -80,7 +80,8 @@ void func_8010BF78(ST06_ACTOR *wp)
         cam.x = wp->value_180.x;
         cam.y = wp->value_180.y - 0x20;
         cam.z = wp->value_180.z;
-        func_80039FAC(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
+        Camera_move_set_pause(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
+                              D_800A396C);
         EM_Char_Set(wp, 1, 0);
         D_8012BA08    = Calc_degree2(&wp->position, &pl->position);
         wp->routine_0 = 2;
@@ -150,7 +151,7 @@ void func_8010C20C(ST06_ACTOR *wp)
 
     turn           = Muku_angle(D_8012BA08, wp->rotation.y, wp->turn_64);
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         Message_event_set(&wp->position, 3, 0, wp->timer_C);
         EM_Char_Set(wp, 8, 0);
@@ -167,7 +168,7 @@ void func_8010C2B4(STAGE_OBJ *wp)
 {
     if ((sint8)*Message_event == 0)
     {
-        func_80039E18();
+        Camera_return_resume();
         EM_Char_Set(wp, 1, 0);
         wp->routine_0++;
         return;
@@ -183,7 +184,7 @@ void func_8010C318(ST06_ACTOR *wp)
     turn           = Muku_angle(wp->rotation_prev.y, wp->rotation.y, wp->turn_64);
     pl             = &Player_work;
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         EM_Char_Set(wp, 0, 0);
         wp->routine_1 = 0;
@@ -207,7 +208,7 @@ void func_8010C408(STAGE_OBJ *wp)
     if (wp->routine_0 == 0)
     {
         wp->flags_0 |= 2;
-        func_8002F9EC(wp, NULL);
+        Model_work_init2(wp, NULL);
         wp->scale.words[0] = 0x2000200;
         wp->scale.words[1] = 0x200;
         wp->scale.v.pad    = 0x4210;

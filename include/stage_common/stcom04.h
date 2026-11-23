@@ -71,7 +71,8 @@ typedef void (*STCOM04_FUNC)(STCOM04_WORK *wp);
 extern STCOM04_FUNC stcom04_D_0000[];     // handlers by index_3 (stcom04_func_0000)
 extern STCOM04_FUNC stcom04_D_0008[];     // routine_0 handlers (stcom04_func_0B58)
 extern uint8 stcom04_D_0010[];            // data_78 (stcom04_func_00CC)
-extern STCOM_FIXED_VECTOR stcom04_E_0000; // another object's data: position for func_80039FAC
+// Another object's data: position for Camera_move_set_pause.
+extern STCOM_FIXED_VECTOR stcom04_E_0000;
 
 // ROCK_NEO.EXE: steps the angle `rot` toward `goal` by at most `speed`; returns the step (0 when
 // there). Its result isn't sign-extended here (see rock_neo.h).

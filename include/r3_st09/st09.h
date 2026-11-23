@@ -665,7 +665,7 @@ void func_80118D98(STAGE_OBJ *wp);
 void func_80105D20(STAGE_OBJ *wp);
 void func_80108098(STAGE_OBJ *wp);
 void func_80108C70(STAGE_OBJ *wp);
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 void func_801143B4(ST09_PART *wp);
 void func_80114400(ST09_PART *wp);
 void func_801144E8(ST09_PART *wp);
@@ -680,7 +680,7 @@ void func_80107828(ST09_VIEW *wp);
 void func_8010779C(ST09_VIEW *wp);
 sint32 func_80107C28(ST09_VIEW *wp);
 void func_801076FC(ST09_VIEW *wp);
-// func_800317AC is declared in stage_common/stage.h.
+// Open_WORK_50_index is declared in stage_common/stage.h.
 void func_8011A440(STAGE_EV *wp);
 void func_80101E84(ST09_VIEW *wp);
 
@@ -711,8 +711,8 @@ sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_V
                      sint32 target_rot, sint32 target_range);
 sint32 func_80103170(ST09_VIEW *wp);
 
-sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
+                         STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 
@@ -1049,7 +1049,7 @@ typedef struct
 
 #define ST09_PATROL_DATA (*(ST09_PATROL *)D_8011E1C8)
 
-// ROCK_NEO's sprite list (func_8002D464 fills it the same way).
+// ROCK_NEO's sprite list (Billboard_alloc fills it the same way).
 extern uint32 Billboard_count;
 extern uint32 *Billboard_queue[];
 #define ST09_PACKET_PTR ((uint32 **)0x1F800070)

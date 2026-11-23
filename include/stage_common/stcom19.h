@@ -12,7 +12,7 @@ typedef union
     sint32 words[8];
 } STCOM19_MATRIX;
 
-// The 0x50-byte work slot of a floor panel that turns over (func_80031734).
+// The 0x50-byte work slot of a floor panel that turns over (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;         // 00
@@ -104,8 +104,8 @@ void Sce_flag_off(sint32 flag);
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
-STCOM19_WORK *func_80031734(void);
-void func_80031A4C(STCOM19_WORK *wp);
+STCOM19_WORK *Open_WORK_50(void);
+void Close_WORK_50(STCOM19_WORK *wp);
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);
 uint32 Stage_hed_model_get(uint32 key);
 

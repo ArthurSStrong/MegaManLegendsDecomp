@@ -126,11 +126,11 @@ void func_80119778(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_2C);
+        Close_WORK_5A4(wp->child_2C);
         wp->child_2C = NULL;
-        func_8003187C(wp->child_30);
+        Close_WORK_5A4(wp->child_30);
         wp->child_30 = NULL;
-        func_8003187C(wp->child_34);
+        Close_WORK_5A4(wp->child_34);
         child                     = wp->child_28;
         wp->child_34              = NULL;
         child->position.y         = -0x100;
@@ -300,7 +300,7 @@ void func_80119D28(STAGE_ROOM *wp)
     switch (wp->frame_10)
     {
         case 0:
-            func_8003187C(wp->child_28);
+            Close_WORK_5A4(wp->child_28);
             Sce_slot_open(D_80122704);
             Obj_work_flag_change(0x60, 0x80);
             break;
@@ -319,7 +319,7 @@ void func_80119DE8(STAGE_ROOM *wp)
     switch (wp->frame_10)
     {
         case 0:
-            func_8003187C(wp->child_2C);
+            Close_WORK_5A4(wp->child_2C);
             Sce_slot_open(D_80122718);
             Obj_work_flag_change(0x60, 0x80);
             break;
@@ -338,7 +338,7 @@ void func_80119EB8(STAGE_ROOM *wp)
     switch (wp->routine_6)
     {
         case 0:
-            func_8003187C(wp->child_30);
+            Close_WORK_5A4(wp->child_30);
             func_80119A14(3);
             wp->child_24->flags_0 |= 2;
             wp->child_24->routine_0++;
@@ -356,7 +356,7 @@ void func_80119EB8(STAGE_ROOM *wp)
         case 2:
             if (Fade_busy == 0)
             {
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 wp->reserved09[1] = 30;
                 wp->routine_6++;
             }
@@ -574,7 +574,7 @@ void func_8011A574(STAGE_ROOM *wp)
         case 2:
             if (D_800C356C_A[0] == 2)
             {
-                func_8003697C();
+                Draw_dist_far();
                 pl = &Player_work;
                 Player_control_on(pl);
                 STAGE_PL_BYTE(0x168) = 0;
@@ -582,7 +582,7 @@ void func_8011A574(STAGE_ROOM *wp)
                 D_800A395C           = 1;
                 pl->flags_0 |= 3;
                 STAGE_PL_BYTE(0x170) = D_80122B9C;
-                func_80039820();
+                Camera_reset();
                 D_800C356C_A[0]++;
                 func_8001D974();
                 Sce_flag_on(0x2A);

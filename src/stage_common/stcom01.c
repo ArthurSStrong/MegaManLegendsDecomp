@@ -1044,7 +1044,7 @@ void stcom01_func_21B0(STCOM01_WORK *wp)
     v.x = wp->position.x;
     v.y = wp->position.y - 0x30;
     v.z = wp->position.z;
-    func_80039FAC(&v, 0x100, Calc_degree2(&pos, &pl->position), D_800A396C + 0x6C);
+    Camera_move_set_pause(&v, 0x100, Calc_degree2(&pos, &pl->position), D_800A396C + 0x6C);
     wp->anim_AC = stcom01_func_28C8(wp->kind_2);
     ctl->turn = STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
     ctl->routine++;
@@ -1055,7 +1055,7 @@ void stcom01_func_2310(STCOM01_WORK *wp)
     STCOM_PL_WORK *pl;
 
     pl = &Player_work;
-    if (func_8003A13C() == 0)
+    if (Camera_moving() == 0)
     {
         Message_event_set(&wp->position, 0xD, 0, wp->param_C);
         wp->ctl.routine++;
@@ -1075,7 +1075,7 @@ void stcom01_func_2398(STCOM01_WORK *wp)
         wp->ctl.flags &= ~4;
         wp->ctl.routine += 2;
         wp->anim_AC = stcom01_func_28C8(wp->kind_2);
-        func_80039E18();
+        Camera_return_resume();
     }
     else if (Game_work.mode_0 == 6)
     {
@@ -1102,7 +1102,7 @@ void stcom01_func_24A8(STCOM01_WORK *wp)
     step = Muku_angle(wp->ctl.value_4, wp->rotation.y, wp->ctl.turn);
     if (step == 0 || (wp->param_D & 0x80))
     {
-        if (func_8003A13C() == 0)
+        if (Camera_moving() == 0)
         {
             pl->routine_1 = 0;
             pl->value_0a  = 0;

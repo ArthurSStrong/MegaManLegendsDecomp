@@ -725,7 +725,7 @@ extern sint32 D_8011A0FC[];      // by room (func_8005DC10)
 extern void *D_8011A6F0[];       // model table by room (func_80022FD4)
 extern void *D_8011AB3C[];       // spawn list by room
 extern void *D_8011AC40[];       // exit list by room
-extern uint8 D_8011AC54[][0x28]; // by room (func_800371A0)
+extern uint8 D_8011AC54[][0x28]; // by room (Fog_room_set)
 extern uint8 D_8011AD1C[][8];    // by D_8011ADE4[room]
 extern sint32 D_8011ADE4[];
 extern STAGE_SCRIPT_ENTRY D_8011AE0C[];
@@ -853,17 +853,17 @@ void func_8010E928(STAGE_OBJ *wp);
 
 void func_8010C930(STAGE_OBJ *wp);
 
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 
 extern STAGE_OBJ_FUNC D_8011CA3C[];
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 
 extern STAGE_OBJ_FUNC D_8011C700[];
 
 extern STAGE_OBJ_FUNC D_8011C718[];
 
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
-void func_800398E0(sint32 arg);
+void Swing_Camera(sint32 arg);
 
 // PsyQ's TILE (a flat rectangle), as func_80100614 fills it.
 typedef struct
@@ -1006,7 +1006,7 @@ typedef union
 } ST00_STCOM19_MATRIX;
 
 // From r3_st09 (STCOM19_WORK).
-// The 0x50-byte work slot of a floor panel that turns over (func_80031734).
+// The 0x50-byte work slot of a floor panel that turns over (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;              // 00
@@ -1455,7 +1455,7 @@ typedef struct
     uint32 value_8;      // 34
 } ST00_TARGET_HIT;
 
-// A 0x50-byte slot (func_80031734) that can be shot (func_80113F2C, func_80114370).
+// A 0x50-byte slot (Open_WORK_50) that can be shot (func_80113F2C, func_80114370).
 typedef struct
 {
     uint8 flags_0;         // 00
@@ -1514,7 +1514,7 @@ typedef struct
     ST00_SPIN spin;           // 348
 } ST00_SPINNER;
 
-// A 0x50-byte slot (func_80031734) that leaves an effect beside itself, at its angle
+// A 0x50-byte slot (Open_WORK_50) that leaves an effect beside itself, at its angle
 // (func_8011668C).
 typedef struct
 {
@@ -1953,8 +1953,8 @@ void func_80107D04(STAGE_STCOM15_WORK_4E0 *wp);
 
 void func_80107FAC(STAGE_STCOM15_WORK_4E0 *wp);
 
-sint32 func_80031E60(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
+                         STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);
 extern sint16 D_8011C14C[];
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void func_801084D4(STAGE_STCOM15_WORK_4E0 *wp);
@@ -2095,11 +2095,11 @@ typedef struct
 sint32 Player_atari_off(void);
 
 // ROCK_NEO: a model's UV block (stcom07's STCOM07_QUAD): u0, v0, u1, v1, u2, v2, u3, v3.
-uint8 *func_8002D22C(uint32 model, sint32 arg);
+uint8 *Model_face_get(uint32 model, sint32 arg);
 
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 
-// Eight bytes of texture coordinates of a model face (func_8002D22C, func_8002D27C; r3_st0e's
+// Eight bytes of texture coordinates of a model face (Model_face_get, Model_face_uv_set; r3_st0e's
 // ST0E_UV8).
 typedef struct
 {
@@ -2163,7 +2163,7 @@ typedef struct
 extern ST00_UV8 D_8012256C[16]; // the surface's texture coordinates
 extern uint16 D_801225EC[25];   // its vertices' heights
 
-void func_8002D27C(void *model, sint32 id, ST00_UV8 *uv);
+void Model_face_uv_set(void *model, sint32 id, ST00_UV8 *uv);
 
 // A 0x10C-byte slot (Open_SHL_WORK) as func_8010B1C0 fires it: STAGE_PIECE with two more words.
 typedef struct

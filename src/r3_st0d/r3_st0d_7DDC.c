@@ -39,7 +39,7 @@ void func_80107EF8(ST0D_VILLAGER *wp, ST0D_TALK *talk)
     }
     else
     {
-        func_8002F9EC(wp, (sint32)&wp->variant_3);
+        Model_work_init2(wp, (sint32)&wp->variant_3);
     }
     wp->scale.words[0]   = 0x02000200;
     wp->scale.words[1]   = 0x200;
@@ -83,15 +83,16 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                 cam.x = wp->value_180.x;
                 cam.y = wp->value_180.y - 0x20;
                 cam.z = wp->value_180.z;
-                func_80039FAC(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                              D_800A396C);
+                Camera_move_set_pause(&cam, 0x100,
+                                      Calc_degree2(&pl->position, &wp->position) + 0x800,
+                                      D_800A396C);
                 wp->routine_1++;
             }
             break;
         case 1:
             turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-            if (turn == 0 && func_8003A13C() == 0)
+            if (turn == 0 && Camera_moving() == 0)
             {
                 if (talk->msg_0 != 0x7FFFFFFF)
                 {
@@ -111,7 +112,7 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                 switch (wp->value_E)
                 {
                     case 0:
-                        func_80039E18();
+                        Camera_return_resume();
                         wp->routine_1 = 4;
                         break;
                     case 1:
@@ -129,7 +130,7 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                             }
                             talk->first_C = 0;
                         }
-                        func_80039E18();
+                        Camera_return_resume();
                         wp->routine_1 = 4;
                         break;
                 }
@@ -139,7 +140,7 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                 switch (wp->value_E)
                 {
                     case 0:
-                        func_80039E18();
+                        Camera_return_resume();
                         wp->routine_1 = 4;
                         break;
                     case 1:
@@ -157,7 +158,7 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
                             }
                             talk->first_C = 0;
                         }
-                        func_80039E18();
+                        Camera_return_resume();
                         wp->routine_1 = 4;
                         break;
                 }
@@ -166,12 +167,12 @@ void func_80108040(ST0D_VILLAGER *wp, ST0D_TALK *talk)
         case 3:
             if (Fade_busy == 0)
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_1++;
             }
             break;
         case 4:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x80;
                 pl->flags_0 |= 2;
@@ -676,7 +677,7 @@ void func_80109324(ST0D_CELL *cell, sint32 color)
 {
     STCOM23_PACKET *p;
 
-    p          = func_8002D464();
+    p          = Billboard_alloc();
     p->code_4  = color - cell->shade_5 * 0x10101;
     p->xy_8    = (uint16)cell->x_A | (cell->y_C << 16);
     p->z_10    = cell->z_E;
@@ -694,7 +695,7 @@ void func_801093C8(ST0D_CELL *cell, sint32 color)
     sint32 u;
 
     u          = D_8010E4C0[cell->frame_6 >> 2];
-    p          = func_8002D464();
+    p          = Billboard_alloc();
     p->code_4  = color - cell->shade_5 * 0x10101;
     p->xy_8    = (uint16)cell->x_A | (cell->y_C << 16);
     p->z_10    = cell->z_E;
@@ -714,7 +715,7 @@ void func_80109498(ST0D_CELL *cell, sint32 color)
     if (cell->state_4 < 2)
     {
         u          = D_8010E4C0[cell->frame_6 >> 2];
-        p          = func_8002D464();
+        p          = Billboard_alloc();
         p->code_4  = color - cell->shade_5 * 0x10101;
         p->xy_8    = (uint16)cell->x_A | (cell->y_C << 16);
         p->z_10    = cell->z_E;
@@ -748,7 +749,7 @@ void func_8010957C(ST0D_BOBBER *wp)
 void func_8010964C(ST0D_BOBBER *wp, ST0D_BOB *bob)
 {
     wp->flags_0 |= 2;
-    func_8002F9EC(wp, 0);
+    Model_work_init2(wp, 0);
     wp->scale.words[0] = 0x02000200;
     wp->scale.words[1] = 0x200;
     wp->scale.v.pad    = 0x4210;

@@ -163,7 +163,7 @@ void func_801125AC(ST06_ACTOR *wp)
         case 6:
             turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-            if (turn == 0 && func_8003A13C() == 0)
+            if (turn == 0 && Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0x30);
                 wp->routine_1 = 0;
@@ -182,7 +182,7 @@ void func_801125AC(ST06_ACTOR *wp)
                 {
                     turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
                     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-                    if (turn == 0 && func_8003A13C() == 0)
+                    if (turn == 0 && Camera_moving() == 0)
                     {
                         MojiTaskExec2(0, 0x31);
                         EM_Char_Set(wp, 8, 0);
@@ -227,7 +227,7 @@ void func_8011283C(ST06_ACTOR *wp)
         case 2:
             turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-            if (turn == 0 && func_8003A13C() == 0)
+            if (turn == 0 && Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0x49);
                 EM_Char_Set(wp, 8, 0);
@@ -238,12 +238,12 @@ void func_8011283C(ST06_ACTOR *wp)
         case 3:
             if (!(Moji_flag & 0x08000000))
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_0++;
             }
             break;
         case 4:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x40;
                 pl->flags_0 |= 2;
@@ -303,8 +303,8 @@ sint32 func_80112A60(ST06_ACTOR *wp)
         D_8012BA60.x = wp->value_180.x;
         D_8012BA60.y = wp->value_180.y - 0x20;
         D_8012BA60.z = wp->value_180.z;
-        func_80039FAC(&D_8012BA60, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_8012BA60, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
@@ -388,7 +388,8 @@ void func_80112DB8(ST06_ACTOR *wp)
         cam.x = wp->value_180.x;
         cam.y = wp->value_180.y - 0x20;
         cam.z = wp->value_180.z;
-        func_80039FAC(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
+        Camera_move_set_pause(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
+                              D_800A396C);
         EM_Char_Set(wp, 1, 0);
         D_8012BA70    = Calc_degree2(&wp->position, &pl->position);
         wp->routine_0 = 2;
@@ -458,7 +459,7 @@ void func_8011304C(ST06_ACTOR *wp)
 
     turn           = Muku_angle(D_8012BA70, wp->rotation.y, wp->turn_64);
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         Message_event_set(&wp->position, 3, 0, wp->timer_C);
         EM_Char_Set(wp, 8, 0);
@@ -475,7 +476,7 @@ void func_801130F4(STAGE_OBJ *wp)
 {
     if ((sint8)*Message_event == 0)
     {
-        func_80039E18();
+        Camera_return_resume();
         EM_Char_Set(wp, 1, 0);
         wp->routine_0++;
         return;
@@ -491,7 +492,7 @@ void func_80113158(ST06_ACTOR *wp)
     turn           = Muku_angle(wp->rotation_prev.y, wp->rotation.y, wp->turn_64);
     pl             = &Player_work;
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         EM_Char_Set(wp, 0, 0);
         wp->routine_1 = 0;
@@ -556,7 +557,7 @@ void func_8011335C(ST06_ACTOR *wp)
         case 2:
             turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-            if (turn == 0 && func_8003A13C() == 0)
+            if (turn == 0 && Camera_moving() == 0)
             {
                 MojiTaskExec2(0, 0x13);
                 wp->anim_AC = 8;
@@ -566,12 +567,12 @@ void func_8011335C(ST06_ACTOR *wp)
         case 3:
             if (!(Moji_flag & 0x08000000))
             {
-                func_80039E18();
+                Camera_return_resume();
                 wp->routine_0++;
             }
             break;
         case 4:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 pl->flags_bd &= ~0x80;
                 pl->flags_0 |= 2;
@@ -624,8 +625,8 @@ sint32 func_80113548(ST06_ACTOR *wp)
         D_8012BA78.x = wp->value_180.x;
         D_8012BA78.y = wp->value_180.y - 0x20;
         D_8012BA78.z = wp->value_180.z;
-        func_80039FAC(&D_8012BA78, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
-                      D_800A396C);
+        Camera_move_set_pause(&D_8012BA78, 0x100,
+                              Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
@@ -709,7 +710,8 @@ void func_801138A0(ST06_ACTOR *wp)
         cam.x = wp->value_180.x;
         cam.y = wp->value_180.y - 0x20;
         cam.z = wp->value_180.z;
-        func_80039FAC(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
+        Camera_move_set_pause(&cam, 0x100, Calc_degree2(&pl->position, &wp->position) + 0x800,
+                              D_800A396C);
         EM_Char_Set(wp, 1, 0);
         D_8012BA88    = Calc_degree2(&wp->position, &pl->position);
         wp->routine_0 = 2;
@@ -779,7 +781,7 @@ void func_80113B34(ST06_ACTOR *wp)
 
     turn           = Muku_angle(D_8012BA88, wp->rotation.y, wp->turn_64);
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         Message_event_set(&wp->position, 1, 0, wp->timer_C);
         EM_Char_Set(wp, 8, 0);
@@ -796,7 +798,7 @@ void func_80113BDC(STAGE_OBJ *wp)
 {
     if ((sint8)*Message_event == 0)
     {
-        func_80039E18();
+        Camera_return_resume();
         EM_Char_Set(wp, 1, 0);
         wp->routine_0++;
         return;
@@ -812,7 +814,7 @@ void func_80113C40(ST06_ACTOR *wp)
     turn           = Muku_angle(wp->rotation_prev.y, wp->rotation.y, wp->turn_64);
     pl             = &Player_work;
     wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
-    if (turn == 0 && func_8003A13C() == 0)
+    if (turn == 0 && Camera_moving() == 0)
     {
         EM_Char_Set(wp, 0, 0);
         wp->routine_1 = 0;

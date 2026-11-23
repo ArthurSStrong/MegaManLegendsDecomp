@@ -79,7 +79,7 @@ void func_8012AB24(ST05_PRIZE *wp)
     switch (wp->routine_1)
     {
         case 0:
-            if (Player_control_off(pl) != 0 && func_8003A13C() == 0)
+            if (Player_control_off(pl) != 0 && Camera_moving() == 0)
             {
                 wp->routine_1++;
             }
@@ -95,7 +95,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             wp->routine_1++;
             break;
         case 2:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 wp->timer_C = 0x1E;
                 wp->routine_1++;
@@ -149,7 +149,7 @@ void func_8012AB24(ST05_PRIZE *wp)
             if (Message_event[0] == 0)
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_1++;
             }
             break;
@@ -204,11 +204,11 @@ void func_8012AB24(ST05_PRIZE *wp)
             break;
         case 7:
         case 15:
-            if (func_8003A13C() == 0)
+            if (Camera_moving() == 0)
             {
                 Player_control_on(pl);
                 pl->flags_0 |= 2;
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
                 Sce_flag_off(0x670);
             }
             break;
@@ -368,7 +368,7 @@ void func_8012B314(STAGE_OBJ50 *wp)
             if (!(Moji_flag & 0x08000000))
             {
                 Player_control_on(pl);
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             break;
     }
@@ -596,8 +596,8 @@ void func_8012BB3C(void)
     uint32 mask;
     sint32 i;
 
-    mask = D_800989CC;
-    slot = D_800BF118;
+    mask = Work_50_used;
+    slot = Work_50_tbl;
     for (i = 0; i < 32; i++, slot++)
     {
         if ((sint32)(mask << i) < 0)
@@ -609,7 +609,7 @@ void func_8012BB3C(void)
                 case 0x19:
                 case 0x21:
                     Ride_clear(slot);
-                    func_80031A4C(slot);
+                    Close_WORK_50(slot);
                     break;
             }
         }
@@ -1057,7 +1057,7 @@ void func_8012CA40(STAGE_OBJ50 *wp)
                 Sce_flag_off(0x200);
                 STAGE_GAME.value_78 = 1;
                 Player_control_on(&Player_work);
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
             }
             break;
     }

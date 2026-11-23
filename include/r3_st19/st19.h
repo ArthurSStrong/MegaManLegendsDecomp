@@ -580,7 +580,7 @@ extern STAGE_FX_FUNC D_801184A0[];
 extern STAGE_FX_FUNC D_801184A8[];
 
 extern uint8 D_80118530[];
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 
 // ROCK_NEO scalar declared as an array: GCC then keeps later struct loads after the stores.
 extern sint32 D_800BC7D4[];

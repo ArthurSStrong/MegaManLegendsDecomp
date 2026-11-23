@@ -692,7 +692,7 @@ void func_80100854(STAGE_OBJ *wp);
 void func_80101A84(STAGE_OBJ *wp);
 void func_801079DC(STAGE_OBJ *wp);
 void func_80100664(STAGE_OBJ *wp);
-// func_800317AC is declared in stage_common/stage.h.
+// Open_WORK_50_index is declared in stage_common/stage.h.
 void Sce_exit_lock_list(void *a, void *b);
 void func_8001EB98(void *entry);
 
@@ -701,9 +701,9 @@ void func_8001EB98(void *entry);
 
 extern ST13_KIND **D_8009884C;
 
-extern uint32 D_80098B20; // ROCK_NEO.EXE
+extern uint32 Work_5A4_used; // ROCK_NEO.EXE
 
-STAGE_OBJ *func_80031498(void); // ROCK_NEO.EXE: allocates a work slot (NULL when none is free)
+STAGE_OBJ *Open_WORK_5A4(void); // ROCK_NEO.EXE: allocates a work slot (NULL when none is free)
 
 sint32 Scr_line_calc(STCOM_SVECTOR *pos, STCOM_SVECTOR *prev, void *info, sint32 mask);
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, void *box, sint32 dy, sint32 kind);

@@ -187,7 +187,7 @@ void func_801060D4(STAGE_ROOM *wp)
                 Sce_flag_off(0x208);
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->flags_0 = 0;
             }
             break;
@@ -386,12 +386,12 @@ void func_80106934(STAGE_ROOM *wp)
             {
                 Fade_start(1);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_4++;
                 Close_EM_WORK(wp->child_24);
                 Obj_work_flag_change(0x56, 0xA);
                 func_8001E3F0(0xF);
-                func_80039820();
+                Camera_reset();
             }
             break;
         case 5:
@@ -1020,7 +1020,7 @@ uint8 func_80107D68(void)
     {
         return 0;
     }
-    slot = func_80031734();
+    slot = Open_WORK_50();
     if (slot != NULL)
     {
         slot->flags_0 = 1;
@@ -1487,8 +1487,8 @@ void func_80108BA4(ST05_VILLAGER *wp)
                 ctl->flags_0 |= 1;
                 break;
             }
-            if (func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
-                              wp->rotation.y, 0x400))
+            if (Angle_range_check(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
+                                  wp->rotation.y, 0x400))
             {
                 wp->spin_66               = 0x80;
                 wp->routine_1             = 5;

@@ -918,7 +918,7 @@ void Em_work_move(void)
 
 void func_80017094(void)
 {
-    for (D_800989D0 = D_800C3580; (uint32)D_800989D0 < (uint32)&D_800C3580[4]; D_800989D0++)
+    for (D_800989D0 = Work_5A4_tbl; (uint32)D_800989D0 < (uint32)&Work_5A4_tbl[4]; D_800989D0++)
     {
         if (D_800989D0->flags & D_800989D0->active & 1)
         {
@@ -997,7 +997,7 @@ void eve_work_move(void)
 
 void func_80017528(void)
 {
-    for (D_80098924 = D_800BF118; (uint32)D_80098924 < (uint32)&D_800BF118[32]; D_80098924++)
+    for (D_80098924 = Work_50_tbl; (uint32)D_80098924 < (uint32)&Work_50_tbl[32]; D_80098924++)
     {
         if (D_80098924->flags & D_80098924->active & 1)
         {

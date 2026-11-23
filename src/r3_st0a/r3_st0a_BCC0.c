@@ -406,7 +406,7 @@ void func_8010CB1C(ST0A_EM *wp)
     {
         Close_SHL_WORK(ext->obj_80[1]);
     }
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_8010CBB4(void)
@@ -1288,9 +1288,9 @@ void func_8010E9C8(ST0A_EM *wp, sint32 side)
     ext = &wp->ext;
     for (i = 0; i < 3; i++)
     {
-        ext->uv_34  = func_8002D22C(wp->model_88, (i << 24) | 0x10E01);
-        ext->vtx_38 = func_8002D2DC(wp->model_88, (i << 24) | 0x10E04);
-        ext->vtx_3C = func_8002D2DC(wp->model_88, (i << 24) | 0x10E05);
+        ext->uv_34  = Model_face_get(wp->model_88, (i << 24) | 0x10E01);
+        ext->vtx_38 = Model_vertex_get(wp->model_88, (i << 24) | 0x10E04);
+        ext->vtx_3C = Model_vertex_get(wp->model_88, (i << 24) | 0x10E05);
         if (side == 0)
         {
             ext->vtx_38[1] -= 0x58;
@@ -1312,7 +1312,7 @@ sint32 func_8010EB40(void)
 {
     ST0A_VIEW *obj;
 
-    obj = func_80031498();
+    obj = Open_WORK_5A4();
     if (obj != NULL)
     {
         obj->flags_0          = 1;

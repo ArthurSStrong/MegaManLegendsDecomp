@@ -280,7 +280,7 @@ void func_801011B8(STAGE_ROOM *wp)
             Moji_task_kill(0);
             Cd_subcmd(0, 1, 0);
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             Close_SHL_WORK(wp->child_24);
             wp->routine_4++;
             break;
@@ -288,7 +288,7 @@ void func_801011B8(STAGE_ROOM *wp)
             Player_control_on(&Player_work);
             D_800A395C = 1;
             STAGE_PL.flags_0 |= 2;
-            func_8003A264();
+            Camera_return_set2();
             wp->flags_0 = 0;
             break;
     }

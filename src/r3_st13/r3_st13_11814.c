@@ -165,7 +165,7 @@ void func_80111B50(STAGE_STCOM15_WORK_4E0 *wp)
                         fx->variant_3       = 0x40;
                         fx->sprite.position = wp->position;
                     }
-                    func_8003187C(wp);
+                    Close_WORK_5A4(wp);
                     func_80047228(wp, &wp->position, wp->param_D);
                     Sound_call2(0xA1, &wp->position);
                 }
@@ -200,7 +200,7 @@ void func_80111B50(STAGE_STCOM15_WORK_4E0 *wp)
 
 void func_80111E70(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_80111E90(STAGE_STCOM15_WORK_4E0 *wp)
@@ -969,7 +969,7 @@ sint32 func_801134E4(STAGE_STCOM15_WORK_4E0 *wp)
                                 fx->variant_3       = 0x40;
                                 fx->sprite.position = wp->position;
                             }
-                            func_8003187C(wp);
+                            Close_WORK_5A4(wp);
                             func_80047228(wp, &wp->position, wp->param_D);
                             Sound_call2(0xA1, &wp->position);
                             break;

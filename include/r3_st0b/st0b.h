@@ -656,7 +656,7 @@ void func_80103BC8(void *wp, STAGE_FACE16 *face, sint32 index);
 
 void func_80104404(void *wp, STAGE_FACE16 *face, sint32 index);
 
-void func_8003187C(void *wp);
+void Close_WORK_5A4(void *wp);
 
 extern void *D_80119354[];
 extern void *D_80119554[];
@@ -1512,7 +1512,7 @@ extern const STCOM_FIXED_VECTOR D_80100284;
 extern ST0B_BOB_FUNC D_8011BBB0[];
 void func_80112B00(STAGE_PROP *wp, uint16 *bob);
 
-// A 0x50-byte slot (func_80031734) that turns a model about z (func_801185D4; D_8011C42C by
+// A 0x50-byte slot (Open_WORK_50) that turns a model about z (func_801185D4; D_8011C42C by
 // variant_3).
 typedef struct ST0B_WHEEL ST0B_WHEEL;
 
@@ -1728,7 +1728,7 @@ void func_80114FB4(ST0B_DRIFT *wp);
 
 void func_80101FB4(STAGE_ROOM *wp);
 
-STAGE_OBJ *func_80031498(void);
+STAGE_OBJ *Open_WORK_5A4(void);
 
 void func_8010BAFC(ST0B_OBJ *wp, ST0B_BOB *bob);
 
@@ -2303,10 +2303,10 @@ void func_80112004(ST0B_LIFT *wp, ST0B_PATH_D *path);
 extern ST0B_PATH_STEP D_8011BB48[];
 extern STAGE_OBJ Player_work_obj __asm__("Player_work");
 
-sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
-                     sint32 target_angle, sint32 target_range);
+sint32 Angle_range_check2(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
+                          sint32 target_angle, sint32 target_range);
 
-void func_8003697C(void);
+void Draw_dist_far(void);
 
 void Pl00_shot_enable_off(void *pl);
 void Moji_task_kill(sint32 arg);

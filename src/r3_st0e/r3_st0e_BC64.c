@@ -52,7 +52,7 @@ void func_8010BD90(ST0E_LEVER *wp)
 
 void func_8010BE04(STAGE_OBJ *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_8010BE24(ST0E_LEVER *wp)
@@ -143,7 +143,7 @@ void func_8010BFB4(ST0E_PANEL *wp)
         for (i = 0; i < 16; i++)
         {
             uv = D_80110CF4[wp->variant_3][i];
-            func_8002D27C(wp->model_14, i | 0x10000, &uv);
+            Model_face_uv_set(wp->model_14, i | 0x10000, &uv);
         }
     }
     if (wp->variant_3 == 3)
@@ -152,7 +152,7 @@ void func_8010BFB4(ST0E_PANEL *wp)
     }
     for (i = 0; i < 16; i++)
     {
-        D_80110CF4[wp->variant_3][i] = *func_8002D22C(wp->model_14, i | 0x10000);
+        D_80110CF4[wp->variant_3][i] = *Model_face_get(wp->model_14, i | 0x10000);
     }
     rec = wp->model_14->parts_70->recs_24;
     for (i = 0; i < 25; i++)
@@ -257,7 +257,7 @@ void func_8010C1C0(ST0E_PANEL *wp)
             uv.b[3] = D_80110D74[wp->variant_3 - 1][i].b[3] - (wp->variant_3 - 1) * 16;
             uv.b[5] = D_80110D74[wp->variant_3 - 1][i].b[5] - (wp->variant_3 - 1) * 16;
             uv.b[7] = D_80110D74[wp->variant_3 - 1][i].b[7] - (wp->variant_3 - 1) * 16;
-            func_8002D27C(wp->model_14, i | 0x10000, &uv);
+            Model_face_uv_set(wp->model_14, i | 0x10000, &uv);
         }
         rec = wp->model_14->parts_70->recs_24;
         for (i = 0; i < 25; i++)
@@ -295,5 +295,5 @@ void func_8010C1C0(ST0E_PANEL *wp)
 
 void func_8010C694(STAGE_OBJ *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }

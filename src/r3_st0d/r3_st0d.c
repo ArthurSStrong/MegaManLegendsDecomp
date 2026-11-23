@@ -29,7 +29,7 @@ void func_801001EC(void)
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_8010C1DC[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_8010C2E4[D_8010C2F4[Game_work.value_51]], D_8010C1F4[Game_work.value_51]);
+    Fog_room_set(D_8010C2E4[D_8010C2F4[Game_work.value_51]], D_8010C1F4[Game_work.value_51]);
     func_8005DC10(0);
     *(uint32 *)&D_800989F8.routine_4 = 0;
     func_80100358();
@@ -438,7 +438,7 @@ void func_80101034(STAGE_ROOM *wp)
     {
         case 0:
             Obj_work_flag_change(0x56, 0x80);
-            func_8003697C();
+            Draw_dist_far();
             Cd_subcmd(0, 1, 0);
             wp->routine_5++;
             break;
@@ -447,7 +447,7 @@ void func_80101034(STAGE_ROOM *wp)
             {
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 func_8001D974();
                 wp->flags_0 = 0;
                 D_800C356C_A[0]++;
@@ -828,7 +828,7 @@ void func_80101A60(STAGE_ROOM *wp)
             Cd_subcmd(0, 1, 0);
             if (wp->reserved09[1] & 1)
             {
-                func_8003697C();
+                Draw_dist_far();
             }
             wp->routine_5++;
             break;
@@ -837,7 +837,7 @@ void func_80101A60(STAGE_ROOM *wp)
             {
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_5++;
             }
             break;
@@ -880,7 +880,7 @@ void func_80101C64(STAGE_ROOM *wp)
     if (wp->frame_10 == 0)
     {
         STAGE_PL.flags_0 |= 2;
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_28);
         Sce_slot_open(&D_8010CFB0[0]);
         Sce_slot_open(&D_8010CFB0[1]);
         wp->child_24->routine_1 = 1;
@@ -1276,7 +1276,7 @@ void func_8010288C(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_C, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_C, 0x2A, 0x33, 6));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -1293,7 +1293,7 @@ void func_8010288C(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_F, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_F, 0x2A, 0x33, 6));
     }
     face->prev_10 = face->shape_F;
 }
@@ -1750,7 +1750,7 @@ void func_801036E0(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_C, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_C, 0x33, 0x37, 5));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x3F)
@@ -1767,7 +1767,7 @@ void func_801036E0(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_F, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_F, 0x33, 0x37, 5));
     }
     face->prev_10 = face->shape_F;
 }
@@ -1946,7 +1946,7 @@ void func_80103CB8(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0xC000B, func_8002D404(face->shape_C, 0x1F, 0x21, 8));
+        Model_uv_copy(wp->model_88, 0xC000B, Uv_cell_offset(face->shape_C, 0x1F, 0x21, 8));
     }
     face->prev_D = face->shape_C;
 }
@@ -1980,7 +1980,7 @@ void func_80103EDC(ST0D_ACTOR *wp, uint16 *bob)
     wp->flags_0 = (uint8)wp->flags_0 | 6;
     if (STAGE_GAME.value_50 == 0xD)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {
@@ -2287,7 +2287,7 @@ void func_80104BE0(ST0D_ACTOR *wp, uint16 *bob)
     wp->flags_0 = (uint8)wp->flags_0 | 6;
     if (STAGE_GAME.value_50 == 0xD)
     {
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
     }
     else
     {

@@ -208,7 +208,7 @@ void func_80119AF8(ST06_WAIT *wp)
     else if (--wp->timer_14 == 0)
     {
         Sce_flag_on(0x628);
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
     }
 }
 

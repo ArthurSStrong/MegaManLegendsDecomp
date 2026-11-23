@@ -142,7 +142,7 @@ void func_80102E4C(ST1E_PANEL *wp);
 extern void *D_80104190[];       // model table by room
 extern void *D_80104238[];       // spawn list by room
 extern void *D_8010426C[];       // exit list by room
-extern uint8 D_80104288[][0x28]; // by room (func_800371A0)
+extern uint8 D_80104288[][0x28]; // by room (Fog_room_set)
 extern uint8 D_801043A0[][8];    // by D_801043B8[room]
 extern sint32 D_801043B8[];
 void func_8010028C(void);

@@ -324,7 +324,7 @@ void func_8004602C(CODE456_WORK *wp)
         uv1  = D_80097EC0[wp->routine_9][1];
         uv2  = D_80097EC0[wp->routine_9][2];
         uv3  = D_80097EC0[wp->routine_9][3];
-        p    = func_8002D464();
+        p    = Billboard_alloc();
         p[1] = 0x2C808080;
         p[2] = wp->snd_38.word[0];
         xy1  = wp->snd_38.word[1];
@@ -854,7 +854,7 @@ void func_80047354(CODE456_BOX *wp)
     {
         arg = 2;
         Model_work_init(wp, (uint8 *)&arg);
-        func_800398E0(0x1E);
+        Swing_Camera(0x1E);
         child = (CODE456_BOX *)Open_EFFECT_WORK();
         if (child != NULL)
         {

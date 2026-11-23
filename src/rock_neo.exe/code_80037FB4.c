@@ -33,7 +33,7 @@ sint16 D_80098660;
 sint16 D_80098662;
 sint16 D_80098664;
 
-void func_80037FB4(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Camera_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     sint32 v[3];
     sint32 r;
@@ -72,7 +72,7 @@ void func_80037FB4(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 void func_80038324(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     D_800A39A0 = *vec;
-    func_80037FB4(vec, arg1, arg2, arg3);
+    Camera_set(vec, arg1, arg2, arg3);
 }
 
 void func_80038370(CAM_VEC *vec, CAM_VEC *target)
@@ -90,7 +90,7 @@ void func_80038370(CAM_VEC *vec, CAM_VEC *target)
         dist = (sq / dist + dist) >> 1;
     }
     yaw = ratan2(target->x - vec->x, target->z - vec->z) + 0x800;
-    func_80037FB4(vec, dist, yaw, -ratan2(target->y - vec->y, dist));
+    Camera_set(vec, dist, yaw, -ratan2(target->y - vec->y, dist));
 }
 
 void func_800384A4(CAM_VEC *vec, CAM_VEC *target)
@@ -193,8 +193,8 @@ void func_80038648(void)
     D_80097D50 = 1;
     D_80097D34 = 0x200;
     D_80097D54 = 0x4B0;
-    func_80037FB4((CAM_VEC *)&cw->w[0x12], cw->w[3], cw->w[4], cw->w[5]);
-    func_80039A38(D_80097D58);
+    Camera_set((CAM_VEC *)&cw->w[0x12], cw->w[3], cw->w[4], cw->w[5]);
+    Camera_cmd_set(D_80097D58);
     func_800397E8();
 }
 
@@ -219,7 +219,7 @@ void func_80038894(void)
     sint32 base;
     sint32 near;
 
-    func_80039A60();
+    camera_cmd_exec();
     cw = &Camera_work;
     if (D_800A395C != 1)
     {
@@ -455,7 +455,7 @@ void func_80038894(void)
                 }
             }
             cw->rot_10 = want;
-            func_80039A38(D_80097D5C);
+            Camera_cmd_set(D_80097D5C);
             goto aim;
         turn:
             cw->rot_10 += step;
@@ -503,14 +503,14 @@ void func_80038894(void)
         pos.x = (cw->vec_78.x * rest + cw->pos_48.x * blend) / total;
         pos.y = (cw->vec_78.y * rest + cw->pos_48.y * blend) / total;
         pos.z = (cw->vec_78.z * rest + cw->pos_48.z * blend) / total;
-        func_80037FB4(&pos, (cw->value_30 * rest + cw->dist_0C * blend) / total,
-                      (cw->value_34 * rest + rot * blend) / total,
-                      (cw->value_38 * rest + cw->height_14 * blend) / total);
+        Camera_set(&pos, (cw->value_30 * rest + cw->dist_0C * blend) / total,
+                   (cw->value_34 * rest + rot * blend) / total,
+                   (cw->value_38 * rest + cw->height_14 * blend) / total);
         return;
     }
     cw->pos_48.y -= cw->flag_7;
-    func_80037FB4(&cw->pos_48, cw->dist_0C, cw->rot_10 + cw->value_1C,
-                  cw->height_14 + cw->value_20);
+    Camera_set(&cw->pos_48, cw->dist_0C, cw->rot_10 + cw->value_1C,
+               cw->height_14 + cw->value_20);
     if (cw->flag_7 != 0)
     {
         if (cw->flag_7 < 10)
@@ -564,7 +564,7 @@ void func_800392CC(void)
     }
     Camera_work.flag_8 = 1;
     cw->pos_48.y -= cw->flag_7;
-    func_80037FB4(&cw->pos_48, cw->dist_0C, cw->rot_10, cw->height_14);
+    Camera_set(&cw->pos_48, cw->dist_0C, cw->rot_10, cw->height_14);
     if (cw->flag_7 != 0)
     {
         if (cw->flag_7 < 10)
@@ -670,7 +670,7 @@ void func_800397E8(void)
     Player_work.value44d    = 0;
 }
 
-void func_80039820(void)
+void Camera_reset(void)
 {
     sint32 x;
     sint32 y;
@@ -693,7 +693,7 @@ void func_80039820(void)
     D_800A3968                                         = rot + 0x800;
 }
 
-void func_800398E0(sint32 arg0)
+void Swing_Camera(sint32 arg0)
 {
     if (arg0 > 0)
     {
@@ -723,7 +723,7 @@ void Swing_Camera2(sint32 arg0, uint32 arg1, uint32 arg2, CAM_DELTA *pos)
     }
 }
 
-sint32 func_800399EC(uint32 *cmd)
+sint32 camera_cmd_push(uint32 *cmd)
 {
     uint32 n;
 
@@ -737,14 +737,14 @@ sint32 func_800399EC(uint32 *cmd)
     return 1;
 }
 
-void func_80039A38(void *data)
+void Camera_cmd_set(void *data)
 {
     D_80097D6C = 0;
     D_80097D70 = 0;
-    func_800399EC(data);
+    camera_cmd_push(data);
 }
 
-void func_80039A60(void)
+void camera_cmd_exec(void)
 {
     uint32 *cmd;
 
@@ -775,7 +775,7 @@ void func_80039A60(void)
     }
 }
 
-sint32 func_80039B80(void)
+sint32 Camera_pitch_get(void)
 {
     if (D_800A3960 == 0)
     {
@@ -848,17 +848,17 @@ void func_80039DE8(void)
     Scene_work.routine_0 = D_80098670;
 }
 
-void func_80039E18(void)
+void Camera_return_resume(void)
 {
     Scene_work.routine_1 = D_80098674;
     Scene_work.routine_0 = D_80098670;
-    func_80039E50();
+    Camera_return_set();
 }
 
 // D_80097D2C and dist_3C get 0x200 in separate statements, with the vec_58.y store between
 // them; the chained form schedules the dist_0C load first. The x + 0x1000 - y wrap form fixes
-// the dir/near registers (as func_80039FFC).
-void func_80039E50(void)
+// the dir/near registers (as Camera_move_set).
+void Camera_return_set(void)
 {
     sint32 base;
     sint32 dir;
@@ -898,7 +898,7 @@ void func_80039E50(void)
     }
 }
 
-void func_80039FAC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Camera_move_set_pause(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     sint32 saved1;
     sint32 saved0;
@@ -909,11 +909,11 @@ void func_80039FAC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     Scene_work.routine_0 = 1;
     D_80098674           = saved1;
     D_80098670           = saved0;
-    func_80039FFC(vec, arg1, arg2, arg3);
+    Camera_move_set(vec, arg1, arg2, arg3);
 }
 
 // The wrap distance is written x + 0x1000 - y so the near distance is computed first.
-void func_80039FFC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Camera_move_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     sint32 base;
 
@@ -948,7 +948,7 @@ void func_80039FFC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     }
 }
 
-sint32 func_8003A13C(void)
+sint32 Camera_moving(void)
 {
     return D_800A3962 >= 0;
 }
@@ -1051,8 +1051,8 @@ sint32 func_8003A218(sint32 arg0)
     return near;
 }
 
-// Twin of func_80039E50.
-void func_8003A264(void)
+// Twin of Camera_return_set.
+void Camera_return_set2(void)
 {
     sint32 base;
     sint32 dir;

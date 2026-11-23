@@ -39,7 +39,7 @@ void func_801003E4(void)
     spawns    = D_80119554[room];
     mw->exits = D_801195EC[room];
     Obj_spawn_list(spawns, D_800C356D);
-    func_800371A0(D_8011974C[D_80119774[Game_work.value_51]], D_8011960C[Game_work.value_51]);
+    Fog_room_set(D_8011974C[D_80119774[Game_work.value_51]], D_8011960C[Game_work.value_51]);
     func_8005DC10(0);
     func_80100570();
 }
@@ -187,7 +187,7 @@ void func_80100844(STAGE_ROOM *wp)
             if (Fade_busy == 0 && Cd_read_sync2() == 0)
             {
                 Cd_xa_play_id(0x2000000D);
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 Sce_slot_open(&D_801198AC[0]);
                 Sce_slot_open(&D_801198AC[1]);
                 Sce_slot_open(&D_801198AC[2]);
@@ -254,13 +254,13 @@ void func_80100AF8(STAGE_ROOM *wp)
             case 1:
                 if (Cd_read_sync2() == 0)
                 {
-                    func_8003697C();
+                    Draw_dist_far();
                     wp->routine_5++;
                 }
                 break;
             case 2:
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 pl = &Player_work;
                 Player_control_on(pl);
                 STAGE_PL.value_76 = 0;
@@ -320,8 +320,8 @@ void func_80100D10(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_24);
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_24);
+        Close_WORK_5A4(wp->child_28);
         Close_EM_WORK(wp->child_2C);
         func_80101070(0, 2);
     }
@@ -379,7 +379,7 @@ void func_80100E8C(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_28);
         Close_EM_WORK(wp->child_2C);
         Close_EM_WORK(wp->child_30);
         Close_EM_WORK(wp->child_34);
@@ -623,9 +623,9 @@ void func_80101524(STAGE_ROOM_WORK *wp)
                 wp->routine_5++;
                 break;
             case 1:
-                func_8003697C();
+                Draw_dist_far();
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Player_control_on(&Player_work);
                 wp->routine_5++;
                 break;
@@ -770,8 +770,8 @@ void func_80101914(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_24);
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_24);
+        Close_WORK_5A4(wp->child_28);
         Close_EM_WORK(wp->child_3C);
         Sce_slot_open(&D_80119D14[3]);
         wp->child_24->routine_1 = 2;
@@ -794,7 +794,7 @@ void func_801019B0(STAGE_ROOM *wp)
             if (Fade_busy == 0)
             {
                 Cd_subcmd(0, 1, 0);
-                func_8003187C(wp->child_24);
+                Close_WORK_5A4(wp->child_24);
                 Obj_work_flag_change(0x7E, 0x80);
                 wp->reserved09[1] = 0x80;
                 Fade_start(7);
@@ -880,8 +880,8 @@ void func_80101C54(STAGE_ROOM *wp)
 {
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_24);
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_24);
+        Close_WORK_5A4(wp->child_28);
         Sce_slot_open(&D_80119D14[4]);
         Sce_slot_open(&D_80119D14[2]);
         Sce_slot_open(&D_80119D14[9]);
@@ -927,8 +927,8 @@ void func_80101D98(STAGE_ROOM *wp)
 
     if (wp->frame_10 == 0)
     {
-        func_8003187C(wp->child_24);
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_24);
+        Close_WORK_5A4(wp->child_28);
         Sce_slot_open(&D_80119D14[2]);
         Sce_slot_open(&D_80119D14[9]);
         for (i = 0; i < 5; i++)
@@ -1139,12 +1139,12 @@ void func_8010255C(STAGE_ROOM_WORK *wp)
                 Obj_work_flag_change(0x56, 0x80);
                 if (wp->reserved09[1] & 1)
                 {
-                    func_8003697C();
+                    Draw_dist_far();
                 }
                 Sce_script_next();
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Cd_subcmd(0, 1, 0);
                 wp->routine_5++;
             }
@@ -1401,7 +1401,7 @@ void func_80102DD8(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(face->shape_0, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(face->shape_0, 0x33, 0x37, 5));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -1418,7 +1418,7 @@ void func_80102DD8(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x120011, func_8002D404(face->shape_6, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(face->shape_6, 0x33, 0x37, 5));
     }
     face->prev_8 = face->shape_6;
 }
@@ -1582,7 +1582,7 @@ void func_80103410(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(face->shape_0, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(face->shape_0, 0x33, 0x37, 5));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -1599,7 +1599,7 @@ void func_80103410(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x120011, func_8002D404(face->shape_6, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(face->shape_6, 0x33, 0x37, 5));
     }
     face->prev_8 = face->shape_6;
 }
@@ -1825,7 +1825,7 @@ void func_80103C10(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_0, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_0, 0x2A, 0x40, 6));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -1842,7 +1842,7 @@ void func_80103C10(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_6, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_6, 0x2A, 0x40, 6));
     }
     face->prev_8 = face->shape_6;
 }
@@ -2045,7 +2045,7 @@ void func_80104364(STAGE_OBJ *wp)
         wp->scale.words[0] = 0x02000200;
         wp->scale.words[1] = 0x42100200;
         wp->flags_0 |= 2;
-        func_8002F9EC(wp, 0);
+        Model_work_init2(wp, 0);
         EM_Char_Set(wp, 0, 0);
         func_80104404(wp, face, 0);
         wp->u_C.b.byte_D++;
@@ -2078,7 +2078,7 @@ void func_8010444C(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_0 = face->mouth_C[face->index_4];
     if (face->shape_0 != face->prev_2)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_0, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_0, 0x2A, 0x40, 6));
     }
     face->prev_2 = face->shape_0;
     if (face->eyes_10[face->index_A + 1] != 0x3FFF)
@@ -2095,7 +2095,7 @@ void func_8010444C(STAGE_OBJ *wp, STAGE_FACE16 *face)
     face->shape_6 = face->eyes_10[face->index_A];
     if (face->shape_6 != face->prev_8)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_6, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_6, 0x2A, 0x40, 6));
     }
     face->prev_8 = face->shape_6;
 }
@@ -2203,7 +2203,7 @@ void func_801045F8(ST0B_OBJ *wp)
     }
     else
     {
-        func_8003187C(wp);
+        Close_WORK_5A4(wp);
     }
     func_801048FC(wp);
 }
@@ -2240,8 +2240,8 @@ void func_801048FC(ST0B_OBJ *wp)
     {
         func_80106550(wp);
     }
-    if ((ctl->flags_0 & 0x1000) && func_80031EF0(&wp->position, wp->rotation.y, 0x20, &pl->position,
-                                                 pl->rotation.y, 0x800) != 0)
+    if ((ctl->flags_0 & 0x1000) && Angle_range_check2(&wp->position, wp->rotation.y, 0x20,
+                                                      &pl->position, pl->rotation.y, 0x800) != 0)
     {
         ctl->flags_0 = (ctl->flags_0 & ~0x1000) | 2;
     }
@@ -2468,7 +2468,7 @@ void func_80105118(ST0B_OBJ *wp)
 
 void func_801053B0(ST0B_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
     Close_EM_WORK(wp->value_450);
 }
 
@@ -2501,8 +2501,8 @@ void func_80105404(ST0B_OBJ *wp)
         case 1:
             if (*flags & 0xC)
             {
-                if (func_80031EF0(&wp->position, wp->rotation.y, 0x100, &pl->position,
-                                  pl->rotation.y, 0x800) != 0)
+                if (Angle_range_check2(&wp->position, wp->rotation.y, 0x100, &pl->position,
+                                       pl->rotation.y, 0x800) != 0)
                 {
                     *flags |= 1;
                 }
@@ -2585,8 +2585,8 @@ void func_8010552C(ST0B_OBJ *wp)
         case 3:
             if (wp->value_A7 < 0)
             {
-                if (func_80031EF0(&wp->position, wp->rotation.y, 0x100, &pl->position,
-                                  Player_work.rotation.y, 0x800) == 0)
+                if (Angle_range_check2(&wp->position, wp->rotation.y, 0x100, &pl->position,
+                                       Player_work.rotation.y, 0x800) == 0)
                 {
                     ctl->flags_0 |= 1;
                 }
@@ -2943,8 +2943,8 @@ void func_80106278(ST0B_OBJ *wp)
             wp->value_43E = 0;
             // fall through
         case 1:
-            if (func_80031EF0(&ctl->child_D0->position, (wp->rotation.y + 0x800) & 0xFFF, 0x400,
-                              &pl->position, pl->rotation.y, 0x800) != 0)
+            if (Angle_range_check2(&ctl->child_D0->position, (wp->rotation.y + 0x800) & 0xFFF,
+                                   0x400, &pl->position, pl->rotation.y, 0x800) != 0)
             {
                 ctl->slot_60 = (ST0B_10C *)Open_SHL_WORK();
                 if (ctl->slot_60 != NULL)

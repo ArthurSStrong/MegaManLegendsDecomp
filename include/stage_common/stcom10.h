@@ -75,7 +75,7 @@ typedef struct
     STCOM_SVECTOR rotation_prev;            // 5C
 } STCOM10_OBJ;
 
-// A 0x50-byte slot (func_80031734).
+// A 0x50-byte slot (Open_WORK_50).
 typedef struct
 {
     uint8 flags_0;          // 00
@@ -122,17 +122,17 @@ extern STCOM10_PAIR stcom10_E_0010[]; // the objects spawned in the area, ended 
 
 // ROCK_NEO.EXE.
 extern uint32 Em_work_used; // allocation masks: 0x3C0 slots
-extern uint32 D_80098B20; // 0x5A4
+extern uint32 Work_5A4_used; // 0x5A4
 extern uint32 Shl_work_used; // 0x10C
-extern uint32 D_800989CC; // 0x50
+extern uint32 Work_50_used; // 0x50
 void Sce_flag_off(sint32 flag);
 sint32 Sce_flag_test(sint32 flag);
 sint32 Obj_id_class(uint8 id);
 STCOM10_OBJ *Obj_id_work(uint8 id);
 STCOM10_OBJ *Open_EM_WORK(void);
-STCOM10_OBJ *func_80031498(void);
+STCOM10_OBJ *Open_WORK_5A4(void);
 STCOM10_OBJ *Open_SHL_WORK(void);
-STCOM10_OBJ50 *func_80031734(void);
+STCOM10_OBJ50 *Open_WORK_50(void);
 
 void stcom10_func_0134(STCOM10_WORK *wp);
 

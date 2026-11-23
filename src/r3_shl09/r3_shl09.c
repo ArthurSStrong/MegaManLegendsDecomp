@@ -76,7 +76,7 @@ void func_800D8A98(SHL_WORK *wp)
     wp->col_c8 = 0;
     wp->flags_0 |= 6;
     wp->flags_6 |= 0x20;
-    rot.vx = wp->rot.vx = func_80039B80();
+    rot.vx = wp->rot.vx = Camera_pitch_get();
     rot.vy = wp->rot.vy = Player_work.rot.vy;
     rot.vz = wp->rot.vz = 0x680;
     RotMatrixYXZ(&rot, &wp->draw.mdl.mtx_8c);
@@ -314,7 +314,7 @@ void func_800D9608(SVECTOR *out, sint32 speed)
     SVECTOR rot;
     VECTOR v;
 
-    rot.vx = func_80039B80();
+    rot.vx = Camera_pitch_get();
     rot.vy = Player_work.rot.vy;
     rot.vz = 0;
     RotMatrixYXZ(&rot, &m);

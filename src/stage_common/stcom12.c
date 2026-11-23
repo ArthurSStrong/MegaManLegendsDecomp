@@ -274,7 +274,7 @@ void stcom12_func_0710(STCOM12_WORK *wp)
             // fall through
         case 1:
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
-            if (step != 0 || func_8003A13C())
+            if (step != 0 || Camera_moving())
             {
                 break;
             }
@@ -294,7 +294,7 @@ void stcom12_func_0710(STCOM12_WORK *wp)
             wp->routine_1++;
             break;
         case 4:
-            if (func_8003A13C())
+            if (Camera_moving())
             {
                 break;
             }
@@ -312,11 +312,11 @@ void stcom12_func_0710(STCOM12_WORK *wp)
             break;
         case 3:
         case 21:
-            func_80039E18();
+            Camera_return_resume();
             wp->routine_1++;
             break;
         case 22:
-            if (func_8003A13C())
+            if (Camera_moving())
             {
                 break;
             }
@@ -494,8 +494,8 @@ sint32 stcom12_func_0DE4(STCOM12_WORK *wp)
         stcom12_E_0000.x = target->value_180.x;
         stcom12_E_0000.y = target->value_180.y - 0x20;
         stcom12_E_0000.z = target->value_180.z;
-        func_80039FAC(&stcom12_E_0000, 0x100,
-                      Calc_degree2(&pl->position, &target->position) + 0x800, D_800A396C);
+        Camera_move_set_pause(&stcom12_E_0000, 0x100,
+                              Calc_degree2(&pl->position, &target->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;

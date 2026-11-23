@@ -59,7 +59,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
     }
     else
     {
-        func_8003187C(wp);
+        Close_WORK_5A4(wp);
     }
     if ((((ST09_PAIR_CTL *)ctl)->part_38 = Open_SHL_WORK()) != NULL)
     {
@@ -79,7 +79,7 @@ void func_8010FD88(STAGE_STCOM15_WORK_4E0 *wp)
     }
     else
     {
-        func_8003187C(wp);
+        Close_WORK_5A4(wp);
         Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_34);
     }
     wp->rotation.x          = 0;
@@ -251,7 +251,7 @@ void func_801101D4(STAGE_STCOM15_WORK_4E0 *wp)
 
 void func_801103D0(ST09_PAIR_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
     Close_SHL_WORK(wp->child_514);
     Close_SHL_WORK(wp->child_518);
 }
@@ -489,8 +489,8 @@ void func_801109A4(STAGE_STCOM15_WORK_4E0 *wp)
                 wp->anim_AC               = wp->anim_prev_AD;
                 ctl->level_6              = ctl->timer_4;
             }
-            else if (func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
-                                   wp->rotation.y, 0x400) != 0)
+            else if (Angle_range_check(&pl->position_fixed, pl->rotation.y, 0x800,
+                                       &wp->position_fixed, wp->rotation.y, 0x400) != 0)
             {
                 wp->routine_1             = 3;
                 wp->param_D               = 1;
@@ -876,8 +876,8 @@ void func_80111650(STAGE_STCOM15_WORK_4E0 *wp)
             if (Scr_collision_check(wp) & 0x1000)
             {
                 wp->flags_0 &= ~2;
-                i = func_80031E60(&pl->position_fixed, pl->rotation.y, 0x800, &wp->position_fixed,
-                                  wp->rotation.y, 0x400);
+                i = Angle_range_check(&pl->position_fixed, pl->rotation.y, 0x800,
+                                      &wp->position_fixed, wp->rotation.y, 0x400);
                 if (!(((ST09_PAIR_CTL *)ctl)->part_34->u_E.b.byte_E & 1))
                 {
                     if ((((ST09_PAIR_CTL *)ctl)->part_34->u_E.b.byte_E & 0x10) || i != 0)
@@ -925,7 +925,7 @@ void func_80111650(STAGE_STCOM15_WORK_4E0 *wp)
                 (((ST09_PAIR_CTL *)ctl)->part_38->u_E.b.byte_E & 1))
             {
                 Gauge_close(wp);
-                func_8003187C(wp);
+                Close_WORK_5A4(wp);
                 Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_34);
                 Close_SHL_WORK(((ST09_PAIR_CTL *)ctl)->part_38);
                 func_80047228(wp, &wp->joints_180[0], wp->variant_3);

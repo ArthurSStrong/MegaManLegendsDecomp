@@ -50,7 +50,7 @@ sint32 func_80100578(void);
 extern void *D_80109768[];       // model table by room
 extern void *D_80109820[];       // exit list by room
 extern void *D_801097BC[];       // spawn list by room
-extern uint8 D_80109824[][0x28]; // by room (func_800371A0)
+extern uint8 D_80109824[][0x28]; // by room (Fog_room_set)
 extern uint8 D_8010984C[][8];    // by D_801098E4[room]
 extern sint32 D_801098E4[];
 void func_80107B00(STAGE_SHOT *wp);
@@ -100,7 +100,7 @@ typedef struct
 #define ST11_PL_SBYTE(offset) (*((sint8 *)&Player_work + (offset)))
 
 void Homing_target_clear(sint32 bit);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_801076F8(ST11_SHL *wp);
 

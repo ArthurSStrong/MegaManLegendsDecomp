@@ -101,7 +101,7 @@ void func_8010FCD4(ST19_TRAIL *wp)
         pos.v.z = wp->z_20;
         pos.v.y = wp->y_1E - trail[i][0] * 4;
         i++;
-        p          = func_8002D464();
+        p          = Billboard_alloc();
         p->code_4  = 0x2E000000 | (shade << 16) | (shade << 8) | shade;
         p->uv_C    = 0x3D480000 | (v << 8) | u;
         p->uv_14   = 0x2E0000 | (v << 8) | (u + 0x1F);
@@ -382,9 +382,9 @@ void func_801106C4(STAGE_ROOM *wp)
             wp->routine_5++;
             break;
         case 4:
-            func_8003697C();
+            Draw_dist_far();
             D_800A395C = 1;
-            func_80039820();
+            Camera_reset();
             D_800C356C = -1;
             D_800C356E = 0x19;
             D_800C3560 = -0xCE4;
@@ -670,7 +670,7 @@ void func_80111024(STAGE_ROOM *wp)
     }
     if (wp->frame_10 == 0x262)
     {
-        func_8003187C(wp->child_28);
+        Close_WORK_5A4(wp->child_28);
     }
 }
 

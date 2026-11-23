@@ -1050,7 +1050,7 @@ void func_80111C40(ST1A_TALKER3 *wp, ST1A_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x50004, func_8002D404(face->shape_C, 0x3E, 0x3A, 4));
+        Model_uv_copy(wp->model_88, 0x50004, Uv_cell_offset(face->shape_C, 0x3E, 0x3A, 4));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -1067,7 +1067,7 @@ void func_80111C40(ST1A_TALKER3 *wp, ST1A_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x70006, func_8002D404(face->shape_F, 0x3E, 0x3A, 4));
+        Model_uv_copy(wp->model_88, 0x70006, Uv_cell_offset(face->shape_F, 0x3E, 0x3A, 4));
     }
     face->prev_10 = face->shape_F;
 }
@@ -1143,8 +1143,8 @@ void func_80111F80(ST1A_TALKER *wp, STAGE_FACE2 *face)
             {
                 face->shape_8 = 0;
             }
-            func_8002D320(wp->model_88, 0x50004,
-                          func_8002D404(face->mouth_0[face->shape_8], 0x3E, 0x3A, 4));
+            Model_uv_copy(wp->model_88, 0x50004,
+                          Uv_cell_offset(face->mouth_0[face->shape_8], 0x3E, 0x3A, 4));
             face->prev_9 = face->mouth_0[face->shape_8 + 1];
             face->shape_8 += 2;
         }
@@ -1161,8 +1161,8 @@ void func_80111F80(ST1A_TALKER *wp, STAGE_FACE2 *face)
             {
                 face->index_A = 0;
             }
-            func_8002D320(wp->model_88, 0x70006,
-                          func_8002D404(face->eyes_4[face->index_A], 0x3E, 0x3A, 4));
+            Model_uv_copy(wp->model_88, 0x70006,
+                          Uv_cell_offset(face->eyes_4[face->index_A], 0x3E, 0x3A, 4));
             face->shape_B = face->eyes_4[face->index_A + 1];
             face->index_A += 2;
         }
@@ -1342,7 +1342,7 @@ void func_801125F8(ST1A_WATCHER *wp)
         {
             pos = wp->position;
             pos.z -= 0x70;
-            func_8002CA10(&pos, 0x24, 0x200, 0);
+            Pos_Shadow_Trans(&pos, 0x24, 0x200, 0);
         }
     }
 }
@@ -1635,7 +1635,7 @@ void func_801130D0(ST1A_WATCHER *wp, ST1A_EYES *face)
     face->shape_8 = face->eyes_4[face->index_A];
     if (face->shape_8 != face->prev_9)
     {
-        func_8002D320(wp->model_88, 0x80007, func_8002D404(face->shape_8, 0x2D, 0x3C, 5));
+        Model_uv_copy(wp->model_88, 0x80007, Uv_cell_offset(face->shape_8, 0x2D, 0x3C, 5));
     }
     face->prev_9 = face->shape_8;
 }
@@ -2297,7 +2297,7 @@ void func_801144C8(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_C, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_C, 0x2A, 0x33, 6));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -2314,7 +2314,7 @@ void func_801144C8(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_F, 0x2A, 0x33, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_F, 0x2A, 0x33, 6));
     }
     face->prev_10 = face->shape_F;
 }
@@ -2520,7 +2520,7 @@ void func_80114B70(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_C, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_C, 0x33, 0x37, 5));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x3F)
@@ -2537,7 +2537,7 @@ void func_80114B70(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_F, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_F, 0x33, 0x37, 5));
     }
     face->prev_10 = face->shape_F;
 }
@@ -2953,7 +2953,7 @@ void func_80115828(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(face->shape_C, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(face->shape_C, 0x33, 0x37, 5));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -2970,7 +2970,7 @@ void func_80115828(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x120011, func_8002D404(face->shape_F, 0x33, 0x37, 5));
+        Model_uv_copy(wp->model_88, 0x120011, Uv_cell_offset(face->shape_F, 0x33, 0x37, 5));
     }
     face->prev_10 = face->shape_F;
 }
@@ -3404,7 +3404,7 @@ void func_801165FC(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0x110010, func_8002D404(face->shape_C, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x110010, Uv_cell_offset(face->shape_C, 0x2A, 0x40, 6));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -3421,7 +3421,7 @@ void func_801165FC(STAGE_OBJ *wp, STAGE_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x130012, func_8002D404(face->shape_F, 0x2A, 0x40, 6));
+        Model_uv_copy(wp->model_88, 0x130012, Uv_cell_offset(face->shape_F, 0x2A, 0x40, 6));
     }
     face->prev_10 = face->shape_F;
 }
@@ -4044,7 +4044,7 @@ void func_80117868(ST1A_OBJ *wp)
 
 void func_801178F0(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_80117910(STAGE_FACE2 *face, sint32 index)
@@ -4071,8 +4071,8 @@ void func_80117950(STAGE_OBJ *wp, STAGE_FACE2 *face)
             {
                 face->shape_8 = 0;
             }
-            func_8002D320(wp->model_88, 0xE000D,
-                          func_8002D404(face->mouth_0[face->shape_8], 0x3E, 0x3A, 4));
+            Model_uv_copy(wp->model_88, 0xE000D,
+                          Uv_cell_offset(face->mouth_0[face->shape_8], 0x3E, 0x3A, 4));
             face->prev_9 = face->mouth_0[face->shape_8 + 1];
             face->shape_8 += 2;
         }
@@ -4089,8 +4089,8 @@ void func_80117950(STAGE_OBJ *wp, STAGE_FACE2 *face)
             {
                 face->index_A = 0;
             }
-            func_8002D320(wp->model_88, 0x10000F,
-                          func_8002D404(face->eyes_4[face->index_A], 0x3E, 0x3A, 4));
+            Model_uv_copy(wp->model_88, 0x10000F,
+                          Uv_cell_offset(face->eyes_4[face->index_A], 0x3E, 0x3A, 4));
             face->shape_B = face->eyes_4[face->index_A + 1];
             face->index_A += 2;
         }
@@ -4862,7 +4862,7 @@ void func_80119114(ST1A_OBJ *wp, ST1A_FACE *face)
     face->shape_C = face->mouth_4[face->index_E];
     if (face->shape_C != face->prev_D)
     {
-        func_8002D320(wp->model_88, 0xE000D, func_8002D404(face->shape_C, 0x3E, 0x3A, 4));
+        Model_uv_copy(wp->model_88, 0xE000D, Uv_cell_offset(face->shape_C, 0x3E, 0x3A, 4));
     }
     face->prev_D = face->shape_C;
     if (face->eyes_8[face->index_11 + 1] != 0x7E)
@@ -4879,7 +4879,7 @@ void func_80119114(ST1A_OBJ *wp, ST1A_FACE *face)
     face->shape_F = face->eyes_8[face->index_11];
     if (face->shape_F != face->prev_10)
     {
-        func_8002D320(wp->model_88, 0x10000F, func_8002D404(face->shape_F, 0x3E, 0x3A, 4));
+        Model_uv_copy(wp->model_88, 0x10000F, Uv_cell_offset(face->shape_F, 0x3E, 0x3A, 4));
     }
     face->prev_10 = face->shape_F;
 }
@@ -5133,7 +5133,7 @@ void func_80119714(ST1A_OBJ *wp)
 
 void func_80119AF8(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_80119B18(ST1A_OBJ *wp)
@@ -6017,7 +6017,7 @@ void func_8011BA74(ST1A_OBJ *wp)
                     bp->slot_68[1]->value_E = 1;
                 }
                 bp->hit_0.flags_0.half &= ~0x180;
-                func_8003187C(wp);
+                Close_WORK_5A4(wp);
                 Close_SHL_WORK(bp->part_58[0]);
                 Close_SHL_WORK(bp->part_58[1]);
                 Close_SHL_WORK(bp->part_58[2]);
@@ -6033,7 +6033,7 @@ sint32 func_8011BC80(void)
 {
     STAGE_OBJ *op;
 
-    op = func_80031498();
+    op = Open_WORK_5A4();
     if (op != NULL)
     {
         op->flags_0            = 1;
@@ -6092,7 +6092,7 @@ void func_8011BDD8(ST1A_OBJ *wp, uint8 side)
         t = bp->value_72[side];
         if (D_80132DFC[i].start_0 < t && t < D_80132DFC[i].start_0 + 16)
         {
-            p     = func_8002D464();
+            p     = Billboard_alloc();
             t     = bp->value_72[side] - D_80132DFC[i].start_0;
             angle = (D_80132DFC[i].angle_4 + t * 24) & 0xFFF;
             dy    = D_80132DFC[i].dy_6 - t * (D_80132DFC[i].dy_6 / 16);
@@ -7809,7 +7809,7 @@ STAGE_OBJ *func_8011F27C(void)
 {
     STAGE_OBJ *op;
 
-    op = func_80031498();
+    op = Open_WORK_5A4();
     if (op != NULL)
     {
         op->flags_0    = 1;

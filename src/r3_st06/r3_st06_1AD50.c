@@ -85,7 +85,7 @@ void func_8011B00C(ST06_EVENT *wp)
         wp->routine_0 = 2;
         return;
     }
-    slot = (ST06_SLOT50 *)func_80031734();
+    slot = (ST06_SLOT50 *)Open_WORK_50();
     if (slot != NULL)
     {
         slot->flags_0   = 1;

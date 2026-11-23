@@ -189,7 +189,7 @@ void func_801050E8(ST0D_ORBITER *wp)
         }
         else
         {
-            func_8002F9EC(wp, 0);
+            Model_work_init2(wp, 0);
         }
         wp->color_B4 = 0x808080;
         wp->routine_0++;

@@ -412,5 +412,5 @@ void func_80108574(void)
 
 void func_8010857C(STAGE_OBJ *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }

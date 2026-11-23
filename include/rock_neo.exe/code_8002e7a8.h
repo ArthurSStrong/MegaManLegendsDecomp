@@ -388,7 +388,7 @@ typedef struct
 extern uint32 Homing_target_used;
 extern uint32 Eve_work_closing, Eve_work_used, Em_work_closing, Em_work_used;
 extern uint32 Shl_work_closing, Shl_work_used, Pl_shl_work_closing, Pl_shl_work_used;
-extern uint32 D_80098A4C, D_800989CC, D_80098B64, D_80098B20;
+extern uint32 Work_50_closing, Work_50_used, Work_5A4_closing, Work_5A4_used;
 // Two-word masks, indexed as (&D_x)[i]: retail reaches word 0 like a scalar
 extern uint32 Effect_work_closing, Effect_work_used;
 extern uint32 D_800988CC, D_8009883C;
@@ -467,10 +467,10 @@ void Search_Player_Reset(BYTE_WORK *wp);
 void func_80036A78(sint32 arg);
 void func_8002F3A8(BYTE_WORK *wp, uint32 flags);
 void Search_Player_Init(BYTE_WORK *wp, uint8 arg1, uint32 arg2);
-void func_8002F9EC(void *wp, sint32 arg);
+void Model_work_init2(void *wp, sint32 arg);
 uint32 View_check(ANGLE_WORK *wp, sint32 a1, sint32 a2, sint32 a3);
 void Model_work_init(void *wp, sint32 arg);
-void func_8002FA10(void *wp, sint32 arg);
+void Model_work_init3(void *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 void shift_eve(POS_WORK *wp, uint16 *delta);
 uint32 Obj_id_class(uint32 val);
@@ -516,11 +516,11 @@ typedef struct
 
 extern void Ride_clear(void *wp);
 void Work_stage_close(void);
-void func_8003187C(GAME_WORK_5A4 *wp);
+void Close_WORK_5A4(GAME_WORK_5A4 *wp);
 void Close_SHL_WORK(GAME_WORK_10C *wp);
 void Close_PL_SHL_WORK(GAME_WORK_10C *wp);
 void Close_EFFECT_WORK(GAME_WORK_48 *wp);
-void func_80031A4C(GAME_WORK_50 *wp);
+void Close_WORK_50(GAME_WORK_50 *wp);
 
 // Player_work seen as the array of two player slots (stride 0x5F4), tag byte at +1.
 typedef struct
@@ -582,7 +582,7 @@ typedef struct
 } SEEK_SLOT_5A4;
 
 extern SEEK_SLOT_3C0 Seek_3c0[16] __asm__("Em_work_tbl");
-extern SEEK_SLOT_5A4 Seek_5a4[4] __asm__("D_800C3580");
+extern SEEK_SLOT_5A4 Seek_5a4[4] __asm__("Work_5A4_tbl");
 
 extern sint32 rsin(sint32 angle);
 extern sint32 rcos(sint32 angle);
@@ -971,9 +971,9 @@ extern void OuterProduct12(VEC32_PAD_WORK *a, VEC32_PAD_WORK *b, VEC32_PAD_WORK 
 // pointer returns (GCC 2.7 accepted the implicit declarations; other compilers don't).
 #include "rock_neo.exe/game.h"
 GAME_WORK_3C0 *Open_EM_WORK(void);
-GAME_WORK_5A4 *func_80031498(void);
+GAME_WORK_5A4 *Open_WORK_5A4(void);
 GAME_WORK_10C *Open_SHL_WORK(void);
 GAME_WORK_24 *Open_EVE_WORK(void);
-GAME_WORK_50 *func_80031734(void);
+GAME_WORK_50 *Open_WORK_50(void);
 
 #endif

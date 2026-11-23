@@ -167,7 +167,7 @@ typedef struct
     uint8 reserved01[7];                    // 01
     uint8 routine_0;                        // 08
     uint8 reserved09[3];                    // 09
-    sint8 value_C;                          // 0C: nonzero: func_8002F9EC sets it up
+    sint8 value_C;                          // 0C: nonzero: Model_work_init2 sets it up
     sint8 radius_D;                         // 0D: radius / 10
     sint8 speed_E;                          // 0E
     sint8 reverse_F;                        // 0F: runs the other way round

@@ -52,7 +52,7 @@ void func_80100384(void)
     spawn                     = D_8011262C[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_801127DC[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_801128E4[D_8011295C[Game_work.value_51]], D_801127F4[Game_work.value_51]);
+    Fog_room_set(D_801128E4[D_8011295C[Game_work.value_51]], D_801127F4[Game_work.value_51]);
     func_8005DC10(0);
     func_80100578();
 }
@@ -199,7 +199,7 @@ void func_80100984(STAGE_ROOM *wp)
     }
     if (wp->routine_4 == 0)
     {
-        obj = func_80031734();
+        obj = Open_WORK_50();
         if (obj != NULL)
         {
             obj->flags_0 = 1;
@@ -654,7 +654,7 @@ void func_80101798(void)
         shot->flags_0 = 1;
         shot->kind_2  = 0x21;
     }
-    item = func_80031734();
+    item = Open_WORK_50();
     if (item != NULL)
     {
         item->flags_0   = 1;
@@ -900,7 +900,7 @@ void func_801018CC(STAGE_ROOM *wp)
                 Player_control_on(&Player_work);
                 D_800A395C         = 1;
                 ST08_PL->value_44B = 0;
-                func_80039820();
+                Camera_reset();
                 Sound_work.volume_6 = 0x7F;
                 Pl_key_type_set(&Player_work, (sint8)STAGE_GAME_BYTE(0x54));
                 wp->flags_0 = 0;
@@ -1001,10 +1001,10 @@ void func_801021D8(STAGE_ROOM *wp)
         case 1:
             if (Fade_busy == 0)
             {
-                func_8003697C();
+                Draw_dist_far();
                 Player_control_on(pl);
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 wp->routine_5++;
             }
             break;
@@ -1095,14 +1095,14 @@ void func_80102498(STAGE_ROOM *wp)
             vec.x = actor->position.x;
             vec.y = actor->position.y - 0x92;
             vec.z = actor->position.z;
-            func_80039FFC(&vec, 0xD4, Calc_degree2(&pos, &pl->position), 0);
+            Camera_move_set(&vec, 0xD4, Calc_degree2(&pos, &pl->position), 0);
             pl->flags_0 &= ~2;
             wp->routine_5++;
             break;
         case 1:
             turn = Muku(&actor->position, &pl->pos_438, actor->rotation.v.y, 0x80);
             actor->rotation.v.y += turn;
-            if (!func_8003A13C() && turn == 0)
+            if (!Camera_moving() && turn == 0)
             {
                 actor->value_D = 9;
                 actor->value_E = 1;
@@ -1129,7 +1129,7 @@ void func_80102498(STAGE_ROOM *wp)
         case 4:
             if (--wp->frame_10 == 0)
             {
-                func_80039E50();
+                Camera_return_set();
                 actor->rotation.v.y     = 0xA78;
                 actor->value_D          = 6;
                 actor->value_E          = 1;
@@ -1260,7 +1260,7 @@ void func_80102498(STAGE_ROOM *wp)
     {
         if (wp->routine_5 < 5)
         {
-            func_80039E50();
+            Camera_return_set();
         }
         Moji_task_kill(0);
         D_80118514    = 1;
@@ -1296,7 +1296,7 @@ void func_80102A24(STAGE_ROOM *wp)
             Player_control_on(&Player_work);
             D_800A395C = 1;
             ST08_PL->value_A++;
-            func_80039820();
+            Camera_reset();
             wp->flags_0 = 0;
             break;
     }

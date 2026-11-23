@@ -180,7 +180,7 @@ void func_80100AE0(STAGE_ROOM *wp);
 
 sint32 func_80101AC4(void);
 
-extern uint8 D_8010AC64[][0x28]; // by room (func_800371A0)
+extern uint8 D_8010AC64[][0x28]; // by room (Fog_room_set)
 extern uint8 D_8010AF44[];
 extern uint8 D_8010C98C[];
 extern uint8 D_8010C9C0[];
@@ -193,7 +193,7 @@ extern uint8 D_80111D2C[]; // scene command (Sce_slot_open)
 
 extern uint8 D_800987B5; // Message_event[5]
 extern sint8 D_80111CE0[];
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 void func_80109C8C(STAGE_OBJ50 *wp);
 
 sint32 func_80107850(ST04_ACTOR *wp);

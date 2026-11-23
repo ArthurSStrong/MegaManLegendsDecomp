@@ -529,7 +529,7 @@ void func_801D9388(void)
         sp->mtx.w[2]  = 0x200;
         sp->mtx.w[3]  = 0;
         sp->mtx.w[4]  = 0x200;
-        func_8002FA10(sp, &sp->value_3);
+        Model_work_init3(sp, &sp->value_3);
         sp->routine.b[0]++;
     }
     D_801DC208.value_60 = D_801DC0A4[Player_work.value_172];

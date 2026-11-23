@@ -34,7 +34,7 @@ void func_801002F8(void)
     STAGE_MAP_WORK_PTR->cells = cells;
     STAGE_MAP_WORK_PTR->exits = D_80114858[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
-    func_800371A0(D_80114960[D_801149E0[Game_work.value_51]], D_80114870[Game_work.value_51]);
+    Fog_room_set(D_80114960[D_801149E0[Game_work.value_51]], D_80114870[Game_work.value_51]);
     func_8005DC10(0);
     func_80100460();
 }
@@ -343,7 +343,7 @@ void func_80100920(ST1D_VIEW *wp)
 
 void func_80100E38(STAGE_OBJ *wp)
 {
-    func_8003187C(wp);
+    Close_WORK_5A4(wp);
 }
 
 void func_80100E58(ST1D_VIEW *wp)
@@ -1987,8 +1987,8 @@ void func_80103D6C(ST1D_VIEW *wp)
                 break;
             }
             if ((uint32)wp->value_80 > 0x480000 &&
-                func_80031E60(&ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x800,
-                              &wp->position_fixed, wp->rotation.y, 0x400))
+                Angle_range_check(&ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y,
+                                  0x800, &wp->position_fixed, wp->rotation.y, 0x400))
             {
                 wp->routine_1             = 13;
                 *(uint16 *)&wp->routine_2 = 0;

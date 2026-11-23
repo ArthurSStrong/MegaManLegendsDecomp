@@ -523,7 +523,7 @@ void func_8010F9F8(STAGE_OBJ *wp);
 void func_8010E800(STAGE_OBJ *wp);
 void func_8010E1AC(STAGE_OBJ *wp);
 void Sce_exit_lock_list(void *a, void *b);
-// func_800317AC is declared in stage_common/stage.h.
+// Open_WORK_50_index is declared in stage_common/stage.h.
 void func_8010E5DC(STAGE_OBJ *wp, STAGE_FACE16 *face);
 void func_8010F888(ST14_VILLAGER *wp);
 void func_8010ED0C(ST14_VILLAGER *wp);
@@ -560,15 +560,15 @@ void func_80047148_2(void *wp, STCOM_SVECTOR *pos) __asm__("func_80047148");
 // Obj_pos_set as func_8010CDB0 calls it: without a prototype, so an int result is set in v0.
 sint32 func_8002FEA4_int(void *wp, sint32 x, sint32 y, sint32 z) __asm__("Obj_pos_set");
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
-STAGE_OBJ *func_80031498(void);
+STAGE_OBJ *Open_WORK_5A4(void);
 void Sce_script_timer_clear(void);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 sint32 Scr_height_check(void *wp);
 void func_8005D4D4(void);
 void func_8005D4E8(void);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
-void func_8003187C(void *wp);
-void func_8003697C(void);
+void Close_WORK_5A4(void *wp);
+void Draw_dist_far(void);
 void Gauge_close(void *wp);
 void Swing_Camera2(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
 void Search_Player_Reset(void *track);

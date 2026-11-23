@@ -10,7 +10,7 @@ void func_80111300(STAGE_OBJ50 *wp)
     if (wp->variant_3 == 0xFF)
     {
         func_801113A4();
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     if (wp->routine_0 == 0)
@@ -80,7 +80,7 @@ void func_801113A4(void)
                     {
                         for (i = 0; i < 2; i++)
                         {
-                            wp = func_80031734();
+                            wp = Open_WORK_50();
                             if (wp != NULL)
                             {
                                 wp->flags_0 = 5;
@@ -122,7 +122,7 @@ void func_8011174C(STAGE_OBJ50 *wp)
     if (wp->variant_3 == 1)
     {
         func_80111D78();
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     D_80115000[wp->routine_0](wp);
@@ -192,7 +192,7 @@ void func_801118E0(STAGE_OBJ50 *wp)
     sint32 flag;
     pl   = &STAGE_PL;
     flag = 0;
-    if (wp->value_E == 0 && Em_work_used == 0 && D_80098B20 == 0)
+    if (wp->value_E == 0 && Em_work_used == 0 && Work_5A4_used == 0)
     {
         switch (Game_work.value_51)
         {
@@ -226,7 +226,7 @@ void func_801118E0(STAGE_OBJ50 *wp)
         }
         if (wp->value_E == 0)
         {
-            if ((Em_work_used == 0 && D_80098B20 == 0) || Sce_flag_test(flag) != 0)
+            if ((Em_work_used == 0 && Work_5A4_used == 0) || Sce_flag_test(flag) != 0)
             {
                 wp->routine_0 = 3;
                 wp->routine_3 = 0x10;
@@ -320,7 +320,7 @@ void func_80111C1C(STAGE_OBJ50 *wp)
 
 void func_80111D4C(STAGE_OBJ *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80111D6C(STAGE_OBJ *wp)
@@ -400,7 +400,7 @@ void func_80111D78(void)
                             D_8011A758                = rec->key_0;
                             STAGE_CELL_TBL[cell].info = (uint32 *)Stage_hed_model_get(rec->type_4);
                         }
-                        wp = func_80031734();
+                        wp = Open_WORK_50();
                         if (wp != NULL)
                         {
                             done0       = 1;
@@ -450,7 +450,7 @@ void func_80111D78(void)
                                 STAGE_CELL_TBL[cell].info =
                                     (uint32 *)Stage_hed_model_get(rec->type_4);
                             }
-                            wp = func_80031734();
+                            wp = Open_WORK_50();
                             if (wp != NULL)
                             {
                                 done1       = 1;

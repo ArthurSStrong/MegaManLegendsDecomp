@@ -698,14 +698,14 @@ void func_8011381C(ST00_MATRIX_OBJ *wp)
     if (++wp->count_D == 3)
     {
         wp->count_D = 0;
-        uv          = func_8002D22C(wp->model_14, 0x10001);
+        uv          = Model_face_get(wp->model_14, 0x10001);
         uv[0] = uv[2] = D_8011CA94[wp->frame_E][0] + 1;
         uv[4] = uv[6] = D_8011CA94[wp->frame_E][0] + 0x1F;
         uv[1]         = D_8011CA94[wp->frame_E][1] + 0x2F;
         uv[3]         = D_8011CA94[wp->frame_E][1] + 0x10;
         uv[5]         = D_8011CA94[wp->frame_E][1] + 0x3E;
         uv[7]         = D_8011CA94[wp->frame_E][1] + 1;
-        uv            = func_8002D22C(wp->model_14, 0x10000);
+        uv            = Model_face_get(wp->model_14, 0x10000);
         uv[0] = uv[2] = D_8011CA94[wp->frame_E][0] + 0x1F;
         uv[4] = uv[6] = D_8011CA94[wp->frame_E][0] + 0x3E;
         uv[1]         = D_8011CA94[wp->frame_E][1] + 0x3E;
@@ -940,7 +940,7 @@ void func_80113FEC(ST00_BOX_B *wp)
 
 void func_80114148(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80114168(void)
@@ -983,7 +983,7 @@ void func_80114170(ST00_BOX_B *wp)
         case 2:
             if (++wp->timer_C == 5)
             {
-                func_80031A4C(wp);
+                Close_WORK_50(wp);
                 if ((wp->variant_3 & 0xF) == 1)
                 {
                     func_80047228(wp, &wp->pos_38, 2);
@@ -1079,7 +1079,7 @@ void func_80114504(STAGE_MATRIX_OBJ *wp)
 
 void func_801145D4(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_801145F4(STAGE_MATRIX_OBJ *wp, ST00_BOX *box)
@@ -1703,7 +1703,7 @@ void func_80115A88(STAGE_PANEL_WORK *wp)
 {
     if (Sce_flag_test(0x607))
     {
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     wp->flags_0 |= 6;
@@ -1749,7 +1749,7 @@ void func_80115BD8(STAGE_OBJ *wp)
     if (!(temp_v0 & 0xFF))
     {
         wp->routine_0++;
-        func_800398E0(0x1E);
+        Swing_Camera(0x1E);
         Sound_call2(0x118, &wp->position_fixed_prev.y);
     }
     wp->position_fixed.f.y.words.fraction = (8 - wp->routine_3) << 9;
@@ -1771,7 +1771,7 @@ void func_80115CA4(STAGE_PANEL_WORK *wp)
     if (--wp->timer_B == 0)
     {
         Sound_key_off_voice(0xF);
-        func_80031A4C(wp);
+        Close_WORK_50(wp);
         return;
     }
     if (wp->timer_B == 0x10)
@@ -1827,7 +1827,7 @@ void func_80115E48(void)
 
 void func_80115E50(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80115E70(STAGE_OBJ *wp)
@@ -1845,7 +1845,7 @@ void func_80115EAC(ST00_POOL *wp)
     {
         if (Sce_flag_test(0x608) && Sce_flag_test(0x609))
         {
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
             return;
         }
         i = 1;
@@ -1857,7 +1857,7 @@ void func_80115EAC(ST00_POOL *wp)
     {
         if (Sce_flag_test((wp->variant_3 & 0x1F) ? 0x609 : 0x608))
         {
-            func_80031A4C(wp);
+            Close_WORK_50(wp);
             return;
         }
         i             = 0;
@@ -1887,7 +1887,7 @@ void func_80115EAC(ST00_POOL *wp)
         {
             for (i = 0; i < 16; i++)
             {
-                D_8012256C[i] = *(ST00_UV8 *)func_8002D22C((uint32)wp->model_14, i | 0x10000);
+                D_8012256C[i] = *(ST00_UV8 *)Model_face_get((uint32)wp->model_14, i | 0x10000);
             }
             rec = wp->model_14->parts_70->recs_24;
             for (i = 0; i < 25; i++)
@@ -2081,7 +2081,7 @@ void func_80116750(ST00_POOL *wp)
             uv.b[2] = D_8012256C[i].b[2] + anim;
             uv.b[4] = D_8012256C[i].b[4] + anim;
             uv.b[6] = D_8012256C[i].b[6] + anim;
-            func_8002D27C(wp->model_14, i | 0x10000, &uv);
+            Model_face_uv_set(wp->model_14, i | 0x10000, &uv);
         }
         rec = wp->model_14->parts_70->recs_24;
         for (i = 0; i < 25; i++)
@@ -2145,7 +2145,7 @@ void func_80116A68(STAGE_OBJ *wp)
 
 void func_80116A7C(STAGE_50 *wp)
 {
-    func_80031A4C(wp);
+    Close_WORK_50(wp);
 }
 
 void func_80116A9C(STAGE_SPARK *wp)

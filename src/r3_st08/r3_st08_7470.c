@@ -180,7 +180,7 @@ void func_801077AC(STAGE_ACTOR *wp)
             if (!(Moji_flag & 0x8000000))
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Player_control_on(pl);
                 pl->flags_0 |= 2;
                 wp->reserved04[0] = 0;

@@ -163,7 +163,7 @@ typedef struct
     STAGE_FACE face;                        // 4E0
 } ST0C_OBJ;
 
-// A 0x50-byte slot (func_80031734) that turns a model about z (func_8010B6D8; D_8010D83C by
+// A 0x50-byte slot (Open_WORK_50) that turns a model about z (func_8010B6D8; D_8010D83C by
 // variant_3).
 typedef struct ST0C_WHEEL ST0C_WHEEL;
 typedef void (*ST0C_WHEEL_FUNC)(ST0C_WHEEL *wp);
@@ -496,7 +496,7 @@ sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 void Map_obj_remove(sint32 id);
 void Homing_target_clear(sint32 bit);
-sint16 func_80039B80(void);
+sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
 void func_8010A5E0(ST0C_SHL *wp);
 
@@ -506,6 +506,6 @@ void func_8010A5E0(ST0C_SHL *wp);
 extern sint16 Pl_demo_pad;
 void Sce_script_next(void);
 void Moji_task_kill(sint32 arg);
-void func_8003A264(void);
+void Camera_return_set2(void);
 
 #endif

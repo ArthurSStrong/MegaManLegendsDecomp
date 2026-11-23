@@ -132,7 +132,7 @@ sint32 Pl_life_refill(sint32 arg0);
 sint32 Pl_energy_refill(sint32 arg0);
 sint32 func_8005DA1C(sint32 arg0);
 sint32 Sce_flag_test(sint32 flag);
-// Sce_flag_on, func_80039E18 and Money_add are void, but Capcom's moji code called them
+// Sce_flag_on, Camera_return_resume and Money_add are void, but Capcom's moji code called them
 // without prototypes (implicitly int): its calls keep the unused v0 result (call_value).
 #ifdef __wasm32__
 void Sce_flag_on(sint32 flag);
@@ -149,18 +149,18 @@ void Sound_call(sint32 sound, ...);
 void func_8005ACA8(MOJI_WORK *wp);
 sint32 rand(void);
 #ifdef __wasm32__
-void func_80039E18(void);
+void Camera_return_resume(void);
 #else
-sint32 func_80039E18(void);
+sint32 Camera_return_resume(void);
 #endif
 extern uint8 D_80097F6C[][6];
 extern uint8 D_80097F79[];
 extern uint8 D_80097F7A[];
 extern uint8 D_80097F7B[];
 sint32 Calc_degree2(MOJI_POS *pos, PL_SHORT_VECTOR *target);
-void func_80039FAC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
-void func_80039FFC(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
-sint32 func_8003A13C(void);
+void Camera_move_set_pause(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Camera_move_set(sint32 *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+sint32 Camera_moving(void);
 extern MOJI_POS *D_800987B8;
 extern uint8 Message_event[];
 extern sint32 D_800A396C;

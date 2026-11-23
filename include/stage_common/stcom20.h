@@ -71,7 +71,7 @@ extern STCOM20_FUNC stcom20_D_0018[]; // routine_0 handlers (stcom20_func_0818)
 // ROCK_NEO.EXE.
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
-void func_8002CA10(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
+void Pos_Shadow_Trans(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 sint32 Sce_point_angle(sint16 x0, sint16 z0, sint16 x1, sint16 z1);
 void func_8004AE88(sint16 *angle, sint32 hit);
 #ifdef __wasm32__

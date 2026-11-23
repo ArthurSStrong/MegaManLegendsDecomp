@@ -2247,7 +2247,7 @@ void func_8002366C(C8001F828_LAYER *lp)
     lp->prev_y = lp->y.w >> 16;
 }
 
-// Takes the camera arguments and passes them through to func_80037FB4 unchanged: a0-a3 stay
+// Takes the camera arguments and passes them through to Camera_set unchanged: a0-a3 stay
 // live, so reload puts the GTE pointer constants in t0 as retail does.
 void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
@@ -2257,7 +2257,7 @@ void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3
     if (D_80098824 == 0)
     {
         C8001F828_SCR_75 = D_800C0DE6;
-        func_80037FB4(vec, arg1, arg2, arg3);
+        Camera_set(vec, arg1, arg2, arg3);
         GTE_SET_MATRIX(0x1F800008);
         pos.vx = C8001F828_PL_POS(0);
         pos.vy = C8001F828_PL_POS(1);

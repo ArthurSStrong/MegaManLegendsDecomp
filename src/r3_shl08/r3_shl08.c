@@ -18,7 +18,7 @@ void func_800D8854(SHL08_WORK *wp)
     wp->col_c8 = 0;
     wp->flags_0 |= 6;
     wp->flags_6 |= 0x20;
-    rot.vx = func_80039B80() + ((rand() & 7) - 4) * 2;
+    rot.vx = Camera_pitch_get() + ((rand() & 7) - 4) * 2;
     rot.vy = (wp->rot_y & 0xFFF) + ((rand() & 7) - 4) * 2;
     rot.vz = 0;
     RotMatrixYXZ(&rot, &wp->mdl.mtx_8c);

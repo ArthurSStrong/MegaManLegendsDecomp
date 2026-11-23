@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The 0x50-byte work slot (func_80031734) of the objects in stcom21: a villager who talks
+// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom21: a villager who talks
 // (0000..0E48), a treasure chest whose lid opens (0E88..1908) and a smaller box (19D0..1DDC).
 typedef struct STCOM21_WORK STCOM21_WORK;
 
@@ -106,11 +106,11 @@ extern uint8 *D_8008CE3C;
 sint32 Sce_flag_test(sint32 flag);
 void Sce_flag_off(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
-STCOM21_WORK *func_80031734(void);
-void func_80031A4C(STCOM21_WORK *wp);
+STCOM21_WORK *Open_WORK_50(void);
+void Close_WORK_50(STCOM21_WORK *wp);
 STCOM21_OBJ *Open_EM_WORK(void);
-sint32 func_80031EF0(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
-                     sint32 target_angle, sint32 target_range);
+sint32 Angle_range_check2(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
+                          sint32 target_angle, sint32 target_range);
 sint32 Pl_shot_busy(STCOM_PL_WORK *pl);
 sint32 Money_check(sint32 a0);
 void Money_add(sint32 a0, sint32 a1, sint32 a2);

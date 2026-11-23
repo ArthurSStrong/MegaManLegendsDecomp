@@ -287,6 +287,6 @@ void stcom20_func_0818(STCOM20_WORK *wp)
     MulMatrix(&m->m, &rot.m);
     if (wp->flags_0 & 2)
     {
-        func_8002CA10(&wp->pos_AC, 0x30, 0x200, wp->rotation.y);
+        Pos_Shadow_Trans(&wp->pos_AC, 0x30, 0x200, wp->rotation.y);
     }
 }

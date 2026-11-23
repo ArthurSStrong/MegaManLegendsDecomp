@@ -15,7 +15,7 @@ typedef union
     ((mw)->words[0] = 0x1000, (mw)->words[1] = 0, (mw)->words[2] = 0x1000, (mw)->words[3] = 0,     \
      (mw)->words[4] = 0x1000, (mw)->words[5] = 0, (mw)->words[6] = 0, (mw)->words[7] = 0)
 
-// A 0x50-byte slot (func_80031734) as this stage's objects use it (STCOM21_WORK's layout).
+// A 0x50-byte slot (Open_WORK_50) as this stage's objects use it (STCOM21_WORK's layout).
 typedef struct ST12_OBJ50 ST12_OBJ50;
 typedef void (*ST12_OBJ50_FUNC)(ST12_OBJ50 *wp);
 
@@ -105,7 +105,7 @@ STCOM_MATRIX *MulMatrix(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
 extern void *D_801080D4[];       // model table by room
 extern void *D_801081D4[];       // exit list by room
 extern void *D_80108160[];       // spawn list by room
-extern uint8 D_801081E8[][0x28]; // by room (func_800371A0)
+extern uint8 D_801081E8[][0x28]; // by room (Fog_room_set)
 extern uint8 D_801082B0[][8];    // by D_80108330[room]
 extern sint32 D_80108330[];
 // The circle a ST12_ORBITER runs round (+0xCC).
@@ -127,7 +127,7 @@ typedef struct
     uint8 reserved01[7];                    // 01
     uint8 routine_0;                        // 08
     uint8 reserved09[3];                    // 09
-    sint8 value_C;                          // 0C: nonzero: func_8002F9EC sets it up
+    sint8 value_C;                          // 0C: nonzero: Model_work_init2 sets it up
     sint8 radius_D;                         // 0D: radius / 10
     sint8 speed_E;                          // 0E
     sint8 reverse_F;                        // 0F: runs the other way round

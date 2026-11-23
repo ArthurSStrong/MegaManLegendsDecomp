@@ -61,7 +61,7 @@ typedef struct
     uint8 reserved01[7];                    // 01
     uint8 routine_0;                        // 08
     uint8 reserved09[3];                    // 09
-    sint8 value_C;                          // 0C: nonzero: func_8002F9EC sets it up
+    sint8 value_C;                          // 0C: nonzero: Model_work_init2 sets it up
     sint8 radius_D;                         // 0D: radius / 10
     sint8 speed_E;                          // 0E
     sint8 reverse_F;                        // 0F: runs the other way round
@@ -157,7 +157,7 @@ typedef void (*ST0D_CELL_FUNC)(ST0D_CELL *cell, sint32 value);
 typedef void (*ST0D_GRID6_FUNC)(ST0D_GRID6 *grid, ST0D_CELL *cell);
 
 // From r3_st05 (STCOM21_WORK).
-// The 0x50-byte work slot (func_80031734) of the objects in stcom21: a villager who talks
+// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom21: a villager who talks
 // (0000..0E48), a treasure chest whose lid opens (0E88..1908) and a smaller box (19D0..1DDC).
 typedef struct ST0D_STCOM21_WORK ST0D_STCOM21_WORK;
 
@@ -500,7 +500,7 @@ typedef struct
     uint8 routine_1;                        // 09
     uint8 routine_2;                        // 0A
     uint8 routine_3;                        // 0B
-    sint8 value_C;                          // 0C: nonzero: func_8002F9EC sets it up
+    sint8 value_C;                          // 0C: nonzero: Model_work_init2 sets it up
     sint8 value_D;                          // 0D: talk table index
     sint8 value_E;                          // 0E
     sint8 value_F;                          // 0F
@@ -763,7 +763,7 @@ void func_801036B8(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_80103C90(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_80109BB0(STAGE_OBJ *wp);
 void func_80109FD4(STAGE_OBJ *wp);
-void func_80031A4C(void *wp);
+void Close_WORK_50(void *wp);
 void func_8010A190(STAGE_OBJ50 *wp);
 void func_8010A20C(STAGE_OBJ *wp);
 uint8 func_8010A9CC(STAGE_OBJ50 *wp);

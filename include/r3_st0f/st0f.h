@@ -169,8 +169,8 @@ void func_80103984(ST0F_OBJ *wp);
 void func_80103E70(ST0F_OBJ *wp);
 
 extern uint8 D_80106144[];
-extern STCOM_FIXED_VECTOR D_801061A0; // position for func_80039FAC
-extern STCOM_FIXED_VECTOR D_801061B0; // position for func_80039FAC
+extern STCOM_FIXED_VECTOR D_801061A0; // position for Camera_move_set_pause
+extern STCOM_FIXED_VECTOR D_801061B0; // position for Camera_move_set_pause
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 sint32 func_80103CD8(ST0F_OBJ *wp);
 
@@ -187,7 +187,7 @@ void Sce_flag_select(sint32 arg);
 
 extern void *D_80104B24[];       // spawn list by room
 extern void *D_80104C54[];       // exit list by room
-extern uint8 D_80104C64[][0x28]; // by room (func_800371A0)
+extern uint8 D_80104C64[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80104D04[][8];    // by D_80104D14[room]
 extern sint32 D_80104D14[];      // by room
 #endif                           // ST0F_H

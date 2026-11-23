@@ -201,7 +201,7 @@ extern sint32 D_800BC7B0;
 extern sint32 D_800BC7B4;
 extern sint32 D_800BC7B8;
 extern uint8 D_800BC738;
-void func_800398E0(sint32 arg);
+void Swing_Camera(sint32 arg);
 void Cd_seek_file(sint32 index);
 extern sint32 D_800891F0[];
 sint32 catan(sint32 x);
@@ -269,9 +269,9 @@ typedef struct
 
 extern SCENE_CAM D_800BC730;
 SCENE_SLOT *Open_EM_WORK(void);
-SCENE_SLOT *func_80031498(void);
+SCENE_SLOT *Open_WORK_5A4(void);
 SCENE_SLOT *Open_SHL_WORK(void);
-SCENE_SLOT *func_80031734(void);
+SCENE_SLOT *Open_WORK_50(void);
 extern uint8 D_800BC733;
 extern uint8 D_800BC739;
 extern sint32 D_800BC7E0;
@@ -309,9 +309,9 @@ void func_80067E18(void);
 void func_80067E4C(void);
 // Hand-written block copy entry inside func_80017618 (not yet in the registry).
 void func_800176DC(void *src, void *dst, sint32 count);
-void func_8003697C(void);
-void func_800369C0(void);
-void func_80036A1C(void);
+void Draw_dist_far(void);
+void Draw_dist_mid(void);
+void Draw_dist_near(void);
 #define GAME_WORK_CLEAR_174 ((uint32 *)((uint8 *)&Game_work + 0x174))
 // Scene_work through its fixed address: GCC gives each access its own lui
 // (no shared base register), as the script-step helpers need.

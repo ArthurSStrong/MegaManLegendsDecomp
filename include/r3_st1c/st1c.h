@@ -37,7 +37,7 @@ typedef struct
     uint8 reserved160[0x260];               // 160
 } ST1C_OBJ;
 
-// A 0x50-byte slot (func_80031734) as this stage's objects use it (STCOM21_WORK's layout).
+// A 0x50-byte slot (Open_WORK_50) as this stage's objects use it (STCOM21_WORK's layout).
 typedef struct
 {
     uint8 flags_0;         // 00
@@ -79,7 +79,7 @@ void func_801001E0(void);
 
 extern void *D_801038C0[];       // spawn list by room
 extern void *D_80103940[];       // exit list by room
-extern uint8 D_80103948[][0x28]; // by room (func_800371A0)
+extern uint8 D_80103948[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80103998[][8];    // by D_80103A18[room]
 extern sint32 D_80103A18[];
 void func_801001D0(void);

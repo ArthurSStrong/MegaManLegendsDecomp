@@ -262,7 +262,8 @@ void func_80105C08(ST04_ACTOR *wp)
                 pos.x = -0xE10;
                 pos.y = -1;
                 pos.z = 0xE10;
-                func_80039FAC(&cam, 0x100, Calc_degree2(&pos, &wp->position) + 0x800, D_800A396C);
+                Camera_move_set_pause(&cam, 0x100, Calc_degree2(&pos, &wp->position) + 0x800,
+                                      D_800A396C);
                 pl->flags_0 &= ~2;
                 wp->routine_0 = 0xA;
             }
@@ -280,7 +281,7 @@ void func_80105C08(ST04_ACTOR *wp)
             pos.z          = 0x10CC;
             step           = Muku(&wp->position, &pos, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
-            if (step == 0 && !func_8003A13C())
+            if (step == 0 && !Camera_moving())
             {
                 MojiTaskExec2(0, 0x4E);
                 EM_Char_Set(wp, 8, 0);
@@ -298,7 +299,7 @@ void func_80105C08(ST04_ACTOR *wp)
         case 11:
             if (!(Moji_flag & 0x8000000))
             {
-                func_80039E18();
+                Camera_return_resume();
                 pl->flags_0 |= 2;
                 wp->routine_0++;
             }
@@ -306,7 +307,7 @@ void func_80105C08(ST04_ACTOR *wp)
         case 12:
             step = Muku(&wp->position, &wp->value_C4, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
-            if (step == 0 && !func_8003A13C())
+            if (step == 0 && !Camera_moving())
             {
                 Player_control_on(pl);
                 Sce_flag_off(0x610);
@@ -468,7 +469,7 @@ void func_801061D8(ST04_ACTOR *wp)
             wp->routine_0++;
             break;
         case 21:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 Message_event_set(&wp->position, 2, 0, 0x48);
                 EM_Char_Set(wp, 8, 0);
@@ -541,10 +542,10 @@ void func_801061D8(ST04_ACTOR *wp)
             }
             break;
         case 29:
-            if (!func_8003A13C())
+            if (!Camera_moving())
             {
                 D_800A395C = 1;
-                func_80039820();
+                Camera_reset();
                 Player_control_on(pl);
                 pl->flags_0 |= 2;
                 Close_EM_WORK(wp);

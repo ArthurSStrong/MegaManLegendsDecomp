@@ -21,7 +21,7 @@ void func_800D8854(SHL_WORK *wp)
     wp->col_c4 = 0;
     wp->col_c8 = 0;
     wp->box_78 = &D_800D8F04;
-    rot.vx     = func_80039B80() - 0x80;
+    rot.vx     = Camera_pitch_get() - 0x80;
     rot.vy     = wp->rot_y & 0xFFF;
     rot.vz     = 0;
     RotMatrixYXZ(&rot, &m);

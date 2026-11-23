@@ -99,7 +99,7 @@ void func_800D8AB8(SHL0D_WORK *wp)
     SVECTOR rot;
     SVECTOR p;
 
-    rot.vx = func_80039B80();
+    rot.vx = Camera_pitch_get();
     rot.vy = Player_work.rot.vy & 0xFFF;
     rot.vz = (SHL_FRAME & 0xF) << 8;
     RotMatrixYXZ(&rot, &wp->mtx_8c);
