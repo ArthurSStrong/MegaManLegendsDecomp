@@ -6,11 +6,11 @@
 // assembly (TARGET_ASM, set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom06"
 
-void stcom06_func_0000(STCOM06_WORK *wp)
+void stcom06_move(STCOM06_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
-    stcom06_D_0030[wp->routine_0](wp);
+    stcom06_move_tbl[wp->routine_0](wp);
     if (!(wp->type_3 & 1))
     {
         wp->index_F++;
@@ -39,7 +39,7 @@ void stcom06_func_0000(STCOM06_WORK *wp)
     Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
 }
 
-void stcom06_func_0128(STCOM06_WORK *wp)
+void stcom06_move_init(STCOM06_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
 
@@ -65,13 +65,13 @@ void stcom06_func_0128(STCOM06_WORK *wp)
     wp->value_78 = 0;
     if (wp->type_3 & 0x80)
     {
-        wp->sprite.value_E = stcom06_D_0018[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0018[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame2_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame2_tbl[wp->index_F].b;
     }
     else
     {
-        wp->sprite.value_E = stcom06_D_0000[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
     }
     wp->sprite.value_10 = 0x20;
     wp->value_74        = 1;
@@ -88,7 +88,7 @@ void stcom06_func_0128(STCOM06_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom06_func_0320(STCOM06_WORK *wp)
+void stcom06_move_fly(STCOM06_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
     STCOM_SVECTOR unused2;
@@ -112,7 +112,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
             effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
-                stcom06_func_0E10(wp, effect);
+                stcom06_explosion_set(wp, effect);
             }
             wp->flags_0 = 0;
             Close_SHL_WORK(wp);
@@ -125,7 +125,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
         effect            = Open_EFFECT_WORK();
         if (effect != NULL)
         {
-            stcom06_func_0E10(wp, effect);
+            stcom06_explosion_set(wp, effect);
         }
         wp->flags_0 = 0;
         Close_SHL_WORK(wp);
@@ -140,7 +140,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
             effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
-                stcom06_func_0E10(wp, effect);
+                stcom06_explosion_set(wp, effect);
             }
             wp->flags_0 = 0;
             Close_SHL_WORK(wp);
@@ -156,13 +156,13 @@ void stcom06_func_0320(STCOM06_WORK *wp)
     wp->sprite.color_4.word = 0x2C808080;
     if (wp->type_3 & 0x80)
     {
-        wp->sprite.value_E = stcom06_D_0018[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0018[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame2_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame2_tbl[wp->index_F].b;
     }
     else
     {
-        wp->sprite.value_E = stcom06_D_0000[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
     }
     stcom06_func_0D1C(wp);
     Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
@@ -187,7 +187,7 @@ void stcom06_func_0320(STCOM06_WORK *wp)
     wp->value_76        = 0;
 }
 
-void stcom06_func_0594(STCOM06_WORK *wp)
+void stcom06_move_explode(STCOM06_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
     STCOM_EFFECT *effect;
@@ -199,19 +199,19 @@ void stcom06_func_0594(STCOM06_WORK *wp)
     wp->sprite.pos_8[2] = wp->position.z = wp->position_fixed.z >> 16;
     if (wp->type_3 & 0x80)
     {
-        wp->sprite.value_E = stcom06_D_0018[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0018[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame2_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame2_tbl[wp->index_F].b;
     }
     else
     {
-        wp->sprite.value_E = stcom06_D_0000[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
     }
     wp->sprite.value_10 = 0x20;
     effect              = Open_EFFECT_WORK();
     if (effect != NULL)
     {
-        stcom06_func_0E10(wp, effect);
+        stcom06_explosion_set(wp, effect);
     }
     wp->flags_0 = 0;
     Close_SHL_WORK(wp);
@@ -245,7 +245,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
             effect            = Open_EFFECT_WORK();
             if (effect != NULL)
             {
-                stcom06_func_0E10(wp, effect);
+                stcom06_explosion_set(wp, effect);
             }
             wp->flags_0 = 0;
             Close_SHL_WORK(wp);
@@ -258,7 +258,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
         effect            = Open_EFFECT_WORK();
         if (effect != NULL)
         {
-            stcom06_func_0E10(wp, effect);
+            stcom06_explosion_set(wp, effect);
         }
         wp->flags_0 = 0;
         Close_SHL_WORK(wp);
@@ -269,13 +269,13 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
     {
         if (wp->type_3 & 0x80)
         {
-            wp->sprite.value_E = stcom06_D_0018[wp->index_F].a;
-            wp->sprite.value_F = stcom06_D_0018[wp->index_F].b;
+            wp->sprite.value_E = stcom06_frame2_tbl[wp->index_F].a;
+            wp->sprite.value_F = stcom06_frame2_tbl[wp->index_F].b;
         }
         else
         {
-            wp->sprite.value_E = stcom06_D_0000[wp->index_F].a;
-            wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
+            wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
+            wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
         }
     }
     wp->position_fixed_prev = wp->position_fixed;
@@ -312,7 +312,7 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
     effect = Open_EFFECT_WORK();
     if (effect != NULL)
     {
-        stcom06_func_0E10(wp, effect);
+        stcom06_explosion_set(wp, effect);
     }
     wp->flags_0 = 0;
     Close_SHL_WORK(wp);
@@ -334,13 +334,13 @@ void stcom06_func_0934(STCOM06_WORK *wp)
     wp->position_prev       = wp->position;
     if (wp->type_3 & 0x80)
     {
-        wp->sprite.value_E = stcom06_D_0018[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0018[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame2_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame2_tbl[wp->index_F].b;
     }
     else
     {
-        wp->sprite.value_E = stcom06_D_0000[wp->index_F].a;
-        wp->sprite.value_F = stcom06_D_0000[wp->index_F].b;
+        wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
+        wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
     }
     wp->sprite.value_10 = 0x20;
     wp->flags_0 |= 2;
@@ -456,7 +456,7 @@ void stcom06_func_0D1C(STCOM06_WORK *wp)
     wp->position.z = wp->position.z;
 }
 
-void stcom06_func_0E10(STCOM06_WORK *wp, STCOM_EFFECT *effect)
+void stcom06_explosion_set(STCOM06_WORK *wp, STCOM_EFFECT *effect)
 {
     effect->flags_0 = 5;
     effect->kind_2  = 0x80;

@@ -6,16 +6,16 @@
 // set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom10"
 
-void stcom10_func_0000(STCOM10_WORK *wp)
+void stcom10_move(STCOM10_WORK *wp)
 {
-    stcom10_D_0000[wp->routine_0](wp);
+    stcom10_move_tbl[wp->routine_0](wp);
 }
 
-void stcom10_func_003C(STCOM10_WORK *wp)
+void stcom10_move_init(STCOM10_WORK *wp)
 {
     wp->flags_0      = 1;
     wp->state.area_8 = wp->state.value_9 = -1;
-    wp->state.table_0                    = stcom10_D_000C[Game_work.value_50][Game_work.value_51];
+    wp->state.table_0                    = stcom10_area_tbl[Game_work.value_50][Game_work.value_51];
     wp->state.area_4                     = NULL;
     stcom10_E_0010[0].index              = -1;
     stcom10_E_0010[0].flag               = 0xFF;
@@ -44,10 +44,10 @@ void stcom10_func_003C(STCOM10_WORK *wp)
             break;
     }
     wp->routine_0 = 1;
-    stcom10_func_0134(wp);
+    stcom10_area_check(wp);
 }
 
-void stcom10_func_0134(STCOM10_WORK *wp)
+void stcom10_area_check(STCOM10_WORK *wp)
 {
     STCOM10_STATE *st;
     STCOM10_AREA *area;
@@ -186,7 +186,7 @@ void stcom10_func_0134(STCOM10_WORK *wp)
     stcom10_E_000C = Work_50_used;
 }
 
-void stcom10_func_05F4(STCOM10_WORK *wp)
+void stcom10_area_spawn(STCOM10_WORK *wp)
 {
     STCOM10_AREA *area;
     STCOM10_SPAWN *spawn;

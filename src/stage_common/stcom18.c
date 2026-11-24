@@ -6,15 +6,15 @@
 // set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom18"
 
-void stcom18_func_0000(STCOM18_WORK *wp)
+void stcom18_move(STCOM18_WORK *wp)
 {
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom18_D_0018[wp->routine_0](wp);
+    stcom18_move_tbl[wp->routine_0](wp);
 }
 
-void stcom18_func_009C(STCOM18_WORK *wp)
+void stcom18_move_init(STCOM18_WORK *wp)
 {
     wp->sprite.value_12 = 0;
     wp->flags_0 |= 0x22;
@@ -36,13 +36,13 @@ void stcom18_func_009C(STCOM18_WORK *wp)
     {
         if (!(wp->flags_F & 8))
         {
-            wp->sprite.value_E = stcom18_D_0000[0].a;
-            wp->sprite.value_F = stcom18_D_0000[0].b;
+            wp->sprite.value_E = stcom18_frame_tbl[0].a;
+            wp->sprite.value_F = stcom18_frame_tbl[0].b;
         }
         else
         {
-            wp->sprite.value_E = stcom18_D_000C[0].a;
-            wp->sprite.value_F = stcom18_D_000C[0].b;
+            wp->sprite.value_E = stcom18_frame2_tbl[0].a;
+            wp->sprite.value_F = stcom18_frame2_tbl[0].b;
         }
         wp->sprite.color_4.word = 0x2C808080;
         wp->sprite.mode_0       = 0x3D48000E;
@@ -90,7 +90,7 @@ void stcom18_func_009C(STCOM18_WORK *wp)
     }
 }
 
-void stcom18_func_0260(STCOM18_WORK *wp)
+void stcom18_move_main(STCOM18_WORK *wp)
 {
     sint32 frame;
     sint32 hit;
@@ -105,13 +105,13 @@ void stcom18_func_0260(STCOM18_WORK *wp)
         frame = (0xF0 - wp->timer_B) % 6;
         if (!(wp->flags_F & 8))
         {
-            wp->sprite.value_E = stcom18_D_0000[frame].a;
-            wp->sprite.value_F = stcom18_D_0000[frame].b;
+            wp->sprite.value_E = stcom18_frame_tbl[frame].a;
+            wp->sprite.value_F = stcom18_frame_tbl[frame].b;
         }
         else
         {
-            wp->sprite.value_E = stcom18_D_000C[frame].a;
-            wp->sprite.value_F = stcom18_D_000C[frame].b;
+            wp->sprite.value_E = stcom18_frame2_tbl[frame].a;
+            wp->sprite.value_F = stcom18_frame2_tbl[frame].b;
         }
         wp->sprite.color_4.word = 0x2C808080;
         Pos_Shadow_Trans(&wp->position, 0x30, 0x200, 0);
@@ -156,7 +156,7 @@ void stcom18_func_0260(STCOM18_WORK *wp)
     }
 }
 
-void stcom18_func_04C8(STCOM18_WORK *wp)
+void stcom18_move_hit(STCOM18_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
@@ -165,18 +165,18 @@ void stcom18_func_04C8(STCOM18_WORK *wp)
     {
         if (wp->flags_F & 1)
         {
-            stcom18_func_0534(wp, effect);
+            stcom18_explosion_set(wp, effect);
         }
         else
         {
-            stcom18_func_0574(wp, effect);
+            stcom18_smoke_set(wp, effect);
         }
     }
     wp->flags_0 = 0;
     Close_SHL_WORK(wp);
 }
 
-void stcom18_func_0534(STCOM18_WORK *wp, STCOM_EFFECT *effect)
+void stcom18_explosion_set(STCOM18_WORK *wp, STCOM_EFFECT *effect)
 {
     effect->flags_0         = 7;
     effect->kind_2          = 0x80;
@@ -184,7 +184,7 @@ void stcom18_func_0534(STCOM18_WORK *wp, STCOM_EFFECT *effect)
     effect->sprite.position = wp->position;
 }
 
-void stcom18_func_0574(STCOM18_WORK *wp, STCOM_EFFECT *effect)
+void stcom18_smoke_set(STCOM18_WORK *wp, STCOM_EFFECT *effect)
 {
     effect->flags_0         = 3;
     effect->kind_2          = 0x83;

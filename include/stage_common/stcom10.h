@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// An object to spawn: copied into a work slot of the kind's pool (stcom10_func_05F4).
+// An object to spawn: copied into a work slot of the kind's pool (stcom10_area_spawn).
 typedef struct
 {
     sint8 flags_0;       // 00: -1 ends the list
@@ -35,14 +35,14 @@ typedef struct
 // Where the player is: the room's area table and the current area.
 typedef struct
 {
-    STCOM10_AREA *table_0; // 00: this room's areas (stcom10_D_000C)
+    STCOM10_AREA *table_0; // 00: this room's areas (stcom10_area_tbl)
     STCOM10_AREA *area_4;  // 04: the area the player is in
     sint8 area_8;          // 08: its area_2
     sint8 value_9;         // 09: its value_0
 } STCOM10_STATE;
 
 // The work slot stcom10 runs on: watches the player's map cell against a per-room table and
-// sets scene flags (stcom10_func_0134).
+// sets scene flags (stcom10_area_check).
 typedef struct
 {
     uint8 flags_0;         // 00
@@ -52,7 +52,7 @@ typedef struct
     STCOM10_STATE state;   // 14
 } STCOM10_WORK;
 
-// A work slot as stcom10_func_05F4 sets it up (the 0x3C0, 0x5A4 and 0x10C pools).
+// A work slot as stcom10_area_spawn sets it up (the 0x3C0, 0x5A4 and 0x10C pools).
 typedef struct
 {
     uint8 flags_0;                          // 00
@@ -106,8 +106,9 @@ typedef struct
 
 typedef void (*STCOM10_FUNC)(STCOM10_WORK *wp);
 
-extern STCOM10_FUNC stcom10_D_0000[];   // routine_0 handlers (stcom10_func_0000)
-extern STCOM10_AREA **stcom10_D_000C[]; // tables by stage (Game_work.value_50) and room (value_51)
+extern STCOM10_FUNC stcom10_move_tbl[]; // routine_0 handlers (stcom10_move)
+// Area tables by stage (Game_work.value_50) and room (value_51).
+extern STCOM10_AREA **stcom10_area_tbl[];
 extern uint32 stcom10_E_0000;         // the pools' allocation masks at the last area change: 0x5A4
 extern uint32 stcom10_E_0004;         // 0x3C0
 extern uint32 stcom10_E_0008;         // 0x10C
@@ -134,6 +135,6 @@ STCOM10_OBJ *Open_WORK_5A4(void);
 STCOM10_OBJ *Open_SHL_WORK(void);
 STCOM10_OBJ50 *Open_WORK_50(void);
 
-void stcom10_func_0134(STCOM10_WORK *wp);
+void stcom10_area_check(STCOM10_WORK *wp);
 
 #endif // STCOM10_H

@@ -7,19 +7,19 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom35"
 
 // An emitter (value_D 0) that puts out a glowing puff (value_D 1) every 16 frames for 16 frames.
-void stcom35_func_0000(STCOM_EFFECT *wp)
+void stcom35_move(STCOM_EFFECT *wp)
 {
     if (wp->value_D == 0)
     {
-        stcom35_D_0008[wp->variant_3](wp);
+        stcom35_emit_tbl[wp->variant_3](wp);
     }
     else
     {
-        stcom35_D_0000[wp->routine_0](wp);
+        stcom35_puff_tbl[wp->routine_0](wp);
     }
 }
 
-void stcom35_func_006C(STCOM_EFFECT *wp)
+void stcom35_emit(STCOM_EFFECT *wp)
 {
     STCOM_EFFECT *fx;
 
@@ -64,24 +64,24 @@ void stcom35_func_006C(STCOM_EFFECT *wp)
 }
 
 // A puff: brightens, holds, then fades.
-void stcom35_func_0190(STCOM_EFFECT *wp)
+void stcom35_puff_main(STCOM_EFFECT *wp)
 {
     switch (wp->variant_3)
     {
         case 0:
             if (wp->timer_B >= 0x3F)
             {
-                wp->sprite.color_4.word += stcom35_D_0010[wp->timer_E] * 8;
+                wp->sprite.color_4.word += stcom35_color_tbl[wp->timer_E] * 8;
             }
             else if (wp->timer_B <= 0x20)
             {
-                wp->sprite.color_4.word -= stcom35_D_0010[wp->timer_E] * 4;
+                wp->sprite.color_4.word -= stcom35_color_tbl[wp->timer_E] * 4;
             }
             break;
         case 1:
             if (wp->timer_B >= 0xE1)
             {
-                wp->sprite.color_4.word += stcom35_D_0010[wp->timer_E] * 8;
+                wp->sprite.color_4.word += stcom35_color_tbl[wp->timer_E] * 8;
             }
             break;
     }
@@ -91,7 +91,7 @@ void stcom35_func_0190(STCOM_EFFECT *wp)
     }
 }
 
-void stcom35_func_0264(STCOM_EFFECT *wp)
+void stcom35_puff_end(STCOM_EFFECT *wp)
 {
     Close_EFFECT_WORK(wp);
 }

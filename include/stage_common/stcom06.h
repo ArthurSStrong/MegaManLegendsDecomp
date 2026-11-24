@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// Two bytes from a table of halfword pairs (stcom06_func_0594).
+// Two bytes from a table of halfword pairs (stcom06_move_explode).
 typedef struct
 {
     uint16 a;
@@ -17,7 +17,7 @@ typedef struct
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
     uint8 reserved02;                       // 02
-    uint8 type_3;                           // 03: bit 7 picks stcom06_D_0018 over stcom06_D_0000
+    uint8 type_3;                           // 03: bit 7 picks stcom06_frame2_tbl
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
     uint8 routine_1;                        // 09
@@ -50,11 +50,11 @@ typedef struct
 
 typedef void (*STCOM06_FUNC)(STCOM06_WORK *wp);
 
-extern STCOM06_PAIR stcom06_D_0000[];
-extern STCOM06_PAIR stcom06_D_0018[];
-extern STCOM06_FUNC stcom06_D_0030[]; // routine_0 handlers (stcom06_func_0000)
+extern STCOM06_PAIR stcom06_frame_tbl[];
+extern STCOM06_PAIR stcom06_frame2_tbl[];
+extern STCOM06_FUNC stcom06_move_tbl[]; // routine_0 handlers (stcom06_move)
 
-void stcom06_func_0E10(STCOM06_WORK *wp, STCOM_EFFECT *effect);
+void stcom06_explosion_set(STCOM06_WORK *wp, STCOM_EFFECT *effect);
 void stcom06_func_0E68(STCOM06_WORK *wp, STCOM_EFFECT *effect);
 sint16 stcom06_func_0A80(STCOM06_WORK *wp);
 void stcom06_func_0D1C(STCOM06_WORK *wp);

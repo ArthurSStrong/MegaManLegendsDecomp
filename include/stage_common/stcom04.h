@@ -7,7 +7,7 @@
 // The block at +0x348 of the work slot.
 typedef struct
 {
-    sint32 value_0;          // 348: cleared after every routine (stcom04_func_01A0)
+    sint32 value_0;          // 348: cleared after every routine (stcom04_bird)
     sint32 value_4;          // 34C
     sint32 value_8;          // 350
     sint32 value_C;          // 354
@@ -15,12 +15,13 @@ typedef struct
     STCOM_SVECTOR rot_speed; // 360: added to the rotation each frame
 } STCOM04_CTL;
 
-// The 0x3C0-byte work slot stcom04 runs on (freed through ROCK_NEO's Close_EM_WORK).
+// The 0x3C0-byte work slot stcom04 runs on (freed through ROCK_NEO's Close_EM_WORK): a bird
+// that walks, takes off when Mega Man comes close, or (type 1) can be examined.
 typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 reserved01[2];                    // 01
-    uint8 index_3;                          // 03: stcom04_D_0000 handler
+    uint8 index_3;                          // 03: stcom04_type_tbl handler
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
     uint8 routine_1;                        // 09: also a counter
@@ -68,24 +69,24 @@ typedef struct
 
 typedef void (*STCOM04_FUNC)(STCOM04_WORK *wp);
 
-extern STCOM04_FUNC stcom04_D_0000[];     // handlers by index_3 (stcom04_func_0000)
-extern STCOM04_FUNC stcom04_D_0008[];     // routine_0 handlers (stcom04_func_0B58)
-extern uint8 stcom04_D_0010[];            // data_78 (stcom04_func_00CC)
-// Another object's data: position for Camera_move_set_pause.
-extern STCOM_FIXED_VECTOR stcom04_E_0000;
+extern STCOM04_FUNC stcom04_type_tbl[]; // handlers by index_3 (stcom04_move)
+extern STCOM04_FUNC stcom04_flee_tbl[]; // routine_0 handlers (stcom04_flee)
+extern uint8 stcom04_D_0010[];          // data_78 (stcom04_work_init)
+// Camera target for Camera_move_set_pause (stcom04_talk_check).
+extern STCOM_FIXED_VECTOR stcom04_cam_target;
 
 // ROCK_NEO.EXE: steps the angle `rot` toward `goal` by at most `speed`; returns the step (0 when
 // there). Its result isn't sign-extended here (see rock_neo.h).
 sint32 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 
-void stcom04_func_00CC(STCOM04_WORK *wp);
-void stcom04_func_0748(STCOM04_WORK *wp, sint32 hit);
-void stcom04_func_07D0(STCOM04_WORK *wp);
+void stcom04_work_init(STCOM04_WORK *wp);
+void stcom04_turn_set(STCOM04_WORK *wp, sint32 hit);
+void stcom04_player_check(STCOM04_WORK *wp);
 void stcom04_func_0898(STCOM04_WORK *wp, uint8 on);
 void stcom04_func_08B8(STCOM04_WORK *wp, uint8 on);
-sint32 stcom04_func_08E0(STCOM04_WORK *wp);
-void stcom04_func_0A10(STCOM04_WORK *wp, sint32 hit);
-uint8 stcom04_func_0A84(STCOM04_WORK *wp, uint32 *hit);
+sint32 stcom04_talk_check(STCOM04_WORK *wp);
+void stcom04_circle_turn(STCOM04_WORK *wp, sint32 hit);
+uint8 stcom04_pos_move(STCOM04_WORK *wp, uint32 *hit);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

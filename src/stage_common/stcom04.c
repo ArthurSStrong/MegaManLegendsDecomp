@@ -7,19 +7,19 @@
 // stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom04"
 
-void stcom04_func_0000(STCOM04_WORK *wp)
+void stcom04_move(STCOM04_WORK *wp)
 {
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom04_D_0000[wp->index_3](wp);
+    stcom04_type_tbl[wp->index_3](wp);
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0xC, 0x200, 0);
     }
 }
 
-void stcom04_func_00CC(STCOM04_WORK *wp)
+void stcom04_work_init(STCOM04_WORK *wp)
 {
     wp->rotation.x = 0;
     wp->rotation.z = 0;
@@ -51,7 +51,7 @@ void stcom04_func_00CC(STCOM04_WORK *wp)
     wp->count_C          = 0;
 }
 
-void stcom04_func_01A0(STCOM04_WORK *wp)
+void stcom04_bird(STCOM04_WORK *wp)
 {
     uint32 hit;
     STCOM_PL_WORK *pl;
@@ -62,7 +62,7 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
     switch (wp->routine_0)
     {
         case 0:
-            stcom04_func_00CC(wp);
+            stcom04_work_init(wp);
             EM_Char_Set(wp, 1, 0);
             stcom04_func_08B8(wp, 0);
             stcom04_func_0898(wp, 1);
@@ -72,7 +72,7 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             wp->rotation.x = (wp->rotation.x + ctl->rot_speed.x) & 0xFFF;
             wp->rotation.y = (wp->rotation.y + ctl->rot_speed.y) & 0xFFF;
             wp->rotation.z = (wp->rotation.z + ctl->rot_speed.z) & 0xFFF;
-            if (stcom04_func_0A84(wp, &hit))
+            if (stcom04_pos_move(wp, &hit))
             {
                 return;
             }
@@ -80,9 +80,9 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             wp->position_fixed.y = wp->position.y << 16;
             if (hit)
             {
-                stcom04_func_0748(wp, hit);
+                stcom04_turn_set(wp, hit);
             }
-            stcom04_func_07D0(wp);
+            stcom04_player_check(wp);
             EM_Char_Move(wp);
             if (wp->routine_1 == 0)
             {
@@ -96,17 +96,17 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
         case 2:
             if (wp->routine_1 == 10)
             {
-                stcom04_func_0748(wp, 0);
+                stcom04_turn_set(wp, 0);
                 wp->routine_0 = 1;
                 wp->routine_1 = rand() & 0x3F;
             }
-            stcom04_func_07D0(wp);
+            stcom04_player_check(wp);
             wp->routine_1++;
             break;
         case 3:
             hit = Muku(&pl->position, &wp->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + hit) & 0xFFF;
-            if (stcom04_func_0A84(wp, &hit))
+            if (stcom04_pos_move(wp, &hit))
             {
                 return;
             }
@@ -114,9 +114,9 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             wp->position_fixed.y = wp->position.y << 16;
             if (hit)
             {
-                stcom04_func_0748(wp, hit);
+                stcom04_turn_set(wp, hit);
             }
-            stcom04_func_07D0(wp);
+            stcom04_player_check(wp);
             goto draw;
         case 4:
             if (wp->frame_A4 == 0 || wp->frame_A4 == 8)
@@ -133,7 +133,7 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             {
                 EM_Char_Move(wp);
             }
-            if (stcom04_func_0A84(wp, &hit))
+            if (stcom04_pos_move(wp, &hit))
             {
                 return;
             }
@@ -141,7 +141,7 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             wp->position_fixed.y = wp->position.y << 16;
             if (hit)
             {
-                stcom04_func_0748(wp, hit);
+                stcom04_turn_set(wp, hit);
             }
             break;
         case 5:
@@ -156,13 +156,13 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             {
                 EM_Char_Move(wp);
             }
-            if (stcom04_func_0A84(wp, &hit))
+            if (stcom04_pos_move(wp, &hit))
             {
                 return;
             }
             if (hit)
             {
-                stcom04_func_0748(wp, hit);
+                stcom04_turn_set(wp, hit);
             }
             break;
         case 6:
@@ -180,15 +180,15 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
             {
                 wp->velocity.y = 0;
             }
-            if (stcom04_func_0A84(wp, &hit))
+            if (stcom04_pos_move(wp, &hit))
             {
                 return;
             }
             if (hit != 0 || (wp->routine_1 & 0x3F) == 0)
             {
-                stcom04_func_0748(wp, hit);
+                stcom04_turn_set(wp, hit);
             }
-            stcom04_func_0A10(wp, hit);
+            stcom04_circle_turn(wp, hit);
             wp->routine_1++;
             goto draw;
         case 8:
@@ -205,7 +205,7 @@ void stcom04_func_01A0(STCOM04_WORK *wp)
     ctl->value_0 = 0;
 }
 
-void stcom04_func_05E0(STCOM04_WORK *wp)
+void stcom04_bird_talk(STCOM04_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     sint16 step;
@@ -214,11 +214,11 @@ void stcom04_func_05E0(STCOM04_WORK *wp)
     switch (wp->routine_0)
     {
         case 0:
-            stcom04_func_00CC(wp);
+            stcom04_work_init(wp);
             wp->routine_0++;
             break;
         case 1:
-            if (stcom04_func_08E0(wp))
+            if (stcom04_talk_check(wp))
             {
                 wp->routine_0++;
             }
@@ -253,7 +253,7 @@ void stcom04_func_05E0(STCOM04_WORK *wp)
     Solid_set(wp, 1, -1, 0);
 }
 
-void stcom04_func_0748(STCOM04_WORK *wp, sint32 hit)
+void stcom04_turn_set(STCOM04_WORK *wp, sint32 hit)
 {
     STCOM04_CTL *ctl;
     sint32 speed;
@@ -281,7 +281,7 @@ void stcom04_func_0748(STCOM04_WORK *wp, sint32 hit)
     ctl->rot_speed.z = 0;
 }
 
-void stcom04_func_07D0(STCOM04_WORK *wp)
+void stcom04_player_check(STCOM04_WORK *wp)
 {
     uint32 dist;
 
@@ -338,7 +338,7 @@ void stcom04_func_08B8(STCOM04_WORK *wp, uint8 on)
     }
 }
 
-sint32 stcom04_func_08E0(STCOM04_WORK *wp)
+sint32 stcom04_talk_check(STCOM04_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -350,17 +350,17 @@ sint32 stcom04_func_08E0(STCOM04_WORK *wp)
         pl->target_184 = NULL;
         pl->flags_0 &= ~2;
         pl->flags_bd |= 0x40;
-        stcom04_E_0000.x = wp->value_180.x;
-        stcom04_E_0000.y = wp->value_180.y - 0x20;
-        stcom04_E_0000.z = wp->value_180.z;
-        Camera_move_set_pause(&stcom04_E_0000, 0x100,
+        stcom04_cam_target.x = wp->value_180.x;
+        stcom04_cam_target.y = wp->value_180.y - 0x20;
+        stcom04_cam_target.z = wp->value_180.z;
+        Camera_move_set_pause(&stcom04_cam_target, 0x100,
                               Calc_degree2(&pl->position, &wp->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
 }
 
-void stcom04_func_0A10(STCOM04_WORK *wp, sint32 hit)
+void stcom04_circle_turn(STCOM04_WORK *wp, sint32 hit)
 {
     if (hit != 0 && ++wp->count_C >= 0x3D)
     {
@@ -370,7 +370,7 @@ void stcom04_func_0A10(STCOM04_WORK *wp, sint32 hit)
     }
 }
 
-uint8 stcom04_func_0A84(STCOM04_WORK *wp, uint32 *hit)
+uint8 stcom04_pos_move(STCOM04_WORK *wp, uint32 *hit)
 {
     Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, 0);
     if (Scr_area_check(&wp->position) != 0)
@@ -394,17 +394,17 @@ void stcom04_func_0AF4(STCOM04_WORK *wp)
     EM_World_Pos_Calc_YXZ(wp);
 }
 
-void stcom04_func_0B58(STCOM04_WORK *wp)
+void stcom04_flee(STCOM04_WORK *wp)
 {
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom04_D_0008[wp->routine_0](wp);
+    stcom04_flee_tbl[wp->routine_0](wp);
 }
 
-void stcom04_func_0BF4(STCOM04_WORK *wp)
+void stcom04_flee_init(STCOM04_WORK *wp)
 {
-    stcom04_func_00CC(wp);
+    stcom04_work_init(wp);
     EM_Char_Set(wp, 3, rand() & 3);
     stcom04_func_08B8(wp, 1);
     stcom04_func_0898(wp, 0);
@@ -416,7 +416,7 @@ void stcom04_func_0BF4(STCOM04_WORK *wp)
     Sound_call2(0x109, &wp->position);
 }
 
-void stcom04_func_0C88(STCOM04_WORK *wp)
+void stcom04_flee_main(STCOM04_WORK *wp)
 {
     uint32 hit;
 
@@ -426,7 +426,7 @@ void stcom04_func_0C88(STCOM04_WORK *wp)
         Close_EM_WORK(wp);
     }
     wp->velocity.y -= 0x10;
-    if (!stcom04_func_0A84(wp, &hit))
+    if (!stcom04_pos_move(wp, &hit))
     {
         EM_Char_Move(wp);
     }

@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// A frame's sprite bytes (value_E, value_F) in stcom18_D_0000 and stcom18_D_000C.
+// A frame's sprite bytes (value_E, value_F) in stcom18_frame_tbl and stcom18_frame2_tbl.
 typedef struct
 {
     uint8 a;
@@ -42,14 +42,14 @@ typedef struct
 
 typedef void (*STCOM18_FUNC)(STCOM18_WORK *wp);
 
-extern STCOM18_PAIR stcom18_D_0000[6]; // frames (flags_F bit 0 without bit 3)
-extern STCOM18_PAIR stcom18_D_000C[6]; // frames (flags_F bits 0 and 3)
-extern STCOM18_FUNC stcom18_D_0018[];  // routine_0 handlers (stcom18_func_0000)
+extern STCOM18_PAIR stcom18_frame_tbl[6];  // frames (flags_F bit 0 without bit 3)
+extern STCOM18_PAIR stcom18_frame2_tbl[6]; // frames (flags_F bits 0 and 3)
+extern STCOM18_FUNC stcom18_move_tbl[];    // routine_0 handlers (stcom18_move)
 
 // ROCK_NEO.EXE.
 void Pos_Shadow_Trans(STCOM_SVECTOR *pos, sint32 a1, sint32 a2, sint32 a3);
 
-void stcom18_func_0534(STCOM18_WORK *wp, STCOM_EFFECT *effect);
-void stcom18_func_0574(STCOM18_WORK *wp, STCOM_EFFECT *effect);
+void stcom18_explosion_set(STCOM18_WORK *wp, STCOM_EFFECT *effect);
+void stcom18_smoke_set(STCOM18_WORK *wp, STCOM_EFFECT *effect);
 
 #endif // STCOM18_H
