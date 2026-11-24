@@ -52,7 +52,7 @@ extern uint32 D_80089F88;
 extern uint32 D_80089F8C;
 extern uint32 D_80089F90;
 
-void func_8003BC44(void);
+void map_obj_repair_save(void);
 void Sce_flag_on(sint32 flag);
 void Sce_flag_off(sint32 flag);
 void map_obj_group_state_set(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32 flag);
@@ -75,7 +75,7 @@ extern sint16 D_8015D7A2;
 extern sint16 D_8015D7A4;
 extern uint32 D_800B6230[];
 void func_800176DC(void *src, void *dst, sint32 count);
-void func_8003B5B4(void);
+void map_obj_repair_load(void);
 uint32 Stage_hed_model_get(uint32 key);
 uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 void map_obj_model_put(sint32 idx, uint32 val);

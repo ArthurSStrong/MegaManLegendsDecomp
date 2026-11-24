@@ -295,7 +295,7 @@ void port_asm_break(uint32_t code, const char *where)
 // A load or store at a KUSEG address below 64 KB (a null record pointer plus a field offset)
 // reaches the kernel's RAM on the console. The process can't map that range (vm.mmap_min_addr),
 // so it goes to the same RAM through its KSEG0 view, as overlay.c's fault handler does for
-// native code. Without this an `lwc2` through a null pointer crashed (func_80027BE0's mesh).
+// native code. Without this an `lwc2` through a null pointer crashed (pl_mesh_tri_draw's mesh).
 #define MEM_ADDR(addr) ((uint32_t)(addr) < PSX_KUSEG_MIRROR ? PSX_RAM_BASE | (uint32_t)(addr) : (uint32_t)(addr))
 #ifdef PORT_AOT_MIPS
 #include "mips_memory.h"

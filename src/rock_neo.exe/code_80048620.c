@@ -368,7 +368,7 @@ sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, si
                         hit = area->hits;
                     } while (0);
                     if ((type = hit->kind) < 0x100 &&
-                        D_8008AA24[(type & 0xF0) >> 4](box, type) != 0)
+                        Scr_area_test_tbl[(type & 0xF0) >> 4](box, type) != 0)
                     {
                         left = area->count;
                         do
@@ -456,7 +456,7 @@ sint16 Scr_point_height(PL_SHORT_VECTOR *pos)
             box[3] = org.z + area->z1;
         } while (0);
         hit = area->hits;
-        if (D_8008AA24[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
+        if (Scr_area_test_tbl[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
         {
             left = area->count;
             do
@@ -550,7 +550,8 @@ sint32 scr_ground_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
                     } while (0);
                     hit = area->hits;
                 } while (0);
-                if ((type = hit->kind) < 0x100 && D_8008AA24[(type & 0xF0) >> 4](box, type) != 0)
+                if ((type = hit->kind) < 0x100 &&
+                    Scr_area_test_tbl[(type & 0xF0) >> 4](box, type) != 0)
                 {
                     left = area->count;
                     do
@@ -851,7 +852,8 @@ sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO
                 box[2] = org.z + area->z0;
                 box[3] = org.z + area->z1;
                 hit    = area->hits;
-                if ((type = hit->kind) < 0x100 && D_8008AA24[(type & 0xF0) >> 4](box, type) != 0)
+                if ((type = hit->kind) < 0x100 &&
+                    Scr_area_test_tbl[(type & 0xF0) >> 4](box, type) != 0)
                 {
                     left = area->count;
                     do
@@ -1320,7 +1322,7 @@ sint32 Scr_pos_hit_check(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
                 box[2] = org.z + area->z0;
                 box[3] = org.z + area->z1;
                 hit    = area->hits;
-                if (D_8008AA24[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
+                if (Scr_area_test_tbl[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
                 {
                     left = area->count;
                     do
@@ -1644,7 +1646,7 @@ retry:
                 hit = area->hits;
             } while (0);
             if ((kind = hit->kind) >= 0x100 ||
-                (test = D_8008AA24[(kind & 0xF0) >> 4](box, kind)) == 0)
+                (test = Scr_area_test_tbl[(kind & 0xF0) >> 4](box, kind)) == 0)
             {
                 found = 0;
                 continue;
@@ -2519,7 +2521,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
     return result;
 }
 
-sint32 func_8004E304(uint16 *rect)
+sint32 Scr_area_box_test(uint16 *rect)
 {
     sint32 x0;
     sint32 x1;
@@ -2561,7 +2563,7 @@ sint32 func_8004E488(void)
     return 0;
 }
 
-sint32 func_8004E490(uint16 *rect, sint32 kind)
+sint32 Scr_area_tri_test(uint16 *rect, sint32 kind)
 {
     sint32 x0;
     sint32 x1;
@@ -2625,7 +2627,7 @@ sint32 func_8004E490(uint16 *rect, sint32 kind)
     return 0;
 }
 
-sint32 func_8004E750(uint16 *rect, sint32 kind)
+sint32 Scr_area_tri2_test(uint16 *rect, sint32 kind)
 {
     sint32 x0;
     sint32 x1;
@@ -2690,7 +2692,7 @@ sint32 func_8004E750(uint16 *rect, sint32 kind)
     return 0;
 }
 
-sint32 func_8004EA10(uint16 *rect, sint32 kind)
+sint32 Scr_area_tri3_test(uint16 *rect, sint32 kind)
 {
     sint32 x0;
     sint32 x1;
@@ -2755,7 +2757,7 @@ sint32 func_8004EA10(uint16 *rect, sint32 kind)
     return 0;
 }
 
-sint32 func_8004ECD0(uint16 *rect, sint32 kind)
+sint32 Scr_area_tri4_test(uint16 *rect, sint32 kind)
 {
     sint32 x0;
     sint32 x1;
@@ -2822,7 +2824,7 @@ sint32 func_8004ECD0(uint16 *rect, sint32 kind)
 
 // Rect clipped to the octagon around C0/C4: the rect is narrowed by the offsets and tested
 // against the point; only a hit stores the narrowed rect.
-sint32 func_8004EF90(uint16 *rect)
+sint32 Scr_area_diamond_test(uint16 *rect)
 {
     sint32 x0;
     sint32 x1;
@@ -2851,7 +2853,7 @@ sint32 func_8004EF90(uint16 *rect)
 
 // Octagon test (0x16A1 = sqrt(2) in 4.12): the rect is cut by the corner offsets, and a hit
 // stores the cut rect widened by 0x35/256 of its size, clamped by the rect's edges.
-sint32 func_8004F150(uint16 *rect)
+sint32 Scr_area_octagon_test(uint16 *rect)
 {
     sint32 x0;
     sint32 x1;
@@ -2944,27 +2946,27 @@ sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
     }
     if (mode & 0x10)
     {
-        hit_x = func_80050A24(&push);
+        hit_x = push_check_x2(&push);
     }
     else
     {
-        hit_x = func_80050808(&push);
+        hit_x = push_check_x(&push);
     }
     if (mode & 0x20)
     {
-        hit_z = func_80050A90(&push);
+        hit_z = push_check_z2(&push);
     }
     else
     {
-        hit_z = func_800508BC(&push);
+        hit_z = push_check_z(&push);
     }
     if (mode & 0x40)
     {
-        hit_y = func_80050B68(&push);
+        hit_y = push_check_y3(&push);
     }
     else
     {
-        hit_y = func_80050970(&push) & mode;
+        hit_y = push_check_y(&push) & mode;
     }
     if (hit_x == 0 && hit_z == 0 && hit_y == 0)
     {
@@ -3052,8 +3054,8 @@ sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
     {
         push.y = CODE486_SP_FA - CODE486_SP_POS_C0->y;
     }
-    hit   = func_80050A90(&push);
-    hit_y = func_80050AFC(&push);
+    hit   = push_check_z2(&push);
+    hit_y = push_check_y2(&push);
     if (hit != 0 || hit_y != 0)
     {
         if (hit_y != 0 && CODE486_ABS_NEG(push.y) < CODE486_ABS_NEG(push.z))
@@ -3122,8 +3124,8 @@ sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
     {
         push.y = CODE486_SP_FA - CODE486_SP_POS_C0->y;
     }
-    hit   = func_80050A24(&push);
-    hit_y = func_80050AFC(&push);
+    hit   = push_check_x2(&push);
+    hit_y = push_check_y2(&push);
     if (hit != 0 || hit_y != 0)
     {
         if (hit_y != 0 && CODE486_ABS_NEG(push.y) < CODE486_ABS_NEG(push.x))
@@ -3392,7 +3394,7 @@ push_z:
     return 0;
 }
 
-sint32 func_80050808(PL_SHORT_VECTOR *vec)
+sint32 push_check_x(PL_SHORT_VECTOR *vec)
 {
     sint32 blocked;
     sint32 delta;
@@ -3446,7 +3448,7 @@ sint32 func_80050808(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_800508BC(PL_SHORT_VECTOR *vec)
+sint32 push_check_z(PL_SHORT_VECTOR *vec)
 {
     sint32 blocked;
     sint32 delta;
@@ -3500,7 +3502,7 @@ sint32 func_800508BC(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_80050970(PL_SHORT_VECTOR *vec)
+sint32 push_check_y(PL_SHORT_VECTOR *vec)
 {
     sint32 blocked;
     sint32 delta;
@@ -3554,7 +3556,7 @@ sint32 func_80050970(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_80050A24(PL_SHORT_VECTOR *vec)
+sint32 push_check_x2(PL_SHORT_VECTOR *vec)
 {
     sint32 result;
 
@@ -3587,7 +3589,7 @@ sint32 func_80050A24(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_80050A90(PL_SHORT_VECTOR *vec)
+sint32 push_check_z2(PL_SHORT_VECTOR *vec)
 {
     sint32 result;
 
@@ -3620,7 +3622,7 @@ sint32 func_80050A90(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_80050AFC(PL_SHORT_VECTOR *vec)
+sint32 push_check_y2(PL_SHORT_VECTOR *vec)
 {
     sint32 result;
 
@@ -3653,7 +3655,7 @@ sint32 func_80050AFC(PL_SHORT_VECTOR *vec)
     return result;
 }
 
-sint32 func_80050B68(PL_SHORT_VECTOR *vec)
+sint32 push_check_y3(PL_SHORT_VECTOR *vec)
 {
     return vec->y != 0;
 }
@@ -4170,7 +4172,7 @@ sint32 scr_event_get(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
             {
                 *CODE486_SP_POS_C0 = base;
             }
-            if (((CODE486_BOX_TEST_FUNC)D_8008AA24[(hit->kind & 0xF0) >> 4])(box) == 0)
+            if (((CODE486_BOX_TEST_FUNC)Scr_area_test_tbl[(hit->kind & 0xF0) >> 4])(box) == 0)
             {
                 continue;
             }
@@ -4698,7 +4700,7 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
             box[3] = CODE486_SP_POS_E0->z + area->z1;
         } while (0);
         hit = area->hits;
-        if (D_8008AA24[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
+        if (Scr_area_test_tbl[(hit->kind & 0xF0) >> 4](box, hit->kind) != 0)
         {
             count = area->count;
             do
@@ -4840,7 +4842,7 @@ retry:
             box[3] = CODE486_SP_POS_E0->z + area->z1;
         } while (0);
         hit  = area->hits;
-        test = D_8008AA24[(hit->kind & 0xF0) >> 4](box, hit->kind);
+        test = Scr_area_test_tbl[(hit->kind & 0xF0) >> 4](box, hit->kind);
         if (test == 0)
         {
             found = 0;

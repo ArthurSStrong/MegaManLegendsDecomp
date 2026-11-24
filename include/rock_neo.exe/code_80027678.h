@@ -372,9 +372,9 @@ extern sint32 D_80098550;
 #define C80027678_GTE_AVSZ3()     __asm__ volatile("avsz3")
 #define C80027678_GTE_AVSZ4()     __asm__ volatile("avsz4")
 
-void func_80027BE0(uint32 *prim, uint32 *ot, uint8 **verts);
+void pl_mesh_tri_draw(uint32 *prim, uint32 *ot, uint8 **verts);
 // The mesh pointer argument is reused as the primitive cursor (one register in retail).
-void func_80027D94(uint32 *prim, uint32 *ot, uint8 **verts);
+void pl_mesh_quad_draw(uint32 *prim, uint32 *ot, uint8 **verts);
 // Shadow record: position and a flag that picks the texture half.
 typedef struct
 {

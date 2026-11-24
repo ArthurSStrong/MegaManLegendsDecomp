@@ -119,7 +119,7 @@ extern uint8 D_800BE3DB[];
 extern uint8 *D_8008CE10[];
 extern uint8 *D_8008CACC[];
 extern uint8 D_8008D028[];
-extern MOJI_FUNC D_8008AAC0[];
+extern MOJI_FUNC Moji_window_type_tbl[];
 extern MOJI_WORK Moji_work[];
 extern uint8 *D_8008BAA4[];
 extern uint8 *D_8008CE58;
@@ -251,7 +251,8 @@ extern uint8 D_800986EC;
 extern uint32 D_800987E0;
 typedef sint32 (*MOJI_CMD_FUNC)(MOJI_WORK *);
 extern MOJI_CMD_FUNC D_8008A91C[];
-extern MOJI_FUNC Moji_window_set_tbl[];
+// Text opcode table (0x8008ACD4) minus 0x84 entries: indexed by the opcode byte (>= 0x84)
+extern MOJI_FUNC D_8008AAC4[];
 extern MOJI_FUNC Moji_window_draw_tbl[];
 extern RECT D_80097F50[];
 extern uint16 D_80097F30[];

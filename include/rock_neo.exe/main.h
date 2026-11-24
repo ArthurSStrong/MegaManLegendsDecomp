@@ -102,7 +102,7 @@ void func_80077748(sint32 mode);
 void InitGeom(void);
 void func_8007B118(sint32 x, sint32 y);
 void func_8007B138(sint32 h);
-void func_8006479C(void);
+void Card_init(void);
 void Sound_init(void);
 void Print_clear(void);
 void func_800177CC(void *start, void *end);

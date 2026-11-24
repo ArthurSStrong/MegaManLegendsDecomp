@@ -2325,7 +2325,8 @@ void Map_draw(void)
             GTE_SWC2(7, &otz);
             if (otz > 0)
             {
-                func_800272D0(sxy[0], sxy[1], Shl_work_tbl[i].w_a * 2, Shl_work_tbl[i].h_b * 2);
+                screen_ripple_draw(sxy[0], sxy[1], Shl_work_tbl[i].w_a * 2,
+                                   Shl_work_tbl[i].h_b * 2);
             }
         }
     }
@@ -4309,7 +4310,7 @@ void func_800272C8(void)
 // (retail's copy to a1); the corners are computed in x0..x3 order; the rsin result feeds the
 // out_cur expression directly. The 0x100 limit is a variable set in each tpage arm (retail loads
 // it into a0 in both arms and compares with sltu).
-void func_800272D0(sint32 cx, sint32 cy, sint32 r0, sint32 r1)
+void screen_ripple_draw(sint32 cx, sint32 cy, sint32 r0, sint32 r1)
 {
     sint32 dr;
     sint32 c;

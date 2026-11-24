@@ -90,7 +90,7 @@ void System_init(void)
     *(uint32 *)Joy1.unk34 = 0x4001;
     *(uint32 *)Joy2.unk34 = 0x4001;
     StartPAD();
-    func_8006479C();
+    Card_init();
     Sound_init();
     ChangeClearPAD(0);
     Disp_env_set();

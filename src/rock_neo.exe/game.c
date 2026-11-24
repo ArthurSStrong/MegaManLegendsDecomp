@@ -37,17 +37,17 @@ void Game_init(GAME_WORK *wp)
     Work_init_all(1);
     if (mode == 0)
     {
-        func_800664BC();
+        Game_work_new();
     }
     else
     {
-        func_80065AA8();
+        Game_work_load();
     }
     Player_init(mode);
     Sce_flag_init(mode);
     Map_obj_state_reset(mode);
     Automap_reset(mode);
-    func_80067E6C(mode);
+    Records_init(mode);
     Message_event_clear();
     Sound_bgm_tbl_set();
     wp->routine_0 = 1;
@@ -291,7 +291,7 @@ void game_update(void)
     CODE800133D8_LINK *link;
 
     func_800175D8();
-    func_800679B8();
+    Play_time_label_set();
     eve_work_move();
     Player_move();
     Obj_player_dist_calc();

@@ -204,7 +204,7 @@ void Param_tbl_select(void)
     }
 }
 
-void func_8006479C(void)
+void Card_init(void)
 {
     func_8007FF70();
     D_80098708 = OpenEvent(SW_CARD, EV_SP_IOE, EV_MD_NOINTR, NULL);
@@ -524,7 +524,7 @@ sint32 card_format(sint32 port)
     return -(card_check(port) == 1);
 }
 
-sint32 func_80064FF0(sint32 arg)
+sint32 card_new_clear(sint32 arg)
 {
     D_8009AB31    = 0xFF;
     D_8009AB30[0] = 0xFF;
@@ -541,7 +541,7 @@ sint32 func_80064FF0(sint32 arg)
     return card_hw_event_wait() == 0;
 }
 
-void func_80065064(void)
+void save_image_make(void)
 {
     PL_WORK *pl;
     MEM_GAME_VIEW *gw;
@@ -550,7 +550,7 @@ void func_80065064(void)
 
     pl = &Player_work;
     gw = &Game_work;
-    func_80067D10();
+    save_title_set();
     save = (MEM_IMAGE *)Cd_ring_buf;
     card_header_set(Cd_ring_buf, D_8008FA64);
     D_800B5EB0 = MEM_GWB(0x50);
@@ -624,7 +624,7 @@ void func_80065064(void)
     func_800176A4(gw->records_84, save->records, 15);
 }
 
-void func_80065384(void)
+void save_image_sum_set(void)
 {
     uint32 sum[3];
     uint32 *save;
@@ -675,7 +675,7 @@ void func_80065384(void)
 }
 
 // Offsets via MEM_GWB because the local Game_work view does not name every byte
-void func_80065AA8(void)
+void Game_work_load(void)
 {
     *(uint32 *)((uint8 *)&Game_work + 0x10) = D_800B5ED8;
     *(uint32 *)((uint8 *)&Game_work + 0x14) = D_800B5EDC;
@@ -735,7 +735,7 @@ void func_80065AA8(void)
     D_800C356A    = D_800B5F78;
 }
 
-sint32 func_80065E08(void)
+sint32 save_image_sum_check(void)
 {
     uint32 sum[3];
     uint32 *save;
@@ -846,7 +846,7 @@ sint32 func_80065E08(void)
     return 0;
 }
 
-void func_800664BC(void)
+void Game_work_new(void)
 {
     sint32 flags;
     MEM_ENTRY *ep;
@@ -1385,8 +1385,8 @@ sint32 func_80067174(MEM_WORK *wp)
             {
                 break;
             }
-            func_80065064();
-            func_80065384();
+            save_image_make();
+            save_image_sum_set();
             slot = &MEM_SAVE;
             switch ((sint16)card_file_write(D_80098A48, D_800980AC[D_80098A04], slot, 0x1F00))
             {
@@ -1436,7 +1436,7 @@ sint32 func_80067174(MEM_WORK *wp)
             r = card_file_read(D_80098A48, D_800980AC[D_80098A04], &MEM_SAVE, 0x1F00);
             if (r == 0)
             {
-                r = func_80065E08();
+                r = save_image_sum_check();
             }
             switch (r)
             {
@@ -1534,7 +1534,7 @@ void card_slots_init(void)
 }
 
 // (the function compiles longer: retail shares the timer/30/60 quotients across digits)
-void func_800679B8(void)
+void Play_time_label_set(void)
 {
     uint32 sec;
     uint32 min;
@@ -1588,7 +1588,7 @@ void func_80067B7C(void)
     D_80097FF4 = D_8008D028[digit];
 }
 
-void func_80067D10(void)
+void save_title_set(void)
 {
     D_8008FA84[0] = D_80098124[D_80098A04 + 1];
     D_8008FA84[9] = D_80098124[(uint8)D_80098805];
@@ -1612,7 +1612,7 @@ void func_80067E4C(void)
     Sce_flag_on(0x4C0);
 }
 
-void func_80067E6C(sint32 load)
+void Records_init(sint32 load)
 {
     sint32 i;
 

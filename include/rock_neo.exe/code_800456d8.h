@@ -171,7 +171,7 @@ typedef void (*CODE456_FUNC)(CODE456_WORK *wp);
 
 #define CODE456_FRAME (*(uint16 *)0x1F800002)
 
-extern CODE456_FUNC D_8008A708[];
+extern CODE456_FUNC Effect_explosion2_tbl[];
 extern CODE456_FUNC Effect_dash_spark_tbl[];
 extern CODE456_FUNC Effect_wall_spark_tbl[];
 extern CODE456_FUNC D_8008A778[];
@@ -187,7 +187,7 @@ extern CODE456_ENTRY **Work_5A4_param_tbl;
 extern CODE456_ENTRY **Shl_param_tbl;
 extern CODE456_ENTRY **Work_50_param_tbl;
 extern PL_WORK Player_work2;
-extern CODE456_FUNC D_8008A718[];
+extern CODE456_FUNC Effect_explosion2_size_tbl[];
 extern uint8 D_800986D8[];
 extern CODE456_B6 D_8008A734[];
 extern CODE456_B6 D_8008A74C[];
@@ -237,8 +237,8 @@ void debris_touch_check(CODE456_WORK *wp);
 void item_drop_tumble(CODE456_WORK *wp);
 void item_drop_spin(CODE456_WORK *wp);
 void item_drop_get(CODE456_WORK *wp);
-void func_80047CD8(CODE456_ANIM *wp);
-void func_80047C84(CODE456_ANIM *wp);
+void explosion2_burst_step(CODE456_ANIM *wp);
+void explosion2_burst_start(CODE456_ANIM *wp);
 sint32 calc_distance(CODE456_SVECTOR *a, CODE456_SVECTOR *b);
 void Swing_Camera(sint32 arg);
 uint32 *Line_alloc(void);

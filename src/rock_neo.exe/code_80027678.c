@@ -92,18 +92,18 @@ void pl_body_draw(void *work, void *arg)
             C80027678_TRANS_C[2] = C80027678_TRANS_A[2] + v[2];
             GTE_SET_MATRIX(C80027678_MAT_C);
             k++;
-            func_80027BE0((uint32 *)C80027678_MESH_PTR, arg, &C80027678_MESH_PTR->verts);
-            func_80027D94((uint32 *)C80027678_MESH_PTR, arg, &C80027678_MESH_PTR->verts);
+            pl_mesh_tri_draw((uint32 *)C80027678_MESH_PTR, arg, &C80027678_MESH_PTR->verts);
+            pl_mesh_quad_draw((uint32 *)C80027678_MESH_PTR, arg, &C80027678_MESH_PTR->verts);
             C80027678_MESH_PTR++;
         }
     }
 }
 
-// Same shape as func_80027D94 (mesh argument reused as the prim cursor; mask, clut and tag
+// Same shape as pl_mesh_quad_draw (mesh argument reused as the prim cursor; mask, clut and tag
 // locals before the loop). The clut mask and the 0x1F8000E0 pointer are set in the loop after
 // n--, so loop.c hoists them as retail does; one STSXY3 statement keeps prim's use count low
 // enough for the prim + 4 induction pointer to take the lower register.
-void func_80027BE0(uint32 *prim, uint32 *ot, uint8 **verts)
+void pl_mesh_tri_draw(uint32 *prim, uint32 *ot, uint8 **verts)
 {
     sint32 clip;
     sint32 otz;
@@ -162,7 +162,7 @@ void func_80027BE0(uint32 *prim, uint32 *ot, uint8 **verts)
     }
 }
 
-void func_80027D94(uint32 *prim, uint32 *ot, uint8 **verts)
+void pl_mesh_quad_draw(uint32 *prim, uint32 *ot, uint8 **verts)
 {
     sint32 clip;
     sint32 otz;

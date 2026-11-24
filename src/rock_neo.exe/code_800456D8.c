@@ -762,15 +762,15 @@ void Obj_item_drop_n(CODE456_WORK *wp, void *obj, sint32 n)
     item_drop_set(obj, ent->word);
 }
 
-void func_80047318(CODE456_WORK *wp)
+void Effect_explosion2(CODE456_WORK *wp)
 {
-    D_8008A708[wp->routine_8](wp);
+    Effect_explosion2_tbl[wp->routine_8](wp);
 }
 
 // Every path makes its own Model_work_init call, the default's in each arm of its test.
 // Cross-jumping then merges the calls into the default's last one and leaves each path its own
 // argument store (retail's separate "j; sw" blocks for the 0x80 path and cases 4, 5 and 6).
-void func_80047354(CODE456_BOX *wp)
+void Effect_explosion2_init(CODE456_BOX *wp)
 {
     CODE456_BOX *child;
     sint32 arg;
@@ -783,7 +783,7 @@ void func_80047354(CODE456_BOX *wp)
         wp->routine_8 = 3;
         wp->m18.w[1]  = wp->snd_38.word[0];
         wp->m18.h[4]  = wp->snd_38.half[2];
-        func_80047C84((CODE456_ANIM *)wp);
+        explosion2_burst_start((CODE456_ANIM *)wp);
         debris_spawn(&wp->snd_38.pos, 3, 0x40404040, 1);
         return;
     }
@@ -912,9 +912,9 @@ void func_80047354(CODE456_BOX *wp)
     }
 }
 
-void func_800476A4(CODE456_WORK *wp)
+void Effect_explosion2_move(CODE456_WORK *wp)
 {
-    D_8008A718[wp->routine_9](wp);
+    Effect_explosion2_size_tbl[wp->routine_9](wp);
     if (wp->flag_3 & 0x40)
     {
         Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xA000, wp->id_1, D_800986D8,
@@ -932,7 +932,7 @@ void func_800476A4(CODE456_WORK *wp)
     }
 }
 
-void func_800477A0(CODE456_BOX *wp)
+void Effect_explosion2_size(CODE456_BOX *wp)
 {
     sint16 *v;
     sint32 c;
@@ -1099,7 +1099,7 @@ void func_80047BD0(void)
 {
 }
 
-void func_80047BD8(CODE456_WORK *wp)
+void Effect_explosion2_end(CODE456_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
@@ -1113,12 +1113,12 @@ sint32 calc_distance(CODE456_SVECTOR *a, CODE456_SVECTOR *b)
     return SquareRoot0(dx * dx + dy * dy + dz * dz);
 }
 
-void func_80047C64(CODE456_ANIM *wp)
+void Effect_explosion2_burst(CODE456_ANIM *wp)
 {
-    func_80047CD8(wp);
+    explosion2_burst_step(wp);
 }
 
-void func_80047C84(CODE456_ANIM *wp)
+void explosion2_burst_start(CODE456_ANIM *wp)
 {
     wp->step_9   = 0;
     wp->timer_a  = D_8008A6C8[0].timer_5;
@@ -1128,7 +1128,7 @@ void func_80047C84(CODE456_ANIM *wp)
     wp->value_24 = D_8008A6C8[0].value_4;
 }
 
-void func_80047CD8(CODE456_ANIM *wp)
+void explosion2_burst_step(CODE456_ANIM *wp)
 {
     uint8 step;
 

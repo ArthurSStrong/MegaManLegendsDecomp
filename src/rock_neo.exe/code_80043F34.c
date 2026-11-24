@@ -385,12 +385,12 @@ void Effect_explosion_end(CODE43_WORK *wp)
     Close_EFFECT_WORK(wp);
 }
 
-void func_8004495C(CODE43_WORK *wp)
+void Effect_ghost(CODE43_WORK *wp)
 {
-    D_8008A220[wp->routine_8](wp);
+    Effect_ghost_tbl[wp->routine_8](wp);
 }
 
-void func_80044998(CODE43_WORK *wp)
+void Effect_ghost_init(CODE43_WORK *wp)
 {
     wp->flags_0 |= 2;
     Model_work_init(wp, 0);
@@ -400,7 +400,7 @@ void func_80044998(CODE43_WORK *wp)
     wp->timer_b = 0x10;
 }
 
-void func_80044A00(CODE43_WORK *wp)
+void Effect_ghost_grow(CODE43_WORK *wp)
 {
     CODE43_VEC scale;
 
@@ -413,7 +413,7 @@ void func_80044A00(CODE43_WORK *wp)
     wp->word_40 += 0xFFF7F7F8;
 }
 
-void func_80044A80(CODE43_WORK *wp)
+void Effect_ghost_end(CODE43_WORK *wp)
 {
     wp->flags_0 = 0;
     Close_EFFECT_WORK(wp);

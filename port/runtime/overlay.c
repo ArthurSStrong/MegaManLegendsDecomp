@@ -262,7 +262,7 @@ static int in_psx_memory(uint32_t a)
 // The kernel area: native game code reading through a null record pointer.
 //
 // On the console KUSEG 0x0000-0xFFFF is the BIOS kernel's RAM, and retail code reads it through
-// null pointers without harm (func_80027BE0 loads the first face of a mesh before testing its
+// null pointers without harm (pl_mesh_tri_draw loads the first face of a mesh before testing its
 // face count, and the mesh may have none). The process can't map those addresses
 // (vm.mmap_min_addr), so the fault handler finishes the access itself: it decodes the x86 load
 // or store (the forms GCC emits for plain memory moves), reads or writes the KSEG0 view of the

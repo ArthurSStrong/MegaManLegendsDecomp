@@ -188,10 +188,10 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 #else
 void Sound_call(sint32 sound, ...);
 #endif
-void func_80065064(void);
+void save_image_make(void);
 sint32 rand(void);
-void func_80065384(void);
-sint32 func_80065E08(void);
+void save_image_sum_set(void);
+sint32 save_image_sum_check(void);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 extern uint32 Moji_flag;
 // Message script pointers for the memory card screens.
@@ -321,7 +321,7 @@ typedef struct
 {
     uint8 b[8];
 } MEM_BYTES8;
-// Save image layout (0x1F00 bytes at Cd_ring_buf), as func_80065064 fills it.
+// Save image layout (0x1F00 bytes at Cd_ring_buf), as save_image_make fills it.
 typedef struct
 {
     uint8 reserved000[0x101];
@@ -384,7 +384,7 @@ extern uint8 Sce_flag[];
 extern uint32 Map_obj_state[][0x80];
 extern sint32 Automap_visited[0x280];
 void card_header_set(uint8 *buf, uint8 *src);
-void func_80067D10(void);
+void save_title_set(void);
 void Map_obj_state_save(void);
 extern uint32 D_800B5ED8;
 extern uint32 D_800B5EDC;

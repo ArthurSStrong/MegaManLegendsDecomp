@@ -345,14 +345,14 @@ shared code takes the generic `WORK_48`, and callers cast at the boundary (`Clos
 | Id | Struct | Handler | Family | Kind-specific bytes |
 |---|---|---|---|---|
 | 0x80 | `W48_80_WORK` | `Effect_explosion` | model | `sound_C`/`size_D`/`variant_E`/`level_F`, `hw_44` |
-| 0x81 | `W48_81_WORK` | `func_8004495C` | model | `ptr_44` |
+| 0x81 | `W48_81_WORK` | `Effect_ghost` | model | `ptr_44` |
 | 0x82 | `W48_82_WORK` | `Effect_buster_hit` | sprite | `field_C` (byte, from the spawner `buster_hit_effect`) |
 | 0x83 | `W48_83_WORK` | `Effect_smoke` | sprite | |
 | 0x84 | `W48_84_WORK` | `Effect_arm_hit` | sprite | `field_C` (byte) |
 | 0x85 | `W48_85_WORK` | `Effect_shot_hit` | sprite | `add` 0x28, `spd` 0x30, `dir_40` |
 | 0x86 | `W48_86_WORK` | `Effect_debris` | model (debris) | `ang_y_C`/`ang_x_E`, speed in the matrix's `t` bytes, `ptr_44` |
 | 0x87 | `W48_87_WORK` | `Item_drop_move` | model (debris) | same as 0x86 |
-| 0x88 | `W48_88_WORK` | `func_80047318` | model, then sprite | `field_C` (byte), `hw_44`; `efc` union (routine 3 animates it as a sprite) |
+| 0x88 | `W48_88_WORK` | `Effect_explosion2` | model, then sprite | `field_C` (byte), `hw_44`; `efc` union (routine 3 animates it as a sprite) |
 | 0x89 | `W48_89_WORK` | `Effect_dash_spark` | sprite | `ang_28[8]`, `idx_38[8]` |
 | 0x8A | `W48_8A_WORK` | `Effect_wall_spark` | sprite | `field_C`, `idx_D`, `timer_E` (records `W48_8A_REC`) |
 
@@ -605,16 +605,16 @@ not fields of one struct (declared in `code_8005C258.h`). `gauge_life_exec`'s `w
 `Gauge_work` (byte +4 indexes `Gauge_life_routine_tbl`); it stays `uint8 *` until that object's layout is known.
 
 `code_800456D8.c`: banked `Effect_debris_wait`/`Effect_debris_wait2` (`WORK_48.timer_B` countdown, then `routine_8`
-+= 2 / += 1), `Effect_debris_vanish` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `func_80047318`
-(`D_8008A708[wp->routine_8](wp)`). Parked `func_80045FE4` and `func_80046008` (identical, `NON_MATCHING`):
++= 2 / += 1), `Effect_debris_vanish` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `Effect_explosion2`
+(`Effect_explosion2_tbl[wp->routine_8](wp)`). Parked `func_80045FE4` and `func_80046008` (identical, `NON_MATCHING`):
 the target is `Obj_id_class(wp->kind_1)` followed by `move v1,v0`; GCC drops the dead copy for a
 `void` function with a local, and a `return` form emits no move either (also tried `register`).
 Also banked: `Effect_dash_spark`/`Effect_wall_spark` (`Effect_dash_spark_tbl`/`Effect_wall_spark_tbl[wp->routine_8](wp)`), `func_800485E4`
 (`D_8008A778[wp->flag_4](wp)`), `Effect_dash_spark_end`, `Item_drop_collect` (`WORK_48.flag_3` picks sound 0x9E/0x9D).
-Banked `func_80047C84`: copies `D_8008A6C8..CF` into `WORK_48`. It was parked over the `field_14`
+Banked `explosion2_burst_start`: copies `D_8008A6C8..CF` into `WORK_48`. It was parked over the `field_14`
 word copy (the target does it third; GCC delayed it to the end), but it matches as written since the
 later `WORK_48` type changes.
-Parked `func_80047354` (`NON_MATCHING`, spawn/init of a `WORK_48` by `flag_3`): all instructions match except the
+Parked `Effect_explosion2_init` (`NON_MATCHING`, spawn/init of a `WORK_48` by `flag_3`): all instructions match except the
 tail layout. The target tests `flag_3 & 0x80` with `beqz` (`sub = 0` store, then `j` to the shared `Model_work_init`)
 and keeps the `sub = 4/5/6` arms as three separate stubs; ours inverts the 0x80 test and merges the arms. Tried
 flat if/else, nested, `goto init`, `sub = flag_3 & 0xF` vs constants.
@@ -622,7 +622,7 @@ Banked: `item_drop_spin` (matrix at `WORK_48+0x18` with diagonal `field_3E`, `Ro
 += 0x100; chained store `m00 = m11 = m22`), `Effect_debris_shrink`/`Item_drop_shrink` (same matrix with the diagonal
 `pos_38.pad >> 1` for m00/m22; `field_2E += field_34`, `pos_38.vy += field_2E`,
 `field_3E -= D_80097E64/D_80097EE0[field_A] >> 3`, `routine_8++` once `field_2E >= 0`), `svec_distance`
-(distance of two SVECTORs via `SquareRoot0`), `func_80047CD8` (steps through the 8-byte records at
+(distance of two SVECTORs via `SquareRoot0`), `explosion2_burst_step` (steps through the 8-byte records at
 `D_8008A6C8`; separate symbols indexed by `i * 8`). Parked `dash_spark_check` (`NON_MATCHING`; Player_work
 `unk09 == 3` and `unk11C & unk128/unk12A` pad test, else `routine_8 = 2`; returns 1/0): the target ends the
 two AND tests with `beqz`/`li 1`/`move 0`, GCC emits `sltu` for `hit != 0` (tried nested returns, a `hit`
@@ -653,7 +653,7 @@ Batch (`Effect_dash_spark_init`, `_80045BC8`, `_80046F38`, `_80045CE8`, `_800477
   `D_8008A2B0`): whole body matches; only the prologue move order (a2, a3, a1 vs a1, a2, a3) differs. What made the
   body match: `for (...; i++, ang += step)`, signed `switch` value, `(rnd & 3)` written inline (no local), stores
   in the order `field_A`, `field_3E`, `field_C`, `field_C+2`.
-- `func_800477A0` (per-frame colour/scale fade of a `WORK_48`, `switch (flag_3 & 0xF)` with cases 0/3/default sharing
+- `Effect_explosion2_size` (per-frame colour/scale fade of a `WORK_48`, `switch (flag_3 & 0xF)` with cases 0/3/default sharing
   code): prologue, sums and jump table match; the target keeps the five colour tails separate (each ends in a jump
   to one shared `or; sw`) with the channel in a2, GCC cross-jumps them. Separate locals per case did not help.
 - `item_drop_set` (two bursts of effects, `spec` packs count/kind of each): only register allocation; the target
@@ -674,12 +674,12 @@ written inline folds to `(ground - 1) - D`, so a local `h = D + 1` is needed to 
 
 `code_800456D8.c` (consolidation): `WORK_48`'s 0x18-0x37 is a union `u_18` by kind: `mtx` (the model kinds, with
 bit 2 of `routine_0` set, position in `pos_38`; replaces the `(MATRIX *)&field_18` casts and the raw word stores of
-`func_80047354`) and `s` (`field_18`, `pos_1C` for the kinds without bit 2, which `shift_effect`/`POS_WORK` moves,
+`Effect_explosion2_init`) and `s` (`field_18`, `pos_1C` for the kinds without bit 2, which `shift_effect`/`POS_WORK` moves,
 `field_22..24`, and the debris speed/acceleration `vx_2C..az_36`, which share the bytes of `mtx.t` while the debris
 uses `mtx.m`). `HIT_ENT` (`D_8008A310`, `D_8008A618`) is three (min, max) halfword pairs; `D_8008A622` is written as
 `D_8008A618[i][j].max_A` (same bytes; only the relocation symbol changes). Retried after the change, no new matches:
 `Item_drop_wait`/`Item_drop_blink` (5 + 1 cycles: `ground - h` inline, copy order, `>` compare; the limit stays in the
-wrong register), `func_80047354` (4: if/else-if with its own call, value local `n` stored per case, a call per case;
+wrong register), `Effect_explosion2_init` (4: if/else-if with its own call, value local `n` stored per case, a call per case;
 GCC always cross-jumps the identical `sub` stores the target keeps separate), `debris_spawn` (clamp order: worse),
 `item_drop_set` and `Obj_item_drop_n` (unchanged).
 
@@ -815,7 +815,7 @@ keep the base register, as in the target); the high halfwords at `ang_40 + 2/6/0
 (`D_800A39A0`, angles `D_800A3968/396C/3964 & 0xFFF` into vx/vy/vz); `D_800A395C = 3` only schedules
 right when written after the first `ofs_A0` store.
 
-`moji.c` (message control codes): banked `func_800546B0` (`timer_4 = unk_3F = get_le16(arg)`, chained),
+`moji.c` (message control codes): banked `Moji_cmd_speed` (`timer_4 = unk_3F = get_le16(arg)`, chained),
 `Moji_cmd_se` (`Sound_call(get_le16(arg), 0, 0)`), `Moji_text_option_bright`, `Moji_text_locate` (cursor x/y from two
 16-bit arguments), `Moji_cmd_list_msg` (the `cmd_ptr_6C` twin of `Moji_text_list_msg`; `unk_72` is `sint8`, `lb`).
 `MOJI_CMD_WORK` was merged into `MOJI_WORK`: `Moji_work` is an array of 0xC4-byte entries
@@ -833,7 +833,7 @@ target has `$v1` and `li $v0,1` in the load delay slot. Banked later: the cause 
 type (see the `Money_add` paragraph below); `Camera_return_resume` is now declared `sint32`.
 Also banked, matching at once: `func_80058EA0` (the `func_80058788` twin with flags `0x402800`; sets pool
 byte `D_80098851` to 0xFF), `Moji_cmd_sync` (fails, returns 0, while `Moji_work[arg]` has bit 31 set and
-bit 17 clear), `Moji_cmd_window` and `Moji_cmd_window_close` (call `D_8008AAC0[unk_7C]`, a handler table splat
+bit 17 clear), `Moji_cmd_window` and `Moji_cmd_window_close` (call `Moji_window_type_tbl[unk_7C]`, a handler table splat
 split into several labels), `func_80057DF4` (writes the low bytes of `Game_work.unk084[Moji_weapon][2..4]`
 into its own command's argument bytes; `sltiu`, so the counter is unsigned) and `Moji_cmd_list_choice`.
 `Moji_cmd_window_close` needs the bit-set path written first.
@@ -877,12 +877,12 @@ Banked, this round: `Moji_cmd_voice` (XA wait command: first pass sets bit `0x01
 `Moji_flag |= 0x100000`, flags `|= 0x40000` and `&= ~0x01000000` in one expression, step 5; always sets
 `0x10000000`, returns 0), `Moji_cmd_page_wait` (the `Moji_cmd_wait` wait, but at 0 it also sets `timer_4 = 5`,
 clears `unk_71..73`, sets `cmd_top_48` to the stepped `cmd_ptr_6C`, `unk_3C = unk_3E`, `Moji_flag |=
-0x200000`), `func_80057C2C` (lists the set bits of `Sce_flag[0x63]` (flags 0x318-0x31F) into
+0x200000`), `Moji_cmd_list_bits` (lists the set bits of `Sce_flag[0x63]` (flags 0x318-0x31F) into
 `Moji_list`, terminated by 8, then takes `cmd_ptr_6C[count]` as message; 0xFF steps 9. Needs a local
 `flag = &Sce_flag[0x63]` assigned first: with `Sce_flag[0x63]` written inline the hoisted address moves
 after the counter inits), `Moji_text_list_from_flags` (text twin over 64 flags from `Sce_flag[0xA8]` (0x540-0x57F),
 count in pool word `Moji_list_count`, now tentative in `moji.c`; rest of `Moji_list[0..0x7F]` set to 0xFF),
-`func_8005861C` (push, then message byte 2, 3 or 4 of the command by `D_8008D8EC[Moji_weapon][n]`: `[0]`
+`Moji_cmd_level_branch` (push, then message byte 2, 3 or 4 of the command by `D_8008D8EC[Moji_weapon][n]`: `[0]`
 zero, `[Player_work[0].rec[r].idx[n]]` zero (r = 0, or `Moji_weapon + 1`), or neither; clears/sets `Moji_flag`
 bit `0x20000`). Parked `six_digit_set` (`NON_MATCHING`; six digits of `n` by `D_8008AF24` (100000..1),
 leading zeros as `D_8008AF3C[pad]` until a nonzero digit (flag in `.sbss` `D_800986F0[0]`), terminator
@@ -899,7 +899,7 @@ like `Moji_cmd_wait`'s wait, but also `unk_3B++` on the first pass; each frame a
 `sint8`, `lb`); `Moji_window_set` (window state in `unk_7D`: 0 sets flags `0x06000000`, margins
 `unk_B4 = unk_B6 = arg`, `Moji_flag |= 0x200000` and the four `corner_88` points from the margins and
 `unk_7E`/`unk_7F` * 12; 2 sets `0x10000000` and clears `0x06000000`; void, in a data table).
-Parked `func_80059D20` (`NON_MATCHING`; prints `D_8008AF00[i] - Game_work.unk028[i]` for `i =
+Parked `Moji_cmd_repair_cost` (`NON_MATCHING`; prints `D_8008AF00[i] - Game_work.unk028[i]` for `i =
 Moji_list[arg] < 4`, else `unk062[9 - i] * D_8008AF00[i] - unk028[9 - i]`, at `cmd + 7`, then calls into
 `D_8008CE5C[i]`). Only the else branch differs: the target reuses the `i * 4` computed for
 `D_8008AF00[i]`; ours recomputes it (best form `(&arr[9])[-i]`, which at least folds the 9 into the
@@ -951,7 +951,7 @@ would put the 16th entry's end at 0x800A4708, over `Cd_cmd_queue` (0x800A3A40). 
 the layout of an older build, not a view of `WORK_5A4`/`WORK_3C0`; the stale object would also
 explain the two functions' `ori` encodings.
 Banked by `tools/twins.py` (byte-identical to a matched function; C copied, build-checked):
-`func_8004E488` (same code as `func_80054BAC`: `return 0;`), `Moji_window_set2` (same code as
+`func_8004E488` (same code as `Moji_cmd_halt`: `return 0;`), `Moji_window_set2` (same code as
 `Moji_window_set`), and after the twins run below `Fade_effect_freeze2`, `Moji_window_open_v`, `Card_screen_load`.
 Named `Sce_cd_read_wait` -> `Sce_read_sync`: waits a frame at a time (`Thread_wait(1)`) until
 `Cd_read_sync2()` reports the CD queue empty. Same purpose as `Cd_read_sync`, different code (it calls
@@ -968,7 +968,7 @@ Twins run (one of each all-assembly twin group, then `twins.py --apply`):
 - `Fade_effect_freeze` (`code_8001786C`, `Fade_effect_step_tbl[0]`): once `Dbl_buff_idx` is 1, zeroes both buffers'
   vertical offsets, clip y and the isbg/dfe flags, `MojiTaskKill`, sets three pool words, calls
   `screen_tile_uv_set`. `Dbl_buff_idx`/`Vsync_wait` added to ROCK_NEO's `scratch.h` (the shim's names).
-- `func_8005A874` (moji window kind 0): opens a window from a flat line `unk_85` (8) pixels a frame, then
+- `Moji_window_fade` (moji window kind 0): opens a window from a flat line `unk_85` (8) pixels a frame, then
   closes it. New `MOJI_WORK.unk_80`/`unk_85`; `unk_A` is `sint16` (`lh`). Matching needed `unk_7D++` at the
   end of state 1's block and `c[0][1] > c[2][1]` (not `<` swapped) in state 2.
 - Parked `map_blocks_draw` and its twin `map_blocks_draw2` (`NON_MATCHING`, same attempt): draws the map

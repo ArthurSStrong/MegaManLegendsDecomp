@@ -61,7 +61,7 @@ void Map_obj_state_load(void)
 
     if (C8003AC24_GAME_FLAG64 != 0)
     {
-        func_8003B5B4();
+        map_obj_repair_load();
     }
     game_row = C8003AC24_GAME_ROW;
     row      = Map_obj_state_row_tbl[game_row];
@@ -194,7 +194,7 @@ void Map_obj_state_save(void)
     uint32 bits;
     uint32 entry;
 
-    func_8003BC44();
+    map_obj_repair_save();
     row = Map_obj_state_row_tbl[C8003AC24_GAME_ROW];
     if (row >= 0)
     {
@@ -385,7 +385,7 @@ sint32 map_obj_state_set(sint32 idx, sint32 bit, uint32 val)
     return 1;
 }
 
-void func_8003B5B4(void)
+void map_obj_repair_load(void)
 {
     uint32 i;
     uint32 state;
@@ -648,7 +648,7 @@ void map_obj_group7_state_set(uint32 *remain, uint32 amount, uint32 key, sint32 
     }
 }
 
-void func_8003BC44(void)
+void map_obj_repair_save(void)
 {
     uint8 *rp;
 

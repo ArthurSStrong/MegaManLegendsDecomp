@@ -326,7 +326,7 @@ typedef sint32 (*CODE486_BOX_TEST_FUNC)(sint16 *box);
 #define CODE486_SP_DA    (*(sint16 *)0x1F8000DA)
 #define CODE486_SP_DC    (*(sint16 *)0x1F8000DC)
 
-extern CODE486_TEST_FUNC D_8008AA24[];
+extern CODE486_TEST_FUNC Scr_area_test_tbl[];
 
 // A cell's two area lists (picked by the cell flags), reached through value8's low 24 bits.
 typedef struct
@@ -366,14 +366,14 @@ typedef union
 // The real arguments are (step, dx, adx, vec); the callees only read step.
 void push_flag_x();
 void push_flag_z();
-sint32 func_80050A24(PL_SHORT_VECTOR *vec);
-sint32 func_80050A90(PL_SHORT_VECTOR *vec);
-sint32 func_80050AFC(PL_SHORT_VECTOR *vec);
+sint32 push_check_x2(PL_SHORT_VECTOR *vec);
+sint32 push_check_z2(PL_SHORT_VECTOR *vec);
+sint32 push_check_y2(PL_SHORT_VECTOR *vec);
 sint32 push_flag_y(PL_SHORT_VECTOR *vec);
-sint32 func_80050808(PL_SHORT_VECTOR *vec);
-sint32 func_800508BC(PL_SHORT_VECTOR *vec);
-sint32 func_80050970(PL_SHORT_VECTOR *vec);
-sint32 func_80050B68(PL_SHORT_VECTOR *vec);
+sint32 push_check_x(PL_SHORT_VECTOR *vec);
+sint32 push_check_z(PL_SHORT_VECTOR *vec);
+sint32 push_check_y(PL_SHORT_VECTOR *vec);
+sint32 push_check_y3(PL_SHORT_VECTOR *vec);
 sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
 
 // The scratchpad offsets as signed halfwords plus the two adjustments after them, as one

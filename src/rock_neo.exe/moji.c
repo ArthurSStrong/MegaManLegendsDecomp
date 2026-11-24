@@ -272,7 +272,7 @@ void Moji_update(void)
                     }
                     else
                     {
-                        Moji_window_set_tbl[*wp->pos_14](wp);
+                        D_8008AAC4[*wp->pos_14](wp);
                     }
                 }
                 rect.x = wp->val_8;
@@ -398,7 +398,7 @@ sint32 Moji_cmd_end_wait(MOJI_WORK *wp)
         if (wp->flags_0 & 0x4000000)
         {
             wp->flags_0 |= 0x100000;
-            D_8008AAC0[wp->val_7C](wp);
+            Moji_window_type_tbl[wp->val_7C](wp);
             return 0;
         }
         wp->flags_0 &= ~0x20000;
@@ -460,13 +460,13 @@ sint32 Moji_cmd_page_wait(MOJI_WORK *wp)
     return 0;
 }
 
-void func_80054694(MOJI_WORK *wp)
+void Moji_text_color(MOJI_WORK *wp)
 {
     wp->val_3E = wp->pos_14[1];
     wp->pos_14 += 2;
 }
 
-sint32 func_800546B0(MOJI_WORK *wp)
+sint32 Moji_cmd_speed(MOJI_WORK *wp)
 {
     wp->val_3F = get_le16(wp->pos_6C + 1);
     wp->val_4  = wp->val_3F;
@@ -591,7 +591,7 @@ sint32 Moji_cmd_window(MOJI_WORK *wp)
         wp->val_7D = 0;
     }
     wp->val_7C = wp->pos_6C[1];
-    D_8008AAC0[wp->val_7C](wp);
+    Moji_window_type_tbl[wp->val_7C](wp);
     return 0;
 }
 
@@ -600,14 +600,14 @@ void Moji_text_window(MOJI_WORK *wp)
     D_8008AB08[wp->val_7C](wp);
 }
 
-sint32 func_80054B88(MOJI_WORK *wp)
+sint32 Moji_cmd_fast_off(MOJI_WORK *wp)
 {
     wp->flags_0 |= MOJI_FLAG_08000000;
     wp->pos_6C += 1;
     return 1;
 }
 
-sint32 func_80054BAC(void)
+sint32 Moji_cmd_halt(void)
 {
     return 0;
 }
@@ -863,7 +863,7 @@ void Moji_text_select(MOJI_WORK *wp)
     wp->pos_14 += wp->v_72.skip + 2;
 }
 
-sint32 func_8005531C(MOJI_WORK *wp)
+sint32 Moji_cmd_fast_on(MOJI_WORK *wp)
 {
     wp->flags_0 &= ~MOJI_FLAG_08000000;
     wp->pos_6C += 1;
@@ -1126,7 +1126,7 @@ sint32 Moji_cmd_window_close(MOJI_WORK *wp)
     if (wp->flags_0 & 0x4000000)
     {
         wp->flags_0 |= 0x100000;
-        D_8008AAC0[wp->val_7C](wp);
+        Moji_window_type_tbl[wp->val_7C](wp);
         return 0;
     }
     wp->pos_6C += 1;
@@ -1294,7 +1294,7 @@ void Moji_text_bright(MOJI_WORK *wp)
     wp->pos_14 += 2;
 }
 
-sint32 func_8005619C(MOJI_WORK *wp)
+sint32 Moji_cmd_life_refill(MOJI_WORK *wp)
 {
     if (Pl_life_refill(1) != 0)
     {
@@ -1304,7 +1304,7 @@ sint32 func_8005619C(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_800561E8(MOJI_WORK *wp)
+sint32 Moji_cmd_energy_refill(MOJI_WORK *wp)
 {
     if (Pl_energy_refill(1) != 0)
     {
@@ -1314,7 +1314,7 @@ sint32 func_800561E8(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80056234(MOJI_WORK *wp)
+sint32 Moji_cmd_gauge_hold_end(MOJI_WORK *wp)
 {
     if (Gauge_hold_end(1) != 0)
     {
@@ -1324,7 +1324,7 @@ sint32 func_80056234(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80056280(MOJI_WORK *wp)
+sint32 Moji_cmd_refill_branch(MOJI_WORK *wp)
 {
     uint8 a;
     uint8 b;
@@ -2160,7 +2160,7 @@ void Moji_text_amount(MOJI_WORK *wp)
     num_to_text(1, Moji_amount, wp->pos_14);
 }
 
-sint32 func_80057C2C(MOJI_WORK *wp)
+sint32 Moji_cmd_list_bits(MOJI_WORK *wp)
 {
     sint32 count;
     uint32 i;
@@ -2200,20 +2200,20 @@ sint32 func_80057C2C(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80057D00(MOJI_WORK *wp)
+sint32 Moji_cmd_list_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
     wp->pos_6C                      = D_8008CE10[Moji_list[wp->pos_6C[1]]];
     return 1;
 }
 
-void func_80057D60(MOJI_WORK *wp)
+void Moji_text_list_call(MOJI_WORK *wp)
 {
     wp->jump_tbl_18[wp->depth_BE++] = (uint32)(wp->pos_14 + 2);
     wp->pos_14                      = D_8008CE10[Moji_list[wp->pos_14[1]]];
 }
 
-sint32 func_80057DB8(MOJI_WORK *wp)
+sint32 Moji_cmd_list_pick(MOJI_WORK *wp)
 {
     uint32 index;
 
@@ -2236,7 +2236,7 @@ sint32 func_80057DF4(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80057E50(MOJI_WORK *wp)
+void Moji_text_time(MOJI_WORK *wp)
 {
     uint8 *p;
 
@@ -2432,7 +2432,7 @@ sint32 Moji_cmd_name_entry(MOJI_WORK *wp)
     return done;
 }
 
-sint32 func_8005851C(MOJI_WORK *wp)
+sint32 Moji_cmd_level_label(MOJI_WORK *wp)
 {
     uint16 *row;
     sint8 *level;
@@ -2471,7 +2471,7 @@ sint32 func_8005851C(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_8005861C(MOJI_WORK *wp)
+sint32 Moji_cmd_level_branch(MOJI_WORK *wp)
 {
     uint16 *row;
     sint8 *level;
@@ -2511,7 +2511,7 @@ sint32 func_8005861C(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80058740(MOJI_WORK *wp)
+void Moji_text_level_branch(MOJI_WORK *wp)
 {
     uint8 *base;
 
@@ -3117,7 +3117,7 @@ sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
     return 0;
 }
 
-sint32 func_80059B44(MOJI_WORK *wp)
+sint32 Moji_cmd_repair_list(MOJI_WORK *wp)
 {
     sint32 count;
     sint32 value;
@@ -3158,7 +3158,7 @@ sint32 func_80059B44(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80059D20(MOJI_WORK *wp)
+sint32 Moji_cmd_repair_cost(MOJI_WORK *wp)
 {
     sint32 index;
     uint8 *p;
@@ -3185,7 +3185,7 @@ sint32 func_80059D20(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80059E24(MOJI_WORK *wp)
+void Moji_text_repair_name(MOJI_WORK *wp)
 {
     uint32 idx = wp->pos_14[1];
 
@@ -3486,7 +3486,7 @@ void Moji_text_char_space(MOJI_WORK *wp)
 
 // The edge tests are written with the moving edge on the left; the reset writes the edges in
 // field order.
-void func_8005A874(MOJI_WORK *wp)
+void Moji_window_fade(MOJI_WORK *wp)
 {
     uint32 size;
 

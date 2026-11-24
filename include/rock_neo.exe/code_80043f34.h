@@ -132,7 +132,7 @@ extern CODE43_FUNC Effect_explosion_size_tbl[];
 extern uint8 D_80097DDC[];
 extern uint8 D_800986C0[];
 extern CODE43_FUNC Effect_explosion_tbl[];
-extern CODE43_FUNC D_8008A220[];
+extern CODE43_FUNC Effect_ghost_tbl[];
 extern CODE43_FUNC Effect_buster_hit_tbl[];
 extern CODE43_FUNC Effect_smoke_tbl[];
 extern CODE43_FUNC Effect_arm_hit_tbl[];

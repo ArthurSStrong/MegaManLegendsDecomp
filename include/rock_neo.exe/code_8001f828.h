@@ -274,7 +274,7 @@ extern sint16 D_800BAEB8[];
 extern sint16 D_800BBD00[];
 extern C8001F828_OT *Disp_env_ptr;
 sint32 rsin(sint32 angle);
-void func_800272D0(sint32 cx, sint32 cy, sint32 r0, sint32 r1);
+void screen_ripple_draw(sint32 cx, sint32 cy, sint32 r0, sint32 r1);
 extern sint32 D_80098824;
 extern sint32 D_800D9BD8;
 sint32 SquareRoot0(sint32 v);
