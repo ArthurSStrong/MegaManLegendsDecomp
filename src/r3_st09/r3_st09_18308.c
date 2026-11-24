@@ -460,7 +460,7 @@ void func_80119374(STAGE_PANEL_WORK *wp)
 
 void func_80119390(STAGE_PANEL_WORK *wp)
 {
-    // Never used; they reserve retail's frame (stcom19_func_0000's locals).
+    // Never used; they reserve retail's frame (stcom19_move's locals).
     STCOM_SVECTOR v;
     STCOM_FIXED_VECTOR out;
     STCOM_MATRIX m;

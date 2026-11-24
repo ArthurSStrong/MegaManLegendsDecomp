@@ -50,7 +50,7 @@ typedef struct
     STCOM_SVECTOR rotation;                 // 54
     STCOM_SVECTOR rotation_prev;            // 5C
     sint16 turn_64;                         // 64
-    sint16 turn_66;                         // 66: turn speed (stcom13_func_0C24)
+    sint16 turn_66;                         // 66: turn speed (stcom13_flee)
     uint8 reserved68[6];                    // 68
     sint16 life_6E;                         // 6E
     uint8 reserved70[8];                    // 70
@@ -85,12 +85,12 @@ typedef struct
 
 typedef void (*STCOM13_FUNC)(STCOM13_WORK *wp);
 
-extern STCOM13_FUNC stcom13_D_0000[]; // routine_0 handlers (stcom13_func_0000)
-extern STCOM13_FUNC stcom13_D_000C[]; // routine_1 handlers (stcom13_func_01D8)
-extern uint8 stcom13_D_0020[];        // data_78
-extern uint8 stcom13_D_002C[];        // drop times by routine_3 (stcom13_func_08B0)
-extern uint8 stcom13_D_0030[4][4];    // joints to drop from, by routine_3
-extern uint8 stcom13_D_0040[];        // joints to drop from when it dies
+extern STCOM13_FUNC stcom13_move_tbl[];  // routine_0 handlers (stcom13_move)
+extern STCOM13_FUNC stcom13_state_tbl[]; // routine_1 handlers (stcom13_move_main)
+extern uint8 stcom13_D_0020[];           // data_78
+extern uint8 stcom13_D_002C[];           // drop times by routine_3 (stcom13_func_08B0)
+extern uint8 stcom13_D_0030[4][4];       // joints to drop from, by routine_3
+extern uint8 stcom13_D_0040[];           // joints to drop from when it dies
 
 // ROCK_NEO.EXE.
 extern STCOM13_KIND **Em_param_tbl;
@@ -98,8 +98,8 @@ void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
-void stcom13_func_01D8(STCOM13_WORK *wp);
-sint32 stcom13_func_0DA8(STCOM13_WORK *wp);
+void stcom13_move_main(STCOM13_WORK *wp);
+sint32 stcom13_damage(STCOM13_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

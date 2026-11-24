@@ -6,19 +6,19 @@
 // set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom09"
 
-void stcom09_func_0000(STCOM09_WORK *wp)
+void stcom09_move(STCOM09_WORK *wp)
 {
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom09_D_0000[wp->index_3](wp);
+    stcom09_type_tbl[wp->index_3](wp);
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0xC, 0x200, 0);
     }
 }
 
-void stcom09_func_00CC(STCOM09_WORK *wp)
+void stcom09_work_init(STCOM09_WORK *wp)
 {
     STCOM_SVECTOR ofs;
 
@@ -47,7 +47,7 @@ void stcom09_func_00CC(STCOM09_WORK *wp)
     wp->hit.value_4      = 0x8880000;
     wp->hit.timer_2      = 0;
     Search_Player_Init(wp->track_328, 0, -0x60);
-    stcom09_func_0C48(&ofs, wp->rotation.y, wp->hit.ofs_10, wp->hit.ofs_12, wp->hit.ofs_14);
+    stcom09_ofs_rotate(&ofs, wp->rotation.y, wp->hit.ofs_10, wp->hit.ofs_12, wp->hit.ofs_14);
     wp->hit.pos_8 = ofs;
     wp->hit.pos_8.x += wp->position.x;
     wp->hit.pos_8.y += wp->position.y;
@@ -56,7 +56,7 @@ void stcom09_func_00CC(STCOM09_WORK *wp)
     wp->routine_1                                    = 0;
 }
 
-void stcom09_func_0268(STCOM09_WORK *wp)
+void stcom09_chest(STCOM09_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM09_HIT *hit;
@@ -67,11 +67,11 @@ void stcom09_func_0268(STCOM09_WORK *wp)
     switch (wp->routine_0)
     {
         case 0:
-            stcom09_func_00CC(wp);
+            stcom09_work_init(wp);
             wp->routine_0++;
             // fall through
         case 1:
-            if (stcom09_func_0AFC(wp))
+            if (stcom09_item_check(wp))
             {
                 EM_Char_Set(wp, 0, 0);
             }
@@ -85,7 +85,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
         case 2:
             if (pl->target_184 == wp)
             {
-                if (stcom09_func_0B48(wp))
+                if (stcom09_examine_check(wp))
                 {
                     wp->routine_0++;
                 }
@@ -124,7 +124,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
             wp->routine_0++;
             break;
         case 7:
-            if (stcom09_func_0AFC(wp))
+            if (stcom09_item_check(wp))
             {
                 if (wp->value_D == 0)
                 {
@@ -202,7 +202,7 @@ void stcom09_func_0268(STCOM09_WORK *wp)
     hit->hit_18 = 0;
 }
 
-void stcom09_func_06A0(STCOM09_WORK *wp)
+void stcom09_trap(STCOM09_WORK *wp)
 {
     STCOM09_HIT *hit;
 
@@ -220,7 +220,7 @@ void stcom09_func_06A0(STCOM09_WORK *wp)
             hit->flags_0 &= ~1;
         }
     }
-    stcom09_D_0008[wp->routine_0](wp);
+    stcom09_trap_tbl[wp->routine_0](wp);
     if (wp->routine_0 == 0)
     {
         Solid_set(wp, 1, -1, 0x1000000);
@@ -237,7 +237,7 @@ void stcom09_func_06A0(STCOM09_WORK *wp)
     hit->hit_18 = 0;
 }
 
-void stcom09_func_07B8(STCOM09_WORK *wp)
+void stcom09_trap_open(STCOM09_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM09_HIT *hit;
@@ -247,14 +247,14 @@ void stcom09_func_07B8(STCOM09_WORK *wp)
     switch (wp->routine_1)
     {
         case 0:
-            stcom09_func_00CC(wp);
+            stcom09_work_init(wp);
             EM_Char_Set(wp, 0, 0);
             wp->routine_1++;
             break;
         case 1:
             if (pl->target_184 == wp)
             {
-                if (stcom09_func_0B48(wp))
+                if (stcom09_examine_check(wp))
                 {
                     wp->routine_1++;
                 }
@@ -290,7 +290,7 @@ void stcom09_func_07B8(STCOM09_WORK *wp)
     }
 }
 
-void stcom09_func_0918(STCOM09_WORK *wp)
+void stcom09_trap_wait(STCOM09_WORK *wp)
 {
     switch (wp->routine_1)
     {
@@ -305,10 +305,10 @@ void stcom09_func_0918(STCOM09_WORK *wp)
             }
             break;
     }
-    stcom09_func_0BE0(wp);
+    stcom09_damage(wp);
 }
 
-void stcom09_func_0988(STCOM09_WORK *wp)
+void stcom09_trap_fire(STCOM09_WORK *wp)
 {
     STCOM09_HIT *hit;
 
@@ -324,7 +324,7 @@ void stcom09_func_0988(STCOM09_WORK *wp)
         case 1:
         case 3:
         case 5:
-            if (stcom09_func_0D28(wp))
+            if (stcom09_bomb_throw(wp))
             {
                 wp->timer_A = 4;
                 wp->routine_1++;
@@ -344,10 +344,10 @@ void stcom09_func_0988(STCOM09_WORK *wp)
             wp->timer_A   = 30;
             break;
     }
-    stcom09_func_0BE0(wp);
+    stcom09_damage(wp);
 }
 
-void stcom09_func_0A64(STCOM09_WORK *wp)
+void stcom09_trap_break(STCOM09_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
@@ -367,12 +367,12 @@ void stcom09_func_0A64(STCOM09_WORK *wp)
     }
 }
 
-void stcom09_func_0ADC(STCOM09_WORK *wp)
+void stcom09_trap_erase(STCOM09_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
 
-uint8 stcom09_func_0AFC(STCOM09_WORK *wp)
+uint8 stcom09_item_check(STCOM09_WORK *wp)
 {
     if (Sce_flag_test(wp->flag_C + 0x400) == 0)
     {
@@ -389,7 +389,7 @@ uint8 stcom09_func_0AFC(STCOM09_WORK *wp)
     return 0;
 }
 
-uint8 stcom09_func_0B48(STCOM09_WORK *wp)
+uint8 stcom09_examine_check(STCOM09_WORK *wp)
 {
     STCOM_FIXED_VECTOR out;
     STCOM_SVECTOR size;
@@ -406,7 +406,7 @@ uint8 stcom09_func_0B48(STCOM09_WORK *wp)
     return (View_check_center(wp, &Player_work, &size, &out) & mask) == 0;
 }
 
-void stcom09_func_0BE0(STCOM09_WORK *wp)
+void stcom09_damage(STCOM09_WORK *wp)
 {
     uint32 hit;
     uint32 damage;
@@ -427,7 +427,7 @@ void stcom09_func_0BE0(STCOM09_WORK *wp)
     }
 }
 
-STCOM_SVECTOR *stcom09_func_0C48(STCOM_SVECTOR *out, sint32 angle, sint32 x, sint32 y, sint32 z)
+STCOM_SVECTOR *stcom09_ofs_rotate(STCOM_SVECTOR *out, sint32 angle, sint32 x, sint32 y, sint32 z)
 {
     STCOM_SVECTOR v;
     STCOM_SVECTOR r;
@@ -462,7 +462,7 @@ STCOM_SVECTOR *stcom09_func_0C48(STCOM_SVECTOR *out, sint32 angle, sint32 x, sin
     return out;
 }
 
-uint8 stcom09_func_0D28(STCOM09_WORK *wp)
+uint8 stcom09_bomb_throw(STCOM09_WORK *wp)
 {
     STCOM09_SHOT *shot;
 

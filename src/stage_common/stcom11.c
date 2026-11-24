@@ -6,12 +6,12 @@
 // by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom11"
 
-void stcom11_func_0000(STCOM11_WORK *wp)
+void stcom11_move(STCOM11_WORK *wp)
 {
-    stcom11_D_0000[wp->routine_0](wp);
+    stcom11_move_tbl[wp->routine_0](wp);
 }
 
-void stcom11_func_003C(STCOM11_WORK *wp)
+void stcom11_move_init(STCOM11_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -93,7 +93,7 @@ void stcom11_func_003C(STCOM11_WORK *wp)
     Sound_call2(0x1AF, &wp->position);
 }
 
-void stcom11_func_0308(STCOM11_WORK *wp)
+void stcom11_fly_aim(STCOM11_WORK *wp)
 {
     STCOM_EFFECT *effect;
     sint32 frame;
@@ -115,8 +115,8 @@ void stcom11_func_0308(STCOM11_WORK *wp)
             frame = wp->routine_2 + 2;
         }
         wp->routine_2       = frame;
-        wp->sprite.value_E  = stcom11_D_0014[wp->routine_2];
-        wp->sprite.value_F  = stcom11_D_0014[wp->routine_2 + 1];
+        wp->sprite.value_E  = stcom11_frame_tbl[wp->routine_2];
+        wp->sprite.value_F  = stcom11_frame_tbl[wp->routine_2 + 1];
         wp->sprite.value_12 = (wp->sprite.value_12 + 8) & 0x3F;
         wp->position_fixed.x += (wp->velocity.x + wp->accel.x) << 16;
         wp->position_fixed.y += wp->velocity.y << 16;
@@ -155,7 +155,7 @@ void stcom11_func_0308(STCOM11_WORK *wp)
     wp->sprite.hit_14 = 0;
 }
 
-void stcom11_func_0564(STCOM11_WORK *wp)
+void stcom11_fly_fast(STCOM11_WORK *wp)
 {
     STCOM_EFFECT *effect;
     sint32 frame;
@@ -177,8 +177,8 @@ void stcom11_func_0564(STCOM11_WORK *wp)
             frame = wp->routine_2 + 2;
         }
         wp->routine_2       = frame;
-        wp->sprite.value_E  = stcom11_D_0014[wp->routine_2];
-        wp->sprite.value_F  = stcom11_D_0014[wp->routine_2 + 1];
+        wp->sprite.value_E  = stcom11_frame_tbl[wp->routine_2];
+        wp->sprite.value_F  = stcom11_frame_tbl[wp->routine_2 + 1];
         wp->sprite.value_12 = (wp->sprite.value_12 + 8) & 0x3F;
         Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
         if (wp->timer_E == 0 || --wp->timer_E == 0)
@@ -214,7 +214,7 @@ void stcom11_func_0564(STCOM11_WORK *wp)
     wp->sprite.hit_14 = 0;
 }
 
-void stcom11_func_077C(STCOM11_WORK *wp)
+void stcom11_fly_param(STCOM11_WORK *wp)
 {
     STCOM_EFFECT *effect;
     sint32 frame;
@@ -236,8 +236,8 @@ void stcom11_func_077C(STCOM11_WORK *wp)
             frame = wp->routine_2 + 2;
         }
         wp->routine_2       = frame;
-        wp->sprite.value_E  = stcom11_D_0014[wp->routine_2];
-        wp->sprite.value_F  = stcom11_D_0014[wp->routine_2 + 1];
+        wp->sprite.value_E  = stcom11_frame_tbl[wp->routine_2];
+        wp->sprite.value_F  = stcom11_frame_tbl[wp->routine_2 + 1];
         wp->sprite.value_12 = (wp->sprite.value_12 + 8) & 0x3F;
         Obj_pos_set(wp, wp->velocity.x, wp->velocity.y, wp->velocity.z);
         if (wp->timer_E == 0 || --wp->timer_E == 0)
@@ -273,7 +273,7 @@ void stcom11_func_077C(STCOM11_WORK *wp)
     wp->sprite.hit_14 = 0;
 }
 
-void stcom11_func_0994(STCOM11_WORK *wp)
+void stcom11_erase(STCOM11_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }

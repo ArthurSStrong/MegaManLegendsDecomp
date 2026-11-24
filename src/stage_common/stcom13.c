@@ -6,13 +6,13 @@
 // by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom13"
 
-void stcom13_func_0000(STCOM13_WORK *wp)
+void stcom13_move(STCOM13_WORK *wp)
 {
-    stcom13_D_0000[wp->routine_0](wp);
+    stcom13_move_tbl[wp->routine_0](wp);
     wp->ctl.hit_14 = 0;
 }
 
-void stcom13_func_004C(STCOM13_WORK *wp)
+void stcom13_move_init(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
     sint16 life;
@@ -62,12 +62,12 @@ void stcom13_func_004C(STCOM13_WORK *wp)
             EM_Char_Set(wp, 0, 0);
             break;
     }
-    stcom13_func_01D8(wp);
+    stcom13_move_main(wp);
 }
 
 // The identical arms (merged by jump2 after allocation) keep the hit box call's arguments
 // after the pos_C.y store, as retail; the matched siblings hoist them above it.
-void stcom13_func_01D8(STCOM13_WORK *wp)
+void stcom13_move_main(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
 
@@ -80,9 +80,9 @@ void stcom13_func_01D8(STCOM13_WORK *wp)
     ctl                     = &wp->ctl;
     if ((ctl->flags_0 & 0x104) == 0x104)
     {
-        stcom13_func_0DA8(wp);
+        stcom13_damage(wp);
     }
-    stcom13_D_000C[wp->routine_1](wp);
+    stcom13_state_tbl[wp->routine_1](wp);
     if (ctl->flags_0 & 1)
     {
         switch (wp->routine_1)
@@ -137,7 +137,7 @@ void stcom13_func_01D8(STCOM13_WORK *wp)
     }
 }
 
-void stcom13_func_045C(STCOM13_WORK *wp)
+void stcom13_move_erase(STCOM13_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
@@ -398,7 +398,7 @@ void stcom13_func_08B0(STCOM13_WORK *wp)
     wp->scale.v.pad = 0x190C;
 }
 
-void stcom13_func_0C24(STCOM13_WORK *wp)
+void stcom13_flee(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
     STCOM_PL_WORK *pl;
@@ -437,7 +437,7 @@ void stcom13_func_0C24(STCOM13_WORK *wp)
     }
 }
 
-sint32 stcom13_func_0DA8(STCOM13_WORK *wp)
+sint32 stcom13_damage(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
     STCOM_EFFECT *effect;

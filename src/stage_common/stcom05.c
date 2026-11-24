@@ -6,19 +6,19 @@
 // assembly (TARGET_ASM, set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom05"
 
-void stcom05_func_0000(STCOM05_WORK *wp)
+void stcom05_move(STCOM05_WORK *wp)
 {
-    stcom05_D_0000[wp->index_3](wp);
+    stcom05_type_tbl[wp->index_3](wp);
 }
 
-void stcom05_func_003C(STCOM05_WORK *wp)
+void stcom05_walker(STCOM05_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
 
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom05_D_0008[wp->routine_0](wp);
+    stcom05_walker_tbl[wp->routine_0](wp);
     RotMatrixYXZ(&wp->rotation, &wp->matrix);
     scale.x = 0x200;
     scale.y = 0x200;
@@ -35,7 +35,7 @@ void stcom05_func_003C(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0184(STCOM05_WORK *wp)
+void stcom05_walker_init(STCOM05_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
 
@@ -68,10 +68,10 @@ void stcom05_func_0184(STCOM05_WORK *wp)
     wp->ctl.value_24 = 0;
     wp->ctl.value_25 = 0;
     wp->ctl.value_26 = 0;
-    stcom05_func_029C(wp);
+    stcom05_walker_main(wp);
 }
 
-void stcom05_func_029C(STCOM05_WORK *wp)
+void stcom05_walker_main(STCOM05_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM05_CTL *ctl;
@@ -83,7 +83,7 @@ void stcom05_func_029C(STCOM05_WORK *wp)
         return;
     }
     stcom05_func_0ED0(wp);
-    stcom05_D_0018[wp->routine_1](wp);
+    stcom05_route_tbl[wp->routine_1](wp);
     if (ctl->value_24 == 0 && Player_work.value_6E < Player_work.value_B0 / 2 &&
         !(Moji_flag & 0x8000000))
     {
@@ -96,7 +96,7 @@ void stcom05_func_029C(STCOM05_WORK *wp)
     }
     if (pl->flags_71 < 0 && ctl->value_25 == 0 && !(Moji_flag & 0x8000000))
     {
-        MojiTaskExec2(0, stcom05_D_00AC[ctl->value_26]);
+        MojiTaskExec2(0, stcom05_hint_tbl[ctl->value_26]);
         ctl->value_25 = 1;
         if (ctl->value_26 != 2)
         {
@@ -117,12 +117,12 @@ void stcom05_func_029C(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0464(STCOM05_WORK *wp)
+void stcom05_walker_erase(STCOM05_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }
 
-void stcom05_func_0484(STCOM05_WORK *wp)
+void stcom05_walker_warp(STCOM05_WORK *wp)
 {
     if (Moji_flag & 0x8000000)
     {
@@ -156,15 +156,15 @@ void stcom05_func_0484(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_05B8(STCOM05_WORK *wp)
+void stcom05_route_start(STCOM05_WORK *wp)
 {
-    wp->rotation.y  = Calc_degree2(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
+    wp->rotation.y  = Calc_degree2(&wp->position, &stcom05_waypoint_tbl[wp->ctl.index_20]) & 0xFFF;
     wp->routine_1   = 1;
-    wp->ctl.dist_14 = wp->ctl.dist_10 =
-        Calc_distance(&stcom05_D_003C[wp->ctl.index_20 - 1], &stcom05_D_003C[wp->ctl.index_20]);
+    wp->ctl.dist_14 = wp->ctl.dist_10 = Calc_distance(&stcom05_waypoint_tbl[wp->ctl.index_20 - 1],
+                                                      &stcom05_waypoint_tbl[wp->ctl.index_20]);
 }
 
-void stcom05_func_0630(STCOM05_WORK *wp)
+void stcom05_route_walk(STCOM05_WORK *wp)
 {
     sint32 diff;
 
@@ -175,7 +175,7 @@ void stcom05_func_0630(STCOM05_WORK *wp)
     Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
     stcom05_func_0E64(wp);
     wp->ctl.dist_14 = wp->ctl.dist_10;
-    wp->ctl.dist_10 = Calc_distance(&wp->position, &stcom05_D_003C[wp->ctl.index_20]);
+    wp->ctl.dist_10 = Calc_distance(&wp->position, &stcom05_waypoint_tbl[wp->ctl.index_20]);
     if (wp->ctl.dist_14 < wp->ctl.dist_10)
     {
         wp->ctl.index_20++;
@@ -189,7 +189,7 @@ void stcom05_func_0630(STCOM05_WORK *wp)
         {
             wp->routine_1 = 2;
             wp->ctl.rot_goal_18 =
-                Calc_degree2(&wp->position, &stcom05_D_003C[wp->ctl.index_20]) & 0xFFF;
+                Calc_degree2(&wp->position, &stcom05_waypoint_tbl[wp->ctl.index_20]) & 0xFFF;
             diff                = wp->rotation.y - wp->ctl.rot_goal_18;
             wp->ctl.rot_diff_1A = STCOM_ABS(diff) & 0xFFF;
             if (wp->ctl.rot_diff_1A >= 0x800)
@@ -261,7 +261,7 @@ void stcom05_func_0790(STCOM05_WORK *wp)
     }
     Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
     stcom05_func_0E64(wp);
-    ctl->rot_goal_18 = Calc_degree2(&wp->position, &stcom05_D_003C[ctl->index_20]) & 0xFFF;
+    ctl->rot_goal_18 = Calc_degree2(&wp->position, &stcom05_waypoint_tbl[ctl->index_20]) & 0xFFF;
 }
 
 void stcom05_func_0938(STCOM05_WORK *wp)
@@ -309,7 +309,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                 wp->routine_1 = 0;
                 Sound_call2(0x17C, &wp->position);
                 wp->velocity.v.x = 0;
-                stcom05_func_05B8(wp);
+                stcom05_route_start(wp);
                 wp->routine_2 = 0;
             }
             break;
@@ -335,7 +335,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                     Sound_call2(0x17C, &wp->position);
                 }
                 ctl->value_23 = 0;
-                stcom05_func_05B8(wp);
+                stcom05_route_start(wp);
                 wp->routine_2 = 0;
             }
             break;
@@ -361,7 +361,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                     Sound_call2(0x17C, &wp->position);
                 }
                 ctl->value_23 = 0;
-                stcom05_func_05B8(wp);
+                stcom05_route_start(wp);
                 wp->routine_2 = 0;
             }
             break;
@@ -387,7 +387,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                     Sound_call2(0x17C, &wp->position);
                 }
                 ctl->value_23 = 0;
-                stcom05_func_05B8(wp);
+                stcom05_route_start(wp);
                 wp->routine_2 = 0;
                 Cd_xa_seek_id(0x140009);
             }
@@ -406,8 +406,9 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                 }
                 wp->routine_2++;
                 MojiTaskExec2(0, 0x18);
-                ctl->dist_14 = ctl->dist_10 = Calc_distance(&stcom05_D_003C[ctl->index_20 - 1],
-                                                            &stcom05_D_003C[ctl->index_20 + 1]);
+                ctl->dist_14 = ctl->dist_10 =
+                    Calc_distance(&stcom05_waypoint_tbl[ctl->index_20 - 1],
+                                  &stcom05_waypoint_tbl[ctl->index_20 + 1]);
                 wp->velocity.v.x            = 0;
             }
             else if (wp->routine_2 == 1)
@@ -451,7 +452,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
             break;
         default:
             wp->routine_1 = 0;
-            stcom05_func_05B8(wp);
+            stcom05_route_start(wp);
             break;
     }
 }

@@ -8,7 +8,7 @@
 
 // The panels' spawner (value_3 0xFF) or a panel: runs its routine, then lights it while the
 // player stands on the far side of its edge.
-void stcom19_func_0000(STCOM19_WORK *wp)
+void stcom19_move(STCOM19_WORK *wp)
 {
     STCOM_SVECTOR sxy_player;
     STCOM_SVECTOR sxy_edge;
@@ -22,11 +22,11 @@ void stcom19_func_0000(STCOM19_WORK *wp)
 
     if (wp->value_3 == 0xFF)
     {
-        stcom19_func_0640();
+        stcom19_spawn();
         Close_WORK_50(wp);
         return;
     }
-    stcom19_D_0150[wp->routine_0](wp);
+    stcom19_move_tbl[wp->routine_0](wp);
     if (Sce_flag_test(0x7B0) == 0)
     {
         edge.x     = -0x200;
@@ -69,15 +69,15 @@ void stcom19_func_0000(STCOM19_WORK *wp)
     wp->color_40 = 0x808080;
 }
 
-void stcom19_func_02F4(STCOM19_WORK *wp)
+void stcom19_move_init(STCOM19_WORK *wp)
 {
     wp->flags_0 |= 2;
     wp->routine_0++;
 }
 
-void stcom19_func_0310(STCOM19_WORK *wp)
+void stcom19_wait_open(STCOM19_WORK *wp)
 {
-    // Never used; they reserve retail's frame (stcom19_func_0000's locals).
+    // Never used; they reserve retail's frame (stcom19_move's locals).
     STCOM_SVECTOR v;
     STCOM_FIXED_VECTOR out;
     STCOM_MATRIX m;
@@ -91,7 +91,7 @@ void stcom19_func_0310(STCOM19_WORK *wp)
     }
 }
 
-void stcom19_func_0384(STCOM19_WORK *wp)
+void stcom19_open(STCOM19_WORK *wp)
 {
     wp->matrix.words[0]  = 0x1000;
     wp->matrix.words[2]  = 0x1000;
@@ -110,7 +110,7 @@ void stcom19_func_0384(STCOM19_WORK *wp)
     }
 }
 
-void stcom19_func_0448(STCOM19_WORK *wp)
+void stcom19_wait_close(STCOM19_WORK *wp)
 {
     if (Sce_flag_test(0x7B0))
     {
@@ -148,7 +148,7 @@ void stcom19_func_0448(STCOM19_WORK *wp)
     }
 }
 
-void stcom19_func_0574(STCOM19_WORK *wp)
+void stcom19_close(STCOM19_WORK *wp)
 {
     if (--wp->timer_B == 0)
     {
@@ -165,14 +165,14 @@ void stcom19_func_0574(STCOM19_WORK *wp)
     RotMatrixY(wp->dir_C << 10, &wp->matrix.m);
 }
 
-void stcom19_func_0614(STCOM19_WORK *wp)
+void stcom19_cell_block(STCOM19_WORK *wp)
 {
     STCOM19_CELLS[wp->cell_44].value = wp->matrix.words[5];
     wp->routine_0                    = 0;
 }
 
 // Spawns the room's panels: two on every map cell whose attribute matches a list entry.
-void stcom19_func_0640(void)
+void stcom19_spawn(void)
 {
     STCOM_SVECTOR pos;
     sint32 x0;

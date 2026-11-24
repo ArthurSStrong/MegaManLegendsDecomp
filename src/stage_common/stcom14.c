@@ -6,19 +6,19 @@
 // by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom14"
 
-void stcom14_func_0000(STCOM_EFFECT *wp)
+void stcom14_move(STCOM_EFFECT *wp)
 {
     if (wp->value_D == 0)
     {
-        stcom14_D_0000[wp->variant_3](wp);
+        stcom14_emit_tbl[wp->variant_3](wp);
     }
     else
     {
-        stcom14_D_0010[wp->variant_3](wp);
+        stcom14_puff_tbl[wp->variant_3](wp);
     }
 }
 
-void stcom14_func_006C(STCOM_EFFECT *wp)
+void stcom14_emit0(STCOM_EFFECT *wp)
 {
     STCOM_EFFECT *puff;
 
@@ -53,7 +53,7 @@ void stcom14_func_006C(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_0164(STCOM_EFFECT *wp)
+void stcom14_puff0(STCOM_EFFECT *wp)
 {
     if (wp->timer_E > 0)
     {
@@ -84,7 +84,7 @@ void stcom14_func_0164(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_02A0(STCOM_EFFECT *wp)
+void stcom14_emit1(STCOM_EFFECT *wp)
 {
     STCOM_EFFECT *puff;
 
@@ -119,7 +119,7 @@ void stcom14_func_02A0(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_03C4(STCOM_EFFECT *wp)
+void stcom14_puff1(STCOM_EFFECT *wp)
 {
     if (wp->timer_E > 0)
     {
@@ -150,7 +150,7 @@ void stcom14_func_03C4(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_0504(STCOM_EFFECT *wp)
+void stcom14_emit2(STCOM_EFFECT *wp)
 {
     STCOM_EFFECT *puff;
 
@@ -182,7 +182,7 @@ void stcom14_func_0504(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_062C(STCOM_EFFECT *wp)
+void stcom14_puff2(STCOM_EFFECT *wp)
 {
     if (wp->timer_E > 0)
     {
@@ -199,7 +199,7 @@ void stcom14_func_062C(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_06DC(STCOM_EFFECT *wp)
+void stcom14_emit3(STCOM_EFFECT *wp)
 {
     STCOM_EFFECT *puff;
 
@@ -235,7 +235,7 @@ void stcom14_func_06DC(STCOM_EFFECT *wp)
     }
 }
 
-void stcom14_func_0808(STCOM_EFFECT *wp)
+void stcom14_puff3(STCOM_EFFECT *wp)
 {
     if (wp->timer_E > 0)
     {

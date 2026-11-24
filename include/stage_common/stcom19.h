@@ -93,10 +93,10 @@ typedef struct
 typedef void (*STCOM19_FUNC)(STCOM19_WORK *wp);
 
 extern STCOM19_ROOM stcom19_D_0000[];
-extern STCOM19_FUNC stcom19_D_0150[];
+extern STCOM19_FUNC stcom19_move_tbl[];
 extern STCOM19_OFFSET stcom19_D_0140[];
 
-void stcom19_func_0640(void);
+void stcom19_spawn(void);
 
 // ROCK_NEO.EXE.
 sint32 Sce_flag_test(sint32 flag);

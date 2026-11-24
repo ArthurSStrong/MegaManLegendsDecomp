@@ -19,7 +19,7 @@ typedef struct
     uint8 reserved1C[4]; // 324
 } STCOM09_HIT;
 
-// The 0x10C-byte slot stcom09_func_0D28 spawns (stcom06's emitter, kind 6).
+// The 0x10C-byte slot stcom09_bomb_throw spawns (stcom06's emitter, kind 6).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -43,13 +43,14 @@ typedef union
     sint32 words[8];
 } STCOM09_MATRIX;
 
-// The 0x3C0-byte work slot stcom09 runs on (freed through ROCK_NEO's Close_EM_WORK).
+// The 0x3C0-byte work slot stcom09 runs on (freed through ROCK_NEO's Close_EM_WORK): a treasure
+// chest (type 0) or a trap chest that throws bombs (type 1).
 typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 value_1;                          // 01
     uint8 kind_2;                           // 02: index into Em_param_tbl
-    uint8 index_3;                          // 03: stcom09_D_0000 handler
+    uint8 index_3;                          // 03: stcom09_type_tbl handler
     uint8 reserved04[2];                    // 04
     uint8 flags_6;                          // 06
     uint8 reserved07;                       // 07
@@ -105,10 +106,10 @@ typedef struct
 
 typedef void (*STCOM09_FUNC)(STCOM09_WORK *wp);
 
-extern STCOM09_FUNC stcom09_D_0000[]; // handlers by index_3 (stcom09_func_0000)
-extern STCOM09_FUNC stcom09_D_0008[]; // routine_0 handlers (stcom09_func_06A0)
-extern uint8 stcom09_D_001C[];        // data_10
-extern uint8 stcom09_D_0028[];        // data_78
+extern STCOM09_FUNC stcom09_type_tbl[]; // handlers by index_3 (stcom09_move)
+extern STCOM09_FUNC stcom09_trap_tbl[]; // routine_0 handlers (stcom09_trap)
+extern uint8 stcom09_D_001C[];          // data_10
+extern uint8 stcom09_D_0028[];          // data_78
 
 // ROCK_NEO.EXE.
 extern STCOM09_KIND **Em_param_tbl;
@@ -128,12 +129,12 @@ sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 STCOM_MATRIX *RotMatrixY(sint32 r, STCOM_MATRIX *m);
 STCOM_SVECTOR *ApplyMatrixSV(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_SVECTOR *r);
 
-STCOM_SVECTOR *stcom09_func_0C48(STCOM_SVECTOR *out, sint32 angle, sint32 x, sint32 y, sint32 z);
-void stcom09_func_00CC(STCOM09_WORK *wp);
-uint8 stcom09_func_0AFC(STCOM09_WORK *wp);
-uint8 stcom09_func_0B48(STCOM09_WORK *wp);
-void stcom09_func_0BE0(STCOM09_WORK *wp);
-uint8 stcom09_func_0D28(STCOM09_WORK *wp);
+STCOM_SVECTOR *stcom09_ofs_rotate(STCOM_SVECTOR *out, sint32 angle, sint32 x, sint32 y, sint32 z);
+void stcom09_work_init(STCOM09_WORK *wp);
+uint8 stcom09_item_check(STCOM09_WORK *wp);
+uint8 stcom09_examine_check(STCOM09_WORK *wp);
+void stcom09_damage(STCOM09_WORK *wp);
+uint8 stcom09_bomb_throw(STCOM09_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 Scr_height_check(void *wp);

@@ -62,7 +62,7 @@ typedef struct
     STCOM_SVECTOR rotation;                 // 54
     STCOM_SVECTOR rotation_prev;            // 5C
     sint16 turn_64;                         // 64
-    sint16 turn_66;                         // 66: turn speed (stcom13_func_0C24)
+    sint16 turn_66;                         // 66: turn speed (stcom13_flee)
     uint8 reserved68[6];                    // 68
     sint16 life_6E;                         // 6E
     uint8 reserved70[8];                    // 70

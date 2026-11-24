@@ -40,7 +40,7 @@ typedef struct
 
 typedef void (*STCOM11_FUNC)(STCOM11_WORK *wp);
 
-extern STCOM11_FUNC stcom11_D_0000[]; // routine_0 handlers (stcom11_func_0000)
-extern uint8 stcom11_D_0014[];        // (u, v) per animation frame
+extern STCOM11_FUNC stcom11_move_tbl[]; // routine_0 handlers (stcom11_move)
+extern uint8 stcom11_frame_tbl[];       // (u, v) per animation frame
 
 #endif // STCOM11_H

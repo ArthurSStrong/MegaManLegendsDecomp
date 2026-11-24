@@ -36,7 +36,7 @@ typedef struct
 {
     uint8 flags_0;                          // 00
     uint8 reserved01[2];                    // 01
-    uint8 index_3;                          // 03: stcom05_D_0000 handler
+    uint8 index_3;                          // 03: stcom05_type_tbl handler
     uint8 reserved04[4];                    // 04
     uint8 routine_0;                        // 08
     uint8 routine_1;                        // 09
@@ -72,20 +72,20 @@ typedef struct
 
 typedef void (*STCOM05_FUNC)(STCOM05_WORK *wp);
 
-extern STCOM05_FUNC stcom05_D_0000[];  // handlers by index_3 (stcom05_func_0000)
-extern STCOM05_FUNC stcom05_D_0008[];  // routine_0 handlers (stcom05_func_003C)
-extern STCOM05_FUNC stcom05_D_0018[];  // routine_1 handlers (stcom05_func_029C)
-extern STCOM05_FUNC stcom05_D_002C[];  // routine_0 handlers (stcom05_func_0F78)
-extern STCOM_SVECTOR stcom05_D_003C[]; // waypoints (index_20 - 1 is the one behind)
-extern STCOM_SVECTOR stcom05_D_0044[]; // the same waypoints, one ahead
-extern uint8 stcom05_D_00AC[];         // message numbers by ctl.value_26
-extern uint8 stcom05_D_00B0[];         // data_78
-extern uint8 stcom05_D_00BC[];         // data_10
+extern STCOM05_FUNC stcom05_type_tbl[];      // handlers by index_3 (stcom05_move)
+extern STCOM05_FUNC stcom05_walker_tbl[];    // routine_0 handlers (stcom05_walker)
+extern STCOM05_FUNC stcom05_route_tbl[];     // routine_1 handlers (stcom05_walker_main)
+extern STCOM05_FUNC stcom05_D_002C[];        // routine_0 handlers (stcom05_func_0F78)
+extern STCOM_SVECTOR stcom05_waypoint_tbl[]; // waypoints (index_20 - 1 is the one behind)
+extern STCOM_SVECTOR stcom05_D_0044[];       // the same waypoints, one ahead
+extern uint8 stcom05_hint_tbl[];             // message numbers by ctl.value_26
+extern uint8 stcom05_D_00B0[];               // data_78
+extern uint8 stcom05_D_00BC[];               // data_10
 
-void stcom05_func_029C(STCOM05_WORK *wp);
+void stcom05_walker_main(STCOM05_WORK *wp);
 void stcom05_func_0E64(STCOM05_WORK *wp);
 void stcom05_func_0ED0(STCOM05_WORK *wp);
 void stcom05_func_0938(STCOM05_WORK *wp);
-void stcom05_func_05B8(STCOM05_WORK *wp);
+void stcom05_route_start(STCOM05_WORK *wp);
 
 #endif // STCOM05_H

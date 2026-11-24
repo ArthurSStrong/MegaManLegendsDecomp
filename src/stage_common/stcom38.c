@@ -7,20 +7,20 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom38"
 
 // Room handlers: each starts its room's script once.
-void stcom38_func_0000(void)
+void stcom38_room_none(void)
 {
 }
 
-void stcom38_func_0008(STCOM38_ROOM_WORK *wp)
+void stcom38_room1(STCOM38_ROOM_WORK *wp)
 {
     if (wp->started_4 == 0)
     {
-        Sce_slot_open_list(stcom38_D_0000);
+        Sce_slot_open_list(stcom38_room1_list);
         wp->started_4 = 0xFF;
     }
 }
 
-void stcom38_func_0054(STCOM38_ROOM_WORK *wp)
+void stcom38_room2(STCOM38_ROOM_WORK *wp)
 {
     if (wp->started_4 == 0)
     {
@@ -29,7 +29,7 @@ void stcom38_func_0054(STCOM38_ROOM_WORK *wp)
     }
 }
 
-void stcom38_func_00A0(STCOM38_ROOM_WORK *wp)
+void stcom38_room3(STCOM38_ROOM_WORK *wp)
 {
     if (wp->started_4 == 0)
     {
