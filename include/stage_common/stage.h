@@ -1532,7 +1532,7 @@ typedef struct
     uint16 flag_3A;          // 3A: scene flag (from position.pad)
     union
     {
-        uint8 *steps;        // frames per hop (stcom15_D_0050, stcom15_D_005C)
+        uint8 *steps;        // frames per hop (stcom15_hop_tbl, stcom15_fall_hop_tbl)
         uint16 flag;         // a scene flag (r3_st13's func_80111E90)
     } u_3C;                  // 3C
     STCOM_EFFECT *effect_40; // 40

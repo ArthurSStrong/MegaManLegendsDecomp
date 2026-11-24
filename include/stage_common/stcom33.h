@@ -38,7 +38,7 @@ typedef struct
 {
     uint8 flags_0;          // 00
     uint8 reserved01[2];    // 01
-    uint8 variant_3;        // 03: index into stcom33_D_0000
+    uint8 variant_3;        // 03: index into stcom33_scroll_tbl
     uint8 reserved04[4];    // 04
     uint8 routine_0;        // 08
     uint8 routine_1;        // 09
@@ -50,8 +50,8 @@ typedef struct
 
 typedef void (*STCOM33_FUNC)(STCOM33_WORK *wp);
 
-extern STCOM33_SCROLL stcom33_D_0000[]; // by variant_3
-extern STCOM33_FUNC stcom33_D_003C[];   // routine_0 handlers (stcom33_func_0000)
+extern STCOM33_SCROLL stcom33_scroll_tbl[]; // by variant_3
+extern STCOM33_FUNC stcom33_move_tbl[];     // routine_0 handlers (stcom33_move)
 
 // ROCK_NEO.EXE.
 extern STCOM33_LINK *Disp_env_ptr;

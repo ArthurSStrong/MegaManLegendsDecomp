@@ -6,7 +6,7 @@
 // tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom15"
 
-void stcom15_func_0000(STCOM15_WORK *wp)
+void stcom15_move(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -16,7 +16,7 @@ void stcom15_func_0000(STCOM15_WORK *wp)
     wp->rotation_prev       = wp->rotation;
     wp->scale.v.pad         = 0x4210;
     wp->ctl.rand_2          = rand();
-    stcom15_D_0000[wp->routine_0](wp);
+    stcom15_move_tbl[wp->routine_0](wp);
     ctl = &wp->ctl;
     if (wp->anim_prev_AD != wp->anim_AC)
     {
@@ -39,7 +39,7 @@ void stcom15_func_0000(STCOM15_WORK *wp)
     ctl->hit_14 = 0;
 }
 
-void stcom15_func_01A4(STCOM15_WORK *wp)
+void stcom15_move_init(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
     sint16 life;
@@ -103,7 +103,7 @@ void stcom15_func_01A4(STCOM15_WORK *wp)
     wp->scale.v.pad = 0x4210;
 }
 
-void stcom15_func_0394(STCOM15_WORK *wp)
+void stcom15_move_main(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -118,9 +118,9 @@ void stcom15_func_0394(STCOM15_WORK *wp)
     }
     if (ctl->flags_0 & 2)
     {
-        stcom15_func_1F44(wp);
+        stcom15_damage(wp);
     }
-    stcom15_D_000C[wp->routine_1](wp);
+    stcom15_state_tbl[wp->routine_1](wp);
     if (ctl->flags_0 & 1)
     {
         switch (wp->routine_1)
@@ -139,7 +139,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
                 }
                 else
                 {
-                    stcom15_func_1D40(wp);
+                    stcom15_walk_choose(wp);
                 }
                 break;
             default:
@@ -149,7 +149,7 @@ void stcom15_func_0394(STCOM15_WORK *wp)
                 }
                 else
                 {
-                    stcom15_func_1D40(wp);
+                    stcom15_walk_choose(wp);
                 }
                 break;
         }
@@ -185,12 +185,12 @@ void stcom15_func_0394(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_05F8(STCOM15_WORK *wp)
+void stcom15_erase(STCOM15_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void stcom15_func_0618(STCOM15_WORK *wp)
+void stcom15_wait(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -233,7 +233,7 @@ void stcom15_func_0618(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_0748(STCOM15_WORK *wp)
+void stcom15_turn(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -261,7 +261,7 @@ void stcom15_func_0748(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_0874(STCOM15_WORK *wp)
+void stcom15_walk(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -319,7 +319,7 @@ void stcom15_func_0874(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_0A30(STCOM15_WORK *wp)
+void stcom15_charge(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -421,7 +421,7 @@ void stcom15_func_0A30(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_0D54(STCOM15_WORK *wp)
+void stcom15_shoot(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -468,7 +468,7 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
                 wp->routine_2 = 3;
                 wp->anim_AC++;
                 ctl->timer_4 = 11;
-                stcom15_func_1E0C(wp);
+                stcom15_shot_throw(wp);
             }
             break;
         case 3:
@@ -513,7 +513,7 @@ void stcom15_func_0D54(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_0FE0(STCOM15_WORK *wp)
+void stcom15_dying(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -606,7 +606,7 @@ void stcom15_func_0FE0(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_12E8(STCOM15_WORK *wp)
+void stcom15_flinch(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -639,7 +639,7 @@ void stcom15_func_12E8(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_13E8(STCOM15_WORK *wp)
+void stcom15_knock_back(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -650,7 +650,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
             wp->routine_2    = 1;
             wp->anim_AC      = 7;
             wp->velocity.v.x = -16;
-            wp->ctl.timer_4  = stcom15_D_0044[0];
+            wp->ctl.timer_4  = stcom15_back_hop_tbl[0];
             wp->ctl.value_8  = 0;
             wp->ctl.flags_0 &= ~8;
             if (wp->life_6E <= 0)
@@ -666,7 +666,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
             // fall through
         case 2:
             ctl->timer_4--;
-            wp->velocity.v.y = (stcom15_D_0044[wp->routine_3 + 1] - ctl->timer_4) << 3;
+            wp->velocity.v.y = (stcom15_back_hop_tbl[wp->routine_3 + 1] - ctl->timer_4) << 3;
             Obj_pos_set(wp, wp->velocity.v.x << 4, wp->velocity.v.y << 4, 0);
             ctl->hit_48 = Scr_collision_check(wp);
             if (ctl->hit_48 != 0)
@@ -684,7 +684,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
                         wp->routine_2    = 1;
                         wp->velocity.v.x = -16;
                         wp->anim_AC++;
-                        ctl->timer_4 = stcom15_D_0044[wp->routine_3];
+                        ctl->timer_4 = stcom15_back_hop_tbl[wp->routine_3];
                         ctl->flags_0 |= 8;
                     }
                     else if (wp->life_6E <= 0)
@@ -715,7 +715,7 @@ void stcom15_func_13E8(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_1620(STCOM15_WORK *wp)
+void stcom15_knock_fwd(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -730,7 +730,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
             if (wp->variant_3 & 0x40)
             {
                 wp->velocity.v.x = 8;
-                wp->ctl.steps_3C = stcom15_D_005C;
+                wp->ctl.steps_3C = stcom15_fall_hop_tbl;
                 wp->ctl.timer_4  = wp->ctl.steps_3C[0];
                 wp->ctl.rand_2   = 7;
                 wp->ctl.value_8  = Em_param_tbl[wp->kind_2][wp->ctl.level_6].value_B;
@@ -738,7 +738,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
             else
             {
                 wp->velocity.v.x = 16;
-                wp->ctl.steps_3C = stcom15_D_0050;
+                wp->ctl.steps_3C = stcom15_hop_tbl;
                 wp->ctl.timer_4  = wp->ctl.steps_3C[0];
             }
             if (wp->life_6E <= 0)
@@ -810,7 +810,7 @@ void stcom15_func_1620(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_18EC(STCOM15_WORK *wp)
+void stcom15_chase(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -876,7 +876,7 @@ void stcom15_func_18EC(STCOM15_WORK *wp)
     }
 }
 
-void stcom15_func_1B90(STCOM15_WORK *wp)
+void stcom15_ram(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -915,7 +915,7 @@ void stcom15_func_1B90(STCOM15_WORK *wp)
     }
 }
 
-sint32 stcom15_func_1D40(STCOM15_WORK *wp)
+sint32 stcom15_walk_choose(STCOM15_WORK *wp)
 {
     sint16 i;
     sint16 sum;
@@ -925,7 +925,7 @@ sint32 stcom15_func_1D40(STCOM15_WORK *wp)
     r   = wp->ctl.rand_2 & 0xF;
     for (i = 0; i < 4; i++)
     {
-        sum += stcom15_D_0068[i];
+        sum += stcom15_walk_odds_tbl[i];
         if (r < sum)
         {
             break;
@@ -951,7 +951,7 @@ sint32 stcom15_func_1D40(STCOM15_WORK *wp)
     return 1;
 }
 
-void stcom15_func_1E0C(STCOM15_WORK *wp)
+void stcom15_shot_throw(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
 
@@ -984,7 +984,7 @@ void stcom15_func_1E0C(STCOM15_WORK *wp)
     }
 }
 
-sint32 stcom15_func_1F44(STCOM15_WORK *wp)
+sint32 stcom15_damage(STCOM15_WORK *wp)
 {
     STCOM15_CTL *ctl;
     uint32 damage;

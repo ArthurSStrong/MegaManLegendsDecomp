@@ -6,7 +6,7 @@
 // by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom12"
 
-void stcom12_func_0000(STCOM12_WORK *wp)
+void stcom12_move(STCOM12_WORK *wp)
 {
     STCOM12_CTL *ctl;
 
@@ -14,7 +14,7 @@ void stcom12_func_0000(STCOM12_WORK *wp)
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
     wp->anim_prev_AD        = wp->anim_AC;
-    stcom12_D_0000[wp->routine_0](wp);
+    stcom12_move_tbl[wp->routine_0](wp);
     ctl = &wp->ctl;
     if (wp->routine_3 != 0)
     {
@@ -40,7 +40,7 @@ void stcom12_func_0000(STCOM12_WORK *wp)
     ctl->hit_C = 0;
 }
 
-void stcom12_func_0164(STCOM12_WORK *wp)
+void stcom12_move_init(STCOM12_WORK *wp)
 {
     uint16 scale;
 
@@ -50,7 +50,7 @@ void stcom12_func_0164(STCOM12_WORK *wp)
     wp->turn_64    = 0x40;
     wp->flags_0 |= 2;
     Model_work_init(wp, NULL);
-    scale           = stcom12_D_0038[wp->param_E];
+    scale           = stcom12_scale_tbl[wp->param_E];
     wp->scale.v.pad = 0x4210;
     wp->data_78     = stcom12_D_002C;
     wp->scale.v.x = wp->scale.v.y = wp->scale.v.z = scale;
@@ -94,12 +94,12 @@ void stcom12_func_0164(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_02E4(STCOM12_WORK *wp)
+void stcom12_erase(STCOM12_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void stcom12_func_0304(STCOM12_WORK *wp)
+void stcom12_wander(STCOM12_WORK *wp)
 {
     STCOM12_CTL *ctl;
     uint32 hit;
@@ -113,7 +113,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
         wp->routine_1 = 0;
         return;
     }
-    if (stcom12_func_0DE4(wp))
+    if (stcom12_examine_check(wp))
     {
         wp->routine_0 = 4;
         wp->routine_1 = 0;
@@ -127,7 +127,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             wp->routine_1++;
             // fall through
         case 1:
-            if (!stcom12_func_0F98(wp))
+            if (!stcom12_player_check(wp))
             {
                 break;
             }
@@ -149,7 +149,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             }
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
             hit = Scr_collision_check(wp);
-            stcom12_func_0E9C(wp, hit);
+            stcom12_fall(wp, hit);
             if (wp->param_D != 0 &&
                 wp->param_D < (Calc_distance(&wp->position, &ctl->home_24) >> 7))
             {
@@ -162,9 +162,9 @@ void stcom12_func_0304(STCOM12_WORK *wp)
                 wp->routine_1 = 10;
                 break;
             }
-            stcom12_func_0D68(wp, hit);
+            stcom12_turn_set(wp, hit);
             wp->rotation.y = (wp->rotation.y + wp->turn_66) & 0xFFF;
-            stcom12_func_0F28(wp, hit);
+            stcom12_wall_check(wp, hit);
             if (wp->velocity.y != 0)
             {
                 break;
@@ -203,14 +203,14 @@ void stcom12_func_0304(STCOM12_WORK *wp)
             }
             break;
         case 11:
-            if (!stcom12_func_0F98(wp))
+            if (!stcom12_player_check(wp))
             {
                 break;
             }
             // fall through
         case 15:
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            stcom12_func_0E9C(wp, Scr_collision_check(wp));
+            stcom12_fall(wp, Scr_collision_check(wp));
             if (--ctl->timer_4 == 0)
             {
                 wp->routine_1 = 0;
@@ -227,7 +227,7 @@ void stcom12_func_0304(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_0660(STCOM12_WORK *wp)
+void stcom12_wait_near(STCOM12_WORK *wp)
 {
     uint32 dist;
 
@@ -255,7 +255,7 @@ void stcom12_func_0660(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_0710(STCOM12_WORK *wp)
+void stcom12_examine(STCOM12_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     sint16 step;
@@ -328,13 +328,13 @@ void stcom12_func_0710(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_08E8(STCOM12_WORK *wp)
+void stcom12_wander_reset(STCOM12_WORK *wp)
 {
     wp->routine_0 = 1;
     wp->routine_1 = 0;
 }
 
-void stcom12_func_08F8(STCOM12_WORK *wp)
+void stcom12_kicked(STCOM12_WORK *wp)
 {
     STCOM12_CTL *ctl;
     uint32 hit;
@@ -384,7 +384,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
                 wp->position       = wp->position_prev;
                 wp->position_fixed = wp->position_fixed_prev;
             }
-            stcom12_func_0E9C(wp, hit);
+            stcom12_fall(wp, hit);
             if (wp->state_A7 < 0)
             {
                 EM_Char_Set(wp, 0, 0);
@@ -397,7 +397,7 @@ void stcom12_func_08F8(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_0B24(STCOM12_WORK *wp)
+void stcom12_release(STCOM12_WORK *wp)
 {
     STCOM12_CTL *ctl;
     STCOM_PL_WORK *pl;
@@ -442,7 +442,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
             // fall through
         case 4:
             Obj_pos_set(wp, wp->velocity.x, 0, 0);
-            stcom12_func_0E9C(wp, Scr_collision_check(wp));
+            stcom12_fall(wp, Scr_collision_check(wp));
             if (Message_event[0] != 0)
             {
                 break;
@@ -456,7 +456,7 @@ void stcom12_func_0B24(STCOM12_WORK *wp)
     }
 }
 
-void stcom12_func_0D68(STCOM12_WORK *wp, uint32 hit)
+void stcom12_turn_set(STCOM12_WORK *wp, uint32 hit)
 {
     sint32 turn;
 
@@ -479,7 +479,7 @@ void stcom12_func_0D68(STCOM12_WORK *wp, uint32 hit)
     wp->turn_66 = turn;
 }
 
-sint32 stcom12_func_0DE4(STCOM12_WORK *wp)
+sint32 stcom12_examine_check(STCOM12_WORK *wp)
 {
     STCOM12_WORK *target;
     STCOM_PL_WORK *pl;
@@ -491,17 +491,17 @@ sint32 stcom12_func_0DE4(STCOM12_WORK *wp)
         Player_work.target_184 = NULL;
         pl->flags_0 &= ~2;
         Player_work.flags_bd |= 0x40;
-        stcom12_E_0000.x = target->value_180.x;
-        stcom12_E_0000.y = target->value_180.y - 0x20;
-        stcom12_E_0000.z = target->value_180.z;
-        Camera_move_set_pause(&stcom12_E_0000, 0x100,
+        stcom12_camera_pos.x = target->value_180.x;
+        stcom12_camera_pos.y = target->value_180.y - 0x20;
+        stcom12_camera_pos.z = target->value_180.z;
+        Camera_move_set_pause(&stcom12_camera_pos, 0x100,
                               Calc_degree2(&pl->position, &target->position) + 0x800, D_800A396C);
         return 1;
     }
     return 0;
 }
 
-void stcom12_func_0E9C(STCOM12_WORK *wp, uint32 hit)
+void stcom12_fall(STCOM12_WORK *wp, uint32 hit)
 {
     sint16 ground;
 
@@ -524,7 +524,7 @@ void stcom12_func_0E9C(STCOM12_WORK *wp, uint32 hit)
     wp->position_fixed.y = wp->position.y << 16;
 }
 
-void stcom12_func_0F28(STCOM12_WORK *wp, uint32 hit)
+void stcom12_wall_check(STCOM12_WORK *wp, uint32 hit)
 {
     if (hit && ++wp->ctl.counter_0 > 60)
     {
@@ -534,7 +534,7 @@ void stcom12_func_0F28(STCOM12_WORK *wp, uint32 hit)
     }
 }
 
-uint8 stcom12_func_0F98(STCOM12_WORK *wp)
+uint8 stcom12_player_check(STCOM12_WORK *wp)
 {
     STCOM_FIXED_VECTOR out;
     STCOM_SVECTOR size;

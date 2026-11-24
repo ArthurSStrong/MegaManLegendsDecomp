@@ -227,11 +227,11 @@ stcom32_D_009A = 0x8010E212;
 stcom32_D_009B = 0x8010E213;
 stcom32_D_00A8 = 0x8010E220;
 // stcom33 (src/stage_common/stcom33.c): this stage's copy, under the shared names.
-stcom33_func_0000 = 0x80109050; // type:func
-stcom33_func_003C = 0x8010908C; // type:func
-stcom33_func_0058 = 0x801090A8; // type:func
-stcom33_D_0000 = 0x8010E230;
+stcom33_move = 0x80109050; // type:func
+stcom33_move_init = 0x8010908C; // type:func
+stcom33_scroll = 0x801090A8; // type:func
+stcom33_scroll_tbl = 0x8010E230;
 stcom33_D_0004 = 0x8010E234;
 stcom33_D_0008 = 0x8010E238;
 stcom33_D_000A = 0x8010E23A;
-stcom33_D_003C = 0x8010E26C;
+stcom33_move_tbl = 0x8010E26C;

@@ -7,12 +7,12 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom33"
 
 // Scrolls a texture in VRAM (running water) once a scene flag is set.
-void stcom33_func_0000(STCOM33_WORK *wp)
+void stcom33_move(STCOM33_WORK *wp)
 {
-    stcom33_D_003C[wp->routine_0](wp);
+    stcom33_move_tbl[wp->routine_0](wp);
 }
 
-void stcom33_func_003C(STCOM33_WORK *wp)
+void stcom33_move_init(STCOM33_WORK *wp)
 {
     wp->routine_1 = 0;
     wp->scroll_A  = 0;
@@ -20,7 +20,7 @@ void stcom33_func_003C(STCOM33_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom33_func_0058(STCOM33_WORK *wp)
+void stcom33_scroll(STCOM33_WORK *wp)
 {
     RECT rect;
     STCOM33_DR_MOVE *p;
@@ -29,25 +29,25 @@ void stcom33_func_0058(STCOM33_WORK *wp)
 
     v   = wp->variant_3;
     ofs = wp->scroll_A;
-    if (Sce_flag_test(stcom33_D_0000[v].flag_A) == 0)
+    if (Sce_flag_test(stcom33_scroll_tbl[v].flag_A) == 0)
     {
         return;
     }
     if (wp->strips_C != 2)
     {
         p      = STCOM33_PACKET_PTR++;
-        rect.x = stcom33_D_0000[v].x0;
-        rect.y = stcom33_D_0000[v].y0 + ofs;
+        rect.x = stcom33_scroll_tbl[v].x0;
+        rect.y = stcom33_scroll_tbl[v].y0 + ofs;
         rect.w = 0x10;
         rect.h = 0x40 - ofs;
-        SetDrawMove(p, &rect, stcom33_D_0000[v].x0, stcom33_D_0000[v].y0 - 0x40);
+        SetDrawMove(p, &rect, stcom33_scroll_tbl[v].x0, stcom33_scroll_tbl[v].y0 - 0x40);
         addPrim(&Disp_env_ptr->ot_88, p);
         if (ofs != 0)
         {
             p      = STCOM33_PACKET_PTR++;
-            rect.y = stcom33_D_0000[v].y0;
+            rect.y = stcom33_scroll_tbl[v].y0;
             rect.h = ofs;
-            SetDrawMove(p, &rect, stcom33_D_0000[v].x0, stcom33_D_0000[v].y0 - ofs);
+            SetDrawMove(p, &rect, stcom33_scroll_tbl[v].x0, stcom33_scroll_tbl[v].y0 - ofs);
             addPrim(&Disp_env_ptr->ot_88, p);
         }
     }
@@ -55,27 +55,27 @@ void stcom33_func_0058(STCOM33_WORK *wp)
     if (wp->strips_C != 1)
     {
         p      = STCOM33_PACKET_PTR++;
-        rect.x = stcom33_D_0000[v].x1;
-        rect.y = stcom33_D_0000[v].y1 + ofs;
+        rect.x = stcom33_scroll_tbl[v].x1;
+        rect.y = stcom33_scroll_tbl[v].y1 + ofs;
         rect.w = 8;
         rect.h = 0x20 - ofs;
-        SetDrawMove(p, &rect, stcom33_D_0000[v].x1, stcom33_D_0000[v].y1 - 0x20);
+        SetDrawMove(p, &rect, stcom33_scroll_tbl[v].x1, stcom33_scroll_tbl[v].y1 - 0x20);
         addPrim(&Disp_env_ptr->ot_88, p);
         if (ofs != 0)
         {
             p      = STCOM33_PACKET_PTR++;
-            rect.y = stcom33_D_0000[v].y1;
+            rect.y = stcom33_scroll_tbl[v].y1;
             rect.h = ofs;
-            SetDrawMove(p, &rect, stcom33_D_0000[v].x1, stcom33_D_0000[v].y1 - ofs);
+            SetDrawMove(p, &rect, stcom33_scroll_tbl[v].x1, stcom33_scroll_tbl[v].y1 - ofs);
             addPrim(&Disp_env_ptr->ot_88, p);
         }
     }
     if (wp->reverse_B != 0)
     {
-        wp->scroll_A = (wp->scroll_A + stcom33_D_0000[v].speed_8) & 0x3F;
+        wp->scroll_A = (wp->scroll_A + stcom33_scroll_tbl[v].speed_8) & 0x3F;
     }
     else
     {
-        wp->scroll_A = (wp->scroll_A - stcom33_D_0000[v].speed_8) & 0x3F;
+        wp->scroll_A = (wp->scroll_A - stcom33_scroll_tbl[v].speed_8) & 0x3F;
     }
 }

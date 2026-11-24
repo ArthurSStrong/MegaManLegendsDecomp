@@ -6,17 +6,17 @@
 // tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom20"
 
-sint32 stcom20_func_0000(STCOM20_WORK *wp)
+sint32 stcom20_player_found(STCOM20_WORK *wp)
 {
     return Search_Player(wp->ctl.track_0, wp) != 0;
 }
 
-sint32 stcom20_func_0024(STCOM20_WORK *wp)
+sint32 stcom20_player_lost(STCOM20_WORK *wp)
 {
     return Search_Player(wp->ctl.track_0, wp) == 0;
 }
 
-void stcom20_func_0048(STCOM20_WORK *wp)
+void stcom20_move_init(STCOM20_WORK *wp)
 {
     STCOM20_CTL *ctl;
     sint16 y;
@@ -50,14 +50,14 @@ void stcom20_func_0048(STCOM20_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom20_func_0148(STCOM20_WORK *wp)
+void stcom20_drift(STCOM20_WORK *wp)
 {
     STCOM20_CTL *ctl;
     sint16 y;
     sint16 d;
 
     ctl = &wp->ctl;
-    if (stcom20_func_0000(wp))
+    if (stcom20_player_found(wp))
     {
         wp->routine_1    = 1;
         wp->velocity.v.y = 0;
@@ -98,7 +98,7 @@ void stcom20_func_0148(STCOM20_WORK *wp)
     }
 }
 
-void stcom20_func_02F8(STCOM20_WORK *wp)
+void stcom20_chase(STCOM20_WORK *wp)
 {
     STCOM20_CTL *ctl;
     STCOM_PL_WORK *pl;
@@ -111,7 +111,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
 
     ctl = &wp->ctl;
     pl  = &Player_work;
-    if (stcom20_func_0024(wp))
+    if (stcom20_player_lost(wp))
     {
         wp->routine_1 = 0;
     }
@@ -187,7 +187,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
     }
 }
 
-void stcom20_func_05FC(STCOM20_WORK *wp)
+void stcom20_burst(STCOM20_WORK *wp)
 {
     STCOM_EFFECT *effect;
     sint16 angle;
@@ -221,7 +221,7 @@ void stcom20_func_05FC(STCOM20_WORK *wp)
     Scr_collision_check(wp);
 }
 
-void stcom20_func_06E8(STCOM20_WORK *wp)
+void stcom20_move_main(STCOM20_WORK *wp)
 {
     STCOM20_CTL *ctl;
 
@@ -243,18 +243,18 @@ void stcom20_func_06E8(STCOM20_WORK *wp)
             wp->routine_1 = 2;
         }
     }
-    stcom20_D_000C[wp->routine_1](wp);
+    stcom20_state_tbl[wp->routine_1](wp);
     Set_Atari(&wp->position, 0x20, 0, 0x8000, wp->value_1, &ctl->hit_1C, 0x4080000, 0x800000,
                   0);
     ctl->hit_1C = 0;
 }
 
-void stcom20_func_07F8(STCOM20_WORK *wp)
+void stcom20_erase(STCOM20_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }
 
-void stcom20_func_0818(STCOM20_WORK *wp)
+void stcom20_move(STCOM20_WORK *wp)
 {
     STCOM20_MATRIX *m;
     STCOM20_MATRIX rot;
@@ -262,7 +262,7 @@ void stcom20_func_0818(STCOM20_WORK *wp)
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom20_D_0018[wp->routine_0](wp);
+    stcom20_move_tbl[wp->routine_0](wp);
     wp->pos_AC          = wp->position;
     m                   = &wp->matrix;
     wp->matrix.words[0] = 0x1000;

@@ -64,9 +64,9 @@ typedef struct
 
 typedef void (*STCOM20_FUNC)(STCOM20_WORK *wp);
 
-extern uint8 stcom20_D_0000[];        // data_78
-extern STCOM20_FUNC stcom20_D_000C[]; // routine_1 handlers (stcom20_func_06E8)
-extern STCOM20_FUNC stcom20_D_0018[]; // routine_0 handlers (stcom20_func_0818)
+extern uint8 stcom20_D_0000[];           // data_78
+extern STCOM20_FUNC stcom20_state_tbl[]; // routine_1 handlers (stcom20_move_main)
+extern STCOM20_FUNC stcom20_move_tbl[];  // routine_0 handlers (stcom20_move)
 
 // ROCK_NEO.EXE.
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
@@ -83,8 +83,8 @@ void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 STCOM_MATRIX *MulMatrix(STCOM_MATRIX *m0, STCOM_MATRIX *m1);
 
-sint32 stcom20_func_0000(STCOM20_WORK *wp);
-sint32 stcom20_func_0024(STCOM20_WORK *wp);
+sint32 stcom20_player_found(STCOM20_WORK *wp);
+sint32 stcom20_player_lost(STCOM20_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

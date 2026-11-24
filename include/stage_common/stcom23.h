@@ -14,7 +14,7 @@ typedef union
     } f;
 } STCOM23_FIXED_VECTOR;
 
-// A missile's parameters, by variant_3 (stcom23_D_0000, 0x2C bytes each).
+// A missile's parameters, by variant_3 (stcom23_param_tbl, 0x2C bytes each).
 typedef struct
 {
     uint8 kind_0;        // 00: kind_2 while it sets up
@@ -25,7 +25,7 @@ typedef struct
     sint32 turn_8;       // 08: Vec_turn_toward's limits
     sint32 turn_C;       // 0C
     uint32 model_10[3];  // 10
-    uint8 type_1C;       // 1C: index into the stcom23_D_0134/013C/0144 tables
+    uint8 type_1C;       // 1C: index into the stcom23_launch_tbl/013C/0144 tables
     uint8 reserved1D[2]; // 1D
     uint8 size_1F;       // 1F: hit box
     uint8 life_20;       // 20: frames
@@ -97,17 +97,17 @@ typedef struct
     uint8 u, v;
 } STCOM23_UV;
 
-extern STCOM23_PARAM stcom23_D_0000[];
-extern STCOM23_FUNC stcom23_D_0134[]; // by type_1C: set up
-extern STCOM23_FUNC stcom23_D_013C[]; // by type_1C: each frame
-extern STCOM23_FUNC stcom23_D_0144[]; // by type_1C: destroyed
-extern STCOM23_UV stcom23_D_014C[];   // the four puffs' textures
-extern STCOM23_FUNC stcom23_D_0154[]; // routine_0
+extern STCOM23_PARAM stcom23_param_tbl[];  // by variant_3
+extern STCOM23_FUNC stcom23_launch_tbl[];  // by type_1C: set up
+extern STCOM23_FUNC stcom23_fly_tbl[];     // by type_1C: each frame
+extern STCOM23_FUNC stcom23_break_tbl[];   // by type_1C: destroyed
+extern STCOM23_UV stcom23_puff_uv_tbl[];   // the four puffs' textures
+extern STCOM23_FUNC stcom23_move_tbl[];    // routine_0 handlers (stcom23_move)
 
-void stcom23_func_0954(STCOM23_WORK *wp);
-void stcom23_func_09FC(STCOM23_WORK *wp);
-void stcom23_func_0AAC(STCOM23_WORK *wp);
-void stcom23_func_0B18(STCOM23_WORK *wp);
+void stcom23_hit_set(STCOM23_WORK *wp);
+void stcom23_matrix_set(STCOM23_WORK *wp);
+void stcom23_puff(STCOM23_WORK *wp);
+void stcom23_trail_draw(STCOM23_WORK *wp);
 
 // ROCK_NEO.EXE.
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);

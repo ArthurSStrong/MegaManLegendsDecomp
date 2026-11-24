@@ -173,7 +173,7 @@ extern uint16 D_800AD168[]; // shadow copy of the texture pages (palettes live h
 sint32 rand(void);
 void MojiTaskKill(void);
 // ROCK_NEO's prototype takes uint8s, but the stage code passes signed bytes without
-// narrowing them (stcom12_func_0710), so it was compiled against an int prototype.
+// narrowing them (stcom12_examine), so it was compiled against an int prototype.
 void MojiTaskExec2(sint32 a, sint32 b);
 sint32 Camera_moving(void);
 sint32 Camera_return_resume(void);

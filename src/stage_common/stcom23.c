@@ -7,12 +7,12 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom23"
 
 // A homing missile.
-void stcom23_func_0000(STCOM23_WORK *wp)
+void stcom23_move(STCOM23_WORK *wp)
 {
-    stcom23_D_0154[wp->routine_0](wp);
+    stcom23_move_tbl[wp->routine_0](wp);
 }
 
-void stcom23_func_003C(STCOM23_WORK *wp)
+void stcom23_move_init(STCOM23_WORK *wp)
 {
     STCOM_SVECTOR v;
     STCOM_FIXED_VECTOR n;
@@ -26,7 +26,7 @@ void stcom23_func_003C(STCOM23_WORK *wp)
     wp->hit_C4   = 0;
     wp->value_C8 = 0;
     wp->flags_0 |= 6;
-    wp->model_78 = stcom23_D_0000[wp->variant_3].model_10;
+    wp->model_78 = stcom23_param_tbl[wp->variant_3].model_10;
     v.x          = 0;
     v.y          = 0;
     v.z          = -0x1000;
@@ -36,16 +36,16 @@ void stcom23_func_003C(STCOM23_WORK *wp)
     v.y        = n.y;
     v.z        = n.z;
     wp->dir_CC = v;
-    speed = wp->speed_6E = stcom23_D_0000[wp->variant_3].speed_2;
+    speed = wp->speed_6E = stcom23_param_tbl[wp->variant_3].speed_2;
     wp->velocity.x       = (v.x * speed) >> 4;
     wp->velocity.y       = (v.y * speed) >> 4;
     wp->velocity.z       = (v.z * speed) >> 4;
-    speed                = stcom23_D_0000[wp->variant_3].accel_4;
+    speed                = stcom23_param_tbl[wp->variant_3].accel_4;
     wp->accel.x          = (v.x * speed) >> 4;
     wp->accel.y          = (v.y * speed) >> 4;
     wp->accel.z          = (v.z * speed) >> 4;
-    wp->kind_2           = stcom23_D_0000[wp->variant_3].kind_0;
-    Model_work_init(wp, &stcom23_D_0000[wp->variant_3].variant_1);
+    wp->kind_2           = stcom23_param_tbl[wp->variant_3].kind_0;
+    Model_work_init(wp, &stcom23_param_tbl[wp->variant_3].variant_1);
     wp->draw_pos.x         = wp->position.x;
     wp->draw_pos.y         = wp->position.y;
     wp->draw_pos.z         = wp->position.z;
@@ -61,12 +61,12 @@ void stcom23_func_003C(STCOM23_WORK *wp)
     wp->trail[3].v         = wp->trail[2].v;
     wp->color_B4           = 0x808080;
     wp->routine_0++;
-    wp->life_B = stcom23_D_0000[wp->variant_3].life_20;
-    stcom23_func_0954(wp);
-    stcom23_D_0134[stcom23_D_0000[wp->variant_3].type_1C](wp);
+    wp->life_B = stcom23_param_tbl[wp->variant_3].life_20;
+    stcom23_hit_set(wp);
+    stcom23_launch_tbl[stcom23_param_tbl[wp->variant_3].type_1C](wp);
 }
 
-void stcom23_func_03E4(STCOM23_WORK *wp)
+void stcom23_move_main(STCOM23_WORK *wp)
 {
     STCOM_SVECTOR dir;
     STCOM_SVECTOR unit;
@@ -74,16 +74,16 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
     sint32 speed;
     sint32 result;
 
-    result = Shot_map_check(wp, stcom23_D_0000[wp->variant_3].value_22);
+    result = Shot_map_check(wp, stcom23_param_tbl[wp->variant_3].value_22);
     if (result != 0)
     {
         if (result != 0x7FFF)
         {
             goto destroyed;
         }
-        if (wp->hit_C4 & stcom23_D_0000[wp->variant_3].hit_mask_24)
+        if (wp->hit_C4 & stcom23_param_tbl[wp->variant_3].hit_mask_24)
         {
-            stcom23_D_0144[stcom23_D_0000[wp->variant_3].type_1C](wp);
+            stcom23_break_tbl[stcom23_param_tbl[wp->variant_3].type_1C](wp);
             Close_SHL_WORK(wp);
         }
     }
@@ -106,23 +106,23 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
             d.z >>= 2;
         }
         VectorNormalS(&d, &unit);
-        Vec_turn_toward(&dir, &unit, &wp->dir_CC, stcom23_D_0000[wp->variant_3].turn_8,
-                        stcom23_D_0000[wp->variant_3].turn_C);
+        Vec_turn_toward(&dir, &unit, &wp->dir_CC, stcom23_param_tbl[wp->variant_3].turn_8,
+                        stcom23_param_tbl[wp->variant_3].turn_C);
         wp->dir_CC     = dir;
         speed          = wp->speed_6E;
         wp->velocity.x = (dir.x * speed) >> 4;
         wp->velocity.y = (dir.y * speed) >> 4;
         wp->velocity.z = (dir.z * speed) >> 4;
-        speed          = wp->speed_6E + stcom23_D_0000[wp->variant_3].accel_4;
-        if (speed >= stcom23_D_0000[wp->variant_3].speed_max_6)
+        speed          = wp->speed_6E + stcom23_param_tbl[wp->variant_3].accel_4;
+        if (speed >= stcom23_param_tbl[wp->variant_3].speed_max_6)
         {
-            wp->speed_6E = stcom23_D_0000[wp->variant_3].speed_max_6;
+            wp->speed_6E = stcom23_param_tbl[wp->variant_3].speed_max_6;
         }
         else
         {
             wp->speed_6E = speed;
         }
-        stcom23_func_09FC(wp);
+        stcom23_matrix_set(wp);
         wp->position_fixed.v.x += wp->velocity.x << 8;
         wp->position_fixed.v.y += wp->velocity.y << 8;
         wp->position_fixed.v.z += wp->velocity.z << 8;
@@ -133,25 +133,25 @@ void stcom23_func_03E4(STCOM23_WORK *wp)
     else
     {
     destroyed:
-        stcom23_D_0144[stcom23_D_0000[wp->variant_3].type_1C](wp);
+        stcom23_break_tbl[stcom23_param_tbl[wp->variant_3].type_1C](wp);
         Close_SHL_WORK(wp);
         return;
     }
-    stcom23_func_0954(wp);
-    stcom23_func_0B18(wp);
-    stcom23_D_013C[stcom23_D_0000[wp->variant_3].type_1C](wp);
+    stcom23_hit_set(wp);
+    stcom23_trail_draw(wp);
+    stcom23_fly_tbl[stcom23_param_tbl[wp->variant_3].type_1C](wp);
 }
 
 void stcom23_func_085C(STCOM23_WORK *wp)
 {
 }
 
-void stcom23_func_0864(STCOM23_WORK *wp)
+void stcom23_launch0(STCOM23_WORK *wp)
 {
     Sound_call2(0x144, &wp->position);
 }
 
-void stcom23_func_0888(STCOM23_WORK *wp)
+void stcom23_launch1(STCOM23_WORK *wp)
 {
     wp->timer_C = 10;
     Sound_call2(0x141, &wp->position);
@@ -161,7 +161,7 @@ void stcom23_func_08B8(STCOM23_WORK *wp)
 {
 }
 
-void stcom23_func_08C0(STCOM23_WORK *wp)
+void stcom23_fly1(STCOM23_WORK *wp)
 {
     if (wp->timer_C != 0)
     {
@@ -173,26 +173,27 @@ void stcom23_func_08C0(STCOM23_WORK *wp)
     }
 }
 
-void stcom23_func_0914(STCOM23_WORK *wp)
+void stcom23_break0(STCOM23_WORK *wp)
 {
-    stcom23_func_0AAC(wp);
+    stcom23_puff(wp);
 }
 
-void stcom23_func_0934(STCOM23_WORK *wp)
+// Same code as stcom23_break0.
+void stcom23_break1(STCOM23_WORK *wp)
 {
-    stcom23_func_0AAC(wp);
+    stcom23_puff(wp);
 }
 
 // Registers the hit box.
-void stcom23_func_0954(STCOM23_WORK *wp)
+void stcom23_hit_set(STCOM23_WORK *wp)
 {
-    Set_Atari(&wp->position, stcom23_D_0000[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
-                  &wp->hit_C4, stcom23_D_0000[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
+    Set_Atari(&wp->position, stcom23_param_tbl[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
+                  &wp->hit_C4, stcom23_param_tbl[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
     wp->hit_C4 = 0;
 }
 
 // Points the model along the velocity.
-void stcom23_func_09FC(STCOM23_WORK *wp)
+void stcom23_matrix_set(STCOM23_WORK *wp)
 {
     STCOM_SVECTOR rotation;
     STCOM_FIXED_VECTOR scale;
@@ -210,7 +211,7 @@ void stcom23_func_09FC(STCOM23_WORK *wp)
 }
 
 // A puff of smoke where it was.
-void stcom23_func_0AAC(STCOM23_WORK *wp)
+void stcom23_puff(STCOM23_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
@@ -227,7 +228,7 @@ void stcom23_func_0AAC(STCOM23_WORK *wp)
 }
 
 // Draws the smoke trail.
-void stcom23_func_0B18(STCOM23_WORK *wp)
+void stcom23_trail_draw(STCOM23_WORK *wp)
 {
     STCOM23_PACKET *p;
     sint32 i;
@@ -236,8 +237,8 @@ void stcom23_func_0B18(STCOM23_WORK *wp)
 
     for (i = 0; i < 4; i++)
     {
-        u          = stcom23_D_014C[i].u;
-        v          = stcom23_D_014C[i].v;
+        u          = stcom23_puff_uv_tbl[i].u;
+        v          = stcom23_puff_uv_tbl[i].v;
         p          = Billboard_alloc();
         p->code_4  = 0x2E808080;
         p->xy_8    = wp->trail[i].words[0];
