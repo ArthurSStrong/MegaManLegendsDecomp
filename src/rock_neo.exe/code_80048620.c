@@ -377,7 +377,7 @@ sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, si
                             {
                                 box[4] = org.y + hit->y0;
                                 box[5] = org.y + hit->y1;
-                                func_8004A060(box, hit->kind);
+                                scr_box_hit(box, hit->kind);
                                 if (dy >= 0)
                                 {
                                     if (box[4] < best)
@@ -409,7 +409,7 @@ sint32 Scr_height_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dy, si
 }
 
 // Scalar scratch stores and the do/while hit loop give retail's order. The box corners sit
-// one do/while (0) level deeper (see func_8004AF28): GCC weights references by loop depth,
+// one do/while (0) level deeper (see Scr_pos_hit_check): GCC weights references by loop depth,
 // and only this ranks the area giv above left and hit (s1/s2/s3).
 sint16 Scr_point_height(PL_SHORT_VECTOR *pos)
 {
@@ -463,7 +463,7 @@ sint16 Scr_point_height(PL_SHORT_VECTOR *pos)
             {
                 box[4] = org.y + hit->y0;
                 box[5] = org.y + hit->y1;
-                func_8004A060(box, hit->kind);
+                scr_box_hit(box, hit->kind);
                 if (box[4] < best && CODE486_SP_POS_C0->y < box[5])
                 {
                     best = box[4];
@@ -484,7 +484,7 @@ sint32 Scr_ground_check(PL_WORK *pl)
 // struct fields (a scalar literal address goes through a register that loop.c hoists), the
 // kind goes through an unsigned local (no andi 0xFFFF before the call) and the floor term's
 // +1 is its own statement. Loop depth: the box corners sit two do/while (0) levels deeper and
-// the hit pointer one (see func_8004AF28); GCC weights each reference by loop depth, and only
+// the hit pointer one (see Scr_pos_hit_check); GCC weights each reference by loop depth, and only
 // this ranks the area giv above hit (s0/s1) without changing the box[4] temporaries.
 sint32 scr_ground_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 kind)
 {
@@ -691,7 +691,7 @@ sint32 scr_wall_dist_calc(PL_SHORT_VECTOR *pos, PL_HEIGHT_INFO *info, sint32 dir
                     }
                     box[4] = org.y + hit->y0;
                     box[5] = org.y + hit->y1;
-                    func_8004A060(box, hit->kind);
+                    scr_box_hit(box, hit->kind);
                     if (!(box[4] < CODE486_SP_POS_C0->y && CODE486_SP_POS_C0->y < box[5]))
                     {
                         goto next;
@@ -761,7 +761,7 @@ sint32 Scr_line_check(PL_WORK *pl)
 // from x), the kind and pad go through unsigned locals and the hit loop is a do/while. The two
 // floor tests each get their own single-use variable (the subtraction then lands in the first
 // operand's register), cy is a sint16. Loop depth: the area loop sits one level deeper than the
-// cell loop and the area selection one more (two do/while (0)s, see func_8004AF28); GCC weights
+// cell loop and the area selection one more (two do/while (0)s, see Scr_pos_hit_check); GCC weights
 // each reference by loop depth, and only this ranks the area pointer above pad (s4/s5).
 sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO *info, sint32 kind)
 {
@@ -861,7 +861,7 @@ sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO
                         {
                             box[4] = org.y + hit->y0;
                             box[5] = org.y + hit->y1;
-                            func_8004A060(box, hit->kind);
+                            scr_box_hit(box, hit->kind);
                             cy = CODE486_SP_POS_C0->y;
                             if (cy > box[4] && cy < box[5])
                             {
@@ -877,7 +877,7 @@ sint32 Scr_line_calc(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, PL_HEIGHT_INFO
     return 0;
 }
 
-void func_8004A060(sint16 *box, uint16 kind)
+void scr_box_hit(sint16 *box, uint16 kind)
 {
     sint8 flag;
     uint8 type;
@@ -1219,7 +1219,7 @@ sint32 Scr_vec_reflect(PL_SHORT_VECTOR *vec, sint32 flags)
     }
     return changed;
 }
-sint32 func_8004AE88(uint16 *angle, uint32 flags)
+sint32 Scr_angle_reflect(uint16 *angle, uint32 flags)
 {
     uint32 ang;
     sint32 flipped;
@@ -1269,7 +1269,7 @@ sint32 func_8004AE88(uint16 *angle, uint32 flags)
 // The area loop sits one loop level deeper than the cell loop (an extra do/while (0)): GCC
 // weights each reference by loop depth, and only this depth ranks the area pointer above
 // hit as retail does (area s1, hit s2); without it only those two saved registers swap.
-sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
+sint32 Scr_pos_hit_check(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
 {
     sint16 box[6];
     PL_SHORT_VECTOR org;
@@ -1327,7 +1327,7 @@ sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3)
                     {
                         box[4] = org.y + hit->y0;
                         box[5] = org.y + hit->y1;
-                        func_8004A060(box, hit->kind);
+                        scr_box_hit(box, hit->kind);
                         if ((hit->pad & 0x4000) && Player_work.value74 == 0 && CODE486_SP_FE != 0)
                         {
                             return CODE486_SP_FE;
@@ -1482,7 +1482,7 @@ sint32 Scr_collision_check(PL_WORK *wp)
     return result;
 }
 
-sint32 func_8004B5CC(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3)
+sint32 Scr_move_check(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3)
 {
     sint32 result;
 
@@ -1731,7 +1731,7 @@ done:
     return val;
 }
 
-// Box-versus-collision-kind test (sibling of func_8004A060). `type` is a uint16 copy (retail
+// Box-versus-collision-kind test (sibling of scr_box_hit). `type` is a uint16 copy (retail
 // zero-extends it with andi 0xFFFF for `type != 0x18`) and the switch is on `kind & 0xFF`.
 // Cases 8..0xB keep their x product in gap and every wall push amount goes through `b` (as
 // mult-only variables they would prefer LO, and reload would spill an extra saved register);
@@ -2905,7 +2905,7 @@ sint32 func_8004F150(uint16 *rect)
 // Same layout as the banked func_8004F8BC (if/else push assignments, ABS_NEG, per-path
 // calls). The x-only, z-only and both-x paths jump to one final `return 0`: with their own
 // returns the x-only tail cross-jumped onto the last `li v0,0` instead of into the both-x
-// tail. The z-only push sits one do/while (0) level deeper (see func_8004AF28): GCC weights
+// tail. The z-only push sits one do/while (0) level deeper (see Scr_pos_hit_check): GCC weights
 // references by loop depth, and without it pos (14 refs over 155 insns) ranks below hit_x
 // and they swap s1/s2. Any one to three of the five push groups wrapped match; four or more
 // flip it back.
@@ -3702,7 +3702,7 @@ sint32 push_flag_y(PL_SHORT_VECTOR *vec)
 }
 
 // Case 3's exit search sits one loop level deeper (an extra do/while (0)), as in
-// func_8004AF28: GCC weights references by loop depth, and only this depth ranks the
+// Scr_pos_hit_check: GCC weights references by loop depth, and only this depth ranks the
 // exit+0xE pointer above ev.z (a0/a1) as retail does.
 sint32 Scr_event_check(PL_WORK *pl)
 {
@@ -4182,7 +4182,7 @@ sint32 scr_event_get(PL_WORK *pl, sint32 *ofs, CODE486_EVENT *out)
             {
                 box[4] = org.y + hit->y0 - CODE486_SP_OFSH4.h12e;
                 box[5] = org.y + hit->y1 - CODE486_SP_OFSH4.h12c;
-                func_8004A060(box, (uint8)hit->kind);
+                scr_box_hit(box, (uint8)hit->kind);
                 cy = CODE486_SP_POS_C0->y;
                 if (box[4] < cy && cy < box[5])
                 {
@@ -4410,7 +4410,7 @@ void Solid_check(void)
                     break;
                 }
             }
-            // The loop level (as in func_8004AF28) keeps req++ ahead of the end test and
+            // The loop level (as in Scr_pos_hit_check) keeps req++ ahead of the end test and
             // gives req the reference count that ranks it above the stand-in base.
             do
             {
@@ -4655,7 +4655,7 @@ void ride_clear_one(sint32 key, CODE486_LINK *pl)
 }
 
 // D_80098AC0 is a 16-byte vector reached through $gp (the file is built with -G32, see
-// tools/cc.sh). The box corners sit one do/while (0) level deeper (see func_8004AF28): GCC
+// tools/cc.sh). The box corners sit one do/while (0) level deeper (see Scr_pos_hit_check): GCC
 // weights references by loop depth, and only this ranks the area giv above hit and count.
 // The solid is reached through key at each use (a separate pointer local reorders the
 // prologue). The final negations in natural x, y, z order give retail's store order.
@@ -4705,7 +4705,7 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
             {
                 box[4] = CODE486_SP_POS_E0->y + hit->y0;
                 box[5] = CODE486_SP_POS_E0->y + hit->y1;
-                func_8004A060(box, hit->kind);
+                scr_box_hit(box, hit->kind);
                 if (box[4] < best && CODE486_SP_POS_C0->y <= box[5])
                 {
                     best = box[4];

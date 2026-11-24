@@ -282,7 +282,7 @@ void pl_world_update(PL_WORK *pl)
             pl->position_fixed.y = pl->position_fixed_prev.y;
         }
     }
-    func_8002D004(pl, pl->value168, pl->value169);
+    Pl_face_set(pl, pl->value168, pl->value169);
 #ifdef __wasm32__
     Pl_key_unpack(pl, 0);
 #else
@@ -357,7 +357,7 @@ void Pl_move_main(PL_WORK *pl)
     pl->value75             = a2;
     pl->value77             = a3;
     pl->flags_bd &= 0xF7;
-    hit = func_8004AF28(&pl->position, a1, a2, a3);
+    hit = Scr_pos_hit_check(&pl->position, a1, a2, a3);
     if (hit != 0)
     {
         pl->routine_1 = 0xA;
@@ -963,7 +963,7 @@ void Pl_r1_turn(PL_WORK *pl)
     pl_turn_l1r1(pl, arg1, arg2);
 }
 
-void func_8003D7D4(PL_WORK *pl)
+void Pl_r1_quick_turn(PL_WORK *pl)
 {
     uint32 pad;
     sint16 hold;
@@ -1678,7 +1678,7 @@ void Pl_r1_down(PL_WORK *pl)
             if (pl->value74 == 0)
             {
                 pl_anim_set(pl, 0x24, 0, 1);
-                if (func_8005D8C4(8) && (sint8)pl->reserved16a == 0)
+                if (Gauge_life_hit_show(8) && (sint8)pl->reserved16a == 0)
                 {
                     pl->life -= 8;
                 }
@@ -2444,7 +2444,7 @@ reset:
     *(uint16 *)&pl->routine_2 = 0;
 }
 
-void func_8003FFA8(void)
+void Pl_r1_quick_turn_check(void)
 {
 }
 
@@ -2991,7 +2991,7 @@ sint32 pl_aim_start(PL_WORK *pl)
     return 0;
 }
 
-sint32 func_80040B34(PL_WORK *pl)
+sint32 pl_quick_turn_start(PL_WORK *pl)
 {
     if (pl->pad_cur & pl->value13e)
     {
@@ -3375,13 +3375,13 @@ void pl_damage_check(PL_WORK *pl)
         pl->value177         = 0;
         if (flags & 0x1000000)
         {
-            func_8005D8C4(damage);
+            Gauge_life_hit_show(damage);
         }
         if (flags & 0x40000000)
         {
             Gauge_show_hold();
         }
-        if (func_8005D8C4(0) != 0 || func_8005D938() != 0)
+        if (Gauge_life_hit_show(0) != 0 || Gauge_hold_get() != 0)
         {
             if (pl->life > 0)
             {
@@ -3411,7 +3411,7 @@ void pl_damage_check(PL_WORK *pl)
         {
             if (pl->life > 0)
             {
-                func_8005D8C4(damage);
+                Gauge_life_hit_show(damage);
             }
             else
             {
@@ -3790,7 +3790,7 @@ reset:
 
 void Player_control_on(PL_WORK *pl)
 {
-    func_8002D004(pl, 0, 0);
+    Pl_face_set(pl, 0, 0);
     pl->value449 = 0;
     pl->value111 = 0;
     pl->value71  = 0;

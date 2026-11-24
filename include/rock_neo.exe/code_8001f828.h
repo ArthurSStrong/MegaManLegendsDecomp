@@ -291,12 +291,12 @@ extern sint32 D_80097C84[];
 sint32 rcos(sint32 angle);
 void func_8001782C(uint32 a, uint32 b);
 void map_tile_window(void);
-void func_800221E0(void);
-void func_8002196C(sint32 x, sint32 y, uint16 id);
+void map_tile_near_draw(void);
+void map_tile_lod_draw(sint32 x, sint32 y, uint16 id);
 void map_tile_model_draw(uint8 *data, C8001F828_SVEC *pos, uint32 id);
 void Map_layer_set(uint16 **tbl);
-void func_80021834(sint32 x, sint32 y, sint32 tile, sint16 *pos);
-void func_80021258(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
+void map_tile_cull(sint32 x, sint32 y, sint32 tile, sint16 *pos);
+void map_tile_scan2(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
 void map_tile_scan(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
 
 sint32 print_number(uint32 flags, sint32 val, uint8 *out, sint32 width);
@@ -454,9 +454,9 @@ typedef struct
     sint32 x, y, z, w;
 } C8001F828_CAM_VEC;
 
-// Camera setup; func_80023728 passes its own four arguments through unchanged
+// Camera setup; Map_draw_near_cam passes its own four arguments through unchanged
 void Camera_set(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
-void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Map_draw_near_cam(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
 // Camera block D_800A3958 (code_80037fb4.h's CAM_BLOCK and CAM_WORK, which can't be co-included
 // here): the fields this file reads. Reaching them through the block lets GCC relate their

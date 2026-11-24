@@ -53,8 +53,8 @@ typedef struct
 } CODE178_G4_WORDS;
 
 extern CODE178_FUNC Fade_task_tbl[];
-extern CODE178_FUNC D_800821BC[];
-extern uint8 D_800821E0[][4];
+extern CODE178_FUNC Fade_effect_step_tbl[];
+extern uint8 Fade_effect_seq_tbl[][4];
 extern sint8 Fade_work;
 extern sint8 D_80098A69;
 extern sint8 D_80098A6A;
@@ -106,12 +106,12 @@ extern uint32 D_80097A78[];
 extern uint8 D_80082197[][4];
 #define CODE178_QUAD_CORNER(i, k) (D_80082197[i][(k) - 3])
 
-void func_800196A0(void);
+void screen_tile_uv_set(void);
 sint32 rcos(sint32 angle);
 sint32 rsin(sint32 angle);
 void Thread_exit(void);
 void fade_thread(void);
-void func_80019760(sint16 x, sint16 y, sint16 angle, sint16 scale);
+void screen_grid_rotate(sint16 x, sint16 y, sint16 angle, sint16 scale);
 
 void func_800176A4(void *src, void *dst, sint32 count);
 void func_800176DC(void *src, void *dst, sint32 count);

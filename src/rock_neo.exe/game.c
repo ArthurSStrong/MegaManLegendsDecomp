@@ -168,7 +168,7 @@ void Game_play(GAME_WORK *wp)
                         D_800A39F0.x += delta.x;
                         D_800A39F4 += delta.y;
                         D_800A39F8 += delta.z;
-                        func_80039D38(&delta);
+                        Camera_pos_shift(&delta);
                         Obj_work_flag_change(0x200, 0x80);
                         Work_room_change(0x1FE, &delta);
                     }

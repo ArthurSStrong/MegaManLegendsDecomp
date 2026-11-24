@@ -1,7 +1,7 @@
 #include "common.h"
 #include "code_8001786c.h"
 
-void func_8001786C(void)
+void clut_dirty_copy(void)
 {
     sint32 i;
 
@@ -296,12 +296,12 @@ void Fade_effect_task(void)
 {
     while (1)
     {
-        D_800821BC[D_800821E0[D_80098A69][D_80098A6A]]();
+        Fade_effect_step_tbl[Fade_effect_seq_tbl[D_80098A69][D_80098A6A]]();
         Thread_wait(1);
     }
 }
 
-void func_800180D4(void)
+void Fade_effect_freeze(void)
 {
     switch (D_80098A6B)
     {
@@ -323,7 +323,7 @@ void func_800180D4(void)
                 D_80098824 = 1;
                 D_80098864 = 1;
                 D_80098A6B++;
-                func_800196A0();
+                screen_tile_uv_set();
             }
             break;
         case 1:
@@ -333,7 +333,8 @@ void func_800180D4(void)
     }
 }
 
-void func_800181D4(void)
+// Same code as Fade_effect_freeze.
+void Fade_effect_freeze2(void)
 {
     switch (D_80098A6B)
     {
@@ -355,7 +356,7 @@ void func_800181D4(void)
                 D_80098824 = 1;
                 D_80098864 = 1;
                 D_80098A6B++;
-                func_800196A0();
+                screen_tile_uv_set();
             }
             break;
         case 1:
@@ -365,7 +366,7 @@ void func_800181D4(void)
     }
 }
 
-void func_800182D4(void)
+void Fade_effect_unfreeze(void)
 {
     switch (D_80098A6B)
     {
@@ -446,7 +447,7 @@ void func_8001840C(void)
     }
 }
 
-void func_80018534(void)
+void Fade_effect_spin_zoom(void)
 {
     POLY_FT4 *prims;
     POLY_FT4 *p;
@@ -473,11 +474,11 @@ void func_80018534(void)
     scale = frame * 200 + 256;
     if (mode == 1)
     {
-        func_80019760(160, 120, 0, scale);
+        screen_grid_rotate(160, 120, 0, scale);
     }
     else
     {
-        func_80019760(160, 120, frame << 5, scale);
+        screen_grid_rotate(160, 120, frame << 5, scale);
     }
     for (i = 0; i < 10; i++)
     {
@@ -772,7 +773,7 @@ void func_800194C4(void)
     }
 }
 
-void func_800196A0(void)
+void screen_tile_uv_set(void)
 {
     sint32 i, j;
     sint32 v, page;
@@ -820,7 +821,7 @@ void func_800196A0(void)
     }
 }
 
-void func_80019760(sint16 x, sint16 y, sint16 angle, sint16 scale)
+void screen_grid_rotate(sint16 x, sint16 y, sint16 angle, sint16 scale)
 {
     sint32 i;
     sint32 trig, trig2;

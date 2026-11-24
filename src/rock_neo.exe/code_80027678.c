@@ -15,15 +15,15 @@ void Work_draw_all(void)
     {
         wp = &Player_work;
         if ((wp->flags & Player_work.mask & 2) &&
-            func_80027F78(wp, D_8009BF88 + (C80027678_SCRATCH_00 << 11)) != 0)
+            pl_body_ot_set(wp, D_8009BF88 + (C80027678_SCRATCH_00 << 11)) != 0)
         {
-            func_8002786C(wp, D_8009BF88 + (C80027678_SCRATCH_00 << 11));
+            pl_body_draw(wp, D_8009BF88 + (C80027678_SCRATCH_00 << 11));
         }
         wp = &Player_work2;
         if ((wp->flags & Player_work2.mask & 2) &&
-            func_80027F78(wp, D_8009AE48 + (C80027678_SCRATCH_00 << 11)) != 0)
+            pl_body_ot_set(wp, D_8009AE48 + (C80027678_SCRATCH_00 << 11)) != 0)
         {
-            func_8002786C(wp, D_8009AE48 + (C80027678_SCRATCH_00 << 11));
+            pl_body_draw(wp, D_8009AE48 + (C80027678_SCRATCH_00 << 11));
         }
         C80027678_VSYNC_MARK = VSync(1);
         shl_work_draw();
@@ -43,7 +43,7 @@ void Work_draw_all(void)
     }
 }
 
-void func_8002786C(void *work, void *arg)
+void pl_body_draw(void *work, void *arg)
 {
     C80027678_BODY *wp;
     sint32 unused[4]; // never used; retail reserves the stack space
@@ -223,7 +223,7 @@ void func_80027D94(uint32 *prim, uint32 *ot, uint8 **verts)
     }
 }
 
-sint32 func_80027F78(void *work, void *arg)
+sint32 pl_body_ot_set(void *work, void *arg)
 {
     C80027678_BODY *wp;
     C80027678_OT_ENTRY *ot;
@@ -296,8 +296,8 @@ sint32 func_80027F78(void *work, void *arg)
 }
 
 // Multi-part model: culls and picks the LOD by depth, then draws each visible part with its
-// own rotation and offset (and, without a model colour, the part colour) through func_800289A0.
-void func_8002831C(void *rec)
+// own rotation and offset (and, without a model colour, the part colour) through obj_part_lod_draw.
+void obj_parts_draw(void *rec)
 {
     sint32 v[3];
     sint32 unused[2]; // unused (frame size)
@@ -403,15 +403,15 @@ void func_8002831C(void *rec)
             GTE_MTC2(8, C80027678_IR0_SAVE);
             C80027678_GTE_DPCS(&C80027678_SCRATCH_E4);
         }
-        func_800289A0(C80027678_LOD_PTR + wp->parts[i].lod);
+        obj_part_lod_draw(C80027678_LOD_PTR + wp->parts[i].lod);
     }
 }
 
-// Like func_80029608 plus an OT range check. Register choice hangs on global-alloc
+// Like obj_part_lod_draw2 plus an OT range check. Register choice hangs on global-alloc
 // priorities: the shared index word w, separate per-loop primitive pointers and vertex
 // count, the quad loop's one-statement nop/nclip and n-- after nclip give f > d > n as
 // retail. The 16-byte unused block local reproduces the frame (it is placed after otz).
-void func_800289A0(C80027678_LOD *lod)
+void obj_part_lod_draw(C80027678_LOD *lod)
 {
     sint32 sz[4];
     sint32 clip;
@@ -555,12 +555,12 @@ void Em_work_draw(void)
             {
                 if (a->flags & a->mask & 2)
                 {
-                    func_8002831C(a);
+                    obj_parts_draw(a);
                 }
             }
             else if (a->flags & a->mask & 2)
             {
-                func_80028F90(a);
+                Obj_parts_draw2(a);
             }
         }
         D_800D9BFC           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
@@ -574,20 +574,20 @@ void Em_work_draw(void)
             {
                 if (b->flags & b->mask & 2)
                 {
-                    func_8002831C(b);
+                    obj_parts_draw(b);
                 }
             }
             else if (b->flags & b->mask & 2)
             {
-                func_80028F90(b);
+                Obj_parts_draw2(b);
             }
         }
         D_800D9C00 = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
     }
 }
 
-// As func_8002831C, drawing the parts through func_80029608 and without the IR0 reload.
-void func_80028F90(void *rec)
+// As obj_parts_draw, drawing the parts through obj_part_lod_draw2 and without the IR0 reload.
+void Obj_parts_draw2(void *rec)
 {
     sint32 v[3];
     sint32 unused[2]; // unused (frame size)
@@ -692,14 +692,14 @@ void func_80028F90(void *rec)
                 ((c & 0x1F) << 3) | ((c & 0x3E0) << 6) | ((c & 0x7C00) << 9) | ((c & 0x8000) << 10);
             C80027678_GTE_DPCS(&C80027678_SCRATCH_E4);
         }
-        func_80029608(C80027678_LOD_PTR + wp->parts[i].lod);
+        obj_part_lod_draw2(C80027678_LOD_PTR + wp->parts[i].lod);
     }
 }
 
 // Register choice hangs on global-alloc priorities: separate per-loop primitive pointers and
 // vertex count, the shared index word w, a three-store screen-XY macro in the vertex loop and
 // the one-statement store in the quad loop give f > d > n (t3, t4, t5) as retail.
-void func_80029608(C80027678_LOD *lod)
+void obj_part_lod_draw2(C80027678_LOD *lod)
 {
     sint32 sz[4];
     sint32 clip;
@@ -998,7 +998,7 @@ void func_8002A158(void)
 {
 }
 
-void func_8002A160(C80027678_OBJ *obj, uint32 flags)
+void Obj_model_draw(C80027678_OBJ *obj, uint32 flags)
 {
     sint32 v[3];
     C80027678_VTX8 pos;
@@ -1089,15 +1089,15 @@ void func_8002A160(C80027678_OBJ *obj, uint32 flags)
     GTE_SET_MATRIX(C80027678_MAT_C);
     if (flags & 0x20)
     {
-        func_8002A6E8(C80027678_LOD_PTR + obj->part, obj->tex2 & 0x2FFFFFF, flags);
+        obj_model_lod_draw(C80027678_LOD_PTR + obj->part, obj->tex2 & 0x2FFFFFF, flags);
     }
     else
     {
-        func_8002A6E8(C80027678_LOD_PTR, obj->tex2 & 0x2FFFFFF, flags);
+        obj_model_lod_draw(C80027678_LOD_PTR, obj->tex2 & 0x2FFFFFF, flags);
     }
 }
 
-void func_8002A6E8(C80027678_LOD *lod, uint32 color, uint32 flags)
+void obj_model_lod_draw(C80027678_LOD *lod, uint32 color, uint32 flags)
 {
     uint32 code;
     sint32 clip;
@@ -1220,7 +1220,7 @@ void func_8002AB68(void)
 {
 }
 
-void func_8002AB70(C80027678_OBJ *obj, uint32 flags)
+void Obj_poly_g_draw(C80027678_OBJ *obj, uint32 flags)
 {
     sint32 v[3];
     sint32 z;
@@ -1267,15 +1267,15 @@ void func_8002AB70(C80027678_OBJ *obj, uint32 flags)
     GTE_SET_MATRIX(C80027678_MAT_C);
     if (flags & 0x20)
     {
-        func_8002AEE4(C80027678_LOD_PTR + obj->part, obj->tex);
+        obj_poly_g_lod_draw(C80027678_LOD_PTR + obj->part, obj->tex);
     }
     else
     {
-        func_8002AEE4(C80027678_LOD_PTR, obj->tex);
+        obj_poly_g_lod_draw(C80027678_LOD_PTR, obj->tex);
     }
 }
 
-void func_8002AEE4(C80027678_LOD *lod, uint32 *attr)
+void obj_poly_g_lod_draw(C80027678_LOD *lod, uint32 *attr)
 {
     uint32 code;
     sint32 clip;
@@ -1370,7 +1370,7 @@ void func_8002AEE4(C80027678_LOD *lod, uint32 *attr)
     }
 }
 
-void func_8002B2C8(C80027678_OBJ *obj, uint32 flags)
+void Obj_gouraud_draw(C80027678_OBJ *obj, uint32 flags)
 {
     sint32 v[3];
     sint32 z;
@@ -1417,11 +1417,11 @@ void func_8002B2C8(C80027678_OBJ *obj, uint32 flags)
     GTE_SET_MATRIX(C80027678_MAT_C);
     if (flags & 0x20)
     {
-        func_8002B644(C80027678_LOD_PTR + obj->part, obj->tex, obj->tex2);
+        obj_gouraud_lod_draw(C80027678_LOD_PTR + obj->part, obj->tex, obj->tex2);
     }
     else
     {
-        func_8002B644(C80027678_LOD_PTR, obj->tex, obj->tex2);
+        obj_gouraud_lod_draw(C80027678_LOD_PTR, obj->tex, obj->tex2);
     }
 }
 
@@ -1429,7 +1429,7 @@ void func_8002B2C8(C80027678_OBJ *obj, uint32 flags)
 // loop temporary, so the quad code takes the top byte of the last scaled colour, as in retail.
 // Each loop has its own primitive pointer (one shared pointer would be a global pseudo and
 // shift the allocation), and n/f are loaded first so i2 outranks them for t5.
-void func_8002B644(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
+void obj_gouraud_lod_draw(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
 {
     uint32 code;
     sint32 clip;
@@ -1566,7 +1566,7 @@ void func_8002B644(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
     }
 }
 
-void func_8002BD48(C80027678_OBJ *obj, uint32 flags)
+void Obj_face_color_draw(C80027678_OBJ *obj, uint32 flags)
 {
     sint32 v[3];
     sint32 z;
@@ -1613,18 +1613,18 @@ void func_8002BD48(C80027678_OBJ *obj, uint32 flags)
     GTE_SET_MATRIX(C80027678_MAT_C);
     if (flags & 0x20)
     {
-        func_8002C0C4(C80027678_LOD_PTR + obj->part, obj->tex, obj->tex2);
+        obj_face_color_lod_draw(C80027678_LOD_PTR + obj->part, obj->tex, obj->tex2);
     }
     else
     {
-        func_8002C0C4(C80027678_LOD_PTR, obj->tex, obj->tex2);
+        obj_face_color_lod_draw(C80027678_LOD_PTR, obj->tex, obj->tex2);
     }
 }
 
-// Like func_8002B644 with per-face colours and semi-transparency. The quad loop's GTE
+// Like obj_gouraud_lod_draw with per-face colours and semi-transparency. The quad loop's GTE
 // statements carry their nops (and the XY stores are one statement); with the triangle loop's
 // split form the hoisted 0xFF0000 mask outranks the colours+12 pointer and takes t4.
-void func_8002C0C4(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
+void obj_face_color_lod_draw(C80027678_LOD *lod, uint32 *colors, uint32 rgb)
 {
     uint32 code;
     sint32 clip;
@@ -1963,7 +1963,7 @@ void Draw_list_clear(void)
 }
 
 // Scales the quotient and remainder in place (q *= 51, r *= 42) before packing them.
-void func_8002D004(sint32 unused, uint32 x, uint32 y)
+void Pl_face_set(sint32 unused, uint32 x, uint32 y)
 {
     uint32 q;
     uint32 r;
@@ -1972,18 +1972,18 @@ void func_8002D004(sint32 unused, uint32 x, uint32 y)
     r = x % 6;
     q *= 51;
     r *= 42;
-    func_8002D0D0((void *)0x800F7820, q << 8 | r);
+    face_part_uv_shift((void *)0x800F7820, q << 8 | r);
     q = y / 6;
     r = y % 6;
     q *= 51;
     r *= 42;
-    func_8002D0D0((void *)0x800F7830, q << 8 | r);
+    face_part_uv_shift((void *)0x800F7830, q << 8 | r);
 }
 
 // Adds delta to the coordinate words of two record tables (0x44- and 0x54-byte records, two
 // sub-records each). The word index m = i * 17 + j * 8 keeps retail's unreduced a3 * 4 address;
 // j first holds the header word (retail reuses its register).
-void func_8002D0D0(C80027678_COUNTS *c, sint32 delta)
+void face_part_uv_shift(C80027678_COUNTS *c, sint32 delta)
 {
     uint32 i;
     uint32 j;

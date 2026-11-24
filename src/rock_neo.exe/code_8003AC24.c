@@ -398,7 +398,7 @@ void func_8003B5B4(void)
         if ((sint8)Game_work[0x50] == 5 && Game_work[0x64] != 0)
         {
             Game_work[0x64] = 0;
-            func_8003B8B0((uint32 *)(Game_work + 0x34), 0xC8, D_80089F64, 5, 0x240);
+            map_obj_group_state_set((uint32 *)(Game_work + 0x34), 0xC8, D_80089F64, 5, 0x240);
             i    = 1;
             key  = D_80089F68;
             left = C8003AC24_GAME32(0x38) / 150;
@@ -439,9 +439,9 @@ void func_8003B5B4(void)
         if ((sint8)Game_work[0x50] == 6 && Game_work[0x65] != 0)
         {
             Game_work[0x65] = 0;
-            func_8003BA58((uint32 *)(Game_work + 0x28), 0x1F4, D_80089F6C, 6);
-            func_8003B8B0((uint32 *)(Game_work + 0x2C), 0xC8, D_80089F70, 6, 0x23E);
-            func_8003B8B0((uint32 *)(Game_work + 0x30), 0xFA, D_80089F74, 6, 0x23F);
+            map_obj_group7_state_set((uint32 *)(Game_work + 0x28), 0x1F4, D_80089F6C, 6);
+            map_obj_group_state_set((uint32 *)(Game_work + 0x2C), 0xC8, D_80089F70, 6, 0x23E);
+            map_obj_group_state_set((uint32 *)(Game_work + 0x30), 0xFA, D_80089F74, 6, 0x23F);
             i    = 1;
             key  = D_80089F78;
             left = C8003AC24_GAME32(0x3C) / 180;
@@ -482,7 +482,7 @@ void func_8003B5B4(void)
     }
 }
 
-void func_8003B8B0(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32 flag)
+void map_obj_group_state_set(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32 flag)
 {
     uint32 state;
     uint32 left;
@@ -561,7 +561,7 @@ void func_8003B8B0(uint32 *remain, uint32 amount, uint32 key, sint32 row, sint32
     }
 }
 
-void func_8003BA58(uint32 *remain, uint32 amount, uint32 key, sint32 unused)
+void map_obj_group7_state_set(uint32 *remain, uint32 amount, uint32 key, sint32 unused)
 {
     uint32 state;
     uint32 left;
@@ -657,20 +657,20 @@ void func_8003BC44(void)
     {
         if ((sint8)*rp == 5)
         {
-            func_8003BD0C((uint32 *)(rp - 0x1C), D_80089F7C);
-            func_8003BDC0(rp + 0x16, D_80089F80, 0x8FFF0000);
+            map_obj_key_alive_clear((uint32 *)(rp - 0x1C), D_80089F7C);
+            map_obj_key_count(rp + 0x16, D_80089F80, 0x8FFF0000);
         }
         if ((sint8)*rp == 6)
         {
-            func_8003BD0C((uint32 *)(rp - 0x28), D_80089F84);
-            func_8003BD0C((uint32 *)(rp - 0x24), D_80089F88);
-            func_8003BD0C((uint32 *)(rp - 0x20), D_80089F8C);
-            func_8003BDC0(rp + 0x17, D_80089F90, 0x8FFF0000);
+            map_obj_key_alive_clear((uint32 *)(rp - 0x28), D_80089F84);
+            map_obj_key_alive_clear((uint32 *)(rp - 0x24), D_80089F88);
+            map_obj_key_alive_clear((uint32 *)(rp - 0x20), D_80089F8C);
+            map_obj_key_count(rp + 0x17, D_80089F90, 0x8FFF0000);
         }
     }
 }
 
-void func_8003BD0C(uint32 *out, uint32 key)
+void map_obj_key_alive_clear(uint32 *out, uint32 key)
 {
     uint32 i;
     uint8 *p;
@@ -699,7 +699,7 @@ void func_8003BD0C(uint32 *out, uint32 key)
     }
 }
 
-void func_8003BDC0(uint8 *count, uint32 a1, uint32 a2)
+void map_obj_key_count(uint8 *count, uint32 a1, uint32 a2)
 {
     uint32 i;
     uint8 *p;

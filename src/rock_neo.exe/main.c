@@ -57,7 +57,7 @@ void main(void)
         thread_exec();
         Sound_update();
         Cd_cmd_exec();
-        func_800203A8();
+        Print_draw();
         Moji_update();
         Game_logo_draw();
         DrawSync(0);
@@ -107,7 +107,7 @@ void System_init(void)
         D_800BAEB0[angle >> 6] = rcos(angle);
         D_800BBCF8[angle >> 6] = rsin(angle);
     }
-    func_8002037C();
+    Print_clear();
 }
 
 void Disp_env_set(void)
@@ -277,7 +277,7 @@ long exception_viewer(void)
         ClearOTagR(CURRENT_DISP_ENV->ot, OT_LEN);
         ClearOTagR((u_long *)D_800A4D40[SCRATCH_BUFFER_INDEX], 0x1000);
         SCRATCH_SCREEN_WORD = (SCRATCH_BUFFER_INDEX << 17) + 0x801B8000;
-        func_800203A8();
+        Print_draw();
         D_800987D4 = 0;
         Print(DEBUG_TEXT_POS(D_80080858[0].x, D_80080858[0].y, D_80080858[0].color),
               D_80080858[0].text, names[(cause >> 2) & 0xF]);

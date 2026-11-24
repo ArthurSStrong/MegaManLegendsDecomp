@@ -135,7 +135,7 @@ typedef struct
     uint8 *tbl_b;
 } C80027678_COUNTS;
 
-void func_8002D0D0(C80027678_COUNTS *c, sint32 delta);
+void face_part_uv_shift(C80027678_COUNTS *c, sint32 delta);
 // An update record (flags at +0, mask at +6). Its full 0x5A4-byte size matters: as a 7-byte
 // struct it counted as small data (-G8) and GCC folded wp->flags to an absolute address.
 typedef struct
@@ -171,8 +171,8 @@ extern uint8 Game_work[];
 #define C80027678_ROOM (*(sint8 *)(Game_work + 0x50))
 
 sint32 VSync(sint32 mode);
-void func_8002831C(void *rec);
-void func_80028F90(void *rec);
+void obj_parts_draw(void *rec);
+void Obj_parts_draw2(void *rec);
 extern C80027678_UPD Player_work;
 extern C80027678_UPD Player_work2;
 extern uint8 D_8009BF88[];
@@ -185,8 +185,8 @@ extern sint32 D_800D9BF8;
 #define C80027678_SCRATCH_00 (*(uint8 *)0x1F800000)
 #define C80027678_VSYNC_MARK (*(sint32 *)0x800D9BE4)
 
-sint32 func_80027F78(void *work, void *arg);
-void func_8002786C(void *work, void *arg);
+sint32 pl_body_ot_set(void *work, void *arg);
+void pl_body_draw(void *work, void *arg);
 void shl_work_draw(void);
 void effect_work_draw(void);
 void work_50_draw(void);
@@ -320,12 +320,12 @@ extern uint8 Fog_clut_tbl[];
 #define C80027678_PRIM  (*(uint32 **)0x1F800070)
 #define C80027678_FAR_Z (*(uint16 *)0x1F800006)
 
-void func_8002AEE4(C80027678_LOD *lod, uint32 *attr);
-void func_800289A0(C80027678_LOD *lod);
-void func_80029608(C80027678_LOD *lod);
-void func_8002A6E8(C80027678_LOD *lod, uint32 color, uint32 flags);
-void func_8002B644(C80027678_LOD *lod, uint32 *colors, uint32 rgb);
-void func_8002C0C4(C80027678_LOD *lod, uint32 *colors, uint32 rgb);
+void obj_poly_g_lod_draw(C80027678_LOD *lod, uint32 *attr);
+void obj_part_lod_draw(C80027678_LOD *lod);
+void obj_part_lod_draw2(C80027678_LOD *lod);
+void obj_model_lod_draw(C80027678_LOD *lod, uint32 color, uint32 flags);
+void obj_gouraud_lod_draw(C80027678_LOD *lod, uint32 *colors, uint32 rgb);
+void obj_face_color_lod_draw(C80027678_LOD *lod, uint32 *colors, uint32 rgb);
 
 // Small data ($gp-addressed in retail; not yet owned by this file).
 extern sint32 D_80098554;
@@ -434,7 +434,7 @@ typedef struct
 
 #define C80027678_VIEW_TR ((sint32 *)0x1F800030)
 
-void func_8002A160(C80027678_OBJ *obj, uint32 flags);
+void Obj_model_draw(C80027678_OBJ *obj, uint32 flags);
 
 // Camera-facing sprite: texture word, colour, position, uv, half size and roll angle.
 typedef struct

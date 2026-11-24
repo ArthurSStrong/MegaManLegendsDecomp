@@ -783,7 +783,7 @@ void Gauge_boss_clear(void)
     D_800BBE48      = 0;
 }
 
-sint32 func_8005D8C4(sint32 arg0)
+sint32 Gauge_life_hit_show(sint32 arg0)
 {
     if (Pl_invincible_timer > 0)
     {
@@ -807,7 +807,7 @@ sint32 func_8005D8C4(sint32 arg0)
     return 1;
 }
 
-uint8 func_8005D938(void)
+uint8 Gauge_hold_get(void)
 {
     if (Pl_invincible_timer > 0)
     {
@@ -816,7 +816,7 @@ uint8 func_8005D938(void)
     return D_800BBD84[3];
 }
 
-sint32 func_8005D95C(void)
+sint32 Gauge_hold_state(void)
 {
     return D_800BBD84[3];
 }
@@ -855,7 +855,7 @@ void Pl_life_full(void)
     Gauge_show_release();
 }
 
-sint32 func_8005DA1C(sint32 arg0)
+sint32 Gauge_hold_end(sint32 arg0)
 {
     if (arg0 != 0 && D_800BBD84[3] != 0)
     {

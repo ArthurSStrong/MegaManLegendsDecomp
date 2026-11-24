@@ -906,14 +906,14 @@ sint32 Sce_stage_load(void)
     id = D_800896D4[routine];
     func_80019F94(id);
     cur = SCENE_GAME_FIXED.value_68;
-    id  = D_800893BC[routine][0];
+    id  = Sce_stage_file_tbl[routine][0];
     gw  = &Game_work;
     if (cur != id)
     {
         SCENE_GAME_FIXED.value_68 = id;
         func_800177CC((void *)0x8015C000, (void *)0x80161FFC);
         Cd_read_comb(id);
-        next                      = D_800893BC[routine][sub + 1];
+        next                      = Sce_stage_file_tbl[routine][sub + 1];
         SCENE_GAME_FIXED.value_6A = next;
         if (next >= 0)
         {
@@ -955,7 +955,7 @@ sint32 Sce_room_load(void)
     pw = (uint8 *)&Player_work;
     if (D_800C356C != -1)
     {
-        cd = D_800893BC[routine][sub + 1];
+        cd = Sce_stage_file_tbl[routine][sub + 1];
         if (cd >= 0 && SCENE_GAME_FIXED.value_6A != cd)
         {
             Cd_read_comb(cd);
@@ -1054,7 +1054,7 @@ void Sce_stage_file_seek(void)
     sint32 value;
     uint32 sub;
 
-    tbl   = D_800893BC[D_800C356E];
+    tbl   = Sce_stage_file_tbl[D_800C356E];
     value = tbl[0];
     sub   = D_800C356F;
     if (Game_work.value_68 != value || ((value = tbl[sub + 1]) >= 0 && Game_work.value_6A != value))
@@ -1065,20 +1065,20 @@ void Sce_stage_file_seek(void)
 
 void sce_stage_init(void)
 {
-    func_8001F798(Game_work.stage_no);
+    sce_stage_file_reset(Game_work.stage_no);
     Sce_stage_init_tbl[Game_work.stage_no]();
 }
 
-void func_8001F798(sint32 arg)
+void sce_stage_file_reset(sint32 arg)
 {
     sint32 i;
 
-    for (i = 0; i < D_80089248[arg].count; i++)
+    for (i = 0; i < Sce_stage_file_def_tbl[arg].count; i++)
     {
-        D_80089248[arg].dst[i] = D_80089248[arg].src[i];
+        Sce_stage_file_def_tbl[arg].dst[i] = Sce_stage_file_def_tbl[arg].src[i];
     }
 }
 
-void func_8001F820(void)
+void Sce_stage_init_none(void)
 {
 }

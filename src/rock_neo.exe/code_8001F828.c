@@ -16,7 +16,7 @@ sint16 D_800982FA, D_800982FC, D_800982FE;
 sint8 D_80098340, D_80098344, D_80098348, D_8009834C;
 sint32 D_80098A08, D_800989AC;
 
-void func_8001F828(void)
+void Sce_init_st03(void)
 {
     sint16 id;
 
@@ -51,7 +51,7 @@ void func_8001F828(void)
     D_800981BE = D_800981C0 = D_800981C2 = id;
 }
 
-void func_8001F8DC(void)
+void Sce_init_st04(void)
 {
     sint16 id;
 
@@ -93,7 +93,7 @@ void func_8001F8DC(void)
     D_800981D2 = id;
 }
 
-void func_8001F9AC(void)
+void Sce_init_st05(void)
 {
     sint16 id;
 
@@ -147,7 +147,7 @@ void func_8001F9AC(void)
     D_800981E2 = id;
 }
 
-void func_8001FA94(void)
+void Sce_init_st06(void)
 {
     sint16 id;
 
@@ -180,7 +180,7 @@ void func_8001FA94(void)
     D_800981EE = id;
 }
 
-void func_8001FB24(void)
+void Sce_init_st07(void)
 {
     if (C8001F828_GAME_52 == 6)
     {
@@ -192,7 +192,7 @@ void func_8001FB24(void)
     }
 }
 
-void func_8001FB54(void)
+void Sce_init_st08(void)
 {
     sint16 id;
 
@@ -217,7 +217,7 @@ void func_8001FB54(void)
     D_80098212 = id;
 }
 
-void func_8001FB8C(void)
+void Sce_init_st0A(void)
 {
     sint16 id;
 
@@ -240,7 +240,7 @@ void func_8001FB8C(void)
     D_80098236 = id;
 }
 
-void func_8001FBC4(void)
+void Sce_init_st0B(void)
 {
     sint16 id;
 
@@ -267,7 +267,7 @@ void func_8001FBC4(void)
     D_8009823E = D_80098240 = id;
 }
 
-void func_8001FC50(void)
+void Sce_init_st0C(void)
 {
     sint16 id;
 
@@ -290,7 +290,7 @@ void func_8001FC50(void)
     D_8009824C = id;
 }
 
-void func_8001FCA4(void)
+void Sce_init_st0D(void)
 {
     sint16 id;
 
@@ -313,7 +313,7 @@ void func_8001FCA4(void)
     D_8009825A = id;
 }
 
-void func_8001FCE4(void)
+void Sce_init_st0F(void)
 {
     sint16 id;
 
@@ -340,7 +340,7 @@ void func_8001FCE4(void)
     D_80098276 = id;
 }
 
-void func_8001FD3C(void)
+void Sce_init_st10(void)
 {
     switch (C8001F828_GAME_52)
     {
@@ -368,7 +368,7 @@ void func_8001FD3C(void)
     }
 }
 
-void func_8001FD90(void)
+void Sce_init_st11(void)
 {
     switch (C8001F828_GAME_52)
     {
@@ -396,7 +396,7 @@ void func_8001FD90(void)
     }
 }
 
-void func_8001FDE4(void)
+void Sce_init_st1B(void)
 {
     sint16 id;
 
@@ -601,7 +601,7 @@ void Print(uint32 flags, const char *fmt, ...)
     *D_8009893C++ = 0;
 }
 
-void func_8002037C(void)
+void Print_clear(void)
 {
     D_800BEAD8[0] = 0;
     D_8009893C    = D_800BEAD8;
@@ -609,7 +609,7 @@ void func_8002037C(void)
     D_800987DC    = 0;
 }
 
-void func_800203A8(void)
+void Print_draw(void)
 {
     uint8 *p;
     C8001F828_SPRT8 *sp;
@@ -868,7 +868,7 @@ void func_80020A40(void)
 
 // Draws every non-empty tile in the scratchpad window (x 0x40..0x42, y 0x41..0x43). The bounds
 // are read before v[3] is set, and y0 is copied into y by the loop.
-void func_80020A4C(void)
+void map_tile_all_scan(void)
 {
     sint16 v[4];
     sint32 x;
@@ -896,12 +896,12 @@ void func_80020A4C(void)
                                (y - *(uint8 *)0x1F800041) * *(uint16 *)0x1F800044 * 2);
             if (tile != 0)
             {
-                func_80021834(x, y, tile, v);
+                map_tile_cull(x, y, tile, v);
             }
         }
     }
     func_8001782C(0x8015BC00, 0x8015BD00);
-    func_800221E0();
+    map_tile_near_draw();
 }
 
 // Visible tile window from the camera angles. The camera-pitch terms are ABS() macro
@@ -1015,7 +1015,7 @@ void map_tile_window(void)
     {
         C8001F828_S16(0x1F800108) = (e << 12) / -c;
         C8001F828_S16(0x1F80010A) = (f << 12) / -d;
-        func_80021258(x0, x1, y0, y1);
+        map_tile_scan2(x0, x1, y0, y1);
     }
     else
     {
@@ -1038,15 +1038,15 @@ void map_tile_window(void)
                                  (y - *(uint8 *)0x1F800041) * *(uint16 *)0x1F800044 * 2);
             if (w != 0)
             {
-                func_80021834(x, y, w, pos);
+                map_tile_cull(x, y, w, pos);
             }
         }
     }
     func_8001782C(0x8015BC00, 0x8015BD00);
-    func_800221E0();
+    map_tile_near_draw();
 }
 
-void func_80021258(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
+void map_tile_scan2(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
 {
     C8001F828_SVEC sv;
     sint32 d0;
@@ -1116,7 +1116,7 @@ void func_80021258(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
                     tile  = (C8001F828_TILE_PTR + ofs)[row];
                     if (tile != 0)
                     {
-                        func_80021834(x, y, tile, &sv.vx);
+                        map_tile_cull(x, y, tile, &sv.vx);
                     }
                 }
                 ofs += *(uint16 *)0x1F800044;
@@ -1200,14 +1200,14 @@ void map_tile_scan(sint32 x0, sint32 x1, sint32 y0, sint32 y1)
                 tile   = (C8001F828_TILE_PTR + ofs)[row];
                 if (tile != 0)
                 {
-                    func_80021834(x, y, tile, pos);
+                    map_tile_cull(x, y, tile, pos);
                 }
             }
         }
     }
 }
 
-void func_80021834(sint32 x, sint32 y, sint32 tile, sint16 *pos)
+void map_tile_cull(sint32 x, sint32 y, sint32 tile, sint16 *pos)
 {
     sint32 v[3];
     sint32 depth;
@@ -1241,7 +1241,7 @@ void func_80021834(sint32 x, sint32 y, sint32 tile, sint16 *pos)
         {
             if (tile < 0)
             {
-                func_8002196C(x, y, tile & 0xFFFF);
+                map_tile_lod_draw(x, y, tile & 0xFFFF);
                 return;
             }
             if (depth >= C8001F828_SCR_04)
@@ -1258,7 +1258,7 @@ void func_80021834(sint32 x, sint32 y, sint32 tile, sint16 *pos)
 
 // The id's high bit is tested as (id << 24) < 0 on the uint16 parameter; (sint8)id tests the
 // incoming register instead of the copy.
-void func_8002196C(sint32 x, sint32 y, uint16 id)
+void map_tile_lod_draw(sint32 x, sint32 y, uint16 id)
 {
     C8001F828_SVEC sv;
     sint32 out[3];
@@ -1572,7 +1572,7 @@ void map_tile_model_draw(uint8 *data, C8001F828_SVEC *pos, uint32 id)
 // The model table is read through its fixed address (C8001F828_MODEL_ENTRIES at 0x80139F00, hdr
 // at +4): retail's addu at,v0,at. Indexing a base of 0x80139F04 directly, the offset-0 load is
 // built with li instead.
-void func_800221E0(void)
+void map_tile_near_draw(void)
 {
     uint32 i;
     uint32 count;
@@ -2249,7 +2249,7 @@ void map_layer_wrap(C8001F828_LAYER *lp)
 
 // Takes the camera arguments and passes them through to Camera_set unchanged: a0-a3 stay
 // live, so reload puts the GTE pointer constants in t0 as retail does.
-void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Map_draw_near_cam(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     C8001F828_SCRVEC *scr = C8001F828_SCRV;
     C8001F828_SVEC pos;
@@ -2304,7 +2304,7 @@ void Map_draw(void)
     C8001F828_TIME_START = VSync(1);
     if (C8001F828_SCR_75 == 1)
     {
-        func_80020A4C();
+        map_tile_all_scan();
     }
     else
     {

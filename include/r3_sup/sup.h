@@ -42,7 +42,7 @@ typedef struct
         uint32 w;
     } routine; // 08
     uint8 reserved0c[8];
-    uint8 *model_14; // 14: start of the object func_8002A160 draws
+    uint8 *model_14; // 14: start of the object Obj_model_draw draws
     union
     {
         MATRIX m;
@@ -260,12 +260,12 @@ void Player_weapon_refill(void);
 void Model_work_init(void *obj, void *arg);
 
 void func_800177CC(void *start, void *end);
-void func_80023728(void *vec, sint32 arg1, sint32 arg2, sint32 arg3);
-void func_80028F90(void *rec);
+void Map_draw_near_cam(void *vec, sint32 arg1, sint32 arg2, sint32 arg3);
+void Obj_parts_draw2(void *rec);
 void EM_Char_Set(void *obj, sint32 anim, sint32 arg);
 void EM_Char_Move(void *obj);
 void Money_add(sint32 arg0, sint32 arg1, sint32 arg2);
-void func_8002A160(void *obj, uint32 flags);
+void Obj_model_draw(void *obj, uint32 flags);
 
 // Moji scripts loaded with the module.
 #define SUP_SCRIPT ((uint8 *)0x801E4000)

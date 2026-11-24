@@ -160,7 +160,7 @@ address.
 ## What the evidence showed
 
 - **Rodata blocks are not files.** Block `1BD8` holds jump tables for functions on *both* sides of
-  `2MBYTE.OBJ` (`func_8006689C` ... `Event_scene_main`), so one splat block can span objects. Block `9E4`
+  `2MBYTE.OBJ` (`Card_files_read` ... `Event_scene_main`), so one splat block can span objects. Block `9E4`
   (jump tables + stage-file path strings) **holds three files' data** (`0x80017C30`, `0x8001BB4C`,
   `0x8001F23C`); the yaml splits it at `0xA44` and `0xAB0` so that `cd`'s part travels with its C.
   Block `156C` holds at least four. So "13 blocks" means *at least* 13 rodata-owning files; a block's
@@ -169,12 +169,12 @@ address.
 - **Rodata block -> file** (users from `jlabel` targets and `%hi` references):
   `800` rows 1 (`D_80010000`, `D_80010040`) and 2 (3 jump tables); `8B4` row 3; `938` row 4; `9E4` rows 6
   (`Fade_start`), 8 (`0xA44`–`0xAAF`: `cd_cmd_read_comb`'s 3 tables, **confirmed**) and 9 (the path strings, reached via `.data` table
-  `D_800893BC`); `10C0` row 10; `1294` row 13; `1330` row 15; `136C` row 18; `14D0` row 19;
+  `Sce_stage_file_tbl`); `10C0` row 10; `1294` row 13; `1330` row 15; `136C` row 18; `14D0` row 19;
   `1514` row 21; `1530` row 22; `156C` rows 23, 25, 26, 27; `1BD8` rows 29 and 30.
 - **Padding is not a boundary marker here.** Functions are packed back to back; the only extra `nop`s
   after a function are three hand-written routines (`func_800175D8`, `_800175FC`, `_80017668`, which pad to
   8 bytes). Those mark one *assembly* file (row 5, `asm_fastmem`), not Capcom C-file ends. There are 40 eight-byte
-  empty functions (`jr ra; nop`); only `func_8001F820` and `func_8003BE38` sit right before a candidate
+  empty functions (`jr ra; nop`); only `Sce_stage_init_none` and `func_8003BE38` sit right before a candidate
   boundary, the rest are mid-file, so they are not a reliable end-of-file marker.
 - **`Sound_key_off_voice` (`0x8001B2F0`) is not `SsSetNck`.** It is a 0x24-byte Capcom wrapper
   (`sll`/`sra` to `short`, then a tail into `SsUtKeyOffV`, which keys off one SPU voice: it
@@ -215,8 +215,8 @@ piece of evidence.
 | 6 | `0x8001786C` | `0x806C` | `0x800198C0` | 0x2054 | `code_8001786C` | low | yes | End of the asm file + window of rodata blocks `938` and `9E4` (the `9E4` jump table user `Fade_start` must be in a different file than block `938`). Start inside 0x8001786C..0x80017C30 is a guess (all gaps cost 0); may begin as late as 0x80017C30. |
 | 7 | `0x800198C0` | `0xA0C0` | `0x8001B3E4` | 0x1B24 | `sound` | high | no | ChrisNonyminus `sound` 0xA0C0; `.data` 0x8008222A is first used exactly at 0x800198C0 (a new data cluster, ten tiny functions each with its own variable); `Sound_call`/`Sound_call2` 0x8001A008/50; gap cost 0. Tail 0x8001B2F0..0x8001B3E4 is three thin libsnd/libspu wrappers (see notes below). |
 | 8 | `0x8001B3E4` | `0xBBE4` | `0x8001D854` | 0x2470 | `cd` | **confirmed** | no | ChrisNonyminus `cd` 0xBBE4; `Cd_init` calls `CdInit` and is called only by init; `Cd_read_comb`, `Cd_read_sync2`; the shim's CD module ([rock_neo.md](rock_neo.md), "Shared code") spans it. In C (`src/rock_neo.exe/cd.c`) and matching, with its rodata at `0xA44`–`0xAAF` (`cd_cmd_read_comb`'s three jump tables, inside block `9E4`). |
-| 9 | `0x8001D854` | `0xE054` | `0x8001F828` | 0x1FD4 | `scene` | medium | no | ChrisNonyminus `scene` 0xE054; `Sce_flag_test/on/off` at 0x8001DA58..; the stage-file path strings at the end of rodata block `9E4` are reached through the `.data` table `D_800893BC`, used by `Sce_stage_load`/`_3C8`/`_6C4` (this file). |
-| 10 | `0x8001F828` | `0x10028` | `0x80027678` | 0x7E50 | `code_8001F828` | low | yes | Rodata block `10C0` (5 jump-table functions, first user `func_8001F8DC`) starts a new file; window 0x8001F6C4..0x8001F8DC, all gaps cost 0. The 8-byte empty `func_8001F820` is guessed to end the previous file. `.sdata` 0x80097C3C..0x80097C90 run suggests the file extends to ~0x80027678, possibly several files (see split candidates). |
+| 9 | `0x8001D854` | `0xE054` | `0x8001F828` | 0x1FD4 | `scene` | medium | no | ChrisNonyminus `scene` 0xE054; `Sce_flag_test/on/off` at 0x8001DA58..; the stage-file path strings at the end of rodata block `9E4` are reached through the `.data` table `Sce_stage_file_tbl`, used by `Sce_stage_load`/`_3C8`/`_6C4` (this file). |
+| 10 | `0x8001F828` | `0x10028` | `0x80027678` | 0x7E50 | `code_8001F828` | low | yes | Rodata block `10C0` (5 jump-table functions, first user `Sce_init_st04`) starts a new file; window 0x8001F6C4..0x8001F8DC, all gaps cost 0. The 8-byte empty `Sce_stage_init_none` is guessed to end the previous file. `.sdata` 0x80097C3C..0x80097C90 run suggests the file extends to ~0x80027678, possibly several files (see split candidates). |
 | 11 | `0x80027678` | `0x17E78` | `0x8002D9A0` | 0x6328 | `code_80027678` | low | yes | Atom edge only: gap cost 0 and `.data` 0x800898D0..0x80089938 first used inside it. Contains `Model_Shadow_Trans` (0x8002C8CC); `Model_` prefix suggests a model file. |
 | 12 | `0x8002D9A0` | `0x1E1A0` | `0x8002E7A8` | 0xE08 | `code_8002D9A0` | low | yes | Atom edge only: gap cost 0; first user of `.sdata` 0x80097CD4; a run of small cost-0 functions up to 0x8002E7A8. |
 | 13 | `0x8002E7A8` | `0x1EFA8` | `0x80037534` | 0x8D8C | `code_8002E7A8` | low | yes | Rodata block `1294` (3 jump-table functions at 0x800320B8..0x800329D4) is inside; names `Obj_work_flag_change`, `Close_EVE_WORK` (an `Obj_`/`EVE` file). Both ends are atom edges only; likely several files. |
@@ -227,7 +227,7 @@ piece of evidence.
 | 18 | `0x8003BE40` | `0x2C640` | `0x800425FC` | 0x67BC | `player` | medium | no | ChrisNonyminus `player` 0x2C640; new `.sdata` cluster begins at 0x8003BE6C (0x80097D90); gap cost 0; `Pl00_shot_enable_off/on`; rodata block `136C` (11 jump-table functions, 0x8003CD4C..0x80042458). End 0x800425FC is a guess within a window of six cost-1.0 gaps (0x800424D4..0x80042770). |
 | 19 | `0x800425FC` | `0x32DFC` | `0x8004324C` | 0xC50 | `code_800425FC` | low | no | Rodata block `14D0` (users 0x80042770..0x80042F78); first user of `.data` 0x8008A04C (a new cluster) at 0x800425FC. Start is one of six tied gaps; end 0x8004324C is right after the last jump-table function. |
 | 20 | `0x8004324C` | `0x33A4C` | `0x80043F34` | 0xCE8 | `pl_shl` | low | yes | Named `pl_shl` by the owner (2026-11-23; was `code_8004324C`): the resident player shots (`Pl_shl_normal_arm`, `Pl_shl_buster`, `PL_SHL_WORK`) plus `Money_*`/`Pl_life_add`; Capcom's file name unknown. Window between rodata blocks `14D0` and `1514` (0x80042F78..0x8004441C); many cost-0 gaps. Single guess: edge right after the last `14D0` user. |
-| 21 | `0x80043F34` | `0x34734` | `0x800456D8` | 0x17A4 | `code_80043F34` | low | no | Rodata block `1514` (one user, `func_8004441C`); `.data` cluster 0x8008A208.. starts at 0x80043F34 and `.sdata` 0x80097DDC..0x80097E0A. |
+| 21 | `0x80043F34` | `0x34734` | `0x800456D8` | 0x17A4 | `code_80043F34` | low | no | Rodata block `1514` (one user, `Effect_explosion_size`); `.data` cluster 0x8008A208.. starts at 0x80043F34 and `.sdata` 0x80097DDC..0x80097E0A. |
 | 22 | `0x800456D8` | `0x35ED8` | `0x80048620` | 0x2F48 | `code_800456D8` | low | no | Rodata block `1530` (users `func_80047354`, `_800477A0`); both ends are cost-0 gaps; `.data` 0x8008A2B0..0x8008A778 and `.sdata` 0x80097E64..0x80097F24 are contiguous clusters used only here. |
 | 23 | `0x80048620` | `0x38E20` | `0x80053788` | 0xB168 | `code_80048620` | low | no | Rodata block `156C` first five tables (users 0x80048704..0x80051BE4); `.data` jumps from 0x8008A778 to 0x8008A9D4 exactly here (first user 0x80048620). End = Chris `moji`. |
 | 24 | `0x80053788` | `0x43F88` | `0x8005C258` | 0x8AD0 | `moji` | medium | no | ChrisNonyminus `moji` 0x43F88; `MojiTaskExec/Exec2/Kill` at 0x8005382C..0x80053A30; gap cost 0. No rodata of its own. End 0x8005C258: cost-0 gap with data/sdata/bss separation; the 0xC-byte setter `Moji_weapon_set` writes `Moji_weapon`, used only by `moji` code, so it stays in this file. |

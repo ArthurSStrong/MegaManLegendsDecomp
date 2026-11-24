@@ -99,7 +99,7 @@ void Camera_look_at2(CAM_VEC *vec, CAM_VEC *target)
     Camera_look_at(vec, target);
 }
 
-void func_800384F0(CAM_VEC *pos, sint32 arg1, sint32 arg2)
+void camera_angle_set(CAM_VEC *pos, sint32 arg1, sint32 arg2)
 {
     sint32 v[3];
     sint16 x;
@@ -329,7 +329,7 @@ void Camera_update(void)
                         }
                         else
                         {
-                            diff = func_8003A218(Player_work.rotation.y + 0x800, cw->rot_10);
+                            diff = camera_rot_dist(Player_work.rotation.y + 0x800, cw->rot_10);
                             if (diff >= 0x200)
                             {
                                 D_80097D28 = 0x80;
@@ -344,7 +344,7 @@ void Camera_update(void)
                             }
                         }
                         cw->rot_10 =
-                            func_8003A154(Player_work.rotation.y + 0x800, D_80097D28, 0x200);
+                            camera_rot_limit(Player_work.rotation.y + 0x800, D_80097D28, 0x200);
                     }
                     if ((sint8)Player_work.value44d == 1)
                     {
@@ -790,7 +790,7 @@ void func_80039BA4(uint8 arg0, uint8 arg1)
     D_800A395B = arg1;
 }
 
-void func_80039BBC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void camera_now_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     D_800A39A0 = *vec;
     D_800A3964 = arg1;
@@ -806,7 +806,7 @@ void func_80039C08(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     D_800A3990 = arg3;
 }
 
-void func_80039C54(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void Camera_blend_from_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     D_800A39C0 = *vec;
     D_800A397C = arg1;
@@ -822,7 +822,7 @@ void func_80039CA0(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     D_800A3978 = arg3;
 }
 
-void func_80039CEC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
+void camera_blend_to_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
 {
     *(CAM_VEC *)&D_800A39E0 = *vec;
     D_800A3994              = arg1;
@@ -830,7 +830,7 @@ void func_80039CEC(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3)
     D_800A399C              = arg3;
 }
 
-void func_80039D38(CAM_DELTA *delta)
+void Camera_pos_shift(CAM_DELTA *delta)
 {
     D_800A39C0.x += delta->x;
     D_800A39C4.value += delta->y;
@@ -953,7 +953,7 @@ sint32 Camera_moving(void)
     return D_800A3962 >= 0;
 }
 
-sint32 func_8003A154(sint32 arg0, sint32 arg1, sint32 arg2)
+sint32 camera_rot_limit(sint32 arg0, sint32 arg1, sint32 arg2)
 {
     sint32 b;
     sint32 near;
@@ -1023,7 +1023,7 @@ sint32 func_8003A154(sint32 arg0, sint32 arg1, sint32 arg2)
     return lim;
 }
 
-sint32 func_8003A218(sint32 arg0)
+sint32 camera_rot_dist(sint32 arg0)
 {
     sint32 b;
     sint32 near;

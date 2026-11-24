@@ -254,7 +254,7 @@ extern uint8 D_8008D7E8[][5][4];
 extern uint16 D_8008DB08[];
 extern uint8 D_8008D7EC[];
 // Defined as uint8 in code_8005C258.c; Sub_screen_item tests v0 without an andi, so it saw int.
-sint32 func_8005D95C(void);
+sint32 Gauge_hold_state(void);
 void Gauge_show_release(void);
 void Player_weapon_refill(void);
 void Pl_invincible_set(sint32 arg);

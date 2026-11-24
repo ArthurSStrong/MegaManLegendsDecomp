@@ -272,7 +272,7 @@ void Moji_update(void)
                     }
                     else
                     {
-                        D_8008AAC4[*wp->pos_14](wp);
+                        Moji_window_set_tbl[*wp->pos_14](wp);
                     }
                 }
                 rect.x = wp->val_8;
@@ -284,7 +284,7 @@ void Moji_update(void)
                 addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], area);
                 if (wp->flags_0 & 0x04000000)
                 {
-                    D_8008AAE4[wp->val_7C](wp);
+                    Moji_window_draw_tbl[wp->val_7C](wp);
                 }
             }
             else
@@ -1316,7 +1316,7 @@ sint32 func_800561E8(MOJI_WORK *wp)
 
 sint32 func_80056234(MOJI_WORK *wp)
 {
-    if (func_8005DA1C(1) != 0)
+    if (Gauge_hold_end(1) != 0)
     {
         wp->pos_6C += 1;
         return 1;
@@ -1330,7 +1330,7 @@ sint32 func_80056280(MOJI_WORK *wp)
     uint8 b;
     sint32 x;
 
-    a = func_8005DA1C(0);
+    a = Gauge_hold_end(0);
     b = Pl_energy_refill(0);
     if (a == 0)
     {
@@ -3548,7 +3548,7 @@ void func_8005A874(MOJI_WORK *wp)
 }
 
 // The flags store comes first, so GCC reloads the counter rather than folding the switch value.
-void func_8005AB78(MOJI_WORK *wp)
+void Moji_window_set(MOJI_WORK *wp)
 {
     uint8 size;
 
@@ -3576,14 +3576,14 @@ void func_8005AB78(MOJI_WORK *wp)
     }
 }
 
-void func_8005ACA8(MOJI_WORK *wp)
+void Moji_window_draw(MOJI_WORK *wp)
 {
     DR_MODE *mode;
     DR_MODE *mode2;
 
     wp->val_8C = wp->val_B4 + wp->val_7E * 12;
     wp->val_94 = wp->val_B4 + wp->val_7E * 12;
-    func_8005BCE4(wp, D_8008AF18[wp->val_7C]);
+    moji_window_fill_set(wp, D_8008AF18[wp->val_7C]);
     wp->prim_A0[0]->x0 = wp->val_8 + wp->val_88 - 1;
     wp->prim_A0[0]->y0 = wp->val_A + wp->val_8A - 1;
     wp->prim_A0[0]->x1 = wp->val_8 + wp->val_8C + 1;
@@ -3648,7 +3648,7 @@ void func_8005ACA8(MOJI_WORK *wp)
     addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode2);
 }
 
-void func_8005B454(MOJI_WORK *wp)
+void Moji_fade_set(MOJI_WORK *wp)
 {
     switch (wp->val_7D)
     {
@@ -3695,7 +3695,7 @@ void func_8005B454(MOJI_WORK *wp)
     }
 }
 
-void func_8005B5D8(MOJI_WORK *wp)
+void Moji_fade_draw(MOJI_WORK *wp)
 {
     DR_MODE *mode;
     DR_MODE *mode2;
@@ -3728,8 +3728,8 @@ void func_8005B5D8(MOJI_WORK *wp)
     addPrim(&Disp_env_ptr->ot[(sint8)wp->val_3D], mode2);
 }
 
-// The flags store comes first, so GCC reloads the counter rather than folding the switch value.
-void func_8005B85C(MOJI_WORK *wp)
+// Same code as Moji_window_set.
+void Moji_window_set2(MOJI_WORK *wp)
 {
     uint8 size;
 
@@ -3759,7 +3759,7 @@ void func_8005B85C(MOJI_WORK *wp)
 
 // The edge tests are written with the moving edge on the left; the reset writes the edges in
 // field order.
-void func_8005B98C(MOJI_WORK *wp)
+void Moji_window_open_v(MOJI_WORK *wp)
 {
     uint32 size;
 
@@ -3820,7 +3820,7 @@ void func_8005B98C(MOJI_WORK *wp)
     }
 }
 
-void func_8005BC90(MOJI_WORK *wp)
+void Moji_window_draw_alt(MOJI_WORK *wp)
 {
     if (D_80098912 == 1)
     {
@@ -3830,14 +3830,14 @@ void func_8005BC90(MOJI_WORK *wp)
     {
         wp->val_7C = 4;
     }
-    func_8005ACA8(wp);
+    Moji_window_draw(wp);
     wp->val_7C = 7;
 }
 
 // The G4 loop indexes the shade tables with (i << 2), which keeps loop.c's count low enough to
 // hoist the len/code constants and walk four table pointers, as retail does; the colour table is
 // uint8[][6] (a flat index * 6 + k leaves orphan address pseudos that take stack slots).
-void func_8005BCE4(MOJI_WORK *wp, sint32 index)
+void moji_window_fill_set(MOJI_WORK *wp, sint32 index)
 {
     POLY_F4 *f4;
     POLY_G4 *g4;

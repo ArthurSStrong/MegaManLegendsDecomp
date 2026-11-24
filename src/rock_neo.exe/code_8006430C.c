@@ -331,7 +331,7 @@ retry:
     return (r != 0) ? 3 : 0;
 }
 
-sint32 func_80064B60(sint32 port)
+sint32 card_info_get(sint32 port)
 {
     sint32 r;
 
@@ -348,7 +348,7 @@ sint32 func_80064B60(sint32 port)
     return -1;
 }
 
-sint32 func_80064BB4(sint32 port)
+sint32 card_info_get2(sint32 port)
 {
     sint32 r;
 
@@ -395,7 +395,7 @@ uint32 card_free_blocks(sint32 port)
     return free / 0x2000;
 }
 
-void func_80064CB8(uint8 *buf, uint8 *src)
+void card_header_set(uint8 *buf, uint8 *src)
 {
     sint32 i;
     uint8 *dst;
@@ -552,7 +552,7 @@ void func_80065064(void)
     gw = &Game_work;
     func_80067D10();
     save = (MEM_IMAGE *)Cd_ring_buf;
-    func_80064CB8(Cd_ring_buf, D_8008FA64);
+    card_header_set(Cd_ring_buf, D_8008FA64);
     D_800B5EB0 = MEM_GWB(0x50);
     for (i = 0; i < 8; i++)
     {
@@ -911,7 +911,7 @@ sint32 Card_screen_exec(sint16 arg)
     return Card_screen_tbl[D_80098914]((MEM_WORK *)&D_80098910);
 }
 
-sint32 func_80066664(MEM_WORK *wp)
+sint32 Card_screen_start(MEM_WORK *wp)
 {
     sint32 r;
 
@@ -921,33 +921,34 @@ sint32 func_80066664(MEM_WORK *wp)
         wp->mode_4             = 2;
         wp->sub_5              = 0;
         *(uint16 *)&wp->step_6 = 0;
-        func_80067884();
-        r = func_80066714(wp);
+        card_slots_init();
+        r = Card_screen_load(wp);
     }
     else
     {
         wp->mode_4             = 1;
         wp->sub_5              = 0;
         *(uint16 *)&wp->step_6 = 0;
-        func_80067884();
-        r = func_800666D8(wp);
+        card_slots_init();
+        r = Card_screen_save(wp);
     }
     return r;
 }
 
-sint32 func_800666D8(MEM_WORK *wp)
+sint32 Card_screen_save(MEM_WORK *wp)
 {
-    D_8008FD20[wp->sub_5](wp);
+    Card_sub_tbl[wp->sub_5](wp);
     return 0;
 }
 
-sint32 func_80066714(MEM_WORK *wp)
+// Same code as Card_screen_save.
+sint32 Card_screen_load(MEM_WORK *wp)
 {
-    D_8008FD20[wp->sub_5](wp);
+    Card_sub_tbl[wp->sub_5](wp);
     return 0;
 }
 
-sint32 func_80066750(MEM_WORK *wp)
+sint32 Card_screen_end(MEM_WORK *wp)
 {
     wp->value_0            = 0;
     *(uint32 *)&wp->mode_4 = 0;
@@ -957,7 +958,7 @@ sint32 func_80066750(MEM_WORK *wp)
 
 // A sint16 choice gives retail's two copies of Moji_flag & 0xFF (one for the switch, one for
 // the D_80098A48 store); uint8 gives one, sint32 none.
-sint32 func_80066764(MEM_WORK *wp)
+sint32 Card_port_select(MEM_WORK *wp)
 {
     sint16 choice;
 
@@ -1001,7 +1002,7 @@ sint32 func_80066764(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_8006689C(MEM_WORK *wp)
+sint32 Card_files_read(MEM_WORK *wp)
 {
     MEM_SLOT *slot;
     sint16 i;
@@ -1025,7 +1026,7 @@ sint32 func_8006689C(MEM_WORK *wp)
             MojiTaskExec(2, D_8008CB00, -1);
             wp->timer_0c = 0xF;
             wp->step_6++;
-            func_80067884();
+            card_slots_init();
             break;
         case 1:
             if (--wp->timer_0c != 0)
@@ -1182,7 +1183,7 @@ sint32 func_80066E48(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_80066F40(MEM_WORK *wp)
+sint32 Card_format_ask(MEM_WORK *wp)
 {
     switch (wp->step_6)
     {
@@ -1224,7 +1225,7 @@ sint32 func_80066F40(MEM_WORK *wp)
             else
             {
                 wp->timer_10 = 0x1E;
-                if (func_80064B60(D_80098A48) == 0)
+                if (card_info_get(D_80098A48) == 0)
                 {
                     wp->sub_5              = 2;
                     *(uint16 *)&wp->step_6 = 0;
@@ -1335,7 +1336,7 @@ sint32 func_80067174(MEM_WORK *wp)
             else
             {
                 wp->timer_10 = 0x1E;
-                if (func_80064B60(D_80098A48) == 0)
+                if (card_info_get(D_80098A48) == 0)
                 {
                     wp->sub_5              = 2;
                     *(uint16 *)&wp->step_6 = 0;
@@ -1372,7 +1373,7 @@ sint32 func_80067174(MEM_WORK *wp)
             else
             {
                 wp->timer_10 = 0x1E;
-                if (func_80064B60(D_80098A48) == 0)
+                if (card_info_get(D_80098A48) == 0)
                 {
                     wp->sub_5              = 2;
                     *(uint16 *)&wp->step_6 = 0;
@@ -1499,7 +1500,7 @@ sint32 func_8006779C(MEM_WORK *wp)
     return 1;
 }
 
-void func_80067884(void)
+void card_slots_init(void)
 {
     sint32 i;
     sint32 j;
@@ -1511,7 +1512,7 @@ void func_80067884(void)
     for (i = 0; i < 5; i++)
     {
         slot = &D_800BAF38[i];
-        func_80064CB8((uint8 *)slot, D_8008FA64);
+        card_header_set((uint8 *)slot, D_8008FA64);
         slot->byte_109  = 0;
         slot->index_100 = 0;
         for (j = 0; j < 13; j++)

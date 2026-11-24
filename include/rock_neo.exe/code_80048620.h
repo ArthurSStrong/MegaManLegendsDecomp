@@ -354,7 +354,7 @@ typedef struct
 void RotMatrixY(sint32 angle, CODE486_MTX *m);
 void ApplyMatrixSV(CODE486_MTX *m, CODE486_SVECTOR *v, CODE486_SVECTOR *out);
 extern PL_FIXED_VECTOR D_80098AC0;
-void func_8004A060(sint16 *box, uint16 kind);
+void scr_box_hit(sint16 *box, uint16 kind);
 sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test);
 
 typedef union
@@ -377,7 +377,7 @@ sint32 func_80050B68(PL_SHORT_VECTOR *vec);
 sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
 
 // The scratchpad offsets as signed halfwords plus the two adjustments after them, as one
-// struct so GCC keeps the adjustment loads after the box stores (func_8004A060).
+// struct so GCC keeps the adjustment loads after the box stores (scr_box_hit).
 typedef struct
 {
     sint16 h124, h126, h128, h12a;

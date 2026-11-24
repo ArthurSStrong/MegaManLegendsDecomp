@@ -2499,8 +2499,8 @@ sint32 View_check(void *a, void *b, STCOM_SVECTOR *size, STCOM_FIXED_VECTOR *out
 
 void Moji_task_kill(sint32 arg);
 
-void func_80039C54(STCOM_FIXED_VECTOR *vec, sint32 dist, sint32 angle,
-                   sint32 arg3); // ROCK_NEO.EXE: places the camera
+void Camera_blend_from_set(STCOM_FIXED_VECTOR *vec, sint32 dist, sint32 angle,
+                           sint32 height); // ROCK_NEO.EXE: start of a camera blend
 
 void *Sce_slot_open_keep(STAGE_SCRIPT_ENTRY *entry); // ROCK_NEO.EXE: runs a room script command
 

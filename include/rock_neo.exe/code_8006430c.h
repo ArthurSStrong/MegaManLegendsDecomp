@@ -153,7 +153,7 @@ extern sint16 D_80098912;
 extern sint8 D_80098914;
 extern uint16 D_80098918[2];
 extern MEM_FUNC Card_screen_tbl[];
-extern MEM_FUNC D_8008FD20[];
+extern MEM_FUNC Card_sub_tbl[];
 extern char *D_8008FA5C[];
 extern uint16 D_800C0C2A;
 extern uint16 D_800C0C26;
@@ -251,9 +251,9 @@ sint32 read(sint32 fd, void *buf, uint32 size);
 sint32 close(sint32 fd);
 sint32 write(sint32 fd, void *buf, uint32 size);
 sint32 card_hw_event_wait(void);
-void func_80067884(void);
-sint32 func_80066714(MEM_WORK *wp);
-sint32 func_800666D8(MEM_WORK *wp);
+void card_slots_init(void);
+sint32 Card_screen_load(MEM_WORK *wp);
+sint32 Card_screen_save(MEM_WORK *wp);
 void Sce_flag_on(sint32 flag);
 // Save slot buffer (0x180 bytes)
 typedef struct
@@ -383,7 +383,7 @@ extern uint8 D_800B5EB0;
 extern uint8 Sce_flag[];
 extern uint32 Map_obj_state[][0x80];
 extern sint32 Automap_visited[0x280];
-void func_80064CB8(uint8 *buf, uint8 *src);
+void card_header_set(uint8 *buf, uint8 *src);
 void func_80067D10(void);
 void Map_obj_state_save(void);
 extern uint32 D_800B5ED8;
@@ -459,7 +459,7 @@ extern void *D_8008F200[];
 extern void *D_8008F260[];
 extern void *D_8008F2E4[];
 sint32 card_check(sint32 port);
-sint32 func_80064B60(sint32 port);
+sint32 card_info_get(sint32 port);
 sint32 card_format(sint32 port);
 
 #endif // ROCK_CODE_8006430C_H

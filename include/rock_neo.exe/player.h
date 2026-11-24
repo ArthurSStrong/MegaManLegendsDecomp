@@ -221,7 +221,7 @@ sint32 pl_hang_start(PL_WORK *pl);
 sint32 pl_side_jump_start(PL_WORK *pl);
 sint32 pl_run_back_start(PL_WORK *pl, sint32 arg);
 sint32 pl_side_step_start(PL_WORK *pl, sint32 arg);
-void func_8002D004(PL_WORK *pl, sint32 a1, sint32 a2);
+void Pl_face_set(PL_WORK *pl, sint32 a1, sint32 a2);
 sint32 pl_super_dash_start(PL_WORK *pl);
 sint32 pl_shot_no_move(PL_WORK *pl);
 sint32 pl_shot_no_turn(PL_WORK *pl);
@@ -265,7 +265,7 @@ extern PL_FUNC Pl_r1_tbl[];
 void pl_damage_check(PL_WORK *pl);
 void Pl_shot_special(PL_WORK *pl);
 void Pl_shot_buster(PL_WORK *pl);
-sint32 func_8004AF28(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3);
+sint32 Scr_pos_hit_check(PL_SHORT_VECTOR *pos, uint16 a1, uint8 a2, uint8 a3);
 sint32 Pl_special_shot_check();
 void Ride_carry(PL_WORK *pl, uint32 arg);
 void Ride_carry_saved(PL_WORK *pl, uint32 arg);
@@ -298,7 +298,7 @@ void Gauge_hide(void);
 void pl_run_move(PL_WORK *pl, sint32 dir);
 void pl_fall_start(PL_WORK *pl);
 sint32 Scr_height_calc(); // signature differs between callers; see code_80048620.h
-sint32 func_8005D8C4(sint32 arg);
+sint32 Gauge_life_hit_show(sint32 arg);
 void Swing_Camera2(); // takes a CAM_DELTA pointer; see code_80037fb4.h
 void pl_effect_pos_set(PL_WORK *pl, PL_EFFECT *fx, sint32 arg);
 void Obj_pos_adj_round(); // signature differs between callers; see code_8002e7a8.h

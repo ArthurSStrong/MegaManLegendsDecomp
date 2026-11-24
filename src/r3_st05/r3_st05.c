@@ -364,7 +364,7 @@ void func_80101420(STAGE_ROOM *wp)
             cam.y = Player_work.position.y - 0x96;
             cam.z = Player_work.position.z;
             Camera_return_resume();
-            func_80039C54(&cam, 0x258, (Player_work.rotation.y - 0x824) & 0xFFF, 0);
+            Camera_blend_from_set(&cam, 0x258, (Player_work.rotation.y - 0x824) & 0xFFF, 0);
             wp->flags_0 = 0;
             if (!(wp->reserved09[1] & 0x10))
             {

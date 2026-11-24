@@ -179,8 +179,8 @@ extern SCENE_WORK_FUNC D_80089024[];
 extern sint8 D_800C356C;
 extern uint8 D_800C356E;
 extern uint8 D_800C356F;
-extern sint16 *D_800893BC[];
-extern SCENE_COPY D_80089248[];
+extern sint16 *Sce_stage_file_tbl[];
+extern SCENE_COPY Sce_stage_file_def_tbl[];
 extern uint8 D_800A395C;
 extern sint32 D_800A3964;
 extern sint32 D_800A3968;
@@ -210,7 +210,7 @@ extern sint16 D_80089204[];
 extern sint16 D_80089208[];
 SCENE_SLOT *Sce_slot_open(SCENE_CMD *cmd);
 uint32 Sce_flag_test(uint32 flag);
-void func_8001F798(sint32 arg);
+void sce_stage_file_reset(sint32 arg);
 
 // 16.16 fixed-point word, also read as its integer half.
 typedef union

@@ -115,7 +115,7 @@ sint32 Sub_screen_item(SUB_WORK *wp)
             switch (wp->reserved4[0])
             {
                 case 0x40:
-                    if (func_8005D95C() == 0)
+                    if (Gauge_hold_state() == 0)
                     {
                         MojiTaskExec(0, (uint8 *)0x801F2000, 0x58);
                         wp->routine_1 += 2;

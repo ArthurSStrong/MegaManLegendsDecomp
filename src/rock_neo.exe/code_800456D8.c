@@ -9,7 +9,7 @@ void Sound_call2(sint16 id, void *args);
 // Small data reached through $gp
 sint32 D_800986D0;
 
-void func_800456D8(CODE456_WORK *wp)
+void Effect_debris_init(CODE456_WORK *wp)
 {
     if (rand() & 1)
     {
@@ -18,11 +18,11 @@ void func_800456D8(CODE456_WORK *wp)
     Model_work_init(wp, &wp->flag_3);
     wp->routine_8++;
     Sound_call2(0x9B, &wp->snd_38.args);
-    func_80045AB4(wp);
-    func_80045BC8(wp);
+    debris_tumble(wp);
+    debris_touch_check(wp);
 }
 
-void func_80045750(CODE456_WORK *wp)
+void Effect_debris_move(CODE456_WORK *wp)
 {
     PL_SHORT_VECTOR cur;
     PL_SHORT_VECTOR old;
@@ -36,8 +36,8 @@ void func_80045750(CODE456_WORK *wp)
     wp->mtx_18.tr.h.ty_lo += wp->mtx_18.tr.h.tz_hi;
     wp->snd_38.half[2] += wp->mtx_18.tr.h.ty_lo;
     cur = wp->snd_38.pos;
-    func_80045AB4(wp);
-    hit = func_8004B5CC(&cur, &old, 1, &D_8008A310[wp->value_a]);
+    debris_tumble(wp);
+    hit = Scr_move_check(&cur, &old, 1, &D_8008A310[wp->value_a]);
     if (hit)
     {
         wp->snd_38.pos.x = cur.x;
@@ -64,10 +64,10 @@ void func_80045750(CODE456_WORK *wp)
         }
         Scr_vec_reflect(&wp->mtx_18.tr.h.tx_lo, hit);
     }
-    func_80045BC8(wp);
+    debris_touch_check(wp);
 }
 
-void func_80045918(CODE456_WORK *wp)
+void Effect_debris_wait(CODE456_WORK *wp)
 {
     if (--wp->timer_b == 0)
     {
@@ -75,7 +75,7 @@ void func_80045918(CODE456_WORK *wp)
     }
 }
 
-void func_8004594C(CODE456_WORK *wp)
+void Effect_debris_wait2(CODE456_WORK *wp)
 {
     if (--wp->timer_b == 0)
     {
@@ -83,19 +83,19 @@ void func_8004594C(CODE456_WORK *wp)
     }
 }
 
-void func_80045980(CODE456_WORK *wp)
+void Effect_debris_end(CODE456_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
 
-void func_800459A0(CODE456_WORK *wp)
+void Effect_debris_touch(CODE456_WORK *wp)
 {
     wp->mtx_18.tr.h.value_2e = -0x28;
     wp->mtx_18.tr.h.value_34 = 5;
     wp->routine_8++;
 }
 
-void func_800459C0(CODE456_WORK *wp)
+void Effect_debris_shrink(CODE456_WORK *wp)
 {
     wp->mtx_18.m[2][1] = 0;
     wp->mtx_18.m[2][0] = 0;
@@ -115,13 +115,13 @@ void func_800459C0(CODE456_WORK *wp)
     }
 }
 
-void func_80045A7C(CODE456_WORK *wp)
+void Effect_debris_vanish(CODE456_WORK *wp)
 {
     Sound_call2(0xCF, &wp->snd_38.args);
     Close_EFFECT_WORK(wp);
 }
 
-void func_80045AB4(CODE456_WORK *wp)
+void debris_tumble(CODE456_WORK *wp)
 {
     CODE456_SVECTOR rot;
     CODE456_MTX m;
@@ -139,7 +139,7 @@ void func_80045AB4(CODE456_WORK *wp)
     wp->mtx_18 = m;
 }
 
-void func_80045BC8(CODE456_WORK *wp)
+void debris_touch_check(CODE456_WORK *wp)
 {
     uint32 r = D_80097E70[wp->value_a];
 
@@ -159,7 +159,7 @@ void func_80045BC8(CODE456_WORK *wp)
 
 // The clamp copies the parameter into count in its else arm; that puts count's entry copy
 // after weights' and kind's, as in retail's prologue.
-void func_80045CE8(PL_SHORT_VECTOR *pos, uint32 num, uint32 weights, uint32 kind)
+void debris_spawn(PL_SHORT_VECTOR *pos, uint32 num, uint32 weights, uint32 kind)
 {
     CODE456_WORK *wp;
     uint32 i;
@@ -311,7 +311,7 @@ void Item_drop_move(CODE456_WORK *wp)
 
     if (D_800986D0 != CODE456_FRAME)
     {
-        func_80046F38();
+        item_drop_color_set();
     }
     Item_drop_tbl[wp->routine_8](wp);
     if (wp->flag_3 != 0 && (wp->routine_0 & 2) && wp->routine_8 < 5)
@@ -338,7 +338,7 @@ void Item_drop_move(CODE456_WORK *wp)
     }
 }
 
-void func_800461A4(CODE456_WORK *wp)
+void Item_drop_init(CODE456_WORK *wp)
 {
     wp->routine_0 |= 2;
     Model_work_init(wp, &wp->flag_3);
@@ -346,7 +346,7 @@ void func_800461A4(CODE456_WORK *wp)
     Sound_call2(0x9B, &wp->snd_38.args);
     if (wp->flag_3)
     {
-        func_80046890(wp);
+        item_drop_tumble(wp);
     }
     else
     {
@@ -356,7 +356,7 @@ void func_800461A4(CODE456_WORK *wp)
     wp->timer_b = 0xFF;
 }
 
-void func_8004622C(CODE456_WORK *wp)
+void Item_drop_fall(CODE456_WORK *wp)
 {
     PL_SHORT_VECTOR cur;
     PL_SHORT_VECTOR old;
@@ -372,13 +372,13 @@ void func_8004622C(CODE456_WORK *wp)
     cur = wp->snd_38.pos;
     if (wp->flag_3)
     {
-        func_80046890(wp);
+        item_drop_tumble(wp);
     }
     else
     {
         item_drop_spin(wp);
     }
-    hit = func_8004B5CC(&cur, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
+    hit = Scr_move_check(&cur, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
     if (hit)
     {
         wp->snd_38.pos.x = cur.x;
@@ -409,7 +409,7 @@ void func_8004622C(CODE456_WORK *wp)
 
 // The difference gets its own variable (it then takes r's register), computed before the
 // position copy.
-void func_80046438(CODE456_WORK *wp)
+void Item_drop_wait(CODE456_WORK *wp)
 {
     PL_SHORT_VECTOR old;
     sint32 r;
@@ -432,7 +432,7 @@ void func_80046438(CODE456_WORK *wp)
         wp->mtx_18.tr.h.value_2e += wp->mtx_18.tr.h.value_34;
         wp->snd_38.pos.y += wp->mtx_18.tr.h.value_2e;
     }
-    func_8004B5CC(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
+    Scr_move_check(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
     item_drop_get(wp);
     if (wp->flag_3 == 0)
     {
@@ -440,8 +440,8 @@ void func_80046438(CODE456_WORK *wp)
     }
 }
 
-// Same difference form as func_80046438.
-void func_800465C8(CODE456_WORK *wp)
+// Same difference form as Item_drop_wait.
+void Item_drop_blink(CODE456_WORK *wp)
 {
     PL_SHORT_VECTOR old;
     sint32 r;
@@ -464,7 +464,7 @@ void func_800465C8(CODE456_WORK *wp)
         wp->mtx_18.tr.h.value_2e += wp->mtx_18.tr.h.value_34;
         wp->snd_38.pos.y += wp->mtx_18.tr.h.value_2e;
     }
-    func_8004B5CC(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
+    Scr_move_check(&wp->snd_38, &old, 1, &D_8008A618[wp->flag_3][wp->value_a]);
     item_drop_get(wp);
     if (wp->flag_3 == 0)
     {
@@ -472,19 +472,19 @@ void func_800465C8(CODE456_WORK *wp)
     }
 }
 
-void func_8004674C(CODE456_WORK *wp)
+void Item_drop_end(CODE456_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
 
-void func_8004676C(CODE456_WORK *wp)
+void Item_drop_take(CODE456_WORK *wp)
 {
     wp->mtx_18.tr.h.value_2e = -0x28;
     wp->mtx_18.tr.h.value_34 = 5;
     wp->routine_8++;
 }
 
-void func_8004678C(CODE456_WORK *wp)
+void Item_drop_shrink(CODE456_WORK *wp)
 {
     wp->mtx_18.m[2][1] = 0;
     wp->mtx_18.m[2][0] = 0;
@@ -504,13 +504,14 @@ void func_8004678C(CODE456_WORK *wp)
     }
 }
 
-void func_80046848(CODE456_WORK *wp)
+void Item_drop_collect(CODE456_WORK *wp)
 {
     Sound_call2(wp->flag_3 ? 0x9E : 0x9D, &wp->snd_38.args);
     Close_EFFECT_WORK(wp);
 }
 
-void func_80046890(CODE456_WORK *wp)
+// Same code as debris_tumble.
+void item_drop_tumble(CODE456_WORK *wp)
 {
     CODE456_SVECTOR rot;
     CODE456_MTX m;
@@ -675,7 +676,7 @@ void item_drop_set(PL_SHORT_VECTOR *pos, uint32 arg)
     }
 }
 
-void func_80046F38(void)
+void item_drop_color_set(void)
 {
     uint32 frame;
     uint32 i;
@@ -783,7 +784,7 @@ void func_80047354(CODE456_BOX *wp)
         wp->m18.w[1]  = wp->snd_38.word[0];
         wp->m18.h[4]  = wp->snd_38.half[2];
         func_80047C84((CODE456_ANIM *)wp);
-        func_80045CE8(&wp->snd_38.pos, 3, 0x40404040, 1);
+        debris_spawn(&wp->snd_38.pos, 3, 0x40404040, 1);
         return;
     }
     if (wp->flag_3 == 0xFE)
@@ -904,7 +905,7 @@ void func_80047354(CODE456_BOX *wp)
     }
     wp->routine_8++;
     wp->timer_b = 0;
-    arg = func_80047BF8((CODE456_SVECTOR *)&wp->snd_38, (CODE456_SVECTOR *)&Player_work.position);
+    arg = calc_distance((CODE456_SVECTOR *)&wp->snd_38, (CODE456_SVECTOR *)&Player_work.position);
     if (wp->sound_c)
     {
         Sound_call2(0xA1, &wp->snd_38.args);
@@ -1103,7 +1104,7 @@ void func_80047BD8(CODE456_WORK *wp)
     Close_EFFECT_WORK(wp);
 }
 
-sint32 func_80047BF8(CODE456_SVECTOR *a, CODE456_SVECTOR *b)
+sint32 calc_distance(CODE456_SVECTOR *a, CODE456_SVECTOR *b)
 {
     sint32 dx = a->vx - b->vx;
     sint32 dy = a->vy - b->vy;
@@ -1149,18 +1150,18 @@ void func_80047CD8(CODE456_ANIM *wp)
     }
 }
 
-void func_80047D9C(CODE456_WORK *wp)
+void Effect_dash_spark(CODE456_WORK *wp)
 {
-    D_8008A724[wp->routine_8](wp);
+    Effect_dash_spark_tbl[wp->routine_8](wp);
 }
 
-void func_80047DD8(CODE456_SPARK *wp)
+void Effect_dash_spark_init(CODE456_SPARK *wp)
 {
     PL_WORK *pl = &Player_work;
     CODE456_SPARK_DATA *d;
     uint8 i;
 
-    if (func_800482A8(wp) == 0)
+    if (dash_spark_check(wp) == 0)
     {
         d = &wp->data;
         wp->flags_6 |= 0x20;
@@ -1181,7 +1182,7 @@ void func_80047DD8(CODE456_SPARK *wp)
     }
 }
 
-void func_80047EC8(CODE456_SPARK *wp)
+void Effect_dash_spark_draw(CODE456_SPARK *wp)
 {
     uint32 *prim;
     uint16 step;
@@ -1196,7 +1197,7 @@ void func_80047EC8(CODE456_SPARK *wp)
     uint8 lit;
 
     d = &wp->data;
-    if (func_800482A8(wp) != 0)
+    if (dash_spark_check(wp) != 0)
     {
         return;
     }
@@ -1261,14 +1262,14 @@ void func_80047EC8(CODE456_SPARK *wp)
     Sound_call(0x8D, 0, 0);
 }
 
-void func_80048268(CODE456_WORK *wp)
+void Effect_dash_spark_end(CODE456_WORK *wp)
 {
     Sound_call(0x8F, 0, 0);
     wp->routine_0 = 0;
     Close_EFFECT_WORK(wp);
 }
 
-uint8 func_800482A8(void *vp)
+uint8 dash_spark_check(void *vp)
 {
     CODE456_WORK *wp = vp;
     uint16 pad;
@@ -1308,12 +1309,12 @@ uint8 func_800482A8(void *vp)
     return 0;
 }
 
-void func_80048354(CODE456_WORK *wp)
+void Effect_wall_spark(CODE456_WORK *wp)
 {
-    D_8008A76C[wp->routine_8](wp);
+    Effect_wall_spark_tbl[wp->routine_8](wp);
 }
 
-void func_80048390(CODE456_ANIM *wp)
+void Effect_wall_spark_init(CODE456_ANIM *wp)
 {
     wp->value_24 = 0x20;
     wp->value_c  = -0x80;
@@ -1337,7 +1338,7 @@ void func_80048390(CODE456_ANIM *wp)
     wp->timer_b   = 0;
 }
 
-void func_80048484(CODE456_ANIM *wp)
+void Effect_wall_spark_move(CODE456_ANIM *wp)
 {
     if (--wp->value_e == 0)
     {
@@ -1363,7 +1364,7 @@ void func_80048484(CODE456_ANIM *wp)
     }
 }
 
-void func_800485C4(CODE456_WORK *wp)
+void Effect_wall_spark_end(CODE456_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }

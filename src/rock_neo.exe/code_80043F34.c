@@ -115,7 +115,7 @@ void Effect_explosion_init(CODE43_WORK *wp)
 // One temporary `t` serves three values (the player x, the y difference and the squared
 // radius); that reuse gives retail's load order and registers for the distance terms and the
 // squares. Loading the raw w before the (sint16) / 2 gives retail's lhu and radius register.
-void func_800441CC(CODE43_WORK *wp)
+void Effect_explosion_move(CODE43_WORK *wp)
 {
     uint32 add;
     uint32 dist;
@@ -125,7 +125,7 @@ void func_800441CC(CODE43_WORK *wp)
     sint32 r;
     sint32 t;
 
-    D_8008A214[wp->count_9](wp);
+    Effect_explosion_size_tbl[wp->count_9](wp);
     add = D_80097DDC[wp->sel_d];
     switch (wp->sel_e)
     {
@@ -191,7 +191,7 @@ void func_800441CC(CODE43_WORK *wp)
     }
 }
 
-void func_8004441C(CODE43_WORK *wp)
+void Effect_explosion_size(CODE43_WORK *wp)
 {
     sint16 *v;
     sint32 c;
@@ -380,7 +380,7 @@ void func_80044934(CODE43_WORK *wp)
 {
 }
 
-void func_8004493C(CODE43_WORK *wp)
+void Effect_explosion_end(CODE43_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
@@ -429,10 +429,10 @@ void func_80044AA8(CODE43_WORK *wp)
 
 void Effect_buster_hit(CODE43_WORK *wp)
 {
-    D_8008A250[wp->routine_8](wp);
+    Effect_buster_hit_tbl[wp->routine_8](wp);
 }
 
-void func_80044AEC(CODE43_WORK *wp)
+void Effect_buster_hit_init(CODE43_WORK *wp)
 {
     wp->u14.word = 0x3D48002E;
     wp->word_18  = 0x2E808080;
@@ -451,7 +451,7 @@ void func_80044AEC(CODE43_WORK *wp)
     }
 }
 
-void func_80044BA0(CODE43_WORK *wp)
+void Effect_buster_hit_move(CODE43_WORK *wp)
 {
     uint8 i;
     uint32 unused[2];
@@ -474,12 +474,12 @@ void func_80044BA0(CODE43_WORK *wp)
     }
 }
 
-void func_80044C58(CODE43_WORK *wp)
+void Effect_smoke(CODE43_WORK *wp)
 {
-    D_8008A258[wp->routine_8](wp);
+    Effect_smoke_tbl[wp->routine_8](wp);
 }
 
-void func_80044C94(CODE43_WORK *wp)
+void Effect_smoke_init(CODE43_WORK *wp)
 {
     wp->u14.word = 0x3D48002E;
     wp->word_18  = 0x2E404040;
@@ -515,7 +515,7 @@ void func_80044C94(CODE43_WORK *wp)
     wp->routine_8++;
 }
 
-void func_80044D5C(CODE43_WORK *wp)
+void Effect_smoke_move1(CODE43_WORK *wp)
 {
     uint8 t;
 
@@ -546,7 +546,7 @@ void func_80044D5C(CODE43_WORK *wp)
     }
 }
 
-void func_80044E50(CODE43_WORK *wp)
+void Effect_smoke_move2(CODE43_WORK *wp)
 {
     uint8 t;
 
@@ -577,7 +577,7 @@ void func_80044E50(CODE43_WORK *wp)
     }
 }
 
-void func_80044F44(CODE43_WORK *wp)
+void Effect_smoke_move3(CODE43_WORK *wp)
 {
     uint8 t;
 
@@ -608,7 +608,7 @@ void func_80044F44(CODE43_WORK *wp)
     }
 }
 
-void func_80045038(CODE43_WORK *wp)
+void Effect_smoke_end(CODE43_WORK *wp)
 {
     if (--wp->timer_b == 0)
     {
@@ -619,10 +619,10 @@ void func_80045038(CODE43_WORK *wp)
 
 void Effect_arm_hit(CODE43_WORK *wp)
 {
-    D_8008A288[wp->routine_8](wp);
+    Effect_arm_hit_tbl[wp->routine_8](wp);
 }
 
-void func_800450B0(CODE43_WORK *wp)
+void Effect_arm_hit_init(CODE43_WORK *wp)
 {
     wp->u14.word = 0x3D48002E;
     wp->word_18  = 0x2E208080;
@@ -641,7 +641,7 @@ void func_800450B0(CODE43_WORK *wp)
     wp->routine_8++;
 }
 
-void func_80045170(CODE43_WORK *wp)
+void Effect_arm_hit_move(CODE43_WORK *wp)
 {
     uint8 i;
     uint32 unused[2];
@@ -664,12 +664,12 @@ void func_80045170(CODE43_WORK *wp)
     }
 }
 
-void func_80045238(CODE43_WORK *wp)
+void Effect_shot_hit(CODE43_WORK *wp)
 {
-    D_8008A290[wp->routine_8](wp);
+    Effect_shot_hit_tbl[wp->routine_8](wp);
 }
 
-void func_80045274(CODE43_WORK *wp)
+void Effect_shot_hit_init(CODE43_WORK *wp)
 {
     uint32 i;
 
@@ -752,7 +752,7 @@ void func_8004548C(CODE43_WORK *wp)
     wp->routine_8++;
 }
 
-void func_8004557C(CODE43_WORK *wp)
+void Effect_shot_hit_end(CODE43_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
@@ -779,7 +779,7 @@ void func_80045650(CODE43_WORK *wp)
     wp->routine_8 = 4;
 }
 
-void func_8004569C(CODE43_WORK *wp)
+void Effect_debris(CODE43_WORK *wp)
 {
-    D_8008A358[wp->routine_8](wp);
+    Effect_debris_tbl[wp->routine_8](wp);
 }

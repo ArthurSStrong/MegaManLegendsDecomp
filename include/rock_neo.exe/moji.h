@@ -130,7 +130,7 @@ uint16 get_le16(uint8 *p);
 void num_to_text(sint32 mode, uint32 value, uint8 *out);
 sint32 Pl_life_refill(sint32 arg0);
 sint32 Pl_energy_refill(sint32 arg0);
-sint32 func_8005DA1C(sint32 arg0);
+sint32 Gauge_hold_end(sint32 arg0);
 sint32 Sce_flag_test(sint32 flag);
 // Sce_flag_on, Camera_return_resume and Money_add are void, but Capcom's moji code called them
 // without prototypes (implicitly int): its calls keep the unused v0 result (call_value).
@@ -146,7 +146,7 @@ void Sound_call(sint16 id, uint32 arg1, uint32 arg2);
 #else
 void Sound_call(sint32 sound, ...);
 #endif
-void func_8005ACA8(MOJI_WORK *wp);
+void Moji_window_draw(MOJI_WORK *wp);
 sint32 rand(void);
 #ifdef __wasm32__
 void Camera_return_resume(void);
@@ -231,7 +231,7 @@ extern uint8 D_80097FE2; // byte 6 of the D_80097FDC script, written as its own 
 
 extern DISP_ENV *Disp_env_ptr;
 extern uint8 D_8008AF18[];
-void func_8005BCE4(MOJI_WORK *wp, sint32 index);
+void moji_window_fill_set(MOJI_WORK *wp, sint32 index);
 sint32 Moji_cmd_select(MOJI_WORK *wp);
 void Moji_text_list_choice(MOJI_WORK *wp);
 sint32 Moji_cmd_name_entry(MOJI_WORK *wp);
@@ -251,8 +251,8 @@ extern uint8 D_800986EC;
 extern uint32 D_800987E0;
 typedef sint32 (*MOJI_CMD_FUNC)(MOJI_WORK *);
 extern MOJI_CMD_FUNC D_8008A91C[];
-extern MOJI_FUNC D_8008AAC4[];
-extern MOJI_FUNC D_8008AAE4[];
+extern MOJI_FUNC Moji_window_set_tbl[];
+extern MOJI_FUNC Moji_window_draw_tbl[];
 extern RECT D_80097F50[];
 extern uint16 D_80097F30[];
 extern uint8 D_8008AE7C[];

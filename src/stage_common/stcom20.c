@@ -183,7 +183,7 @@ void stcom20_func_02F8(STCOM20_WORK *wp)
     }
     else
     {
-        func_8004AE88(&wp->angle_66, hit);
+        Scr_angle_reflect(&wp->angle_66, hit);
     }
 }
 

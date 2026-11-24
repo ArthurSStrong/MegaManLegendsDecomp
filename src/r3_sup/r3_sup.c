@@ -114,14 +114,14 @@ void func_801D8490(void)
 
 void func_801D8524(void)
 {
-    func_80023728(&D_801DC208.vec_0c, D_801DC208.value_1c, D_801DC208.value_20,
-                  D_801DC208.value_24);
+    Map_draw_near_cam(&D_801DC208.vec_0c, D_801DC208.value_1c, D_801DC208.value_20,
+                      D_801DC208.value_24);
 }
 
 void func_801D8564(void)
 {
-    func_80028F90(SUP_OBJ_0);
-    func_80028F90(SUP_OBJ_1);
+    Obj_parts_draw2(SUP_OBJ_0);
+    Obj_parts_draw2(SUP_OBJ_1);
 }
 
 void func_801D8594(void)
@@ -975,7 +975,7 @@ void func_801D9C74(void)
         ScaleMatrix(&sp->mtx.m, &D_801DC208.scale_68);
         if (sp->value_0 & 2)
         {
-            func_8002A160(&sp->model_14, (sint8)sp->value_0);
+            Obj_model_draw(&sp->model_14, (sint8)sp->value_0);
         }
     }
 

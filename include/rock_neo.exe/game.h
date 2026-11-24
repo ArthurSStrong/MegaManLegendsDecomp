@@ -327,7 +327,7 @@ sint32 func_801D816C(void);
 
 void Sce_update(void);
 void Message_event_update(void);
-void func_80039D38(GAME_DELTA *delta);
+void Camera_pos_shift(GAME_DELTA *delta);
 void Obj_work_flag_change(sint32 mask, sint32 flags);
 void Work_room_change(sint32 flag, GAME_DELTA *delta);
 void Sound_bgm_change_check(void);
