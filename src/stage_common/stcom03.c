@@ -7,12 +7,12 @@
 // same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom03"
 
-void stcom03_func_0000(STCOM03_WORK *wp)
+void stcom03_move(STCOM03_WORK *wp)
 {
-    stcom03_D_0000[wp->routine_0](wp);
+    stcom03_move_tbl[wp->routine_0](wp);
 }
 
-void stcom03_func_003C(STCOM03_WORK *wp)
+void stcom03_move_init(STCOM03_WORK *wp)
 {
     wp->flags_0 |= 2;
     switch (wp->type_3)
@@ -95,7 +95,7 @@ void stcom03_func_003C(STCOM03_WORK *wp)
     }
 }
 
-void stcom03_func_02CC(STCOM03_WORK *wp)
+void stcom03_move_flash(STCOM03_WORK *wp)
 {
     if (--wp->routine_3 == 0)
     {
@@ -108,7 +108,7 @@ void stcom03_func_02CC(STCOM03_WORK *wp)
     }
 }
 
-void stcom03_func_0330(STCOM03_WORK *wp)
+void stcom03_move_grow(STCOM03_WORK *wp)
 {
     sint32 unused[1]; // never used; retail reserves its 8-byte frame
 
@@ -149,7 +149,7 @@ void stcom03_func_0330(STCOM03_WORK *wp)
     }
 }
 
-void stcom03_func_0414(STCOM03_WORK *wp)
+void stcom03_move_shrink(STCOM03_WORK *wp)
 {
     sint32 unused[1]; // never used; retail reserves its frame
 
@@ -164,7 +164,7 @@ void stcom03_func_0414(STCOM03_WORK *wp)
     }
 }
 
-void stcom03_func_0468(STCOM03_WORK *wp)
+void stcom03_move_spread(STCOM03_WORK *wp)
 {
     if (wp->routine_1 == 0)
     {

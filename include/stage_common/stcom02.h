@@ -43,11 +43,11 @@ typedef struct
 
 typedef void (*STCOM02_FUNC)(STCOM02_WORK *wp);
 
-extern STCOM02_STEP *stcom02_D_0000[]; // scripts, by index_3
-extern STCOM02_RANGE stcom02_D_006C[]; // palette ranges, by index_3
-extern STCOM02_FUNC stcom02_D_0110[];  // routine_0 handlers (stcom02_func_0000)
+extern STCOM02_STEP *stcom02_script_tbl[]; // scripts, by index_3
+extern STCOM02_RANGE stcom02_range_tbl[];  // palette ranges, by index_3
+extern STCOM02_FUNC stcom02_move_tbl[];    // routine_0 handlers (stcom02_move)
 
-void stcom02_func_0140(STCOM02_WORK *wp);
-sint32 stcom02_func_0334(STCOM02_WORK *wp);
+void stcom02_clut_blend(STCOM02_WORK *wp);
+sint32 stcom02_step_next(STCOM02_WORK *wp);
 
 #endif // STCOM02_H

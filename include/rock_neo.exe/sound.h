@@ -40,7 +40,7 @@ typedef struct
     uint8 unk1B; // 0x1B: lbu/sb (sound_volume_update countdown, set to 0x1E)
     uint8
         *unk1C; // 0x1C: lw (sound_volume_update: pointer to 3-byte reverb entries); set by Sound_init
-                //       (&D_800821F8) and func_80019F94
+                //       (&D_800821F8) and Sound_reverb_set
     uint8 *unk20; // 0x20: lw/sw (sound_volume_update: last applied unk1C); cleared in Sound_init
 } SOUND_WORK;
 

@@ -613,7 +613,7 @@ void Thread_load_change(char *name)
     Thread_change(Thread_current->entry);
 }
 
-void func_8001319C(void)
+void thread_work_clear(void)
 {
     sint32 i;
 

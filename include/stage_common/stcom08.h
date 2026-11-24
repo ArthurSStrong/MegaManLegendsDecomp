@@ -50,11 +50,11 @@ typedef struct
 
 typedef void (*STCOM08_FUNC)(STCOM08_WORK *wp);
 
-extern STCOM08_FUNC stcom08_D_0000[]; // routine_0 handlers (stcom08_func_0000)
-extern uint16 stcom08_D_0010[];       // height wobble, by frame & 7
+extern STCOM08_FUNC stcom08_move_tbl[]; // routine_0 handlers (stcom08_move)
+extern uint16 stcom08_wobble_tbl[];      // height wobble, by frame & 7
 
-void stcom08_func_0348(STCOM08_WORK *wp);
-void stcom08_func_0424(STCOM08_WORK *wp);
+void stcom08_float(STCOM08_WORK *wp);
+void stcom08_drift_set(STCOM08_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

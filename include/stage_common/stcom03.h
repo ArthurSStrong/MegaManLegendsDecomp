@@ -10,12 +10,12 @@ typedef struct
 {
     uint8 flags_0;          // 00
     uint8 reserved01[2];    // 01
-    uint8 type_3;           // 03: which effect (stcom03_func_003C)
+    uint8 type_3;           // 03: which effect (stcom03_move_init)
     uint8 reserved04[4];    // 04
     uint8 routine_0;        // 08
     uint8 routine_1;        // 09
     uint8 routine_2;        // 0A
-    uint8 routine_3;        // 0B: also a countdown (stcom03_func_02CC)
+    uint8 routine_3;        // 0B: also a countdown (stcom03_move_flash)
     sint8 param_C;          // 0C
     uint8 reserved0D[7];    // 0D
     uint32 mode_14;         // 14: draw mode word
@@ -30,7 +30,7 @@ typedef struct
 
 typedef void (*STCOM03_FUNC)(STCOM03_WORK *wp);
 
-extern STCOM03_FUNC stcom03_D_0000[]; // routine_0 handlers (stcom03_func_0000)
+extern STCOM03_FUNC stcom03_move_tbl[]; // routine_0 handlers (stcom03_move)
 
 // ROCK_NEO.EXE: frees a 0x48-byte work slot.
 void Close_EFFECT_WORK(STCOM03_WORK *wp);

@@ -288,7 +288,7 @@ void Sound_init(void)
     Sound_flags |= 1;
 }
 
-void func_80019F94(sint32 index)
+void Sound_reverb_set(sint32 index)
 {
     Sound_work.unk1C = (uint8 *)&D_800821F8[index];
 }

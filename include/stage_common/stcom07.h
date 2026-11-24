@@ -22,7 +22,7 @@ typedef union
     sint32 words[8];
 } STCOM07_MATRIX;
 
-// Per-quad v steps for the slide (stcom07_D_001C).
+// Per-quad v steps for the slide (stcom07_scroll_tbl).
 typedef struct
 {
     uint8 v0, v1, v2, v3;
@@ -33,7 +33,7 @@ typedef struct
 {
     uint8 flags_0;          // 00
     uint8 reserved01[2];    // 01
-    uint8 type_3;           // 03: picks the UV set (stcom07_func_003C)
+    uint8 type_3;           // 03: picks the UV set (stcom07_move_init)
     uint8 reserved04[4];    // 04
     uint8 routine_0;        // 08
     uint8 reserved09[2];    // 09
@@ -49,8 +49,8 @@ typedef struct
 
 typedef void (*STCOM07_FUNC)(STCOM07_WORK *wp);
 
-extern STCOM07_FUNC stcom07_D_0000[]; // routine_0 handlers (stcom07_func_0000)
-extern STCOM07_STEP stcom07_D_001C[]; // v steps per quad
+extern STCOM07_FUNC stcom07_move_tbl[];   // routine_0 handlers (stcom07_move)
+extern STCOM07_STEP stcom07_scroll_tbl[]; // v steps per quad
 
 // ROCK_NEO.EXE.
 STCOM07_QUAD *Model_face_get(uint32 model, sint32 arg);

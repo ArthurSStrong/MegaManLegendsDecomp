@@ -903,8 +903,8 @@ sint32 Sce_stage_load(void)
     routine = SCENE_GAME_FIXED.stage_no;
     sub     = SCENE_GAME_FIXED.area_no;
     sce_stage_init();
-    id = D_800896D4[routine];
-    func_80019F94(id);
+    id = Sce_stage_reverb_tbl[routine];
+    Sound_reverb_set(id);
     cur = SCENE_GAME_FIXED.value_68;
     id  = Sce_stage_file_tbl[routine][0];
     gw  = &Game_work;

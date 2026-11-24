@@ -7,37 +7,37 @@
 // by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom02"
 
-void stcom02_func_0000(STCOM02_WORK *wp)
+void stcom02_move(STCOM02_WORK *wp)
 {
-    stcom02_D_0110[wp->routine_0](wp);
+    stcom02_move_tbl[wp->routine_0](wp);
 }
 
-void stcom02_func_003C(STCOM02_WORK *wp)
+void stcom02_move_init(STCOM02_WORK *wp)
 {
-    wp->script_1C = wp->step_20 = stcom02_D_0000[wp->index_3];
+    wp->script_1C = wp->step_20 = stcom02_script_tbl[wp->index_3];
     wp->count_C                 = wp->step_20->count;
     wp->frame_D                 = 0;
     wp->dst_18                  = &D_800AD168[wp->script_1C->lo + (wp->script_1C->hi << 8)];
-    if (stcom02_func_0334(wp))
+    if (stcom02_step_next(wp))
     {
         Close_EVE_WORK(wp);
     }
     wp->routine_0 = 1;
 }
 
-void stcom02_func_00D8(STCOM02_WORK *wp)
+void stcom02_move_main(STCOM02_WORK *wp)
 {
     if (wp->count_C < ++wp->frame_D)
     {
-        if (stcom02_func_0334(wp))
+        if (stcom02_step_next(wp))
         {
             Close_EVE_WORK(wp);
         }
     }
-    stcom02_func_0140(wp);
+    stcom02_clut_blend(wp);
 }
 
-void stcom02_func_0140(STCOM02_WORK *wp)
+void stcom02_clut_blend(STCOM02_WORK *wp)
 {
     sint32 unused[4];
     sint32 src;
@@ -48,9 +48,9 @@ void stcom02_func_0140(STCOM02_WORK *wp)
     sint32 r, g, b;
     sint32 dr, dg, db;
 
-    offset = stcom02_D_006C[wp->index_3].offset;
-    count  = stcom02_D_006C[wp->index_3].count;
-    if (stcom02_D_006C[wp->index_3].blend != 0)
+    offset = stcom02_range_tbl[wp->index_3].offset;
+    count  = stcom02_range_tbl[wp->index_3].count;
+    if (stcom02_range_tbl[wp->index_3].blend != 0)
     {
         for (i = 0; i < count; i++)
         {
@@ -74,7 +74,7 @@ void stcom02_func_0140(STCOM02_WORK *wp)
     }
 }
 
-sint32 stcom02_func_0334(STCOM02_WORK *wp)
+sint32 stcom02_step_next(STCOM02_WORK *wp)
 {
     sint32 unused[1]; // never used; retail reserves its 8-byte frame
     STCOM02_STEP *step;

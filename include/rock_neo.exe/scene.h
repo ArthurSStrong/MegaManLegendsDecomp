@@ -293,11 +293,11 @@ typedef void (*SCENE_SLOT_FUNC)(SCENE_SLOT *slot);
 uint32 Obj_id_class(uint8 id);
 void Close_EM_WORK(SCENE_SLOT *slot);
 
-extern uint16 D_800896D4[];
+extern uint16 Sce_stage_reverb_tbl[];
 extern SCENE_FUNC D_80089714[];
 extern SCENE_FUNC D_80089790[];
 void sce_stage_init(void);
-void func_80019F94(uint16 arg);
+void Sound_reverb_set(uint16 arg);
 void func_800177CC(void *a, void *b);
 void sce_work_reset(sint32 arg);
 void Light_stage_init(void);

@@ -7,12 +7,12 @@
 // registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom08"
 
-void stcom08_func_0000(STCOM08_WORK *wp)
+void stcom08_move(STCOM08_WORK *wp)
 {
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom08_D_0000[wp->routine_0](wp);
+    stcom08_move_tbl[wp->routine_0](wp);
     if (wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0xC, 0x200, 0);
@@ -27,7 +27,7 @@ void stcom08_func_0000(STCOM08_WORK *wp)
     }
 }
 
-void stcom08_func_00F0(STCOM08_WORK *wp)
+void stcom08_move_init(STCOM08_WORK *wp)
 {
     wp->rotation.x = 0;
     wp->rotation.y = 0;
@@ -55,7 +55,7 @@ void stcom08_func_00F0(STCOM08_WORK *wp)
     wp->routine_3 = 0;
 }
 
-void stcom08_func_01F0(STCOM08_WORK *wp)
+void stcom08_move_drift(STCOM08_WORK *wp)
 {
     wp->rotation.y = (wp->rotation.y + wp->rot_speed_66) & 0xFFF;
     if (--wp->timer_34C == 0)
@@ -63,10 +63,10 @@ void stcom08_func_01F0(STCOM08_WORK *wp)
         wp->routine_0 = 3;
         wp->routine_1 = 0;
     }
-    stcom08_func_0348(wp);
+    stcom08_float(wp);
 }
 
-void stcom08_func_0248(STCOM08_WORK *wp)
+void stcom08_move_return(STCOM08_WORK *wp)
 {
     wp->dist_350 = Calc_distance(&wp->position, &wp->home) >> 7;
     switch (wp->routine_1)
@@ -78,7 +78,7 @@ void stcom08_func_0248(STCOM08_WORK *wp)
             }
             else
             {
-                stcom08_func_0424(wp);
+                stcom08_drift_set(wp);
                 wp->routine_0 = 1;
                 wp->routine_1 = 0;
             }
@@ -89,21 +89,21 @@ void stcom08_func_0248(STCOM08_WORK *wp)
                              0xFFF;
             if (wp->dist_350 < 2)
             {
-                stcom08_func_0424(wp);
+                stcom08_drift_set(wp);
                 wp->routine_0 = 1;
                 wp->routine_1 = 0;
             }
             break;
     }
-    stcom08_func_0348(wp);
+    stcom08_float(wp);
 }
 
-void stcom08_func_0328(STCOM08_WORK *wp)
+void stcom08_move_erase(STCOM08_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void stcom08_func_0348(STCOM08_WORK *wp)
+void stcom08_float(STCOM08_WORK *wp)
 {
     sint16 ground;
     uint16 wobble;
@@ -115,7 +115,7 @@ void stcom08_func_0348(STCOM08_WORK *wp)
         return;
     }
     ground = Scr_height_check(wp);
-    wobble = stcom08_D_0010[STCOM08_FRAME & 7];
+    wobble = stcom08_wobble_tbl[STCOM08_FRAME & 7];
     if (wp->position.y > ground - 100)
     {
         wp->position.y = ground - 100 + wobble;
@@ -132,7 +132,7 @@ void stcom08_func_0348(STCOM08_WORK *wp)
     }
 }
 
-void stcom08_func_0424(STCOM08_WORK *wp)
+void stcom08_drift_set(STCOM08_WORK *wp)
 {
     wp->timer_34C    = (rand() & 0x7F) | 1;
     wp->velocity.y   = (rand() & 0xF) + 8;

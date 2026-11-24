@@ -7,12 +7,12 @@
 // stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom07"
 
-void stcom07_func_0000(STCOM07_WORK *wp)
+void stcom07_move(STCOM07_WORK *wp)
 {
-    stcom07_D_0000[wp->routine_0](wp);
+    stcom07_move_tbl[wp->routine_0](wp);
 }
 
-void stcom07_func_003C(STCOM07_WORK *wp)
+void stcom07_move_init(STCOM07_WORK *wp)
 {
     wp->flags_0 |= 6;
     Model_work_init(wp, &wp->type_3);
@@ -70,7 +70,7 @@ void stcom07_func_003C(STCOM07_WORK *wp)
     }
 }
 
-void stcom07_func_02F4(STCOM07_WORK *wp)
+void stcom07_wait_open(STCOM07_WORK *wp)
 {
     if (Scr_cell_get(&wp->position) == Scr_cell_get(&Player_work.position) &&
         Sce_flag_test(0x7B1) != 0)
@@ -80,7 +80,7 @@ void stcom07_func_02F4(STCOM07_WORK *wp)
     }
 }
 
-void stcom07_func_0360(STCOM07_WORK *wp)
+void stcom07_open(STCOM07_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
     STCOM07_QUAD *quad;
@@ -99,10 +99,10 @@ void stcom07_func_0360(STCOM07_WORK *wp)
         for (i = 0; i < 4; i++)
         {
             quad = &wp->quad_44[i];
-            quad->tex.uv[1] += stcom07_D_001C[i].v0;
-            quad->tex.uv[3] += stcom07_D_001C[i].v1;
-            quad->tex.uv[5] += stcom07_D_001C[i].v2;
-            quad->tex.uv[7] += stcom07_D_001C[i].v3;
+            quad->tex.uv[1] += stcom07_scroll_tbl[i].v0;
+            quad->tex.uv[3] += stcom07_scroll_tbl[i].v1;
+            quad->tex.uv[5] += stcom07_scroll_tbl[i].v2;
+            quad->tex.uv[7] += stcom07_scroll_tbl[i].v3;
         }
     }
     else
@@ -111,7 +111,7 @@ void stcom07_func_0360(STCOM07_WORK *wp)
     }
 }
 
-void stcom07_func_0488(STCOM07_WORK *wp)
+void stcom07_wait_close(STCOM07_WORK *wp)
 {
     if (Scr_cell_get(&wp->position) == Scr_cell_get(&Player_work.position) &&
         Sce_flag_test(0x7B1) == 0)
@@ -121,7 +121,7 @@ void stcom07_func_0488(STCOM07_WORK *wp)
     }
 }
 
-void stcom07_func_04F4(STCOM07_WORK *wp)
+void stcom07_close(STCOM07_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
     STCOM07_QUAD *quad;
@@ -140,10 +140,10 @@ void stcom07_func_04F4(STCOM07_WORK *wp)
         for (i = 0; i < 4; i++)
         {
             quad = &wp->quad_44[i];
-            quad->tex.uv[1] -= stcom07_D_001C[i].v0;
-            quad->tex.uv[3] -= stcom07_D_001C[i].v1;
-            quad->tex.uv[5] -= stcom07_D_001C[i].v2;
-            quad->tex.uv[7] -= stcom07_D_001C[i].v3;
+            quad->tex.uv[1] -= stcom07_scroll_tbl[i].v0;
+            quad->tex.uv[3] -= stcom07_scroll_tbl[i].v1;
+            quad->tex.uv[5] -= stcom07_scroll_tbl[i].v2;
+            quad->tex.uv[7] -= stcom07_scroll_tbl[i].v3;
         }
     }
     else
