@@ -439,7 +439,7 @@ typedef struct
 
 typedef void (*ST1A_FX_FUNC)(ST1A_FX *wp);
 
-void func_8012C1B4(STAGE_OBJ *wp);
+void eve19_main_dummy(STAGE_OBJ *wp);
 
 void func_801226A8(STAGE_OBJ *wp);
 
@@ -475,7 +475,7 @@ void func_8012A6D4(STCOM_EFFECT *arg0);
 
 void func_8012A964(STCOM_EFFECT *arg0);
 
-void func_8012B95C(STAGE_OBJ *wp);
+void eve19_end(STAGE_OBJ *wp);
 
 void func_80101BF0(STAGE_ROOM *wp);
 
@@ -565,11 +565,11 @@ void func_8012A0DC(STAGE_OBJ *wp);
 extern STAGE_OBJ_FUNC D_80138F3C[];
 void func_8012A6F4(STAGE_OBJ *wp);
 
-extern STAGE_OBJ_FUNC D_801396C4[];
-void func_8012B8E4(STAGE_OBJ *wp);
+extern STAGE_OBJ_FUNC eve19_move_tbl[];
+void StXX_eve19_move(STAGE_OBJ *wp);
 
-extern STAGE_OBJ_FUNC D_801396CC[];
-void func_8012B920(STAGE_OBJ *wp);
+extern STAGE_OBJ_FUNC eve19_main_tbl[];
+void eve19_main(STAGE_OBJ *wp);
 
 void func_80116DD0(ST1A_OBJ *wp);
 void func_80116D08(STAGE_OBJ *wp);
@@ -1752,7 +1752,7 @@ typedef struct
 
 sint32 func_801218D0(ST1A_PIECES *wp);
 
-// A floor rectangle in 512-unit cells: its corner and size (func_8012C1C0).
+// A floor rectangle in 512-unit cells: its corner and size (check_block).
 typedef struct
 {
     sint8 x_0; // 0
@@ -1761,8 +1761,8 @@ typedef struct
     uint8 d_3; // 3
 } ST1A_AREA;
 
-sint32 func_8012C1C0(void *wp, ST1A_AREA *area);
-sint32 func_8012C228(STAGE_EV *wp);
+sint32 check_block(void *wp, ST1A_AREA *area);
+sint32 check_swing_camera(STAGE_EV *wp);
 void *Open_WORK_5A4(void);
 
 typedef struct ST1A_VIEW_D ST1A_VIEW_D;

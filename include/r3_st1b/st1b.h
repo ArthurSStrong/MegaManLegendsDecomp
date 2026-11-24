@@ -96,7 +96,7 @@ typedef struct
     sint16 value_1A;     // 362
     sint16 value_1C;     // 364
     sint16 value_1E;     // 366
-    uint16 range_20;     // 368: how near the player must come (stcom01_func_01FC)
+    uint16 range_20;     // 368: how near the player must come (stcom01_move_main)
 } ST1B_STCOM01_CTL;
 
 // From r3_st03 (STCOM01_WORK).
@@ -135,7 +135,7 @@ typedef struct ST1B_STCOM01_WORK
     uint8 reserved7C[0x2B];                 // 7C
     sint8 state_A7;                         // A7: negative ends routine_2's step
     uint8 reservedA8[4];                    // A8
-    uint8 anim_AC;                          // AC: animation (stcom01_func_28D8 picks it)
+    uint8 anim_AC;                          // AC: animation (stcom01_walk_anim picks it)
     uint8 anim_prev_AD;                     // AD
     uint8 reservedAE[2];                    // AE
     sint16 value_B0;                        // B0

@@ -1,22 +1,22 @@
 #include "common.h"
 #include "st1a.h"
 
-void func_8012B8E4(STAGE_OBJ *wp)
+void StXX_eve19_move(STAGE_OBJ *wp)
 {
-    D_801396C4[wp->routine_0](wp);
+    eve19_move_tbl[wp->routine_0](wp);
 }
 
-void func_8012B920(STAGE_OBJ *wp)
+void eve19_main(STAGE_OBJ *wp)
 {
-    D_801396CC[wp->variant_3](wp);
+    eve19_main_tbl[wp->variant_3](wp);
 }
 
-void func_8012B95C(STAGE_OBJ *wp)
+void eve19_end(STAGE_OBJ *wp)
 {
     Close_EVE_WORK(wp);
 }
 
-void func_8012B97C(STAGE_EV *wp)
+void eve19_main_area_00(STAGE_EV *wp)
 {
     switch (wp->routine_1)
     {
@@ -63,7 +63,7 @@ void func_8012B97C(STAGE_EV *wp)
             }
             break;
         case 4:
-            if (func_8012C228(wp) != 0)
+            if (check_swing_camera(wp) != 0)
             {
                 Sound_call(0x209, 0, 0);
                 wp->routine_1++;
@@ -87,13 +87,13 @@ void func_8012B97C(STAGE_EV *wp)
     }
 }
 
-void func_8012BB54(STAGE_OBJ *wp)
+void eve19_main_area_01(STAGE_OBJ *wp)
 {
     ST1A_AREA area = {-2, -2, 4, 1};
 
     if (Sce_flag_test(0x35) == 0)
     {
-        if (func_8012C1C0(wp, &area) == 0)
+        if (check_block(wp, &area) == 0)
         {
             return;
         }
@@ -103,7 +103,7 @@ void func_8012BB54(STAGE_OBJ *wp)
     wp->routine_0 = 1;
 }
 
-void func_8012BBEC(STAGE_OBJ *wp)
+void eve19_main_area_02(STAGE_OBJ *wp)
 {
     ST1A_AREA area = {0x0A, -6, 3, 1};
 
@@ -114,7 +114,7 @@ void func_8012BBEC(STAGE_OBJ *wp)
             {
                 wp->routine_0 = 1;
             }
-            else if (func_8012C1C0(wp, &area) != 0)
+            else if (check_block(wp, &area) != 0)
             {
                 wp->routine_1++;
             }
@@ -122,7 +122,7 @@ void func_8012BBEC(STAGE_OBJ *wp)
         case 1:
             if (!(Moji_flag & 0x8000000))
             {
-                if (func_8012C1C0(wp, &area) != 0)
+                if (check_block(wp, &area) != 0)
                 {
                     wp->routine_1++;
                 }
@@ -148,7 +148,7 @@ void func_8012BBEC(STAGE_OBJ *wp)
     }
 }
 
-void func_8012BD4C(STAGE_OBJ *wp)
+void eve19_main_area_05(STAGE_OBJ *wp)
 {
     ST1A_AREA area = {-5, -22, 1, 1};
 
@@ -160,7 +160,7 @@ void func_8012BD4C(STAGE_OBJ *wp)
                 STAGE_GAME_U16(0x17A) |= 0x8;
                 wp->routine_0 = 1;
             }
-            else if (func_8012C1C0(wp, &area) != 0)
+            else if (check_block(wp, &area) != 0)
             {
                 wp->routine_1++;
             }
@@ -168,7 +168,7 @@ void func_8012BD4C(STAGE_OBJ *wp)
         case 1:
             if (!(Moji_flag & 0x800000))
             {
-                if (func_8012C1C0(wp, &area) != 0)
+                if (check_block(wp, &area) != 0)
                 {
                     wp->routine_1++;
                 }
@@ -192,7 +192,7 @@ void func_8012BD4C(STAGE_OBJ *wp)
     }
 }
 
-void func_8012BEC4(STAGE_OBJ *wp)
+void eve19_main_area_06(STAGE_OBJ *wp)
 {
     ST1A_AREA area = {1, -6, 1, 1};
 
@@ -204,7 +204,7 @@ void func_8012BEC4(STAGE_OBJ *wp)
                 STAGE_GAME_U16(0x17A) |= 0x10;
                 wp->routine_0 = 1;
             }
-            else if (func_8012C1C0(wp, &area) != 0)
+            else if (check_block(wp, &area) != 0)
             {
                 wp->routine_1++;
             }
@@ -212,7 +212,7 @@ void func_8012BEC4(STAGE_OBJ *wp)
         case 1:
             if (!(Moji_flag & 0x800000))
             {
-                if (func_8012C1C0(wp, &area) != 0)
+                if (check_block(wp, &area) != 0)
                 {
                     wp->routine_1++;
                 }
@@ -236,7 +236,7 @@ void func_8012BEC4(STAGE_OBJ *wp)
     }
 }
 
-void func_8012C03C(STAGE_OBJ *wp)
+void eve19_main_area_09(STAGE_OBJ *wp)
 {
     ST1A_AREA area = {-5, 0x24, 1, 1};
 
@@ -252,7 +252,7 @@ void func_8012C03C(STAGE_OBJ *wp)
                 STAGE_GAME_U16(0x17A) |= 0x24;
                 wp->routine_0 = 1;
             }
-            else if (func_8012C1C0(wp, &area) != 0)
+            else if (check_block(wp, &area) != 0)
             {
                 wp->routine_1++;
             }
@@ -260,7 +260,7 @@ void func_8012C03C(STAGE_OBJ *wp)
         case 1:
             if (!(Moji_flag & 0x800000))
             {
-                if (func_8012C1C0(wp, &area) != 0)
+                if (check_block(wp, &area) != 0)
                 {
                     wp->routine_1++;
                 }
@@ -284,14 +284,14 @@ void func_8012C03C(STAGE_OBJ *wp)
     }
 }
 
-void func_8012C1B4(STAGE_OBJ *wp)
+void eve19_main_dummy(STAGE_OBJ *wp)
 {
     wp->routine_0 = 1;
 }
 
 // The player's cell (position >> 9 fits in a byte) is held in a sint8: the (uint16) subtraction
 // then extends it as retail does, and the nested ifs set the zero result before the first test.
-sint32 func_8012C1C0(void *wp, ST1A_AREA *area)
+sint32 check_block(void *wp, ST1A_AREA *area)
 {
     sint8 x;
     sint8 z;
@@ -308,7 +308,7 @@ sint32 func_8012C1C0(void *wp, ST1A_AREA *area)
     return 0;
 }
 
-sint32 func_8012C228(STAGE_EV *wp)
+sint32 check_swing_camera(STAGE_EV *wp)
 {
     sint32 ret = 0;
 

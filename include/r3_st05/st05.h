@@ -611,7 +611,7 @@ extern uint8 D_801313BC[];
 extern sint32 D_801313C8[];
 extern uint8 D_801313D4[];
 extern uint8 D_801313D8[];
-extern uint8 D_8013143C[];
+extern uint8 em1c_adjust_size[];
 extern sint16 D_8013179C[];
 extern uint16 D_801317AC[];
 extern uint8 D_801317B4[];
@@ -1080,7 +1080,7 @@ typedef struct
     uint8 reserved10[4]; // 10
 } ST05_NODE;
 
-extern ST05_NODE *D_80131790[]; // each variant's course
+extern ST05_NODE *em1c_move_tbl[]; // each variant's course
 extern sint16 D_801317A4[];
 
 // A flag per direction (the walker's open ways); D_801004E0 holds all zeros.
@@ -1406,11 +1406,11 @@ sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 typedef void (*ST05_WALKER_FUNC)(ST05_WALKER *wp);
 
 extern ST05_WALKER_FUNC em1c_move00_tbl[];
-extern ST05_WALKER_FUNC D_801313F8[];
-extern ST05_WALKER_FUNC D_80131424[];
-extern ST05_WALKER_FUNC D_80131430[];
-void func_801146EC(ST05_WALKER *wp);
-void func_8011472C(ST05_WALKER *wp);
+extern ST05_WALKER_FUNC em1c_move01_tbl[];
+extern ST05_WALKER_FUNC em1c_walk_tbl[];
+extern ST05_WALKER_FUNC em1c_attack_tbl[];
+void em1c_move_walk(ST05_WALKER *wp);
+void em1c_move_attack(ST05_WALKER *wp);
 sint32 func_80116254(ST05_WALKER *wp);
 sint32 func_80116380(ST05_WALKER *wp);
 void func_80116528(ST05_WALKER *wp);
@@ -1453,7 +1453,7 @@ extern sint32 D_80138020;
 extern sint32 D_80138078;
 extern sint32 D_80138080;
 
-// The pair of walkers func_80113E6C checks, with their parts, and the distances of all pairs.
+// The pair of walkers em1c_move_main checks, with their parts, and the distances of all pairs.
 extern STAGE_OBJ *D_80137F48;
 extern STAGE_OBJ *D_80137F4C;
 extern ST05_WALKER *D_80137F50;
@@ -1713,7 +1713,7 @@ typedef struct
     uint8 reserved388[0x38];                // 388
 } ST05_ACTOR_B;
 
-void stcom01_func_0000(ST05_ACTOR_B *wp);
+void stcom01_move(ST05_ACTOR_B *wp);
 extern STAGE_STCOM15_FUNC_348 D_80130A44[];
 void func_80107E08(STAGE_STCOM15_WORK_348 *wp);
 

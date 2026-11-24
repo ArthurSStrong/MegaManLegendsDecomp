@@ -906,7 +906,7 @@ void StXX_em1c_move(ST05_WALKER *wp)
     ctl->hit_14 = 0;
 }
 
-void func_801139EC(ST05_WALKER *wp)
+void em1c_move_init(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -971,7 +971,7 @@ void func_801139EC(ST05_WALKER *wp)
     // Pointer arithmetic, not life_A[...]: it keeps retail's addu operand order.
     wp->value_B2 = wp->value_B0 = wp->value_6E =
         *(Em_param_tbl[wp->kind_2]->life_A + wp->variant_3) * 32;
-    wp->data_78            = D_8013143C;
+    wp->data_78            = em1c_adjust_size;
     wp->value_10           = 0;
     wp->position.y         = Scr_height_check(wp);
     wp->position_fixed.v.y = wp->position.y << 16;
@@ -987,8 +987,8 @@ void func_801139EC(ST05_WALKER *wp)
     Search_Player_Init(ctl->track_24, Em_param_tbl[wp->kind_2]->track_F, -0x200);
     if (!(ctl->flags_0 & 0x200))
     {
-        ctl->node_38              = &D_80131790[wp->variant_3][D_801317B4[wp->variant_3]];
-        ctl->node_3C              = &D_80131790[wp->variant_3][D_801317BA[wp->variant_3]];
+        ctl->node_38              = &em1c_move_tbl[wp->variant_3][D_801317B4[wp->variant_3]];
+        ctl->node_3C              = &em1c_move_tbl[wp->variant_3][D_801317BA[wp->variant_3]];
         ctl->node_id_49           = 3;
         ctl->target_40.x          = ctl->node_38->x_4;
         ctl->target_40.y          = 0;
@@ -1020,7 +1020,7 @@ void func_801139EC(ST05_WALKER *wp)
     EM_Char_Set(wp, 0, 0);
 }
 
-void func_80113E6C(ST05_WALKER *wp)
+void em1c_move_main(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 i;
@@ -1105,7 +1105,7 @@ void func_80113E6C(ST05_WALKER *wp)
     {
         func_80116254(wp);
     }
-    D_801313F8[wp->routine_1](wp);
+    em1c_move01_tbl[wp->routine_1](wp);
     if (ctl->flags_0 & 1)
     {
         switch (wp->routine_1)
@@ -1162,7 +1162,7 @@ void func_80113E6C(ST05_WALKER *wp)
     }
 }
 
-void func_801143D8(ST05_WALKER *wp)
+void em1c_move_opening(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1179,7 +1179,7 @@ void func_801143D8(ST05_WALKER *wp)
     {
         func_80116254(wp);
     }
-    D_801313F8[wp->routine_1](wp);
+    em1c_move01_tbl[wp->routine_1](wp);
     if (ctl->flags_0 & 1)
     {
         wp->routine_1             = 0;
@@ -1196,7 +1196,7 @@ void func_801143D8(ST05_WALKER *wp)
     }
 }
 
-void func_801144D4(ST05_WALKER *wp)
+void em1c_move_type2(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1213,7 +1213,7 @@ void func_801144D4(ST05_WALKER *wp)
     {
         func_80116380(wp);
     }
-    D_801313F8[wp->routine_1](wp);
+    em1c_move01_tbl[wp->routine_1](wp);
     if (ctl->flags_0 & 1)
     {
         wp->routine_1             = 0;
@@ -1244,7 +1244,7 @@ void em1c_move_erase(ST05_WALKER *wp)
     }
 }
 
-void func_8011466C(ST05_WALKER *wp)
+void em1c_move_wait(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1268,25 +1268,25 @@ void func_8011466C(ST05_WALKER *wp)
     }
 }
 
-void func_801146EC(ST05_WALKER *wp)
+void em1c_move_walk(ST05_WALKER *wp)
 {
     uint8 temp_v0;
 
     temp_v0       = wp->variant_3;
     wp->routine_2 = temp_v0;
-    D_80131424[temp_v0](wp);
+    em1c_walk_tbl[temp_v0](wp);
 }
 
-void func_8011472C(ST05_WALKER *wp)
+void em1c_move_attack(ST05_WALKER *wp)
 {
     uint8 temp_v0;
 
     temp_v0       = wp->variant_3;
     wp->routine_2 = temp_v0;
-    D_80131430[temp_v0](wp);
+    em1c_attack_tbl[temp_v0](wp);
 }
 
-void func_8011476C(ST05_WALKER *wp)
+void em1c_move_curve(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     ST05_NODE *node;
@@ -1341,7 +1341,7 @@ void func_8011476C(ST05_WALKER *wp)
     }
 }
 
-void func_8011493C(ST05_WALKER *wp)
+void em1c_move_curve2(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     ST05_NODE *node;
@@ -1389,7 +1389,7 @@ void func_8011493C(ST05_WALKER *wp)
     }
 }
 
-void func_80114AE0(ST05_WALKER *wp)
+void em1c_move_start(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1414,7 +1414,7 @@ void func_80114AE0(ST05_WALKER *wp)
     }
 }
 
-void func_80114B8C(ST05_WALKER *wp)
+void em1c_move_stop(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1448,7 +1448,7 @@ void func_80114B8C(ST05_WALKER *wp)
     }
 }
 
-void func_80114CA0(ST05_WALKER *wp)
+void em1c_move_stop2(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1482,7 +1482,7 @@ void func_80114CA0(ST05_WALKER *wp)
     }
 }
 
-void func_80114DB8(ST05_WALKER *wp)
+void em1c_es_walk(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 dx;
@@ -1508,7 +1508,7 @@ void func_80114DB8(ST05_WALKER *wp)
                 dir              = func_80115E98(wp);
                 ctl->node_id_49  = ctl->node_38->id_0;
                 ctl->node_3C     = ctl->node_38;
-                ctl->node_38     = &D_80131790[wp->variant_3][ctl->node_38->link_C[dir]];
+                ctl->node_38     = &em1c_move_tbl[wp->variant_3][ctl->node_38->link_C[dir]];
                 ctl->target_40.x = ctl->node_38->x_4;
                 ctl->target_40.y = 0;
                 ctl->target_40.z = ctl->node_38->z_6;
@@ -1542,7 +1542,7 @@ void func_80114DB8(ST05_WALKER *wp)
     }
 }
 
-void func_80114FF4(ST05_WALKER *wp)
+void em1c_at_walk(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 dx;
@@ -1567,7 +1567,7 @@ void func_80114FF4(ST05_WALKER *wp)
                 dir              = func_80115E98(wp);
                 ctl->node_id_49  = ctl->node_38->id_0;
                 ctl->node_3C     = ctl->node_38;
-                ctl->node_38     = &D_80131790[wp->variant_3][ctl->node_38->link_C[dir]];
+                ctl->node_38     = &em1c_move_tbl[wp->variant_3][ctl->node_38->link_C[dir]];
                 ctl->target_40.x = ctl->node_38->x_4;
                 ctl->target_40.y = 0;
                 ctl->target_40.z = ctl->node_38->z_6;
@@ -1595,7 +1595,7 @@ void func_80114FF4(ST05_WALKER *wp)
     }
 }
 
-void func_801151E8(ST05_WALKER *wp)
+void em1c_st_walk(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 dx;
@@ -1621,7 +1621,7 @@ void func_801151E8(ST05_WALKER *wp)
                 dir              = func_80115E98(wp);
                 ctl->node_id_49  = ctl->node_38->id_0;
                 ctl->node_3C     = ctl->node_38;
-                ctl->node_38     = &D_80131790[wp->variant_3][ctl->node_38->link_C[dir]];
+                ctl->node_38     = &em1c_move_tbl[wp->variant_3][ctl->node_38->link_C[dir]];
                 ctl->target_40.x = ctl->node_38->x_4;
                 ctl->target_40.y = 0;
                 ctl->target_40.z = ctl->node_38->z_6;
@@ -1654,7 +1654,7 @@ void func_801151E8(ST05_WALKER *wp)
     }
 }
 
-void func_80115430(ST05_WALKER *wp)
+void em1c_es_attack(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 dx;
@@ -1705,7 +1705,7 @@ void func_80115430(ST05_WALKER *wp)
                 }
                 ctl->node_id_49  = ctl->node_38->id_0;
                 ctl->node_3C     = ctl->node_38;
-                ctl->node_38     = &D_80131790[wp->variant_3][ctl->node_38->link_C[dir]];
+                ctl->node_38     = &em1c_move_tbl[wp->variant_3][ctl->node_38->link_C[dir]];
                 ctl->target_40.x = ctl->node_38->x_4;
                 ctl->target_40.y = 0;
                 ctl->target_40.z = ctl->node_38->z_6;
@@ -1761,7 +1761,7 @@ void func_80115430(ST05_WALKER *wp)
     }
 }
 
-void func_801157E4(ST05_WALKER *wp)
+void em1c_st_attack(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     sint32 dx;
@@ -1812,7 +1812,7 @@ void func_801157E4(ST05_WALKER *wp)
                 }
                 ctl->node_id_49  = ctl->node_38->id_0;
                 ctl->node_3C     = ctl->node_38;
-                ctl->node_38     = &D_80131790[wp->variant_3][ctl->node_38->link_C[dir]];
+                ctl->node_38     = &em1c_move_tbl[wp->variant_3][ctl->node_38->link_C[dir]];
                 ctl->target_40.x = ctl->node_38->x_4;
                 ctl->target_40.y = 0;
                 ctl->target_40.z = ctl->node_38->z_6;
@@ -1868,7 +1868,7 @@ void func_801157E4(ST05_WALKER *wp)
     }
 }
 
-void func_80115B98(ST05_WALKER *wp)
+void em1c_move_stop_attack(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 
@@ -1909,7 +1909,7 @@ void func_80115B98(ST05_WALKER *wp)
     }
 }
 
-void func_80115CA4(ST05_WALKER *wp)
+void em1c_move_dead(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
     STCOM_EFFECT *fx;
@@ -1950,7 +1950,7 @@ void func_80115CA4(ST05_WALKER *wp)
     }
 }
 
-void func_80115DD8(ST05_WALKER *wp)
+void em1c_move_touch(ST05_WALKER *wp)
 {
     ST05_WALKER_CTL *ctl;
 

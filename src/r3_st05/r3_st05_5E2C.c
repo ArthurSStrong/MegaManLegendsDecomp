@@ -1041,7 +1041,7 @@ void func_80107E08(STAGE_STCOM15_WORK_348 *wp)
     STAGE_STCOM15_CTL *ctl;
     if (STCOM_STAGE_ROOM == 5)
     {
-        stcom01_func_0000((ST05_ACTOR_B *)wp);
+        stcom01_move((ST05_ACTOR_B *)wp);
         return;
     }
     wp->anim_prev_AD        = wp->anim_AC;

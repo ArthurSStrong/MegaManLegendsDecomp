@@ -21,7 +21,7 @@ typedef struct
     sint16 value_1A;     // 362
     sint16 value_1C;     // 364
     sint16 value_1E;     // 366
-    uint16 range_20;     // 368: how near the player must come (stcom01_func_01FC)
+    uint16 range_20;     // 368: how near the player must come (stcom01_move_main)
 } STCOM01_CTL;
 
 // The work slot stcom01's routines run on. Freed through ROCK_NEO.EXE's Close_EM_WORK, so it is
@@ -59,7 +59,7 @@ typedef struct STCOM01_WORK
     uint8 reserved7C[0x2B];                 // 7C
     sint8 state_A7;                         // A7: negative ends routine_2's step
     uint8 reservedA8[4];                    // A8
-    uint8 anim_AC;                          // AC: animation (stcom01_func_28D8 picks it)
+    uint8 anim_AC;                          // AC: animation (stcom01_walk_anim picks it)
     uint8 anim_prev_AD;                     // AD
     uint8 reservedAE[2];                    // AE
     sint16 value_B0;                        // B0
@@ -78,11 +78,11 @@ typedef struct
     sint32 a, b, c;
 } STCOM01_PARAM3;
 
-extern uint8 stcom01_D_0550[];          // data_10 (stcom01_func_003C)
-extern STCOM01_FUNC stcom01_D_0568[];   // routine_1 handlers (stcom01_func_01FC)
-extern STCOM01_FUNC stcom01_D_055C[];   // routine_0 handlers (stcom01_func_0000)
-extern STCOM01_FUNC stcom01_D_058C[];   // routine_2 handlers (stcom01_func_03D8)
-extern STCOM01_FUNC stcom01_D_05DC[];   // routine_2 handlers (stcom01_func_057C)
+extern uint8 stcom01_D_0550[];          // data_10 (stcom01_move_init)
+extern STCOM01_FUNC stcom01_move01_tbl[];   // routine_1 handlers (stcom01_move_main)
+extern STCOM01_FUNC stcom01_move00_tbl[];   // routine_0 handlers (stcom01_move)
+extern STCOM01_FUNC stcom01_stand_tbl[];   // routine_2 handlers (stcom01_move_stand)
+extern STCOM01_FUNC stcom01_pace_tbl[];   // routine_2 handlers (stcom01_move_pace)
 extern STCOM01_FUNC stcom01_D_0678[];   // routine_2 handlers (stcom01_func_0C68)
 extern STCOM01_FUNC stcom01_D_06D4[];   // routine_2 handlers (stcom01_func_12A4)
 extern STCOM01_FUNC stcom01_D_0740[];   // ctl.routine handlers (stcom01_func_1888)
@@ -90,8 +90,8 @@ extern STCOM01_FUNC stcom01_D_0750[];   // ctl.routine handlers (stcom01_func_1C
 extern STCOM01_FUNC stcom01_D_075C[];   // ctl.routine handlers (stcom01_func_1F30)
 extern STCOM01_FUNC stcom01_D_0774[];   // ctl.routine handlers (stcom01_func_2174)
 extern STCOM01_FUNC stcom01_D_0788[];   // ctl.routine handlers (stcom01_func_257C)
-extern STCOM01_PARAM3 stcom01_D_0000[]; // by kind_2: Model_Shadow_Trans's arguments
-extern uint8 stcom01_D_04E0[];          // speed by kind_2 (stcom01_func_2918)
+extern STCOM01_PARAM3 stcom01_shadow_tbl[]; // by kind_2: Model_Shadow_Trans's arguments
+extern uint8 stcom01_speed_tbl[];          // speed by kind_2 (stcom01_speed)
 extern uint8 stcom01_D_059C[4][16];     // random wait times (stcom01_func_0414)
 extern uint8 stcom01_D_0608[];          // 4 x 16 random steps, row by param_D bits 4-5
 extern uint8 stcom01_D_0648[2][16];     // random wait times (stcom01_func_0610)
@@ -108,14 +108,14 @@ extern uint8 stcom01_D_0730[16];        // random wait times (stcom01_func_133C)
 // there). See rock_neo.h.
 sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 
-sint32 stcom01_func_2828(uint8 kind);
-sint32 stcom01_func_28C8(uint8 kind);
-sint32 stcom01_func_28D8(uint8 kind);
+sint32 stcom01_act_anim(uint8 kind);
+sint32 stcom01_stand_anim(uint8 kind);
+sint32 stcom01_walk_anim(uint8 kind);
 uint8 stcom01_func_1B28(STCOM01_WORK *wp);
-void stcom01_func_01FC(STCOM01_WORK *wp);
+void stcom01_move_main(STCOM01_WORK *wp);
 void stcom01_func_27C0(STCOM01_WORK *wp);
-sint32 stcom01_func_2918(STCOM01_WORK *wp, uint8 mode);
-uint8 stcom01_func_2968(STCOM01_WORK *wp, sint32 a1, sint32 a2);
+sint32 stcom01_speed(STCOM01_WORK *wp, uint8 mode);
+uint8 stcom01_player_near(STCOM01_WORK *wp, sint32 a1, sint32 a2);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

@@ -109,7 +109,7 @@ case "$target" in
                r3_st00_4474) GFLAGS="-G0" ;;
                r3_st1a_FDE0) JT_UNALIGNED="func_80113460 func_8011C870 func_8011CE4C func_8011DA38 func_8011DCD8"
                              JT_PACKED="func_80113EE8 func_801146D8 func_80114E90 func_80115B48 func_8011D240 func_8011DE9C" ;;
-               r3_st05_11898) JT_PACKED="func_80113E6C" ;;
+               r3_st05_11898) JT_PACKED="em1c_move_main" ;;
                # r3_st0b_166EC.c: func_80118D40's table packs at 4 bytes (jtbl_80100364).
                r3_st0b_166EC) JT_PACKED="func_80118D40" ;;
                # r3_st03_3CC4.c: a zero word follows func_80106BBC's table (jtbl_801001E8).
