@@ -472,7 +472,7 @@ void func_80106550(STAGE_STCOM15_WORK_348 *wp)
             ctl->flags_0 |= 0x200;
             // fall through
         case 1:
-            func_8005D4C0();
+            Gauge_life_keep();
             if (wp->value_A6 == 1)
             {
                 Sound_call2(0xBD, &wp->position);
@@ -579,7 +579,7 @@ void func_80106904(STAGE_STCOM15_WORK_348 *wp)
             wp->ctl.value_8 = 0;
             // fall through
         case 1:
-            func_8005D4C0();
+            Gauge_life_keep();
             wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
                                                              wp->rotation.y, 0x20)) &
                              0xFFF;

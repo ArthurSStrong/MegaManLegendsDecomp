@@ -2033,7 +2033,7 @@ void func_8011AFA0(ST05_BOSS *wp)
 
     if (wp->ctl.dist_E0 < 0x1801)
     {
-        func_8005D4C0();
+        Gauge_life_keep();
     }
     if (wp->ctl.flags_0 & 2)
     {
@@ -2982,7 +2982,7 @@ void func_8011C9B0(ST05_BOSS *wp)
     pl->value_C4.z = wp->value_C4.z;
     if (shot->type_F != 0)
     {
-        func_80030934(shot, pl, (ctl->value_E8 & 2) ? 0x78 : 0x28, ctl->value_E6 << 9);
+        Obj_arc_vel_set_std(shot, pl, (ctl->value_E8 & 2) ? 0x78 : 0x28, ctl->value_E6 << 9);
         Sound_call2(0xCE, &wp->position);
     }
     else
@@ -3069,7 +3069,7 @@ void func_8011CE1C(ST05_BOSS *wp)
         STAGE_PL.value_C4.x = wp->value_C4.x;
         STAGE_PL.value_C4.y = wp->value_C4.y;
         STAGE_PL.value_C4.z = wp->value_C4.z;
-        func_80030934(obj, &Player_work, 0x32, 0);
+        Obj_arc_vel_set_std(obj, &Player_work, 0x32, 0);
         Sound_call2(0xCE, &wp->position);
     }
 }

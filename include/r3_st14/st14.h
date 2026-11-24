@@ -565,7 +565,7 @@ void Sce_script_timer_clear(void);
 STCOM_MATRIX *RotMatrix(STCOM_SVECTOR *r, STCOM_MATRIX *m);
 sint32 Scr_height_check(void *wp);
 void func_8005D4D4(void);
-void func_8005D4E8(void);
+void Gauge_life_auto_hide(void);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 void Close_WORK_5A4(void *wp);
 void Draw_dist_far(void);

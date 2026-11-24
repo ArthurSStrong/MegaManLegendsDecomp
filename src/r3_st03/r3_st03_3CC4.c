@@ -337,7 +337,7 @@ void func_80104778(STAGE_ROOM_WORK *wp)
             break;
         case 1:
             Player_control_on(pl);
-            func_8001D974();
+            Sce_no_advance();
             wp->flags_0 = 0;
             break;
     }
@@ -1912,7 +1912,7 @@ void func_8010758C(ST03_ACTOR *wp)
             *(uint16 *)&held->routine_2       = 0;
             D_801380A0[wp->value_E]->value_C4 = D_801380A0[wp->value_E]->value_180[0];
             D_801380A0[wp->value_E]->value_C4.y -= 0x140;
-            func_80030934(held, D_801380A0[wp->value_E], 0x18, 0);
+            Obj_arc_vel_set_std(held, D_801380A0[wp->value_E], 0x18, 0);
             D_801380A0[D_801380A0[wp->value_E]->value_D]->value_F &= ~0x40;
             // fall through
         case 2:

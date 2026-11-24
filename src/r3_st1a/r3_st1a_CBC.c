@@ -2482,7 +2482,7 @@ void func_80105598(STAGE_ROOM *wp)
             D_800C356D = 0;
             D_800C3571 = 0xFF;
             D_800C3570 = 0xFF;
-            func_8001D974();
+            Sce_no_advance();
             wp->flags_0 = 0;
             break;
     }

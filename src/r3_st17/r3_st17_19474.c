@@ -584,7 +584,7 @@ void func_8011A574(STAGE_ROOM *wp)
                 STAGE_PL_BYTE(0x170) = D_80122B9C;
                 Camera_reset();
                 D_800C356C_A[0]++;
-                func_8001D974();
+                Sce_no_advance();
                 Sce_flag_on(0x2A);
                 wp->flags_0 = 0;
             }

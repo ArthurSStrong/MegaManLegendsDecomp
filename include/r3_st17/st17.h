@@ -349,7 +349,7 @@ extern STAGE_OBJ_FUNC D_8011B648[];
 
 extern STAGE_OBJ_FUNC D_8011BAF4[];
 
-void func_8005D4E8(void);
+void Gauge_life_auto_hide(void);
 
 // Talk routines: the work slot, the scene's script position and the slot's face.
 typedef void (*ST17_TALK_FUNC)(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, STAGE_FACE *face);
@@ -1387,7 +1387,7 @@ void Sce_script_next(void);
 extern uint8 D_801220E4[];
 extern STAGE_ROOM2_FUNC D_80122628[];
 void Draw_dist_far(void);
-void func_8001D974(void);
+void Sce_no_advance(void);
 extern STAGE_SCRIPT_ENTRY D_80121FE8[];
 extern STAGE_SCRIPT_ENTRY D_80121FFC[];
 extern uint8 D_80122088[];

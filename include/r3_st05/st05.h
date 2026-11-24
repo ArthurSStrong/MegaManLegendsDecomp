@@ -2405,7 +2405,7 @@ STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 
 sint16 Scr_point_height(STCOM_SVECTOR *pos);
 
-void func_80030934(void *a0, void *a1, sint16 a2,
+void Obj_arc_vel_set_std(void *a0, void *a1, sint16 a2,
                    sint32 a3); // a3 passed without narrowing (func_8011C9B0)
 
 // A 0x50-byte slot that times a run past the shop counter's items (func_8012BF74, func_8012B788):

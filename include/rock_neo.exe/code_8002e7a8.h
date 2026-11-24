@@ -456,7 +456,7 @@ extern uint32 View_check_ang(DELTA14_WORK *a, DELTA14_WORK *b, SHORT3_WORK *rang
 extern void Obj_arc_vel_set(void *wp, void *other, sint16 a2, sint16 a3, sint16 a4);
 extern void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size, sint16 e,
                           sint16 f, sint16 g);
-extern sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4);
+extern sint32 obj_arc_angle(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4);
 
 void func_800358E8(void);
 void shift_model(SYNC_POS_WORK *wp, uint16 *delta);
@@ -497,9 +497,9 @@ typedef struct
 sint32 *Calc_local_vec(sint32 *out, sint32 angle, sint16 x, sint16 y, sint16 z);
 sint32 Calc_degree(VEC32_WORK *a, VEC32_WORK *b);
 extern sint32 catan(sint32 v);
-void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
-sint32 func_80031268(sint16 *a, sint16 *b);
-sint16 func_80030CB8(void *a0, sint32 a1, sint16 a2, sint16 a3);
+void Obj_arc_vel_set_std(void *a0, void *a1, sint16 a2, sint16 a3);
+sint32 Calc_degree_ratan(sint16 *a, sint16 *b);
+sint16 obj_arc_angle_std(void *a0, sint32 a1, sint16 a2, sint16 a3);
 
 // Pool slot views for the sweep over every slot table.
 typedef struct
@@ -791,7 +791,7 @@ typedef struct
 extern TRACK_INFO D_800899AC[];
 extern PL_HEIGHT_INFO D_80097D0C;
 extern sint32 Pl_invisible_get(void);
-extern void func_8005D4C0(void);
+extern void Gauge_life_keep(void);
 extern SVECTOR *Vec_turn_toward(SVECTOR *out, SVECTOR *a, SVECTOR *b, sint32 len, uint32 limit);
 extern sint32 Scr_line_calc(void *pos, void *prev, PL_HEIGHT_INFO *info, sint32 kind);
 sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle);

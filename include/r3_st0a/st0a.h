@@ -977,7 +977,7 @@ void func_8010E9C8(ST0A_EM *wp, sint32 side);
 sint32 func_8010EE60(ST0A_EM *wp, sint32 index);
 uint8 *Model_face_get(void *model, sint32 id);
 sint32 Player_atari_off(void);
-void func_8005D4C0(void);
+void Gauge_life_keep(void);
 void func_80111788(ST0A_PIECE *wp);
 void func_80111864(ST0A_PIECE *wp);
 void func_801118B4(ST0A_PIECE *wp);

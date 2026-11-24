@@ -76,7 +76,7 @@ void sce_work_reset(sint32 arg)
     D_80098A00             = 0;
 }
 
-void func_8001D974(void)
+void Sce_no_advance(void)
 {
     Game_work.flags_53++;
 }

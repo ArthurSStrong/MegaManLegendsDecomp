@@ -5021,7 +5021,7 @@ void func_80119714(ST1A_OBJ *wp)
         wp->part_180[i].pad = 0x4210;
     }
     bp->hit_0.flags_0.h[1] = rand();
-    func_8005D4C0();
+    Gauge_life_keep();
     wp->u_E.b.byte_E &= 0xF8;
     wp->u_E.b.byte_F &= 0x11;
     if (bp->hit_0.flags_0.half & 4)
@@ -6401,7 +6401,7 @@ void func_8011C870(ST1A_OBJ *wp)
                 fp->routine_2    = 0;
             }
             Sound_call(0x20C, 0, 0);
-            func_8005D4E8();
+            Gauge_life_auto_hide();
             bp->count_CE  = 0;
             wp->routine_3 = 0x5A;
             wp->routine_1++;

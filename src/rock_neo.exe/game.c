@@ -309,9 +309,9 @@ void game_update(void)
     Atari_check();
     Map_obj_break_update();
     Automap_update();
-    func_800238B4();
+    Map_draw();
     Map_layer_draw();
-    func_80027678();
+    Work_draw_all();
     func_800175FC();
     Em_work_draw();
     index = CODE800133D8_DISPLAY_INDEX;
@@ -556,7 +556,7 @@ void Game_auto_map(GAME_WORK *wp)
     switch ((sint8)wp->routine_1)
     {
         case 0:
-            func_8005DF3C();
+            Automap_scroll_reset();
             PLAYER_WORK_PTR->flags_bd |= 0x40;
             MojiTaskKill();
             Game_logo_init();
@@ -567,7 +567,7 @@ void Game_auto_map(GAME_WORK *wp)
             wp->routine_1++;
             break;
         case 1:
-            func_8005DF4C();
+            Automap_screen_update();
             if ((D_800C0C2A & 1) || (D_800C0C2A & 0x1000))
             {
                 Sub_screen_sound_reinit(&Player_work);

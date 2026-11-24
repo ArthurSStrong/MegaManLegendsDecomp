@@ -151,7 +151,7 @@ void Fade_start(sint32 arg);
 void Cd_subcmd(sint32 arg0, sint32 arg1, sint32 arg2);
 void Cd_xa_play_id(uint32 arg);
 uint32 Sce_cd_reading(void);
-void func_8001D974(void);
+void Sce_no_advance(void);
 uint32 Sce_skip_check(void);
 void Sce_flag_select(sint32 arg);
 void Sce_camera_script_exec(void);

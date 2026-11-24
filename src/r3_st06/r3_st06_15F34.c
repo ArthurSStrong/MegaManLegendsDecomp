@@ -615,7 +615,7 @@ void func_80117290(ST06_CRAB *wp)
     wp->rotation_prev       = wp->rotation;
     wp->scale.v.pad         = 0x4210;
     wp->body.random_2       = rand();
-    func_8005D4C0();
+    Gauge_life_keep();
     body = &wp->body;
     if (wp->body.flags_0 & 4)
     {

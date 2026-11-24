@@ -6,7 +6,7 @@
 sint32 D_80098550;
 sint32 D_80098554;
 
-void func_80027678(void)
+void Work_draw_all(void)
 {
     C80027678_UPD *wp;
     sint32 unused[2]; // unused (frame size)
@@ -26,13 +26,13 @@ void func_80027678(void)
             func_8002786C(wp, D_8009AE48 + (C80027678_SCRATCH_00 << 11));
         }
         C80027678_VSYNC_MARK = VSync(1);
-        func_80029A38();
+        shl_work_draw();
         D_800D9BF0           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
         C80027678_VSYNC_MARK = VSync(1);
-        func_80029B10();
+        effect_work_draw();
         D_800D9BF4           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
         C80027678_VSYNC_MARK = VSync(1);
-        func_80029B94();
+        work_50_draw();
         D_800D9BF8           = (VSync(1) - C80027678_VSYNC_MARK) & 0xFFFF;
         C80027678_VSYNC_MARK = VSync(1);
         shadow_draw_all();
@@ -810,7 +810,7 @@ void func_80029608(C80027678_LOD *lod)
     }
 }
 
-void func_80029A38(void)
+void shl_work_draw(void)
 {
     uint32 i;
     C80027678_SLOT10C *p;
@@ -822,7 +822,7 @@ void func_80029A38(void)
         f = p->flags;
         if (f & p->mask & 2)
         {
-            D_800898D0[(f & 0x1C) >> 2](p->work, f);
+            Obj_draw_tbl[(f & 0x1C) >> 2](p->work, f);
         }
     }
     for (i = 0; i < 32; i++)
@@ -831,12 +831,12 @@ void func_80029A38(void)
         f = p->flags;
         if (f & p->mask & 2)
         {
-            D_800898D0[(f & 0x1C) >> 2](p->work, f);
+            Obj_draw_tbl[(f & 0x1C) >> 2](p->work, f);
         }
     }
 }
 
-void func_80029B10(void)
+void effect_work_draw(void)
 {
     uint32 i;
     C80027678_SLOT48 *p;
@@ -848,12 +848,12 @@ void func_80029B10(void)
         f = p->flags;
         if (f & p->mask & 2)
         {
-            D_800898D0[(f & 0x1C) >> 2](p->work, f);
+            Obj_draw_tbl[(f & 0x1C) >> 2](p->work, f);
         }
     }
 }
 
-void func_80029B94(void)
+void work_50_draw(void)
 {
     uint32 i;
     C80027678_SLOT50 *p;
@@ -865,13 +865,13 @@ void func_80029B94(void)
         f = p->flags;
         if (f & p->mask & 2)
         {
-            D_800898D0[(f & 0x1C) >> 2](p->work, f);
+            Obj_draw_tbl[(f & 0x1C) >> 2](p->work, f);
         }
     }
 }
 
 // Camera-facing sprite (POLY_FT4), optionally rolled by obj->angle.
-void func_80029C18(C80027678_SPRITE *obj, uint32 flags)
+void Obj_sprite_draw(C80027678_SPRITE *obj, uint32 flags)
 {
     sint32 m[8];
     sint32 v[3];

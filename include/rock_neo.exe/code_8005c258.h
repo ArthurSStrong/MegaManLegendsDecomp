@@ -117,11 +117,11 @@ typedef union
     uint16 half;
 } CODE5C_WORD_HALF;
 
-extern CODE5C_COLOR D_8009806C[2];
+extern CODE5C_COLOR Automap_back_color_tbl[2];
 
-extern CODE5C_FUNC D_8008D7B4[];
-extern CODE5C_FUNC D_8008D7C0[];
-extern CODE5C_FUNC D_8008D7C4[];
+extern CODE5C_FUNC Gauge_life_routine_tbl[];
+extern CODE5C_FUNC Gauge_weapon_routine_tbl[];
+extern CODE5C_FUNC Gauge_enemy_routine_tbl[];
 
 extern uint32 D_800A38F0;
 extern uint8 D_800A38F8;
@@ -158,8 +158,8 @@ extern sint32 D_80098018;
 extern sint32 D_80098034;
 extern sint32 D_8009800C;
 extern sint32 D_8009801C;
-extern sint16 D_800986F8;
-extern sint16 D_800986FC;
+extern sint16 Automap_scroll_x;
+extern sint16 Automap_scroll_y;
 extern sint32 D_8009878C;
 extern sint32 D_80098794;
 extern sint32 D_8009882C;
@@ -232,20 +232,20 @@ void func_800176DC(void *src, void *dst, sint32 blocks);
 void func_800177CC(void *start, void *end);
 void hud_sprite_draw(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size);
 void hud_sprite_draw_color(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, sint32 color);
-void func_8005C720(CODE5C_WORK *wp);
-void func_8005C868(CODE5C_WORK *wp);
-void func_8005C978(CODE5C_WORK *wp);
-void func_8005C9BC(CODE5C_SLOT *wp);
-void func_8005CCF4(CODE5C_SLOT *wp);
-void func_8005CEFC(CODE5C_SLOT *wp);
-void func_8005D0FC(CODE5C_SLOT *wp);
+void gauge_life_exec(CODE5C_WORK *wp);
+void gauge_weapon_exec(CODE5C_WORK *wp);
+void gauge_enemy_exec(CODE5C_WORK *wp);
+void gauge_life_draw(CODE5C_SLOT *wp);
+void gauge_weapon_draw(CODE5C_SLOT *wp);
+void gauge_enemy_draw(CODE5C_SLOT *wp);
+void gauge_boss_draw(CODE5C_SLOT *wp);
 void gauge_show(void);
 void Gauge_hide(void);
 void Gauge_show_release(void);
 void automap_visit(void);
 void automap_draw(void);
-void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect);
-void func_8005E9F8(CODE5C_RECT *rect);
-void func_8005EAA8(CODE5C_RECT *rect);
+void automap_map_draw(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect);
+void automap_window_draw(CODE5C_RECT *rect);
+void automap_screen_back_draw(CODE5C_RECT *rect);
 
 #endif

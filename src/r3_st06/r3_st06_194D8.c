@@ -321,7 +321,7 @@ sint32 func_80119C8C(STAGE_OBJ *wp)
     }
     else
     {
-        func_8005D4E8();
+        Gauge_life_auto_hide();
     }
     return D_8012BAA4 >= 0x12;
 }

@@ -151,7 +151,7 @@ void func_8010C0A0(ST0A_EM *wp)
         wp->joint_180[i].pad = 0x4210;
     }
     ext->value_2 = rand();
-    func_8005D4C0();
+    Gauge_life_keep();
     if (ext->flags_0 & 0x400)
     {
         if (wp->life_6E - Work_5A4_param_tbl[wp->kind_2]->value_B > 0)

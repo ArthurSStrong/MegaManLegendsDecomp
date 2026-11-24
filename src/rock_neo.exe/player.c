@@ -1877,7 +1877,7 @@ void Pl_r1_aim(PL_WORK *pl)
         {
             pl_turn_pad(pl, 4, 0x48, 1);
         }
-        else if (func_80041158(pl) == 0)
+        else if (pl_shot_no_turn(pl) == 0)
         {
             pl_turn_pad(pl, 4, 0x48, 0);
         }
@@ -1887,7 +1887,7 @@ void Pl_r1_aim(PL_WORK *pl)
         }
         return;
     }
-    angle        = func_80031268(&pl->position.x, &target->position.x) & 0xFFF;
+    angle        = Calc_degree_ratan(&pl->position.x, &target->position.x) & 0xFFF;
     pl->value10a = angle;
     dir          = pl->rotation.y - angle;
     if (dir > 0x800)
@@ -2131,7 +2131,7 @@ void Pl_r1_stand_check(PL_WORK *pl)
         (pl->value176 & 3))
     {
         pl->value44a = 0;
-        if (func_800410D4(pl) != 0 ||
+        if (pl_shot_no_move(pl) != 0 ||
             ((pl_shot_start(pl, 0), pl_jump_start(pl) == 0) &&
              (pl_shot_button_held(pl) != 0 || pl_shot_anim_done(pl) == 0 || pl->routine_3 != 0 ||
               (pl_run_start(pl) == 0 && pl_run_left_start(pl, pl->routine_3) == 0 &&
@@ -2141,7 +2141,7 @@ void Pl_r1_stand_check(PL_WORK *pl)
               (pl_walk_start(pl) == 0 && pl_side_step_start(pl, pl->routine_3) == 0 &&
                pl_walk_back_start(pl, pl->routine_3) == 0))))
         {
-            if (func_80041158(pl) == 0)
+            if (pl_shot_no_turn(pl) == 0)
             {
                 pl_turn_start(pl);
             }
@@ -2400,7 +2400,7 @@ void Pl_r1_turn_check(PL_WORK *pl)
     uint32 pad;
 
     pad = pl->pad_cur;
-    if (func_80041158(pl) != 0 ||
+    if (pl_shot_no_turn(pl) != 0 ||
         !(pad & (pl->key_jump | (pl->key_forward | pl->key_back | (pl->key_run_l | pl->key_run_r)) |
                  (pl->key_shot_l | pl->key_shot_r) | (pl->key_turn_l | pl->key_turn_r))))
     {
@@ -3140,7 +3140,7 @@ sint32 pl_shot_button_held(PL_WORK *pl)
     return 0;
 }
 
-sint32 func_800410D4(PL_WORK *pl)
+sint32 pl_shot_no_move(PL_WORK *pl)
 {
     sint32 type;
 
@@ -3153,7 +3153,7 @@ sint32 func_800410D4(PL_WORK *pl)
     return 0;
 }
 
-sint32 func_80041158(PL_WORK *pl)
+sint32 pl_shot_no_turn(PL_WORK *pl)
 {
     sint32 type;
 

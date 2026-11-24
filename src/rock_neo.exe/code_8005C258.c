@@ -13,8 +13,8 @@ sint32 D_80098014;
 sint32 D_80098018;
 sint32 D_8009801C;
 sint32 D_80098034;
-sint16 D_800986F8;
-sint16 D_800986FC;
+sint16 Automap_scroll_x;
+sint16 Automap_scroll_y;
 sint32 D_8009878C;
 sint32 D_80098794;
 sint32 D_8009882C;
@@ -38,7 +38,7 @@ void Gauge_update(void)
     sint32 off;
     uint32 i;
 
-    func_8005C868((CODE5C_WORK *)&Gauge_work[1]);
+    gauge_weapon_exec((CODE5C_WORK *)&Gauge_work[1]);
     if (Pl_invincible_timer > 0)
     {
         Pl_invincible_timer--;
@@ -160,36 +160,36 @@ void Gauge_update(void)
     }
     if (Gauge_work[0].active_00 & 1)
     {
-        func_8005C720((CODE5C_WORK *)&Gauge_work[0]);
+        gauge_life_exec((CODE5C_WORK *)&Gauge_work[0]);
     }
     if (Gauge_work[0].active_00 & 2)
     {
-        func_8005C9BC(&Gauge_work[0]);
+        gauge_life_draw(&Gauge_work[0]);
     }
     if (Player_work.weapon_left_no != 0 && (Gauge_work[1].active_00 & 2))
     {
-        func_8005CCF4(&Gauge_work[1]);
+        gauge_weapon_draw(&Gauge_work[1]);
     }
     for (i = 0; i < 3; i++)
     {
         if (Gauge_work[i + 2].active_00 & 1)
         {
-            func_8005C978((CODE5C_WORK *)&Gauge_work[i + 2]);
+            gauge_enemy_exec((CODE5C_WORK *)&Gauge_work[i + 2]);
         }
         if (Gauge_work[i + 2].active_00 & 2)
         {
-            func_8005CEFC(&Gauge_work[i + 2]);
+            gauge_enemy_draw(&Gauge_work[i + 2]);
         }
     }
     if (Gauge_work[5].active_00 & 2)
     {
-        func_8005D0FC(&Gauge_work[5]);
+        gauge_boss_draw(&Gauge_work[5]);
     }
 }
 
-void func_8005C720(CODE5C_WORK *wp)
+void gauge_life_exec(CODE5C_WORK *wp)
 {
-    D_8008D7B4[wp->routine_4](wp);
+    Gauge_life_routine_tbl[wp->routine_4](wp);
 }
 
 void Gauge_life_watch(CODE5C_WATCH *wp)
@@ -236,9 +236,9 @@ void func_8005C860(void)
 {
 }
 
-void func_8005C868(CODE5C_WORK *wp)
+void gauge_weapon_exec(CODE5C_WORK *wp)
 {
-    D_8008D7C0[wp->routine_4](wp);
+    Gauge_weapon_routine_tbl[wp->routine_4](wp);
 }
 
 void Gauge_buster_recharge(CODE5C_REPEAT *wp)
@@ -273,16 +273,16 @@ void Gauge_buster_recharge(CODE5C_REPEAT *wp)
     }
 }
 
-void func_8005C978(CODE5C_WORK *wp)
+void gauge_enemy_exec(CODE5C_WORK *wp)
 {
-    D_8008D7C4[wp->routine_4](wp);
+    Gauge_enemy_routine_tbl[wp->routine_4](wp);
 }
 
 void func_8005C9B4(void)
 {
 }
 
-void func_8005C9BC(CODE5C_SLOT *wp)
+void gauge_life_draw(CODE5C_SLOT *wp)
 {
     sint32 x;
     sint32 y;
@@ -369,7 +369,7 @@ void func_8005C9BC(CODE5C_SLOT *wp)
 // jump2, so the code after the call starts a new block. tbl and lim are then global pseudos
 // set before that label: combine can't fold the table address into the load, and the
 // condition's temporary (v0) pushes them into a2/a3, where sched2 hoists both to the top.
-void func_8005CCF4(CODE5C_SLOT *wp)
+void gauge_weapon_draw(CODE5C_SLOT *wp)
 {
     CODE5C_RECT unused; // retail's frame has 8 unexplained bytes
     PL_WORK *pl;
@@ -429,7 +429,7 @@ void func_8005CCF4(CODE5C_SLOT *wp)
     hud_sprite_draw(&D_8008D624, x, y + dy - max, 0);
 }
 
-void func_8005CEFC(CODE5C_SLOT *wp)
+void gauge_enemy_draw(CODE5C_SLOT *wp)
 {
     sint32 shift;
     sint32 mask;
@@ -479,7 +479,7 @@ void func_8005CEFC(CODE5C_SLOT *wp)
     hud_sprite_draw(&D_8008D688[set][2], x - full, y, (D_8008D688[set][2].height << 8) | full);
 }
 
-void func_8005D0FC(CODE5C_SLOT *wp)
+void gauge_boss_draw(CODE5C_SLOT *wp)
 {
     sint32 shift;
     sint32 len;
@@ -627,7 +627,7 @@ void hud_sprite_draw_color(CODE5C_SPRITE *spr, sint16 x, sint16 y, uint16 size, 
     addPrim(&Disp_env_ptr->tag78, p);
 }
 
-void func_8005D4C0(void)
+void Gauge_life_keep(void)
 {
     D_800BBD84[0] = 1;
 }
@@ -637,7 +637,7 @@ void func_8005D4D4(void)
     D_800BBD84[0] = 2;
 }
 
-void func_8005D4E8(void)
+void Gauge_life_auto_hide(void)
 {
     D_800BBD84[0] = 0;
 }
@@ -1027,18 +1027,18 @@ void automap_draw(void)
         rect.x     = pos.x + 6;
         D_80098034 = 6;
         rect.y     = pos.y - 0x3C;
-        func_8005E144(&pos, &size, &cell, &rect);
-        func_8005E9F8(&rect);
+        automap_map_draw(&pos, &size, &cell, &rect);
+        automap_window_draw(&rect);
     }
 }
 
-void func_8005DF3C(void)
+void Automap_scroll_reset(void)
 {
-    D_800986F8 = 0;
-    D_800986FC = 0;
+    Automap_scroll_x = 0;
+    Automap_scroll_y = 0;
 }
 
-void func_8005DF4C(void)
+void Automap_screen_update(void)
 {
     CODE5C_POINT pos;
     CODE5C_POINT size;
@@ -1056,35 +1056,35 @@ void func_8005DF4C(void)
         pad = D_800C0C26;
         if (pad & 0x10)
         {
-            D_800986FC -= 2;
+            Automap_scroll_y -= 2;
         }
         if (pad & 0x40)
         {
-            D_800986FC += 2;
+            Automap_scroll_y += 2;
         }
         if (pad & 0x80)
         {
-            D_800986F8 -= 2;
+            Automap_scroll_x -= 2;
         }
         if (pad & 0x20)
         {
-            D_800986F8 += 2;
+            Automap_scroll_x += 2;
         }
-        if (D_800986F8 < -0x20)
+        if (Automap_scroll_x < -0x20)
         {
-            D_800986F8 = -0x20;
+            Automap_scroll_x = -0x20;
         }
-        if (D_800986F8 > 0x20)
+        if (Automap_scroll_x > 0x20)
         {
-            D_800986F8 = 0x20;
+            Automap_scroll_x = 0x20;
         }
-        if (D_800986FC < -0x20)
+        if (Automap_scroll_y < -0x20)
         {
-            D_800986FC = -0x20;
+            Automap_scroll_y = -0x20;
         }
-        if (D_800986FC > 0x20)
+        if (Automap_scroll_y > 0x20)
         {
-            D_800986FC = 0x20;
+            Automap_scroll_y = 0x20;
         }
         scale      = 6;
         w          = 0x140 / scale;
@@ -1098,14 +1098,14 @@ void func_8005DF4C(void)
         rect.y      = 0;
         rect.w      = 0x140;
         rect.h      = 0xF0;
-        pos.x       = D_800986F8 + (((w - mw) * scale >> 1) + 1);
-        pos.y       = D_800986FC - (((h - mh) * scale >> 1) - 0xF0);
-        func_8005E144(&pos, &size, &cell, &rect);
-        func_8005EAA8(&rect);
+        pos.x       = Automap_scroll_x + (((w - mw) * scale >> 1) + 1);
+        pos.y       = Automap_scroll_y - (((h - mh) * scale >> 1) - 0xF0);
+        automap_map_draw(&pos, &size, &cell, &rect);
+        automap_screen_back_draw(&rect);
     }
 }
 
-void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect)
+void automap_map_draw(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CODE5C_RECT *rect)
 {
     POLY_G4 *arrow;
     DR_AREA *area;
@@ -1322,7 +1322,7 @@ void func_8005E144(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell, CO
     }
 }
 
-void func_8005E9F8(CODE5C_RECT *rect)
+void automap_window_draw(CODE5C_RECT *rect)
 {
     POLY_F4 *p;
 
@@ -1337,7 +1337,7 @@ void func_8005E9F8(CODE5C_RECT *rect)
     addPrim(&Disp_env_ptr->tag78, p);
 }
 
-void func_8005EAA8(CODE5C_RECT *rect)
+void automap_screen_back_draw(CODE5C_RECT *rect)
 {
     POLY_G4 *p;
     sint32 i;
@@ -1346,10 +1346,10 @@ void func_8005EAA8(CODE5C_RECT *rect)
     {
         p                            = CODE5C_PRIM(POLY_G4)++;
         *(u_long *)p                 = 0x08000000;
-        ((CODE5C_G4_WORDS *)p)->rgb0 = D_8009806C[i].color[0] | 0x38000000;
-        ((CODE5C_G4_WORDS *)p)->rgb1 = D_8009806C[i].color[1];
-        ((CODE5C_G4_WORDS *)p)->rgb2 = D_8009806C[i].color[2];
-        ((CODE5C_G4_WORDS *)p)->rgb3 = D_8009806C[i].color[3];
+        ((CODE5C_G4_WORDS *)p)->rgb0 = Automap_back_color_tbl[i].color[0] | 0x38000000;
+        ((CODE5C_G4_WORDS *)p)->rgb1 = Automap_back_color_tbl[i].color[1];
+        ((CODE5C_G4_WORDS *)p)->rgb2 = Automap_back_color_tbl[i].color[2];
+        ((CODE5C_G4_WORDS *)p)->rgb3 = Automap_back_color_tbl[i].color[3];
         p->x0 = p->x2 = 0;
         p->x1 = p->x3 = 0x140;
         p->y0 = p->y1 = i * 0x78;

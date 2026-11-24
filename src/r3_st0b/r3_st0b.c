@@ -643,7 +643,7 @@ void func_80101524(STAGE_ROOM_WORK *wp)
                 STAGE_PL.value_76   = 0;
                 STAGE_GAME.value_83 = 0;
                 Player_work.flags_0 |= 3;
-                func_8001D974();
+                Sce_no_advance();
                 wp->flags_0 = 0;
                 break;
         }
@@ -2237,7 +2237,7 @@ void func_801048FC(ST0B_OBJ *wp)
     }
     ctl->child_D0->scale.v.pad = 0x4210;
     ctl->rand_2                = rand();
-    func_8005D4C0();
+    Gauge_life_keep();
     if (ctl->flags_0 & 0x40)
     {
         func_80106550(wp);
@@ -2412,7 +2412,7 @@ void func_80105118(ST0B_OBJ *wp)
     }
     ctl->child_D0->scale.v.pad = 0x4210;
     ctl->rand_2                = rand();
-    func_8005D4C0();
+    Gauge_life_keep();
     wp->position.y         = ctl->base_DA + (D_800BBCF8[ctl->wave_CC++] >> 8);
     wp->position_fixed.v.y = wp->position.y << 16;
     ctl->wave_CC &= 0x3F;

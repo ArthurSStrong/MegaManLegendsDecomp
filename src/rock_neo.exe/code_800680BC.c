@@ -583,7 +583,7 @@ void Event_scene_main(CODE68_WORK *wp)
                 Player_control_on(&Player_work);
                 Sce_flag_select(0x2EB);
                 Sce_flag_on(0x55);
-                func_8001D974();
+                Sce_no_advance();
             }
             break;
     }

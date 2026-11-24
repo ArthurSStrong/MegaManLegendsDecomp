@@ -2159,7 +2159,7 @@ void Map_layer_draw(void)
                 m->x_4 += (sint16)m->body.w20 << 8;
                 m->body.y_8 += (sint16)m->body.w22 << 8;
             }
-            func_8002366C((C8001F828_LAYER *)m);
+            map_layer_wrap((C8001F828_LAYER *)m);
         }
         if (m->id.b.lo & 2)
         {
@@ -2218,7 +2218,7 @@ void Map_layer_draw(void)
     *(uint32 **)0x1F800070 = p;
 }
 
-void func_8002366C(C8001F828_LAYER *lp)
+void map_layer_wrap(C8001F828_LAYER *lp)
 {
     sint32 lim;
 
@@ -2280,12 +2280,12 @@ void func_80023728(C8001F828_CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3
         C8001F828_SCR_04 = 0;
         scr->vxy         = 0;
         scr->vz.w        = 0;
-        func_80024E94((uint32 *)0x801F6080, 0);
+        Map_list_draw_near((uint32 *)0x801F6080, 0);
         C8001F828_SCR_04 = 1;
     }
 }
 
-void func_800238B4(void)
+void Map_draw(void)
 {
     C8001F828_SVEC pos;
     sint16 sxy[2];
@@ -2348,39 +2348,39 @@ void func_800238B4(void)
     func_800176DC(Fog_clut_tbl, (void *)0x1F800100, 1);
     func_800176DC(D_80097C90, (void *)0x1F800120, 1);
     C8001F828_TIME_START = VSync(1);
-    func_80023C08();
+    map_cells_mode_draw();
     C8001F828_TIME_B = (VSync(1) - C8001F828_TIME_START) & 0xFFFF;
 }
 
-void func_80023C08(void)
+void map_cells_mode_draw(void)
 {
     switch (C8001F828_SCR_75)
     {
         case 0:
         default:
             C8001F828_SCR_04 = 0x400;
-            func_80024BAC(C8001F828_BUF_A, 0);
-            func_80024BAC(C8001F828_BUF_B, 1);
+            map_cells_draw(C8001F828_BUF_A, 0);
+            map_cells_draw(C8001F828_BUF_B, 1);
             break;
         case 1:
             C8001F828_SCR_04 = 0;
-            func_80024BAC(C8001F828_BUF_A, 1);
-            func_80024BAC(C8001F828_BUF_B, 1);
+            map_cells_draw(C8001F828_BUF_A, 1);
+            map_cells_draw(C8001F828_BUF_B, 1);
             break;
         case 2:
             C8001F828_SCR_04 = 0;
-            func_800267AC(C8001F828_BUF_A, 2);
-            func_800267AC(C8001F828_BUF_B, 2);
+            map_cells_draw2(C8001F828_BUF_A, 2);
+            map_cells_draw2(C8001F828_BUF_B, 2);
             break;
         case 3:
             C8001F828_SCR_04 = 0;
-            func_800267AC(C8001F828_BUF_A, 3);
-            func_800267AC(C8001F828_BUF_B, 3);
+            map_cells_draw2(C8001F828_BUF_A, 3);
+            map_cells_draw2(C8001F828_BUF_B, 3);
             break;
     }
 }
 
-void func_80023CF0(uint8 *list, sint32 limit)
+void Map_box_draw(uint8 *list, sint32 limit)
 {
     C8001F828_SCR100 *sc;
     uint32 count;
@@ -2425,7 +2425,7 @@ void func_80023CF0(uint8 *list, sint32 limit)
 }
 
 // The header word and the loop counter share a variable (retail keeps both in s1).
-void func_80023E1C(uint32 *list)
+void Map_list_draw(uint32 *list)
 {
     uint32 i;
     uint32 *p;
@@ -2857,7 +2857,7 @@ uint32 *quad_split2(void)
     return last;
 }
 
-void func_80024BAC(void *p, sint32 mode)
+void map_cells_draw(void *p, sint32 mode)
 {
     uint32 *flags;
     uint32 *rec;
@@ -2915,7 +2915,7 @@ void func_80024BAC(void *p, sint32 mode)
                     }
                     // The entry word replaces its pointer in one variable, as retail reuses the register
                     ofs = (uint32 *)*ofs;
-                    D_80089890[mode][(uint32)ofs >> 31]((uint32)ofs & 0xFFFFFF, out[2]);
+                    Map_list_draw_tbl[mode][(uint32)ofs >> 31]((uint32)ofs & 0xFFFFFF, out[2]);
                 }
                 bits <<= 1;
                 rec += 3;
@@ -2930,7 +2930,7 @@ void func_80024BAC(void *p, sint32 mode)
     } while (rec < fp);
 }
 
-void func_80024D4C(uint8 *list, sint32 limit)
+void Map_box_draw_near(uint8 *list, sint32 limit)
 {
     C8001F828_SCR100 *sc;
     uint32 i;
@@ -2977,7 +2977,7 @@ void func_80024D4C(uint8 *list, sint32 limit)
 }
 
 // The only caller passes a second argument (0) that this function never reads.
-void func_80024E94(uint32 *list, sint32 mode)
+void Map_list_draw_near(uint32 *list, sint32 mode)
 {
     uint32 i;
     uint32 n;
@@ -3331,7 +3331,7 @@ void map_quad_draw_near(void *list)
     }
 }
 
-void func_80025748(uint8 *list, sint32 limit)
+void Map_box_draw_twoside(uint8 *list, sint32 limit)
 {
     C8001F828_SCR100 *sc;
     uint32 count;
@@ -3376,7 +3376,7 @@ void func_80025748(uint8 *list, sint32 limit)
 }
 
 // The header word and the loop counter share a variable (retail keeps both in s1).
-void func_80025874(uint32 *list)
+void Map_list_draw_twoside(uint32 *list)
 {
     uint32 i;
     uint32 *p;
@@ -3891,7 +3891,7 @@ uint32 *quad_split3(void)
     return last;
 }
 
-void func_800267AC(void *p, sint32 mode)
+void map_cells_draw2(void *p, sint32 mode)
 {
     uint32 *flags;
     uint32 *rec;
@@ -3949,7 +3949,7 @@ void func_800267AC(void *p, sint32 mode)
                     }
                     // The entry word replaces its pointer in one variable, as retail reuses the register
                     ofs = (uint32 *)*ofs;
-                    D_80089890[mode][(uint32)ofs >> 31]((uint32)ofs & 0xFFFFFF, out[2]);
+                    Map_list_draw_tbl[mode][(uint32)ofs >> 31]((uint32)ofs & 0xFFFFFF, out[2]);
                 }
                 bits <<= 1;
                 rec += 3;
@@ -3964,7 +3964,7 @@ void func_800267AC(void *p, sint32 mode)
     } while (rec < fp);
 }
 
-void func_8002694C(uint8 *list, sint32 limit)
+void Map_box_draw2(uint8 *list, sint32 limit)
 {
     C8001F828_SCR100 *sc;
     uint32 count;
@@ -4009,7 +4009,7 @@ void func_8002694C(uint8 *list, sint32 limit)
 }
 
 // The header word and the loop counter share a variable (retail keeps both in s1).
-void func_80026A78(uint32 *list)
+void Map_list_draw2(uint32 *list)
 {
     uint32 i;
     uint32 *p;

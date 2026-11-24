@@ -607,7 +607,7 @@ void func_80017684(void *src, void *dst, sint32 count);
 void func_8010C9AC(ST1D_VIEW *wp, uint8 kind);
 void Obj_target_vel_set(void *wp, STCOM_SVECTOR *target, sint32 speed);
 void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
-void func_8001D974(void);
+void Sce_no_advance(void);
 void EM_World_Pos_Calc_Mtx(void *wp, STCOM_MATRIX *m);
 
 extern uint32 Em_work_used; // allocation masks: 0x3C0 slots

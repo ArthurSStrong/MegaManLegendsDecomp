@@ -1158,7 +1158,7 @@ sint32 view_cone_check(DELTA0_WORK *a, DELTA0_WORK *b, sint16 *shift, sint16 ang
     return result;
 }
 
-void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3)
+void Obj_arc_vel_set_std(void *a0, void *a1, sint16 a2, sint16 a3)
 {
     Obj_arc_vel_set(a0, a1, a2, a3, 0x100);
 }
@@ -1217,12 +1217,12 @@ void calc_arc_vel(SHORT3_WORK *a, SHORT3_WORK *b, SHORT3_WORK *out, sint16 *size
     *size  = 0;
 }
 
-sint16 func_80030CB8(void *a0, sint32 a1, sint16 a2, sint16 a3)
+sint16 obj_arc_angle_std(void *a0, sint32 a1, sint16 a2, sint16 a3)
 {
-    return func_80030CF0(a0, a1, a2, a3, 0x100);
+    return obj_arc_angle(a0, a1, a2, a3, 0x100);
 }
 
-sint32 func_80030CF0(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4)
+sint32 obj_arc_angle(void *a0, sint32 a1, sint16 a2, sint16 a3, sint16 a4)
 {
     return (sint16)Calc_arc_angle((uint8 *)a0 + 0x14, (uint8 *)a1 + 0xC4, a2, a3, a4);
 }
@@ -1358,7 +1358,7 @@ sint32 Calc_degree2(SHORT3_WORK *a, SHORT3_WORK *b)
     return angle;
 }
 
-sint32 func_80031268(sint16 *a, sint16 *b)
+sint32 Calc_degree_ratan(sint16 *a, sint16 *b)
 {
     return ratan2(b[0] - a[0], b[2] - a[2]) + 0x800;
 }
@@ -3780,7 +3780,7 @@ sint32 Search_Player_Ang(TRACK_WORK *t, TRACK_TARGET *tg, sint32 angle)
                 t->state = 0;
                 return 0;
             }
-            func_8005D4C0();
+            Gauge_life_keep();
             range.z = 9;
             range.y = 9;
             range.x = 9;

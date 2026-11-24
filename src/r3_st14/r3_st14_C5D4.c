@@ -1563,7 +1563,7 @@ void func_8010F4F4(ST14_VILLAGER *wp)
 #else
         Obj_item_drop(wp, &wp->position, effect);
 #endif
-        func_8005D4E8();
+        Gauge_life_auto_hide();
         Gauge_close(wp);
         wp->routine_0 = 2;
         wp->routine_1 = 0;

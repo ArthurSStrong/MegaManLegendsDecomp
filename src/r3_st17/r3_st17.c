@@ -5449,7 +5449,7 @@ void func_8010B458(STAGE_OBJ *wp)
     if (wp->routine_2 == 0 && Sound_fade_flags == 0)
     {
         Sound_fade_start(0x10);
-        func_8005D4E8();
+        Gauge_life_auto_hide();
         wp->routine_2++;
     }
     if (face->value_2 == 0)

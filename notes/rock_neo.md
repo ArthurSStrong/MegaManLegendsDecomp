@@ -523,7 +523,7 @@ which gives the shared `ori`; this probably also fixes parked `view_cone_check`.
 registers (a1/a2) are swapped. `func_80035508` stays assembly (GTE, same decision as above).
 
 `code_8002E7A8.c` (small functions): banked `Obj_id_class`, `Obj_pos_adj_round` (16.16 vector rounded to
-`SVECTOR`), `func_80031268` (`ratan2` of the x/z delta + 0x800), `Atari_init`, `Draw_dist_far`
+`SVECTOR`), `Calc_degree_ratan` (`ratan2` of the x/z delta + 0x800), `Atari_init`, `Draw_dist_far`
 (scratchpad fog setup, `SetFogNear(D_800BC81C, 0x180)`). Parked `Fog_color_get` (`NON_MATCHING`): copies
 `Fog_color..74` into an `SVECTOR`; the target does load/store pair by pair, GCC hoists the later loads
 above the earlier stores (struct, `sint16 *`, `*v++` and `volatile` forms tried).
@@ -554,7 +554,7 @@ RotMatrixY/RotTrans, returns 0x10 behind, 2 inside; target stores `m[0]` late an
 between the x >= 0 / x < 0 paths) and `Calc_hit_side` (direction quantizer vs a base angle, returns
 angle | side << 16; only the prologue order differs).
 
-`code_8002E7A8.c` (batch 5): banked `func_80030CB8` (`func_80030CF0` with arc 0x100), `Obj_target_vel_set`
+`code_8002E7A8.c` (batch 5): banked `obj_arc_angle_std` (`obj_arc_angle` with arc 0x100), `Obj_target_vel_set`
 (velocity (+0x44..0x4A) toward a target at speed `s`: `d * s << 8 / dist`, time = dist / s; the three stores
 must be written vx, vy, vz, time) and `Vec_turn_toward` (rotates unit vector `a` toward `b`: two
 `OuterProduct12`, a scratchpad-like static matrix, `ApplyMatrix` twice, `VectorNormalS` of the closer result;
@@ -597,12 +597,12 @@ Retried with the new types (no new matches): `lockon_probe_set` (now two registe
 
 `code_8005C258.c` (small functions): banked `Automap_update` (calls `automap_visit`, `automap_draw`),
 `Pl_life_full` (`Player_work+0x6E = +0xB0`, then `Gauge_show_release`), `Gauge_boss_set` (arms slot
-`D_800BBE2C`..`E46`), `Gauge_show_hold`, `func_8005C720` (dispatch through `D_8008D7B4[wp[4]]`).
+`D_800BBE2C`..`E46`), `Gauge_show_hold`, `gauge_life_exec` (dispatch through `Gauge_life_routine_tbl[wp[4]]`).
 Parked `gauge_show` (`NON_MATCHING`): the target loads and stores `D_800BBD85` through one `lui`+`addiu`
 base register (`$v1`), but GCC folds `&D_800BBD85` into `lui`+`%lo` on each access; a pointer local and
 a `volatile` pointer both fold the same way. The store to `D_800BBD81` uses its own `lui`. So `D_800BBD81`, `D_800BBD85`, ... are separate globals,
-not fields of one struct (declared in `code_8005C258.h`). `func_8005C720`'s `wp` is the 9-byte object at
-`Gauge_work` (byte +4 indexes `D_8008D7B4`); it stays `uint8 *` until that object's layout is known.
+not fields of one struct (declared in `code_8005C258.h`). `gauge_life_exec`'s `wp` is the 9-byte object at
+`Gauge_work` (byte +4 indexes `Gauge_life_routine_tbl`); it stays `uint8 *` until that object's layout is known.
 
 `code_800456D8.c`: banked `func_80045918`/`func_8004594C` (`WORK_48.timer_B` countdown, then `routine_8`
 += 2 / += 1), `func_80045A7C` (`Sound_call2(0xCF, &wp->pos_38)` then `Close_EFFECT_WORK`), `func_80047318`
@@ -768,7 +768,7 @@ the per-frame work (`event_step_call`, `screen_tile_draw(field_68, 6C, 70, 74)` 
 camera, `Sce_event_update`, the empty `func_80068DA4` at `timer_14 == 0x4680`, 5 minutes). In 5 with
 `Fade_busy == 0` it sets the `D_800C3560`.. block for the next stage (0x1B, 6), clears `unk00`, pauses
 the CD (`Cd_subcmd(0, 1, 0)`), restores the player (`Player_control_on`), `Sce_flag_select(0x2EB)`,
-`Sce_flag_on(0x55)`, `func_8001D974`. So `screen_tile_draw` takes `uint8` r, g, b (the caller loads
+`Sce_flag_on(0x55)`, `Sce_no_advance`. So `screen_tile_draw` takes `uint8` r, g, b (the caller loads
 the low bytes of the `uint32` fields with `lbu`), and the stores only match with `D_800C356C = 2`
 written first (its constant is loaded before the others; its store stays in place).
 
@@ -786,7 +786,7 @@ call with a `file` local; `D_800C356F` is read into a local before the first tes
 step of `Sce_event_update` without the frame test): only the first four instructions differ. GCC keeps the
 address of `Scene_work.ev_ptr_A4` in a register for the load and the store; the target uses `lui` + `%lo`
 for each. Experiments: in GCC 2.7 the *first* load/store pair on one constant address in a function gets
-the shared address register (also seen for `Game_work.unk053++` in the banked `func_8001D974`, and for
+the shared address register (also seen for `Game_work.unk053++` in the banked `Sce_no_advance`, and for
 `unk14++` in a reconstruction of `Sce_event_update`, whose target also avoids it). A dead read of another
 global before it (`dead = Scene_work.timer_10;`) gives the target's code exactly, so the source probably had
 some statement that compiled away; an unused `&Scene_work` local, a parameter, `++` forms, a pre-read of

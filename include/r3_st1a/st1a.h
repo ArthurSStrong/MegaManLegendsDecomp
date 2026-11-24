@@ -2506,12 +2506,12 @@ void func_80114B48(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 
 void func_80121164(ST1A_PIECES *wp);
 void func_80121418(ST1A_PIECES *wp);
-void func_8001D974(void);
+void Sce_no_advance(void);
 
 void func_80121164(ST1A_PIECES *wp);
 void func_80121418(ST1A_PIECES *wp);
 sint32 func_80121710(ST1A_PIECES *wp);
-void func_8001D974(void);
+void Sce_no_advance(void);
 
 // A 0x3C0-byte slot that sends 0x48-byte effects (kind 0x13) from the joint +0x188 of the slot
 typedef struct
@@ -4403,7 +4403,7 @@ extern ST1A_OBJ_FUNC D_80132DAC[];
 extern sint32 D_80132DE4[];
 extern uint32 D_80132DF0[];
 
-void func_8005D4C0(void);
+void Gauge_life_keep(void);
 
 sint32 func_8011C080(ST1A_OBJ *wp);
 

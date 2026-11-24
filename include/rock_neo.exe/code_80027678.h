@@ -62,7 +62,7 @@ typedef struct
 
 typedef void (*C80027678_FUNC)(void *work, sint32 flags);
 
-extern C80027678_FUNC D_800898D0[];
+extern C80027678_FUNC Obj_draw_tbl[];
 extern C80027678_SLOT48 Effect_work_tbl[0x40];
 extern C80027678_SLOT50 Work_50_tbl[0x20];
 extern C80027678_SLOT10C Pl_shl_work_tbl[0x10];
@@ -187,12 +187,12 @@ extern sint32 D_800D9BF8;
 
 sint32 func_80027F78(void *work, void *arg);
 void func_8002786C(void *work, void *arg);
-void func_80029A38(void);
-void func_80029B10(void);
-void func_80029B94(void);
+void shl_work_draw(void);
+void effect_work_draw(void);
+void work_50_draw(void);
 void shadow_draw_all(void);
 void billboard_list_draw(void);
-void func_80027678(void);
+void Work_draw_all(void);
 void Em_work_draw(void);
 void Model_uv_copy(C80027678_MODEL *m, uint32 idx, sint32 delta);
 void func_800177CC(void *, void *);
@@ -468,7 +468,7 @@ typedef struct
 #define C80027678_GTE_STSXY3_GT(p)                                                                 \
     __asm__ volatile("swc2 $12, 8(%0); swc2 $13, 20(%0); swc2 $14, 32(%0)" : : "r"(p) : "memory")
 
-void func_80029C18(C80027678_SPRITE *obj, uint32 flags);
+void Obj_sprite_draw(C80027678_SPRITE *obj, uint32 flags);
 
 // Multi-part model work (enemy records of 0x3C0 and 0x5A4 bytes): parts drawn with their own
 // rotation (two matrix tables, picked by kind) and offset, each part a LOD model entry.

@@ -2314,7 +2314,7 @@ void func_8010A21C(ST05_VILLAGER *wp)
             *(uint16 *)&held->routine_2           = 0;
             ST05_VILLAGERS[wp->value_E]->value_C4 = ST05_VILLAGERS[wp->value_E]->value_180[0];
             ST05_VILLAGERS[wp->value_E]->value_C4.y -= 0x140;
-            func_80030934(held, ST05_VILLAGERS[wp->value_E], 0x18, 0);
+            Obj_arc_vel_set_std(held, ST05_VILLAGERS[wp->value_E], 0x18, 0);
             ST05_VILLAGERS[ST05_VILLAGERS[wp->value_E]->value_D]->value_F &= ~0x40;
             // fall through
         case 2:

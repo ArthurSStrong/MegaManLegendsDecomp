@@ -2552,7 +2552,7 @@ extern ST0B_KIND **Em_param_tbl;
 
 #define ST0B_ABS(x) ((x) < 0 ? -(x) : (x))
 
-void func_8001D974(void);
+void Sce_no_advance(void);
 
 sint16 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
@@ -2643,7 +2643,7 @@ extern ST0B_OBJ_FUNC D_8011AB30[];
 extern ST0B_OBJ_FUNC D_8011AB38[];
 extern ST0B_OBJ_FUNC D_8011AB40[];
 
-void func_8005D4C0(void);
+void Gauge_life_keep(void);
 void func_80106E4C(ST0B_OBJ *wp);
 
 // ST0B_OBJ's shooting state at +0x43C (func_80106278).

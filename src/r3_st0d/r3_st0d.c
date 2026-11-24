@@ -448,7 +448,7 @@ void func_80101034(STAGE_ROOM *wp)
                 Player_control_on(&Player_work);
                 D_800A395C = 1;
                 Camera_reset();
-                func_8001D974();
+                Sce_no_advance();
                 wp->flags_0 = 0;
                 D_800C356C_A[0]++;
             }

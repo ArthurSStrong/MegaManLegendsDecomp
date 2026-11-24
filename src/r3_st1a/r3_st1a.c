@@ -93,7 +93,7 @@ void func_801009E0(STAGE_ROOM *wp)
         case 1:
             if (Sce_flag_test(0x56))
             {
-                func_8001D974();
+                Sce_no_advance();
                 wp->routine_4 = 0xFF;
             }
             break;

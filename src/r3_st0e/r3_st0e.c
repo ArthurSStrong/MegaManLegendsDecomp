@@ -260,7 +260,7 @@ void func_80100870(STAGE_ROOM *wp)
                 Obj_work_flag_change(0x56, 0xA);
                 Sce_flag_on(0x528);
                 Sce_light_add(0xD);
-                func_8001D974();
+                Sce_no_advance();
                 Sound_fade_start(0x20);
                 wp->flags_0 = 0;
                 Fade_start(2);

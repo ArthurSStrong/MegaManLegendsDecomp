@@ -1612,7 +1612,7 @@ void func_80117290(ST06_CRAB *wp);
 
 sint32 func_80118884(ST06_CRAB *wp);
 
-void func_8005D4C0(void);
+void Gauge_life_keep(void);
 
 void Gauge_close(void *wp);
 
@@ -1699,7 +1699,7 @@ void func_8011B4E0(sint32 level);
 
 void func_8005D4D4(void);
 
-void func_8005D4E8(void);
+void Gauge_life_auto_hide(void);
 
 void func_80119B78(ST06_CRAB *wp, sint16 slot, uint8 variant);
 
@@ -1772,7 +1772,7 @@ typedef struct
 
 extern ST06_ENTRY D_800C3558; // ROCK_NEO.EXE
 
-void func_8001D974(void); // ROCK_NEO.EXE
+void Sce_no_advance(void); // ROCK_NEO.EXE
 
 void Camera_move_set(STCOM_FIXED_VECTOR *vec, sint32 arg1, sint32 arg2,
                      sint32 arg3); // ROCK_NEO.EXE: moves the camera

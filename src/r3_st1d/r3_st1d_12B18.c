@@ -110,7 +110,7 @@ void func_80112D3C(STAGE_OBJ *wp)
             if (count == 3)
             {
                 Sce_flag_on(0x2B);
-                func_8001D974();
+                Sce_no_advance();
             }
             wp->routine_1++;
             break;

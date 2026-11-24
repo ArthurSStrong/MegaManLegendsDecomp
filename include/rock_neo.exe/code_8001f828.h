@@ -280,7 +280,7 @@ extern sint32 D_800D9BD8;
 sint32 SquareRoot0(sint32 v);
 sint32 ratan2(sint32 x, sint32 y);
 sint32 VSync(sint32 mode);
-void func_8002366C(C8001F828_LAYER *lp);
+void map_layer_wrap(C8001F828_LAYER *lp);
 void Map_layer_draw(void);
 uint32 *quad_split2(void);
 uint32 *quad_split3(void);
@@ -302,7 +302,7 @@ void map_tile_scan(sint32 x0, sint32 x1, sint32 y0, sint32 y1);
 sint32 print_number(uint32 flags, sint32 val, uint8 *out, sint32 width);
 void map_quad_draw(void *p);
 typedef void (*C8001F828_DRAW_FUNC)(uint32 data, sint32 z);
-extern C8001F828_DRAW_FUNC D_80089890[][4];
+extern C8001F828_DRAW_FUNC Map_list_draw_tbl[][4];
 // Scratchpad block at 0x1F800100 as used by the tile draw loops (vector at +0x40, flags at +0x46)
 typedef struct
 {
@@ -380,8 +380,8 @@ typedef struct
                      : "memory")
 // Flag bit n of a face word tested through the sign of a shift, as retail does
 #define C8001F828_BIT(f, n) ((sint32)((f) << (31 - (n))) < 0)
-void func_80024BAC(void *p, sint32 mode);
-void func_800267AC(void *p, sint32 mode);
+void map_cells_draw(void *p, sint32 mode);
+void map_cells_draw2(void *p, sint32 mode);
 void map_quad_draw_twoside(void *p);
 void map_quad_draw2(void *p);
 void map_quad_draw_near(void *p);
@@ -428,7 +428,7 @@ extern C8001F828_POOL_SLOT Shl_work_tbl[32];
 #define C8001F828_TIME_A     (*(sint32 *)0x800D9BE8)
 #define C8001F828_TIME_B     (*(sint32 *)0x800D9BEC)
 extern sint32 D_80098A08, D_800989AC;
-void func_80023C08(void);
+void map_cells_mode_draw(void);
 
 // 8x8 sprite primitive (GPU code 0x74) used by the debug text drawer
 typedef struct
@@ -488,6 +488,6 @@ typedef union
 
 extern C8001F828_CAM_BLOCK D_800A3958;
 
-void func_80024E94(uint32 *list, sint32 mode);
+void Map_list_draw_near(uint32 *list, sint32 mode);
 
 #endif // CODE_8001F828_H

@@ -105,7 +105,7 @@ void func_80114F98(STAGE_OBJ *wp)
         Sound_fade_start(0x10);
         Sce_flag_off(0x64B);
         Sce_flag_on(0x53);
-        func_8005D4E8();
+        Gauge_life_auto_hide();
         MojiTaskExec2(0, 0x15);
         Sce_exit_lock(0xC, 0, 3);
         Gauge_clear();

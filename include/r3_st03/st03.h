@@ -724,12 +724,12 @@ extern uint8 D_80164006[];
 extern uint8 D_80164007[];
 extern void *D_80164008[];
 
-void func_8001D974(void);
+void Sce_no_advance(void);
 void Message_event_clear(void);
 void Sound_se_stop_all(void);
 void Sce_script_timer_clear(void);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
-void func_80030934(void *a0, void *a1, sint16 a2, sint16 a3);
+void Obj_arc_vel_set_std(void *a0, void *a1, sint16 a2, sint16 a3);
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
                          STCOM_FIXED_VECTOR *target, sint32 target_rot, sint32 target_range);

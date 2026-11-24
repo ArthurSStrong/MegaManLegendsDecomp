@@ -3081,7 +3081,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 Sce_slot_open(&D_80123F4C[1]);
                 Sce_flag_on(0x2C);
                 Sce_flag_off(0x7E0);
-                func_8001D974();
+                Sce_no_advance();
                 wp->flags_0 = 0;
             }
             break;
@@ -3173,7 +3173,7 @@ void func_80105D20(STAGE_ROOM *wp)
                 Sce_slot_open(&D_80123F4C[0]);
                 Sce_slot_open(&D_80123F4C[1]);
                 Sce_flag_off(0x7E0);
-                func_8001D974();
+                Sce_no_advance();
                 wp->flags_0 = 0;
             }
             break;
@@ -3211,7 +3211,7 @@ void func_80105D20(STAGE_ROOM *wp)
             Close_EM_WORK(wp->child_2C);
             Close_EM_WORK(wp->child_30);
             Sce_flag_off(0x7E0);
-            func_8001D974();
+            Sce_no_advance();
             wp->flags_0 = 0;
             break;
     }
@@ -3372,7 +3372,7 @@ void func_801068BC(STAGE_ROOM *wp)
             D_800989F8.routine_5 = 1;
             wp->flags_0          = 0;
             Sce_light_add(0x16);
-            func_8001D974();
+            Sce_no_advance();
             break;
     }
 }
