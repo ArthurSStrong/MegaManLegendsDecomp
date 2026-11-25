@@ -56,7 +56,7 @@ extern STCOM06_FUNC stcom06_move_tbl[]; // routine_0 handlers (stcom06_move)
 
 void stcom06_explosion_set(STCOM06_WORK *wp, STCOM_EFFECT *effect);
 void stcom06_func_0E68(STCOM06_WORK *wp, STCOM_EFFECT *effect);
-sint16 stcom06_func_0A80(STCOM06_WORK *wp);
-void stcom06_func_0D1C(STCOM06_WORK *wp);
+sint16 stcom06_bounce(STCOM06_WORK *wp);
+void stcom06_pos_update(STCOM06_WORK *wp);
 
 #endif // STCOM06_H

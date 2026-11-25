@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The first bytes of another work slot (stcom05_func_0ED0 reads its kind).
+// The first bytes of another work slot (stcom05_guard_check reads its kind).
 typedef struct
 {
     uint8 flags_0;
@@ -22,7 +22,7 @@ typedef struct
     sint16 rot_diff_1A;    // E6: |rotation.y - rot_goal_18|, folded to 0..0x800
     sint16 rot_half_1C;    // E8: rot_diff_1A / 2
     sint16 value_1E;       // EA
-    uint8 index_20;        // EC: current waypoint in stcom05_D_0034
+    uint8 index_20;        // EC: current waypoint in stcom05_waypoint_tbl
     sint8 timer_21;        // ED
     uint8 flags_22;        // EE: one bit per link still not kind 0x33
     uint8 value_23;        // EF
@@ -75,7 +75,7 @@ typedef void (*STCOM05_FUNC)(STCOM05_WORK *wp);
 extern STCOM05_FUNC stcom05_type_tbl[];      // handlers by index_3 (stcom05_move)
 extern STCOM05_FUNC stcom05_walker_tbl[];    // routine_0 handlers (stcom05_walker)
 extern STCOM05_FUNC stcom05_route_tbl[];     // routine_1 handlers (stcom05_walker_main)
-extern STCOM05_FUNC stcom05_D_002C[];        // routine_0 handlers (stcom05_func_0F78)
+extern STCOM05_FUNC stcom05_talker_tbl[];    // routine_0 handlers (stcom05_talker), 4 entries
 extern STCOM_SVECTOR stcom05_waypoint_tbl[]; // waypoints (index_20 - 1 is the one behind)
 extern STCOM_SVECTOR stcom05_D_0044[];       // the same waypoints, one ahead
 extern uint8 stcom05_hint_tbl[];             // message numbers by ctl.value_26
@@ -83,9 +83,9 @@ extern uint8 stcom05_D_00B0[];               // data_78
 extern uint8 stcom05_D_00BC[];               // data_10
 
 void stcom05_walker_main(STCOM05_WORK *wp);
-void stcom05_func_0E64(STCOM05_WORK *wp);
-void stcom05_func_0ED0(STCOM05_WORK *wp);
-void stcom05_func_0938(STCOM05_WORK *wp);
+void stcom05_crash_check(STCOM05_WORK *wp);
+void stcom05_guard_check(STCOM05_WORK *wp);
+void stcom05_route_stop(STCOM05_WORK *wp);
 void stcom05_route_start(STCOM05_WORK *wp);
 
 #endif // STCOM05_H

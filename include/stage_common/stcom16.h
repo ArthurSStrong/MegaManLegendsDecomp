@@ -123,14 +123,14 @@ typedef struct
 
 typedef void (*STCOM16_FUNC)(STCOM16_WORK *wp);
 
-extern uint8 stcom16_D_0000[];        // data_78
-extern STCOM16_FUNC stcom16_D_000C[]; // routine_0 handlers (stcom16_func_0000)
-extern STCOM16_FUNC stcom16_D_001C[]; // routine_1 handlers (stcom16_func_0370)
-extern STCOM16_FUNC stcom16_D_0040[]; // routine_2 handlers (stcom16_func_0D60)
-extern STCOM16_FUNC stcom16_D_005C[]; // routine_2 handlers (stcom16_func_12D0)
-extern STCOM16_FUNC stcom16_D_0070[]; // routine_2 handlers (stcom16_func_18E4)
-extern STCOM16_FUNC stcom16_D_008C[]; // routine_2 handlers (stcom16_func_1DA0)
-extern STCOM16_FUNC stcom16_D_0098[]; // routine_2 handlers (stcom16_func_2434)
+extern uint8 stcom16_D_0000[];            // data_78
+extern STCOM16_FUNC stcom16_move_tbl[];   // routine_0 handlers (stcom16_move)
+extern STCOM16_FUNC stcom16_state_tbl[];  // routine_1 handlers (stcom16_move_main)
+extern STCOM16_FUNC stcom16_patrol_tbl[]; // routine_2 handlers (stcom16_patrol)
+extern STCOM16_FUNC stcom16_charge_tbl[]; // routine_2 handlers (stcom16_charge)
+extern STCOM16_FUNC stcom16_claw_tbl[];   // routine_2 handlers (stcom16_claw)
+extern STCOM16_FUNC stcom16_jump_tbl[];   // routine_2 handlers (stcom16_jump)
+extern STCOM16_FUNC stcom16_vanish_tbl[]; // routine_2 handlers (stcom16_vanish)
 
 // ROCK_NEO.EXE.
 extern STCOM16_KIND **Em_param_tbl;
@@ -139,7 +139,7 @@ void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
@@ -148,13 +148,13 @@ void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 // PsyQ libgte.
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);
 
-void stcom16_func_0370(STCOM16_WORK *wp);
-void stcom16_func_0FB4(STCOM16_WORK *wp);
-void stcom16_func_1128(STCOM16_WORK *wp);
-void stcom16_func_11C4(STCOM16_WORK *wp);
-void stcom16_func_1668(STCOM16_WORK *wp);
-void stcom16_func_1790(STCOM16_WORK *wp);
-void stcom16_func_27E8(STCOM16_WORK *wp);
+void stcom16_move_main(STCOM16_WORK *wp);
+void stcom16_look_turn(STCOM16_WORK *wp);
+void stcom16_turn_back(STCOM16_WORK *wp);
+void stcom16_chase(STCOM16_WORK *wp);
+void stcom16_charge_stop(STCOM16_WORK *wp);
+void stcom16_bite(STCOM16_WORK *wp);
+void stcom16_ground_check(STCOM16_WORK *wp);
 
 // ROCK_NEO.EXE (see rock_neo.h).
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);

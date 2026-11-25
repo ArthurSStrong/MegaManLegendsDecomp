@@ -82,7 +82,7 @@ void stcom05_walker_main(STCOM05_WORK *wp)
     {
         return;
     }
-    stcom05_func_0ED0(wp);
+    stcom05_guard_check(wp);
     stcom05_route_tbl[wp->routine_1](wp);
     if (ctl->value_24 == 0 && Player_work.value_6E < Player_work.value_B0 / 2 &&
         !(Moji_flag & 0x8000000))
@@ -173,7 +173,7 @@ void stcom05_route_walk(STCOM05_WORK *wp)
         wp->velocity.v.x += wp->accel_4C;
     }
     Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-    stcom05_func_0E64(wp);
+    stcom05_crash_check(wp);
     wp->ctl.dist_14 = wp->ctl.dist_10;
     wp->ctl.dist_10 = Calc_distance(&wp->position, &stcom05_waypoint_tbl[wp->ctl.index_20]);
     if (wp->ctl.dist_14 < wp->ctl.dist_10)
@@ -201,7 +201,7 @@ void stcom05_route_walk(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0790(STCOM05_WORK *wp)
+void stcom05_route_turn(STCOM05_WORK *wp)
 {
     STCOM05_CTL *ctl;
 
@@ -216,7 +216,7 @@ void stcom05_func_0790(STCOM05_WORK *wp)
             {
                 wp->rotation.y = wp->ctl.rot_goal_18;
                 wp->routine_1  = 3;
-                stcom05_func_0938(wp);
+                stcom05_route_stop(wp);
             }
         }
         else
@@ -227,7 +227,7 @@ void stcom05_func_0790(STCOM05_WORK *wp)
             {
                 wp->rotation.y = wp->ctl.rot_goal_18;
                 wp->routine_1  = 3;
-                stcom05_func_0938(wp);
+                stcom05_route_stop(wp);
             }
         }
     }
@@ -238,7 +238,7 @@ void stcom05_func_0790(STCOM05_WORK *wp)
         {
             wp->rotation.y = wp->ctl.rot_goal_18;
             wp->routine_1  = 3;
-            stcom05_func_0938(wp);
+            stcom05_route_stop(wp);
         }
     }
     else
@@ -248,7 +248,7 @@ void stcom05_func_0790(STCOM05_WORK *wp)
         {
             wp->rotation.y = wp->ctl.rot_goal_18;
             wp->routine_1  = 3;
-            stcom05_func_0938(wp);
+            stcom05_route_stop(wp);
         }
     }
     if (ctl->rot_diff_1A > ctl->rot_half_1C)
@@ -260,11 +260,13 @@ void stcom05_func_0790(STCOM05_WORK *wp)
         wp->velocity.v.x += wp->accel_4C;
     }
     Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
-    stcom05_func_0E64(wp);
+    stcom05_crash_check(wp);
     ctl->rot_goal_18 = Calc_degree2(&wp->position, &stcom05_waypoint_tbl[ctl->index_20]) & 0xFFF;
 }
 
-void stcom05_func_0938(STCOM05_WORK *wp)
+// The scripted stops along the route: messages, waits for the guards that block the way, and the
+// end of the route.
+void stcom05_route_stop(STCOM05_WORK *wp)
 {
     STCOM05_CTL *ctl;
 
@@ -409,7 +411,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
                 ctl->dist_14 = ctl->dist_10 =
                     Calc_distance(&stcom05_waypoint_tbl[ctl->index_20 - 1],
                                   &stcom05_waypoint_tbl[ctl->index_20 + 1]);
-                wp->velocity.v.x            = 0;
+                wp->velocity.v.x = 0;
             }
             else if (wp->routine_2 == 1)
             {
@@ -457,7 +459,7 @@ void stcom05_func_0938(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0D44(STCOM05_WORK *wp)
+void stcom05_route_reverse(STCOM05_WORK *wp)
 {
     STCOM05_CTL *ctl;
 
@@ -476,7 +478,7 @@ void stcom05_func_0D44(STCOM05_WORK *wp)
     }
     Obj_pos_move(&wp->position, &wp->position_fixed, wp->rotation.y + 0x800, wp->velocity.v.x, 0,
                  0);
-    stcom05_func_0E64(wp);
+    stcom05_crash_check(wp);
     ctl->dist_10 = Calc_distance(&wp->position, &stcom05_D_0044[ctl->index_20]);
     if (ctl->dist_10 < 0x25D)
     {
@@ -489,7 +491,8 @@ void stcom05_func_0D44(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0E64(STCOM05_WORK *wp)
+// Breaks a map object in the way.
+void stcom05_crash_check(STCOM05_WORK *wp)
 {
     sint32 value;
 
@@ -504,7 +507,8 @@ void stcom05_func_0E64(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0ED0(STCOM05_WORK *wp)
+// Clears the flag of each linked guard (kind 0x33) that is gone.
+void stcom05_guard_check(STCOM05_WORK *wp)
 {
     if (wp->ctl.link[0]->kind_2 != 0x33)
     {
@@ -524,14 +528,15 @@ void stcom05_func_0ED0(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_0F78(STCOM05_WORK *wp)
+// Index 1: a solid object that speaks when the player examines it.
+void stcom05_talker(STCOM05_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
 
     wp->position_prev       = wp->position;
     wp->position_fixed_prev = wp->position_fixed;
     wp->rotation_prev       = wp->rotation;
-    stcom05_D_002C[wp->routine_0](wp);
+    stcom05_talker_tbl[wp->routine_0](wp);
     RotMatrixYXZ(&wp->rotation, &wp->matrix);
     scale.x = 0x200;
     scale.y = 0x200;
@@ -548,7 +553,7 @@ void stcom05_func_0F78(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_10C0(STCOM05_WORK *wp)
+void stcom05_talker_init(STCOM05_WORK *wp)
 {
     wp->pos_saved         = wp->position;
     wp->rotation.x        = 0;
@@ -574,7 +579,7 @@ void stcom05_func_10C0(STCOM05_WORK *wp)
     wp->color_B4  = 0x808080;
 }
 
-void stcom05_func_1178(STCOM05_WORK *wp)
+void stcom05_talker_check(STCOM05_WORK *wp)
 {
     if (Game_work.value_50 == 0x1B)
     {
@@ -617,7 +622,7 @@ void stcom05_func_1178(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_12D0(STCOM05_WORK *wp)
+void stcom05_talker_talk(STCOM05_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -645,7 +650,7 @@ void stcom05_func_12D0(STCOM05_WORK *wp)
     }
 }
 
-void stcom05_func_138C(STCOM05_WORK *wp)
+void stcom05_talker_erase(STCOM05_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }

@@ -26,13 +26,11 @@ void stcom06_move(STCOM06_WORK *wp)
     {
         if (wp->routine_2 != 0)
         {
-            Set_Atari(&pos, 0x20, 0, 0x4000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
-                          0x80);
+            Set_Atari(&pos, 0x20, 0, 0x4000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0, 0x80);
         }
         else
         {
-            Set_Atari(&pos, 0x20, 0, 0x8000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0,
-                          0x80);
+            Set_Atari(&pos, 0x20, 0, 0x8000, wp->value_1, &wp->sprite.hit_14, 0x8000000, 0, 0x80);
         }
         Solid_mover_set(wp);
     }
@@ -76,7 +74,7 @@ void stcom06_move_init(STCOM06_WORK *wp)
     wp->sprite.value_10 = 0x20;
     wp->value_74        = 1;
     wp->flags_0 |= 2;
-    if (stcom06_func_0A80(wp) != 0)
+    if (stcom06_bounce(wp) != 0)
     {
         wp->routine_0 = 3;
         wp->timer_D   = 0;
@@ -164,10 +162,10 @@ void stcom06_move_fly(STCOM06_WORK *wp)
         wp->sprite.value_E = stcom06_frame_tbl[wp->index_F].a;
         wp->sprite.value_F = stcom06_frame_tbl[wp->index_F].b;
     }
-    stcom06_func_0D1C(wp);
+    stcom06_pos_update(wp);
     Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
     Obj_pos_adj_round(&wp->position_fixed, &wp->position);
-    if (stcom06_func_0A80(wp) != 0)
+    if (stcom06_bounce(wp) != 0)
     {
         wp->routine_0 = 3;
         wp->timer_D   = 0;
@@ -217,7 +215,8 @@ void stcom06_move_explode(STCOM06_WORK *wp)
     Close_SHL_WORK(wp);
 }
 
-void stcom06_func_06A0(STCOM06_WORK *wp)
+// Lying on the ground: blinks and explodes after 30 frames; a kick sends it flying again.
+void stcom06_move_land(STCOM06_WORK *wp)
 {
     STCOM_FIXED_VECTOR unused; // never used; retail reserves its frame
     STCOM_EFFECT *effect;
@@ -280,10 +279,10 @@ void stcom06_func_06A0(STCOM06_WORK *wp)
     }
     wp->position_fixed_prev = wp->position_fixed;
     wp->position_prev       = wp->position;
-    stcom06_func_0D1C(wp);
+    stcom06_pos_update(wp);
     Obj_pos_adj_round(&wp->position_fixed_prev, &wp->position_prev);
     Obj_pos_adj_round(&wp->position_fixed, &wp->position);
-    stcom06_func_0A80(wp);
+    stcom06_bounce(wp);
     wp->sprite.pos_8[0] = wp->position.x;
     wp->sprite.pos_8[1] = wp->position.y - 0x10;
     wp->sprite.pos_8[2] = wp->position.z;
@@ -346,7 +345,8 @@ void stcom06_func_0934(STCOM06_WORK *wp)
     wp->flags_0 |= 2;
 }
 
-sint16 stcom06_func_0A80(STCOM06_WORK *wp)
+// Bounces off what it hits; returns 1 when it comes to rest on the floor.
+sint16 stcom06_bounce(STCOM06_WORK *wp)
 {
     STCOM_EFFECT *effect;
     sint32 hit;
@@ -418,7 +418,8 @@ sint16 stcom06_func_0A80(STCOM06_WORK *wp)
     return landed;
 }
 
-void stcom06_func_0D1C(STCOM06_WORK *wp)
+// Adds the acceleration (velocity clamped to +-0x6000) and moves.
+void stcom06_pos_update(STCOM06_WORK *wp)
 {
     wp->velocity.v.x += wp->accel.x;
     wp->velocity.v.y += wp->accel.y;
