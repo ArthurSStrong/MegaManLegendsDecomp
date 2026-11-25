@@ -34,7 +34,7 @@ typedef struct
     uint8 reserved68[0xA4];            // 68
 } STCOM17_SHOT;
 
-// The block at +0x2E8 of the tank's work slot (stcom17_func_0000..1470).
+// The block at +0x2E8 of the tank's work slot (stcom17_tank..1470).
 typedef struct
 {
     STCOM_SVECTOR pos_0;         // 2E8: the hit box's center
@@ -118,7 +118,7 @@ typedef struct
     STCOM17_CTL ctl;                        // 2E8
 } STCOM17_WORK;
 
-// The block at +0x308 of the gun's work slot (stcom17_func_1690..23BC).
+// The block at +0x308 of the gun's work slot (stcom17_gun..23BC).
 typedef struct
 {
     STCOM_SVECTOR pos_0;         // 308: the hit box's center
@@ -200,14 +200,14 @@ typedef struct
 
 typedef void (*STCOM17_FUNC)(STCOM17_WORK *wp);
 
-extern uint8 stcom17_D_0000[];        // data_78
-extern STCOM17_FUNC stcom17_D_000C[]; // routine_0 handlers (stcom17_func_0000)
-extern STCOM17_FUNC stcom17_D_0018[]; // routine_1 handlers (stcom17_func_021C)
+extern uint8 stcom17_D_0000[];                // data_78
+extern STCOM17_FUNC stcom17_tank_tbl[];       // routine_0 handlers (stcom17_tank)
+extern STCOM17_FUNC stcom17_tank_state_tbl[]; // routine_1 handlers (stcom17_tank_main)
 
 typedef void (*STCOM17_GUN_FUNC)(STCOM17_GUN_WORK *wp);
 
-extern STCOM17_GUN_FUNC stcom17_D_0034[]; // routine_0 handlers (stcom17_func_1690)
-extern STCOM17_GUN_FUNC stcom17_D_0040[]; // routine_1 handlers (stcom17_func_1990)
+extern STCOM17_GUN_FUNC stcom17_gun_tbl[];       // routine_0 handlers (stcom17_gun)
+extern STCOM17_GUN_FUNC stcom17_gun_state_tbl[]; // routine_1 handlers (stcom17_gun_main)
 
 // ROCK_NEO.EXE.
 extern STCOM17_KIND **Em_param_tbl;
@@ -231,18 +231,18 @@ void Obj_item_drop(void *wp, STCOM_SVECTOR *pos, STCOM_EFFECT *effect);
 void Ride_clear(void *wp);
 sint32 Search_Player_Ang(void *track, void *wp, sint32 angle);
 sint16 Calc_arc_angle(STCOM_SVECTOR *from, STCOM_SVECTOR *to, sint32 speed, sint32 arg3,
-                     sint32 arg4);
+                      sint32 arg4);
 void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32 arg4);
 sint32 SquareRoot0(sint32 v);
 // Hand-written: copies `count` words.
 void func_80017684(void *src, void *dst, sint32 count);
 
-void stcom17_func_0530(STCOM17_WORK *wp);
-void stcom17_func_0594(STCOM17_WORK *wp);
-void stcom17_func_0BE4(STCOM17_WORK *wp);
-void stcom17_func_1278(STCOM17_WORK *wp);
-void stcom17_func_1470(STCOM17_WORK *wp);
-void stcom17_func_2100(STCOM17_GUN_WORK *wp);
+void stcom17_tank_wait(STCOM17_WORK *wp);
+void stcom17_tank_track(STCOM17_WORK *wp);
+void stcom17_tank_fire(STCOM17_WORK *wp);
+void stcom17_tank_attack(STCOM17_WORK *wp);
+void stcom17_tank_missile(STCOM17_WORK *wp);
+void stcom17_gun_pitch(STCOM17_GUN_WORK *wp);
 void stcom17_func_22C8(STCOM17_GUN_WORK *wp, sint16 angle, sint16 goal);
 void stcom17_func_2320(STCOM17_GUN_WORK *wp, sint16 angle, sint16 goal);
 void stcom17_func_2378(STCOM17_GUN_WORK *wp, sint32 angle, sint32 goal);

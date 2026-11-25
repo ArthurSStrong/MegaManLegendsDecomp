@@ -6,20 +6,21 @@
 // names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom21"
 
-// The villager.
-void stcom21_func_0000(STCOM21_WORK *wp)
+// A vending machine: 10 zenny buys a drink that refills life; a kick may give one free or
+// break it.
+void stcom21_vend(STCOM21_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
     Solid_set(wp, 7, 0, 0);
-    stcom21_D_0000[wp->routine_0](wp);
+    stcom21_vend_tbl[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x50;
     Set_Atari(&pos, 0x64, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
     wp->y_48.value = 0;
 }
 
-void stcom21_func_00C0(STCOM21_WORK *wp)
+void stcom21_vend_init(STCOM21_WORK *wp)
 {
     // Never used; it reserves retail's frame.
     STCOM_FIXED_VECTOR unused;
@@ -30,7 +31,7 @@ void stcom21_func_00C0(STCOM21_WORK *wp)
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY((wp->variant_3 & 3) << 10, &wp->matrix.m);
     wp->color_40   = 0x808080;
-    wp->model_10   = stcom21_D_001C;
+    wp->model_10   = stcom21_vend_model;
     wp->y_48.value = 0;
     wp->speed_4C   = 0;
     wp->routine_1  = 0;
@@ -58,11 +59,11 @@ void stcom21_func_00C0(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_021C(STCOM21_WORK *wp)
+void stcom21_vend_wait(STCOM21_WORK *wp)
 {
-    if (stcom21_func_0CE8(wp, &Player_work))
+    if (stcom21_vend_front_check(wp, &Player_work))
     {
-        if (stcom21_func_0D34(wp))
+        if (stcom21_vend_talk_check(wp))
         {
             wp->routine_0++;
         }
@@ -82,12 +83,12 @@ void stcom21_func_021C(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_02D4(STCOM21_WORK *wp)
+void stcom21_vend_use(STCOM21_WORK *wp)
 {
-    stcom21_D_000C[wp->routine_1](wp);
+    stcom21_vend_use_tbl[wp->routine_1](wp);
 }
 
-void stcom21_func_0310(STCOM21_WORK *wp)
+void stcom21_vend_message(STCOM21_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -131,7 +132,7 @@ void stcom21_func_0310(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_0460(STCOM21_WORK *wp)
+void stcom21_vend_buy(STCOM21_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -217,7 +218,7 @@ void stcom21_func_0460(STCOM21_WORK *wp)
                 Sound_call2(0x13F, &wp->pos_38);
                 Pl_life_add(pl->value_B0, 0);
                 wp->value_C |= 1;
-                stcom21_func_0E48(wp->value_D, 2);
+                stcom21_vend_flag_on(wp->value_D, 2);
                 wp->routine_2++;
             }
             break;
@@ -270,7 +271,7 @@ void stcom21_func_0460(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_0768(STCOM21_WORK *wp)
+void stcom21_vend_hit(STCOM21_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM_EFFECT *effect;
@@ -294,7 +295,7 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             }
             else if (rand() & 1)
             {
-                stcom21_func_0E48(wp->value_D, 1);
+                stcom21_vend_flag_on(wp->value_D, 1);
                 wp->routine_2 = 0x14;
                 wp->value_C |= 2;
             }
@@ -387,14 +388,15 @@ void stcom21_func_0768(STCOM21_WORK *wp)
             effect = Open_EFFECT_WORK();
             if (effect != NULL)
             {
-                effect->flags_0         = 1;
-                effect->kind_2          = 0xB;
-                effect->variant_3       = 3;
-                effect->timer_E         = 0x14;
-                effect->value_C         = 0;
-                effect->value_D         = 0;
-                effect->value_F         = 8;
-                effect->sprite.pos_8[0] = wp->pos_38.x + stcom21_D_0028[wp->variant_3 & 3].x;
+                effect->flags_0   = 1;
+                effect->kind_2    = 0xB;
+                effect->variant_3 = 3;
+                effect->timer_E   = 0x14;
+                effect->value_C   = 0;
+                effect->value_D   = 0;
+                effect->value_F   = 8;
+                effect->sprite.pos_8[0] =
+                    wp->pos_38.x + stcom21_vend_smoke_tbl[wp->variant_3 & 3].x;
                 effect->sprite.pos_8[1] = wp->pos_38.y - 0xC8;
                 effect->sprite.pos_8[2] = wp->pos_38.z;
                 effect->routine_1       = 4;
@@ -441,11 +443,11 @@ void stcom21_func_0768(STCOM21_WORK *wp)
                 wp->flags_0 &= ~2;
                 if (!(wp->value_C & 8))
                 {
-                    stcom21_func_0D9C();
+                    stcom21_vend_break_count();
                 }
                 Sce_light_add(1);
                 wp->value_C |= 4;
-                stcom21_func_0E48(wp->value_D, 0);
+                stcom21_vend_flag_on(wp->value_D, 0);
                 wp->routine_2++;
             }
             break;
@@ -494,15 +496,15 @@ void stcom21_func_0768(STCOM21_WORK *wp)
     }
 }
 
-// Whether the player faces the villager from the front.
-uint8 stcom21_func_0CE8(STCOM21_WORK *wp, STCOM_PL_WORK *pl)
+// Whether the player faces the vending machine from the front.
+uint8 stcom21_vend_front_check(STCOM21_WORK *wp, STCOM_PL_WORK *pl)
 {
     return Angle_range_check2(&wp->pos_38, ((wp->variant_3 << 10) - 0x400) & 0xC00, 0x1FF,
                               &pl->position, pl->rotation.y, 0x1FF);
 }
 
-// Whether the player talks to the villager: picks the conversation.
-sint32 stcom21_func_0D34(STCOM21_WORK *wp)
+// Whether the player examines the vending machine: picks the conversation.
+sint32 stcom21_vend_talk_check(STCOM21_WORK *wp)
 {
     sint32 message;
 
@@ -530,7 +532,7 @@ sint32 stcom21_func_0D34(STCOM21_WORK *wp)
 }
 
 // Steps the two-flag counter in scene flags 0x220 and 0x221.
-void stcom21_func_0D9C(void)
+void stcom21_vend_break_count(void)
 {
     if (Sce_flag_test(0x220) && Sce_flag_test(0x221))
     {
@@ -553,7 +555,7 @@ void stcom21_func_0D9C(void)
     }
 }
 
-void stcom21_func_0E48(uint8 index, uint8 n)
+void stcom21_vend_flag_on(uint8 index, uint8 n)
 {
     if (STCOM_STAGE_ROOM == 0x105)
     {
@@ -562,12 +564,12 @@ void stcom21_func_0E48(uint8 index, uint8 n)
 }
 
 // The chest.
-void stcom21_func_0E88(STCOM21_WORK *wp)
+void stcom21_chest(STCOM21_WORK *wp)
 {
-    stcom21_D_0038[wp->routine_0](wp);
+    stcom21_chest_tbl[wp->routine_0](wp);
 }
 
-void stcom21_func_0EC4(STCOM21_WORK *wp)
+void stcom21_chest_init(STCOM21_WORK *wp)
 {
     // Never used; it reserves retail's frame.
     STCOM_FIXED_VECTOR unused;
@@ -582,17 +584,17 @@ void stcom21_func_0EC4(STCOM21_WORK *wp)
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY(wp->value_F << 6, &wp->matrix.m);
     wp->color_40   = 0x808080;
-    wp->model_10   = stcom21_D_005C;
+    wp->model_10   = stcom21_chest_model;
     wp->y_48.value = 0;
     wp->speed_4C   = 0;
     wp->routine_0++;
 }
 
-void stcom21_func_0F74(STCOM21_WORK *wp)
+void stcom21_chest_main(STCOM21_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
-    stcom21_D_0044[wp->variant_3](wp);
+    stcom21_chest_type_tbl[wp->variant_3](wp);
     if (wp->variant_3 != 2)
     {
         Solid_set(wp, 7, 0, 0);
@@ -604,7 +606,7 @@ void stcom21_func_0F74(STCOM21_WORK *wp)
 }
 
 // Vanishes in a puff.
-void stcom21_func_1044(STCOM21_WORK *wp)
+void stcom21_chest_erase(STCOM21_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
@@ -620,12 +622,12 @@ void stcom21_func_1044(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_10C0(STCOM21_WORK *wp)
+void stcom21_chest_closed(STCOM21_WORK *wp)
 {
-    stcom21_D_0050[wp->routine_1](wp);
+    stcom21_chest_closed_tbl[wp->routine_1](wp);
 }
 
-void stcom21_func_10FC(STCOM21_WORK *wp)
+void stcom21_chest_wait(STCOM21_WORK *wp)
 {
     if (Player_work.target_184 == wp)
     {
@@ -634,13 +636,13 @@ void stcom21_func_10FC(STCOM21_WORK *wp)
     }
     else if (wp->y_48.value & 0x20000000)
     {
-        if (stcom21_func_1880(wp))
+        if (stcom21_chest_item_check(wp))
         {
             wp->routine_1 = 2;
         }
         else
         {
-            stcom21_func_1524(wp);
+            stcom21_lid_spawn(wp);
             Sound_call2(0x13D, &wp->pos_38);
         }
     }
@@ -652,7 +654,7 @@ void stcom21_func_10FC(STCOM21_WORK *wp)
 }
 
 // Opened by talking to it: hands over the contents.
-void stcom21_func_11A0(STCOM21_WORK *wp)
+void stcom21_chest_open(STCOM21_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     uint32 zenny;
@@ -671,7 +673,7 @@ void stcom21_func_11A0(STCOM21_WORK *wp)
             }
             break;
         case 1:
-            if (!stcom21_func_1880(wp))
+            if (!stcom21_chest_item_check(wp))
             {
                 Moji_param_exec(0, 2, 0, 0);
             }
@@ -713,7 +715,7 @@ void stcom21_func_11A0(STCOM21_WORK *wp)
 }
 
 // Opened by a hit: the lid flies off.
-void stcom21_func_1380(STCOM21_WORK *wp)
+void stcom21_chest_hit_open(STCOM21_WORK *wp)
 {
     switch (wp->routine_2)
     {
@@ -732,7 +734,7 @@ void stcom21_func_1380(STCOM21_WORK *wp)
             if (wp->value_F != wp->value_B)
             {
                 STCOM21_IDENTITY(&wp->matrix);
-                RotMatrixZ((sint16)stcom21_D_0068[wp->value_B & 7] >> 2, &wp->matrix.m);
+                RotMatrixZ((sint16)stcom21_lid_angle_tbl[wp->value_B & 7] >> 2, &wp->matrix.m);
                 RotMatrixY(wp->value_B << 6, &wp->matrix.m);
                 wp->value_B = (wp->value_B + 1) & 0x3F;
             }
@@ -760,7 +762,7 @@ void stcom21_func_1380(STCOM21_WORK *wp)
 }
 
 // Spawns the lid (variant 2) and shows the chest open.
-void stcom21_func_1524(STCOM21_WORK *wp)
+void stcom21_lid_spawn(STCOM21_WORK *wp)
 {
     STCOM21_WORK *lid;
 
@@ -784,15 +786,15 @@ void stcom21_func_1524(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_15FC(STCOM21_WORK *wp)
+void stcom21_chest_opened(STCOM21_WORK *wp)
 {
     STCOM21_IDENTITY(&wp->matrix);
-    RotMatrixZ((sint16)stcom21_D_0068[wp->value_B & 7] >> 2, &wp->matrix.m);
+    RotMatrixZ((sint16)stcom21_lid_angle_tbl[wp->value_B & 7] >> 2, &wp->matrix.m);
     RotMatrixY(wp->value_B << 6, &wp->matrix.m);
 }
 
 // The lid: rises, then falls back onto its chest.
-void stcom21_func_1688(STCOM21_WORK *wp)
+void stcom21_lid(STCOM21_WORK *wp)
 {
     STCOM21_WORK *chest;
     sint16 top;
@@ -808,7 +810,7 @@ void stcom21_func_1688(STCOM21_WORK *wp)
         case 1:
             if (chest->value_D == 1 && chest->value_E == 0x10)
             {
-                stcom21_func_1908(chest);
+                stcom21_chest_em_spawn(chest);
             }
             wp->routine_1++;
             // fall through
@@ -834,7 +836,7 @@ void stcom21_func_1688(STCOM21_WORK *wp)
             else
             {
                 STCOM21_IDENTITY(&wp->matrix);
-                RotMatrixZ((sint16)stcom21_D_0068[chest->value_B & 7], &wp->matrix.m);
+                RotMatrixZ((sint16)stcom21_lid_angle_tbl[chest->value_B & 7], &wp->matrix.m);
                 RotMatrixY(wp->value_F << 6, &wp->matrix.m);
                 chest->value_B++;
             }
@@ -843,7 +845,7 @@ void stcom21_func_1688(STCOM21_WORK *wp)
 }
 
 // Whether the chest still has something to give.
-uint8 stcom21_func_1880(STCOM21_WORK *wp)
+uint8 stcom21_chest_item_check(STCOM21_WORK *wp)
 {
     sint32 flag;
 
@@ -861,7 +863,7 @@ uint8 stcom21_func_1880(STCOM21_WORK *wp)
 }
 
 // Three creatures jump out of the chest.
-void stcom21_func_1908(STCOM21_WORK *wp)
+void stcom21_chest_em_spawn(STCOM21_WORK *wp)
 {
     STCOM21_OBJ *obj;
     uint8 i;
@@ -884,19 +886,19 @@ void stcom21_func_1908(STCOM21_WORK *wp)
 }
 
 // The box.
-void stcom21_func_19D0(STCOM21_WORK *wp)
+void stcom21_box(STCOM21_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
     Solid_set(wp, 7, 0, 0);
-    stcom21_D_0078[wp->routine_0](wp);
+    stcom21_box_tbl[wp->routine_0](wp);
     pos = wp->pos_38;
     pos.y -= 0x2D;
     Set_Atari(&pos, 0x32, 0, 0x8000, wp->index_1, &wp->y_48, 0x4000000, 0, 0x80);
     wp->y_48.value = 0;
 }
 
-void stcom21_func_1A90(STCOM21_WORK *wp)
+void stcom21_box_init(STCOM21_WORK *wp)
 {
     // Never used; it reserves retail's frame.
     STCOM_FIXED_VECTOR unused;
@@ -908,13 +910,13 @@ void stcom21_func_1A90(STCOM21_WORK *wp)
     STCOM21_IDENTITY(&wp->matrix);
     RotMatrixY(wp->value_F << 10, &wp->matrix.m);
     wp->color_40   = 0x808080;
-    wp->model_10   = stcom21_D_0088;
+    wp->model_10   = stcom21_box_model;
     wp->y_48.value = 0;
     wp->speed_4C   = 0;
     wp->routine_0++;
 }
 
-void stcom21_func_1B34(STCOM21_WORK *wp)
+void stcom21_box_wait(STCOM21_WORK *wp)
 {
     if (Player_work.target_184 == wp)
     {
@@ -926,7 +928,7 @@ void stcom21_func_1B34(STCOM21_WORK *wp)
     }
 }
 
-void stcom21_func_1B74(STCOM21_WORK *wp)
+void stcom21_box_open(STCOM21_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     sint32 zenny;
@@ -945,7 +947,7 @@ void stcom21_func_1B74(STCOM21_WORK *wp)
             }
             break;
         case 1:
-            if (!stcom21_func_1DDC(wp))
+            if (!stcom21_box_item_check(wp))
             {
                 Moji_param_exec(1, 2, 0, 0);
             }
@@ -987,7 +989,7 @@ void stcom21_func_1B74(STCOM21_WORK *wp)
 }
 
 // Vanishes in a puff.
-void stcom21_func_1D60(STCOM21_WORK *wp)
+void stcom21_box_erase(STCOM21_WORK *wp)
 {
     STCOM_EFFECT *effect;
 
@@ -1004,7 +1006,7 @@ void stcom21_func_1D60(STCOM21_WORK *wp)
 }
 
 // Whether the box still has something to give.
-uint8 stcom21_func_1DDC(STCOM21_WORK *wp)
+uint8 stcom21_box_item_check(STCOM21_WORK *wp)
 {
     if ((wp->u_44.flag == 0 || Sce_flag_test(wp->u_44.flag)) &&
         !Sce_flag_test(wp->value_C + 0x400) && wp->value_E != -1)
