@@ -609,8 +609,8 @@ not fields of one struct (declared in `code_8005C258.h`). `gauge_life_exec`'s `w
 (`Effect_explosion2_tbl[wp->routine_8](wp)`). Parked `func_80045FE4` and `func_80046008` (identical, `NON_MATCHING`):
 the target is `Obj_id_class(wp->kind_1)` followed by `move v1,v0`; GCC drops the dead copy for a
 `void` function with a local, and a `return` form emits no move either (also tried `register`).
-Also banked: `Effect_dash_spark`/`Effect_wall_spark` (`Effect_dash_spark_tbl`/`Effect_wall_spark_tbl[wp->routine_8](wp)`), `func_800485E4`
-(`D_8008A778[wp->flag_4](wp)`), `Effect_dash_spark_end`, `Item_drop_collect` (`WORK_48.flag_3` picks sound 0x9E/0x9D).
+Also banked: `Effect_dash_spark`/`Effect_wall_spark` (`Effect_dash_spark_tbl`/`Effect_wall_spark_tbl[wp->routine_8](wp)`), `Entry_walk`
+(`Entry_walk_tbl[wp->flag_4](wp)`), `Effect_dash_spark_end`, `Item_drop_collect` (`WORK_48.flag_3` picks sound 0x9E/0x9D).
 Banked `explosion2_burst_start`: copies `D_8008A6C8..CF` into `WORK_48`. It was parked over the `field_14`
 word copy (the target does it third; GCC delayed it to the end), but it matches as written since the
 later `WORK_48` type changes.

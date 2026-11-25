@@ -4,7 +4,9 @@
 // Small data reached through $gp
 PL_FIXED_VECTOR D_80098AC0;
 
-void func_80048620(CODE486_TASK *task)
+// Entry_walk_tbl (run by Entry_walk): the player walks out through the entry request's first
+// spot (D_800C3558 +0), the screen fades, and the player walks in at the second spot (+8).
+void Entry_walk_start(CODE486_TASK *task)
 {
     uint8 *entry;
 
@@ -29,7 +31,7 @@ void func_80048620(CODE486_TASK *task)
     }
 }
 
-void func_80048704(CODE486_TASK *task)
+void Entry_walk_main(CODE486_TASK *task)
 {
     PL_WORK *pl;
     uint8 *entry;
@@ -40,7 +42,7 @@ void func_80048704(CODE486_TASK *task)
     {
         case 0:
             Sce_camera_start(CODE486_ENTRY_H(entry, 0), CODE486_ENTRY_H(entry, 2),
-                          CODE486_ENTRY_H(entry, 4));
+                             CODE486_ENTRY_H(entry, 4));
             pl->kind      = 3;
             pl->routine_1 = 1;
             pl->position_saved.x =
@@ -92,7 +94,7 @@ void func_80048704(CODE486_TASK *task)
             {
                 D_800BC7F0[0] = D_8008A9E4[CODE486_ENTRY_H(entry, 0x12) >> 10];
                 Sce_camera_start(CODE486_ENTRY_H(entry, 8), CODE486_ENTRY_H(entry, 0xA),
-                              CODE486_ENTRY_H(entry, 0xC));
+                                 CODE486_ENTRY_H(entry, 0xC));
                 pl->kind      = 3;
                 pl->routine_1 = 1;
                 pl->position_saved.x =
@@ -124,7 +126,7 @@ void func_80048704(CODE486_TASK *task)
             break;
         case 3:
         case 11:
-            func_80048A9C(task);
+            entry_walk_forward(task);
             break;
         case 4:
         case 12:
@@ -145,7 +147,7 @@ void func_80048704(CODE486_TASK *task)
     Sce_script_update();
 }
 
-void func_80048A40(PL_WORK *pl)
+void Entry_walk_end(PL_WORK *pl)
 {
     Player_control_on(&Player_work);
     *(uint32 *)&Player_work.kind = 0;
@@ -156,7 +158,7 @@ void func_80048A40(PL_WORK *pl)
 }
 
 // Pl_demo_pad is an array: an array reference keeps &Pl_demo_pad in a1 within each case.
-void func_80048A9C(CODE486_TASK *task)
+void entry_walk_forward(CODE486_TASK *task)
 {
     PL_WORK *pl;
 
@@ -1515,11 +1517,11 @@ sint32 Scr_move_check(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, si
     return result;
 }
 
-// Map-cell version of func_80052B04 (same retry goto, delta vector and push block). The
+// Map-cell version of solid_shape_check (same retry goto, delta vector and push block). The
 // floor/ceiling hits break out to the found test; the cell id variable is reused for the
 // target height and val for the result. The two do { } while (0) levels around the box
 // corners and the one around the cell setup give retail's saved-register ranking (as in
-// func_80052674).
+// solid_floor_find).
 sint32 scr_collision_calc(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3)
 {
     PL_SHORT_VECTOR org;
@@ -1658,7 +1660,7 @@ retry:
                 {
                     box[4] = org.y + hit->y0;
                     box[5] = org.y + hit->y1;
-                    found  = func_8004BDC8(box, hit->kind, test);
+                    found  = scr_shape_push(box, hit->kind, test);
                     if (found != 0)
                     {
                         goto done;
@@ -1735,6 +1737,8 @@ done:
 
 // Box-versus-collision-kind test (sibling of scr_box_hit). `type` is a uint16 copy (retail
 // zero-extends it with andi 0xFFFF for `type != 0x18`) and the switch is on `kind & 0xFF`.
+// Pushes the point at C0 out of one collision shape of the given kind (block, step, wall,
+// floor, ceiling, slope or cut corner); used by the map and by solids.
 // Cases 8..0xB keep their x product in gap and every wall push amount goes through `b` (as
 // mult-only variables they would prefer LO, and reload would spill an extra saved register);
 // case 0xE has its own near_x/far_x quotients; the wall cases address F0/F8 directly.
@@ -1744,7 +1748,7 @@ done:
 //   instead of corner's (the last jump to `clear`).
 // - case 3 jumps to `land` inside 0x1C; dbr then fills the jump's delay slot with the li.
 // - case 3's call arm writes the clears out; jump2 merges them into ceil's (beqz + j clear).
-sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
+sint32 scr_shape_push(sint16 *box, uint16 kind, sint32 test)
 {
     uint16 type;
     sint32 height;
@@ -1806,7 +1810,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                     CODE486_SP_F6W       = 0x100;
                     goto clear;
                 }
-                if (func_8004F44C(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 1) != 0)
+                if (scr_push_box(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 1) != 0)
                 {
                     if (CODE486_SP_D2 >= 0)
                     {
@@ -1822,7 +1826,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 result               = 1;
                 CODE486_SP_POS_F0->y = top;
                 CODE486_SP_POS_F8->y = bottom;
-                if (func_8004F44C(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 0) != 0)
+                if (scr_push_box(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 0) != 0)
                 {
                     if (CODE486_SP_D2 >= 0)
                     {
@@ -1843,7 +1847,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                     CODE486_SP_POS_C0->y = top;
                     goto land;
                 }
-                if (func_8004F44C(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 3) != 0)
+                if (scr_push_box(CODE486_SP_POS_C0, CODE486_SP_POS_C8, 3) != 0)
                 {
                     CODE486_SP_106 = 0;
                     CODE486_SP_108 = 0;
@@ -1869,7 +1873,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 CODE486_SP_POS_F0->y = top;
                 CODE486_SP_POS_F8->y = bottom;
             side_x:
-                if (func_8004F8BC(CODE486_SP_POS_C0, CODE486_SP_POS_C8, type - 4) != 0)
+                if (scr_push_z(CODE486_SP_POS_C0, CODE486_SP_POS_C8, type - 4) != 0)
                 {
                     if (CODE486_SP_D2 >= 0)
                     {
@@ -1889,7 +1893,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 CODE486_SP_POS_F0->y = top;
                 CODE486_SP_POS_F8->y = bottom;
             side_z:
-                if (func_8004FBE8(CODE486_SP_POS_C0, CODE486_SP_POS_C8, type - 6) != 0)
+                if (scr_push_x(CODE486_SP_POS_C0, CODE486_SP_POS_C8, type - 6) != 0)
                 {
                     if (CODE486_SP_D2 >= 0)
                     {
@@ -1910,7 +1914,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 result               = 1;
                 CODE486_SP_POS_F0->y = top;
                 CODE486_SP_POS_F8->y = bottom;
-                if (func_800501E8(CODE486_SP_POS_C0, type - 0x1C) != 0)
+                if (scr_push_diag(CODE486_SP_POS_C0, type - 0x1C) != 0)
                 {
                     if (CODE486_SP_D2 >= 0)
                     {
@@ -2263,7 +2267,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x <=
-                      CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
+                   CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
                          ? CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x
                          : CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z;
             height = y0 + (y1 - y0) * ((CODE486_SP_POS_C0->x - x0) + (z1 - CODE486_SP_POS_C0->z)) /
@@ -2289,12 +2293,12 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x <=
-                      CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
+                   CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
                          ? CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x
                          : CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z;
             height = y1 - (y1 - y0) * ((CODE486_SP_POS_C0->x - x0) + (z1 - CODE486_SP_POS_C0->z)) /
                               (x1 - x0);
-            b      = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
+            b = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
             if (b > 0)
             {
                 CODE486_SP_POS_F8->x -= b;
@@ -2313,7 +2317,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x <=
-                      CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
+                   CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
                          ? CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x
                          : CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z;
             height = y0 + (y1 - y0) * ((x1 - CODE486_SP_POS_C0->x) + (z1 - CODE486_SP_POS_C0->z)) /
@@ -2339,12 +2343,12 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x <=
-                      CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
+                   CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z)
                          ? CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x
                          : CODE486_SP_POS_C0->z - CODE486_SP_POS_F0->z;
             height = y1 - (y1 - y0) * ((x1 - CODE486_SP_POS_C0->x) + (z1 - CODE486_SP_POS_C0->z)) /
                               (x1 - x0);
-            b      = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
+            b = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
             if (b > 0)
             {
                 CODE486_SP_POS_F0->x += b;
@@ -2363,7 +2367,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x <=
-                      CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
+                   CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
                          ? CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x
                          : CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z;
             height = y0 + (y1 - y0) * ((CODE486_SP_POS_C0->x - x0) + (CODE486_SP_POS_C0->z - z0)) /
@@ -2389,12 +2393,12 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x <=
-                      CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
+                   CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
                          ? CODE486_SP_POS_F8->x - CODE486_SP_POS_C0->x
                          : CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z;
             height = y1 - (y1 - y0) * ((CODE486_SP_POS_C0->x - x0) + (CODE486_SP_POS_C0->z - z0)) /
                               (x1 - x0);
-            b      = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
+            b = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
             if (b > 0)
             {
                 CODE486_SP_POS_F8->x -= b;
@@ -2413,7 +2417,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x <=
-                      CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
+                   CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
                          ? CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x
                          : CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z;
             height = y0 + (y1 - y0) * ((x1 - CODE486_SP_POS_C0->x) + (CODE486_SP_POS_C0->z - z0)) /
@@ -2439,12 +2443,12 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 goto step;
             }
             gap    = (CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x <=
-                      CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
+                   CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z)
                          ? CODE486_SP_POS_C0->x - CODE486_SP_POS_F0->x
                          : CODE486_SP_POS_F8->z - CODE486_SP_POS_C0->z;
             height = y1 - (y1 - y0) * ((x1 - CODE486_SP_POS_C0->x) + (CODE486_SP_POS_C0->z - z0)) /
                               (x1 - x0);
-            b      = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
+            b = (x1 - x0) * (y1 - CODE486_SP_POS_C0->y) / (y1 - y0);
             if (b > 0)
             {
                 CODE486_SP_POS_F0->x += b;
@@ -2468,7 +2472,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
             }
             break;
         corner:
-            if (func_8004FF14(CODE486_SP_POS_C0, (type >> 4) - 2) != 0)
+            if (scr_push_slant(CODE486_SP_POS_C0, (type >> 4) - 2) != 0)
             {
                 if (CODE486_SP_D2 >= 0)
                 {
@@ -2492,7 +2496,7 @@ sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test)
                 }
                 CODE486_SP_POS_F0->y = height;
                 CODE486_SP_POS_F8->y = bottom;
-                if (func_8004F44C(CODE486_SP_POS_C0, CODE486_SP_POS_C8, flag | 0x43) != 0)
+                if (scr_push_box(CODE486_SP_POS_C0, CODE486_SP_POS_C8, flag | 0x43) != 0)
                 {
                     CODE486_SP_106 = 0;
                     CODE486_SP_108 = 0;
@@ -2904,14 +2908,14 @@ sint32 Scr_area_octagon_test(uint16 *rect)
     return 0;
 }
 
-// Same layout as the banked func_8004F8BC (if/else push assignments, ABS_NEG, per-path
+// Same layout as the banked scr_push_z (if/else push assignments, ABS_NEG, per-path
 // calls). The x-only, z-only and both-x paths jump to one final `return 0`: with their own
 // returns the x-only tail cross-jumped onto the last `li v0,0` instead of into the both-x
 // tail. The z-only push sits one do/while (0) level deeper (see Scr_pos_hit_check): GCC weights
 // references by loop depth, and without it pos (14 refs over 155 insns) ranks below hit_x
 // and they swap s1/s2. Any one to three of the five push groups wrapped match; four or more
 // flip it back.
-sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
+sint32 scr_push_box(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
 {
     PL_SHORT_VECTOR push;
     sint32 hit_x;
@@ -2970,7 +2974,7 @@ sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
     }
     if (hit_x == 0 && hit_z == 0 && hit_y == 0)
     {
-        return func_80050400(pos, prev, mode);
+        return scr_push_nearest(pos, prev, mode);
     }
     if (hit_x == 0)
     {
@@ -3032,7 +3036,7 @@ done:
     return 0;
 }
 
-sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
+sint32 scr_push_z(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
 {
     PL_SHORT_VECTOR push;
     sint32 hit;
@@ -3102,7 +3106,7 @@ sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
     }
 }
 
-sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
+sint32 scr_push_x(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
 {
     PL_SHORT_VECTOR push;
     sint32 hit;
@@ -3173,7 +3177,7 @@ sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side)
 }
 
 // The corner offset goes through cx so GCC keeps F8 - (x - 4) unfolded.
-sint32 func_8004FF14(PL_SHORT_VECTOR *pos, sint32 corner)
+sint32 scr_push_slant(PL_SHORT_VECTOR *pos, sint32 corner)
 {
     PL_SHORT_VECTOR push;
     sint32 cx;
@@ -3244,7 +3248,7 @@ sint32 func_8004FF14(PL_SHORT_VECTOR *pos, sint32 corner)
     return 1;
 }
 
-sint32 func_800501E8(PL_SHORT_VECTOR *pos, sint32 corner)
+sint32 scr_push_diag(PL_SHORT_VECTOR *pos, sint32 corner)
 {
     PL_SHORT_VECTOR push;
     sint32 dx;
@@ -3325,7 +3329,8 @@ sint32 func_800501E8(PL_SHORT_VECTOR *pos, sint32 corner)
     return 1;
 }
 
-sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
+// Pushes the point out of the box F0..F8 through its nearest face.
+sint32 scr_push_nearest(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode)
 {
     PL_SHORT_VECTOR push;
 
@@ -4351,18 +4356,18 @@ void Solid_check(void)
                 switch (kind)
                 {
                     case 0:
-                        result = func_80052970((sint32)req->obj.pl, *pp, index, 0);
+                        result = solid_hit((sint32)req->obj.pl, *pp, index, 0);
                         break;
                     case 1:
                         result =
-                            func_80051F08((sint32)req->obj.pl, *pp, req->obj.pl, index, value, 0);
+                            solid_ride_hit((sint32)req->obj.pl, *pp, req->obj.pl, index, value, 0);
                         break;
                     case 2:
-                        result = func_80052970((sint32)req->obj.pl, *pp, index, 1);
+                        result = solid_hit((sint32)req->obj.pl, *pp, index, 1);
                         break;
                     case 3:
                         result =
-                            func_80051F08((sint32)req->obj.pl, *pp, req->obj.pl, index, value, 1);
+                            solid_ride_hit((sint32)req->obj.pl, *pp, req->obj.pl, index, value, 1);
                         break;
                     case 4:
                     case 6:
@@ -4383,7 +4388,7 @@ void Solid_check(void)
                         D_8009A770.value48 = 0;
                         D_8009A770.areas   = req->obj.prop->areas;
                         D_8009A770.info78  = req->obj.prop->info;
-                        result             = func_80052970((sint32)&D_8009A770, *pp, -1, 1);
+                        result             = solid_hit((sint32)&D_8009A770, *pp, -1, 1);
                         break;
                     case 5:
                     case 7:
@@ -4404,7 +4409,8 @@ void Solid_check(void)
                         D_8009A770.value48 = 0;
                         D_8009A770.areas   = req->obj.prop->areas;
                         D_8009A770.info78  = req->obj.prop->info;
-                        result = func_80051F08((sint32)&D_8009A770, *pp, req->obj.pl, -1, value, 1);
+                        result =
+                            solid_ride_hit((sint32)&D_8009A770, *pp, req->obj.pl, -1, value, 1);
                         break;
                 }
                 if (result != 0)
@@ -4434,8 +4440,10 @@ void Solid_check(void)
     Solid_mover_ptr = Solid_mover_tbl;
 }
 
-sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32 value8,
-                     sint32 flag)
+// A mover against a solid it can stand on: pushes it out, and lands it on the top (value76,
+// value_c0) or carries it along with the solid's motion.
+sint32 solid_ride_hit(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32 value8,
+                      sint32 flag)
 {
     CODE486_MTX mtx;
     PL_FIXED_VECTOR cur;
@@ -4455,10 +4463,10 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
     PL_SHORT_VECTOR unused; // unused; gives retail's frame size
 
     old74 = pl->value74;
-    func_800536B0((PL_WORK *)key, &now, &prev, index);
+    solid_pos_get((PL_WORK *)key, &now, &prev, index);
     scr_box_set((sint32 *)pl->info78);
     slide = (Obj_id_class(pl->value01) == 0) << 15;
-    if (func_80052674(pl, key, &now, flag, slide) == 0)
+    if (solid_floor_find(pl, key, &now, flag, slide) == 0)
     {
         if (pl->value76 != 0 && (uint32)obj == pl->value_c0)
         {
@@ -4519,8 +4527,8 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
     delta.z       = now.z - prev.z;
     CODE486_SP_F6 = pl->value74;
     CODE486_SP_F7 = pl->value76;
-    func_800534E0(key, pl, &now, &prev, &cur, &old);
-    result = func_80052B04(key, &now, &cur, &old, flag, slide);
+    solid_prev_follow(key, pl, &now, &prev, &cur, &old);
+    result = solid_shape_check(key, &now, &cur, &old, flag, slide);
     if (result > 0)
     {
         if (move.x == 0 || (delta.x ^ move.x) < 0)
@@ -4549,13 +4557,13 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
                 {
                     pl->value188 = (pl->value188 + (value8 & 0xFF)) | (value8 & ~0xFF);
                     pl->value71  = (((((CODE486_SOLID_AT(key)->rot.vy - pl->rotation.y +
-                                        (sint16)pl->value116) &
-                                       0xFFF) +
-                                      0x200) >>
-                                     10) &
-                                    3) +
-                                       1 |
-                                   0x80;
+                                       (sint16)pl->value116) &
+                                      0xFFF) +
+                                     0x200) >>
+                                    10) &
+                                   3) +
+                                      1 |
+                                  0x80;
                 }
             }
         }
@@ -4572,7 +4580,7 @@ sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32
     }
     pl->position_fixed.x = cur.x;
     pl->position_fixed.z = cur.z;
-    if (func_80052674(pl, key, &now, flag, slide) != 0)
+    if (solid_floor_find(pl, key, &now, flag, slide) != 0)
     {
         y = pl->position_fixed.y;
         if (D_80098AC0.y - 0x40000 < y && y < D_80098AC0.y + 0x200000 && pl->value74 == 0)
@@ -4661,7 +4669,7 @@ void ride_clear_one(sint32 key, CODE486_LINK *pl)
 // weights references by loop depth, and only this ranks the area giv above hit and count.
 // The solid is reached through key at each use (a separate pointer local reorders the
 // prologue). The final negations in natural x, y, z order give retail's store order.
-sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep, sint32 slide)
+sint32 solid_floor_find(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep, sint32 slide)
 {
     sint16 box[6];
     CODE486_MTX mtx;
@@ -4733,9 +4741,9 @@ sint32 func_80052674(PL_WORK *pl, sint32 key, PL_FIXED_VECTOR *pos, sint32 keep,
     return 1;
 }
 
-// mtx and delta are unused (left over from the func_80051F08 template); they give retail's
+// mtx and delta are unused (left over from the solid_ride_hit template); they give retail's
 // 0xA8 frame and stack layout.
-sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
+sint32 solid_hit(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
 {
     CODE486_MTX mtx;
     PL_FIXED_VECTOR cur;
@@ -4746,16 +4754,16 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
     sint32 result;
     sint32 slide;
 
-    func_800536B0((PL_WORK *)arg0, &now, &prev, index);
+    solid_pos_get((PL_WORK *)arg0, &now, &prev, index);
     result = 0;
     scr_box_set((sint32 *)pl->info78);
     slide = (Obj_id_class(pl->value01) == 0) << 15;
-    if (func_80052674(pl, arg0, &now, arg3, slide) != 0)
+    if (solid_floor_find(pl, arg0, &now, arg3, slide) != 0)
     {
         cur = pl->position_fixed;
         old = pl->position_fixed_prev;
-        func_800534E0(arg0, pl, &now, &prev, &cur, &old);
-        result = func_80052B04(arg0, &now, &cur, &old, arg3, slide);
+        solid_prev_follow(arg0, pl, &now, &prev, &cur, &old);
+        result = solid_shape_check(arg0, &now, &cur, &old, arg3, slide);
         if (result != 0)
         {
             if (result & 0x300)
@@ -4781,8 +4789,8 @@ sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3)
 // The push block copies PUSH[0..2]/[6..8] straight into [3..5]/[9..11] after moving C0 by
 // PUSH[3..5] (no temporaries), then clears the sources. The do { } while (0) around the
 // box corners (as in Scr_line_calc) ranks &area->hits above left and hit, as retail.
-sint32 func_80052B04(sint32 key, PL_FIXED_VECTOR *now, PL_FIXED_VECTOR *cur, PL_FIXED_VECTOR *old,
-                     sint32 keep, sint32 slide)
+sint32 solid_shape_check(sint32 key, PL_FIXED_VECTOR *now, PL_FIXED_VECTOR *cur,
+                         PL_FIXED_VECTOR *old, sint32 keep, sint32 slide)
 {
     CODE486_MTX mtx;
     CODE486_SVECTOR rot;
@@ -4856,7 +4864,7 @@ retry:
                 {
                     box[4] = CODE486_SP_POS_E0->y + hit->y0;
                     box[5] = CODE486_SP_POS_E0->y + hit->y1;
-                    found  = func_8004BDC8(box, hit->kind, test);
+                    found  = scr_shape_push(box, hit->kind, test);
                     if (found != 0)
                     {
                         goto done;
@@ -5016,8 +5024,9 @@ void Ride_carry_saved(PL_WORK *pl, uint32 arg)
     }
 }
 
-void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
-                   PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5)
+// Moves the mover's old position (a5) along with the solid's move and turn since last frame.
+void solid_prev_follow(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
+                       PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5)
 {
     CODE486_MTX mtx;
     PL_FIXED_VECTOR pos;
@@ -5049,7 +5058,7 @@ void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR 
     }
 }
 
-void func_800536B0(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index)
+void solid_pos_get(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index)
 {
     if (index < 0)
     {

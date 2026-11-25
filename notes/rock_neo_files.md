@@ -192,7 +192,7 @@ address.
   the rodata blocks alone put several files in each (rows 10-17 and 18-23).
 - **Data clusters.** `.data`/`.sdata`/bss are laid out in link order, so private variables of one file
   form a contiguous run and a boundary often shows as a jump (example: `.data` goes from `0x8008A778` to
-  `0x8008A9D4` exactly at `func_80048620`). Used as support only: a run of tiny functions each owning the
+  `0x8008A9D4` exactly at `Entry_walk_start`). Used as support only: a run of tiny functions each owning the
   next variable looks like a boundary at every step.
 - **Call-graph cost.** For each gap between functions I summed the "private" links crossing it (calls
   to functions with <= 3 callers, variables with 2-4 users, spans <= 60 functions). Cost 0 means a file

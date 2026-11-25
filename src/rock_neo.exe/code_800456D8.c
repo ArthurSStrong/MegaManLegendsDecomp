@@ -421,8 +421,8 @@ void Item_drop_wait(CODE456_WORK *wp)
         wp->routine_8++;
         wp->timer_b = (rand() & 7) + 30;
     }
-    r   = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a],
-                          wp->mtx_18.tr.h.value_2e, 0xFFFF);
+    r = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a], wp->mtx_18.tr.h.value_2e,
+                        0xFFFF);
     lim = D_8008A618[wp->flag_3][wp->value_a].h[5];
     lim++;
     diff = r - lim;
@@ -453,8 +453,8 @@ void Item_drop_blink(CODE456_WORK *wp)
     {
         wp->routine_8++;
     }
-    r   = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a],
-                          wp->mtx_18.tr.h.value_2e, 0xFFFF);
+    r = Scr_height_calc(&wp->snd_38, &D_8008A618[wp->flag_3][wp->value_a], wp->mtx_18.tr.h.value_2e,
+                        0xFFFF);
     lim = D_8008A618[wp->flag_3][wp->value_a].h[5];
     lim++;
     diff = r - lim;
@@ -918,17 +918,17 @@ void Effect_explosion2_move(CODE456_WORK *wp)
     if (wp->flag_3 & 0x40)
     {
         Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xA000, wp->id_1, D_800986D8,
-                      0x10000008, 0, 0x80);
+                  0x10000008, 0, 0x80);
     }
     else if (wp->flag_3 == 6)
     {
         Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
-                      0x30000000, 0, 0x80);
+                  0x30000000, 0, 0x80);
     }
     else
     {
         Set_Atari(&wp->snd_38, (sint16)wp->snd_38.half[3] / 2, 0, 0xC000, wp->id_1, D_800986D8,
-                      0x10000008, 0, 0x80);
+                  0x10000008, 0, 0x80);
     }
 }
 
@@ -1369,7 +1369,7 @@ void Effect_wall_spark_end(CODE456_WORK *wp)
     Close_EFFECT_WORK(wp);
 }
 
-void func_800485E4(CODE456_WORK *wp)
+void Entry_walk(CODE456_WORK *wp)
 {
-    D_8008A778[wp->routine_4](wp);
+    Entry_walk_tbl[wp->routine_4](wp);
 }

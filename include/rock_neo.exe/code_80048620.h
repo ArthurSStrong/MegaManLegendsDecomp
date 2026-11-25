@@ -190,7 +190,7 @@ uint32 Sce_flag_test(uint32 flag);
 void Message_event_set(sint32 a0, sint32 a1, sint32 a2, sint32 a3);
 
 void scr_box_set(sint32 *arg);
-void func_80048A9C(CODE486_TASK *task);
+void entry_walk_forward(CODE486_TASK *task);
 void Sce_camera_start(sint32 a0, sint32 a1, sint32 a2);
 void Sce_camera_script_exec(void);
 void Sce_script_update(void);
@@ -200,13 +200,13 @@ extern sint8 D_800C356C;
 extern uint8 D_800C3570;
 extern uint8 D_800C3571;
 sint32 scr_collision_calc(PL_SHORT_VECTOR *out, PL_SHORT_VECTOR *in, sint32 arg2, sint32 arg3);
-sint32 func_80052674(PL_WORK *pl, sint32 a0, PL_FIXED_VECTOR *pos, sint32 a3, sint32 slide);
-void func_800534E0(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
-                   PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5);
-sint32 func_80052B04(sint32 a0, PL_FIXED_VECTOR *a1, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
-                     sint32 a4, sint32 slide);
+sint32 solid_floor_find(PL_WORK *pl, sint32 a0, PL_FIXED_VECTOR *pos, sint32 a3, sint32 slide);
+void solid_prev_follow(sint32 a0, PL_WORK *pl, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
+                       PL_FIXED_VECTOR *a4, PL_FIXED_VECTOR *a5);
+sint32 solid_shape_check(sint32 a0, PL_FIXED_VECTOR *a1, PL_FIXED_VECTOR *a2, PL_FIXED_VECTOR *a3,
+                         sint32 a4, sint32 slide);
 void Obj_pos_adj_round(PL_FIXED_VECTOR *fixed, PL_SHORT_VECTOR *pos);
-void func_800536B0(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index);
+void solid_pos_get(PL_WORK *pl, PL_FIXED_VECTOR *pos, PL_FIXED_VECTOR *prev, sint32 index);
 sint32 scr_cell_get_index(sint32 index);
 sint32 scr_cell_index(PL_SHORT_VECTOR *pos);
 sint32 Scr_cell_get(PL_SHORT_VECTOR *pos);
@@ -297,9 +297,9 @@ struct CODE486_PROP
 
 // Stand-in solid that props are copied into before the shared tests run.
 extern CODE486_SOLID D_8009A770;
-sint32 func_80051F08(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32 value8,
-                     sint32 flag);
-sint32 func_80052970(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3);
+sint32 solid_ride_hit(sint32 key, PL_WORK *pl, PL_WORK *obj, sint32 index, uint32 value8,
+                      sint32 flag);
+sint32 solid_hit(sint32 arg0, PL_WORK *pl, sint32 index, sint32 arg3);
 
 typedef sint32 (*CODE486_TEST_FUNC)(sint16 *box, uint16 kind);
 // The same tests called with the box alone (scr_event_get leaves a1 unset).
@@ -355,7 +355,7 @@ void RotMatrixY(sint32 angle, CODE486_MTX *m);
 void ApplyMatrixSV(CODE486_MTX *m, CODE486_SVECTOR *v, CODE486_SVECTOR *out);
 extern PL_FIXED_VECTOR D_80098AC0;
 void scr_box_hit(sint16 *box, uint16 kind);
-sint32 func_8004BDC8(sint16 *box, uint16 kind, sint32 test);
+sint32 scr_shape_push(sint16 *box, uint16 kind, sint32 test);
 
 typedef union
 {
@@ -374,7 +374,7 @@ sint32 push_check_x(PL_SHORT_VECTOR *vec);
 sint32 push_check_z(PL_SHORT_VECTOR *vec);
 sint32 push_check_y(PL_SHORT_VECTOR *vec);
 sint32 push_check_y3(PL_SHORT_VECTOR *vec);
-sint32 func_80050400(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
+sint32 scr_push_nearest(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
 
 // The scratchpad offsets as signed halfwords plus the two adjustments after them, as one
 // struct so GCC keeps the adjustment loads after the box stores (scr_box_hit).
@@ -385,7 +385,7 @@ typedef struct
 } CODE486_OFSH6;
 #define CODE486_SP_OFSH6 (*(CODE486_OFSH6 *)0x1F800124)
 
-// Scratchpad fields read by the box tests (func_8004BDC8).
+// Scratchpad fields read by the box tests (scr_shape_push).
 #define CODE486_SP_POS_F0 ((PL_SHORT_VECTOR *)0x1F8000F0)
 #define CODE486_SP_POS_F8 ((PL_SHORT_VECTOR *)0x1F8000F8)
 #define CODE486_SP_F6W    (*(sint16 *)0x1F8000F6)
@@ -399,11 +399,11 @@ typedef struct
 #define CODE486_SP_H126   (*(sint16 *)0x1F800126)
 #define CODE486_SP_H128   (*(sint16 *)0x1F800128)
 #define CODE486_SP_H12A   (*(sint16 *)0x1F80012A)
-sint32 func_8004F44C(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
-sint32 func_8004F8BC(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side);
-sint32 func_8004FBE8(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side);
-sint32 func_8004FF14(PL_SHORT_VECTOR *pos, sint32 corner);
-sint32 func_800501E8(PL_SHORT_VECTOR *pos, sint32 corner);
+sint32 scr_push_box(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 mode);
+sint32 scr_push_z(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side);
+sint32 scr_push_x(PL_SHORT_VECTOR *pos, PL_SHORT_VECTOR *prev, sint32 side);
+sint32 scr_push_slant(PL_SHORT_VECTOR *pos, sint32 corner);
+sint32 scr_push_diag(PL_SHORT_VECTOR *pos, sint32 corner);
 
 // Room-exit record (0x18 bytes) in the list at *0x1F800050, ended by id -1.
 typedef struct

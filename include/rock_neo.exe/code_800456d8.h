@@ -174,7 +174,7 @@ typedef void (*CODE456_FUNC)(CODE456_WORK *wp);
 extern CODE456_FUNC Effect_explosion2_tbl[];
 extern CODE456_FUNC Effect_dash_spark_tbl[];
 extern CODE456_FUNC Effect_wall_spark_tbl[];
-extern CODE456_FUNC D_8008A778[];
+extern CODE456_FUNC Entry_walk_tbl[];
 extern uint16 D_80097E64[];
 extern uint16 D_80097EE0[];
 extern uint16 D_80097E70[];
@@ -246,7 +246,7 @@ sint32 Scr_point_height(void *pos);
 uint8 dash_spark_check(void *wp);
 void Effect_dash_spark_init(CODE456_SPARK *wp);
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
-                     uint32 flags, sint32 arg7, sint32 arg8);
+                 uint32 flags, sint32 arg7, sint32 arg8);
 sint32 rand(void);
 sint32 rcos(sint32 angle);
 sint32 rsin(sint32 angle);
