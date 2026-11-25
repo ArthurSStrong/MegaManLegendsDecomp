@@ -20,21 +20,21 @@ typedef struct
     STCOM25_NODE *nodes_0; // CC
     STCOM25_NODE *start_4; // D0: start records, by param_D
     uint8 *order_8;        // D4: node order for the scripted course (start next[0] == 6)
-    uint8 dir_C;           // D8: direction it rolls, 0..3
+    uint8 dir_C;           // D8: direction it drives, 0..3
     uint8 dir_D;           // D9
-    uint8 node_E;          // DA: the node it rolls to
+    uint8 node_E;          // DA: the node it drives to
     uint8 flags_F;         // DB
     sint16 speed_10;       // DC: target speed
-    sint16 phase_12;       // DE: how far it has turned over, 0..0x400
+    sint16 phase_12;       // DE: how far round the corner it has turned, 0..0x400
     sint16 dist_14;        // E0: distance to the node
-    sint16 pivot_16;       // E2: the edge it turns over (x)
+    sint16 pivot_16;       // E2: the corner's center (x)
     sint16 pivot_18;       // E4: (z)
     sint16 index_1A;       // E6: position in order_8
     sint16 value_1C;       // E8
     uint8 reserved1E[2];   // EA
 } STCOM25_CTL;
 
-// The 0x10C-byte work slot (freed through Close_SHL_WORK) of a block that rolls over and over
+// The 0x10C-byte work slot (freed through Close_SHL_WORK) of something that drives
 // along a course of map cells.
 typedef struct
 {
@@ -70,18 +70,18 @@ typedef struct
 
 typedef void (*STCOM25_FUNC)(STCOM25_WORK *wp);
 
-extern sint16 stcom25_D_0000[][4];     // by course_C: [0] the length of order_8
-extern STCOM25_NODE *stcom25_D_03B4[]; // by course_C: nodes
-extern STCOM25_NODE *stcom25_D_03E0[]; // by course_C: start records
-extern uint8 *stcom25_D_040C[];        // by course_C: node order
-extern STCOM25_FUNC stcom25_D_0438[];  // routine_0 (stcom25_func_0000)
-extern STCOM25_FUNC stcom25_D_0448[];  // routine_1 (stcom25_func_02CC)
+extern sint16 stcom25_D_0000[][4];        // by course_C: [0] the length of order_8
+extern STCOM25_NODE *stcom25_node_tbl[];  // by course_C: nodes
+extern STCOM25_NODE *stcom25_start_tbl[]; // by course_C: start records
+extern uint8 *stcom25_order_tbl[];        // by course_C: node order
+extern STCOM25_FUNC stcom25_move_tbl[];   // routine_0 (stcom25_move)
+extern STCOM25_FUNC stcom25_state_tbl[];  // routine_1 (stcom25_move_main)
 
-sint16 stcom25_func_06E4(STCOM25_WORK *wp);
-void stcom25_func_08AC(STCOM25_WORK *wp);
-void stcom25_func_0A38(STCOM25_WORK *wp);
-void stcom25_func_0D08(STCOM25_WORK *wp, sint16 size);
-void stcom25_func_0E3C(STCOM25_WORK *wp);
+sint16 stcom25_corner_check(STCOM25_WORK *wp);
+void stcom25_corner_place(STCOM25_WORK *wp);
+void stcom25_speed_update(STCOM25_WORK *wp);
+void stcom25_tilt(STCOM25_WORK *wp, sint16 size);
+void stcom25_node_next(STCOM25_WORK *wp);
 
 // ROCK_NEO.EXE.
 // The ground height at a position.

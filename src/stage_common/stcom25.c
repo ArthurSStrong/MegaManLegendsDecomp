@@ -6,20 +6,21 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom25"
 
-// A block that rolls over and over along a course.
-void stcom25_func_0000(STCOM25_WORK *wp)
+// Something that drives along a course of nodes, slowing for corners and turning round them.
+void stcom25_move(STCOM25_WORK *wp)
 {
-    stcom25_D_0438[wp->routine_0](wp);
+    stcom25_move_tbl[wp->routine_0](wp);
 }
 
-void stcom25_func_003C(STCOM25_WORK *wp)
+// Puts it at its start record, facing the start direction, with that record's model and speed.
+void stcom25_move_init(STCOM25_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
     STCOM_MATRIX *m;
 
-    wp->ctl.nodes_0 = stcom25_D_03B4[wp->course_C];
-    wp->ctl.start_4 = stcom25_D_03E0[wp->course_C];
-    wp->ctl.order_8 = stcom25_D_040C[wp->course_C];
+    wp->ctl.nodes_0 = stcom25_node_tbl[wp->course_C];
+    wp->ctl.start_4 = stcom25_start_tbl[wp->course_C];
+    wp->ctl.order_8 = stcom25_order_tbl[wp->course_C];
     wp->flags_0 |= 2;
     wp->position.x       = (wp->ctl.start_4[wp->start_D].x_0 - 0x40) << 9;
     wp->position.y       = 0;
@@ -42,7 +43,7 @@ void stcom25_func_003C(STCOM25_WORK *wp)
     wp->ctl.flags_F               = 0;
     wp->data_78                   = NULL;
     wp->position.y                = Scr_point_height(&wp->position);
-    stcom25_func_0D08(wp, 0x100);
+    stcom25_tilt(wp, 0x100);
     m                    = &wp->matrix;
     wp->position_fixed.y = wp->position.y << 16;
     wp->draw_pos         = wp->position;
@@ -60,7 +61,8 @@ void stcom25_func_003C(STCOM25_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom25_func_02CC(STCOM25_WORK *wp)
+// Each frame: runs the state (state_tbl), follows the ground and registers itself as solid.
+void stcom25_move_main(STCOM25_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
     STCOM_MATRIX *m;
@@ -70,9 +72,9 @@ void stcom25_func_02CC(STCOM25_WORK *wp)
     wp->rotation_prev       = wp->rotation;
     wp->rotation.z          = 0;
     wp->rotation.x          = 0;
-    stcom25_D_0448[wp->routine_1](wp);
+    stcom25_state_tbl[wp->routine_1](wp);
     wp->position.y = Scr_point_height(&wp->position);
-    stcom25_func_0D08(wp, 0x100);
+    stcom25_tilt(wp, 0x100);
     m                    = &wp->matrix;
     wp->position_fixed.y = wp->position.y << 16;
     wp->draw_pos         = wp->position;
@@ -84,40 +86,45 @@ void stcom25_func_02CC(STCOM25_WORK *wp)
     Solid_set(wp, 1, -1, 0x1000008);
 }
 
-void stcom25_func_040C(STCOM25_WORK *wp)
+// Frees the work slot.
+void stcom25_erase(STCOM25_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }
 
+// routine_0 3: nothing.
 void stcom25_func_042C(void)
 {
 }
 
-void stcom25_func_0434(STCOM25_WORK *wp)
+// Picks the first node to drive to.
+void stcom25_drive_start(STCOM25_WORK *wp)
 {
-    stcom25_func_0E3C(wp);
+    stcom25_node_next(wp);
     wp->routine_1++;
 }
 
-void stcom25_func_046C(STCOM25_WORK *wp)
+// Drives to the node, then turns the corner there.
+void stcom25_drive(STCOM25_WORK *wp)
 {
-    stcom25_func_0A38(wp);
-    if (stcom25_func_06E4(wp) == 0)
+    stcom25_speed_update(wp);
+    if (stcom25_corner_check(wp) == 0)
     {
         Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
         return;
     }
     wp->routine_1 = 2;
     wp->ctl.phase_12 += (wp->velocity.v.x * 3) >> 5;
-    stcom25_func_08AC(wp);
+    stcom25_corner_place(wp);
 }
 
-void stcom25_func_04E8(STCOM25_WORK *wp)
+// Turns round the corner; once round, heads for the next node and drives on.
+void stcom25_corner(STCOM25_WORK *wp)
 {
     STCOM25_CTL *ctl;
     sint8 sign;
 
-    stcom25_func_0A38(wp);
+    stcom25_speed_update(wp);
     ctl             = &wp->ctl;
     wp->ctl.dist_14 = 0x7FFF;
     wp->ctl.phase_12 += (wp->velocity.v.x * 3) >> 5;
@@ -158,17 +165,17 @@ void stcom25_func_04E8(STCOM25_WORK *wp)
         }
         wp->position_fixed.x = wp->position.x << 16;
         wp->position_fixed.z = wp->position.z << 16;
-        stcom25_func_0E3C(wp);
+        stcom25_node_next(wp);
         ctl->phase_12 = 0;
         ctl->flags_F &= ~1;
         wp->routine_1 = 1;
         return;
     }
-    stcom25_func_08AC(wp);
+    stcom25_corner_place(wp);
 }
 
-// Nonzero once it reaches the node's cell: sets up the turn over its edge.
-sint16 stcom25_func_06E4(STCOM25_WORK *wp)
+// Nonzero once it reaches the node's cell: sets up the turn round the corner there.
+sint16 stcom25_corner_check(STCOM25_WORK *wp)
 {
     STCOM25_CTL *ctl;
     sint16 result;
@@ -183,7 +190,7 @@ sint16 stcom25_func_06E4(STCOM25_WORK *wp)
     ctl = &wp->ctl;
     if ((wp->ctl.flags_F & 0xE0) == 0x40)
     {
-        stcom25_func_0E3C(wp);
+        stcom25_node_next(wp);
         wp->ctl.flags_F &= ~0x40;
         return 0;
     }
@@ -237,8 +244,8 @@ sint16 stcom25_func_06E4(STCOM25_WORK *wp)
     return result;
 }
 
-// Places it on its turn over the pivot edge.
-void stcom25_func_08AC(STCOM25_WORK *wp)
+// Places it on its way round the corner, by phase_12.
+void stcom25_corner_place(STCOM25_WORK *wp)
 {
     STCOM25_CTL *ctl;
     sint32 c;
@@ -285,7 +292,7 @@ void stcom25_func_08AC(STCOM25_WORK *wp)
 }
 
 // Speeds it up or slows it down toward speed_10, braking before corners.
-void stcom25_func_0A38(STCOM25_WORK *wp)
+void stcom25_speed_update(STCOM25_WORK *wp)
 {
     STCOM25_CTL *ctl;
     STCOM25_NODE *node;
@@ -414,7 +421,7 @@ void stcom25_func_0A38(STCOM25_WORK *wp)
 }
 
 // Tilts it (rotation.x) by the ground's slope across `size`.
-void stcom25_func_0D08(STCOM25_WORK *wp, sint16 size)
+void stcom25_tilt(STCOM25_WORK *wp, sint16 size)
 {
     STCOM_SVECTOR pos;
     sint16 h;
@@ -454,7 +461,7 @@ void stcom25_func_0D08(STCOM25_WORK *wp, sint16 size)
 }
 
 // Picks the next node: in order_8's order, or at random by each branch's chance.
-void stcom25_func_0E3C(STCOM25_WORK *wp)
+void stcom25_node_next(STCOM25_WORK *wp)
 {
     STCOM25_CTL *ctl;
     sint16 i;

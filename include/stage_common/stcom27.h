@@ -82,24 +82,24 @@ typedef struct
 
 typedef void (*STCOM27_FUNC)(STCOM27_WORK *wp);
 
-extern STCOM27_FUNC stcom27_D_0000[]; // routine_0 handlers (stcom27_func_0000)
-extern sint16 stcom27_D_000C[];       // data_78
-extern STCOM27_FUNC stcom27_D_0018[]; // routine_1 handlers (stcom27_func_0168)
-extern STCOM27_FUNC stcom27_D_003C[]; // routine_2 handlers (stcom27_func_0954)
+extern STCOM27_FUNC stcom27_move_tbl[];   // by routine_0
+extern sint16 stcom27_D_000C[];           // data_78
+extern STCOM27_FUNC stcom27_state_tbl[];  // by routine_1
+extern STCOM27_FUNC stcom27_charge_tbl[]; // the charge, by routine_2
 
-void stcom27_func_02B4(STCOM27_WORK *wp);
-void stcom27_func_04E4(STCOM27_WORK *wp);
-void stcom27_func_0578(STCOM27_WORK *wp);
-void stcom27_func_0600(STCOM27_WORK *wp);
-void stcom27_func_06F8(STCOM27_WORK *wp);
-void stcom27_func_0CC4(STCOM27_WORK *wp);
-void stcom27_func_0D44(STCOM27_WORK *wp);
-void stcom27_func_0DB8(STCOM27_WORK *wp);
-void stcom27_func_0DDC(STCOM27_WORK *wp);
-void stcom27_func_0E34(STCOM27_WORK *wp);
-void stcom27_func_0E4C(STCOM27_WORK *wp);
-void stcom27_func_0E78(STCOM27_WORK *wp);
-void stcom27_func_0EAC(STCOM27_WORK *wp);
+void stcom27_damage(STCOM27_WORK *wp);
+void stcom27_knock_start(STCOM27_WORK *wp);
+void stcom27_hit_set(STCOM27_WORK *wp);
+void stcom27_ground_check(STCOM27_WORK *wp);
+void stcom27_notice(STCOM27_WORK *wp);
+void stcom27_knock_fly(STCOM27_WORK *wp);
+void stcom27_knock_bounce(STCOM27_WORK *wp);
+void stcom27_wall_stop(STCOM27_WORK *wp);
+void stcom27_air_move(STCOM27_WORK *wp);
+void stcom27_idle_init(STCOM27_WORK *wp);
+void stcom27_walk_init(STCOM27_WORK *wp);
+void stcom27_turn_init(STCOM27_WORK *wp);
+void stcom27_back_off_init(STCOM27_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern STCOM27_KIND **Em_param_tbl;
@@ -107,7 +107,7 @@ void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else

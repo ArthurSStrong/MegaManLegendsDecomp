@@ -8,12 +8,13 @@
 
 // A model whose texture runs an animation script; variant 1 also runs a scene when scene flag
 // 0x60D is set.
-void stcom29_func_0000(STCOM29_WORK *wp)
+void stcom29_move(STCOM29_WORK *wp)
 {
-    stcom29_D_00E0[wp->variant_3][wp->routine_0](wp);
+    stcom29_move_tbl[wp->variant_3][wp->routine_0](wp);
 }
 
-void stcom29_func_0048(STCOM29_WORK *wp)
+// Gets the model (frees the slot if missing) and picks the variant's script.
+void stcom29_move_init(STCOM29_WORK *wp)
 {
     wp->key_20 = Stage_hed_model_get(stcom29_D_0000[wp->variant_3]);
     if (wp->key_20 == 0)
@@ -34,11 +35,12 @@ void stcom29_func_0048(STCOM29_WORK *wp)
         wp->script_C = 1;
     }
     wp->step_D  = 0;
-    wp->timer_E = stcom29_D_00BC[wp->script_C]->time_0;
+    wp->timer_E = stcom29_script_tbl[wp->script_C]->time_0;
     wp->routine_0++;
 }
 
-void stcom29_func_00F8(STCOM29_WORK *wp)
+// Variant 1: waits for scene flag 0x60D.
+void stcom29_scene_wait(STCOM29_WORK *wp)
 {
     if (Sce_flag_test(0x60D) != 0)
     {
@@ -47,7 +49,9 @@ void stcom29_func_00F8(STCOM29_WORK *wp)
     }
 }
 
-void stcom29_func_013C(STCOM29_WORK *wp)
+// Variant 1's scene: stops the player, plays the animation to step 4, shows a message, plays
+// script 2 to step 4, then hands control back.
+void stcom29_scene(STCOM29_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -65,7 +69,7 @@ void stcom29_func_013C(STCOM29_WORK *wp)
             }
             break;
         case 2:
-            stcom29_func_04B4();
+            stcom29_scene_message();
             wp->routine_1++;
             break;
         case 3:
@@ -73,13 +77,13 @@ void stcom29_func_013C(STCOM29_WORK *wp)
             {
                 wp->script_C = 2;
                 wp->step_D   = 0;
-                wp->timer_E  = stcom29_D_00BC[wp->script_C]->time_0;
+                wp->timer_E  = stcom29_script_tbl[wp->script_C]->time_0;
                 wp->routine_1++;
             }
             break;
         case 1:
         case 4:
-            stcom29_func_0294(wp);
+            stcom29_anim_step(wp);
             if (wp->step_D == 4)
             {
                 wp->routine_1++;
@@ -91,20 +95,20 @@ void stcom29_func_013C(STCOM29_WORK *wp)
             Sce_flag_off(0x60D);
             wp->script_C  = 1;
             wp->step_D    = 0;
-            wp->timer_E   = stcom29_D_00BC[wp->script_C]->time_0;
+            wp->timer_E   = stcom29_script_tbl[wp->script_C]->time_0;
             wp->routine_0 = 1;
             break;
     }
 }
 
 // Steps the texture animation script.
-void stcom29_func_0294(STCOM29_WORK *wp)
+void stcom29_anim_step(STCOM29_WORK *wp)
 {
     STCOM29_UV4 uv;
     STCOM29_UNPACK unpack;
     STCOM29_STEP *step;
 
-    step = &stcom29_D_00BC[wp->script_C][wp->step_D];
+    step = &stcom29_script_tbl[wp->script_C][wp->step_D];
     if (step->time_0 == 0)
     {
         return;
@@ -117,13 +121,13 @@ void stcom29_func_0294(STCOM29_WORK *wp)
         if (step->time_0 == 0xFF)
         {
             wp->step_D = 0;
-            step       = stcom29_D_00BC[wp->script_C];
+            step       = stcom29_script_tbl[wp->script_C];
         }
         else if (step->time_0 == 0)
         {
             return;
         }
-        wp->timer_E = stcom29_D_00BC[wp->script_C]->time_0;
+        wp->timer_E = stcom29_script_tbl[wp->script_C]->time_0;
     }
     uv      = Quad_uv_get(unpack.c, 0);
     uv.b[0] = stcom29_D_000C[step->frame_1][0];
@@ -137,7 +141,9 @@ void stcom29_func_0294(STCOM29_WORK *wp)
     Quad_uv_set(unpack.c, 0, uv.w);
 }
 
-void stcom29_func_04B4(void)
+// Starts the scene's message: 0x22 unless stcom29_func_055C passes, else 1 the first time
+// (setting its scene flags) and 2 after.
+void stcom29_scene_message(void)
 {
     if (stcom29_func_055C())
     {
@@ -182,12 +188,13 @@ uint8 stcom29_func_055C(void)
 }
 
 // Five texture layers, each stepping its own script.
-void stcom29_func_05E0(STCOM29_ANIM_WORK *wp)
+void stcom29_layers_move(STCOM29_ANIM_WORK *wp)
 {
-    stcom29_D_0258[wp->routine_0](wp);
+    stcom29_layers_tbl[wp->routine_0](wp);
 }
 
-void stcom29_func_061C(STCOM29_ANIM_WORK *wp)
+// Gets both models; frees the slot if either is missing.
+void stcom29_layers_init(STCOM29_ANIM_WORK *wp)
 {
     wp->key_1C[0] = Stage_hed_model_get(0x130000);
     if (wp->key_1C[0] == 0 || (wp->key_1C[1] = Stage_hed_model_get(0x130200)) == 0)
@@ -208,7 +215,8 @@ void stcom29_func_061C(STCOM29_ANIM_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom29_func_0708(STCOM29_ANIM_WORK *wp)
+// Steps each layer's script and moves its texture.
+void stcom29_layers_main(STCOM29_ANIM_WORK *wp)
 {
     STCOM29_UV4 uv;
     STCOM29_UNPACK unpack;
@@ -235,18 +243,19 @@ void stcom29_func_0708(STCOM29_ANIM_WORK *wp)
     }
 }
 
-// Runs a scene once scene flag 0x60C is set.
-void stcom29_func_0920(STCOM29_WORK *wp)
+// Refills the player's life in a scene once scene flag 0x60C is set.
+void stcom29_heal_move(STCOM29_WORK *wp)
 {
-    stcom29_D_0260[wp->routine_0](wp);
+    stcom29_heal_tbl[wp->routine_0](wp);
 }
 
-void stcom29_func_095C(STCOM29_WORK *wp)
+void stcom29_heal_init(STCOM29_WORK *wp)
 {
     wp->routine_0 = 1;
 }
 
-void stcom29_func_0968(STCOM29_WORK *wp)
+// Waits for scene flag 0x60C.
+void stcom29_heal_wait(STCOM29_WORK *wp)
 {
     if (Sce_flag_test(0x60C) != 0)
     {
@@ -255,7 +264,9 @@ void stcom29_func_0968(STCOM29_WORK *wp)
     }
 }
 
-void stcom29_func_09A4(STCOM29_WORK *wp)
+// Stops the player, shows a message, refills the life gauge, shows a second message, then
+// hands control back once the camera settles.
+void stcom29_heal(STCOM29_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 

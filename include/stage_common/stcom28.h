@@ -70,27 +70,27 @@ typedef struct
 
 typedef void (*STCOM28_FUNC)(STCOM28_WORK *wp);
 
-extern STCOM28_FUNC stcom28_D_0000[]; // routine_0 handlers (stcom28_func_0000)
-extern sint16 stcom28_D_000C[];       // data_78
-extern STCOM28_FUNC stcom28_D_0018[]; // routine_1 handlers (stcom28_func_00E8)
-extern uint16 stcom28_D_0034[];       // bobbing offsets, 32 steps
-extern uint16 stcom28_D_0074[];       // move durations, 8 choices
+extern STCOM28_FUNC stcom28_move_tbl[];  // by routine_0
+extern sint16 stcom28_D_000C[];          // data_78
+extern STCOM28_FUNC stcom28_state_tbl[]; // by routine_1
+extern uint16 stcom28_bob_tbl[];         // bobbing offsets, 32 steps
+extern uint16 stcom28_time_tbl[];        // move durations, 8 choices
 
-void stcom28_func_00E8(STCOM28_WORK *wp);
-void stcom28_func_0294(STCOM28_WORK *wp);
-void stcom28_func_0344(STCOM28_WORK *wp);
-void stcom28_func_038C(STCOM28_WORK *wp);
-void stcom28_func_0468(STCOM28_WORK *wp);
-void stcom28_func_0574(STCOM28_WORK *wp);
-void stcom28_func_063C(STCOM28_WORK *wp);
-void stcom28_func_0678(STCOM28_WORK *wp);
-sint32 stcom28_func_0744(STCOM28_WORK *wp);
-void stcom28_func_0794(STCOM28_WORK *wp);
-void stcom28_func_07F4(STCOM28_WORK *wp);
-void stcom28_func_0A14(STCOM28_WORK *wp);
-void stcom28_func_0A88(STCOM28_WORK *wp);
-void stcom28_func_0BF0(STCOM28_WORK *wp);
-void stcom28_func_0CB8(STCOM28_WORK *wp);
+void stcom28_move_main(STCOM28_WORK *wp);
+void stcom28_choose(STCOM28_WORK *wp);
+void stcom28_notice(STCOM28_WORK *wp);
+void stcom28_damage(STCOM28_WORK *wp);
+void stcom28_ground_check(STCOM28_WORK *wp);
+void stcom28_hit_set(STCOM28_WORK *wp);
+void stcom28_roam_rise(STCOM28_WORK *wp);
+void stcom28_roam_walk(STCOM28_WORK *wp);
+sint32 stcom28_edge_check(STCOM28_WORK *wp);
+void stcom28_turn_init(STCOM28_WORK *wp);
+void stcom28_leap_init(STCOM28_WORK *wp);
+void stcom28_charge_aim(STCOM28_WORK *wp);
+void stcom28_charge_run(STCOM28_WORK *wp);
+void stcom28_leap_air(STCOM28_WORK *wp);
+void stcom28_leap_back(STCOM28_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern STCOM28_KIND **Shl_param_tbl;
@@ -98,7 +98,7 @@ void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
 sint32 Calc_hit_side(STCOM_SVECTOR *pos, STCOM_SVECTOR *from, sint32 rot, sint32 arg3);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 #ifdef __wasm32__
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else

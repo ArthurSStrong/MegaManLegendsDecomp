@@ -22,7 +22,7 @@ typedef struct
     uint8 routine_0;        // 08
     uint8 routine_1;        // 09
     uint8 reserved0A[2];    // 0A
-    sint8 script_C;         // 0C: index into stcom29_D_00BC
+    sint8 script_C;         // 0C: index into stcom29_script_tbl
     sint8 step_D;           // 0D
     sint8 timer_E;          // 0E
     uint8 reserved0F[0x11]; // 0F
@@ -64,20 +64,20 @@ typedef union
 typedef void (*STCOM29_FUNC)(STCOM29_WORK *wp);
 typedef void (*STCOM29_ANIM_FUNC)(STCOM29_ANIM_WORK *wp);
 
-extern uint32 stcom29_D_0000[];            // model keys by variant_3
-extern uint8 stcom29_D_000C[][8];          // UV corners by frame
-extern STCOM29_STEP *stcom29_D_00BC[];     // scripts
-extern STCOM29_FUNC *stcom29_D_00E0[];     // routine_0 handlers by variant_3 (stcom29_func_0000)
-extern uint8 stcom29_D_010C[];             // the model's part by variant_3
-extern uint8 stcom29_D_0110[5][29][2];     // each layer's (frame, time) steps
-extern uint8 stcom29_D_0234[5][4];         // each layer's first u per corner
-extern uint8 stcom29_D_0248[];             // each layer's texture entry
-extern uint8 stcom29_D_0250[];             // each layer's model (key_1C index)
-extern STCOM29_ANIM_FUNC stcom29_D_0258[]; // routine_0 handlers (stcom29_func_05E0)
-extern STCOM29_FUNC stcom29_D_0260[];      // routine_0 handlers (stcom29_func_0920)
+extern uint32 stcom29_D_0000[];                // model keys by variant_3
+extern uint8 stcom29_D_000C[][8];              // UV corners by frame
+extern STCOM29_STEP *stcom29_script_tbl[];     // scripts
+extern STCOM29_FUNC *stcom29_move_tbl[];       // routine_0 handlers by variant_3 (stcom29_move)
+extern uint8 stcom29_D_010C[];                 // the model's part by variant_3
+extern uint8 stcom29_D_0110[5][29][2];         // each layer's (frame, time) steps
+extern uint8 stcom29_D_0234[5][4];             // each layer's first u per corner
+extern uint8 stcom29_D_0248[];                 // each layer's texture entry
+extern uint8 stcom29_D_0250[];                 // each layer's model (key_1C index)
+extern STCOM29_ANIM_FUNC stcom29_layers_tbl[]; // routine_0 handlers (stcom29_layers_move)
+extern STCOM29_FUNC stcom29_heal_tbl[];        // routine_0 handlers (stcom29_heal_move)
 
-void stcom29_func_0294(STCOM29_WORK *wp);
-void stcom29_func_04B4(void);
+void stcom29_anim_step(STCOM29_WORK *wp);
+void stcom29_scene_message(void);
 uint8 stcom29_func_055C(void);
 
 // ROCK_NEO.EXE.
