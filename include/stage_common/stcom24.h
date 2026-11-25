@@ -83,7 +83,7 @@ typedef struct
     STCOM24_CTL ctl;                        // 348
 } STCOM24_WORK;
 
-// The 0x10C-byte slot stcom24_func_07E4 spawns (kind 9, variant 3).
+// The 0x10C-byte slot stcom24_shoot_fire spawns (kind 9, variant 3).
 typedef struct
 {
     uint8 flags_0;                     // 00
@@ -111,15 +111,15 @@ typedef struct
 
 typedef void (*STCOM24_FUNC)(STCOM24_WORK *wp);
 
-extern sint16 stcom24_D_0000[];       // data_78
-extern STCOM24_FUNC stcom24_D_000C[]; // routine_0 handlers (stcom24_func_0000)
-extern STCOM24_FUNC stcom24_D_002C[]; // routine_1 handlers (stcom24_func_05B4)
-extern STCOM24_FUNC stcom24_D_0044[]; // routine_1 handlers (stcom24_func_0954)
-extern STCOM24_FUNC stcom24_D_0050[]; // routine_1 handlers (stcom24_func_0BA0)
-extern STCOM24_FUNC stcom24_D_0060[]; // routine_1 handlers (stcom24_func_0F20)
+extern sint16 stcom24_D_0000[];          // data_78
+extern STCOM24_FUNC stcom24_move_tbl[];  // routine_0 handlers (stcom24_move)
+extern STCOM24_FUNC stcom24_shoot_tbl[]; // routine_1 handlers (stcom24_shoot)
+extern STCOM24_FUNC stcom24_guard_tbl[]; // routine_1 handlers (stcom24_guard)
+extern STCOM24_FUNC stcom24_knock_tbl[]; // routine_1 handlers (stcom24_knock_back)
+extern STCOM24_FUNC stcom24_walk_tbl[];  // routine_1 handlers (stcom24_walk)
 
-sint8 stcom24_func_1468(STCOM24_WORK *wp);
-sint8 stcom24_func_15E8(STCOM24_WORK *wp);
+sint8 stcom24_body_hit(STCOM24_WORK *wp);
+sint8 stcom24_claw_hit(STCOM24_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern STCOM24_KIND **Em_param_tbl;

@@ -5,8 +5,9 @@
 #include "stage_common/rock_neo.h"
 
 // The 0x50-byte work slot (Open_WORK_50) of the objects in stcom22, by variant_3: a lift that
-// carries the player (0, 003C..0EA8), a breakable crate (1 and 2, 0F00..13F0), a lever (4,
-// 1434..1730), a gate and its switch (6 and 7, 1758..1ED0).
+// carries the player (0), a crate that breaks when stood on (1 and 2), a lever (4), a button that
+// sinks when shot and sets a scene flag (6), and a barrier that sinks away once that flag is set
+// and the player agrees (7). Variants 3 and 5 do nothing.
 typedef struct STCOM22_WORK STCOM22_WORK;
 
 // What the objects keep in their matrix's translation, reached through a pointer.
@@ -120,23 +121,23 @@ typedef struct
     uint8 fade_out;         // 19
 } STCOM22_ENTRY;
 
-extern sint16 stcom22_D_0000[];       // lift: floor box for the ground height
-extern uint32 stcom22_D_000C[];       // a model
-extern uint32 stcom22_D_0018[];       // a model
-extern STCOM22_FUNC stcom22_D_0024[]; // by variant_3
-extern STCOM22_FUNC stcom22_D_0044[]; // lift: routine_0
-extern STCOM22_FUNC stcom22_D_0050[]; // lift: routine_1
-extern STCOM22_FUNC stcom22_D_0068[]; // crate: routine_0
-extern STCOM22_FUNC stcom22_D_0074[]; // crate: routine_1
-extern STCOM22_FUNC stcom22_D_007C[]; // lever: routine_0
-extern STCOM22_FUNC stcom22_D_0088[]; // lever: routine_1
-extern STCOM22_FUNC stcom22_D_0094[]; // gate: routine_0
-extern STCOM22_FUNC stcom22_D_00A0[]; // gate: routine_1
-extern STCOM22_FUNC stcom22_D_00AC[]; // switch: routine_0
+extern sint16 stcom22_D_0000[];                 // lift: floor box for the ground height
+extern uint32 stcom22_D_000C[];                 // a model
+extern uint32 stcom22_D_0018[];                 // a model
+extern STCOM22_FUNC stcom22_move_tbl[];         // by variant_3
+extern STCOM22_FUNC stcom22_lift_tbl[];         // lift: routine_0
+extern STCOM22_FUNC stcom22_lift_state_tbl[];   // lift: routine_1
+extern STCOM22_FUNC stcom22_crate_tbl[];        // crate: routine_0
+extern STCOM22_FUNC stcom22_crate_state_tbl[];  // crate: routine_1
+extern STCOM22_FUNC stcom22_lever_tbl[];        // lever: routine_0
+extern STCOM22_FUNC stcom22_lever_state_tbl[];  // lever: routine_1
+extern STCOM22_FUNC stcom22_button_tbl[];       // button: routine_0
+extern STCOM22_FUNC stcom22_button_state_tbl[]; // button: routine_1
+extern STCOM22_FUNC stcom22_barrier_tbl[];      // barrier: routine_0
 
-void stcom22_func_04B4(STCOM22_WORK *wp);
-void stcom22_func_0FD4(STCOM22_WORK *wp);
-void stcom22_func_1C5C(STCOM22_WORK *wp);
+void stcom22_lift_main(STCOM22_WORK *wp);
+void stcom22_crate_main(STCOM22_WORK *wp);
+void stcom22_barrier_main(STCOM22_WORK *wp);
 
 // Defined outside this file, at the same address in every stage that links it.
 void func_8010D9F8(sint32 a0, sint32 a1, sint32 a2, STCOM_SVECTOR *pos);
@@ -149,8 +150,8 @@ STCOM22_WORK *Open_WORK_50(void);
 void Close_WORK_50(STCOM22_WORK *wp);
 sint32 Scr_height_calc(STCOM_SVECTOR *pos, sint16 *box, sint32 dy, sint32 kind);
 void Ride_clear(STCOM22_WORK *wp);
-sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range,
-                     STCOM_FIXED_VECTOR *target, sint32 target_angle, sint32 target_range);
+sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 angle, sint32 range, STCOM_FIXED_VECTOR *target,
+                sint32 target_angle, sint32 target_range);
 sint32 Scr_map_cell_get(sint32 a0, STCOM_SVECTOR *pos);
 uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 

@@ -6,18 +6,18 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom22"
 
-void stcom22_func_0000(STCOM22_WORK *wp)
+void stcom22_move(STCOM22_WORK *wp)
 {
-    stcom22_D_0024[wp->variant_3](wp);
+    stcom22_move_tbl[wp->variant_3](wp);
 }
 
 // The lift.
-void stcom22_func_003C(STCOM22_WORK *wp)
+void stcom22_lift(STCOM22_WORK *wp)
 {
-    stcom22_D_0044[wp->routine_0](wp);
+    stcom22_lift_tbl[wp->routine_0](wp);
 }
 
-void stcom22_func_0078(STCOM22_WORK *wp)
+void stcom22_lift_init(STCOM22_WORK *wp)
 {
     STCOM22_PL_WORK *pl;
     STCOM22_CTL *ctl;
@@ -170,21 +170,21 @@ void stcom22_func_0078(STCOM22_WORK *wp)
     wp->routine_0 = 1;
     wp->color_40  = 0x2C808080;
     wp->value_D   = 0x78;
-    stcom22_func_04B4(wp);
+    stcom22_lift_main(wp);
 }
 
-void stcom22_func_04B4(STCOM22_WORK *wp)
+void stcom22_lift_main(STCOM22_WORK *wp)
 {
-    stcom22_D_0050[wp->routine_1](wp);
+    stcom22_lift_state_tbl[wp->routine_1](wp);
     Solid_set(wp, 5, -1, 0);
 }
 
-void stcom22_func_0510(STCOM22_WORK *wp)
+void stcom22_lift_erase(STCOM22_WORK *wp)
 {
     Close_WORK_50(wp);
 }
 
-void stcom22_func_0530(STCOM22_WORK *wp)
+void stcom22_lift_wait(STCOM22_WORK *wp)
 {
     STCOM22_PL_WORK *pl;
     STCOM22_CTL *ctl;
@@ -301,7 +301,7 @@ void stcom22_func_0530(STCOM22_WORK *wp)
     wp->routine_2 = 0;
 }
 
-void stcom22_func_0864(STCOM22_WORK *wp)
+void stcom22_lift_move(STCOM22_WORK *wp)
 {
     sint32 diff;
     STCOM_PL_WORK *pl;
@@ -356,7 +356,7 @@ void stcom22_func_0864(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_0A24(STCOM22_WORK *wp)
+void stcom22_lift_carry(STCOM22_WORK *wp)
 {
     STCOM22_PL_WORK *pl;
     STCOM22_CTL *ctl;
@@ -424,7 +424,7 @@ void stcom22_func_0A24(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_0CC8(STCOM22_WORK *wp)
+void stcom22_lift_exit(STCOM22_WORK *wp)
 {
     STCOM22_ENTRY *entry;
 
@@ -473,7 +473,7 @@ void stcom22_func_0CC8(STCOM22_WORK *wp)
     wp->routine_1++;
 }
 
-void stcom22_func_0E50(STCOM22_WORK *wp)
+void stcom22_lift_exit_wait(STCOM22_WORK *wp)
 {
     // Never used; it reserves retail's frame.
     sint32 unused;
@@ -485,7 +485,7 @@ void stcom22_func_0E50(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_0EA8(STCOM22_WORK *wp)
+void stcom22_lift_carry_start(STCOM22_WORK *wp)
 {
     if (!(Moji_flag & 0x8000000))
     {
@@ -496,13 +496,13 @@ void stcom22_func_0EA8(STCOM22_WORK *wp)
     }
 }
 
-// The crate.
-void stcom22_func_0F00(STCOM22_WORK *wp)
+// The crate: 30 frames after the player stands on it, it breaks into pieces.
+void stcom22_crate(STCOM22_WORK *wp)
 {
-    stcom22_D_0068[wp->routine_0](wp);
+    stcom22_crate_tbl[wp->routine_0](wp);
 }
 
-void stcom22_func_0F3C(STCOM22_WORK *wp)
+void stcom22_crate_init(STCOM22_WORK *wp)
 {
     wp->flags_0 |= 6;
     STCOM22_IDENTITY(&wp->matrix);
@@ -514,20 +514,20 @@ void stcom22_func_0F3C(STCOM22_WORK *wp)
     wp->routine_0 = 1;
     wp->routine_1 = 0;
     wp->color_40  = 0x2C808080;
-    stcom22_func_0FD4(wp);
+    stcom22_crate_main(wp);
 }
 
-void stcom22_func_0FD4(STCOM22_WORK *wp)
+void stcom22_crate_main(STCOM22_WORK *wp)
 {
-    stcom22_D_0074[wp->routine_1](wp);
+    stcom22_crate_state_tbl[wp->routine_1](wp);
 }
 
-void stcom22_func_1010(STCOM22_WORK *wp)
+void stcom22_crate_erase(STCOM22_WORK *wp)
 {
     Close_WORK_50(wp);
 }
 
-void stcom22_func_1030(STCOM22_WORK *wp)
+void stcom22_crate_wait(STCOM22_WORK *wp)
 {
     if (Player_work.value_76 != 0 && Player_work.value_C0 == wp)
     {
@@ -540,7 +540,7 @@ void stcom22_func_1030(STCOM22_WORK *wp)
     Solid_set(wp, 5, -1, 0);
 }
 
-void stcom22_func_10B8(STCOM22_WORK *wp)
+void stcom22_crate_break(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
@@ -607,9 +607,10 @@ void stcom22_func_10B8(STCOM22_WORK *wp)
     Sound_call2(0x114, &wp->pos_38);
 }
 
-void stcom22_func_13F0(STCOM22_WORK *wp)
+// Same code as stcom22_crate (variant 2: the broken crate's model).
+void stcom22_crate2(STCOM22_WORK *wp)
 {
-    stcom22_D_0068[wp->routine_0](wp);
+    stcom22_crate_tbl[wp->routine_0](wp);
 }
 
 void stcom22_func_142C(void)
@@ -617,11 +618,11 @@ void stcom22_func_142C(void)
 }
 
 // The lever.
-void stcom22_func_1434(STCOM22_WORK *wp)
+void stcom22_lever(STCOM22_WORK *wp)
 {
     STCOM_FIXED_VECTOR scale;
 
-    stcom22_D_007C[wp->routine_0](wp);
+    stcom22_lever_tbl[wp->routine_0](wp);
     RotMatrixYXZ(&wp->matrix.f.ctl.rot, &wp->matrix.m);
     scale.x = 0x1000;
     scale.y = 0x1000;
@@ -629,7 +630,7 @@ void stcom22_func_1434(STCOM22_WORK *wp)
     ScaleMatrix(&wp->matrix.m, &scale);
 }
 
-void stcom22_func_14A8(STCOM22_WORK *wp)
+void stcom22_lever_init(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
@@ -659,12 +660,12 @@ void stcom22_func_14A8(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_1588(STCOM22_WORK *wp)
+void stcom22_lever_main(STCOM22_WORK *wp)
 {
-    stcom22_D_0088[wp->routine_1](wp);
+    stcom22_lever_state_tbl[wp->routine_1](wp);
 }
 
-void stcom22_func_15C4(STCOM22_WORK *wp)
+void stcom22_lever_wait(STCOM22_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM_FIXED_VECTOR fixed;
@@ -677,7 +678,7 @@ void stcom22_func_15C4(STCOM22_WORK *wp)
         fixed.y = wp->pos_38.y << 16;
         fixed.z = wp->pos_38.z << 16;
         if (Angle_ck(&fixed, wp->matrix.f.ctl.rot.y + 0x400, 0x100, &pl->position_fixed,
-                          Player_work.rotation.y, 0x800))
+                     Player_work.rotation.y, 0x800))
         {
             wp->routine_1 = 1;
             if (wp->value_C == 0)
@@ -699,7 +700,7 @@ void stcom22_func_15C4(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_16F4(STCOM22_WORK *wp)
+void stcom22_lever_pull(STCOM22_WORK *wp)
 {
     wp->matrix.f.ctl.rot.z = (wp->matrix.f.ctl.rot.z - 0x50) & 0xFFF;
     if (wp->matrix.f.ctl.rot.z <= 0xC00)
@@ -713,7 +714,7 @@ void stcom22_func_1728(void)
 {
 }
 
-void stcom22_func_1730(STCOM22_WORK *wp)
+void stcom22_lever_erase(STCOM22_WORK *wp)
 {
     Close_WORK_50(wp);
 }
@@ -722,13 +723,13 @@ void stcom22_func_1750(void)
 {
 }
 
-// The gate.
-void stcom22_func_1758(STCOM22_WORK *wp)
+// The button: a hit squashes it for 0x80 frames and sets its scene flag (by value_5).
+void stcom22_button(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR rot;
     STCOM_FIXED_VECTOR scale;
 
-    stcom22_D_0094[wp->routine_0](wp);
+    stcom22_button_tbl[wp->routine_0](wp);
     rot.x = 0;
     rot.y = 0;
     rot.z = 0;
@@ -739,7 +740,7 @@ void stcom22_func_1758(STCOM22_WORK *wp)
     ScaleMatrix(&wp->matrix.m, &scale);
 }
 
-void stcom22_func_17E0(STCOM22_WORK *wp)
+void stcom22_button_init(STCOM22_WORK *wp)
 {
     wp->flags_0 |= 6;
     STCOM22_IDENTITY(&wp->matrix);
@@ -751,7 +752,7 @@ void stcom22_func_17E0(STCOM22_WORK *wp)
     wp->matrix.f.ctl.value = 0x1000;
 }
 
-void stcom22_func_1864(STCOM22_WORK *wp)
+void stcom22_button_main(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR pos;
     sint32 *hit;
@@ -765,11 +766,11 @@ void stcom22_func_1864(STCOM22_WORK *wp)
     pos.y -= 0x28;
     pos.z -= 0x80;
     Set_Atari(&pos, 0x3C, 0, 0xC000, wp->index_1, hit, 0x4000000, 0, 0x80);
-    stcom22_D_00A0[wp->routine_1](wp);
+    stcom22_button_state_tbl[wp->routine_1](wp);
     wp->u_48.hit = 0;
 }
 
-void stcom22_func_1934(STCOM22_WORK *wp)
+void stcom22_button_erase(STCOM22_WORK *wp)
 {
     Close_WORK_50(wp);
 }
@@ -778,7 +779,7 @@ void stcom22_func_1954(void)
 {
 }
 
-void stcom22_func_195C(STCOM22_WORK *wp)
+void stcom22_button_press(STCOM22_WORK *wp)
 {
     STCOM22_CTL *ctl;
 
@@ -812,7 +813,7 @@ void stcom22_func_195C(STCOM22_WORK *wp)
     wp->value_B   = 0x80;
 }
 
-void stcom22_func_1A2C(STCOM22_WORK *wp)
+void stcom22_button_wait(STCOM22_WORK *wp)
 {
     if (wp->value_B != 0)
     {
@@ -837,13 +838,13 @@ void stcom22_func_1A2C(STCOM22_WORK *wp)
     }
 }
 
-// The gate's switch.
-void stcom22_func_1A9C(STCOM22_WORK *wp)
+// The barrier: once the button's flag is set it asks, and on a yes it sinks away.
+void stcom22_barrier(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR rot;
     STCOM_FIXED_VECTOR scale;
 
-    stcom22_D_00AC[wp->routine_0](wp);
+    stcom22_barrier_tbl[wp->routine_0](wp);
     rot.x = 0;
     rot.y = 0x400;
     rot.z = 0;
@@ -854,7 +855,7 @@ void stcom22_func_1A9C(STCOM22_WORK *wp)
     ScaleMatrix(&wp->matrix.m, &scale);
 }
 
-void stcom22_func_1B28(STCOM22_WORK *wp)
+void stcom22_barrier_init(STCOM22_WORK *wp)
 {
     STCOM22_CTL *ctl;
     STCOM22_WORK *gate;
@@ -902,10 +903,10 @@ void stcom22_func_1B28(STCOM22_WORK *wp)
         }
         wp->u_48.gate = gate;
     }
-    stcom22_func_1C5C(wp);
+    stcom22_barrier_main(wp);
 }
 
-void stcom22_func_1C5C(STCOM22_WORK *wp)
+void stcom22_barrier_main(STCOM22_WORK *wp)
 {
     STCOM_SVECTOR pos;
     STCOM_PL_WORK *pl;
@@ -986,7 +987,7 @@ void stcom22_func_1C5C(STCOM22_WORK *wp)
     }
 }
 
-void stcom22_func_1ED0(STCOM22_WORK *wp)
+void stcom22_barrier_erase(STCOM22_WORK *wp)
 {
     Close_WORK_50(wp);
 }
