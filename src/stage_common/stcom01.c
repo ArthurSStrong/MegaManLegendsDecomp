@@ -7,6 +7,8 @@
 // assembly (TARGET_ASM, set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom01"
 
+// A villager. Idle, it stands, paces, walks a loop or wanders (routine_1 0-3, from param_D bits
+// 0-2); examined, it turns to talk (routine_1 4-8, by kind) and then goes back to what it did.
 void stcom01_move(STCOM01_WORK *wp)
 {
     stcom01_move00_tbl[wp->routine_0](wp);
@@ -93,7 +95,7 @@ void stcom01_move_main(STCOM01_WORK *wp)
         wp->scale.v.pad         = 0x4210;
         if (ctl->flags & 2)
         {
-            stcom01_func_27C0(wp);
+            stcom01_talk_check(wp);
         }
         stcom01_move01_tbl[wp->routine_1](wp);
         if (!(wp->param_D & 0x20))
@@ -134,17 +136,17 @@ void stcom01_move_stand(STCOM01_WORK *wp)
     stcom01_stand_tbl[wp->routine_2](wp);
 }
 
-void stcom01_func_0414(STCOM01_WORK *wp)
+void stcom01_stand_init(STCOM01_WORK *wp)
 {
     uint8 *tbl;
 
-    tbl           = stcom01_D_059C[wp->param_E & 3];
+    tbl           = stcom01_stand_wait_tbl[wp->param_E & 3];
     wp->anim_AC   = stcom01_stand_anim(wp->kind_2);
     wp->ctl.timer = tbl[rand() & 0xF];
     wp->routine_2++;
 }
 
-void stcom01_func_0484(STCOM01_WORK *wp)
+void stcom01_stand_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -161,7 +163,7 @@ void stcom01_func_0484(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_04F8(STCOM01_WORK *wp)
+void stcom01_stand_act(STCOM01_WORK *wp)
 {
     sint32 unused[1]; // never used; retail reserves its 8-byte frame
 
@@ -182,7 +184,7 @@ void stcom01_func_04F8(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0560(STCOM01_WORK *wp)
+void stcom01_stand_act_end(STCOM01_WORK *wp)
 {
     if (wp->state_A7 < 0)
     {
@@ -195,7 +197,7 @@ void stcom01_move_pace(STCOM01_WORK *wp)
     stcom01_pace_tbl[wp->routine_2](wp);
 }
 
-void stcom01_func_05B8(STCOM01_WORK *wp)
+void stcom01_pace_init(STCOM01_WORK *wp)
 {
     wp->ctl.value_14 = 0;
     wp->ctl.value_16 = wp->ctl.value_1E = wp->param_E * 8;
@@ -205,15 +207,15 @@ void stcom01_func_05B8(STCOM01_WORK *wp)
     wp->routine_2++;
 }
 
-void stcom01_func_0610(STCOM01_WORK *wp)
+void stcom01_pace_choose(STCOM01_WORK *wp)
 {
     uint8 *tbl;
     uint8 *row;
     STCOM01_CTL *ctl;
     uint8 step;
 
-    tbl  = stcom01_D_0648[0];
-    row  = &stcom01_D_0608[wp->param_D & 0x30];
+    tbl  = stcom01_pace_wait_tbl[0];
+    row  = &stcom01_pace_step_tbl[wp->param_D & 0x30];
     step = row[rand() & 0xF];
     ctl  = &wp->ctl;
     switch (step)
@@ -251,7 +253,7 @@ void stcom01_func_0610(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0774(STCOM01_WORK *wp)
+void stcom01_pace_walk(STCOM01_WORK *wp)
 {
     Obj_pos_set(wp, wp->velocity.x, 0, 0);
     if (--wp->ctl.value_16 == 0)
@@ -278,7 +280,7 @@ void stcom01_func_0774(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0858(STCOM01_WORK *wp)
+void stcom01_pace_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -286,7 +288,7 @@ void stcom01_func_0858(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0880(STCOM01_WORK *wp)
+void stcom01_pace_turn(STCOM01_WORK *wp)
 {
     sint16 step;
 
@@ -300,7 +302,7 @@ void stcom01_func_0880(STCOM01_WORK *wp)
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
 }
 
-void stcom01_func_08FC(STCOM01_WORK *wp)
+void stcom01_pace_end_turn(STCOM01_WORK *wp)
 {
     sint16 step;
 
@@ -314,7 +316,7 @@ void stcom01_func_08FC(STCOM01_WORK *wp)
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
 }
 
-void stcom01_func_0978(STCOM01_WORK *wp)
+void stcom01_pace_end_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -324,7 +326,7 @@ void stcom01_func_0978(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_09DC(STCOM01_WORK *wp)
+void stcom01_pace_end_act(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -357,7 +359,7 @@ void stcom01_func_09DC(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0AC4(STCOM01_WORK *wp)
+void stcom01_pace_end_return(STCOM01_WORK *wp)
 {
     sint16 step;
 
@@ -378,7 +380,7 @@ void stcom01_func_0AC4(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0B80(STCOM01_WORK *wp)
+void stcom01_pace_player_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -402,7 +404,7 @@ void stcom01_func_0B80(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0C24(STCOM01_WORK *wp)
+void stcom01_pace_end_anim(STCOM01_WORK *wp)
 {
     if (wp->state_A7 < 0)
     {
@@ -411,12 +413,13 @@ void stcom01_func_0C24(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_0C68(STCOM01_WORK *wp)
+// Walks a loop: a straight stretch, then an arc back (turn speed param_F).
+void stcom01_move_lap(STCOM01_WORK *wp)
 {
-    stcom01_D_0678[wp->routine_2](wp);
+    stcom01_lap_tbl[wp->routine_2](wp);
 }
 
-void stcom01_func_0CA4(STCOM01_WORK *wp)
+void stcom01_lap_init(STCOM01_WORK *wp)
 {
     wp->ctl.value_14 = 0;
     wp->ctl.value_16 = 0;
@@ -428,14 +431,14 @@ void stcom01_func_0CA4(STCOM01_WORK *wp)
     wp->routine_2++;
 }
 
-void stcom01_func_0CD8(STCOM01_WORK *wp)
+void stcom01_lap_choose(STCOM01_WORK *wp)
 {
     uint8 *tbl;
     STCOM01_CTL *ctl;
 
-    tbl = stcom01_D_06A4[0];
+    tbl = stcom01_lap_wait_tbl[0];
     ctl = &wp->ctl;
-    switch (stcom01_D_0694[rand() & 0xF])
+    switch (stcom01_lap_step_tbl[rand() & 0xF])
     {
         case 0:
             if (ctl->value_16 == 0)
@@ -456,7 +459,7 @@ void stcom01_func_0CD8(STCOM01_WORK *wp)
                 wp->velocity.x = stcom01_speed(wp, 1);
                 wp->anim_AC    = stcom01_walk_anim(wp->kind_2);
             }
-            tbl = stcom01_D_06A4[0];
+            tbl = stcom01_lap_wait_tbl[0];
             break;
         case 1:
             tbl += 16;
@@ -473,7 +476,7 @@ void stcom01_func_0CD8(STCOM01_WORK *wp)
     ctl->timer = tbl[rand() & 0xF];
 }
 
-void stcom01_func_0E44(STCOM01_WORK *wp)
+void stcom01_lap_walk(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -513,7 +516,7 @@ void stcom01_func_0E44(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1018(STCOM01_WORK *wp)
+void stcom01_lap_arc(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
     sint16 step;
@@ -546,7 +549,7 @@ void stcom01_func_1018(STCOM01_WORK *wp)
     Obj_pos_set(wp, wp->velocity.x, 0, 0);
 }
 
-void stcom01_func_1148(STCOM01_WORK *wp)
+void stcom01_lap_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -554,7 +557,7 @@ void stcom01_func_1148(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1170(STCOM01_WORK *wp)
+void stcom01_lap_turn(STCOM01_WORK *wp)
 {
     sint16 step;
 
@@ -572,7 +575,7 @@ void stcom01_func_1170(STCOM01_WORK *wp)
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
 }
 
-void stcom01_func_1218(STCOM01_WORK *wp)
+void stcom01_lap_player_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -590,12 +593,13 @@ void stcom01_func_1218(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_12A4(STCOM01_WORK *wp)
+// Wanders at random inside a box around ctl.pos_C (param_E and param_F give its half sizes).
+void stcom01_move_wander(STCOM01_WORK *wp)
 {
-    stcom01_D_06D4[wp->routine_2](wp);
+    stcom01_wander_tbl[wp->routine_2](wp);
 }
 
-void stcom01_func_12E0(STCOM01_WORK *wp)
+void stcom01_wander_init(STCOM01_WORK *wp)
 {
     wp->velocity.x   = stcom01_speed(wp, 1);
     wp->velocity.y   = 0;
@@ -605,7 +609,7 @@ void stcom01_func_12E0(STCOM01_WORK *wp)
     wp->routine_2++;
 }
 
-void stcom01_func_133C(STCOM01_WORK *wp)
+void stcom01_wander_choose(STCOM01_WORK *wp)
 {
     uint8 *choice_tbl;
     STCOM01_CTL *ctl;
@@ -620,13 +624,13 @@ void stcom01_func_133C(STCOM01_WORK *wp)
     {
         choice_tbl = stcom01_D_0700;
         flag_tbl   = stcom01_D_0720;
-        wait_tbl   = stcom01_D_0730;
+        wait_tbl   = stcom01_wander_wait_tbl;
     }
     else
     {
-        choice_tbl = stcom01_D_06F0;
+        choice_tbl = stcom01_wander_step_tbl;
         flag_tbl   = stcom01_D_0710;
-        wait_tbl   = stcom01_D_0730;
+        wait_tbl   = stcom01_wander_wait_tbl;
     }
     step = choice_tbl[rand() & 0xF];
     switch (step)
@@ -672,7 +676,7 @@ void stcom01_func_133C(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1564(STCOM01_WORK *wp)
+void stcom01_wander_walk(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -731,7 +735,7 @@ void stcom01_func_1564(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1704(STCOM01_WORK *wp)
+void stcom01_wander_wait(STCOM01_WORK *wp)
 {
     if (--wp->ctl.timer == 0)
     {
@@ -739,7 +743,7 @@ void stcom01_func_1704(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_172C(STCOM01_WORK *wp)
+void stcom01_wander_spin(STCOM01_WORK *wp)
 {
     if (stcom01_player_near(wp, 0x40, 0x64))
     {
@@ -759,7 +763,7 @@ void stcom01_func_172C(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_17D4(STCOM01_WORK *wp)
+void stcom01_wander_turn(STCOM01_WORK *wp)
 {
     sint16 step;
 
@@ -771,7 +775,7 @@ void stcom01_func_17D4(STCOM01_WORK *wp)
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
 }
 
-void stcom01_func_1838(STCOM01_WORK *wp)
+void stcom01_wander_avoid(STCOM01_WORK *wp)
 {
     wp->rot_goal_64  = (wp->rotation.y + 0x800) & 0xFFF;
     wp->anim_AC      = stcom01_walk_anim(wp->kind_2);
@@ -779,12 +783,12 @@ void stcom01_func_1838(STCOM01_WORK *wp)
     wp->routine_2    = 5;
 }
 
-void stcom01_func_1888(STCOM01_WORK *wp)
+void stcom01_move_talk(STCOM01_WORK *wp)
 {
-    stcom01_D_0740[wp->ctl.routine](wp);
+    stcom01_talk_tbl[wp->ctl.routine](wp);
 }
 
-void stcom01_func_18C4(STCOM01_WORK *wp)
+void stcom01_talk_start(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -793,12 +797,11 @@ void stcom01_func_18C4(STCOM01_WORK *wp)
     ctl->value_4 = wp->rotation.y;
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = stcom01_stand_anim(wp->kind_2);
-    ctl->turn =
-        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+    ctl->turn = STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     Message_event_set(&wp->position, 0, 0, wp->param_C);
 }
 
-void stcom01_func_19B0(STCOM01_WORK *wp)
+void stcom01_talk_wait(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM01_CTL *ctl;
@@ -807,9 +810,9 @@ void stcom01_func_19B0(STCOM01_WORK *wp)
     pl  = &Player_work;
     if (!(wp->param_D & 0x40))
     {
-        wp->rotation.y = (wp->rotation.y +
-                          Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
-                         0xFFF;
+        wp->rotation.y =
+            (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
+            0xFFF;
         if (Moji_flag & 0x200000)
         {
             wp->anim_AC = stcom01_act_anim(wp->kind_2);
@@ -824,10 +827,10 @@ void stcom01_func_19B0(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1A84(STCOM01_WORK *wp)
+void stcom01_talk_act(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
-                                                     wp->rotation.y, wp->ctl.turn)) &
+    wp->rotation.y = (wp->rotation.y +
+                      Muku(&wp->position, &Player_work.position, wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (wp->state_A7 < 0)
     {
@@ -842,7 +845,8 @@ void stcom01_func_1A84(STCOM01_WORK *wp)
     }
 }
 
-uint8 stcom01_func_1B28(STCOM01_WORK *wp)
+// Whether the talk cut into a walking step (it then skips turning back).
+uint8 stcom01_was_walking(STCOM01_WORK *wp)
 {
     switch (wp->ctl.value_2)
     {
@@ -867,14 +871,14 @@ uint8 stcom01_func_1B28(STCOM01_WORK *wp)
     return 0;
 }
 
-void stcom01_func_1BAC(STCOM01_WORK *wp)
+void stcom01_talk_end(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
     sint16 step;
 
     ctl  = &wp->ctl;
     step = Muku_angle(ctl->value_4, wp->rotation.y, ctl->turn);
-    if (step == 0 || (wp->param_D & 0x80) || stcom01_func_1B28(wp))
+    if (step == 0 || (wp->param_D & 0x80) || stcom01_was_walking(wp))
     {
         wp->anim_AC = ctl->value_2;
         ctl->flags |= 2;
@@ -886,12 +890,13 @@ void stcom01_func_1BAC(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1C70(STCOM01_WORK *wp)
+void stcom01_move_talk2(STCOM01_WORK *wp)
 {
-    stcom01_D_0750[wp->ctl.routine](wp);
+    stcom01_talk2_tbl[wp->ctl.routine](wp);
 }
 
-void stcom01_func_1CAC(STCOM01_WORK *wp)
+// Same code as stcom01_talk_start.
+void stcom01_talk2_start(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -900,12 +905,12 @@ void stcom01_func_1CAC(STCOM01_WORK *wp)
     ctl->value_4 = wp->rotation.y;
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = stcom01_stand_anim(wp->kind_2);
-    ctl->turn =
-        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+    ctl->turn = STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     Message_event_set(&wp->position, 0, 0, wp->param_C);
 }
 
-void stcom01_func_1D98(STCOM01_WORK *wp)
+// Same code as stcom01_talk_wait.
+void stcom01_talk2_wait(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM01_CTL *ctl;
@@ -914,9 +919,9 @@ void stcom01_func_1D98(STCOM01_WORK *wp)
     pl  = &Player_work;
     if (!(wp->param_D & 0x40))
     {
-        wp->rotation.y = (wp->rotation.y +
-                          Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
-                         0xFFF;
+        wp->rotation.y =
+            (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, ctl->turn)) &
+            0xFFF;
         if (Moji_flag & 0x200000)
         {
             wp->anim_AC = stcom01_act_anim(wp->kind_2);
@@ -931,14 +936,15 @@ void stcom01_func_1D98(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1E6C(STCOM01_WORK *wp)
+// Same code as stcom01_talk_end.
+void stcom01_talk2_end(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
     sint16 step;
 
     ctl  = &wp->ctl;
     step = Muku_angle(ctl->value_4, wp->rotation.y, ctl->turn);
-    if (step == 0 || (wp->param_D & 0x80) || stcom01_func_1B28(wp))
+    if (step == 0 || (wp->param_D & 0x80) || stcom01_was_walking(wp))
     {
         wp->anim_AC = ctl->value_2;
         ctl->flags |= 2;
@@ -950,12 +956,13 @@ void stcom01_func_1E6C(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_1F30(STCOM01_WORK *wp)
+// Kind 0x34's talk: from behind or far off it only turns its head (and says param_C + 1).
+void stcom01_move_talk_look(STCOM01_WORK *wp)
 {
-    stcom01_D_075C[wp->ctl.routine](wp);
+    stcom01_talk_look_tbl[wp->ctl.routine](wp);
 }
 
-void stcom01_func_1F6C(STCOM01_WORK *wp)
+void stcom01_talk_look_start(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM01_CTL *ctl;
@@ -968,8 +975,7 @@ void stcom01_func_1F6C(STCOM01_WORK *wp)
     if (stcom01_player_near(wp, 0xFA, 0xC8))
     {
         wp->anim_AC = stcom01_stand_anim(wp->kind_2);
-        ctl->turn =
-            STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+        ctl->turn   = STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
         ctl->routine++;
         param = wp->param_C;
     }
@@ -990,7 +996,7 @@ void stcom01_func_1F6C(STCOM01_WORK *wp)
     Message_event_set(&wp->position, 0, 0, param);
 }
 
-void stcom01_func_20C0(STCOM01_WORK *wp)
+void stcom01_talk_look_wait(STCOM01_WORK *wp)
 {
     STCOM01_CTL *ctl;
 
@@ -1010,7 +1016,7 @@ void stcom01_func_20C0(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_2110(STCOM01_WORK *wp)
+void stcom01_talk_look_end(STCOM01_WORK *wp)
 {
     if (wp->state_A7 < 0)
     {
@@ -1021,12 +1027,13 @@ void stcom01_func_2110(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_2174(STCOM01_WORK *wp)
+// Kind 0x11's talk: the player stops and the camera moves to it first.
+void stcom01_move_talk_cam(STCOM01_WORK *wp)
 {
-    stcom01_D_0774[wp->ctl.routine](wp);
+    stcom01_talk_cam_tbl[wp->ctl.routine](wp);
 }
 
-void stcom01_func_21B0(STCOM01_WORK *wp)
+void stcom01_talk_cam_start(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM01_CTL *ctl;
@@ -1046,11 +1053,11 @@ void stcom01_func_21B0(STCOM01_WORK *wp)
     v.z = wp->position.z;
     Camera_move_set_pause(&v, 0x100, Calc_degree2(&pos, &pl->position), D_800A396C + 0x6C);
     wp->anim_AC = stcom01_stand_anim(wp->kind_2);
-    ctl->turn = STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+    ctl->turn   = STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
     ctl->routine++;
 }
 
-void stcom01_func_2310(STCOM01_WORK *wp)
+void stcom01_talk_cam_message(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -1060,15 +1067,14 @@ void stcom01_func_2310(STCOM01_WORK *wp)
         Message_event_set(&wp->position, 0xD, 0, wp->param_C);
         wp->ctl.routine++;
     }
-    wp->rotation.y = (wp->rotation.y +
-                      Muku(&wp->position, &pl->position, wp->rotation.y, wp->ctl.turn)) &
-                     0xFFF;
+    wp->rotation.y =
+        (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, wp->ctl.turn)) & 0xFFF;
 }
 
-void stcom01_func_2398(STCOM01_WORK *wp)
+void stcom01_talk_cam_wait(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
-                                                     wp->rotation.y, wp->ctl.turn)) &
+    wp->rotation.y = (wp->rotation.y +
+                      Muku(&wp->position, &Player_work.position, wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (Message_event[0] == 0)
     {
@@ -1093,7 +1099,7 @@ void stcom01_func_2450(STCOM01_WORK *wp)
     }
 }
 
-void stcom01_func_24A8(STCOM01_WORK *wp)
+void stcom01_talk_cam_end(STCOM01_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     sint16 step;
@@ -1129,15 +1135,14 @@ void stcom01_func_25B8(STCOM01_WORK *wp)
     ctl->value_4 = wp->rotation.y;
     ctl->value_2 = wp->anim_AC;
     wp->anim_AC  = 8;
-    ctl->turn =
-        STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
+    ctl->turn = STCOM_ABS(Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x800)) >> 3;
     Message_event_set(&wp->position, 0, 0, wp->param_C);
 }
 
 void stcom01_func_26A0(STCOM01_WORK *wp)
 {
-    wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
-                                                     wp->rotation.y, wp->ctl.turn)) &
+    wp->rotation.y = (wp->rotation.y +
+                      Muku(&wp->position, &Player_work.position, wp->rotation.y, wp->ctl.turn)) &
                      0xFFF;
     if (Message_event[0] == 0)
     {
@@ -1162,7 +1167,8 @@ void stcom01_func_2720(STCOM01_WORK *wp)
     wp->rotation.y = (wp->rotation.y + step) & 0xFFF;
 }
 
-void stcom01_func_27C0(STCOM01_WORK *wp)
+// Starts the kind's talk routine when the player examines it.
+void stcom01_talk_check(STCOM01_WORK *wp)
 {
     STCOM01_WORK *p;
     STCOM01_CTL *ctl;

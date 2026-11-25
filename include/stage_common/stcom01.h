@@ -78,31 +78,31 @@ typedef struct
     sint32 a, b, c;
 } STCOM01_PARAM3;
 
-extern uint8 stcom01_D_0550[];          // data_10 (stcom01_move_init)
-extern STCOM01_FUNC stcom01_move01_tbl[];   // routine_1 handlers (stcom01_move_main)
-extern STCOM01_FUNC stcom01_move00_tbl[];   // routine_0 handlers (stcom01_move)
-extern STCOM01_FUNC stcom01_stand_tbl[];   // routine_2 handlers (stcom01_move_stand)
-extern STCOM01_FUNC stcom01_pace_tbl[];   // routine_2 handlers (stcom01_move_pace)
-extern STCOM01_FUNC stcom01_D_0678[];   // routine_2 handlers (stcom01_func_0C68)
-extern STCOM01_FUNC stcom01_D_06D4[];   // routine_2 handlers (stcom01_func_12A4)
-extern STCOM01_FUNC stcom01_D_0740[];   // ctl.routine handlers (stcom01_func_1888)
-extern STCOM01_FUNC stcom01_D_0750[];   // ctl.routine handlers (stcom01_func_1C70)
-extern STCOM01_FUNC stcom01_D_075C[];   // ctl.routine handlers (stcom01_func_1F30)
-extern STCOM01_FUNC stcom01_D_0774[];   // ctl.routine handlers (stcom01_func_2174)
-extern STCOM01_FUNC stcom01_D_0788[];   // ctl.routine handlers (stcom01_func_257C)
-extern STCOM01_PARAM3 stcom01_shadow_tbl[]; // by kind_2: Model_Shadow_Trans's arguments
-extern uint8 stcom01_speed_tbl[];          // speed by kind_2 (stcom01_speed)
-extern uint8 stcom01_D_059C[4][16];     // random wait times (stcom01_func_0414)
-extern uint8 stcom01_D_0608[];          // 4 x 16 random steps, row by param_D bits 4-5
-extern uint8 stcom01_D_0648[2][16];     // random wait times (stcom01_func_0610)
-extern uint8 stcom01_D_0668[16];        // random wait times (stcom01_func_0610)
-extern uint8 stcom01_D_0694[16];        // random choice (stcom01_func_0CD8)
-extern uint8 stcom01_D_06A4[3][16];     // random wait times (stcom01_func_0CD8)
-extern uint8 stcom01_D_06F0[16];        // random choice (stcom01_func_133C)
-extern uint8 stcom01_D_0700[16];        // random choice, kind 0x2A (stcom01_func_133C)
-extern uint8 stcom01_D_0710[16];        // random flags (stcom01_func_133C)
-extern uint8 stcom01_D_0720[16];        // random flags, kind 0x2A (stcom01_func_133C)
-extern uint8 stcom01_D_0730[16];        // random wait times (stcom01_func_133C)
+extern uint8 stcom01_D_0550[];               // data_10 (stcom01_move_init)
+extern STCOM01_FUNC stcom01_move01_tbl[];    // routine_1 handlers (stcom01_move_main)
+extern STCOM01_FUNC stcom01_move00_tbl[];    // routine_0 handlers (stcom01_move)
+extern STCOM01_FUNC stcom01_stand_tbl[];     // routine_2 handlers (stcom01_move_stand)
+extern STCOM01_FUNC stcom01_pace_tbl[];      // routine_2 handlers (stcom01_move_pace)
+extern STCOM01_FUNC stcom01_lap_tbl[];       // routine_2 handlers (stcom01_move_lap)
+extern STCOM01_FUNC stcom01_wander_tbl[];    // routine_2 handlers (stcom01_move_wander)
+extern STCOM01_FUNC stcom01_talk_tbl[];      // ctl.routine handlers (stcom01_move_talk)
+extern STCOM01_FUNC stcom01_talk2_tbl[];     // ctl.routine handlers (stcom01_move_talk2)
+extern STCOM01_FUNC stcom01_talk_look_tbl[]; // ctl.routine handlers (stcom01_move_talk_look)
+extern STCOM01_FUNC stcom01_talk_cam_tbl[];  // ctl.routine handlers (stcom01_move_talk_cam)
+extern STCOM01_FUNC stcom01_D_0788[];        // ctl.routine handlers (stcom01_func_257C)
+extern STCOM01_PARAM3 stcom01_shadow_tbl[];  // by kind_2: Model_Shadow_Trans's arguments
+extern uint8 stcom01_speed_tbl[];            // speed by kind_2 (stcom01_speed)
+extern uint8 stcom01_stand_wait_tbl[4][16];  // random wait times (stcom01_stand_init)
+extern uint8 stcom01_pace_step_tbl[];        // 4 x 16 random steps, row by param_D bits 4-5
+extern uint8 stcom01_pace_wait_tbl[2][16];   // random wait times (stcom01_pace_choose)
+extern uint8 stcom01_D_0668[16];             // random wait times (stcom01_pace_choose)
+extern uint8 stcom01_lap_step_tbl[16];       // random choice (stcom01_lap_choose)
+extern uint8 stcom01_lap_wait_tbl[3][16];    // random wait times (stcom01_lap_choose)
+extern uint8 stcom01_wander_step_tbl[16];    // random choice (stcom01_wander_choose)
+extern uint8 stcom01_D_0700[16];             // random choice, kind 0x2A (stcom01_wander_choose)
+extern uint8 stcom01_D_0710[16];             // random flags (stcom01_wander_choose)
+extern uint8 stcom01_D_0720[16];             // random flags, kind 0x2A (stcom01_wander_choose)
+extern uint8 stcom01_wander_wait_tbl[16];    // random wait times (stcom01_wander_choose)
 
 // ROCK_NEO.EXE: steps the angle `rot` toward `goal` by at most `speed`; returns the step (0 when
 // there). See rock_neo.h.
@@ -111,9 +111,9 @@ sint16 Muku_angle(sint32 goal, sint32 rot, sint32 speed);
 sint32 stcom01_act_anim(uint8 kind);
 sint32 stcom01_stand_anim(uint8 kind);
 sint32 stcom01_walk_anim(uint8 kind);
-uint8 stcom01_func_1B28(STCOM01_WORK *wp);
+uint8 stcom01_was_walking(STCOM01_WORK *wp);
 void stcom01_move_main(STCOM01_WORK *wp);
-void stcom01_func_27C0(STCOM01_WORK *wp);
+void stcom01_talk_check(STCOM01_WORK *wp);
 sint32 stcom01_speed(STCOM01_WORK *wp, uint8 mode);
 uint8 stcom01_player_near(STCOM01_WORK *wp, sint32 a1, sint32 a2);
 
