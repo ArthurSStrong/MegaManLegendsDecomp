@@ -7,7 +7,7 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom31"
 
 // A vehicle that drives along one of two courses of waypoints, puffing exhaust.
-void stcom31_func_0000(STCOM31_WORK *wp)
+void stcom31_move(STCOM31_WORK *wp)
 {
     STCOM_MATRIX *m;
     STCOM_FIXED_VECTOR scale;
@@ -17,7 +17,7 @@ void stcom31_func_0000(STCOM31_WORK *wp)
     wp->rotation_prev       = wp->rotation.v;
     m                       = &wp->matrix;
     wp->ctl.random_2        = rand();
-    stcom31_D_0000[wp->routine_0](wp);
+    stcom31_move_tbl[wp->routine_0](wp);
     RotMatrixYXZ(&wp->rotation.v, m);
     scale.x = 0x200;
     scale.y = 0x200;
@@ -26,7 +26,8 @@ void stcom31_func_0000(STCOM31_WORK *wp)
     Solid_set(wp, 1, -1, 0x1000008);
 }
 
-void stcom31_func_00F8(STCOM31_WORK *wp)
+// Sets it up from param_C (heading) and starts it waiting.
+void stcom31_move_init(STCOM31_WORK *wp)
 {
     STCOM_MATRIX *m;
     STCOM_FIXED_VECTOR scale;
@@ -61,13 +62,14 @@ void stcom31_func_00F8(STCOM31_WORK *wp)
     wp->color_B4              = 0x808080;
 }
 
-void stcom31_func_01F8(STCOM31_WORK *wp)
+// Runs the current state; when one ends, goes back to waiting.
+void stcom31_move_main(STCOM31_WORK *wp)
 {
     if (Sce_flag_test(4) != 0)
     {
         wp->flags_0 |= 2;
     }
-    stcom31_D_000C[wp->routine_1](wp);
+    stcom31_state_tbl[wp->routine_1](wp);
     wp->pos_AC = wp->position;
     if (wp->ctl.flags_0 & 1)
     {
@@ -77,13 +79,14 @@ void stcom31_func_01F8(STCOM31_WORK *wp)
     }
 }
 
-void stcom31_func_02A8(STCOM31_WORK *wp)
+// Frees the slot.
+void stcom31_erase(STCOM31_WORK *wp)
 {
     Close_SHL_WORK(wp);
 }
 
 // Waits.
-void stcom31_func_02C8(STCOM31_WORK *wp)
+void stcom31_wait(STCOM31_WORK *wp)
 {
     STCOM31_CTL *ctl;
 
@@ -107,7 +110,7 @@ void stcom31_func_02C8(STCOM31_WORK *wp)
 }
 
 // Drives to the next waypoint, slowing down near it.
-void stcom31_func_033C(STCOM31_WORK *wp)
+void stcom31_drive(STCOM31_WORK *wp)
 {
     STCOM31_CTL *ctl;
     STCOM31_WAYPOINT *point;
@@ -127,13 +130,13 @@ void stcom31_func_033C(STCOM31_WORK *wp)
             wp->flags_0 |= 2;
             if (wp->param_F & 0x40)
             {
-                wp->velocity.v.x = 0;
-                stcom31_E_0020   = 4;
+                wp->velocity.v.x   = 0;
+                stcom31_last_point = 4;
             }
             else
             {
-                wp->velocity.v.x = 0x240;
-                stcom31_E_0020   = 5;
+                wp->velocity.v.x   = 0x240;
+                stcom31_last_point = 5;
             }
             wp->accel.x      = 0x16;
             wp->velocity.v.z = 0;
@@ -142,25 +145,25 @@ void stcom31_func_033C(STCOM31_WORK *wp)
         case 1:
             if (wp->param_F & 0x40)
             {
-                point = &stcom31_D_0050[ctl->waypoint_8];
+                point = &stcom31_course1_tbl[ctl->waypoint_8];
             }
             else
             {
-                point = &stcom31_D_0020[ctl->waypoint_8];
+                point = &stcom31_course0_tbl[ctl->waypoint_8];
             }
             stcom31_E_0010[0].x = point->x;
             stcom31_E_0010[0].y = 0;
             stcom31_E_0010[0].z = point->z;
-            step             = Muku(&wp->position, stcom31_E_0010, wp->rotation.v.y, 0x20);
-            wp->velocity.v.z = step * 4;
-            wp->rotation.v.z = (uint16)(step << 3) >> 4;
-            wp->rotation.v.y = (wp->rotation.v.y + step) & 0xFFF;
+            step                = Muku(&wp->position, stcom31_E_0010, wp->rotation.v.y, 0x20);
+            wp->velocity.v.z    = step * 4;
+            wp->rotation.v.z    = (uint16)(step << 3) >> 4;
+            wp->rotation.v.y    = (wp->rotation.v.y + step) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, wp->velocity.v.z);
             dx = wp->position.x - (point->x - (point->width >> 1));
             dz = wp->position.z - (point->z - (point->depth >> 1));
             if ((uint32)dx < point->width && (uint32)dz < point->depth)
             {
-                if (ctl->waypoint_8 == stcom31_E_0020)
+                if (ctl->waypoint_8 == stcom31_last_point)
                 {
                     ctl->flags_0 |= 1;
                     wp->velocity.v.x = 0;

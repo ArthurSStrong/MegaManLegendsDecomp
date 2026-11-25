@@ -214,15 +214,15 @@ stcom33_D_0008 = 0x80110C24;
 stcom33_D_000A = 0x80110C26;
 stcom33_move_tbl = 0x80110C58;
 // stcom34 (src/stage_common/stcom34.c): this stage's copy, under the shared names.
-stcom34_func_0000 = 0x8010DE08; // type:func
-stcom34_func_003C = 0x8010DE44; // type:func
-stcom34_func_014C = 0x8010DF54; // type:func
-stcom34_func_04AC = 0x8010E2B4; // type:func
-stcom34_func_04CC = 0x8010E2D4; // type:func
+stcom34_move = 0x8010DE08; // type:func
+stcom34_move_init = 0x8010DE44; // type:func
+stcom34_move_main = 0x8010DF54; // type:func
+stcom34_erase = 0x8010E2B4; // type:func
+stcom34_spark_draw = 0x8010E2D4; // type:func
 stcom34_D_0000 = 0x80110C00;
 stcom34_D_0002 = 0x80110C02;
 stcom34_D_0004 = 0x80110C04;
-stcom34_D_0010 = 0x80110C10;
+stcom34_move_tbl = 0x80110C10;
 // stcom39 (src/stage_common/stcom39.c): this stage's copy, under the shared names.
 stcom39_func_0000 = 0x8010859C; // type:func
 stcom39_func_0008 = 0x801085A4; // type:func

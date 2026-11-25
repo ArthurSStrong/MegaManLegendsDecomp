@@ -6,13 +6,14 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom34"
 
-// Four sparks flying out from a work slot, each starting over once it has flown in.
-void stcom34_func_0000(STCOM34_WORK *wp)
+// Four sparks flying in toward a work slot, each starting over once it gets there.
+void stcom34_move(STCOM34_WORK *wp)
 {
-    stcom34_D_0010[wp->routine_0](wp);
+    stcom34_move_tbl[wp->routine_0](wp);
 }
 
-void stcom34_func_003C(STCOM34_WORK *wp)
+// Gives each spark a random direction, delay, length and distance.
+void stcom34_move_init(STCOM34_WORK *wp)
 {
     STCOM34_SPARK *sparks;
     uint8 i;
@@ -36,7 +37,8 @@ void stcom34_func_003C(STCOM34_WORK *wp)
     }
 }
 
-void stcom34_func_014C(STCOM34_WORK *wp)
+// Moves the sparks in and draws them.
+void stcom34_move_main(STCOM34_WORK *wp)
 {
     STCOM_SVECTOR a;
     STCOM_SVECTOR b;
@@ -76,7 +78,7 @@ void stcom34_func_014C(STCOM34_WORK *wp)
             {
                 shade = 0x10;
             }
-            stcom34_func_04CC(a, b, shade);
+            stcom34_spark_draw(a, b, shade);
             if (STCOM34_FRAME & 1)
             {
                 if (sparks[i].speed_4 != 2)
@@ -102,13 +104,14 @@ void stcom34_func_014C(STCOM34_WORK *wp)
     }
 }
 
-void stcom34_func_04AC(STCOM34_WORK *wp)
+// Frees the slot.
+void stcom34_erase(STCOM34_WORK *wp)
 {
     Close_EFFECT_WORK(wp);
 }
 
 // Draws one spark: a line from a to b, its color scaled by `shade`.
-void stcom34_func_04CC(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade)
+void stcom34_spark_draw(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade)
 {
     STCOM34_LINE *line;
     sint32 r;

@@ -6,17 +6,17 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom26"
 
-// The rolling blocks' manager.
-void stcom26_func_0000(STCOM26_WORK *wp)
+// Spawns a room's drivers (stcom25) and keeps them from running into each other.
+void stcom26_move(STCOM26_WORK *wp)
 {
-    stcom26_D_0058[wp->routine_0](wp);
+    stcom26_move_tbl[wp->routine_0](wp);
 }
 
-// Picks the room's set of blocks and spawns them.
-void stcom26_func_003C(STCOM26_WORK *wp)
+// Picks the room's set of drivers and spawns them.
+void stcom26_move_init(STCOM26_WORK *wp)
 {
     STCOM_GAME_WORK *gw;
-    STCOM25_WORK *block;
+    STCOM25_WORK *driver;
     sint16 i;
 
     gw = &Game_work;
@@ -84,70 +84,73 @@ void stcom26_func_003C(STCOM26_WORK *wp)
         Close_WORK_50(wp);
         return;
     }
-    for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
+    for (i = 0; i < stcom26_count_tbl[wp->variant_3][0]; i++)
     {
-        block = Open_SHL_WORK();
-        if (block != NULL)
+        driver = Open_SHL_WORK();
+        if (driver != NULL)
         {
-            block->flags_0           = 5;
-            block->kind_2            = 4;
-            block->course_C          = wp->variant_3;
-            block->start_D           = i;
-            *(i + wp->slot_14.bytes) = ((uint32)block - (uint32)Shl_work_tbl) / sizeof(STCOM25_WORK);
-            stcom26_E_0000[i]        = block;
+            driver->flags_0  = 5;
+            driver->kind_2   = 4;
+            driver->course_C = wp->variant_3;
+            driver->start_D  = i;
+            *(i + wp->slot_14.bytes) =
+                ((uint32)driver - (uint32)Shl_work_tbl) / sizeof(STCOM25_WORK);
+            stcom26_work_tbl[i] = driver;
         }
     }
     wp->routine_0++;
 }
 
-void stcom26_func_0254(STCOM26_WORK *wp)
+// Spaces the drivers out and sets their speeds.
+void stcom26_move_main(STCOM26_WORK *wp)
 {
-    stcom26_func_0344(wp);
-    stcom26_func_03F4(wp);
-    stcom26_func_0CE8(wp);
+    stcom26_slot_unpack(wp);
+    stcom26_gap_update(wp);
+    stcom26_speed_all(wp);
 }
 
-// Frees the blocks, then itself.
-void stcom26_func_028C(STCOM26_WORK *wp)
+// Frees the drivers, then itself.
+void stcom26_erase(STCOM26_WORK *wp)
 {
     sint16 i;
 
-    for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
+    for (i = 0; i < stcom26_count_tbl[wp->variant_3][0]; i++)
     {
-        Close_SHL_WORK(stcom26_E_0000[i]);
+        Close_SHL_WORK(stcom26_work_tbl[i]);
     }
     Close_WORK_50(wp);
 }
 
+// Empty (routine 3).
 void stcom26_func_033C(void)
 {
 }
 
-// Unpacks the blocks' slot numbers.
-void stcom26_func_0344(STCOM26_WORK *wp)
+// Unpacks the drivers' slot numbers.
+void stcom26_slot_unpack(STCOM26_WORK *wp)
 {
     sint16 i;
     uint32 word;
 
     word = 0;
-    for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
+    for (i = 0; i < stcom26_count_tbl[wp->variant_3][0]; i++)
     {
         if ((i & 3) == 0)
         {
-            word              = wp->slot_14.words[i >> 2];
-            stcom26_E_0040[i] = word;
+            word                = wp->slot_14.words[i >> 2];
+            stcom26_slot_tbl[i] = word;
         }
         else
         {
-            stcom26_E_0040[i] = word >> ((i & 3) * 8);
+            stcom26_slot_tbl[i] = word >> ((i & 3) * 8);
         }
     }
 }
 
-// Slows each block down behind the others, and holds it while one blocks its way.
-void stcom26_func_03F4(STCOM26_WORK *wp)
+// Slows each driver down behind the others, and holds it while one is in its way.
+void stcom26_gap_update(STCOM26_WORK *wp)
 {
-    STCOM25_WORK *block;
+    STCOM25_WORK *driver;
     STCOM25_CTL *ctl;
     sint16 i;
     sint16 j;
@@ -155,16 +158,16 @@ void stcom26_func_03F4(STCOM26_WORK *wp)
     uint8 flags;
 
     clear = 0;
-    for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
+    for (i = 0; i < stcom26_count_tbl[wp->variant_3][0]; i++)
     {
-        block = &Shl_work_tbl[stcom26_E_0040[i]];
-        block->ctl.flags_F &= ~6;
-        ctl = &block->ctl;
-        for (j = 0; j < stcom26_D_0000[wp->variant_3][0]; j++)
+        driver = &Shl_work_tbl[stcom26_slot_tbl[i]];
+        driver->ctl.flags_F &= ~6;
+        ctl = &driver->ctl;
+        for (j = 0; j < stcom26_count_tbl[wp->variant_3][0]; j++)
         {
             if (i != j)
             {
-                stcom26_func_06DC(block, &Shl_work_tbl[stcom26_E_0040[j]]);
+                stcom26_gap_check(driver, &Shl_work_tbl[stcom26_slot_tbl[j]]);
             }
         }
         flags = ctl->flags_F;
@@ -182,11 +185,11 @@ void stcom26_func_03F4(STCOM26_WORK *wp)
             ctl->flags_F  = flags & ~0x10;
             ctl->value_1C = 0xF;
         }
-        for (j = 0; j < stcom26_D_0000[wp->variant_3][0]; j++)
+        for (j = 0; j < stcom26_count_tbl[wp->variant_3][0]; j++)
         {
             if (i != j)
             {
-                clear = stcom26_func_0918(block, &Shl_work_tbl[stcom26_E_0040[j]]);
+                clear = stcom26_way_clear(driver, &Shl_work_tbl[stcom26_slot_tbl[j]]);
                 if (clear == 0)
                 {
                     break;
@@ -213,7 +216,7 @@ void stcom26_func_03F4(STCOM26_WORK *wp)
 }
 
 // Slows `a` down when it runs up behind `b`.
-void stcom26_func_06DC(STCOM25_WORK *a, STCOM25_WORK *b)
+void stcom26_gap_check(STCOM25_WORK *a, STCOM25_WORK *b)
 {
     uint8 bits;
     STCOM25_CTL *actl;
@@ -304,8 +307,8 @@ void stcom26_func_06DC(STCOM25_WORK *a, STCOM25_WORK *b)
     }
 }
 
-// Zero while `b` stands on a cell `a` is about to roll over.
-sint16 stcom26_func_0918(STCOM25_WORK *a, STCOM25_WORK *b)
+// Zero while `b` stands on a cell `a` is about to drive over.
+sint16 stcom26_way_clear(STCOM25_WORK *a, STCOM25_WORK *b)
 {
     STCOM25_CTL *ctl;
     uint16 cell[4];
@@ -339,14 +342,14 @@ sint16 stcom26_func_0918(STCOM25_WORK *a, STCOM25_WORK *b)
     cell[3] = (b->position.z >> 9) + 0x40;
     mask    = ctl->nodes_0[ctl->node_E].dir_3;
     result  = 1;
-    if (((mask & 1) && stcom26_func_0B50(cell, dir, 1, 0x10) == 0) ||
-        ((mask & 0x10) && stcom26_func_0B50(cell, (dir + 2) & 3, -1, 0x10) == 0) ||
-        ((mask & 2) && stcom26_func_0B50(cell, dir, 2, 0x10) == 0) ||
-        ((mask & 0x20) && stcom26_func_0B50(cell, (dir + 2) & 3, -2, 0x10) == 0) ||
-        ((mask & 4) && stcom26_func_0B50(cell, dir, 3, 0x10) == 0) ||
-        ((mask & 0x40) && stcom26_func_0B50(cell, (dir + 2) & 3, -3, 0x10) == 0) ||
-        ((mask & 8) && stcom26_func_0B50(cell, (dir + 3) & 3, -1, 0x10) == 0) ||
-        ((mask & 0x80) && stcom26_func_0B50(cell, (dir + 3) & 3, 0, 6) == 0))
+    if (((mask & 1) && stcom26_cell_clear(cell, dir, 1, 0x10) == 0) ||
+        ((mask & 0x10) && stcom26_cell_clear(cell, (dir + 2) & 3, -1, 0x10) == 0) ||
+        ((mask & 2) && stcom26_cell_clear(cell, dir, 2, 0x10) == 0) ||
+        ((mask & 0x20) && stcom26_cell_clear(cell, (dir + 2) & 3, -2, 0x10) == 0) ||
+        ((mask & 4) && stcom26_cell_clear(cell, dir, 3, 0x10) == 0) ||
+        ((mask & 0x40) && stcom26_cell_clear(cell, (dir + 2) & 3, -3, 0x10) == 0) ||
+        ((mask & 8) && stcom26_cell_clear(cell, (dir + 3) & 3, -1, 0x10) == 0) ||
+        ((mask & 0x80) && stcom26_cell_clear(cell, (dir + 3) & 3, 0, 6) == 0))
     {
         result = 0;
     }
@@ -354,7 +357,7 @@ sint16 stcom26_func_0918(STCOM25_WORK *a, STCOM25_WORK *b)
 }
 
 // Zero when cell (x1, z1) is `n` cells from (x0, z0) in direction `dir`, within `range` across.
-sint16 stcom26_func_0B50(uint16 *cell, sint16 dir, sint32 n, sint32 range)
+sint16 stcom26_cell_clear(uint16 *cell, sint16 dir, sint32 n, sint32 range)
 {
     uint16 x0;
     uint16 z0;
@@ -401,18 +404,19 @@ sint16 stcom26_func_0B50(uint16 *cell, sint16 dir, sint32 n, sint32 range)
     return result;
 }
 
-void stcom26_func_0CE8(STCOM26_WORK *wp)
+// Sets every driver's target speed.
+void stcom26_speed_all(STCOM26_WORK *wp)
 {
     sint16 i;
 
-    for (i = 0; i < stcom26_D_0000[wp->variant_3][0]; i++)
+    for (i = 0; i < stcom26_count_tbl[wp->variant_3][0]; i++)
     {
-        stcom26_func_0DAC(&Shl_work_tbl[stcom26_E_0040[i]]);
+        stcom26_speed_set(&Shl_work_tbl[stcom26_slot_tbl[i]]);
     }
 }
 
-// Sets a block's target speed: stops it at a corner, then waits there.
-void stcom26_func_0DAC(STCOM25_WORK *wp)
+// Sets a driver's target speed: stops it at a corner, then waits there.
+void stcom26_speed_set(STCOM25_WORK *wp)
 {
     uint8 kind;
     uint8 flags;

@@ -72,14 +72,14 @@ typedef struct
 
 typedef void (*STCOM32_FUNC)(STCOM32_WORK *wp);
 
-extern STCOM32_FUNC stcom32_D_0000[];    // routine_0 handlers (stcom32_func_0000)
+extern STCOM32_FUNC stcom32_move_tbl[];  // routine_0 (stcom32_move)
 extern uint32 stcom32_D_000C[];          // model
-extern sint32 stcom32_D_0068[];          // scene flag set once picked up, by variant_3
+extern sint32 stcom32_flag_tbl[];        // scene flag set once picked up, by variant_3
 extern STCOM32_TEXTURE stcom32_D_0078[]; // by stage
 extern uint8 stcom32_D_0098[][4];        // the sprite's u, v, w, h by variant_3
 extern sint32 stcom32_D_00A8[];          // the item given, by variant_3
 
-void stcom32_func_0678(STCOM32_WORK *wp);
+void stcom32_sprite_anim(STCOM32_WORK *wp);
 
 // ROCK_NEO.EXE.
 void Close_WORK_50(STCOM32_WORK *wp);

@@ -7,13 +7,14 @@
 #define ASM_DIR TARGET_ASM "/stage_common/stcom32"
 
 // An item lying about until the player picks it up.
-void stcom32_func_0000(STCOM32_WORK *wp)
+void stcom32_move(STCOM32_WORK *wp)
 {
-    stcom32_D_0000[wp->routine_0](wp);
+    stcom32_move_tbl[wp->routine_0](wp);
     wp->hit_48 = 0;
 }
 
-void stcom32_func_004C(STCOM32_WORK *wp)
+// Sets up the model, or the sprite from the stage's texture (frees itself in other stages).
+void stcom32_move_init(STCOM32_WORK *wp)
 {
     STCOM32_MATRIX *m;
     STCOM_FIXED_VECTOR scale;
@@ -73,7 +74,8 @@ void stcom32_func_004C(STCOM32_WORK *wp)
     wp->routine_0++;
 }
 
-void stcom32_func_02FC(STCOM32_WORK *wp)
+// Waits for the player to pick it up, keeping its hit box.
+void stcom32_wait(STCOM32_WORK *wp)
 {
     STCOM_SVECTOR pos;
 
@@ -93,14 +95,14 @@ void stcom32_func_02FC(STCOM32_WORK *wp)
         pos.pad = 0;
         if (wp->variant_3 != 3)
         {
-            stcom32_func_0678(wp);
+            stcom32_sprite_anim(wp);
         }
     }
     Set_Atari(&pos, 0x28, 0, 0x8000, wp->index_1, &wp->hit_48, 0x4000000, 0, 0x80);
 }
 
 // Picked up: the player holds it up while the message runs.
-void stcom32_func_03E8(STCOM32_WORK *wp)
+void stcom32_pick_up(STCOM32_WORK *wp)
 {
     STCOM_PL_WORK *pl;
     STCOM32_MATRIX *m;
@@ -185,7 +187,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
             }
             break;
         case 10:
-            Sce_flag_on(stcom32_D_0068[wp->variant_3]);
+            Sce_flag_on(stcom32_flag_tbl[wp->variant_3]);
             Player_control_on(pl);
             pl->target_184 = NULL;
             pl->flags_0 |= 2;
@@ -195,7 +197,7 @@ void stcom32_func_03E8(STCOM32_WORK *wp)
 }
 
 // The sprite cycles through four frames.
-void stcom32_func_0678(STCOM32_WORK *wp)
+void stcom32_sprite_anim(STCOM32_WORK *wp)
 {
     wp->u_14.sprite.u_E = (STCOM32_FRAME * 8) & 0x60;
 }

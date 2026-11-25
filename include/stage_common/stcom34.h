@@ -4,7 +4,7 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// One spark: a short line flying out from the owner.
+// One spark: a short line flying in toward the owner.
 typedef struct
 {
     uint8 yaw_0;    // 0: direction / 0x80
@@ -72,10 +72,10 @@ typedef struct
 
 typedef void (*STCOM34_FUNC)(STCOM34_WORK *wp);
 
-extern STCOM34_KIND stcom34_D_0000[]; // by variant_3
-extern STCOM34_FUNC stcom34_D_0010[]; // routine_0 handlers (stcom34_func_0000)
+extern STCOM34_KIND stcom34_D_0000[];   // by variant_3
+extern STCOM34_FUNC stcom34_move_tbl[]; // routine_0 (stcom34_move)
 
-void stcom34_func_04CC(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade);
+void stcom34_spark_draw(STCOM_SVECTOR a, STCOM_SVECTOR b, uint8 shade);
 
 // ROCK_NEO.EXE.
 STCOM34_OWNER *Obj_id_work(sint32 id);
