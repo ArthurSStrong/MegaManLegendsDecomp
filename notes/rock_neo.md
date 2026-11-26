@@ -819,11 +819,11 @@ right when written after the first `ofs_A0` store.
 `Moji_cmd_se` (`Sound_call(get_le16(arg), 0, 0)`), `Moji_text_option_bright`, `Moji_text_locate` (cursor x/y from two
 16-bit arguments), `Moji_cmd_list_msg` (the `cmd_ptr_6C` twin of `Moji_text_list_msg`; `unk_72` is `sint8`, `lb`).
 `MOJI_CMD_WORK` was merged into `MOJI_WORK`: `Moji_work` is an array of 0xC4-byte entries
-(`Moji_update` walks it in 0xC4 steps; `func_80058788` gets the entry index as `wp - Moji_work`, an
+(`Moji_update` walks it in 0xC4 steps; `Moji_cmd_grid_item` gets the entry index as `wp - Moji_work`, an
 exact division by 0xC4), and the two views' fields don't overlap. Each entry has two read pointers with
 their own call stacks: `mes_ptr_14`/`call_stk_18`/`call_sp_BE` (text) and `cmd_ptr_6C`/`call_stk_4C`/
 `call_sp_C0` (commands). Also banked, all matching at once: `Moji_cmd_window_rect`, `Moji_cmd_call` and
-`Moji_text_call` (call into a message of `mes_file_44`, or of `D_8008CACC` when it's NULL), `func_80058788`,
+`Moji_text_call` (call into a message of `mes_file_44`, or of `D_8008CACC` when it's NULL), `Moji_cmd_grid_item`,
 `Moji_cmd_list_clear` (fills `Moji_list[0..0x7F]` with 0xFF; GCC reverses the loop), `two_digit_set` (two
 digits from `D_8008D028`, leading 0 replaced by font code 0x4F).
 `Moji_cmd_se` zero-extends the id (`andi 0xFFFF`), so `Sound_call`'s `id` is `uint16`, not `sint16`
@@ -831,7 +831,7 @@ digits from `D_8008D028`, leading 0 replaced by font code 0x4F).
 `Camera_return_resume` and clear the bit; then step 1): only the tail differs, the read pointer gets `$v0` where the
 target has `$v1` and `li $v0,1` in the load delay slot. Banked later: the cause was the callee's return
 type (see the `Money_add` paragraph below); `Camera_return_resume` is now declared `sint32`.
-Also banked, matching at once: `func_80058EA0` (the `func_80058788` twin with flags `0x402800`; sets pool
+Also banked, matching at once: `Moji_cmd_scroll_item` (the `Moji_cmd_grid_item` twin with flags `0x402800`; sets pool
 byte `D_80098851` to 0xFF), `Moji_cmd_sync` (fails, returns 0, while `Moji_work[arg]` has bit 31 set and
 bit 17 clear), `Moji_cmd_window` and `Moji_cmd_window_close` (call `Moji_window_type_tbl[unk_7C]`, a handler table splat
 split into several labels), `func_80057DF4` (writes the low bytes of `Game_work.unk084[Moji_weapon][2..4]`

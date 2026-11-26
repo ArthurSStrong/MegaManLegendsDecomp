@@ -144,7 +144,7 @@ void *Sce_slot_open(CODE68_ENTRY *entry);
 #else
 void Sce_slot_open(CODE68_ENTRY *entry);
 #endif
-void func_80068CE0(CODE68_WORK *wp);
+void event_scene_init(CODE68_WORK *wp);
 void event_step_call(CODE68_WORK *wp);
 void func_80068DA4(void);
 void Fade_start(sint32 arg);

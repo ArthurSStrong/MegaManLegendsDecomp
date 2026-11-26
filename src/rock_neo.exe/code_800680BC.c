@@ -485,7 +485,8 @@ void func_80068CB8(CODE68_WORK *wp)
     }
 }
 
-void func_80068CE0(CODE68_WORK *wp)
+// Starts the scene: camera, the event table D_8009039C and the four objects.
+void event_scene_init(CODE68_WORK *wp)
 {
     CODE68_ENTRY *entry;
 
@@ -542,7 +543,7 @@ void Event_scene_main(CODE68_WORK *wp)
             }
             break;
         case 3:
-            func_80068CE0(wp);
+            event_scene_init(wp);
             wp->routine_4++;
             // fall through
         case 4:
@@ -557,7 +558,7 @@ void Event_scene_main(CODE68_WORK *wp)
             if (wp->word_64 != 0)
             {
                 screen_tile_draw((uint8)wp->word_68, (uint8)wp->word_6c, (uint8)wp->word_70,
-                              wp->word_74);
+                                 wp->word_74);
             }
             Sce_camera_script_exec();
             Sce_script_update();

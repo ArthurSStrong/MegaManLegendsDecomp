@@ -235,7 +235,7 @@ void moji_window_fill_set(MOJI_WORK *wp, sint32 index);
 sint32 Moji_cmd_select(MOJI_WORK *wp);
 void Moji_text_list_choice(MOJI_WORK *wp);
 sint32 Moji_cmd_name_entry(MOJI_WORK *wp);
-sint32 func_80059E74(MOJI_WORK *wp);
+sint32 Moji_cmd_amount_entry(MOJI_WORK *wp);
 void Sub_screen_sort_attack(void);
 void Sub_screen_sort_energy(void);
 void Sub_screen_sort_range(void);

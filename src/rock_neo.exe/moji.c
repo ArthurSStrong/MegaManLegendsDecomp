@@ -2524,7 +2524,8 @@ void Moji_text_level_branch(MOJI_WORK *wp)
     wp->pos_14                      = base + ((uint16 *)base)[wp->val_C2];
 }
 
-sint32 func_80058788(MOJI_WORK *wp)
+// A menu item with a neighbour for each direction (bytes 1-4); the text twin moves the cursor.
+sint32 Moji_cmd_grid_item(MOJI_WORK *wp)
 {
     wp->flags_0 |= 0x400800;
     wp->v_72.count++;
@@ -2534,7 +2535,9 @@ sint32 func_80058788(MOJI_WORK *wp)
     return 1;
 }
 
-void func_800587F8(MOJI_WORK *wp)
+// Draws a grid menu item and, on the cursor's item, moves it to bytes 1-4 (up, down, left,
+// right) by the pad, with key repeat.
+void Moji_text_grid_item(MOJI_WORK *wp)
 {
     uint32 held;
     uint32 pressed;
@@ -2639,7 +2642,9 @@ void func_800587F8(MOJI_WORK *wp)
     wp->pos_14 += 5;
 }
 
-sint32 func_80058AEC(MOJI_WORK *wp)
+// Waits for the grid menu: confirm puts 0x40000000 | cursor in Moji_flag, cancel 0x20000000 |
+// the last item.
+sint32 Moji_cmd_grid_wait(MOJI_WORK *wp)
 {
 
     if (!(wp->flags_0 & 0x1000000))
@@ -2758,7 +2763,8 @@ void Moji_text_list_from_flags(MOJI_WORK *wp)
     wp->pos_14++;
 }
 
-sint32 func_80058EA0(MOJI_WORK *wp)
+// A scrolling list item (clears the item picked for swapping).
+sint32 Moji_cmd_scroll_item(MOJI_WORK *wp)
 {
     wp->flags_0 |= 0x402800;
     wp->v_72.count++;
@@ -2769,7 +2775,9 @@ sint32 func_80058EA0(MOJI_WORK *wp)
     return 1;
 }
 
-void func_80058F18(MOJI_WORK *wp)
+// The grid item for a list that scrolls by two rows at its ends; blinks the item picked for
+// swapping.
+void Moji_text_scroll_item(MOJI_WORK *wp)
 {
     uint32 bit;
     sint16 old;
@@ -2899,7 +2907,9 @@ void func_80058F18(MOJI_WORK *wp)
     wp->pos_14 += 5;
 }
 
-sint32 func_800592FC(MOJI_WORK *wp)
+// Waits for the scrolling list: arrow logos while it can scroll, confirm puts the slot + 0x40
+// in Moji_flag.
+sint32 Moji_cmd_scroll_wait(MOJI_WORK *wp)
 {
     uint32 slot;
     uint32 value;
@@ -3201,7 +3211,8 @@ void Moji_text_repair_name(MOJI_WORK *wp)
 // Number entry. As in Moji_cmd_name_entry, a uint8 cursor plus a copy shifted into the top byte
 // (cur << 24) for the left-arrow test gives retail's cursor load and sll; done = 1 written last
 // in the two confirm branches gives retail's placement.
-sint32 func_80059E74(MOJI_WORK *wp)
+// Enters an amount digit by digit, capped at the money and Moji_amount (D_800987E0).
+sint32 Moji_cmd_amount_entry(MOJI_WORK *wp)
 {
     uint8 cur;
     sint32 cur_byte;
