@@ -239,7 +239,7 @@ void pl_world_update(PL_WORK *pl)
             {
                 if (pl->routine_1 == 0xE)
                 {
-                    func_800394AC();
+                    Camera_aim_end();
                     pl->value108 = 0;
                 }
                 if (pl->routine_1 == 3)
@@ -1569,7 +1569,7 @@ void Pl_r1_damage(PL_WORK *pl)
             Pl_move(pl, pl->value44, pl->value46, pl->value48);
             Sound_key_off_voice(0x16);
             Sound_call(0x97, 0, 0);
-            func_800395E8();
+            Camera_view_default();
             pl->value108 = 0;
             pl->routine_2++;
             return;
@@ -1628,7 +1628,7 @@ void Pl_r1_down(PL_WORK *pl)
             Pl_move(pl, pl->value44, pl->value46, pl->value48);
             Sound_key_off_voice(0x16);
             Sound_call(0x98, 0, 0);
-            func_800395E8();
+            Camera_view_default();
             pl->value108 = 0;
             pl->routine_2++;
             return;
@@ -2538,7 +2538,7 @@ void Pl_r1_aim_check(PL_WORK *pl)
     {
         pl->routine_1             = 0;
         *(uint16 *)&pl->routine_2 = 0;
-        func_800394AC();
+        Camera_aim_end();
         pl->value108 = 0;
     }
 }

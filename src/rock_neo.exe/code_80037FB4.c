@@ -230,7 +230,7 @@ void Camera_update(void)
     D_80098668++;
     if (D_800A395E != 0)
     {
-        func_800392CC();
+        camera_behind_player();
         D_8009866C = D_800A395E;
         return;
     }
@@ -509,8 +509,7 @@ void Camera_update(void)
         return;
     }
     cw->pos_48.y -= cw->flag_7;
-    Camera_set(&cw->pos_48, cw->dist_0C, cw->rot_10 + cw->value_1C,
-               cw->height_14 + cw->value_20);
+    Camera_set(&cw->pos_48, cw->dist_0C, cw->rot_10 + cw->value_1C, cw->height_14 + cw->value_20);
     if (cw->flag_7 != 0)
     {
         if (cw->flag_7 < 10)
@@ -524,7 +523,9 @@ void Camera_update(void)
     }
 }
 
-void func_800392CC(void)
+// Camera behind the player while D_800A395E is set; pad bit 1 switches the distance between
+// 0x4B0 and 0x190 over 16 frames.
+void camera_behind_player(void)
 {
     CAM_WORK *cw;
 
@@ -586,7 +587,8 @@ void func_800394A4(void)
 {
 }
 
-void func_800394AC(void)
+// Leaving aim: blends back to distance 0x200 / height 0x30, or snaps there if no blend runs.
+void Camera_aim_end(void)
 {
     if (Camera_work.flag_8 != 0)
     {
@@ -612,7 +614,8 @@ void func_800394AC(void)
     }
 }
 
-void func_800395E8(void)
+// Snaps height 0x30, distance 0x200 and the mode fields back to their defaults.
+void Camera_view_default(void)
 {
     D_800A396C = 0x30;
     D_800A3964 = 0x200;
@@ -840,7 +843,8 @@ void Camera_pos_shift(CAM_DELTA *delta)
     D_800A39E8.value += delta->z;
 }
 
-void func_80039DE8(void)
+// Restores the scene routines saved by Camera_move_set_pause, without the camera return.
+void camera_move_resume(void)
 {
     D_80097D2C           = 0x200;
     Player_work.value44d = 0;

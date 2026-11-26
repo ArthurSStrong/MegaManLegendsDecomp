@@ -214,7 +214,7 @@ void Pl00_shot_enable_on(PL_WORK *pl);
 sint32 pl_shot_start(PL_WORK *pl, sint32 arg);
 sint32 pl_walk_start(PL_WORK *pl);
 sint32 pl_walk_back_start(PL_WORK *pl, sint32 arg);
-void func_800394AC(void);
+void Camera_aim_end(void);
 sint32 pl_jump_start(PL_WORK *pl);
 void pl_damage_state_set(PL_WORK *pl, uint32 flags);
 sint32 pl_hang_start(PL_WORK *pl);
@@ -246,13 +246,13 @@ uint32 Pl_shot_busy(PL_WORK *pl);
 sint32 Scr_collision_check(PL_WORK *pl);
 sint32 pl_turn_l1r1(PL_WORK *pl, sint32 a1, sint32 a2);
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
-                     uint32 flags, sint32 arg7, sint32 arg8);
+                 uint32 flags, sint32 arg7, sint32 arg8);
 void pl_world_update(PL_WORK *pl);
 sint32 pl_investigate_check();
 sint32 pl_aim_start(PL_WORK *pl);
 sint32 pl_turn_start(PL_WORK *pl);
 sint32 pl_run_start(PL_WORK *pl);
-void func_800395E8(void);
+void Camera_view_default(void);
 void Pl00_shot_enable_off(PL_WORK *pl);
 void Solid_mover_set(PL_WORK *pl);
 extern uint16 D_800C0C26, D_800C0C2A, D_800C0C2C, D_800C0C2E;
@@ -325,12 +325,12 @@ typedef struct
     sint16 y0, y1;
 } PL_BOUNDS;
 
-void RotMatrixYXZ();  // argument types differ between callers
+void RotMatrixYXZ();      // argument types differ between callers
 void Calc_rotate_about(); // signature differs between callers; see code_8002e7a8.h
 sint32 Calc_distance_xz(sint16 *a, sint16 *b);
 
 extern sint32 Lockon_target; // same as code_8002e7a8.h
-extern sint32 D_80098B18; // same as code_8005c258.h
+extern sint32 D_80098B18;    // same as code_8005c258.h
 
 // Common head of the 0x3C0, 0x5A4 and 0x10C entity records as the lock-on search
 // (pl_investigate_check) reads it: collision bounds, then position and rotation.

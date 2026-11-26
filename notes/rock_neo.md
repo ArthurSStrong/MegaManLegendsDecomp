@@ -456,8 +456,8 @@ branch bodies, `>=`, swapped names and `-=` forms were also tried.
 target keeps the player's coordinate in v1 and the three squares in a1/a0/t0, the attempt gives v0 and
 a2/a1/a0). Consolidation retried six more shapes of the distance test (squares into locals, reversed
 subtractions, the sum in a reused local, `r *= r`): all register-only differences. `Effect_explosion_size` (a jump-table function) was in progress when the session was killed; still
-assembly. The sprite kinds that keep their position in `pos_1C` (`func_80045338`, `func_80045400`,
-`func_8004548C`) are kind 0x85 (`W48_85_WORK`): acceleration at 0x28 and speed at 0x30, unlike the debris
+assembly. The sprite kinds that keep their position in `pos_1C` (`Effect_shot_hit_step_back`, `Effect_shot_hit_launch`,
+`Effect_shot_hit_fly`) are kind 0x85 (`W48_85_WORK`): acceleration at 0x28 and speed at 0x30, unlike the debris
 kinds 0x86/0x87, where 0x2C is the speed and 0x32 the acceleration (see "WORK_48 kinds").
 
 `code_8003A3B4`: GTE lighting. Banked `Light_stage_init`: for each of the 0x800 `Stage_idx_tbl` entries

@@ -160,7 +160,7 @@ extern uint8 D_8008A280[];
 void Close_EFFECT_WORK(CODE43_WORK *wp);
 void RotMatrixY();
 sint32 Set_Atari(void *pos, sint32 half, sint32 arg2, sint32 arg3, sint32 id, void *tbl,
-                     uint32 flags, sint32 arg7, sint32 arg8);
+                 uint32 flags, sint32 arg7, sint32 arg8);
 sint32 Scr_line_calc(void *a, void *b, sint32 c, uint8 d);
 void Model_work_init(CODE43_WORK *wp, void *arg);
 CODE43_WORK *Open_EFFECT_WORK(void);

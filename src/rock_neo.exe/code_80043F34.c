@@ -132,8 +132,8 @@ void Effect_explosion_move(CODE43_WORK *wp)
         case 0:
             if (wp->value_3 & 0x40)
             {
-                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xA000, wp->byte_1,
-                              D_800986C0, add | 0x10000000, 0, 0x80);
+                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xA000, wp->byte_1, D_800986C0,
+                          add | 0x10000000, 0, 0x80);
             }
             else if (wp->value_3 == 6)
             {
@@ -172,18 +172,18 @@ void Effect_explosion_move(CODE43_WORK *wp)
                 else
                 {
                     Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
-                                  D_800986C0, 0x31000000, 0, 0x80);
+                              D_800986C0, 0x31000000, 0, 0x80);
                 }
             }
             else
             {
-                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1,
-                              D_800986C0, add | 0x10000000, 0, 0x80);
+                Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0xC000, wp->byte_1, D_800986C0,
+                          add | 0x10000000, 0, 0x80);
             }
             break;
         case 1:
             Set_Atari(&wp->pos_38, (sint16)wp->pos_38.w / 2, 0, 0x4000, wp->byte_1, D_800986C0,
-                          add | 0x10000000, 0, 0x80);
+                      add | 0x10000000, 0, 0x80);
             break;
         case 2:
         default:
@@ -692,7 +692,9 @@ void Effect_shot_hit_init(CODE43_WORK *wp)
     wp->routine_8 = D_80097DF0[i].routine_8;
 }
 
-void func_80045338(CODE43_WORK *wp)
+// Closes when word_40 (the direction) is 0xFFFF; otherwise steps back one velocity step
+// (once the size is 0x40 or more) and halves the size.
+void Effect_shot_hit_step_back(CODE43_WORK *wp)
 {
     if (wp->word_40 == 0xFFFF)
     {
@@ -711,7 +713,8 @@ void func_80045338(CODE43_WORK *wp)
     wp->value_24 >>= 1;
 }
 
-void func_80045400(CODE43_WORK *wp)
+// Launches the spark along the word_40 direction with a small random rise and gravity 5.
+void Effect_shot_hit_launch(CODE43_WORK *wp)
 {
     wp->value_26 = rand() & 0x3F;
     wp->index_a  = 0x10;
@@ -724,7 +727,8 @@ void func_80045400(CODE43_WORK *wp)
     wp->value_2a = 5;
 }
 
-void func_8004548C(CODE43_WORK *wp)
+// Flies and fades for 16 frames, or ends early when Scr_line_calc reports a hit.
+void Effect_shot_hit_fly(CODE43_WORK *wp)
 {
     uint16 dx;
     uint16 dy;
@@ -757,7 +761,8 @@ void Effect_shot_hit_end(CODE43_WORK *wp)
     Close_EFFECT_WORK(wp);
 }
 
-void func_8004559C(CODE43_WORK *wp)
+// Flash frames (routines 5-7) from D_80097E08; the first plays sound 0x121, the last ends.
+void Effect_shot_hit_flash_start(CODE43_WORK *wp)
 {
     wp->value_22 = D_80097E08[wp->routine_8 - 5].a;
     wp->value_23 = D_80097E08[wp->routine_8 - 5].b;
@@ -765,14 +770,14 @@ void func_8004559C(CODE43_WORK *wp)
     Sound_call2(0x121, wp->sound_1c);
 }
 
-void func_80045608(CODE43_WORK *wp)
+void Effect_shot_hit_flash_next(CODE43_WORK *wp)
 {
     wp->value_22 = D_80097E08[wp->routine_8 - 5].a;
     wp->value_23 = D_80097E08[wp->routine_8 - 5].b;
     wp->routine_8++;
 }
 
-void func_80045650(CODE43_WORK *wp)
+void Effect_shot_hit_flash_last(CODE43_WORK *wp)
 {
     wp->value_22  = D_80097E08[wp->routine_8 - 5].a;
     wp->value_23  = D_80097E08[wp->routine_8 - 5].b;

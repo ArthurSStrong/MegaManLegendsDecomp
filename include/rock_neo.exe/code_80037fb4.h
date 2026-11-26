@@ -206,7 +206,7 @@ void Camera_cmd_set(void *data);
 void func_800397E8(void);
 void func_800177CC(void *start, void *end);
 void Camera_return_set(void);
-void func_800392CC(void);
+void camera_behind_player(void);
 void camera_cmd_exec(void);
 void Camera_move_set(CAM_VEC *vec, sint32 arg1, sint32 arg2, sint32 arg3);
 
