@@ -851,7 +851,7 @@ argument once, under flags_0 bit `0x01000000`, sets bit `0x10000000`, counts dow
 0x2EE is clear and `Money_check(-D_8008FD3C[D_80098930])`, i.e. the money can't cover that price; pool
 bytes `D_80098930`/`D_80098B6C` now tentative in `moji.c`).
 Parked, then banked: `Moji_cmd_money_add`/`Moji_cmd_money_sub` (`Money_add(±Moji_amount, 0, 0)`, step 1)
-and `func_80057924` (`Money_add` of `-(Game_work.unk07D - unk07C) * 10` or of `-money`, then `unk07C =
+and `Moji_cmd_fill_pay` (`Money_add` of `-(Game_work.unk07D - unk07C) * 10` or of `-money`, then `unk07C =
 unk07D` in each branch (the target duplicates the tail), step 2). Only the tail differs: `cmd_ptr_6C` in `$v0`
 where the target has `$v1` with `li $v0,1` in the load delay slot. **Cause: the callee's return type.** With
 a `void` prototype GCC 2.7 treats `$v0` as free right after the `jal` and loads the pointer into it; with an
@@ -865,7 +865,7 @@ pool words `D_80098B2C` (bytes OR'd in per entry by `Moji_update`, read as bytes
 `Moji_flag` and `D_80098960` (frame counter bumped by `Moji_update`). Only `cmd_ptr_6C` is stored through a
 `&Moji_work[i]` pointer; the other fields by index), `MojiTaskKill` (ORs and clears every entry's `flags_0`,
 `mes_no_C2 = 0xFF`, XA stop if bit `0x40000` was set, `Moji_flag = 0`; `MOJI_WORK_MAX` = 5),
-`func_80057744` (byte 1 or 2 as message by `Game_work.unk07D == unk07C`, falls back to `D_8008CACC` without
+`Moji_cmd_full_branch` (byte 1 or 2 as message by `Game_work.unk07D == unk07C`, falls back to `D_8008CACC` without
 a file; `cmd_ptr_6C = cmd_top_48 = ...`, so `cmd_top_48` is stored first; clears `unk_3E`, `unk_3C`,
 `unk_72`), `Moji_cmd_voice_wait` (`Moji_cmd_wait`'s wait, also ending once bit `0x40000` (XA) clears; clears bits
 `0x11000000`), and the twins `Moji_cmd_part_name`/`Moji_text_part_name` (push, then call into `D_8008CBA4[id - 1]` with
@@ -890,8 +890,8 @@ leading zeros as `D_8008AF3C[pad]` until a nonzero digit (flag in `.sbss` `D_800
 `lui/addiu %lo(D_8008AF24+0x18)`, where the target computes `addiu t3,t0,0x18` from the table register.
 Tried: a pointer loop (`for`, gets a pre-test; `do/while`), a local table pointer indexed or walked
 (`*place++` with `dst[i]` gives the right shape but the end from `dst + 6`), walking both pointers, `sint32 i`.
-Banked, matching: the `six_digit_set` text codes `Moji_text_amount` (`Moji_amount`), `func_80057144`
-(`money_40 = Game_work.money`, then prints it; the target reloads `money_40`) and `func_800579D8`
+Banked, matching: the `six_digit_set` text codes `Moji_text_amount` (`Moji_amount`), `Moji_text_money`
+(`money_40 = Game_work.money`, then prints it; the target reloads `money_40`) and `Moji_text_fill_cost`
 (`(Game_work.unk07D - unk07C) * 10`), each writing at `++mes_ptr_14`; `Moji_cmd_scroll` (scroll command:
 like `Moji_cmd_wait`'s wait, but also `unk_3B++` on the first pass; each frame after the countdown
 `scroll_38 -= unk_3A` until `timer_4 * unk_3A < -(unk_3B * 12)`, then `scroll_38 += unk_3B * 12`, clears

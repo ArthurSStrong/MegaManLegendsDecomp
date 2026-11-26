@@ -1001,7 +1001,7 @@ sint32 Moji_cmd_key_wait(MOJI_WORK *wp)
             {
                 D_800987D4 = 0;
                 Print(((sint16)wp->val_8 + wp->val_7E * 12 - 4) |
-                                  (((sint16)wp->val_A + wp->val_7F * 12 - 4) << 9),
+                          (((sint16)wp->val_A + wp->val_7F * 12 - 4) << 9),
                       D_80097F60);
             }
         }
@@ -1132,7 +1132,6 @@ sint32 Moji_cmd_window_close(MOJI_WORK *wp)
     wp->pos_6C += 1;
     return 1;
 }
-
 
 sint32 Moji_cmd_camera_end(MOJI_WORK *wp)
 {
@@ -1437,7 +1436,8 @@ void Moji_text_parts_msg(MOJI_WORK *wp)
     {
         MojiTaskExec(wp->pos_14[1], wp->base_44,
                      (uint8)(wp->pos_14[2] +
-                             ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454] - 1));
+                             ((uint8 *)&Player_work)[(sint8)wp->val_71 + Moji_list_top + 0x454] -
+                             1));
     }
     else
     {
@@ -1510,7 +1510,8 @@ void Moji_text_list_choice(MOJI_WORK *wp)
                 {
                     wp->val_71 = wp->pos_14[2] >> 4;
                     wp->val_BC = 0;
-                    if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 && Moji_list_top != 0)
+                    if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 &&
+                        Moji_list_top != 0)
                     {
                         Sound_call(0x81, 1, 0);
                         Moji_list_top--;
@@ -1522,7 +1523,8 @@ void Moji_text_list_choice(MOJI_WORK *wp)
                     {
                         wp->val_71 = wp->pos_14[2] >> 4;
                         wp->val_BC = 12;
-                        if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 && Moji_list_top != 0)
+                        if ((uint32)Moji_list_count >= 6 && old == (sint8)wp->val_71 &&
+                            Moji_list_top != 0)
                         {
                             Sound_call(0x81, 1, 0);
                             Moji_list_top--;
@@ -1672,19 +1674,18 @@ sint32 Moji_cmd_shop_list(MOJI_WORK *wp)
     uint8 index;
     uint8 *script;
 
-    base       = D_80097F64[D_80098850];
+    base            = D_80097F64[D_80098850];
     Moji_list_count = 0;
-    Moji_list_top = D_800988F4;
-    have       = &Sce_flag[base >> 3];
-    seen       = &Sce_flag[(sint32)(base - 0x80) >> 3];
+    Moji_list_top   = D_800988F4;
+    have            = &Sce_flag[base >> 3];
+    seen            = &Sce_flag[(sint32)(base - 0x80) >> 3];
     if (Player_work.life_max >= 0xA0)
     {
         D_8008FD3C[0x23] = D_8008FE44;
     }
     else
     {
-        D_8008FD3C[0x23] =
-            D_8008FD3C[0x85 - (0xA0 - Player_work.life_max) / 16];
+        D_8008FD3C[0x23] = D_8008FD3C[0x85 - (0xA0 - Player_work.life_max) / 16];
     }
     if (MOJI_GAME->value7D >= 0x12)
     {
@@ -1725,7 +1726,7 @@ sint32 Moji_cmd_shop_list(MOJI_WORK *wp)
             if (D_80098850 == 1)
             {
                 Moji_list[Moji_list_count] = i;
-                n                      = Moji_list_count++;
+                n                          = Moji_list_count++;
                 if (i < 0x20 || (uint32)(i - 0x24) < 0x14 || (uint32)(i - 0x4C) < 5)
                 {
                     Moji_list_count = n;
@@ -1826,14 +1827,16 @@ sint32 Moji_cmd_exec_if(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_80057124(MOJI_WORK *wp)
+// Copies the money (Game_work+0x1C) into val_40.
+sint32 Moji_cmd_money_get(MOJI_WORK *wp)
 {
     wp->val_40 = Game_work[7];
     wp->pos_6C += 1;
     return 1;
 }
 
-void func_80057144(MOJI_WORK *wp)
+// The text twin: copies the money and writes it as digits.
+void Moji_text_money(MOJI_WORK *wp)
 {
     wp->val_40 = Game_work[7];
     wp->pos_14 += 1;
@@ -1979,23 +1982,23 @@ void Moji_text_price(MOJI_WORK *wp)
         if (D_80098850 == 0)
         {
             num_to_text(0, D_8008FD3C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]] >> 2,
-                          wp->pos_14 + 1);
+                        wp->pos_14 + 1);
         }
         else
         {
             num_to_text(0, D_8008FD7C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]] >> 2,
-                          wp->pos_14 + 1);
+                        wp->pos_14 + 1);
         }
     }
     else if (D_80098850 == 0)
     {
         num_to_text(0, D_8008FD3C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]],
-                      wp->pos_14 + 1);
+                    wp->pos_14 + 1);
     }
     else
     {
         num_to_text(0, D_8008FD7C[Moji_list[Moji_list_top + (sint8)wp->val_73 - 1]],
-                      wp->pos_14 + 1);
+                    wp->pos_14 + 1);
     }
     wp->pos_14 += 1;
 }
@@ -2013,7 +2016,8 @@ void Moji_text_item_msg(MOJI_WORK *wp)
     wp->pos_14                      = D_8008CBA4[Moji_item];
 }
 
-sint32 func_80057744(MOJI_WORK *wp)
+// Branches to message byte 1 when Game_work+0x7C is full (equals +0x7D), else byte 2.
+sint32 Moji_cmd_full_branch(MOJI_WORK *wp)
 {
     sint32 x;
 
@@ -2047,7 +2051,9 @@ sint32 func_80057744(MOJI_WORK *wp)
     return 1;
 }
 
-sint32 func_800577FC(MOJI_WORK *wp)
+// Branches on whether the money covers filling +0x7C up to +0x7D at 10 each: byte 1 if it does,
+// byte 3 if not but value60 >= 0x80 and there is some money, else byte 2.
+sint32 Moji_cmd_fill_cost_branch(MOJI_WORK *wp)
 {
     sint32 x;
 
@@ -2085,8 +2091,8 @@ sint32 func_800577FC(MOJI_WORK *wp)
     return 1;
 }
 
-
-sint32 func_80057924(MOJI_WORK *wp)
+// Fills +0x7C up to +0x7D and pays for it: 10 each (byte 1 == 0), or all the money.
+sint32 Moji_cmd_fill_pay(MOJI_WORK *wp)
 {
     uint8 *next;
 
@@ -2105,11 +2111,11 @@ sint32 func_80057924(MOJI_WORK *wp)
     return 1;
 }
 
-void func_800579D8(MOJI_WORK *wp)
+// Writes the cost of filling +0x7C up to +0x7D (10 each) as digits.
+void Moji_text_fill_cost(MOJI_WORK *wp)
 {
     num_to_text(1, (MOJI_GAME->value7D - MOJI_GAME->value7C) * 10, ++wp->pos_14);
 }
-
 
 sint32 Moji_cmd_item_get(MOJI_WORK *wp)
 {
@@ -2138,14 +2144,12 @@ void Moji_text_item_call(MOJI_WORK *wp)
     wp->pos_14                      = D_8008CBA4[wp->pos_14[1]];
 }
 
-
 sint32 Moji_cmd_money_add(MOJI_WORK *wp)
 {
     Money_add(Moji_amount, 0, 0);
     wp->pos_6C += 1;
     return 1;
 }
-
 
 sint32 Moji_cmd_money_sub(MOJI_WORK *wp)
 {
@@ -2177,7 +2181,7 @@ sint32 Moji_cmd_list_bits(MOJI_WORK *wp)
         }
     }
     Moji_list[count] = 8;
-    x                 = wp->pos_6C[count];
+    x                = wp->pos_6C[count];
     if ((uint8)x == 0xFF)
     {
         wp->pos_6C += 9;
@@ -2720,8 +2724,8 @@ sint32 Moji_cmd_list_clear(MOJI_WORK *wp)
     uint8 *p;
     uint8 value;
 
-    value      = 0xFF;
-    i          = 0x7F;
+    value         = 0xFF;
+    i             = 0x7F;
     Moji_list_top = 0;
     wp->pos_6C += 1;
     p = &Moji_list[0x7F];
@@ -2737,7 +2741,7 @@ void Moji_text_list_from_flags(MOJI_WORK *wp)
     uint8 *bits;
     sint32 i;
 
-    bits       = D_800BE420;
+    bits            = D_800BE420;
     Moji_list_count = 0;
     for (i = 0; i < 0x40; i++)
     {
@@ -3016,7 +3020,8 @@ sint32 Moji_cmd_buster_slot(MOJI_WORK *wp)
     wp->flags_0 &= ~0x400000;
     Moji_flag3 = ((uint8 *)&Player_work)[(sint8)Moji_work[1].val_71 + 0x450];
     Moji_flag3 = Moji_flag3 |
-                 (((uint8 *)&Player_work)[Moji_list_top + Moji_work[2].val_79 + 0x454] << 8) | 0x10000;
+                 (((uint8 *)&Player_work)[Moji_list_top + Moji_work[2].val_79 + 0x454] << 8) |
+                 0x10000;
     if (wp->val_4 <= 0)
     {
         if (*(uint32 *)&wp->val_B8 & 0x10080000)
@@ -3082,7 +3087,7 @@ sint32 Moji_cmd_buster_equip(MOJI_WORK *wp)
         else if (wp->val_BA & 0x4000)
         {
             Sound_call(0x82, 1, 0);
-            temp                                  = parts[(sint8)wp->val_71 + Moji_list_top];
+            temp                                     = parts[(sint8)wp->val_71 + Moji_list_top];
             parts[(sint8)wp->val_71 + Moji_list_top] = ((uint8 *)&Player_work)[D_80098B2D + 0x450];
             ((uint8 *)&Player_work)[D_80098B2D + 0x450] = temp;
             Sub_screen_rb_parts_set();
@@ -3148,7 +3153,7 @@ sint32 Moji_cmd_repair_list(MOJI_WORK *wp)
         Moji_list[count++] = 4;
     }
     Moji_list[count] = 6;
-    value             = wp->pos_6C[1] + 6;
+    value            = wp->pos_6C[1] + 6;
     value -= count;
     wp->val_C2 = (uint8)value;
     wp->pos_6C = wp->pos_48 = wp->base_44 + ((uint16 *)wp->base_44)[(uint8)value];
@@ -3176,9 +3181,9 @@ sint32 Moji_cmd_repair_cost(MOJI_WORK *wp)
     else
     {
         num_to_text(0,
-                      ((uint8 *)Game_work)[0x6B - slot] * limit -
-                          *(sint32 *)((uint8 *)Game_work + 0x4C - slot * 4),
-                      p + 7);
+                    ((uint8 *)Game_work)[0x6B - slot] * limit -
+                        *(sint32 *)((uint8 *)Game_work + 0x4C - slot * 4),
+                    p + 7);
     }
     wp->jump_tbl_4C[wp->depth_C0++] = (uint32)(wp->pos_6C + 2);
     wp->pos_6C                      = D_8008CE5C[Moji_list[index]];
