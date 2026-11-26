@@ -313,6 +313,6 @@ stcom31_E_001A = 0x8012BB7A;
 stcom31_E_001C = 0x8012BB7C;
 stcom31_last_point = 0x8012BB80;
 // stcom37 (src/stage_common/stcom37.c): this stage's copy, under the shared names.
-stcom37_func_0000 = 0x801121A8; // type:func
-stcom37_func_0020 = 0x801121C8; // type:func
-stcom37_func_0040 = 0x801121E8; // type:func
+stcom37_erase = 0x801121A8; // type:func
+stcom37_stand = 0x801121C8; // type:func
+stcom37_talk = 0x801121E8; // type:func

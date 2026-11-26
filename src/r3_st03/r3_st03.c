@@ -3,7 +3,7 @@
 
 #ifdef __wasm32__
 void Sce_flag_off(sint32 flag);
-void stcom36_func_0028(sint8 room);
+void stcom36_objs_open(sint8 room);
 #endif
 
 void func_801004BC(void)
@@ -136,7 +136,7 @@ void func_8010093C(STAGE_OBJ *wp)
 {
     if ((wp->value_4 == 0) && (Sce_flag_test(2) == 0))
     {
-        stcom36_func_0028(0x11);
+        stcom36_objs_open(0x11);
         wp->value_4 = 0xFF;
     }
 }
@@ -155,42 +155,42 @@ void func_80100990(STAGE_ROOM *wp)
         case 0:
             if (Sce_flag_test(0xC))
             {
-                stcom36_func_0028(5);
+                stcom36_objs_open(5);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0xE))
             {
-                stcom36_func_0028(4);
+                stcom36_objs_open(4);
                 wp->routine_4 = 0xFF;
                 func_80101918(1);
             }
             else if (Sce_flag_test(0xD))
             {
-                stcom36_func_0028(3);
+                stcom36_objs_open(3);
                 wp->routine_4 = 0xFF;
                 func_80101918(1);
             }
             else if (Sce_flag_test(0))
             {
-                stcom36_func_0028(2);
+                stcom36_objs_open(2);
                 wp->routine_4 = 0xFF;
                 func_80101918(0);
             }
             else if (Sce_flag_test(4))
             {
-                stcom36_func_0028(1);
+                stcom36_objs_open(1);
                 wp->routine_4 = 2;
                 func_80101918(0);
             }
             else if (Sce_flag_test(3))
             {
-                stcom36_func_0028(0);
+                stcom36_objs_open(0);
                 wp->routine_4 = 1;
                 func_80101918(0);
             }
             else
             {
-                stcom36_func_0028(0);
+                stcom36_objs_open(0);
                 Sce_event_start(8);
                 Scene_work.reserved00[4] = 0;
                 wp->routine_4            = 1;
@@ -242,12 +242,12 @@ void func_80100BF8(STAGE_ROOM *wp)
         case 0:
             if (Sce_flag_test(6))
             {
-                stcom36_func_0028(0x10);
+                stcom36_objs_open(0x10);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0x17))
             {
-                stcom36_func_0028(0xC);
+                stcom36_objs_open(0xC);
                 wp->routine_4 = 2;
             }
             else if (Sce_flag_test(1) && Sce_flag_test(2))
@@ -258,12 +258,12 @@ void func_80100BF8(STAGE_ROOM *wp)
             }
             else if (Sce_flag_test(0x1A))
             {
-                stcom36_func_0028(0xA);
+                stcom36_objs_open(0xA);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0xC))
             {
-                stcom36_func_0028(9);
+                stcom36_objs_open(9);
                 if (Sce_flag_test(0x22) && !Sce_flag_test(0x45))
                 {
                     func_80103CC4(0);
@@ -274,24 +274,24 @@ void func_80100BF8(STAGE_ROOM *wp)
             }
             else if (Sce_flag_test(0xE))
             {
-                stcom36_func_0028(8);
+                stcom36_objs_open(8);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0xD))
             {
-                stcom36_func_0028(7);
+                stcom36_objs_open(7);
                 Sce_flag_on(0x60A);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(4))
             {
-                stcom36_func_0028(6);
+                stcom36_objs_open(6);
                 Sce_flag_on(0x60A);
                 wp->routine_4 = 0xFF;
             }
             else
             {
-                stcom36_func_0028(6);
+                stcom36_objs_open(6);
                 Sce_flag_on(0x60A);
                 wp->routine_4 = 0xFF;
             }
@@ -312,8 +312,8 @@ void func_80100BF8(STAGE_ROOM *wp)
             if (Sce_flag_test(0x1A))
             {
                 MojiTaskExec2(0, 0x67);
-                stcom36_func_0118(0);
-                stcom36_func_0028(0xA);
+                stcom36_objs_end(0);
+                stcom36_objs_open(0xA);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -344,7 +344,7 @@ void func_80100ECC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x16);
+        stcom36_objs_open(0x16);
         wp->routine_4 = 0xFF;
     }
 }
@@ -353,7 +353,7 @@ void func_80100F10(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x12);
+        stcom36_objs_open(0x12);
         wp->routine_4 = 0xFF;
     }
 }
@@ -366,7 +366,7 @@ void func_80100F54(STAGE_ROOM *wp)
     switch (wp->routine_4)
     {
         case 0:
-            stcom36_func_0028(0x14);
+            stcom36_objs_open(0x14);
             wp->routine_4 = 1;
             // fall through
         case 1:
@@ -411,8 +411,8 @@ void func_801010C8(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x13);
-        stcom36_func_0028(0x25);
+        stcom36_objs_open(0x13);
+        stcom36_objs_open(0x25);
         wp->value_4 = 0xFF;
     }
 }
@@ -421,7 +421,7 @@ void func_80101114(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x15);
+        stcom36_objs_open(0x15);
         wp->routine_4 = 0xFF;
     }
 }
@@ -434,8 +434,8 @@ void func_80101160(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x13);
-        stcom36_func_0028(0x25);
+        stcom36_objs_open(0x13);
+        stcom36_objs_open(0x25);
         wp->value_4 = 0xFF;
     }
 }
@@ -444,7 +444,7 @@ void func_801011AC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x15);
+        stcom36_objs_open(0x15);
         wp->routine_4 = 0xFF;
     }
 }
@@ -453,7 +453,7 @@ void func_801011F0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x17);
+        stcom36_objs_open(0x17);
         wp->routine_4 = 0xFF;
     }
 }
@@ -462,7 +462,7 @@ void func_80101234(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x18);
+        stcom36_objs_open(0x18);
         wp->routine_4 = 0xFF;
     }
 }
@@ -471,7 +471,7 @@ void func_80101278(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x19);
+        stcom36_objs_open(0x19);
         wp->routine_4 = 0xFF;
     }
 }
@@ -484,7 +484,7 @@ void func_801012C4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x13);
+        stcom36_objs_open(0x13);
         wp->routine_4 = 0xFF;
     }
 }
@@ -493,7 +493,7 @@ void func_80101308(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x15);
+        stcom36_objs_open(0x15);
         wp->routine_4 = 0xFF;
     }
 }
@@ -502,7 +502,7 @@ void func_8010134C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1A);
+        stcom36_objs_open(0x1A);
         wp->routine_4 = 0xFF;
     }
 }
@@ -511,7 +511,7 @@ void func_80101390(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1B);
+        stcom36_objs_open(0x1B);
         wp->routine_4 = 0xFF;
     }
 }
@@ -520,7 +520,7 @@ void func_801013D4(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x1C);
+        stcom36_objs_open(0x1C);
         wp->value_4 = 0xFF;
     }
 }
@@ -529,7 +529,7 @@ void func_80101418(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x1D);
+        stcom36_objs_open(0x1D);
         wp->value_4 = 0xFF;
     }
 }
@@ -538,7 +538,7 @@ void func_8010145C(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x1E);
+        stcom36_objs_open(0x1E);
         wp->value_4 = 0xFF;
     }
 }
@@ -547,7 +547,7 @@ void func_801014A0(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x1F);
+        stcom36_objs_open(0x1F);
         wp->value_4 = 0xFF;
     }
 }
@@ -556,7 +556,7 @@ void func_801014E4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x20);
+        stcom36_objs_open(0x20);
         wp->routine_4 = 0xFF;
     }
 }
@@ -565,7 +565,7 @@ void func_80101528(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x21);
+        stcom36_objs_open(0x21);
         wp->value_4 = 0xFF;
     }
 }
@@ -574,7 +574,7 @@ void func_8010156C(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x22);
+        stcom36_objs_open(0x22);
         wp->value_4 = 0xFF;
     }
 }
@@ -583,7 +583,7 @@ void func_801015B0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x23);
+        stcom36_objs_open(0x23);
         wp->routine_4 = 0xFF;
     }
 }
@@ -592,7 +592,7 @@ void func_801015F4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x24);
+        stcom36_objs_open(0x24);
         wp->routine_4 = 0xFF;
     }
 }
@@ -601,7 +601,7 @@ void func_80101638(STAGE_OBJ *wp)
 {
     if (wp->value_4 == 0)
     {
-        stcom36_func_0028(0x22);
+        stcom36_objs_open(0x22);
         wp->value_4 = 0xFF;
     }
 }
@@ -610,7 +610,7 @@ void func_8010167C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x23);
+        stcom36_objs_open(0x23);
         wp->routine_4 = 0xFF;
     }
 }
@@ -619,7 +619,7 @@ void func_801016C0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x24);
+        stcom36_objs_open(0x24);
         wp->routine_4 = 0xFF;
     }
 }
@@ -950,8 +950,8 @@ void func_80101D54(STAGE_ROOM_WORK *wp)
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
                 Sce_flag_on(3);
-                stcom36_func_0118();
-                stcom36_func_0028(0);
+                stcom36_objs_end();
+                stcom36_objs_open(0);
             }
             break;
     }
@@ -1071,16 +1071,16 @@ void func_80102224(STAGE_ROOM_WORK *wp)
                 pl->rot_440.y = 0;
                 D_800A395C    = 1;
                 Sce_flag_on(4);
-                stcom36_func_0118();
-                stcom36_func_0028(1);
+                stcom36_objs_end();
+                stcom36_objs_open(1);
             }
             break;
         case 6:
             wp->routine_6++;
             pl->rot_440.y = 0;
             Sce_flag_on(4);
-            stcom36_func_0118();
-            stcom36_func_0028(1);
+            stcom36_objs_end();
+            stcom36_objs_open(1);
             break;
         case 7:
             wp->flags_0 = 0;
@@ -1164,8 +1164,8 @@ void func_8010263C(STAGE_ROOM_WORK *wp)
                 pl->rot_440.x = 0;
                 pl->rot_440.z = 0;
                 pl->anim_448  = 0x30;
-                stcom36_func_0118();
-                stcom36_func_0028(1);
+                stcom36_objs_end();
+                stcom36_objs_open(1);
                 Sce_flag_off(0x606);
                 Sce_flag_off(0x607);
                 obj            = D_8011CB34[2];
@@ -1395,8 +1395,8 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 pl->rot_440.x = 0;
                 pl->rot_440.z = 0;
                 pl->anim_448  = 0x30;
-                stcom36_func_0118();
-                stcom36_func_0028(0xD);
+                stcom36_objs_end();
+                stcom36_objs_open(0xD);
                 wp->routine_6++;
             }
             break;
@@ -1446,8 +1446,8 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 Sce_script_next();
                 Sound_call(0x150, 0, 0);
                 Sound_call(0x150, 0, 0);
-                stcom36_func_0118();
-                stcom36_func_0028(0xE);
+                stcom36_objs_end();
+                stcom36_objs_open(0xE);
                 wp->routine_6++;
             }
             break;
@@ -1506,8 +1506,8 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
             if (!(Moji_flag & 0x08000000))
             {
                 Sce_script_next();
-                stcom36_func_0118();
-                stcom36_func_0028(0xF);
+                stcom36_objs_end();
+                stcom36_objs_open(0xF);
                 wp->timer_C = 0x1E;
                 wp->routine_6++;
                 pl->flags_0 |= 2;
@@ -1550,10 +1550,10 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
                 Camera_reset();
-                stcom36_func_0118();
+                stcom36_objs_end();
                 Sce_flag_on(6);
                 Sce_flag_on(0xB);
-                stcom36_func_0028(0x10);
+                stcom36_objs_open(0x10);
             }
             break;
         case 17:
@@ -1563,10 +1563,10 @@ void func_80102DBC(STAGE_ROOM_WORK *wp)
                 Camera_return_set();
                 Player_control_on(pl);
                 wp->flags_0 = 0;
-                stcom36_func_0118();
+                stcom36_objs_end();
                 Sce_flag_on(6);
                 Sce_flag_on(0xB);
-                stcom36_func_0028(0x10);
+                stcom36_objs_open(0x10);
             }
             break;
     }
@@ -1621,7 +1621,7 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             {
                 break;
             }
-            stcom36_func_0028(0xB);
+            stcom36_objs_open(0xB);
             Sce_script_timer_clear();
             Sce_camera_start(0, 0, 0);
             if (Sce_flag_test(0x16))
@@ -1692,8 +1692,8 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             if (*(uint8 *)wp->tbl_A4 == 0xFF)
             {
                 MojiTaskExec2(0, 0x47);
-                stcom36_func_0118();
-                stcom36_func_0028(0xC);
+                stcom36_objs_end();
+                stcom36_objs_open(0xC);
                 obj = ST03_SPAWNED_0;
                 if (Sce_flag_test(0x16))
                 {
@@ -1783,8 +1783,8 @@ void func_80103578(STAGE_ROOM_WORK *wp)
             }
             pl->rot_440.x = 0;
             pl->rot_440.z = 0;
-            stcom36_func_0118();
-            stcom36_func_0028(0xC);
+            stcom36_objs_end();
+            stcom36_objs_open(0xC);
             obj = ST03_SPAWNED_0;
             if (Sce_flag_test(0x16))
             {

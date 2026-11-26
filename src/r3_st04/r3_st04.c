@@ -2,7 +2,7 @@
 #include "st04.h"
 
 #ifdef __wasm32__
-void stcom36_func_0028(sint8 room);
+void stcom36_objs_open(sint8 room);
 #endif
 
 // Installs the stage's slot routine tables.
@@ -30,8 +30,8 @@ void func_80100268(void)
     STAGE_MAP_WORK_PTR->z0    = STAGE_MAP_TBL[Game_work.value_51].z0;
     STAGE_MAP_WORK_PTR->x1    = STAGE_MAP_WORK_PTR->x0 + STAGE_MAP_WORK_PTR->w;
     STAGE_MAP_WORK_PTR->z1    = STAGE_MAP_WORK_PTR->z0 + STAGE_MAP_WORK_PTR->h;
-    cells               = STAGE_MAP_TBL[Game_work.value_51].cells;
-    pl                  = ST04_PL;
+    cells                     = STAGE_MAP_TBL[Game_work.value_51].cells;
+    pl                        = ST04_PL;
     STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
     STAGE_MAP_WORK_PTR->cells = cells;
     if (Game_work.value_51 == 0)
@@ -53,8 +53,8 @@ void func_80100268(void)
             D_8010AAA2 = 0x1B;
         }
     }
-    pl->value_44E       = 0;
-    spawn               = D_8010AA84[Game_work.value_51];
+    pl->value_44E             = 0;
+    spawn                     = D_8010AA84[Game_work.value_51];
     STAGE_MAP_WORK_PTR->exits = D_8010AC4C[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010AD54[D_8010AD9C[Game_work.value_51]], D_8010AC64[Game_work.value_51]);
@@ -112,42 +112,42 @@ void func_80100594(STAGE_ROOM *wp)
             }
             if (Sce_flag_test(9))
             {
-                stcom36_func_0028(4);
+                stcom36_objs_open(4);
                 wp->routine_4 = 0xFF;
                 func_8010207C(1);
             }
             else if (Sce_flag_test(0xF))
             {
-                stcom36_func_0028(4);
+                stcom36_objs_open(4);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(6))
             {
-                stcom36_func_0028(3);
+                stcom36_objs_open(3);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(1))
             {
-                stcom36_func_0028(0x21);
+                stcom36_objs_open(0x21);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0x20))
             {
-                stcom36_func_0028(0x22);
+                stcom36_objs_open(0x22);
                 func_8010207C(2);
                 func_8010207C(3);
                 wp->routine_4 = 0xFF;
             }
             else if (Sce_flag_test(0x46))
             {
-                stcom36_func_0028(2);
+                stcom36_objs_open(2);
                 if (!Sce_flag_test(0x20))
                 {
-                    lead            = Sce_slot_open_keep(&D_8010C9DC[0]);
-                    ep              = Sce_slot_open_keep(&D_8010C9DC[1]);
-                    ep->value_C4    = lead->position;
-                    ep              = Sce_slot_open_keep(&D_8010C9DC[2]);
-                    ep->value_C4    = lead->position;
+                    lead         = Sce_slot_open_keep(&D_8010C9DC[0]);
+                    ep           = Sce_slot_open_keep(&D_8010C9DC[1]);
+                    ep->value_C4 = lead->position;
+                    ep           = Sce_slot_open_keep(&D_8010C9DC[2]);
+                    ep->value_C4 = lead->position;
                     Sce_slot_open_keep(&D_8010C9DC[3]);
                     wp->routine_4 = 10;
                 }
@@ -158,12 +158,12 @@ void func_80100594(STAGE_ROOM *wp)
             }
             else if (Sce_flag_test(0xC))
             {
-                stcom36_func_0028(1);
+                stcom36_objs_open(1);
                 wp->routine_4 = 0xFF;
             }
             else
             {
-                stcom36_func_0028(0);
+                stcom36_objs_open(0);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -202,7 +202,7 @@ void func_80100594(STAGE_ROOM *wp)
             {
                 func_8010207C(2);
                 func_8010207C(3);
-                stcom36_func_0028(0x1C);
+                stcom36_objs_open(0x1C);
                 wp->routine_4 = 0xFF;
             }
             break;
@@ -219,7 +219,7 @@ void func_80100890(STAGE_ROOM *wp)
     {
         if (Sce_flag_test(1))
         {
-            stcom36_func_0028(7);
+            stcom36_objs_open(7);
             func_8010207C(1);
             func_8010207C(2);
         }
@@ -237,11 +237,11 @@ void func_80100890(STAGE_ROOM *wp)
             {
                 set = 5;
             }
-            stcom36_func_0028(set);
+            stcom36_objs_open(set);
         }
         if (Sce_flag_test(0x22))
         {
-            stcom36_func_0028(0x36);
+            stcom36_objs_open(0x36);
         }
         wp->routine_4 = 0xFF;
     }
@@ -251,7 +251,7 @@ void func_80100948(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x18);
+        stcom36_objs_open(0x18);
         wp->routine_4 = 0xFF;
     }
 }
@@ -260,7 +260,7 @@ void func_8010098C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xB);
+        stcom36_objs_open(0xB);
         wp->routine_4 = 0xFF;
     }
 }
@@ -269,7 +269,7 @@ void func_801009D0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xC);
+        stcom36_objs_open(0xC);
         wp->routine_4 = 0xFF;
     }
 }
@@ -278,7 +278,7 @@ void func_80100A14(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2F);
+        stcom36_objs_open(0x2F);
         wp->routine_4 = 0xFF;
     }
 }
@@ -287,7 +287,7 @@ void func_80100A58(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(8);
+        stcom36_objs_open(8);
         wp->routine_4 = 0xFF;
     }
 }
@@ -296,7 +296,7 @@ void func_80100A9C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xD);
+        stcom36_objs_open(0xD);
         wp->routine_4 = 0xFF;
     }
 }
@@ -313,7 +313,7 @@ void func_80100AFC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x20);
+        stcom36_objs_open(0x20);
         wp->routine_4 = 0xFF;
     }
 }
@@ -322,7 +322,7 @@ void func_80100B40(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xC);
+        stcom36_objs_open(0xC);
         wp->routine_4 = 0xFF;
     }
 }
@@ -331,7 +331,7 @@ void func_80100B84(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(9);
+        stcom36_objs_open(9);
         wp->routine_4 = 0xFF;
     }
 }
@@ -340,7 +340,7 @@ void func_80100BC8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xE);
+        stcom36_objs_open(0xE);
         wp->routine_4 = 0xFF;
     }
 }
@@ -349,7 +349,7 @@ void func_80100C0C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x19);
+        stcom36_objs_open(0x19);
         wp->routine_4 = 0xFF;
     }
 }
@@ -358,7 +358,7 @@ void func_80100C50(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x10);
+        stcom36_objs_open(0x10);
         wp->routine_4 = 0xFF;
     }
 }
@@ -367,7 +367,7 @@ void func_80100C94(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x13);
+        stcom36_objs_open(0x13);
         wp->routine_4 = 0xFF;
     }
 }
@@ -376,7 +376,7 @@ void func_80100CD8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x30);
+        stcom36_objs_open(0x30);
         wp->routine_4 = 0xFF;
     }
 }
@@ -385,7 +385,7 @@ void func_80100D1C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(9);
+        stcom36_objs_open(9);
         wp->routine_4++;
     }
 }
@@ -394,7 +394,7 @@ void func_80100D68(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xE);
+        stcom36_objs_open(0xE);
         wp->routine_4 = 0xFF;
     }
 }
@@ -403,7 +403,7 @@ void func_80100DAC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x19);
+        stcom36_objs_open(0x19);
         wp->routine_4 = 0xFF;
     }
 }
@@ -412,7 +412,7 @@ void func_80100DF0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x10);
+        stcom36_objs_open(0x10);
         wp->routine_4 = 0xFF;
     }
 }
@@ -421,7 +421,7 @@ void func_80100E34(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x13);
+        stcom36_objs_open(0x13);
         wp->routine_4 = 0xFF;
     }
 }
@@ -430,7 +430,7 @@ void func_80100E78(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x30);
+        stcom36_objs_open(0x30);
         wp->routine_4 = 0xFF;
     }
 }
@@ -439,7 +439,7 @@ void func_80100EBC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xA);
+        stcom36_objs_open(0xA);
         wp->routine_4 = 0xFF;
     }
 }
@@ -448,8 +448,8 @@ void func_80100F00(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xF);
-        stcom36_func_0028(0x37);
+        stcom36_objs_open(0xF);
+        stcom36_objs_open(0x37);
         wp->routine_4 = 0xFF;
     }
 }
@@ -458,7 +458,7 @@ void func_80100F4C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1A);
+        stcom36_objs_open(0x1A);
         wp->routine_4 = 0xFF;
     }
 }
@@ -467,7 +467,7 @@ void func_80100F90(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x11);
+        stcom36_objs_open(0x11);
         wp->routine_4 = 0xFF;
     }
 }
@@ -476,7 +476,7 @@ void func_80100FD4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x14);
+        stcom36_objs_open(0x14);
         wp->routine_4 = 0xFF;
     }
 }
@@ -485,7 +485,7 @@ void func_80101018(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x31);
+        stcom36_objs_open(0x31);
         wp->routine_4 = 0xFF;
     }
 }
@@ -494,7 +494,7 @@ void func_8010105C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xA);
+        stcom36_objs_open(0xA);
         wp->routine_4 = 0xFF;
     }
 }
@@ -503,8 +503,8 @@ void func_801010A0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0xF);
-        stcom36_func_0028(0x37);
+        stcom36_objs_open(0xF);
+        stcom36_objs_open(0x37);
         wp->routine_4 = 0xFF;
     }
 }
@@ -513,7 +513,7 @@ void func_801010EC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1A);
+        stcom36_objs_open(0x1A);
         wp->routine_4 = 0xFF;
     }
 }
@@ -522,7 +522,7 @@ void func_80101130(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x11);
+        stcom36_objs_open(0x11);
         wp->routine_4 = 0xFF;
     }
 }
@@ -531,7 +531,7 @@ void func_80101174(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x14);
+        stcom36_objs_open(0x14);
         wp->routine_4 = 0xFF;
     }
 }
@@ -540,7 +540,7 @@ void func_801011B8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x31);
+        stcom36_objs_open(0x31);
         wp->routine_4 = 0xFF;
     }
 }
@@ -549,7 +549,7 @@ void func_801011FC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x15);
+        stcom36_objs_open(0x15);
         wp->routine_4 = 0xFF;
     }
 }
@@ -558,7 +558,7 @@ void func_80101240(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x17);
+        stcom36_objs_open(0x17);
         wp->routine_4 = 0xFF;
     }
 }
@@ -567,7 +567,7 @@ void func_80101284(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1B);
+        stcom36_objs_open(0x1B);
         wp->routine_4 = 0xFF;
     }
 }
@@ -576,7 +576,7 @@ void func_801012C8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x12);
+        stcom36_objs_open(0x12);
         wp->routine_4 = 0xFF;
     }
 }
@@ -585,7 +585,7 @@ void func_8010130C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x16);
+        stcom36_objs_open(0x16);
         wp->routine_4 = 0xFF;
     }
 }
@@ -594,7 +594,7 @@ void func_80101350(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x32);
+        stcom36_objs_open(0x32);
         wp->routine_4 = 0xFF;
     }
 }
@@ -603,7 +603,7 @@ void func_80101394(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x15);
+        stcom36_objs_open(0x15);
         wp->routine_4 = 0xFF;
     }
 }
@@ -612,7 +612,7 @@ void func_801013D8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x17);
+        stcom36_objs_open(0x17);
         wp->routine_4 = 0xFF;
     }
 }
@@ -621,7 +621,7 @@ void func_8010141C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1B);
+        stcom36_objs_open(0x1B);
         wp->routine_4 = 0xFF;
     }
 }
@@ -630,7 +630,7 @@ void func_80101460(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x12);
+        stcom36_objs_open(0x12);
         wp->routine_4 = 0xFF;
     }
 }
@@ -639,7 +639,7 @@ void func_801014A4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x16);
+        stcom36_objs_open(0x16);
         wp->routine_4 = 0xFF;
     }
 }
@@ -648,7 +648,7 @@ void func_801014E8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x32);
+        stcom36_objs_open(0x32);
         wp->routine_4 = 0xFF;
     }
 }
@@ -657,7 +657,7 @@ void func_8010152C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1D);
+        stcom36_objs_open(0x1D);
         if (Sce_flag_test(0x22E) != 0)
         {
             func_8010207C(3);
@@ -670,7 +670,7 @@ void func_80101588(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x23);
+        stcom36_objs_open(0x23);
         wp->routine_4 = 0xFF;
     }
 }
@@ -679,7 +679,7 @@ void func_801015CC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x26);
+        stcom36_objs_open(0x26);
         wp->routine_4 = 0xFF;
     }
 }
@@ -688,7 +688,7 @@ void func_80101610(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x29);
+        stcom36_objs_open(0x29);
         wp->routine_4 = 0xFF;
     }
 }
@@ -697,7 +697,7 @@ void func_80101654(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2C);
+        stcom36_objs_open(0x2C);
         wp->routine_4 = 0xFF;
     }
 }
@@ -706,7 +706,7 @@ void func_80101698(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x33);
+        stcom36_objs_open(0x33);
         wp->routine_4 = 0xFF;
     }
 }
@@ -715,7 +715,7 @@ void func_801016DC(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1E);
+        stcom36_objs_open(0x1E);
         if (Sce_flag_test(0x22E) != 0)
         {
             func_8010207C(3);
@@ -728,7 +728,7 @@ void func_80101738(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x24);
+        stcom36_objs_open(0x24);
         wp->routine_4 = 0xFF;
     }
 }
@@ -737,7 +737,7 @@ void func_8010177C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x27);
+        stcom36_objs_open(0x27);
         wp->routine_4 = 0xFF;
     }
 }
@@ -746,7 +746,7 @@ void func_801017C0(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2A);
+        stcom36_objs_open(0x2A);
         wp->routine_4 = 0xFF;
     }
 }
@@ -755,7 +755,7 @@ void func_80101804(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2D);
+        stcom36_objs_open(0x2D);
         wp->routine_4 = 0xFF;
     }
 }
@@ -764,7 +764,7 @@ void func_80101848(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x34);
+        stcom36_objs_open(0x34);
         wp->routine_4 = 0xFF;
     }
 }
@@ -773,7 +773,7 @@ void func_8010188C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x1F);
+        stcom36_objs_open(0x1F);
         if (Sce_flag_test(0x22E) != 0)
         {
             func_8010207C(3);
@@ -786,7 +786,7 @@ void func_801018E8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x25);
+        stcom36_objs_open(0x25);
         wp->routine_4 = 0xFF;
     }
 }
@@ -795,7 +795,7 @@ void func_8010192C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x28);
+        stcom36_objs_open(0x28);
         wp->routine_4 = 0xFF;
     }
 }
@@ -804,7 +804,7 @@ void func_80101970(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2B);
+        stcom36_objs_open(0x2B);
         wp->routine_4 = 0xFF;
     }
 }
@@ -813,7 +813,7 @@ void func_801019B4(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x2E);
+        stcom36_objs_open(0x2E);
         wp->routine_4 = 0xFF;
     }
 }
@@ -822,7 +822,7 @@ void func_801019F8(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x35);
+        stcom36_objs_open(0x35);
         wp->routine_4 = 0xFF;
     }
 }
@@ -831,7 +831,7 @@ void func_80101A3C(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x38);
+        stcom36_objs_open(0x38);
         wp->routine_4 = 0xFF;
     }
 }
@@ -840,7 +840,7 @@ void func_80101A80(STAGE_ROOM *wp)
 {
     if (wp->routine_4 == 0)
     {
-        stcom36_func_0028(0x39);
+        stcom36_objs_open(0x39);
         wp->routine_4 = 0xFF;
     }
 }
@@ -899,14 +899,14 @@ void func_80101C1C(STAGE_ROOM *wp)
             {
                 Sce_script_timer_clear();
                 Sce_camera_start(0, 0, 0);
-                D_800BC7F0               = D_8010BFE8;
-                wp->tbl_A4               = D_8010BFD8;
-                STAGE_PL.routine_0       = 3;
-                STAGE_PL.routine_1       = 1;
-                STAGE_PL.fixed_428.x     = -0x20 << 16;
-                STAGE_PL.fixed_428.y     = -1 << 16;
-                STAGE_PL.fixed_428.z     = 0x130 << 16;
-                STAGE_PL.flags_bd       |= 0x10;
+                D_800BC7F0           = D_8010BFE8;
+                wp->tbl_A4           = D_8010BFD8;
+                STAGE_PL.routine_0   = 3;
+                STAGE_PL.routine_1   = 1;
+                STAGE_PL.fixed_428.x = -0x20 << 16;
+                STAGE_PL.fixed_428.y = -1 << 16;
+                STAGE_PL.fixed_428.z = 0x130 << 16;
+                STAGE_PL.flags_bd |= 0x10;
                 Obj_pos_adj_round(&pl->fixed_428, &pl->pos_438);
                 STAGE_PL.value_440 = 0;
                 STAGE_PL.value_442 = 0;

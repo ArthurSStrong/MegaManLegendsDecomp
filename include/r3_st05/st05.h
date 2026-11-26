@@ -822,7 +822,7 @@ sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
 void Close_WORK_5A4(void *wp);
 sint32 Sound_seq_end_check(sint32 arg);
-void stcom36_func_0028(sint8 room);
+void stcom36_objs_open(sint8 room);
 void func_801267B0(STAGE_OBJ *wp, uint8 kind);
 void func_80106B28(void);
 
@@ -1003,7 +1003,7 @@ sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed)
 extern STCOM_FIXED_VECTOR D_80137F68;
 sint32 func_801171D0(ST05_ACTOR *wp);
 
-extern uint32 stcom36_D_0000;
+extern uint32 stcom36_obj_bits;
 extern STAGE_SPAWNED *stcom36_E2_0000[];
 
 void func_80105F2C(sint8 index);
@@ -2406,7 +2406,7 @@ STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 sint16 Scr_point_height(STCOM_SVECTOR *pos);
 
 void Obj_arc_vel_set_std(void *a0, void *a1, sint16 a2,
-                   sint32 a3); // a3 passed without narrowing (func_8011C9B0)
+                         sint32 a3); // a3 passed without narrowing (func_8011C9B0)
 
 // A 0x50-byte slot that times a run past the shop counter's items (func_8012BF74, func_8012B788):
 // the gate passed so far, the player's position last frame and the frame count.
@@ -2478,7 +2478,7 @@ typedef struct
 void func_80112284(STAGE_OBJ *wp);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 
 STCOM_MATRIX *MulMatrix0(STCOM_MATRIX *m0, STCOM_MATRIX *m1, STCOM_MATRIX *out);
 STCOM_MATRIX *TransposeMatrix(STCOM_MATRIX *m0, STCOM_MATRIX *m1);

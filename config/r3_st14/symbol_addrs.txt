@@ -280,11 +280,11 @@ stcom27_D_000C = 0x80115BE0;
 stcom27_state_tbl = 0x80115BEC;
 stcom27_charge_tbl = 0x80115C10;
 // stcom30 (src/stage_common/stcom30.c): this stage's copy, under the shared names.
-stcom30_func_0000 = 0x80103DA4; // type:func
-stcom30_func_02B4 = 0x80104058; // type:func
-stcom30_func_0570 = 0x80104314; // type:func
-stcom30_D_0000 = 0x80115678;
-stcom30_D_000C = 0x80115684;
+stcom30_move = 0x80103DA4; // type:func
+stcom30_spawn_left = 0x80104058; // type:func
+stcom30_spawn_all = 0x80104314; // type:func
+stcom30_spawn0_tbl = 0x80115678;
+stcom30_spawn1_tbl = 0x80115684;
 // stcom33 (src/stage_common/stcom33.c): this stage's copy, under the shared names.
 stcom33_move = 0x80112810; // type:func
 stcom33_move_init = 0x8011284C; // type:func

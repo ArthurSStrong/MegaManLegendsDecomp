@@ -378,11 +378,11 @@ stcom29_D_0250 = 0x80118C2C;
 stcom29_layers_tbl = 0x80118C34;
 stcom29_heal_tbl = 0x80118C3C;
 // stcom30 (src/stage_common/stcom30.c): this stage's copy, under the shared names.
-stcom30_func_0000 = 0x80107DDC; // type:func
-stcom30_func_02B4 = 0x80108090; // type:func
-stcom30_func_0570 = 0x8010834C; // type:func
-stcom30_D_0000 = 0x80117944;
-stcom30_D_000C = 0x80117950;
+stcom30_move = 0x80107DDC; // type:func
+stcom30_spawn_left = 0x80108090; // type:func
+stcom30_spawn_all = 0x8010834C; // type:func
+stcom30_spawn0_tbl = 0x80117944;
+stcom30_spawn1_tbl = 0x80117950;
 // func_8010D928 runs to 0x8010DA34; stcom22 calls 0x8010D9F8 (a real function in r3_st0e and
 // r3_st14), which here is the delay slot of its last func_80031BEC call. The call goes through
 // this alias.

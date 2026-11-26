@@ -5,7 +5,7 @@ void func_80103CC4(sint8 index)
 {
     STAGE_SPAWNED *obj;
 
-    if (stcom36_D_0000 & (0x80000000 >> index))
+    if (stcom36_obj_bits & (0x80000000 >> index))
     {
         obj = stcom36_E2_0000[index];
         switch (Obj_id_class(obj->index_1))
@@ -19,7 +19,7 @@ void func_80103CC4(sint8 index)
                 STAGE_SPAWNED_TABLE_10C[obj->kind_2](obj);
                 break;
         }
-        stcom36_D_0000 &= ~(0x80000000 >> index);
+        stcom36_obj_bits &= ~(0x80000000 >> index);
     }
 }
 
@@ -511,9 +511,8 @@ void func_80104D04(ST03_PL *wp)
             break;
         case 1:
             wp->rot_440.y =
-                (wp->rot_440.y + Muku(&wp->position,
-                                               &((STAGE_OBJ *)STAGE_SCENE_OBJ(1))->position,
-                                               wp->rotation.y, 0x800)) &
+                (wp->rot_440.y + Muku(&wp->position, &((STAGE_OBJ *)STAGE_SCENE_OBJ(1))->position,
+                                      wp->rotation.y, 0x800)) &
                 0xFFF;
             wp->value_D++;
             // fall through
@@ -527,11 +526,10 @@ void func_80104D04(ST03_PL *wp)
         case 4:
             if (scene->u_8.byte[1] == 5)
             {
-                wp->rot_440.y =
-                    (wp->rot_440.y + Muku(&wp->position,
-                                                   &((STAGE_OBJ *)STAGE_SCENE_OBJ(0))->position,
-                                                   wp->rotation.y, 0x800)) &
-                    0xFFF;
+                wp->rot_440.y = (wp->rot_440.y + Muku(&wp->position,
+                                                      &((STAGE_OBJ *)STAGE_SCENE_OBJ(0))->position,
+                                                      wp->rotation.y, 0x800)) &
+                                0xFFF;
                 wp->value_D++;
             }
             break;
@@ -670,8 +668,8 @@ void func_80105178(STAGE_STCOM15_WORK_348 *wp)
     {
         ctl->pos_C = wp->position;
         ctl->pos_C.y -= 0x28;
-        Set_Atari(&ctl->pos_C, 0x28, 0, 0x8000, wp->value_1, &ctl->hit_14,
-                      ctl->value_8 | 0x4000000, 0x800000, 0x80);
+        Set_Atari(&ctl->pos_C, 0x28, 0, 0x8000, wp->value_1, &ctl->hit_14, ctl->value_8 | 0x4000000,
+                  0x800000, 0x80);
     }
     ctl->hit_14 = 0;
 }
@@ -1179,9 +1177,9 @@ void func_8010616C(ST03_ACTOR *wp)
                 wp->anim_AC               = wp->anim_prev_AD;
                 break;
             }
-            wp->rotation.y = (wp->rotation.y + Muku(&pl->position, &wp->position,
-                                                             wp->rotation.y, wp->spin_66)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&pl->position, &wp->position, wp->rotation.y, wp->spin_66)) &
+                0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x << 4, 0, 0);
             hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);
@@ -1247,13 +1245,11 @@ void func_8010641C(ST03_ACTOR *wp)
         case 1:
             if (wp->variant_3 < 2 && wp->timer_C == 0)
             {
-                turn = Muku(&Player_work.position, &wp->position, wp->rotation.y,
-                                     wp->spin_66);
+                turn = Muku(&Player_work.position, &wp->position, wp->rotation.y, wp->spin_66);
             }
             else
             {
-                turn = Muku(&wp->position, &Player_work.position, wp->rotation.y,
-                                     wp->spin_66);
+                turn = Muku(&wp->position, &Player_work.position, wp->rotation.y, wp->spin_66);
             }
             if ((sint16)turn == 0)
             {
@@ -1818,10 +1814,9 @@ void func_801072F4(ST03_ACTOR *wp)
         case 1:
             if (--ctl->timer_4 >= 0)
             {
-                wp->rotation.y =
-                    (wp->rotation.y +
-                     Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x40)) &
-                    0xFFF;
+                wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &Player_work.position,
+                                                        wp->rotation.y, 0x40)) &
+                                 0xFFF;
                 wp->position.y -= 4;
                 wp->position_fixed.y            = wp->position.y << 16;
                 ctl->other_38->position.x       = wp->position.x;
@@ -1890,10 +1885,10 @@ void func_8010758C(ST03_ACTOR *wp)
         case 1:
             if (--ctl->timer_4 >= 0)
             {
-                wp->rotation.y = (wp->rotation.y + Muku(&wp->position,
-                                                                 &D_801380A0[wp->value_E]->position,
-                                                                 wp->rotation.y, 0x40)) &
-                                 0xFFF;
+                wp->rotation.y =
+                    (wp->rotation.y + Muku(&wp->position, &D_801380A0[wp->value_E]->position,
+                                           wp->rotation.y, 0x40)) &
+                    0xFFF;
                 wp->position.y -= 4;
                 wp->position_fixed.y   = wp->position.y << 16;
                 held->position.x       = wp->position.x;

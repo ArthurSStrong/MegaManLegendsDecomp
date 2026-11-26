@@ -815,10 +815,10 @@ void func_8010E300(ST03_VIEW *wp);
 void func_80104A74(ST03_PL *wp);
 void func_80104EBC(ST03_PL *wp);
 
-extern uint32 stcom36_D_0000;
+extern uint32 stcom36_obj_bits;
 extern STAGE_SPAWNED *stcom36_E2_0000[];
 void func_80103CC4(sint8 index);
-void stcom36_func_0118(); // no parameters, but func_80100BF8 passes a 0
+void stcom36_objs_end(); // no parameters, but func_80100BF8 passes a 0
 
 void func_8010AFC0(ST03_ACTOR *wp);
 void func_8010B444(ST03_ACTOR *wp);

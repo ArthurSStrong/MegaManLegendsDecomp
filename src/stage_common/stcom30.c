@@ -8,7 +8,7 @@
 
 // Counts the switches turned on (one scene flag each) and sets a scene flag per count; spawns
 // the room's objects.
-void stcom30_func_0000(STCOM30_WORK *wp)
+void stcom30_move(STCOM30_WORK *wp)
 {
     STCOM30_SPAWN *spawn;
     sint32 *flag;
@@ -88,20 +88,20 @@ void stcom30_func_0000(STCOM30_WORK *wp)
         }
         if (Game_work.value_50 == 0xE)
         {
-            spawn = stcom30_D_0000[Game_work.value_51];
+            spawn = stcom30_spawn0_tbl[Game_work.value_51];
         }
         else if (Game_work.value_50 == 0x14)
         {
-            spawn = stcom30_D_000C[Game_work.value_51];
+            spawn = stcom30_spawn1_tbl[Game_work.value_51];
         }
         if (Game_work.value_50 == 0xE)
         {
-            stcom30_func_02B4(wp, spawn);
+            stcom30_spawn_left(wp, spawn);
             Close_WORK_50(wp);
         }
         else if (Game_work.value_50 == 0x14 && wp->spawned_9 == 0)
         {
-            stcom30_func_0570(wp, spawn);
+            stcom30_spawn_all(wp, spawn);
             wp->spawned_9 = 1;
         }
         return;
@@ -110,7 +110,7 @@ void stcom30_func_0000(STCOM30_WORK *wp)
 }
 
 // Spawns the objects whose switches are not on yet.
-void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
+void stcom30_spawn_left(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
 {
     STCOM30_OBJ *obj;
     STCOM30_OBJ50 *obj50;
@@ -220,7 +220,7 @@ void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
 }
 
 // Spawns all the objects.
-void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
+void stcom30_spawn_all(STCOM30_WORK *wp, STCOM30_SPAWN *spawn)
 {
     STCOM30_OBJ *obj;
     STCOM30_OBJ50 *obj50;

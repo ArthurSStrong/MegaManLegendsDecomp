@@ -7,7 +7,7 @@ void func_8010207C(sint8 index)
     STCOM36_OBJ *obj;
     sint32 kind;
 
-    if (stcom36_D_0000 & (0x80000000 >> index))
+    if (stcom36_obj_bits & (0x80000000 >> index))
     {
         obj  = stcom36_E2_0000[index];
         kind = Obj_id_class(obj->index_1);
@@ -16,6 +16,6 @@ void func_8010207C(sint8 index)
             obj->routine_0 = 2;
             STCOM36_TABLE_3C0[obj->kind_2][obj->handler_4](obj);
         }
-        stcom36_D_0000 &= ~(0x80000000 >> index);
+        stcom36_obj_bits &= ~(0x80000000 >> index);
     }
 }

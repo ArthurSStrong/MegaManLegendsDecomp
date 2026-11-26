@@ -6,42 +6,43 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom36"
 
-void stcom36_func_0000(void)
+// A room routine: runs the camera script and the scene script.
+void stcom36_script_run(void)
 {
     Sce_camera_script_exec();
     Sce_script_update();
 }
 
 // Spawns a room's scripted objects and remembers them.
-void stcom36_func_0028(sint8 room)
+void stcom36_objs_open(sint8 room)
 {
     STCOM36_ROOM *r;
     sint16 i;
     sint32 index;
 
-    r              = &stcom36_E_0000[room];
-    stcom36_D_0000 = 0;
+    r                = &stcom36_E_0000[room];
+    stcom36_obj_bits = 0;
     for (i = 0; i < r->count; i++)
     {
         index = r->list[i].index_0;
         Sce_slot_open(&r->list[i]);
         stcom36_E2_0000[index] = Scene_work.obj_24[index];
         stcom36_E2_0000[index]->flags_6 &= ~0x20;
-        stcom36_D_0000 |= 0x80000000 >> index;
+        stcom36_obj_bits |= 0x80000000 >> index;
     }
 }
 
 // Ends the objects still left.
-void stcom36_func_0118(void)
+void stcom36_objs_end(void)
 {
     STCOM36_OBJ *obj;
     sint32 kind;
     sint32 i;
 
     i = 0;
-    while (stcom36_D_0000 != 0)
+    while (stcom36_obj_bits != 0)
     {
-        if (stcom36_D_0000 & (0x80000000 >> i))
+        if (stcom36_obj_bits & (0x80000000 >> i))
         {
             obj  = stcom36_E2_0000[i];
             kind = Obj_id_class(obj->index_1);
@@ -56,7 +57,7 @@ void stcom36_func_0118(void)
                     STCOM36_TABLE_10C[obj->kind_2](obj);
                     break;
             }
-            stcom36_D_0000 &= ~(0x80000000 >> i);
+            stcom36_obj_bits &= ~(0x80000000 >> i);
         }
         i++;
     }

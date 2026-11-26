@@ -2,7 +2,7 @@
 #include "st05.h"
 
 #ifdef __wasm32__
-void stcom36_func_0118(void);
+void stcom36_objs_end(void);
 #endif
 
 // Installs the stage's slot routine tables.
@@ -1704,7 +1704,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
                 Sce_camera_start(0, 0, 0);
                 D_800BC7F0 = D_801302AC;
                 wp->tbl_A4 = D_80130224;
-                stcom36_func_0028(3);
+                stcom36_objs_open(3);
                 func_80106098();
                 func_8010602C(0, 4);
                 func_8010602C(1, 5);
@@ -1730,8 +1730,8 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
                 func_80106074(3);
                 func_8010602C(0, 8);
                 Sce_flag_off(0x60F);
-                stcom36_func_0118();
-                stcom36_func_0028(4);
+                stcom36_objs_end();
+                stcom36_objs_open(4);
                 wp->routine_6++;
                 Sce_script_next();
             }
@@ -1759,7 +1759,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
                 func_80105F2C(3);
                 func_80105F2C(4);
                 func_80105F2C(5);
-                stcom36_func_0118();
+                stcom36_objs_end();
                 pl->fixed_428.x = 0x3F80000;
                 pl->fixed_428.y = 0xFFFF0000;
                 pl->fixed_428.z = 0x1DA30000;
@@ -1772,7 +1772,7 @@ void func_80103B10(STAGE_ROOM_WORK *wp)
             }
             break;
         case 6:
-            stcom36_func_0028(5);
+            stcom36_objs_open(5);
             wp->routine_6++;
             break;
         case 7:
@@ -2583,7 +2583,7 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
             pl->value_440 = 0;
             pl->value_444 = 0;
             pl->value_448 = 0x30;
-            stcom36_func_0028(0);
+            stcom36_objs_open(0);
             func_80106098();
             func_8010602C(0, 0);
             func_8010602C(1, 1);
@@ -2672,8 +2672,8 @@ void func_801052D8(STAGE_ROOM_WORK *wp)
                 Player_control_on(pl);
                 wp->flags_0 = 0;
                 D_800A395C  = 1;
-                stcom36_func_0118();
-                stcom36_func_0028(1);
+                stcom36_objs_end();
+                stcom36_objs_open(1);
                 Sce_flag_on(5);
                 Sound_fade_start(0x20);
                 Sound_work.volume_6 = 0x7F;

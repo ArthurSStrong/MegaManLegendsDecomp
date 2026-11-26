@@ -131,9 +131,9 @@ stcom31_E_001A = 0x80111D82;
 stcom31_E_001C = 0x80111D84;
 stcom31_last_point = 0x80111D88;
 // stcom36 (src/stage_common/stcom36.c): this stage's copy, under the shared names.
-stcom36_func_0000 = 0x80101E40; // type:func
-stcom36_func_0028 = 0x80101E68; // type:func
-stcom36_func_0118 = 0x80101F58; // type:func
-stcom36_D_0000 = 0x8010AFBC;
+stcom36_script_run = 0x80101E40; // type:func
+stcom36_objs_open = 0x80101E68; // type:func
+stcom36_objs_end = 0x80101F58; // type:func
+stcom36_obj_bits = 0x8010AFBC;
 stcom36_E_0000 = 0x8010C010;
 stcom36_E2_0000 = 0x80111D98;

@@ -73,11 +73,11 @@ typedef struct
     uint8 reserved38[0x18]; // 38
 } STCOM30_WORK;
 
-extern STCOM30_SPAWN *stcom30_D_0000[]; // stage 0xE's objects by room
-extern STCOM30_SPAWN *stcom30_D_000C[]; // stage 0x14's objects by room
+extern STCOM30_SPAWN *stcom30_spawn0_tbl[]; // stage 0xE's objects by room
+extern STCOM30_SPAWN *stcom30_spawn1_tbl[]; // stage 0x14's objects by room
 
-void stcom30_func_02B4(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
-void stcom30_func_0570(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
+void stcom30_spawn_left(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
+void stcom30_spawn_all(STCOM30_WORK *wp, STCOM30_SPAWN *spawn);
 
 // ROCK_NEO.EXE.
 sint32 Sce_flag_test(sint32 flag);

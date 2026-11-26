@@ -46,7 +46,7 @@ typedef struct
 #define STCOM36_TABLE_3C0 (*(STCOM36_OBJ_FUNC ***)0x1F800058)
 #define STCOM36_TABLE_10C (*(STCOM36_OBJ_FUNC **)0x1F800060)
 
-extern uint32 stcom36_D_0000;          // the objects still to be ended, one bit per slot
+extern uint32 stcom36_obj_bits;        // the objects still to be ended, one bit per slot
 extern STCOM36_ROOM stcom36_E_0000[];  // by room
 extern STCOM36_OBJ *stcom36_E2_0000[]; // the spawned objects, by slot
 

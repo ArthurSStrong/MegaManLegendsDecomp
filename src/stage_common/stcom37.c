@@ -6,13 +6,16 @@
 // are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom37"
 
-// Routines of a villager: freed, standing, and talking (animation 8 while a message runs).
-void stcom37_func_0000(STCOM37_WORK *wp)
+// Routines of a villager: freed, standing, and talking.
+
+// Frees the slot.
+void stcom37_erase(STCOM37_WORK *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void stcom37_func_0020(STCOM37_WORK *wp)
+// Stands still (animation 0).
+void stcom37_stand(STCOM37_WORK *wp)
 {
     if (wp->routine_2 == 0)
     {
@@ -21,7 +24,8 @@ void stcom37_func_0020(STCOM37_WORK *wp)
     }
 }
 
-void stcom37_func_0040(STCOM37_WORK *wp)
+// Talks: animation 8 while a message runs.
+void stcom37_talk(STCOM37_WORK *wp)
 {
     switch (wp->routine_2)
     {
