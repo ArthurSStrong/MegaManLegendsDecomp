@@ -65,11 +65,11 @@ void func_8006430C(CODE643_ICON_SET *set)
         prim->tag      = ((u_long)(prim + 1) & 0xFFFFFF) | 0x04000000;
         prim->code_rgb = 0x64808080;
         prim->xy       = ((slot % 6) * 44 + (x = icon->x + 0x22)) |
-                         (((slot / 6) * 40 + (y = icon->y + 0x3C)) << 16);
-        prim->wh       = icon->wh;
-        first          = Sce_flag_test(flag);
-        count          = first + Sce_flag_test(flag + 1) + Sce_flag_test(flag + 2);
-        kind           = id >> 8;
+                   (((slot / 6) * 40 + (y = icon->y + 0x3C)) << 16);
+        prim->wh = icon->wh;
+        first    = Sce_flag_test(flag);
+        count    = first + Sce_flag_test(flag + 1) + Sce_flag_test(flag + 2);
+        kind     = id >> 8;
         switch (kind)
         {
             case 0:
@@ -681,7 +681,7 @@ void Game_work_load(void)
     *(uint32 *)((uint8 *)&Game_work + 0x14) = D_800B5EDC;
     *(uint16 *)((uint8 *)&Game_work + 0x18) = D_800B5EE0;
     *(uint16 *)((uint8 *)&Game_work + 0x1A) = D_800B5EE2;
-    Game_work.play_time                      = D_800B5F30;
+    Game_work.play_time                     = D_800B5F30;
     Game_work.words_1c[0]                   = D_800B5F34;
     Game_work.words_1c[1]                   = D_800B5F38;
     Game_work.words_1c[2]                   = D_800B5F3C;
@@ -857,7 +857,7 @@ void Game_work_new(void)
     Game_work.flags_79     = -1;
     Game_work.flags_7a     = -1;
     Game_work.flag_5a      = 1;
-    Game_work.play_time     = 0;
+    Game_work.play_time    = 0;
     Game_work.words_1c[0]  = 0;
     Game_work.words_1c[1]  = 0;
     Game_work.words_1c[2]  = 0;
@@ -1124,7 +1124,9 @@ sint32 Card_files_read(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_80066D60(MEM_WORK *wp)
+// Card_sub_tbl[2]: no memory card in the port (card_check timeout); shows the message,
+// then back to the port select.
+sint32 Card_no_card(MEM_WORK *wp)
 {
     switch (wp->step_6)
     {
@@ -1153,7 +1155,9 @@ sint32 func_80066D60(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_80066E48(MEM_WORK *wp)
+// Card_sub_tbl[3]: none of the five save files exists and the card has no free blocks
+// for one; shows the message, then back to the port select.
+sint32 Card_full(MEM_WORK *wp)
 {
     switch (wp->step_6)
     {
@@ -1264,7 +1268,9 @@ sint32 Card_format_ask(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_80067174(MEM_WORK *wp)
+// Card_sub_tbl[5]: picks one of the five save files, confirms, then writes it (save) or
+// reads it (load); card errors go to the matching message state.
+sint32 Card_file_select(MEM_WORK *wp)
 {
     MEM_SLOT *slot;
     sint16 j;
@@ -1471,7 +1477,9 @@ sint32 func_80067174(MEM_WORK *wp)
     return 1;
 }
 
-sint32 func_8006779C(MEM_WORK *wp)
+// Card_sub_tbl[6]: loading, and none of the five save files exists; shows the message,
+// then back to the port select.
+sint32 Card_no_data(MEM_WORK *wp)
 {
     switch (wp->step_6)
     {

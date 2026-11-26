@@ -282,7 +282,7 @@ void Sound_key_off_voice(sint32 voice);
 void Sub_screen_sound_reinit(PL_WORK *wp);
 void Game_logo_kill(sint32 index);
 
-void func_8005EBE4(void);
+void Sub_screen_open(void);
 sint32 Sub_screen_main(void);
 void Sce_pl_parts_load(void);
 

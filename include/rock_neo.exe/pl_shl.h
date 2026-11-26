@@ -198,7 +198,7 @@ void Vec_turn_toward(CODE43_SVECTOR *out, CODE43_SVECTOR *dir, CODE43_SVECTOR *c
                      sint32 a4);
 #endif
 void buster_dir_set(CODE43_WORK *wp, CODE43_MATRIX *mtx);
-void func_8005D97C(void);
+void Gauge_buster_recharge_reset(void);
 sint16 Camera_pitch_get(void);
 void RotMatrixYXZ(CODE43_SVECTOR *r, CODE43_MATRIX *m);
 void ApplyMatrix(CODE43_MATRIX *m, CODE43_SVECTOR *v, CODE43_VECTOR *out);

@@ -364,7 +364,7 @@ void Game_sub_screen(GAME_WORK *wp)
             break;
         case 1:
             D_80098810 = 0;
-            func_8005EBE4();
+            Sub_screen_open();
             Cd_subcmd(0, 1, 0);
             wp->routine_1++;
             break;

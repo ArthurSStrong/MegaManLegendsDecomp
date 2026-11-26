@@ -191,7 +191,7 @@ void Pl_shl_buster_init(CODE43_WORK *wp)
 
     wp->flags_0 |= 0x2A;
     wp->flags_6 |= 0x20;
-    func_8005D97C();
+    Gauge_buster_recharge_reset();
     wp->word_c4 = 0;
     wp->word_c8 = 0;
     wp->ptr_78  = D_80097DA0;

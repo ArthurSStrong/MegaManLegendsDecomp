@@ -632,6 +632,8 @@ void Gauge_life_keep(void)
     D_800BBD84[0] = 1;
 }
 
+// Sets the life gauge's extra animated sprite to stay on (1 shows it for one frame,
+// 0 hides it); called while an enemy chases the player.
 void func_8005D4D4(void)
 {
     D_800BBD84[0] = 2;
@@ -829,7 +831,8 @@ void func_8005D974(void)
 {
 }
 
-void func_8005D97C(void)
+// Restarts the buster refill counter (Gauge_work[1].count_0F) after a shot.
+void Gauge_buster_recharge_reset(void)
 {
     D_800BBDAB = 0;
 }
@@ -1138,7 +1141,7 @@ void automap_map_draw(CODE5C_POINT *pos, CODE5C_POINT *size, CODE5C_POINT *cell,
         ((CODE5C_G4_WORDS *)arrow)->rgb2 = 0xFF;
         ((CODE5C_G4_WORDS *)arrow)->rgb3 = 0xFF;
         angle                            = -Player_work.rotation.y;
-        x = pos->x +
+        x                                = pos->x +
             (((Player_work.position.x - Automap_room_tbl[D_80098794].x) >> 9) - cell->x) *
                 D_80098034 +
             ((uint32)D_80098034 >> 1);
@@ -1378,7 +1381,9 @@ sint16 Pl_invisible_get(void)
     return Pl_invisible_timer;
 }
 
-void func_8005EBE4(void)
+// Resets the sub-screen state machine and saves the equipped weapon bytes before
+// Sub_screen_main runs.
+void Sub_screen_open(void)
 {
     D_800A38F0 = 0;
     D_800A38F8 = *((uint8 *)&Player_work + 0x450);
