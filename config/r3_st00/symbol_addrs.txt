@@ -124,3 +124,4 @@ st00_stcom02_step_next = 0x8011974C; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st00_slot_tbl_set = 0x80100324; // type:func
+st00_room_init = 0x8010038C; // type:func

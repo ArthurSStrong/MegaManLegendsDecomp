@@ -14,7 +14,7 @@ void st19_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_801005CC(void)
+void st19_room_init(void)
 {
     STAGE_MAP_WORK *mw;
     STAGE_MAP *map;
@@ -62,9 +62,9 @@ void st19_room_reset(void)
 }
 
 // Runs the current room's script.
-void func_801007CC(void)
+void st19_room_script(void)
 {
-    D_80116C20[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st19_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
 void func_80100820(STAGE_ROOM *wp)

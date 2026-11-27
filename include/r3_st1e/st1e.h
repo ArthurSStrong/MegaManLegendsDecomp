@@ -10,7 +10,7 @@ extern STAGE_SLOT_FUNC D_80103F58[];
 extern STAGE_SLOT_FUNC D_8010403C[];
 extern STAGE_SLOT_FUNC D_801040C8[];
 extern STAGE_SLOT_FUNC D_801040E4[];
-extern STAGE_ROOM2_FUNC *D_8010440C[];
+extern STAGE_ROOM2_FUNC *st1e_room_script_tbl[];
 extern STAGE_OBJ_FUNC D_80104A24[];
 void func_80101AF0(STAGE_OBJ *wp);
 void func_80101C0C(STAGE_OBJ *wp);
@@ -145,6 +145,6 @@ extern void *D_8010426C[];       // exit list by room
 extern uint8 D_80104288[][0x28]; // by room (Fog_room_set)
 extern uint8 D_801043A0[][8];    // by D_801043B8[room]
 extern sint32 D_801043B8[];
-void func_8010028C(void);
+void st1e_room_reset(void);
 
 #endif // ST1E_H

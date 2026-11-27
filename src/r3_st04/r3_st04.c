@@ -17,7 +17,7 @@ void st04_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_80100268(void)
+void st04_room_init(void)
 {
     ST04_PL_WORK *pl;
     void *spawn;
@@ -59,10 +59,11 @@ void func_80100268(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010AD54[D_8010AD9C[Game_work.value_51]], D_8010AC64[Game_work.value_51]);
     Automap_room_set(0);
-    func_8010044C();
+    st04_room_reset();
 }
 
-void func_8010044C(void)
+// Locks the exits for Game_work.value_52 and resets the room script's routines.
+void st04_room_reset(void)
 {
     Sce_exit_lock_list(D_8010AF44, D_8010AF4C[STAGE_GAME_VALUE_52]);
     if (STAGE_GAME_VALUE_52 == 0)
@@ -80,15 +81,15 @@ void func_8010044C(void)
 }
 
 // Runs the current room's script (the second set once scene flag 0x1FF is set).
-void func_801004F4(void)
+void st04_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
-        D_8010AF2C[Game_work.value_51](&D_800989F8);
+        st04_first_script_tbl[Game_work.value_51](&D_800989F8);
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_8010AEEC[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st04_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 

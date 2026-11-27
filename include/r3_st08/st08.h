@@ -154,7 +154,7 @@ void Sce_flag_off(sint32 flag);
 void func_8010C37C(STAGE_10C *wp);
 
 void Sce_flag_off(sint32 flag);
-void func_80100578(void);
+void st08_room_reset(void);
 
 void Sce_camera_script_exec(void);
 void Sce_script_update(void);
@@ -229,8 +229,8 @@ typedef struct
     uint8 reserved20[4];   // 20
 } ST08_EV1C;
 
-extern STAGE_ROOM_FUNC D_80113110[];
-extern STAGE_ROOM_FUNC *D_801130D0[];
+extern STAGE_ROOM_FUNC st08_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st08_room_script_tbl[];
 extern uint8 D_80118485;
 extern uint8 D_801184BF[];
 extern uint8 D_801184F9[];

@@ -207,3 +207,7 @@ stcom18_move_tbl = 0x8011B634;
 
 // Named after exact twins (tools/propagate_names.py).
 st0b_slot_tbl_set = 0x8010037C; // type:func
+st0b_room_init = 0x801003E4; // type:func
+st0b_room_reset = 0x80100570; // type:func
+st0b_room_script = 0x80100598; // type:func
+st0b_room_script_tbl = 0x80119814;

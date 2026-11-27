@@ -246,3 +246,7 @@ st0a_shl02_init = 0x801131C4; // type:func
 st0a_shl02_main = 0x801135CC; // type:func
 st0a_shl02_atari_set = 0x80113744; // type:func
 st0a_shl02_hit_effect_set = 0x80113888; // type:func
+st0a_room_init = 0x8010037C; // type:func
+st0a_room_reset = 0x801004E4; // type:func
+st0a_room_script = 0x80100530; // type:func
+st0a_room_script_tbl = 0x80114B08;

@@ -230,3 +230,7 @@ stcom39_func_0010 = 0x801085AC; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st0e_slot_tbl_set = 0x8010010C; // type:func
+st0e_room_init = 0x80100174; // type:func
+st0e_room_reset = 0x8010030C; // type:func
+st0e_room_script = 0x8010031C; // type:func
+st0e_room_script_tbl = 0x8010FF04;

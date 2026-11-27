@@ -17,7 +17,7 @@ void st05_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_801008F4(void)
+void st05_room_init(void)
 {
     STAGE_MAP_WORK *mw;
     sint32 room;
@@ -73,7 +73,7 @@ void func_801008F4(void)
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_8012E2D0[D_8012E438[Game_work.value_51]], D_8012E208[Game_work.value_51]);
     Automap_room_set(0);
-    func_80106B28();
+    st05_room_reset();
 }
 
 void func_80100B5C(STAGE_ROOM *wp)

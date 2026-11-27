@@ -834,7 +834,7 @@ void Close_WORK_5A4(void *wp);
 void Sce_flag_off(sint32 flag);
 void Sce_light_add(sint32 arg);
 void Draw_dist_far(void);
-void func_801006B8(void);
+void st06_room_reset(void);
 
 // A 0x20-byte control block of ST06_ACTOR (at +0x348 and +0x368).
 typedef struct
@@ -967,9 +967,9 @@ typedef struct
     uint8 reservedD0[0x3C];                 // D0
 } ST06_10C_B;
 
-extern STAGE_ROOM_FUNC D_80122650[];
-extern STAGE_ROOM_FUNC *D_80122610[];
-void func_80100764(void);
+extern STAGE_ROOM_FUNC st06_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st06_room_script_tbl[];
+void st06_room_script(void);
 extern ST06_ACTOR_FUNC D_801253BC[];
 void func_801124BC(ST06_ACTOR *wp);
 void func_80112ED0(STAGE_OBJ *wp);

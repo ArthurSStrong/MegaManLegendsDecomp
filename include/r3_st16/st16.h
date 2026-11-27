@@ -10,14 +10,14 @@ extern void *D_80103594[];       // exit list by room
 extern uint8 D_801035A0[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80103618[][8];    // by D_80103698[room]
 extern sint32 D_80103698[];
-void func_80100270(void);
+void st16_room_reset(void);
 extern STAGE_SLOT_FUNC *D_801033D0[];
 extern STAGE_SLOT_FUNC *D_80103470[];
 extern STAGE_SLOT_FUNC D_8010348C[];
 extern STAGE_SLOT_FUNC D_80103490[];
 extern STAGE_SLOT_FUNC D_801034AC[];
 extern STAGE_SLOT_FUNC D_801034C0[];
-extern STAGE_ROOM_FUNC *D_801036BC[];
+extern STAGE_ROOM_FUNC *st16_room_script_tbl[];
 extern STAGE_SCRIPT_ENTRY D_801036FC[];
 extern uint8 D_80103738[];
 extern STAGE_ROOM_FUNC D_801038C8[];

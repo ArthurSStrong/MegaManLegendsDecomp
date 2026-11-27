@@ -543,8 +543,8 @@ extern STAGE_SLOT_FUNC D_80116264[];
 extern STAGE_SLOT_FUNC D_801162B4[];
 extern STAGE_SLOT_FUNC D_80116304[];
 extern STAGE_SLOT_FUNC D_8011638C[];
-extern STAGE_ROOM_FUNC D_80117354[];
-extern STAGE_ROOM_FUNC *D_80117314[];
+extern STAGE_ROOM_FUNC st13_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st13_room_script_tbl[];
 extern uint8 D_80117294[];
 extern STAGE_OBJ_FUNC D_80117500[];
 extern STAGE_OBJ_FUNC D_80117534[];
@@ -607,7 +607,7 @@ extern uint8 D_80164007[];
 extern void *D_80164008[];
 // ROCK_NEO's records per kind (a byte at +0xA is ORed into the hit flags).
 
-void func_8010051C(void);
+void st13_room_script(void);
 void func_801007D0(void);
 void Sce_slot_open_list(uint8 *);
 void func_80100808(STAGE_ROOM *wp);
@@ -651,7 +651,7 @@ void func_80101B28(STAGE_OBJ *wp, sint32 anim);
 void func_80101BF8(ST13_OBJ *wp);
 void func_80101C94(ST13_VIEW *wp);
 void Sce_flag_off(sint32 flag);
-void func_801004D8(void);
+void st13_room_reset(void);
 void func_80100FA4(ST13_STCOM27_WORK *wp);
 void func_8010103C(ST13_STCOM27_WORK *wp);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,

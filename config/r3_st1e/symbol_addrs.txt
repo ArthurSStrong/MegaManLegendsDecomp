@@ -30,3 +30,7 @@ st1e_event_step_call = 0x80101118; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st1e_slot_tbl_set = 0x801000AC; // type:func
+st1e_room_init = 0x8010011C; // type:func
+st1e_room_reset = 0x8010028C; // type:func
+st1e_room_script = 0x8010029C; // type:func
+st1e_room_script_tbl = 0x8010440C;

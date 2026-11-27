@@ -576,7 +576,7 @@ extern STAGE_SLOT_FUNC D_8010BF1C[];
 extern STAGE_SLOT_FUNC D_8010BF30[];
 extern uint8 D_8010C7D8[];
 extern uint8 D_8010C7E0[][8];
-extern STAGE_ROOM2_FUNC *D_8010C3FC[];
+extern STAGE_ROOM2_FUNC *st0d_room_script_tbl[];
 extern STAGE_ROOM2_FUNC D_8010C840[];
 extern STAGE_ROOM2_FUNC D_8010CF54[];
 extern sint8 *D_8010D570[]; // mouth scripts (func_8010283C)

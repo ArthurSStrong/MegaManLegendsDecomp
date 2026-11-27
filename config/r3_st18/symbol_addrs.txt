@@ -3,3 +3,7 @@
 
 // Named after exact twins (tools/propagate_names.py).
 st18_slot_tbl_set = 0x80100004; // type:func
+st18_room_init = 0x80100074; // type:func
+st18_room_reset = 0x801001D8; // type:func
+st18_room_script = 0x801001E8; // type:func
+st18_room_script_tbl = 0x801020E8;

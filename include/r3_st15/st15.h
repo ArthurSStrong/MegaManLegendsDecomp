@@ -16,7 +16,7 @@ extern void *D_801026E0[];       // exit list by room
 extern uint8 D_801026E8[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80102738[][8];    // by D_80102760[room]
 extern sint32 D_80102760[];
-extern STAGE_ROOM_FUNC *D_80102778[];
+extern STAGE_ROOM_FUNC *st15_room_script_tbl[];
 extern STAGE_FUNC D_80102CE8[];
 void func_80100EA8(STAGE_WORK *wp);
 void func_80100FF0(STAGE_WORK *wp);
@@ -62,7 +62,7 @@ extern STAGE_MOUTH *D_80102C20[];
 extern STAGE_MOUTH *D_80102DD0[];
 extern STAGE_MOUTH_CUE D_80102E04[];
 
-void func_80100200(void);
+void st15_room_reset(void);
 void func_801002B8(uint8 mode);
 void func_80100A84(STAGE_ROOM_WORK *wp);
 void st15_event_step_call(STAGE_ROOM_WORK *wp);

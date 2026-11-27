@@ -16,7 +16,7 @@ extern void *D_80101FC0[];       // exit list by room
 extern uint8 D_80101FCC[][0x28]; // by room (Fog_room_set)
 extern uint8 D_80102044[][8];    // by D_801020C4[room]
 extern sint32 D_801020C4[];
-extern STAGE_ROOM_FUNC *D_801020E8[];  // room scripts by script set, then room
+extern STAGE_ROOM_FUNC *st18_room_script_tbl[];  // room scripts by script set, then room
 extern STAGE_EFFECT_FUNC D_80102128[]; // routine_1 handlers (func_801004C8)
 extern uint16 D_8010214C[];
 extern uint8 *D_80102164[];            // (u, v) frames by type_F
@@ -55,7 +55,7 @@ extern STAGE_MOUTH *D_801078D4_S __asm__("D_801078D4");
 extern sint16 D_801078D8[];
 extern STAGE_LIP_CUES D_801078DC;
 
-void func_801001D8(void);
+void st18_room_reset(void);
 void func_801004C8(STAGE_EFFECT *wp);
 STAGE_EFFECT *func_8010072C(STCOM_SVECTOR *pos, sint16 value, uint8 variant);
 void func_801007C0(STAGE_WORK *wp);

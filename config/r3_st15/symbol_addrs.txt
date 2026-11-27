@@ -17,3 +17,7 @@ st15_event_step_call = 0x80100AF4; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st15_slot_tbl_set = 0x80100034; // type:func
+st15_room_init = 0x8010009C; // type:func
+st15_room_reset = 0x80100200; // type:func
+st15_room_script = 0x80100210; // type:func
+st15_room_script_tbl = 0x80102778;

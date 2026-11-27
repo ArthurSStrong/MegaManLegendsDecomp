@@ -663,7 +663,7 @@ extern STAGE_SLOT_FUNC D_8010F624[];
 extern STAGE_SLOT_FUNC D_8010F6E4[];
 extern STAGE_SLOT_FUNC D_8010F748[];
 extern STAGE_SLOT_FUNC D_8010F7D0[];
-extern STAGE_ROOM2_FUNC *D_8010FF04[];
+extern STAGE_ROOM2_FUNC *st0e_room_script_tbl[];
 extern STAGE_ROOM2_FUNC D_8010FF44[];
 extern sint16 *D_8011024C[];
 extern sint16 *D_80110270[];

@@ -208,8 +208,8 @@ void func_80106048(ST04_ACTOR *wp);
 uint8 func_8010A484(ST04_SLOT *slot);
 void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_8010AF4C[][8];
-extern STAGE_ROOM_FUNC D_8010AF2C[];
-extern STAGE_ROOM_FUNC *D_8010AEEC[];
+extern STAGE_ROOM_FUNC st04_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st04_room_script_tbl[];
 void Sce_script_timer_clear(void);
 extern uint8 D_8010BFD4[];
 extern STAGE_ROOM2_FUNC D_8010BFCC[];
@@ -217,10 +217,10 @@ STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);
 void func_8010A2D4(ST04_EV *wp);
 
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);
-void func_8010044C(void);
+void st04_room_reset(void);
 
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);
-void func_801004F4(void);
+void st04_room_script(void);
 
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);
 void func_80101B80(STAGE_ROOM *wp);

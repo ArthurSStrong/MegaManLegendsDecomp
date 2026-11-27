@@ -13,7 +13,7 @@ void st15_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_8010009C(void)
+void st15_room_init(void)
 {
     void *spawn;
     sint16 *cells;
@@ -34,18 +34,19 @@ void func_8010009C(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80102738[D_80102760[Game_work.value_51]], D_801026E8[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100200();
+    st15_room_reset();
 }
 
-void func_80100200(void)
+// Resets the room script's routines.
+void st15_room_reset(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
 // Runs the current room's script.
-void func_80100210(void)
+void st15_room_script(void)
 {
-    D_80102778[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st15_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
 void func_80100264(STAGE_ROOM_WORK *wp)

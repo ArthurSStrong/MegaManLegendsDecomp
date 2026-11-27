@@ -12,10 +12,11 @@ void st10_slot_tbl_set(void)
 }
 
 #ifdef __wasm32__
-void func_801006B0(void);
+void st10_room_reset(void);
 #endif
 
-void func_80100354(void)
+// Sets up the current room: map, spawns.
+void st10_room_init(void)
 {
     STAGE_PL_VIEW *pl;
     void *spawn;
@@ -62,25 +63,28 @@ void func_80100354(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010F85C[D_8010F8F4[Game_work.value_51]], D_8010F76C[Game_work.value_51]);
     Automap_room_set(0);
-    func_801006B0();
+    st10_room_reset();
 }
 
-void func_801006B0(void)
+// Clears the room's slot list, locks the exits for Game_work.value_52 and resets the room script's
+// routines.
+void st10_room_reset(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_80110094, D_8011009C[STAGE_GAME_VALUE_52]);
 }
 
-void func_801006FC(void)
+// Runs the current room's script (the second set once scene flag 0x1FF is set).
+void st10_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
-        D_8010FA44[Game_work.value_51](&D_800989F8);
+        st10_first_script_tbl[Game_work.value_51](&D_800989F8);
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_8010FA04[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st10_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 

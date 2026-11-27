@@ -12,7 +12,8 @@ void st00_slot_tbl_set(void)
     STAGE_TABLE_50  = D_8011A6CC;
 }
 
-void func_8010038C(void)
+// Sets up the current room: map, spawns.
+void st00_room_init(void)
 {
     STAGE_PL_VIEW *pl;
     void *spawns;

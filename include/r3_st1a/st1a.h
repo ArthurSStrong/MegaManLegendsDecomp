@@ -658,7 +658,7 @@ extern STAGE_SLOT_FUNC D_8012D81C[];
 extern STAGE_SLOT_FUNC D_8012D8FC[];
 extern STAGE_SLOT_FUNC D_8012D984[];
 extern STAGE_SLOT_FUNC D_8012DA0C[];
-extern STAGE_ROOM2_FUNC *D_8012E8DC[];
+extern STAGE_ROOM2_FUNC *st1a_room_script_tbl[];
 extern sint8 *D_801320F0[];
 extern sint8 *D_80132100[];
 extern sint8 *D_8013258C[];
@@ -826,7 +826,7 @@ extern uint8 D_80164006[];
 extern uint8 D_80164007[];
 extern sint32 D_80164008[];
 
-void func_8010097C(void);
+void st1a_room_reset(void);
 
 extern ST1A_OBJ_FUNC D_80133170[];
 void func_80123154(ST1A_OBJ *wp);

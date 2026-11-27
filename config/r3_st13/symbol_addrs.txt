@@ -446,3 +446,8 @@ stcom16_vanish_tbl = 0x8011850C;
 
 // Named after exact twins (tools/propagate_names.py).
 st13_slot_tbl_set = 0x801002E8; // type:func
+st13_room_init = 0x80100350; // type:func
+st13_room_reset = 0x801004D8; // type:func
+st13_room_script = 0x8010051C; // type:func
+st13_room_script_tbl = 0x80117314;
+st13_first_script_tbl = 0x80117354;

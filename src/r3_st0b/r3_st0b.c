@@ -13,7 +13,7 @@ void st0b_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_801003E4(void)
+void st0b_room_init(void)
 {
     STAGE_MAP_WORK *mw;
     sint32 room;
@@ -41,19 +41,20 @@ void func_801003E4(void)
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_8011974C[D_80119774[Game_work.value_51]], D_8011960C[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100570();
+    st0b_room_reset();
 }
 
-void func_80100570(void)
+// Clears the room's slot list and resets the room script's routines.
+void st0b_room_reset(void)
 {
     Sce_slot_list_clear();
     D_800989FC = 0;
 }
 
 // Runs the current room's script.
-void func_80100598(void)
+void st0b_room_script(void)
 {
-    D_80119814[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st0b_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
 void func_801005EC(STAGE_ROOM_WORK *wp)

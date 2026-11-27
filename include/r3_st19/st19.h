@@ -511,7 +511,7 @@ extern STAGE_SLOT_FUNC D_801166D4[];
 extern STAGE_SLOT_FUNC D_8011671C[];
 extern STAGE_SLOT_FUNC D_8011679C[];
 extern STAGE_SLOT_FUNC D_801167A0[];
-extern STAGE_ROOM2_FUNC *D_80116C20[];
+extern STAGE_ROOM2_FUNC *st19_room_script_tbl[];
 
 extern sint8 *D_80119CCC[];
 extern sint8 *D_80119D00[];

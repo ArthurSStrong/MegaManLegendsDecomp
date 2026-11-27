@@ -132,8 +132,8 @@ void func_80100B80(STAGE_ROOM_WORK *wp);
 void func_80100C7C(STAGE_ROOM_WORK *wp);
 void func_80100D78(STAGE_ROOM_WORK *wp);
 
-extern STAGE_ROOM_FUNC *D_80104DE4[];
-extern STAGE_ROOM_FUNC D_80104E24[];
+extern STAGE_ROOM_FUNC *st0f_room_script_tbl[];
+extern STAGE_ROOM_FUNC st0f_first_script_tbl[];
 ST0F_SCENE_SLOT *Sce_slot_open_keep(void *entry);
 void func_80100400(STAGE_ROOM_WORK *wp);
 void func_801004D4(STAGE_ROOM_WORK *wp);
@@ -147,7 +147,7 @@ void func_80100BD8(STAGE_ROOM_WORK *wp);
 void func_80100CD4(STAGE_ROOM_WORK *wp);
 void func_801004AC(STAGE_ROOM_WORK *wp);
 sint32 func_80100DD0(void);
-void func_8010025C(void);
+void st0f_room_script(void);
 
 sint32 Map_obj_state_get(sint32 row, sint32 bit);
 void Sce_slot_list_clear(void);

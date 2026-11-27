@@ -311,3 +311,7 @@ func_8010D9F8 = 0x8010D9F8; // absolute:True
 
 // Named after exact twins (tools/propagate_names.py).
 st14_slot_tbl_set = 0x801001E8; // type:func
+st14_room_init = 0x80100250; // type:func
+st14_room_reset = 0x801003B0; // type:func
+st14_room_script = 0x801003F4; // type:func
+st14_room_script_tbl = 0x80114FB8;

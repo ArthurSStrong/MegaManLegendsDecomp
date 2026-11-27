@@ -97,3 +97,7 @@ stcom01_D_0788 = 0x801060E8;
 // Named after exact twins (tools/propagate_names.py).
 st0f_slot_tbl_set = 0x8010005C; // type:func
 st0f_room_reset = 0x80100210; // type:func
+st0f_room_init = 0x801000CC; // type:func
+st0f_room_script = 0x8010025C; // type:func
+st0f_room_script_tbl = 0x80104DE4;
+st0f_first_script_tbl = 0x80104E24;

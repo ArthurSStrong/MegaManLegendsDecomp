@@ -11,7 +11,8 @@ void st0d_slot_tbl_set(void)
     STAGE_TABLE_50  = D_8010BF30;
 }
 
-void func_801001EC(void)
+// Sets up the current room: map, spawns.
+void st0d_room_init(void)
 {
     void *spawn;
     sint16 *cells;
@@ -35,6 +36,8 @@ void func_801001EC(void)
     st0d_room_reset();
 }
 
+// Clears the room's slot list, locks the exits for Game_work.value_52 and resets the room script's
+// routines.
 void st0d_room_reset(void)
 {
     Sce_slot_list_clear();
@@ -42,9 +45,10 @@ void st0d_room_reset(void)
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
-void func_801003A4(void)
+// Runs the current room's script.
+void st0d_room_script(void)
 {
-    D_8010C3FC[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st0d_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
 void func_801003F8(STAGE_OBJ *wp)

@@ -304,3 +304,8 @@ stcom26_slot_tbl = 0x80118588;
 
 // Named after exact twins (tools/propagate_names.py).
 st08_slot_tbl_set = 0x8010031C; // type:func
+st08_room_init = 0x80100384; // type:func
+st08_room_reset = 0x80100578; // type:func
+st08_room_script = 0x801005F0; // type:func
+st08_room_script_tbl = 0x801130D0;
+st08_first_script_tbl = 0x80113110;

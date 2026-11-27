@@ -12,10 +12,11 @@ void st0a_slot_tbl_set(void)
 }
 
 #ifdef __wasm32__
-void func_801004E4(void);
+void st0a_room_reset(void);
 #endif
 
-void func_8010037C(void)
+// Sets up the current room: map, spawns.
+void st0a_room_init(void)
 {
     void *spawn;
     sint16 *cells;
@@ -35,19 +36,22 @@ void func_8010037C(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80114A40[D_80114AD8[Game_work.value_51]], D_80114A18[Game_work.value_51]);
     Automap_room_set(0);
-    func_801004E4();
+    st0a_room_reset();
 }
 
-void func_801004E4(void)
+// Clears the room's slot list, locks the exits for Game_work.value_52 and resets the room script's
+// routines.
+void st0a_room_reset(void)
 {
     Sce_slot_list_clear();
     *(uint32 *)&D_800989F8.routine_4 = 0;
     Sce_exit_lock_list(D_80114EE8, D_80114EF0[STAGE_GAME_VALUE_52]);
 }
 
-void func_80100530(void)
+// Runs the current room's script.
+void st0a_room_script(void)
 {
-    D_80114B08[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st0a_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
 void func_80100584(void)

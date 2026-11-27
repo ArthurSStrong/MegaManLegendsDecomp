@@ -522,7 +522,7 @@ extern STAGE_SLOT_FUNC D_801191DC[];
 extern STAGE_SLOT_FUNC D_80119260[];
 extern STAGE_SLOT_FUNC D_801192C8[];
 extern STAGE_SLOT_FUNC D_801192FC[];
-extern STAGE_ROOM2_FUNC *D_80119814[];
+extern STAGE_ROOM2_FUNC *st0b_room_script_tbl[];
 
 extern STAGE_PART_FUNC D_8011B3A8[];
 
@@ -614,7 +614,7 @@ extern uint8 D_80164007[];
 extern sint32 D_80164008[];
 
 void Sce_slot_list_clear(void);
-void func_80100570(void);
+void st0b_room_reset(void);
 
 void func_801060E0(ST0B_OBJ *wp);
 

@@ -14,7 +14,7 @@ void st0f_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_801000CC(void)
+void st0f_room_init(void)
 {
     void *spawn;
     sint16 *cells;
@@ -37,6 +37,8 @@ void func_801000CC(void)
     st0f_room_reset();
 }
 
+// Clears the room's slot list, locks the exits for Game_work.value_52 and resets the room script's
+// routines.
 void st0f_room_reset(void)
 {
     Sce_slot_list_clear();
@@ -45,15 +47,15 @@ void st0f_room_reset(void)
 }
 
 // Runs the current room's script (the second set once scene flag 0x1FF is set).
-void func_8010025C(void)
+void st0f_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
-        D_80104E24[Game_work.value_51](&D_800989F8);
+        st0f_first_script_tbl[Game_work.value_51](&D_800989F8);
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_80104DE4[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st0f_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 

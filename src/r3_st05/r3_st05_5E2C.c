@@ -408,7 +408,8 @@ void func_80106934(STAGE_ROOM *wp)
 void func_80107DB4(void);
 #endif
 
-void func_80106B28(void)
+// Locks the exits for Game_work.value_52 and resets the room script's routines.
+void st05_room_reset(void)
 {
     Sce_exit_lock_list(D_801309B4, D_801309BC[STAGE_GAME_VALUE_52]);
     if (STAGE_GAME_VALUE_52 == 0)
@@ -429,13 +430,14 @@ void func_80106B28(void)
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
-void func_80106C08(void)
+// Runs the current room's script (the second set once scene flag 0x1FF is set).
+void st05_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
         if (STAGE_GAME_VALUE_52 != 0xB)
         {
-            D_80130970[Game_work.value_51](&D_800989F8);
+            st05_first_script_tbl[Game_work.value_51](&D_800989F8);
         }
         else
         {
@@ -444,7 +446,7 @@ void func_80106C08(void)
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_80130930[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st05_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 

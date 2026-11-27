@@ -288,3 +288,7 @@ st09_stcom19_close = 0x801195F4; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st09_slot_tbl_set = 0x80100330; // type:func
+st09_room_init = 0x80100398; // type:func
+st09_room_reset = 0x801005F4; // type:func
+st09_room_script = 0x8010061C; // type:func
+st09_room_script_tbl = 0x8011DD20;

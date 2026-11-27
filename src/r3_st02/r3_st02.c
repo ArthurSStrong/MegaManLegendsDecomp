@@ -13,7 +13,7 @@ void st02_slot_tbl_set(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_801000B0(void)
+void st02_room_init(void)
 {
     STAGE_MAP_WORK *mw;
     void *spawns;

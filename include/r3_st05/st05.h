@@ -824,7 +824,7 @@ void Close_WORK_5A4(void *wp);
 sint32 Sound_seq_end_check(sint32 arg);
 void stcom36_objs_open(sint8 room);
 void func_801267B0(STAGE_OBJ *wp, uint8 kind);
-void func_80106B28(void);
+void st05_room_reset(void);
 
 // A 0x20-byte control block of ST05_ACTOR (at +0x348 and +0x368).
 typedef struct
@@ -1607,8 +1607,8 @@ void func_8010BD0C(ST05_ACTOR *wp);
 void func_8010BBFC(ST05_ACTOR *wp);
 extern ST05_ACTOR_FUNC D_80130B08[];
 
-extern STAGE_ROOM_FUNC D_80130970[];
-extern STAGE_ROOM_FUNC *D_80130930[];
+extern STAGE_ROOM_FUNC st05_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st05_room_script_tbl[];
 
 void Sce_exit_lock_list(void *a, void *b);
 

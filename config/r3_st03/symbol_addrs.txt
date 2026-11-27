@@ -308,3 +308,8 @@ st03_stcom04_talk_check = 0x8010E3A8; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st03_slot_tbl_set = 0x801004BC; // type:func
+st03_room_init = 0x80100524; // type:func
+st03_room_reset = 0x801007B4; // type:func
+st03_room_script = 0x8010089C; // type:func
+st03_room_script_tbl = 0x801150E4;
+st03_first_script_tbl = 0x80115124;

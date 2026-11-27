@@ -137,7 +137,7 @@ typedef struct
     uint8 value_448;                   // 448
 } ST10_PL;
 
-// A 0x18-byte spawn record, copied whole (func_80100354).
+// A 0x18-byte spawn record, copied whole (st10_room_init).
 typedef struct
 {
     uint8 bytes[0x18];
@@ -369,8 +369,8 @@ extern STAGE_SLOT_FUNC D_8010F1F0[];
 extern STAGE_SLOT_FUNC D_8010F2AC[];
 extern STAGE_SLOT_FUNC D_8010F2EC[];
 extern STAGE_SLOT_FUNC D_8010F2F0[];
-extern STAGE_ROOM_FUNC D_8010FA44[];
-extern STAGE_ROOM_FUNC *D_8010FA04[];
+extern STAGE_ROOM_FUNC st10_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st10_room_script_tbl[];
 extern uint8 D_8011005C[];
 extern uint8 D_80110084[];
 extern uint8 D_80110054[];
@@ -411,7 +411,7 @@ extern uint8 D_80164006[];
 extern uint8 D_80164007[];
 extern void *D_80164008[];
 
-void func_801006FC(void);
+void st10_room_script(void);
 void Sce_slot_open_list(uint8 *);
 void func_80100840(STAGE_ROOM *wp);
 void func_80100894(STAGE_ROOM *wp);

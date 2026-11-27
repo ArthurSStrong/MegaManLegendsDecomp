@@ -69,3 +69,7 @@ st17_shl02_init = 0x801128C4; // type:func
 st17_shl02_main = 0x80112CCC; // type:func
 st17_shl02_atari_set = 0x80112E44; // type:func
 st17_shl02_hit_effect_set = 0x80112F88; // type:func
+st17_room_init = 0x8010059C; // type:func
+st17_room_reset = 0x80100704; // type:func
+st17_room_script = 0x8010070C; // type:func
+st17_room_script_tbl = 0x8011AEA4;
