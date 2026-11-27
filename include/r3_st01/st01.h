@@ -27,7 +27,7 @@ extern STAGE_FUNC D_80101094[]; // routine_0 handlers (func_801008C0)
 extern sint16 D_800BBA9C[];
 
 void func_80100400(STAGE_ROOM_WORK *wp);
-void func_8010045C(STAGE_ROOM_WORK *wp);
+void st01_event_step_call(STAGE_ROOM_WORK *wp);
 void func_80100A70(void *wp, sint32 a1, sint32 y, uint32 color);
 
 #endif // ST01_H

@@ -133,7 +133,7 @@ void stcom13_move_main(STCOM13_WORK *wp)
             ctl->pos_C.y -= 40;
         }
         Set_Atari(&ctl->pos_C, 0x28, 0, 0x8000, wp->value_1, &ctl->hit_14, 0x4000000, 0x800000,
-                      0x80);
+                  0x80);
     }
 }
 
@@ -142,7 +142,8 @@ void stcom13_move_erase(STCOM13_WORK *wp)
     Close_EM_WORK(wp);
 }
 
-void stcom13_func_047C(STCOM13_WORK *wp)
+// State 0: stands still until touched or hit, then flees (state 4).
+void stcom13_wait(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
 
@@ -162,6 +163,8 @@ void stcom13_func_047C(STCOM13_WORK *wp)
     }
 }
 
+// State 1: recoil after a stun hit (Calc_hit_side's side flag set): short hop forward, then
+// flees. Which side the flag means is not known yet.
 void stcom13_func_04E8(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
@@ -222,6 +225,7 @@ void stcom13_func_04E8(STCOM13_WORK *wp)
     }
 }
 
+// State 2: recoil after a stun hit (side flag clear): longer hop back, then flees.
 void stcom13_func_06B8(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
@@ -291,7 +295,9 @@ void stcom13_func_06B8(STCOM13_WORK *wp)
     }
 }
 
-void stcom13_func_08B0(STCOM13_WORK *wp)
+// State 3: knocked down at zero life: bounces (dropping an item, up to 3 in all), then lies
+// dizzy with stars until hit again, which launches it once more.
+void stcom13_down(STCOM13_WORK *wp)
 {
     STCOM13_CTL *ctl;
     STCOM_EFFECT *effect;
@@ -415,9 +421,8 @@ void stcom13_flee(STCOM13_WORK *wp)
             wp->anim_AC      = 9;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y +
-                              Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);

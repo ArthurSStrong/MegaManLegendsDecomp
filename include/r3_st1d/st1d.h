@@ -190,7 +190,7 @@ typedef void (*ST1D_ARM_FUNC)(ST1D_ARM *wp);
         if ((wp)->anim_prev_AD != (n))                                                             \
         {                                                                                          \
             (wp)->anim_prev_AD = (n);                                                              \
-            EM_Char_Set2((wp), (wp)->anim_AC, 0);                                                 \
+            EM_Char_Set2((wp), (wp)->anim_AC, 0);                                                  \
         }                                                                                          \
     } while (0)
 
@@ -508,10 +508,10 @@ void func_8010BE74(STAGE_OBJ *wp);
 void func_8010D084(STAGE_OBJ *wp);
 void func_8010DD38(STAGE_OBJ *wp);
 void func_8010E98C(STAGE_OBJ *wp);
-void func_8010F890(STCOM16_WORK *wp);
+void st1d_stcom16_ground_check(STCOM16_WORK *wp);
 sint32 Scr_height_check(void *wp);
-void func_8010E068(STCOM16_WORK *wp);
-void func_8010E278(STCOM16_WORK *wp);
+void st1d_stcom16_look_turn(STCOM16_WORK *wp);
+void st1d_stcom16_chase(STCOM16_WORK *wp);
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Search_Player(void *track, void *wp);
@@ -579,7 +579,7 @@ extern sint16 D_80114BF8[];
 void func_80102F24(ST1D_VIEW *wp);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 void func_80103920(ST1D_VIEW *wp);
 
 sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
@@ -610,7 +610,7 @@ void Obj_arc_vel_set(void *shot, void *target, sint32 speed, sint32 arg3, sint32
 void Sce_no_advance(void);
 void EM_World_Pos_Calc_Mtx(void *wp, STCOM_MATRIX *m);
 
-extern uint32 Em_work_used; // allocation masks: 0x3C0 slots
+extern uint32 Em_work_used;  // allocation masks: 0x3C0 slots
 extern uint32 Work_5A4_used; // 0x5A4
 
 #endif

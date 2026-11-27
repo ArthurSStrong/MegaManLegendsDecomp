@@ -35,8 +35,8 @@ extern SHL05_LEVEL D_80089C6C[];
 
 extern SHL_BOX D_800D95B0;
 extern SHL05_SCALE D_800D95BC[6];
-extern SHL_FUNC D_800D95EC[]; // routine_0 handlers
-extern uint32 D_800D9600;     // distance to the player, scaled to 0x80
+extern SHL_FUNC shl05_move_tbl[]; // routine_0 handlers
+extern uint32 D_800D9600;         // distance to the player, scaled to 0x80
 
 sint16 func_800D90B0(SHL_WORK *wp);
 void func_800D935C(SHL_WORK *wp);

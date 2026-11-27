@@ -111,8 +111,8 @@ void func_8011032C(ST00_PART *wp)
         ctl->pos_C         = wp->position;
         wp->position       = D_801224AC[0];
         wp->position_fixed = D_801224B4[0];
-        Set_Atari2(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1,
-                   &ctl->hit_14, ctl->value_8 | 0x9880000, 0x800000, 0);
+        Set_Atari2(&ctl->pos_C, 0x50, &wp->position, 0x40, 0x200, 0xA000, wp->index_1, &ctl->hit_14,
+                   ctl->value_8 | 0x9880000, 0x800000, 0);
     }
 }
 
@@ -414,8 +414,8 @@ void func_80110E58(ST00_PART *wp)
             {
                 break;
             }
-            turn           = Muku(&ctl->parent_34->joint_180[wp->index_D], &wp->position,
-                                           wp->rotation.y, 0x20);
+            turn =
+                Muku(&ctl->parent_34->joint_180[wp->index_D], &wp->position, wp->rotation.y, 0x20);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn != 0)
             {

@@ -15,9 +15,9 @@ extern SHL_BOX D_800D8F04;
 extern uint16 D_800D8F10[]; // sprite size by Player_work.value_544
 extern uint32 D_800D8F20[]; // sprite code by Player_work.value_544
 extern SHL0A_SCALE D_800D8F40[8];
-extern SHL_FUNC D_800D8F50[]; // routine_0 handlers
+extern SHL_FUNC shl0a_move_tbl[]; // routine_0 handlers
 
-void func_800D8BE8(SHL_WORK *wp);
-void func_800D8E48(SHL_WORK *wp);
+void shl0a_explosion_ring_set(SHL_WORK *wp);
+void shl0a_atari_set(SHL_WORK *wp);
 
 #endif // SHL0A_H

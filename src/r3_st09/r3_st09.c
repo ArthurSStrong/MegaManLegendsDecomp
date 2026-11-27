@@ -182,8 +182,8 @@ void func_80100788(STAGE_ROOM_WORK *wp)
                 if (wp->timer_C != 0 && --wp->timer_C != 0)
                 {
                     STAGE_PL.value_442 =
-                        (STAGE_PL.value_442 + Muku(&pl->position, &obj->position,
-                                                            (sint16)STAGE_PL.value_442, 0x20)) &
+                        (STAGE_PL.value_442 +
+                         Muku(&pl->position, &obj->position, (sint16)STAGE_PL.value_442, 0x20)) &
                         0xFFF;
                 }
                 else
@@ -232,7 +232,7 @@ void func_80100788(STAGE_ROOM_WORK *wp)
     }
 }
 
-void func_80100AF8(void)
+void st09_stcom36_script_run(void)
 {
     Sce_camera_script_exec();
     Sce_script_update();
@@ -357,7 +357,7 @@ void func_80100DF4(ST09_VIEW *wp)
         ext->pos_C = wp->vec_180;
         ext->pos_C.y += 30;
         Set_Atari(&ext->pos_C, 0x50, 0, 0x8000, wp->value_1, &ext->value_14,
-                      ext->value_8 | 0x4880000, 0x800000, 0);
+                  ext->value_8 | 0x4880000, 0x800000, 0);
     }
     ext->value_14 = 0;
 }
@@ -418,8 +418,8 @@ void func_801012B4(ST09_VIEW *wp)
     {
         func_801031E8(wp);
     }
-    wp->u_64.h[0] = Muku(&wp->position, &Player_work.position,
-                                  (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x40);
+    wp->u_64.h[0] =
+        Muku(&wp->position, &Player_work.position, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x40);
     if (((ext->u_3C.h[0] + wp->u_64.h[0] + 0x500) & 0xFFF) < 0xA00)
     {
         ext->u_3C.h[0] += wp->u_64.h[0];
@@ -607,8 +607,7 @@ void func_801017F0(ST09_VIEW *wp)
             {
                 Sound_call2(0xB6, &wp->position);
             }
-            wp->u_64.h[0] =
-                Muku(&wp->position, &ext->u_58.obj->position, wp->rotation.y, 0x10);
+            wp->u_64.h[0]  = Muku(&wp->position, &ext->u_58.obj->position, wp->rotation.y, 0x10);
             wp->rotation.y = (wp->rotation.y + wp->u_64.h[0]) & 0xFFF;
             Obj_pos_set(wp, 0x100, 0, 0);
             ext->u_5C.w          = Scr_collision_check(wp);
@@ -653,7 +652,7 @@ void func_801017F0(ST09_VIEW *wp)
             }
             if (wp->variant_3 == 0 && ext->u_34.h[1] == 0 &&
                 Angle_ck(&wp->position_fixed, wp->rotation.y, 0x100,
-                              &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x100))
+                         &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x100))
             {
                 switch (func_80103170(wp))
                 {
@@ -677,7 +676,7 @@ void func_801017F0(ST09_VIEW *wp)
             }
             if (wp->variant_3 == 1 && ext->u_34.h[0] == 0 &&
                 Angle_ck(&wp->position_fixed, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x18,
-                              &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x300))
+                         &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x300))
             {
                 ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
                 if (ext->piece_54 != NULL)
@@ -790,8 +789,7 @@ void func_80101EA8(ST09_VIEW *wp)
             wp->routine_2 = 1;
             wp->value_AC  = 5;
             wp->u_64.h[1] =
-                Muku(&wp->position, &wp->ext.u_58.obj->position, wp->rotation.y, 0x800) >>
-                2;
+                Muku(&wp->position, &wp->ext.u_58.obj->position, wp->rotation.y, 0x800) >> 2;
             wp->ext.u_4.h[0] = 4;
             wp->ext.value_8  = 0;
             wp->ext.obj_40->u_E.b.byte_F |= 1;
@@ -803,10 +801,10 @@ void func_80101EA8(ST09_VIEW *wp)
             {
                 ext->flags_0 |= 1;
             }
-            wp->rotation.y = (wp->rotation.y +
-                              Muku(&wp->position, &ext->u_58.obj->position, wp->rotation.y,
-                                            wp->u_64.h[1] < 0 ? -wp->u_64.h[1] : wp->u_64.h[1])) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, &ext->u_58.obj->position, wp->rotation.y,
+                                       wp->u_64.h[1] < 0 ? -wp->u_64.h[1] : wp->u_64.h[1])) &
+                0xFFF;
             break;
     }
 }
@@ -1182,10 +1180,9 @@ void func_80102844(ST09_VIEW *wp)
             {
                 ext->flags_0 |= 1;
             }
-            wp->rotation.y =
-                (wp->rotation.y + Muku(&wp->position, &ext->u_58.obj->position,
-                                                wp->rotation.y, STCOM_ABS(wp->u_64.h[1]))) &
-                0xFFF;
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &ext->u_58.obj->position,
+                                                    wp->rotation.y, STCOM_ABS(wp->u_64.h[1]))) &
+                             0xFFF;
             break;
     }
 }
@@ -1294,9 +1291,8 @@ void func_80102B4C(ST09_VIEW *wp)
             {
                 Sound_call2(0xB8, &wp->position);
                 if ((ext->flags_0 & 0x200) &&
-                    Angle_ck(&wp->position_fixed, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF,
-                                  0x18, &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y,
-                                  0x300))
+                    Angle_ck(&wp->position_fixed, (wp->rotation.y + ext->u_3C.h[0]) & 0xFFF, 0x18,
+                             &ext->u_58.obj->position_fixed.v, ext->u_58.obj->rotation.y, 0x300))
                 {
                     ext->flags_0 &= ~0x200;
                     ext->piece_54 = (STAGE_PIECE *)Open_SHL_WORK();
@@ -1414,10 +1410,9 @@ void func_80102F30(ST09_VIEW *wp)
             {
                 ext->flags_0 |= 1;
             }
-            wp->rotation.y =
-                (wp->rotation.y + Muku(&wp->position, &ext->u_58.obj->position,
-                                                wp->rotation.y, STCOM_ABS(wp->u_64.h[1]))) &
-                0xFFF;
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &ext->u_58.obj->position,
+                                                    wp->rotation.y, STCOM_ABS(wp->u_64.h[1]))) &
+                             0xFFF;
             break;
     }
 }

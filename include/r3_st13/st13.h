@@ -3,7 +3,6 @@
 
 #include "common.h"
 #include "stage_common/stage.h"
-#include "stage_common/stcom16.h"
 
 // A scratchpad halfword func_80111814 sets before EM_World_Pos_Calc.
 #define ST13_SP_13C (*(uint16 *)0x1F80013C)
@@ -558,15 +557,6 @@ extern STAGE_OBJ_FUNC D_80118C60[];
 extern STAGE_OBJ_FUNC D_80117660[];
 extern STAGE_OBJ_FUNC D_80117664[];
 extern STAGE_OBJ_FUNC D_80117838[];
-extern STAGE_OBJ_FUNC D_801184E4[];
-extern STCOM16_FUNC D_80118480[]; // routine_0 handlers (func_8010C764)
-extern uint8 D_80118474[];        // data_78
-extern STCOM16_KIND **Em_param_tbl;
-extern STCOM16_FUNC D_80118490[]; // routine_1 handlers (func_8010CAD4)
-extern STCOM16_FUNC D_801184B4[]; // routine_2 handlers (func_8010D4C4)
-extern STCOM16_FUNC D_801184D0[]; // routine_2 handlers (func_8010DA34)
-extern STCOM16_FUNC D_80118500[]; // routine_2 handlers (func_8010E504)
-extern STCOM16_FUNC D_8011850C[]; // routine_2 handlers (func_8010EB98)
 extern uint8 D_8011729C;
 extern uint8 D_80117490[];
 extern uint8 D_80117498[][8];
@@ -651,8 +641,6 @@ void func_80104AF0(STAGE_OBJ *wp);
 void func_80104B2C(STAGE_OBJ *wp);
 STAGE_OBJ *Obj_id_work(sint32 id);
 void func_80107DA0(STAGE_OBJ *wp);
-void func_8010D3E8(STAGE_OBJ *wp);
-void func_8010E048(STAGE_OBJ *wp);
 void func_8003354C(void *wp);
 void Search_Player_Init(void *track, uint8 arg1, uint32 arg2);
 sint32 Scr_ground_check(void *wp);
@@ -667,17 +655,10 @@ void func_801004D8(void);
 void func_80100FA4(ST13_STCOM27_WORK *wp);
 void func_8010103C(ST13_STCOM27_WORK *wp);
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 void ApplyMatrix(STCOM_MATRIX *m, STCOM_SVECTOR *v, STCOM_FIXED_VECTOR *out);
-void func_8010CAD4(STCOM16_WORK *wp);
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
-void func_8010EF4C(STCOM16_WORK *wp);
 sint32 Scr_height_check(void *wp);
-void func_8010D88C(STCOM16_WORK *wp);
-void func_8010D718(STCOM16_WORK *wp);
-void func_8010D928(STCOM16_WORK *wp);
-void func_8010DDCC(STCOM16_WORK *wp);
-void func_8010DEF4(STCOM16_WORK *wp);
 #ifdef __wasm32__
 void Obj_item_drop(void *wp, STCOM_SVECTOR *pos);
 #else
@@ -730,6 +711,6 @@ typedef struct
 sint32 func_801134E4(STAGE_STCOM15_WORK_4E0 *wp);
 
 void func_80113958(STAGE_ROOM *wp);
-void func_801139A8(STAGE_ROOM_WORK *wp);
+void st13_event_step_call(STAGE_ROOM_WORK *wp);
 
 #endif

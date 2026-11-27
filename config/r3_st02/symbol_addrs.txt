@@ -15,3 +15,7 @@ stcom02_move_tbl = 0x80107E1C;
 D_80107E4C = 0x80107E4C; // ST02_ANIM[14]
 D_80107E68 = 0x80107E68; // ST02_ANIM[5]
 D_80107E74 = 0x80107E74; // ST02_ANIM[9]
+
+// Named after exact twins (tools/propagate_names.py).
+st02_screen_tile_draw = 0x8010032C; // type:func
+st02_event_step_call = 0x80101C80; // type:func

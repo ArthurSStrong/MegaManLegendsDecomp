@@ -781,7 +781,7 @@ void func_80112230(ST05_OBJ *wp);
 extern ST05_OBJ_FUNC D_80130B3C[];
 void func_8010C1A8(ST05_OBJ *wp);
 
-void func_80110344(ST05_OBJ *wp);
+void st05_stcom37_talk(ST05_OBJ *wp);
 
 extern STAGE_OBJ_FUNC D_80130AF0[];
 
@@ -997,11 +997,11 @@ void func_80126F10(STAGE_SHOT *wp);
 void func_80127054(STAGE_SHOT *wp, sint32 arg);
 
 sint32 SquareRoot0(sint32 v);
-sint32 func_80118D74(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
+sint32 st05_calc_distance(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
 
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 extern STCOM_FIXED_VECTOR D_80137F68;
-sint32 func_801171D0(ST05_ACTOR *wp);
+sint32 st05_stcom04_talk_check(ST05_ACTOR *wp);
 
 extern uint32 stcom36_obj_bits;
 extern STAGE_SPAWNED *stcom36_E2_0000[];

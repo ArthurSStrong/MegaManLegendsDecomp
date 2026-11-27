@@ -68,7 +68,7 @@ void func_8011ADD0(ST06_EVENT *wp)
     }
 }
 
-void func_8011AFD0(STAGE_OBJ *wp)
+void st06_stcom34_move(STAGE_OBJ *wp)
 {
     D_80125A74[wp->routine_0](wp);
 }

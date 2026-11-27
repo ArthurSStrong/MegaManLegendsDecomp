@@ -3,7 +3,7 @@
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
 // type_3 selects the object: 0 the beam, 1 the orbiting shot, 2 its spark.
-void func_800D8804(SHL_WORK *wp)
+void shl09_move(SHL_WORK *wp)
 {
     wp->type_3 &= 0x7F;
     D_800D9730[wp->type_3](wp);
@@ -11,7 +11,7 @@ void func_800D8804(SHL_WORK *wp)
 
 void func_800D8848(SHL_WORK *wp)
 {
-    D_800D973C[wp->routine_0](wp);
+    shl09_move_tbl[wp->routine_0](wp);
 }
 
 void func_800D8884(SHL_WORK *wp)
@@ -237,8 +237,8 @@ void func_800D922C(SHL_WORK *wp)
     b.vx = (f.w.x + (d.vx << 8)) >> 16;
     b.vy = (f.w.y + (d.vy << 8)) >> 16;
     b.vz = (f.w.z + (d.vz << 8)) >> 16;
-    Set_Atari2(&a, size, &b, size, 0x200, 0x4000, wp->value_1, &wp->col_c4, flags | 0x28000000,
-               0, 0x80);
+    Set_Atari2(&a, size, &b, size, 0x200, 0x4000, wp->value_1, &wp->col_c4, flags | 0x28000000, 0,
+               0x80);
     wp->col_c4 = 0;
     wp->col_c8 = 0;
 }

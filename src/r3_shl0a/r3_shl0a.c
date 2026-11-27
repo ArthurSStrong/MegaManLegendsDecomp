@@ -2,13 +2,14 @@
 #include "shl0a.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl0a_move(SHL_WORK *wp)
 {
-    D_800D8F50[wp->routine_0](wp);
+    shl0a_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_800D8854(SHL_WORK *wp)
+// Routine 0: sets the shot up.
+void shl0a_init(SHL_WORK *wp)
 {
     SVECTOR rot;
     VECTOR v;
@@ -54,13 +55,14 @@ void func_800D8854(SHL_WORK *wp)
     wp->timer_b                    = 0;
     wp->routine_1                  = 0;
     wp->routine_0++;
-    func_800D8E48(wp);
+    shl0a_atari_set(wp);
     Sound_call2(0x12F, &wp->pos);
 }
 
 // The identical arms (merged by jump2) test `hit` again, so it stays live past the first test and
 // combine can't fold its copy into the branch: retail's move v1,v0.
-void func_800D8A88(SHL_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl0a_main(SHL_WORK *wp)
 {
     MATRIX unused;
     sint32 i;
@@ -71,14 +73,14 @@ void func_800D8A88(SHL_WORK *wp)
     {
         if (wp->hit_7c || hit)
         {
-            func_800D8BE8(wp);
+            shl0a_explosion_ring_set(wp);
             Sound_call2(0x130, &wp->pos);
             Close_PL_SHL_WORK(wp);
             return;
         }
         else
         {
-            func_800D8BE8(wp);
+            shl0a_explosion_ring_set(wp);
             Sound_call2(0x130, &wp->pos);
             Close_PL_SHL_WORK(wp);
             return;
@@ -96,10 +98,12 @@ void func_800D8A88(SHL_WORK *wp)
     i                              = ++wp->timer_b & 7;
     wp->draw.spr.scale_96          = D_800D8F40[i].scale_96;
     wp->draw.spr.scale_97          = D_800D8F40[i].scale_97;
-    func_800D8E48(wp);
+    shl0a_atari_set(wp);
 }
 
-void func_800D8BE8(SHL_WORK *wp)
+// Explosions (effect 0x80) at the shot and in a ring around it: 4 at 150 units, or at
+// the higher level (value_544) bigger ones and 8 at 250 units.
+void shl0a_explosion_ring_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
     sint32 i;
@@ -162,7 +166,8 @@ void func_800D8BE8(SHL_WORK *wp)
     }
 }
 
-void func_800D8E48(SHL_WORK *wp)
+// Sets the shot's hit capsule between its old and new position, its sprite's size wide.
+void shl0a_atari_set(SHL_WORK *wp)
 {
     sint32 size;
     sint32 flags;

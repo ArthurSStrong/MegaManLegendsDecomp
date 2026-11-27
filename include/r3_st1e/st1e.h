@@ -131,7 +131,7 @@ extern ST1E_EV_FUNC D_80105C34[]; // by variant_3 (func_80103D3C)
 
 void func_8010033C(uint8 mode);
 void func_80101078(STAGE_ROOM *wp);
-void func_80101118(STAGE_ROOM *wp);
+void st1e_event_step_call(STAGE_ROOM *wp);
 void func_80101E3C(STAGE_OBJ *wp);
 void func_8010227C(STAGE_OBJ *wp);
 void func_80102698(STAGE_OBJ *wp);

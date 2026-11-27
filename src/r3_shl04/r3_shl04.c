@@ -2,12 +2,13 @@
 #include "shl04.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl04_move(SHL_WORK *wp)
 {
-    D_800D8C44[wp->routine_0](wp);
+    shl04_move_tbl[wp->routine_0](wp);
 }
 
-void func_800D8840(SHL_WORK *wp)
+// Routine 0: sets the shot up.
+void shl04_init(SHL_WORK *wp)
 {
     SVECTOR unused_s;
     VECTOR unused_v;
@@ -15,11 +16,13 @@ void func_800D8840(SHL_WORK *wp)
     Homing_target_clear(wp->bit_d);
     wp->timer_b = 0;
     wp->routine_0++;
-    func_800D89F8(wp);
+    shl04_atari_set(wp);
     Sound_call2(0x123, &wp->pos);
 }
 
-void func_800D8894(SHL_WORK *wp)
+// Routine 1: while the player stays in state 4 and has energy, keeps the hit box on the arm
+// tip and spins it (shl04_tip_rotate, 1/8 turn per frame).
+void shl04_main(SHL_WORK *wp)
 {
     SHL_PLAYER *tp;
     MATRIX unused;
@@ -56,12 +59,13 @@ rotate:
     rot.vx = 0;
     rot.vy = (wp->timer_b & 7) << 9;
     rot.vz = 0;
-    func_800D8AE4(tp, &rot);
+    shl04_tip_rotate(tp, &rot);
     wp->timer_b--;
-    func_800D89F8(wp);
+    shl04_atari_set(wp);
 }
 
-void func_800D89F8(SHL_WORK *wp)
+// Sets the hit capsule from the arm tip (pos_3c8) to 4 steps further along its motion.
+void shl04_atari_set(SHL_WORK *wp)
 {
     SHL_PLAYER *tp;
     SVECTOR pos;
@@ -82,7 +86,8 @@ void func_800D8ADC(SHL_WORK *wp, sint32 arg)
 {
 }
 
-void func_800D8AE4(SHL_PLAYER *tp, SVECTOR *rot)
+// Rebuilds the arm tip's matrix (mtx_248) rotated by rot, and its position pos_3c8.
+void shl04_tip_rotate(SHL_PLAYER *tp, SVECTOR *rot)
 {
     VECTOR v;
     SVECTOR unused_s;

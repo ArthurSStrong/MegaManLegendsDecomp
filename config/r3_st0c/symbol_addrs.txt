@@ -173,10 +173,10 @@ stcom13_move = 0x80101CB8; // type:func
 stcom13_move_init = 0x80101D04; // type:func
 stcom13_move_main = 0x80101E90; // type:func
 stcom13_move_erase = 0x80102114; // type:func
-stcom13_func_047C = 0x80102134; // type:func
+stcom13_wait = 0x80102134; // type:func
 stcom13_func_04E8 = 0x801021A0; // type:func
 stcom13_func_06B8 = 0x80102370; // type:func
-stcom13_func_08B0 = 0x80102568; // type:func
+stcom13_down = 0x80102568; // type:func
 stcom13_flee = 0x801028DC; // type:func
 stcom13_damage = 0x80102A60; // type:func
 stcom13_R_0000 = 0x8010004C;
@@ -260,3 +260,6 @@ stcom35_puff_end = 0x8010B008; // type:func
 stcom35_puff_tbl = 0x8010D7D8;
 stcom35_emit_tbl = 0x8010D7E0;
 stcom35_color_tbl = 0x8010D7E8;
+
+// Named after exact twins (tools/propagate_names.py).
+st0c_event_step_call = 0x80101968; // type:func

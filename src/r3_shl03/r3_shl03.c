@@ -2,13 +2,14 @@
 #include "shl03.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl03_move(SHL_WORK *wp)
 {
-    D_800D8E34[wp->routine_0](wp);
+    shl03_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_800D8854(SHL_WORK *wp)
+// Routine 0: sets the shot up.
+void shl03_init(SHL_WORK *wp)
 {
     SVECTOR dir;
     SVECTOR rot;
@@ -61,17 +62,18 @@ void func_800D8854(SHL_WORK *wp)
     {
         wp->old_pos.pad = wp->pos.pad = 0x4208;
     }
-    func_800D8D5C(wp);
+    shl03_atari_set(wp);
     Sound_call2(0x122, &wp->pos);
 }
 
-void func_800D8A7C(SHL_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl03_main(SHL_WORK *wp)
 {
     MATRIX unused;
 
     if (Shot_map_check(wp, 0x20) || wp->hit_7c)
     {
-        func_800D8C6C(wp);
+        shl03_explosion_set(wp);
         Swing_Camera2(0x14, 0x64, 0xFA0, &wp->pos);
         Close_PL_SHL_WORK(wp);
         return;
@@ -109,14 +111,15 @@ void func_800D8A7C(SHL_WORK *wp)
         Close_PL_SHL_WORK(wp);
         return;
     }
-    func_800D8D5C(wp);
+    shl03_atari_set(wp);
     if (wp->timer_b & 1)
     {
-        func_800D8CF4(wp);
+        shl03_smoke_set(wp);
     }
 }
 
-void func_800D8C6C(SHL_WORK *wp)
+// Opens an Effect_explosion (effect 0x80) at the shot, sized by D_800D8E2C[level].
+void shl03_explosion_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
 
@@ -132,7 +135,8 @@ void func_800D8C6C(SHL_WORK *wp)
     }
 }
 
-void func_800D8CF4(SHL_WORK *wp)
+// Opens an Effect_smoke (effect 0x83) at the shot (every other frame, from shl03_main).
+void shl03_smoke_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
 
@@ -148,7 +152,8 @@ void func_800D8CF4(SHL_WORK *wp)
     }
 }
 
-void func_800D8D5C(SHL_WORK *wp)
+// Sets the shot's hit capsule between its old and new position, its sprite's size wide.
+void shl03_atari_set(SHL_WORK *wp)
 {
     sint32 size;
     sint32 flags;

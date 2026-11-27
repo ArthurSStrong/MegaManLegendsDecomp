@@ -7,8 +7,8 @@
 extern SHL_BOX D_8008A310[]; // indexed by an effect's index_a
 extern uint8 D_80089ADA;
 
-extern SHL_FUNC D_800D8C28[]; // routine_0 handlers
-extern sint16 D_800D8C30[];   // push strength by Player_work.value_530
+extern SHL_FUNC shl07_move_tbl[]; // routine_0 handlers
+extern sint16 shl07_push_tbl[];   // push strength by Player_work.value_530
 
 void Scr_move_check(SVECTOR *pos, SVECTOR *old, sint32 arg, SHL_BOX *box);
 

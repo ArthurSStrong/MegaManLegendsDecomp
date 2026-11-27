@@ -15,13 +15,17 @@ void clut_dirty_copy(void)
     }
 }
 
-void func_800178FC(void)
+// Uploads the working CLUT buffer (32 rows of 256 colours) to VRAM rows 240-255, both halves;
+// once per frame from the main loop.
+void Clut_buf_upload(void)
 {
     LoadImage(&D_80097A28, (u_long *)D_800B1168);
     LoadImage(&D_80097A30, (u_long *)&D_800B1168[0x1000]);
 }
 
-void func_80017944(void)
+// Sets the semi-transparency bit on every non-zero colour of the CLUT buffer, and makes
+// 0x8000 (black with the bit) fully transparent; after a room load.
+void Clut_buf_stp_set(void)
 {
     sint32 i;
     uint16 *pixel;
@@ -163,7 +167,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_1           = 0;
                 CODE178_FADE_WORK.routine_2           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             case 19:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -171,7 +175,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             case 20:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -179,7 +183,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             case 21:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -187,7 +191,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             case 22:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -195,7 +199,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             case 23:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -203,7 +207,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
             default:
                 CODE178_FADE_WORK.routine_0           = 2;
@@ -211,7 +215,7 @@ void Fade_start(sint32 arg)
                 CODE178_FADE_WORK.routine_2           = 0;
                 CODE178_FADE_WORK.routine_3           = 0;
                 *(uint32 *)&CODE178_FADE_WORK.flags04 = 0;
-                Fade_busy                            = -1;
+                Fade_busy                             = -1;
                 break;
         }
         for (i = 0; i < 2; i++)
@@ -401,13 +405,14 @@ void Fade_effect_unfreeze(void)
             break;
         case 1:
             D_80098810 = 0;
-            Fade_busy = 0;
+            Fade_busy  = 0;
             Thread_exit();
             break;
     }
 }
 
-void func_8001840C(void)
+// Same as Fade_effect_unfreeze, but leaves D_80098864 set; pairs with Fade_effect_freeze2.
+void Fade_effect_unfreeze2(void)
 {
     switch (D_80098A6B)
     {
@@ -441,7 +446,7 @@ void func_8001840C(void)
             break;
         case 1:
             D_80098810 = 0;
-            Fade_busy = 0;
+            Fade_busy  = 0;
             Thread_exit();
             break;
     }
@@ -500,16 +505,17 @@ void Fade_effect_spin_zoom(void)
     if (++D_80098A6C >= 64)
     {
         D_80098A70 = 1;
-        Fade_work = 0;
+        Fade_work  = 0;
         D_80098A6B = 0;
         D_80098A76 = 255;
         D_80098A6A++;
     }
 }
 
+// Fade_effect_step_tbl[3]: a subtractive disc grows from the screen centre over 64 frames.
 // CODE178_FADE_WORK keeps case 1's field order; case 0's init loop has its own primitive
 // pointer, so it stays block-local.
-void func_80018850(void)
+void Fade_effect_disc_open(void)
 {
     sint32 j;
     sint32 i;
@@ -572,10 +578,11 @@ void func_80018850(void)
     }
 }
 
+// Fade_effect_step_tbl[4]: iris close, a dark ring closing on the screen centre.
 // CODE178_FADE_WORK fixes the timer reload order, and the cast tag plus word-view colours fix
 // case 0's stores. Case 0's init loop has its own primitive pointer, and case 2 its own OT
 // pointer, loaded after the counter in the for clause.
-void func_80018BB8(void)
+void Fade_effect_iris_close(void)
 {
     sint32 i;
     sint32 j;
@@ -665,10 +672,11 @@ void func_80018BB8(void)
     }
 }
 
+// Fade_effect_step_tbl[5]: two dark bands close from the top and bottom edges.
 // Fade fields through CODE178_FADE_WORK (one struct, so GCC reloads the counter after the
 // addPrim stores as retail does). Case 1 reuses i for the band height, and case 0 has its own
 // primitive pointer.
-void func_80019210(void)
+void Fade_effect_shutter_close(void)
 {
     sint32 i, j;
     POLY_G4 *g4;
@@ -733,7 +741,8 @@ void func_80019210(void)
     }
 }
 
-void func_800194C4(void)
+// Fade_effect_step_tbl[6]: subtracts 0x080808 from the whole screen for 63 frames.
+void Fade_effect_darken(void)
 {
     sint32 i;
     CODE178_TILE *tile;

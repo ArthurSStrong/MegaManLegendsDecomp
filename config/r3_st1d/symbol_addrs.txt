@@ -162,3 +162,22 @@ stcom18_D_0001 = 0x80114EE5;
 stcom18_frame2_tbl = 0x80114EF0;
 stcom18_D_000D = 0x80114EF1;
 stcom18_move_tbl = 0x80114EFC;
+
+// Named after exact twins (tools/propagate_names.py).
+st1d_stcom16_look_turn = 0x8010E068; // type:func
+st1d_stcom16_look = 0x8010E154; // type:func
+st1d_stcom16_look_wait = 0x8010E1AC; // type:func
+st1d_stcom16_chase = 0x8010E278; // type:func
+st1d_stcom16_charge_init = 0x8010E494; // type:func
+st1d_stcom16_claw_aim = 0x8010E9C8; // type:func
+st1d_stcom16_claw_out = 0x8010EA8C; // type:func
+st1d_stcom16_claw_back = 0x8010EAB4; // type:func
+st1d_stcom16_claw_end = 0x8010EAEC; // type:func
+st1d_stcom16_claw_appear = 0x8010EB88; // type:func
+st1d_stcom16_claw_appear_wait = 0x8010EC50; // type:func
+st1d_stcom16_notice = 0x8010ED3C; // type:func
+st1d_stcom16_jump_air = 0x8010F074; // type:func
+st1d_stcom16_die = 0x8010F454; // type:func
+st1d_stcom16_vanish_init = 0x8010F5DC; // type:func
+st1d_stcom16_vanish_turn = 0x8010F690; // type:func
+st1d_stcom16_ground_check = 0x8010F890; // type:func

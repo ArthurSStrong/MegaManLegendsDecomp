@@ -247,3 +247,6 @@ stcom38_room3 = 0x80100E10; // type:func
 stcom38_room1_list = 0x8010D8C0;
 stcom38_E_0000 = 0x8010D8E0;
 stcom38_E2_0000 = 0x8010D900;
+
+// Named after exact twins (tools/propagate_names.py).
+st1b_stcom04_talk_check = 0x80107114; // type:func

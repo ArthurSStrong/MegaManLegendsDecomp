@@ -18,7 +18,7 @@ typedef struct
     uint32 value_18;       // 360
     STCOM_SVECTOR from_1C; // 364: where the hit came from
     uint8 track_24[0x10];  // 36C
-    sint16 count_34;       // 37C: drops so far (stcom13_func_08B0)
+    sint16 count_34;       // 37C: drops so far (stcom13_down)
     uint16 timer_36;       // 37E: frames before it may vanish off screen
 } STCOM13_CTL;
 
@@ -88,7 +88,7 @@ typedef void (*STCOM13_FUNC)(STCOM13_WORK *wp);
 extern STCOM13_FUNC stcom13_move_tbl[];  // routine_0 handlers (stcom13_move)
 extern STCOM13_FUNC stcom13_state_tbl[]; // routine_1 handlers (stcom13_move_main)
 extern uint8 stcom13_D_0020[];           // data_78
-extern uint8 stcom13_D_002C[];           // drop times by routine_3 (stcom13_func_08B0)
+extern uint8 stcom13_D_002C[];           // drop times by routine_3 (stcom13_down)
 extern uint8 stcom13_D_0030[4][4];       // joints to drop from, by routine_3
 extern uint8 stcom13_D_0040[];           // joints to drop from when it dies
 

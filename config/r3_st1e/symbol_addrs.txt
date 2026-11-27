@@ -24,3 +24,6 @@ StXX_em38_49_move = 0x80101798; // type:func
 StXX_em5c_49_move = 0x80101844; // type:func
 StXX_set_shl38 = 0x80101930; // type:func
 StXX_shl38_move = 0x801019C0; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st1e_event_step_call = 0x80101118; // type:func

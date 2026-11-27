@@ -62,15 +62,15 @@ typedef struct
 typedef void (*SHL08_FUNC)(SHL08_WORK *wp);
 
 extern SHL_BOX D_800D90CC;
-extern uint16 D_800D90D8[];     // speed by Player_work.value_536
-extern SHL08_FUNC D_800D90E8[]; // routine_0 handlers
-extern uint8 D_800D90F0[];      // effect value by Player_work.value_534
-extern uint32 D_800D90F8[];     // trail colours
+extern uint16 D_800D90D8[];         // speed by Player_work.value_536
+extern SHL08_FUNC shl08_move_tbl[]; // routine_0 handlers
+extern uint8 D_800D90F0[];          // effect value by Player_work.value_534
+extern uint32 D_800D90F8[];         // trail colours
 
 SHL08_LINE *Line_alloc(void);
 
-void func_800D8E38(SHL08_WORK *wp);
-void func_800D8F0C(SHL08_WORK *wp);
-void func_800D8F98(SHL08_WORK *wp);
+void shl08_atari_set(SHL08_WORK *wp);
+void shl08_explosion_set(SHL08_WORK *wp);
+void shl08_trail_draw(SHL08_WORK *wp);
 
 #endif // SHL08_H

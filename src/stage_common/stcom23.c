@@ -1,9 +1,9 @@
 #include "common.h"
 #include "stage_common/stcom23.h"
 
-// Shared stage code, linked into 4 stages: r3_st06, r3_st0b, r3_st10 and r3_st19. Each stage
-// compiles this file against its own copy of the assembly (TARGET_ASM, set by tools/cc.sh); the
-// names are the same in every stage's registry.
+// Shared stage code, linked into 5 stages: r3_st06, r3_st0b, r3_st10, r3_st17 and r3_st19. Each
+// stage compiles this file against its own copy of the assembly (TARGET_ASM, set by tools/cc.sh);
+// the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom23"
 
 // A homing missile.
@@ -188,7 +188,7 @@ void stcom23_break1(STCOM23_WORK *wp)
 void stcom23_hit_set(STCOM23_WORK *wp)
 {
     Set_Atari(&wp->position, stcom23_param_tbl[wp->variant_3].size_1F, 0, 0x8000, wp->index_1,
-                  &wp->hit_C4, stcom23_param_tbl[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
+              &wp->hit_C4, stcom23_param_tbl[wp->variant_3].hit_kind_21 | 0x40A0000, 0, 0x80);
     wp->hit_C4 = 0;
 }
 

@@ -204,3 +204,6 @@ stcom35_puff_end = 0x80101298; // type:func
 stcom35_puff_tbl = 0x80108B38;
 stcom35_emit_tbl = 0x80108B40;
 stcom35_color_tbl = 0x80108B48;
+
+// Named after exact twins (tools/propagate_names.py).
+st12_event_step_call = 0x80100D48; // type:func

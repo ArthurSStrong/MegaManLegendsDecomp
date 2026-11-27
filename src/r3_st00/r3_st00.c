@@ -73,7 +73,7 @@ void func_80100598(void)
 }
 
 // Draws a translucent full-screen rectangle (abr: the blend mode).
-void func_80100614(uint8 r, uint8 g, uint8 b, uint16 abr)
+void st00_screen_tile_draw(uint8 r, uint8 g, uint8 b, uint16 abr)
 {
     ST00_TILE *tile;
     DR_MODE *mode;
@@ -545,7 +545,7 @@ void func_801010C4(STAGE_ROOM_WORK *wp)
             }
             if (D_80122428 != 0)
             {
-                func_80100614(D_8012242C, D_80122430, D_80122434, D_80122438);
+                st00_screen_tile_draw(D_8012242C, D_80122430, D_80122434, D_80122438);
             }
             break;
         case 7:
@@ -572,7 +572,7 @@ void func_801010C4(STAGE_ROOM_WORK *wp)
             }
             if (D_80122428 != 0)
             {
-                func_80100614(D_8012242C, D_80122430, D_80122434, D_80122438);
+                st00_screen_tile_draw(D_8012242C, D_80122430, D_80122434, D_80122438);
             }
             break;
     }

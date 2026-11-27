@@ -63,17 +63,17 @@ case "$target" in
     # no -G, as for the shim. cc1's -G8 is copied from the other targets, not yet confirmed.
     # Shared stage code (src/stage_common/) finds this stage's copy of its
     # assembly through TARGET_ASM.
-    # r3_st17.c, r3_st02.c, r3_st04_5474.c, r3_st04_8FE0.c, r3_st06_D1F8.c, r3_st16.c, r3_st1b_603C.c, r3_st1a_CBC.c
+    # r3_st17.c, r3_st02.c, r3_st04_5474.c, r3_st04_9FA0.c, r3_st06_D1F8.c, r3_st16.c, r3_st1b_603C.c, r3_st1a_CBC.c
     # r3_st14.c and r3_st00.c pack their
     # jump tables at 4-byte alignment (st17: 0x8010002C, then 0x80100040; st02: jtbl_80100020;
-    # st04: 0x80100034, then 0x801000A0; st04_8FE0: 0x8010019C, then 0x801001B0; st06_D1F8: 0x80100348, then 0x80100364; st16: 0x80100004;
+    # st04: 0x80100034, then 0x801000A0; st04_9FA0: 0x801001B0, then 0x801001DC; st06_D1F8: 0x80100348, then 0x80100364; st16: 0x80100004;
     # st1b: jtbl_801000AC after an assembly table; st1a_CBC: 0x8010000C, 0x80100020, 0x8010003C;
     # st00: 0x80100004, 0x80100018, 0x80100038, 0x80100058; st14: 0x80100004, then 0x80100018;
     # st05_2A920: 0x8010080C, 0x80100860,
     # 0x80100874), where cc1's `.align 3` would pad them
     # (jt_align below); r3_st17_1475C.c and r3_st1e need that padding.
     r3_*)  GFLAGS="-G8"; MASPSX_EXTRA=""; DEFINES="-DTARGET_ASM=\"asm/$target\""
-           case $(basename "$src" .c) in r3_st17 | r3_st14 | r3_st02 | r3_st04_5474 | r3_st04_8FE0 | r3_st16 | r3_st1b_603C | r3_st03_C66C | r3_st1a_CBC | r3_st00 | r3_st05_2A920) JT_ALIGN=2 ;; r3_st1d | r3_st1b_E5C | r3_st08) JT_FILE_OFFSET=4 ;;
+           case $(basename "$src" .c) in r3_st17 | r3_st14 | r3_st02 | r3_st04_5474 | r3_st04_9FA0 | r3_st16 | r3_st1b_603C | r3_st03_C66C | r3_st1a_CBC | r3_st00 | r3_st05_2A920) JT_ALIGN=2 ;; r3_st1d | r3_st1b_E5C | r3_st08) JT_FILE_OFFSET=4 ;;
                # r3_st0d and r3_st0d_4C9C: D_801000F0 and D_80100118 sit in .rodata in function
                # order, after jump tables: -G0. r3_st0d.c aligns its tables to 8 bytes within
                # its own .rodata (jtbl_80100054 after a pad word), counting assembly tables.

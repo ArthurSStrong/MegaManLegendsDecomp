@@ -1,9 +1,9 @@
 #include "common.h"
 #include "stage_common/stcom18.h"
 
-// Shared stage code, linked into 7 stages: r3_st05, r3_st0a, r3_st0c, r3_st10, r3_st11, r3_st1a
-// and r3_st1d. Each stage compiles this file against its own copy of the assembly (TARGET_ASM,
-// set by tools/cc.sh); the names are the same in every stage's registry.
+// Shared stage code, linked into 10 stages: r3_st05, r3_st0a, r3_st0b, r3_st0c, r3_st10, r3_st11,
+// r3_st17, r3_st19, r3_st1a and r3_st1d. Each stage compiles this file against its own copy of
+// the assembly (TARGET_ASM, set by tools/cc.sh); the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom18"
 
 void stcom18_move(STCOM18_WORK *wp)
@@ -79,7 +79,7 @@ void stcom18_move_init(STCOM18_WORK *wp)
     wp->value_78 = 0;
     wp->hit_BC   = 0;
     Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
-                  wp->kind_E | 0x8000000, 0, 0x80);
+              wp->kind_E | 0x8000000, 0, 0x80);
     if (Scr_line_check(wp))
     {
         wp->routine_0 = 2;
@@ -142,7 +142,7 @@ void stcom18_move_main(STCOM18_WORK *wp)
     else
     {
         Set_Atari(&wp->position, wp->sprite.value_10, 0, 0xA000, wp->value_1, &wp->hit_BC,
-                      wp->kind_E | 0x8000000, 0, 0x80);
+                  wp->kind_E | 0x8000000, 0, 0x80);
         wp->hit_BC = 0;
         hit        = Scr_line_check(wp);
         if (hit)

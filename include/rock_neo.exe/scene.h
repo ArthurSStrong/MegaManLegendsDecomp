@@ -302,7 +302,7 @@ void func_800177CC(void *a, void *b);
 void sce_work_reset(sint32 arg);
 void Light_stage_init(void);
 void Map_obj_state_load(void);
-void func_80017944(void);
+void Clut_buf_stp_set(void);
 extern uint8 *D_80098B60;
 extern uint8 D_800B6130[];
 void func_80067E18(void);

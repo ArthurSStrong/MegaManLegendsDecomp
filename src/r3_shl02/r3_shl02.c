@@ -2,13 +2,14 @@
 #include "shl02.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl02_move(SHL_WORK *wp)
 {
-    D_800D9014[wp->routine_0](wp);
+    shl02_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_800D8854(SHL_WORK *wp)
+// Routine 0: sets the shot up.
+void shl02_init(SHL_WORK *wp)
 {
     SVECTOR rot;
     VECTOR v;
@@ -93,12 +94,13 @@ void func_800D8854(SHL_WORK *wp)
     Model_work_init(wp, 0);
     wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
-    func_800D8F08(wp, 0);
-    func_800D8DC4(wp);
+    shl02_hit_effect_set(wp, 0);
+    shl02_atari_set(wp);
     Sound_call2(0x120, &wp->pos);
 }
 
-void func_800D8C4C(SHL_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl02_main(SHL_WORK *wp)
 {
     if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
@@ -110,7 +112,7 @@ void func_800D8C4C(SHL_WORK *wp)
         {
             Close_PL_SHL_WORK(wp);
         }
-        func_800D8F08(wp, 1);
+        shl02_hit_effect_set(wp, 1);
         return;
     }
     wp->old_fpos = wp->fpos;
@@ -136,10 +138,11 @@ void func_800D8C4C(SHL_WORK *wp)
         }
         return;
     }
-    func_800D8DC4(wp);
+    shl02_atari_set(wp);
 }
 
-void func_800D8DC4(SHL_WORK *wp)
+// Sets the shot's hit capsule from its position one step ahead back to it.
+void shl02_atari_set(SHL_WORK *wp)
 {
     SVECTOR p;
     sint32 flags;
@@ -154,8 +157,8 @@ void func_800D8DC4(SHL_WORK *wp)
     }
     if (wp->type_3 & 0x40)
     {
-        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
-                   0, 0x80);
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005, 0,
+                   0x80);
     }
     else if (wp->index_c)
     {
@@ -169,7 +172,8 @@ void func_800D8DC4(SHL_WORK *wp)
     }
 }
 
-void func_800D8F08(SHL_WORK *wp, sint32 arg)
+// Opens an Effect_shot_hit (effect 0x85) at the shot, moving with it; arg goes in flag_3.
+void shl02_hit_effect_set(SHL_WORK *wp, sint32 arg)
 {
     SHL_FX *fx;
 

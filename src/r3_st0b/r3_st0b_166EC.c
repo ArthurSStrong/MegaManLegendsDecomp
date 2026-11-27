@@ -1391,7 +1391,7 @@ void func_80118C34(STAGE_ROOM *wp)
     STAGE_PL.value_C   = 0;
 }
 
-void func_80118D00(STAGE_ROOM_WORK *wp)
+void st0b_event_step_call(STAGE_ROOM_WORK *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -1444,7 +1444,7 @@ void func_80118D40(STAGE_ROOM_WORK *wp)
             }
             // fall through
         case 5:
-            func_80118D00(wp);
+            st0b_event_step_call(wp);
             func_80118854((STAGE_PL_SCRIPT *)&Player_work);
             if (D_800C356C_A[0] == -1)
             {

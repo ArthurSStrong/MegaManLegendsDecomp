@@ -112,3 +112,12 @@ stcom35_puff_end = 0x80117B68; // type:func
 stcom35_puff_tbl = 0x8011CDE0;
 stcom35_emit_tbl = 0x8011CDE8;
 stcom35_color_tbl = 0x8011CDF0;
+
+// Named after exact twins (tools/propagate_names.py).
+st00_screen_tile_draw = 0x80100614; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st00_stcom19_open = 0x801126DC; // type:func
+st00_stcom19_wait_close = 0x801127A0; // type:func
+st00_stcom19_cell_block = 0x80112968; // type:func
+st00_stcom02_step_next = 0x8011974C; // type:func

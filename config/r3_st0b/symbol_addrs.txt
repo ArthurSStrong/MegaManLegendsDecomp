@@ -188,3 +188,19 @@ stcom35_puff_end = 0x80113A40; // type:func
 stcom35_puff_tbl = 0x8011BC6C;
 stcom35_emit_tbl = 0x8011BC74;
 stcom35_color_tbl = 0x8011BC7C;
+
+// Named after exact twins (tools/propagate_names.py).
+st0b_event_step_call = 0x80118D00; // type:func
+
+// stcom18 (stage_common/stcom18.c).
+stcom18_move = 0x8010F498; // type:func
+stcom18_move_init = 0x8010F534; // type:func
+stcom18_move_main = 0x8010F6F8; // type:func
+stcom18_move_hit = 0x8010F960; // type:func
+stcom18_explosion_set = 0x8010F9CC; // type:func
+stcom18_smoke_set = 0x8010FA0C; // type:func
+stcom18_frame_tbl = 0x8011B61C;
+stcom18_D_0001 = 0x8011B61D;
+stcom18_frame2_tbl = 0x8011B628;
+stcom18_D_000D = 0x8011B629;
+stcom18_move_tbl = 0x8011B634;

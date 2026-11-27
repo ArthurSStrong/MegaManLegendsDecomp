@@ -156,71 +156,6 @@ typedef void (*ST0D_CELL_FUNC)(ST0D_CELL *cell, sint32 value);
 // From r3_st17 (ST17_GRID6_FUNC).
 typedef void (*ST0D_GRID6_FUNC)(ST0D_GRID6 *grid, ST0D_CELL *cell);
 
-// From r3_st05 (STCOM21_WORK).
-// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom21: a villager who talks
-// (0000..0E48), a treasure chest whose lid opens (0E88..1908) and a smaller box (19D0..1DDC).
-typedef struct ST0D_STCOM21_WORK ST0D_STCOM21_WORK;
-
-// From r3_st05 (STCOM21_MATRIX).
-// A matrix whose identity setup writes it as eight words.
-typedef union
-{
-    STCOM_MATRIX m;
-    sint32 words[8];
-} ST0D_STCOM21_MATRIX;
-
-// From r3_st05 (STCOM21_WORK).
-struct ST0D_STCOM21_WORK
-{
-    uint8 flags_0;              // 00
-    uint8 index_1;              // 01: pool id and slot
-    uint8 kind_2;               // 02
-    uint8 variant_3;            // 03
-    uint8 reserved04[4];        // 04
-    uint8 routine_0;            // 08
-    uint8 routine_1;            // 09
-    uint8 routine_2;            // 0A
-    uint8 value_B;              // 0B: message (villager), lid frame (chest)
-    sint8 value_C;              // 0C: flags (villager), scene flag - 0x400 (chest)
-    sint8 value_D;              // 0D: contents' kind
-    sint8 value_E;              // 0E: timer (villager), contents (chest)
-    sint8 value_F;              // 0F: rotation
-    void *model_10;             // 10
-    uint8 reserved14[4];        // 14
-    ST0D_STCOM21_MATRIX matrix; // 18
-    STCOM_SVECTOR pos_38;       // 38: pad holds the spawn's scene flag
-    uint32 color_40;            // 40
-    union
-    {
-        sint32 flag;              // the scene flag that must be set (chests)
-        STCOM_EFFECT *effect;     // the effect it waits for (villager)
-        ST0D_STCOM21_WORK *chest; // the chest a lid belongs to
-    } u_44;
-    STCOM_FIXED y_48; // 48: hit result bits; a lid's height
-    sint32 speed_4C;  // 4C
-};
-
-// From r3_st05 (STCOM21_IDENTITY).
-#define ST0D_STCOM21_IDENTITY(mw)                                                                  \
-    ((mw)->words[0] = 0x1000, (mw)->words[1] = 0, (mw)->words[2] = 0x1000, (mw)->words[3] = 0,     \
-     (mw)->words[4] = 0x1000, (mw)->words[5] = 0, (mw)->words[6] = 0, (mw)->words[7] = 0)
-
-// From r3_st05 (STCOM21_OBJ).
-// A 0x3C0-byte work slot (Open_EM_WORK) as func_8010AA54 sets it up.
-typedef struct
-{
-    uint8 flags_0;                     // 00
-    uint8 index_1;                     // 01
-    uint8 kind_2;                      // 02
-    uint8 value_3;                     // 03
-    uint8 handler_4;                   // 04
-    uint8 reserved05[0xF];             // 05
-    STCOM_SVECTOR position;            // 14
-    STCOM_FIXED_VECTOR position_fixed; // 1C
-    uint8 reserved2C[0x28];            // 2C
-    STCOM_SVECTOR rotation;            // 54
-} ST0D_STCOM21_OBJ;
-
 // A slot with sixteen byte pairs at +0x28 (cleared together).
 typedef struct
 {
@@ -652,19 +587,12 @@ extern sint8 *D_8010D7B8[]; // mouth scripts (func_80103C90)
 extern STAGE_PART_FUNC D_8010E490[];
 extern uint8 D_8010E4C0[];
 extern STAGE_OBJ_FUNC D_8010E4D4[];
-extern STAGE_OBJ_FUNC D_8011244C[];
-extern uint8 D_80112470[];
-extern STAGE_OBJ50_FUNC D_80112458[]; // by variant_3
-extern STAGE_OBJ_FUNC D_80112464[];
-extern STAGE_OBJ50_FUNC D_8011248C[]; // by routine_0
-extern uint8 D_8011249C[];
 extern STAGE_OBJ_FUNC D_801124CC[];
 extern STAGE_OBJ_FUNC D_801124D8[];
 extern STAGE_OBJ_FUNC D_801124E4[];
 extern ST0D_TALK_FUNC D_8010D440[];
 extern ST0D_GRID6_FUNC D_8010E4A0[];
 extern ST0D_CELL_FUNC D_8010E4B4[];
-extern uint16 D_8011247C[]; // lid angles
 extern uint8 D_8010C7A0;
 extern uint8 D_8010C7B0;
 extern uint8 D_8010C7C0;
@@ -762,22 +690,13 @@ void func_80103690(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_801036B8(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_80103C90(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 void func_80109BB0(STAGE_OBJ *wp);
-void func_80109FD4(STAGE_OBJ *wp);
 void Close_WORK_50(void *wp);
-void func_8010A190(STAGE_OBJ50 *wp);
-void func_8010A20C(STAGE_OBJ *wp);
-uint8 func_8010A9CC(STAGE_OBJ50 *wp);
-void func_8010A670(STAGE_OBJ50 *wp);
-void func_8010AC80(STAGE_OBJ50 *wp);
-void func_8010AEAC(STAGE_OBJ50 *wp);
 void func_8010B010(STAGE_OBJ *wp);
 void func_8010B27C(STAGE_OBJ *wp);
 void func_8010B508(STAGE_OBJ *wp);
 void func_8010B97C(STAGE_OBJ *wp);
 void func_80102068(STAGE_OBJ *wp);
 void func_80108D10(ST0D_GRID6 *grid, uint8 row, uint8 col);
-void func_8010AA54(ST0D_STCOM21_WORK *wp);
-uint8 func_8010AF28(ST0D_STCOM21_WORK *wp);
 void func_80101268(STAGE_OBJ *wp);
 void func_8010146C(STAGE_ROOM *wp);
 void func_801006EC(void);

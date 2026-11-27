@@ -171,9 +171,9 @@ void func_80110214(ST05_ACTOR *wp)
             ctl->timer_4 = 0x28;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position,
-                                                             wp->rotation.y, wp->turn_64)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64)) &
+                0xFFF;
             if (--ctl->timer_4 == 0)
             {
                 wp->routine_2++;
@@ -185,10 +185,10 @@ void func_80110214(ST05_ACTOR *wp)
             ctl->timer_4 = 0x14;
             break;
         case 3:
-            ctl->timer_A = (ctl->timer_A + Muku(&wp->position, &pl->position,
-                                                         (wp->rotation.y + ctl->timer_A) & 0xFFF,
-                                                         wp->turn_64)) &
-                           0xFFF;
+            ctl->timer_A =
+                (ctl->timer_A + Muku(&wp->position, &pl->position,
+                                     (wp->rotation.y + ctl->timer_A) & 0xFFF, wp->turn_64)) &
+                0xFFF;
             if (--ctl->timer_4 == 0)
             {
                 wp->routine_2++;
@@ -199,7 +199,7 @@ void func_80110214(ST05_ACTOR *wp)
     }
 }
 
-void func_80110344(ST05_OBJ *wp)
+void st05_stcom37_talk(ST05_OBJ *wp)
 {
     sint32 temp_v1;
     uint8 temp_a1;

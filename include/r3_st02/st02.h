@@ -60,7 +60,7 @@ extern sint32 D_800BBC58;
 extern sint32 D_800BBC8C;
 extern sint32 D_800BBC90;
 extern uint8 D_8010A5E0; // the screen shake: 0 off, 1 vertical, 2 horizontal
-extern uint8 D_8010A5E4; // nonzero: func_8010032C tints the screen
+extern uint8 D_8010A5E4; // nonzero: st02_screen_tile_draw tints the screen
 extern uint8 D_8010A5E8;
 extern uint8 D_8010A5EC;
 extern uint8 D_8010A5F0;
@@ -360,7 +360,7 @@ extern uint32 D_80107E24[];
 extern STAGE_ANIM D_80107E88[];
 extern STAGE_UVW D_80107AC4[];
 extern STAGE_UVW D_80107AD4[];
-// PsyQ's TILE (a flat rectangle), as func_8010032C fills it.
+// PsyQ's TILE (a flat rectangle), as st02_screen_tile_draw fills it.
 typedef struct
 {
     u_long tag;
@@ -369,7 +369,7 @@ typedef struct
     short w, h;
 } ST02_TILE;
 
-void func_8010032C(uint8 r, uint8 g, uint8 b, uint16 abr);
+void st02_screen_tile_draw(uint8 r, uint8 g, uint8 b, uint16 abr);
 extern uint8 D_80106C30[];
 extern STAGE_SCRIPT_ENTRY D_80107328[];
 extern STAGE_ROOM2_FUNC D_8010738C[];
@@ -409,7 +409,7 @@ extern sint16 D_801074BC[]; // the horizontal shake, by frame & 1
 extern sint32 D_800BC7D0;   // the screen shake offsets (16.16)
 extern sint32 D_800BC7D4;
 void func_80101B2C(STAGE_ROOM *wp);
-void func_80101C80(STAGE_ROOM *wp);
+void st02_event_step_call(STAGE_ROOM *wp);
 // ROCK_NEO's Cd_subcmd as func_80101CC0 called it: with two arguments (stage.h has three; retail
 // leaves a2 unset).
 void func_8001D494_2(sint32 arg0, sint32 arg1) __asm__("Cd_subcmd");

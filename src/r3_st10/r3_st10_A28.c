@@ -128,7 +128,7 @@ void func_80100C10(STAGE_ROOM *wp)
     }
 }
 
-void func_80100E38(void)
+void st10_stcom36_script_run(void)
 {
     Sce_camera_script_exec();
     Sce_script_update();
@@ -236,7 +236,7 @@ void func_801010C8(STAGE_ROOM *wp)
     STAGE_PL.value_C   = 0;
 }
 
-void func_80101178(STAGE_ROOM_WORK *wp)
+void st10_event_step_call(STAGE_ROOM_WORK *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -267,7 +267,7 @@ void func_801011B8(STAGE_ROOM *wp)
             }
             // fall through
         case 2:
-            func_80101178((STAGE_ROOM_WORK *)wp);
+            st10_event_step_call((STAGE_ROOM_WORK *)wp);
             func_80101068((ST10_PL *)&Player_work);
             Sce_camera_script_exec();
             Sce_script_update();

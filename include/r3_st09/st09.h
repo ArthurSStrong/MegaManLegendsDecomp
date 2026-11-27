@@ -30,7 +30,7 @@ typedef struct
     uint32 value_18;       // 360
     STCOM_SVECTOR from_1C; // 364: where the hit came from
     uint8 track_24[0x10];  // 36C
-    sint16 count_34;       // 37C: drops so far (stcom13_func_08B0)
+    sint16 count_34;       // 37C: drops so far (stcom13_down)
     uint16 timer_36;       // 37E: frames before it may vanish off screen
 } ST09_STCOM13_CTL;
 
@@ -655,7 +655,7 @@ extern void *D_80164008[];
 
 void func_8010071C(void);
 void func_8010074C(STAGE_ROOM *wp);
-void func_80100AF8(void);
+void st09_stcom36_script_run(void);
 void func_801149F0(STAGE_OBJ *wp);
 void func_80115BD0(STAGE_OBJ *wp);
 void func_801170B0(STAGE_OBJ *wp);
@@ -708,7 +708,7 @@ sint32 func_801031E8(ST09_VIEW *wp);
 void Obj_item_drop_n(void *wp, STCOM_SVECTOR *pos, sint32 arg2);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 sint32 func_80103170(ST09_VIEW *wp);
 
 sint32 Angle_range_check(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range,
@@ -1059,7 +1059,7 @@ extern uint32 *Billboard_queue[];
 
 extern ST09_TALK_AREA D_8011DF64;
 extern STAGE_ACTOR Em_work_tbl[]; // ROCK_NEO's 0x3C0-byte slots
-extern uint32 Em_work_used;        // ROCK_NEO: allocation mask of the 0x3C0 slots
+extern uint32 Em_work_used;       // ROCK_NEO: allocation mask of the 0x3C0 slots
 
 void func_801080B8(ST09_ACTOR *wp);
 

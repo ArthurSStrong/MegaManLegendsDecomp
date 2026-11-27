@@ -270,10 +270,9 @@ void func_8010BFF8(ST05_ACTOR *wp)
             {
                 Sound_call2(0xD7, &wp->position);
             }
-            wp->rotation.y =
-                (wp->rotation.y + Muku(&wp->position, &D_80130B24[wp->variant_3],
-                                                wp->rotation.y, wp->turn_64)) &
-                0xFFF;
+            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &D_80130B24[wp->variant_3],
+                                                    wp->rotation.y, wp->turn_64)) &
+                             0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, wp->velocity.v.z);
             dx = wp->position.x - D_80130B24[wp->variant_3].x;
             dz = wp->position.z - D_80130B24[wp->variant_3].z;
@@ -415,12 +414,12 @@ void func_8010C37C(ST05_GUARD *wp)
         if (ctl->flags_0 & 0x20)
         {
             Set_Atari(&ctl->target_C, 0x28, 0, 0x8000, wp->value_1, &ctl->hit_14, 0x4000000,
-                          0x800000, 0x80);
+                      0x800000, 0x80);
         }
         else
         {
             Set_Atari(&ctl->target_C, 0x28, 0, 0x8000, wp->value_1, &ctl->hit_14, 0x4000000,
-                          0x800000, 0);
+                      0x800000, 0);
         }
     }
 }
@@ -430,7 +429,7 @@ void func_8010C644(STAGE_OBJ *wp)
     Close_EM_WORK(wp);
 }
 
-void func_8010C664(ST05_ACTOR *wp)
+void st05_stcom13_wait(ST05_ACTOR *wp)
 {
     ST05_ACTOR_CTL *ctl;
 
@@ -709,9 +708,8 @@ void func_8010CE38(ST05_GUARD *wp)
             wp->anim_AC      = 9;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y +
-                              Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&pl->position, &wp->position, wp->rotation.y, 0x18)) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             hit                  = Scr_collision_check(wp);
             wp->position.y       = Scr_height_check(wp);

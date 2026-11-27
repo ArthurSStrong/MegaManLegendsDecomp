@@ -60,12 +60,13 @@ segments:
       - [0x4, .rodata, r3_st0d]     # entry table, jump tables, constants
       - [0x100, .rodata, r3_st0d_4C9C]
       - [0x128, .rodata, r3_st0d_7DDC]
-      - [0x170, .rodata, r3_st0d_9FD4]
+      - {start: 0x170, type: .rodata, name: stcom40, dir: ../stage_common}
       - [0x184, c, r3_st0d]
       - [0x4C9C, c, r3_st0d_4C9C]
       - {start: 0x53CC, type: c, name: stcom01, dir: ../stage_common}  # shared stage code
       - [0x7DDC, c, r3_st0d_7DDC]
       - {start: 0x9BEC, type: c, name: stcom02, dir: ../stage_common}  # shared stage code
-      - [0x9FD4, c, r3_st0d_9FD4]
+      - {start: 0x9FD4, type: c, name: stcom40, dir: ../stage_common}  # shared stage code
+      - [0xAF94, c, r3_st0d_AF94]
       - [0xBC50, data, data]
   - [0x124F0]

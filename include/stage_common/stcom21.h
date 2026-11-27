@@ -4,9 +4,9 @@
 #include "common.h"
 #include "stage_common/rock_neo.h"
 
-// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom21: a vending machine that sells
-// a drink for 10 zenny and can be kicked (stcom21_vend), a treasure chest whose lid opens
-// (stcom21_chest) and a smaller box (stcom21_box).
+// The 0x50-byte work slot (Open_WORK_50) of the objects in stcom21, a vending machine that sells
+// a drink for 10 zenny and can be kicked (stcom21_vend), and in stcom40, a treasure chest whose
+// lid opens (stcom40_chest) and a smaller box (stcom40_box).
 typedef struct STCOM21_WORK STCOM21_WORK;
 
 // A matrix whose identity setup writes it as eight words.
@@ -52,21 +52,6 @@ struct STCOM21_WORK
 
 typedef void (*STCOM21_FUNC)(STCOM21_WORK *wp);
 
-// A 0x3C0-byte work slot (Open_EM_WORK) as stcom21_chest_em_spawn sets it up.
-typedef struct
-{
-    uint8 flags_0;                     // 00
-    uint8 index_1;                     // 01
-    uint8 kind_2;                      // 02
-    uint8 value_3;                     // 03
-    uint8 handler_4;                   // 04
-    uint8 reserved05[0xF];             // 05
-    STCOM_SVECTOR position;            // 14
-    STCOM_FIXED_VECTOR position_fixed; // 1C
-    uint8 reserved2C[0x28];            // 2C
-    STCOM_SVECTOR rotation;            // 54
-} STCOM21_OBJ;
-
 // An offset from the vending machine, per direction.
 typedef struct
 {
@@ -80,22 +65,11 @@ extern STCOM21_FUNC stcom21_vend_tbl[];         // vending machine: routine_0
 extern STCOM21_FUNC stcom21_vend_use_tbl[];     // vending machine: routine_1 (in use)
 extern uint32 stcom21_vend_model[];             // vending machine's model
 extern STCOM21_OFFSET stcom21_vend_smoke_tbl[]; // where its smoke appears when broken, by direction
-extern STCOM21_FUNC stcom21_chest_tbl[];        // chest: routine_0
-extern STCOM21_FUNC stcom21_chest_type_tbl[];   // chest: by variant_3
-extern STCOM21_FUNC stcom21_chest_closed_tbl[]; // chest: routine_1
-extern uint32 stcom21_chest_model[];            // chest's model
-extern uint16 stcom21_lid_angle_tbl[];          // lid angles
-extern STCOM21_FUNC stcom21_box_tbl[];          // box: routine_0
-extern uint32 stcom21_box_model[];              // box's model
 
 uint8 stcom21_vend_front_check(STCOM21_WORK *wp, STCOM_PL_WORK *pl);
 sint32 stcom21_vend_talk_check(STCOM21_WORK *wp);
 void stcom21_vend_break_count(void);
 void stcom21_vend_flag_on(uint8 index, uint8 n);
-void stcom21_lid_spawn(STCOM21_WORK *wp);
-uint8 stcom21_chest_item_check(STCOM21_WORK *wp);
-void stcom21_chest_em_spawn(STCOM21_WORK *wp);
-uint8 stcom21_box_item_check(STCOM21_WORK *wp);
 
 // ROCK_NEO.EXE.
 extern uint8 *D_8008CACC[];
@@ -109,7 +83,6 @@ void Sce_flag_off(sint32 flag);
 sint32 MojiTaskExec(sint32 arg0, uint8 *script, sint32 arg2);
 STCOM21_WORK *Open_WORK_50(void);
 void Close_WORK_50(STCOM21_WORK *wp);
-STCOM21_OBJ *Open_EM_WORK(void);
 sint32 Angle_range_check2(STCOM_SVECTOR *pos, sint32 angle, sint32 range, STCOM_SVECTOR *target,
                           sint32 target_angle, sint32 target_range);
 sint32 Pl_shot_busy(STCOM_PL_WORK *pl);

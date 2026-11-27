@@ -13,12 +13,12 @@ typedef struct
 
 extern SHL_BOX D_800D9090;
 extern SHL06_SCALE D_800D909C[6];
-extern SHL_FUNC D_800D90CC[]; // routine_0 handlers
+extern SHL_FUNC shl06_move_tbl[]; // routine_0 handlers
 
-void func_800D8C2C(SHL_WORK *wp);
+void shl06_explosion_set(SHL_WORK *wp);
 void func_800D8CB8(SHL_WORK *wp, MATRIX *m);
-void func_800D8D28(SHL_WORK *wp);
-void func_800D8DD8(SHL_WORK *wp, SHL_WORK *np);
-void func_800D8E44(SHL_WORK *wp, sint32 rx, sint32 ry);
+void shl06_atari_set(SHL_WORK *wp);
+void shl06_shot_copy(SHL_WORK *wp, SHL_WORK *np);
+void shl06_shot_launch(SHL_WORK *wp, sint32 rx, sint32 ry);
 
 #endif // SHL06_H

@@ -936,7 +936,7 @@ sint32 Sce_stage_load(void)
     {
         ((uint32 *)((uint8 *)gw + 0x174))[routine] = 0;
     }
-    func_80017944();
+    Clut_buf_stp_set();
     return 0;
 }
 

@@ -60,11 +60,15 @@ segments:
       - [0x4, .rodata, r3_st17]     # entry table, jump tables, constants
       - [0x2D0, .rodata, r3_st17_C6A0]
       - [0x3B0, .rodata, r3_st17_F600]
+      - [0x3D8, .rodata, r3_st17_10C7C]
       - [0x434, .rodata, r3_st17_1475C]
       - [0x510, .rodata, r3_st17_19474]  # its own unit: the jump table isn't 8-aligned from 0x434
       - [0x52C, c, r3_st17]
       - [0xC6A0, c, r3_st17_C6A0]
       - [0xF600, c, r3_st17_F600]
+      - {start: 0xFAE0, type: c, name: stcom23, dir: ../stage_common}  # shared stage code
+      - {start: 0x106D8, type: c, name: stcom18, dir: ../stage_common}  # shared stage code
+      - [0x10C7C, c, r3_st17_10C7C]
       - {start: 0x14374, type: c, name: stcom02, dir: ../stage_common}  # shared stage code
       - [0x1475C, c, r3_st17_1475C]
       - [0x19474, c, r3_st17_19474]

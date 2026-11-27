@@ -29,8 +29,8 @@ void func_80111814(STAGE_STCOM15_WORK_4E0 *wp)
     if ((wp->flags_0 & 1) && (ctl->flags_0 & 8))
     {
         ctl->pos_C = wp->joints_180[0];
-        Set_Atari(&ctl->pos_C, 0x50, 0, 0x8000, wp->value_1, &ctl->hit_14,
-                      ctl->value_8 | 0x5880000, 0x800000, 0);
+        Set_Atari(&ctl->pos_C, 0x50, 0, 0x8000, wp->value_1, &ctl->hit_14, ctl->value_8 | 0x5880000,
+                  0x800000, 0);
     }
     ctl->hit_14 = 0;
 }
@@ -59,8 +59,8 @@ void func_801119CC(STAGE_STCOM15_WORK_4E0 *wp)
     wp->ctl.u_3C.flag            = wp->position.pad;
     wp->life_prev_B2 = wp->life_max_B0 = wp->life_6E =
         Work_5A4_param_tbl[wp->kind_2][wp->param_D].life_8 << 4;
-    wp->data_78                                      = D_8011860C;
-    wp->data_10                                      = NULL;
+    wp->data_78 = D_8011860C;
+    wp->data_10 = NULL;
     if (!(wp->variant_3 & 0x7F))
     {
         ground                    = Scr_ground_check(wp);
@@ -755,9 +755,9 @@ void func_80112F78(STAGE_STCOM15_WORK_4E0 *wp)
     switch (wp->routine_2)
     {
         case 0:
-            wp->routine_2 = 1;
-            wp->anim_AC   = 4;
-            wp->turn_66   = Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 4;
+            wp->routine_2   = 1;
+            wp->anim_AC     = 4;
+            wp->turn_66     = Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 4;
             wp->ctl.timer_4 = 0x10;
             wp->ctl.value_8 = 0;
             // fall through
@@ -786,9 +786,9 @@ void func_8011305C(STAGE_STCOM15_WORK_4E0 *wp)
     switch (wp->routine_2)
     {
         case 0:
-            wp->routine_2 = 1;
-            wp->anim_AC   = 7;
-            wp->turn_66   = Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 4;
+            wp->routine_2    = 1;
+            wp->anim_AC      = 7;
+            wp->turn_66      = Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 4;
             wp->velocity.v.y = -0x200;
             wp->accel.y      = 0x40;
             ctl->timer_4     = 0x10;
@@ -844,9 +844,9 @@ void func_801131F8(STAGE_STCOM15_WORK_4E0 *wp)
         case 1:
             if (--ctl->timer_4 >= 0)
             {
-                wp->rotation.y = (wp->rotation.y +
-                                  Muku(&wp->position, &D_80118D2C, wp->rotation.y, 0x80)) &
-                                 0xFFF;
+                wp->rotation.y =
+                    (wp->rotation.y + Muku(&wp->position, &D_80118D2C, wp->rotation.y, 0x80)) &
+                    0xFFF;
                 break;
             }
             wp->routine_2 = 2;
@@ -856,8 +856,7 @@ void func_801131F8(STAGE_STCOM15_WORK_4E0 *wp)
             // fall through
         case 2:
             wp->rotation.y =
-                (wp->rotation.y + Muku(&wp->position, &D_80118D2C, wp->rotation.y, 0x20)) &
-                0xFFF;
+                (wp->rotation.y + Muku(&wp->position, &D_80118D2C, wp->rotation.y, 0x20)) & 0xFFF;
             Obj_pos_set(wp, 0x70, 0, 0);
             Scr_collision_check(wp);
             if (wp->value_A6 != 0)
@@ -981,11 +980,11 @@ sint32 func_801134E4(STAGE_STCOM15_WORK_4E0 *wp)
             }
             else
             {
-                Sound_call2((wp->ctl.timer_A >=
-                             Work_5A4_param_tbl[wp->kind_2][wp->param_D].value_9 << 4)
-                                ? 0xA2
-                                : 0xA0,
-                            &wp->position);
+                Sound_call2(
+                    (wp->ctl.timer_A >= Work_5A4_param_tbl[wp->kind_2][wp->param_D].value_9 << 4)
+                        ? 0xA2
+                        : 0xA0,
+                    &wp->position);
             }
             wp->scale.v.pad = 0x7FFF;
         }
@@ -1087,7 +1086,7 @@ void func_80113958(STAGE_ROOM *wp)
     wp->tbl_A4 = D_801186F4;
 }
 
-void func_801139A8(STAGE_ROOM_WORK *wp)
+void st13_event_step_call(STAGE_ROOM_WORK *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -1149,7 +1148,7 @@ void func_801139E8(STAGE_ROOM *wp)
             }
             // fall through
         case 10:
-            func_801139A8((STAGE_ROOM_WORK *)wp);
+            st13_event_step_call((STAGE_ROOM_WORK *)wp);
             Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 10 && Fade_busy == 0)

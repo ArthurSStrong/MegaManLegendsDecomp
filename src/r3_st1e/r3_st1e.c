@@ -684,7 +684,7 @@ void func_80101078(STAGE_ROOM *wp)
     }
 }
 
-void func_80101118(STAGE_ROOM *wp)
+void st1e_event_step_call(STAGE_ROOM *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -730,7 +730,7 @@ void func_80101158(STAGE_ROOM *wp)
             }
             // fall through
         case 5:
-            func_80101118(wp);
+            st1e_event_step_call(wp);
             Sce_camera_script_exec();
             Sce_script_update();
             if (wp->routine_4 == 5 && Fade_busy == 0)

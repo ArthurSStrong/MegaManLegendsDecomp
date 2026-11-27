@@ -61,6 +61,7 @@ segments:
       - [0x18, .rodata, r3_st19_3884]
       - {start: 0x2DC, type: .rodata, name: stcom05, dir: ../stage_common}
       - {start: 0x30C, type: .rodata, name: stcom21, dir: ../stage_common}
+      - {start: 0x40C, type: .rodata, name: stcom40, dir: ../stage_common}
       - {start: 0x420, type: .sdata, name: stcom03, dir: ../stage_common}
       - {start: 0x428, type: .rodata, name: stcom03, dir: ../stage_common}
       - [0x43C, .rodata, r3_st19_FAC4]
@@ -72,10 +73,12 @@ segments:
       - {start: 0xE74, type: c, name: stcom01, dir: ../stage_common}  # shared stage code
       - [0x3884, c, r3_st19_3884]
       - {start: 0x8F20, type: c, name: stcom23, dir: ../stage_common}  # shared stage code
-      - [0x9B18, c, r3_st19_9B18]
+      - {start: 0x9B18, type: c, name: stcom18, dir: ../stage_common}  # shared stage code
+      - [0xA0BC, c, r3_st19_A0BC]
       - {start: 0xAEBC, type: c, name: stcom05, dir: ../stage_common}  # shared stage code
       - {start: 0xC268, type: c, name: stcom07, dir: ../stage_common}  # shared stage code
       - {start: 0xC890, type: c, name: stcom21, dir: ../stage_common}  # shared stage code
+      - {start: 0xD718, type: c, name: stcom40, dir: ../stage_common}  # shared stage code
       - [0xE6D8, c, r3_st19_E6D8]
       - {start: 0xEAA4, type: c, name: stcom35, dir: ../stage_common}  # shared stage code
       - {start: 0xED28, type: c, name: stcom14, dir: ../stage_common}  # shared stage code

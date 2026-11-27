@@ -14,10 +14,10 @@ typedef struct
 extern SHL04_MODEL *D_800DD600;
 extern uint8 D_80089AB6;
 
-extern SHL_FUNC D_800D8C44[]; // routine_0 handlers
+extern SHL_FUNC shl04_move_tbl[]; // routine_0 handlers
 
-void func_800D89F8(SHL_WORK *wp);
+void shl04_atari_set(SHL_WORK *wp);
 void func_800D8ADC(SHL_WORK *wp, sint32 arg);
-void func_800D8AE4(SHL_PLAYER *tp, SVECTOR *rot);
+void shl04_tip_rotate(SHL_PLAYER *tp, SVECTOR *rot);
 
 #endif // SHL04_H

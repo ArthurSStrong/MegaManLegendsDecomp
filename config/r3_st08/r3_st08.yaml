@@ -65,6 +65,7 @@ segments:
       - {start: 0x1A8, type: .rodata, name: stcom05, dir: ../stage_common}
       - [0x1D8, rodata, scale_sizes]  # six-byte copy source plus two opaque trailing bytes
       - {start: 0x1E0, type: .rodata, name: stcom21, dir: ../stage_common}
+      - {start: 0x2E0, type: .rodata, name: stcom40, dir: ../stage_common}
       - [0x2F4, .rodata, r3_st08_FE78]
       - [0x31C, c, r3_st08]
       - {start: 0x2B94, type: c, name: stcom01, dir: ../stage_common}  # shared stage code
@@ -80,6 +81,7 @@ segments:
       - [0xBCBC, c, r3_st08_BCBC]
       - {start: 0xCB78, type: c, name: stcom07, dir: ../stage_common}  # shared stage code
       - {start: 0xD1A0, type: c, name: stcom21, dir: ../stage_common}  # shared stage code
+      - {start: 0xE028, type: c, name: stcom40, dir: ../stage_common}  # shared stage code
       - {start: 0xEFE8, type: c, name: stcom26, dir: ../stage_common}  # shared stage code
       - [0xFE78, c, r3_st08_FE78]
       - {start: 0x10D44, type: c, name: stcom14, dir: ../stage_common}  # shared stage code

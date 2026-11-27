@@ -2,13 +2,14 @@
 #include "shl08.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL08_WORK *wp)
+void shl08_move(SHL08_WORK *wp)
 {
-    D_800D90E8[wp->routine_0](wp);
+    shl08_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_800D8854(SHL08_WORK *wp)
+// Routine 0: sets the shot up.
+void shl08_init(SHL08_WORK *wp)
 {
     SVECTOR rot;
     VECTOR v;
@@ -52,11 +53,12 @@ void func_800D8854(SHL08_WORK *wp)
     }
     wp->timer_b = Player_weapon_dist_calc(&Player_work, 8);
     wp->routine_0++;
-    func_800D8E38(wp);
+    shl08_atari_set(wp);
     Sound_call2(0x12D, &wp->pos);
 }
 
-void func_800D8AE0(SHL08_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl08_main(SHL08_WORK *wp)
 {
     VECTOR d;
     SVECTOR n;
@@ -71,7 +73,7 @@ void func_800D8AE0(SHL08_WORK *wp)
         {
             Homing_target_clear(wp->bit_d);
         }
-        func_800D8F0C(wp);
+        shl08_explosion_set(wp);
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
@@ -123,11 +125,12 @@ void func_800D8AE0(SHL08_WORK *wp)
         }
         return;
     }
-    func_800D8E38(wp);
-    func_800D8F98(wp);
+    shl08_atari_set(wp);
+    shl08_trail_draw(wp);
 }
 
-void func_800D8E38(SHL08_WORK *wp)
+// Sets the shot's hit capsule between its old and new position.
+void shl08_atari_set(SHL08_WORK *wp)
 {
     SVECTOR p;
     sint32 flags;
@@ -148,7 +151,8 @@ void func_800D8E38(SHL08_WORK *wp)
     }
 }
 
-void func_800D8F0C(SHL08_WORK *wp)
+// Opens an Effect_explosion (effect 0x80) at the shot, sized by D_800D90F0[level].
+void shl08_explosion_set(SHL08_WORK *wp)
 {
     SHL_FX *fx;
 
@@ -166,7 +170,9 @@ void func_800D8F0C(SHL08_WORK *wp)
     }
 }
 
-void func_800D8F98(SHL08_WORK *wp)
+// Draws the shot's trail: four gouraud lines through pos and trail[0..3], fading by
+// D_800D90F8.
+void shl08_trail_draw(SHL08_WORK *wp)
 {
     SHL08_LINE *lp;
     sint32 i;

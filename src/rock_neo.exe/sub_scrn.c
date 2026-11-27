@@ -132,7 +132,8 @@ sint32 Sub_screen_item(SUB_WORK *wp)
                         wp->routine_1 += 2;
                         break;
                     }
-                    if (Player_weapon_bullet_calc(pl, slot) == *(sint16 *)((uint8 *)pl + (slot << 3) + 0x4FA))
+                    if (Player_weapon_bullet_calc(pl, slot) ==
+                        *(sint16 *)((uint8 *)pl + (slot << 3) + 0x4FA))
                     {
                         MojiTaskExec(0, (uint8 *)0x801F2000, 0x3A);
                         wp->routine_1 += 2;
@@ -261,33 +262,33 @@ sint32 Sub_screen_key_item(SUB_SEL *wp)
             switch (wp->index_4)
             {
                 case 0:
-                    func_8005F3D0(wp);
+                    sub_screen_key_item_refill(wp);
                     break;
                 case 1:
                 case 2:
                 case 3:
                 case 4:
-                    func_8005F608(wp);
+                    sub_screen_key_item_equip(wp);
                     break;
                 case 5:
                     wp->arg_5 = 0x45;
-                    func_8005FAE4(wp);
+                    sub_screen_key_item_info(wp);
                     break;
                 case 6:
                 case 7:
                 case 8:
                     wp->arg_5 = 0x46;
-                    func_8005FAE4(wp);
+                    sub_screen_key_item_info(wp);
                     break;
                 case 9:
                 case 10:
                 case 11:
                 case 13:
                     wp->arg_5 = 0x47;
-                    func_8005FAE4(wp);
+                    sub_screen_key_item_info(wp);
                     break;
                 case 12:
-                    func_8005FBB4(wp);
+                    sub_screen_key_item_warp(wp);
                     break;
                 case 14:
                 case 15:
@@ -301,7 +302,9 @@ sint32 Sub_screen_key_item(SUB_SEL *wp)
     return 0;
 }
 
-void func_8005F3D0(SUB_SEL *wp)
+// Key item 0: asks, then refills life from the stored energy (Game_work value_7C, 16 life per
+// unit); messages 0x40 (life full) and 0x41 (nothing stored).
+void sub_screen_key_item_refill(SUB_SEL *wp)
 {
     sint32 msg;
 
@@ -367,7 +370,9 @@ void func_8005F3D0(SUB_SEL *wp)
     }
 }
 
-void func_8005F608(SUB_SEL *wp)
+// Key items 1-4: asks, then equips or removes the item (Player_work value_16A, flags_16b bits
+// 1 and 0, value_16C).
+void sub_screen_key_item_equip(SUB_SEL *wp)
 {
     switch (wp->routine_2)
     {
@@ -524,7 +529,8 @@ void func_8005F9E8(SUB_SEL *wp)
     }
 }
 
-void func_8005FAE4(SUB_SEL *wp)
+// Key items with no use: shows the message wp->arg_5 if the item is owned.
+void sub_screen_key_item_info(SUB_SEL *wp)
 {
     switch (wp->routine_2)
     {
@@ -550,7 +556,9 @@ void func_8005FAE4(SUB_SEL *wp)
     }
 }
 
-void func_8005FBB4(SUB_SEL *wp)
+// Key item 12: if sub_screen_warp_check allows it, fades out and reloads the stage and room
+// it picked (value_79/value_7A).
+void sub_screen_key_item_warp(SUB_SEL *wp)
 {
     SUB_GAME *gw;
 
@@ -572,7 +580,7 @@ void func_8005FBB4(SUB_SEL *wp)
             }
             break;
         case 1:
-            switch (func_8005FDE4(gw))
+            switch (sub_screen_warp_check(gw))
             {
                 case 0:
                     MojiTaskExec(0, (uint8 *)0x801F2000, 0x4D);
@@ -620,7 +628,9 @@ void func_8005FBB4(SUB_SEL *wp)
     }
 }
 
-sint32 func_8005FDE4(SUB_GAME *gw)
+// Sets the warp target for the current stage (value_50) once its flag is set: 0 = ok,
+// 1 = no target in this stage, 2 = not allowed.
+sint32 sub_screen_warp_check(SUB_GAME *gw)
 {
     if (gw->value_78 == 0)
     {

@@ -65,7 +65,7 @@ extern STAGE_MOUTH_CUE D_80102E04[];
 void func_80100200(void);
 void func_801002B8(uint8 mode);
 void func_80100A84(STAGE_ROOM_WORK *wp);
-void func_80100AF4(STAGE_ROOM_WORK *wp);
+void st15_event_step_call(STAGE_ROOM_WORK *wp);
 void func_80101DF8(STAGE_WORK *wp);
 void func_80101F3C(STAGE_WORK *wp);
 

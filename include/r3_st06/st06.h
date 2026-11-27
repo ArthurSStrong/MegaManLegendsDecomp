@@ -469,7 +469,7 @@ extern STAGE_OBJ_FUNC D_80125A6C[];
 void func_8011AD50(STAGE_OBJ *wp);
 
 extern STAGE_OBJ_FUNC D_80125A74[];
-void func_8011AFD0(STAGE_OBJ *wp);
+void st06_stcom34_move(STAGE_OBJ *wp);
 
 extern STAGE_OBJ_FUNC D_8012B82C[];
 void func_8011F2B0(STAGE_OBJ *wp);
@@ -1681,7 +1681,7 @@ typedef struct
     uint8 reserved10[0x40]; // 10
 } ST06_SLOT50;
 
-// The 0x24-byte event slot of func_8011AFD0's family (STAGE_EVENT with its fields named).
+// The 0x24-byte event slot of st06_stcom34_move's family (STAGE_EVENT with its fields named).
 typedef struct
 {
     uint8 flags_0;          // 00

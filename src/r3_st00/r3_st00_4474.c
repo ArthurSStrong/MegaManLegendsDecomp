@@ -127,8 +127,8 @@ void func_80104864(STAGE_STCOM15_WORK_348 *wp)
     if ((wp->flags_0 & 1) && (ctl->flags_0 & 4))
     {
         ctl->pos_C = wp->joints_180[0];
-        Set_Atari(&ctl->pos_C, 0x30, 0, 0x8000, wp->value_1, &ctl->hit_14,
-                      ctl->value_8 | 0x4880000, 0x800000, 0);
+        Set_Atari(&ctl->pos_C, 0x30, 0, 0x8000, wp->value_1, &ctl->hit_14, ctl->value_8 | 0x4880000,
+                  0x800000, 0);
     }
     ctl->hit_14 = 0;
 }
@@ -377,9 +377,8 @@ void func_801050E8(STAGE_STCOM15_WORK_348 *wp)
                 wp->velocity.v.x = 0x100;
                 ctl->timer_4     = 0xC;
             }
-            wp->rotation.y = (wp->rotation.y +
-                              Muku(&wp->position, &pl->position, wp->rotation.y, 0x30)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, 0x30)) & 0xFFF;
             Obj_pos_set(wp, (uint8)wp->value_A6, 0, 0);
             wp->velocity.v.x += wp->accel.x;
             hit                  = Scr_collision_check(wp);
@@ -411,7 +410,7 @@ void func_801050E8(STAGE_STCOM15_WORK_348 *wp)
             if (wp->value_80 < 0x1E848)
             {
                 if (Angle_ck(&wp->position_fixed, wp->rotation.y, 0x40, &pl->position_fixed,
-                                  pl->rotation.y, 0x400))
+                             pl->rotation.y, 0x400))
                 {
                     wp->routine_1             = 5;
                     *(uint16 *)&wp->routine_2 = 0;
@@ -480,7 +479,7 @@ void func_801053B8(STAGE_STCOM15_WORK_348 *wp)
             wp->anim_AC += 2;
             ctl->timer_4 = (ctl->rand_2 & 7) + 8;
             if (Angle_ck(&wp->position_fixed, wp->rotation.y, 0x400, &pl->position_fixed,
-                              pl->rotation.y, 0x800))
+                         pl->rotation.y, 0x800))
             {
                 ctl->level_6 = (ctl->rand_2 & 3) + 1;
             }
@@ -890,8 +889,8 @@ void func_801062EC(ST00_ACTOR_B *wp)
     if (ctl->flags_0 & 8)
     {
         ctl->pos_C = wp->value_180;
-        Set_Atari(&ctl->pos_C, 0x50, 0, 0x8000, wp->index_1, &ctl->hit_14,
-                      ctl->value_8 | 0x4880000, 0x800000, 0x80);
+        Set_Atari(&ctl->pos_C, 0x50, 0, 0x8000, wp->index_1, &ctl->hit_14, ctl->value_8 | 0x4880000,
+                  0x800000, 0x80);
     }
     ctl->hit_14 = 0;
 }

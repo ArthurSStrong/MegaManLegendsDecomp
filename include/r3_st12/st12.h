@@ -47,7 +47,7 @@ extern STAGE_SLOT_FUNC D_80108034[];
 extern STAGE_SLOT_FUNC D_8010804C[];
 extern STAGE_SLOT_FUNC D_80108050[];
 void func_801001D4(void);
-void func_80100D48(STAGE_ROOM_WORK *wp);
+void st12_event_step_call(STAGE_ROOM_WORK *wp);
 
 void func_80100828(uint8 arg0);
 

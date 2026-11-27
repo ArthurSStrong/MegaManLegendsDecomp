@@ -33,7 +33,6 @@ extern sint8 *D_8011B978[];
 extern sint8 *D_8011BA68[];
 extern sint8 *D_8011BA90[];
 extern STAGE_OBJ_FUNC D_8011BCD4[];
-extern STAGE_OBJ_FUNC D_8011C0E0[];
 extern STAGE_OBJ_FUNC D_8011C128[];
 extern STAGE_OBJ_FUNC D_8011C290[];
 extern STAGE_OBJ_FUNC D_8011C2B0[];
@@ -208,19 +207,13 @@ void func_80109334(STAGE_OBJ *wp);
 
 void func_80105CF8(STAGE_10C *wp, sint32 angle);
 
-void func_80110344(STAGE_OBJ *wp);
-
 void func_80113A70(STAGE_OBJ *wp);
 
 void func_8010F5D0(STAGE_OBJ *wp);
 
-void func_80110368(STAGE_OBJ *wp);
-
 void func_8010FAA0(STAGE_OBJ *wp);
 
 void func_8011892C(STAGE_OBJ *wp);
-
-void func_801103A0(STAGE_OBJ *wp);
 
 void func_80119A14(uint8 value);
 
@@ -356,7 +349,7 @@ typedef void (*ST17_TALK_FUNC)(STAGE_OBJ *wp, STAGE_SCENE_WORK *scene, STAGE_FAC
 
 extern ST17_TALK_FUNC D_8011B844[];
 
-// A marker effect a 0x10C-byte slot leaves where it was (func_80110BA0).
+// A marker effect a 0x10C-byte slot leaves where it was (stcom18_move_hit).
 typedef struct
 {
     uint8 flags_0;            // 00
@@ -377,8 +370,6 @@ typedef struct
     STCOM_SVECTOR *target_44; // 44: the position it follows
 } ST17_MARK;
 
-void func_80110C0C(STAGE_10C *wp, ST17_MARK *ep);
-void func_80110C4C(STAGE_10C *wp, ST17_MARK *ep);
 void func_80113234(ST17_MARK *wp);
 void func_8011338C(ST17_MARK *wp);
 void func_80113528(ST17_MARK *wp);
@@ -588,22 +579,6 @@ extern STAGE_ANIM D_8011C5E0[];
 extern STAGE_ANIM D_8011C5F4[];
 void func_8011475C(STAGE_OBJ *wp);
 // Copies of stcom23's and stcom18's routines (the files themselves are not linked here).
-extern STCOM23_PARAM D_8011BF8C[];
-extern STCOM23_FUNC D_8011C0C0[]; // by type_1C: set up
-extern STCOM23_FUNC D_8011C0C8[]; // by type_1C: each frame
-extern STCOM23_FUNC D_8011C0D0[]; // by type_1C: destroyed
-extern STCOM23_UV D_8011C0D8[];   // the four puffs' textures
-extern STCOM18_PAIR D_8011C0EC[6];
-extern STCOM18_PAIR D_8011C0F8[6];
-extern STCOM18_FUNC D_8011C104[];
-void func_8010FEC4(STCOM23_WORK *wp);
-void func_80110434(STCOM23_WORK *wp);
-void func_801104DC(STCOM23_WORK *wp);
-void func_8011058C(STCOM23_WORK *wp);
-void func_801105F8(STCOM23_WORK *wp);
-void func_801106D8(STCOM18_WORK *wp);
-void func_80110774(STCOM18_WORK *wp);
-void func_80110938(STCOM18_WORK *wp);
 // A grid of 9 rows of 8 cells kept at a work slot's +0x88 (func_80105D04's objects).
 typedef struct
 {

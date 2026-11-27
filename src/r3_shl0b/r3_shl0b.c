@@ -2,9 +2,9 @@
 #include "shl0b.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl0b_move(SHL_WORK *wp)
 {
-    D_800D8F88[wp->routine_0](wp);
+    shl0b_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
@@ -67,7 +67,7 @@ void func_800D8854(SHL_WORK *wp)
         wp->draw.mdl.color_b4 = 0x808080;
     }
     Model_work_init(wp, 0);
-    func_800D8E64(wp, 0x4000);
+    shl0b_atari_set(wp, 0x4000);
     Sound_call2(0x132, &wp->pos);
     wp->routine_0 = 1;
 }
@@ -78,7 +78,7 @@ void func_800D8AAC(SHL_WORK *wp)
 
     if (Shot_map_check(wp, 0) == 0x7FFF || wp->hit_7c || !Scr_cell_get(&wp->pos))
     {
-        func_800D8EF4(wp);
+        shl0b_explosion_set(wp);
         Close_PL_SHL_WORK(wp);
         return;
     }
@@ -106,14 +106,14 @@ void func_800D8AAC(SHL_WORK *wp)
         wp->value_74  = 0;
         wp->routine_0 = 2;
     }
-    func_800D8E64(wp, 0x4000);
+    shl0b_atari_set(wp, 0x4000);
 }
 
 void func_800D8C1C(SHL_WORK *wp)
 {
     if (Shot_map_check(wp, 0) == 0x7FFF)
     {
-        func_800D8EF4(wp);
+        shl0b_explosion_set(wp);
         Close_PL_SHL_WORK(wp);
         return;
     }
@@ -131,10 +131,12 @@ void func_800D8C1C(SHL_WORK *wp)
         wp->value_cc  = 0x3C;
         wp->routine_0 = 3;
     }
-    func_800D8E64(wp, 0x6000);
+    shl0b_atari_set(wp, 0x6000);
 }
 
-void func_800D8D14(SHL_WORK *wp)
+// Routine 3: sits on the ground flashing (sound every 4 frames) until value_cc runs out or
+// it leaves the map, then explodes.
+void shl0b_fuse(SHL_WORK *wp)
 {
     sint32 *timer; // retail keeps &wp->value_cc in a saved register from the start
 
@@ -171,14 +173,15 @@ void func_800D8D14(SHL_WORK *wp)
     if (--*timer == 0)
     {
     end:
-        func_800D8EF4(wp);
+        shl0b_explosion_set(wp);
         Close_PL_SHL_WORK(wp);
         return;
     }
-    func_800D8E64(wp, 0x6000);
+    shl0b_atari_set(wp, 0x6000);
 }
 
-void func_800D8E64(SHL_WORK *wp, uint16 arg)
+// Sets the shot's hit sphere 0x28 above it, with layer arg.
+void shl0b_atari_set(SHL_WORK *wp, uint16 arg)
 {
     SVECTOR p;
 
@@ -192,7 +195,8 @@ void func_800D8E64(SHL_WORK *wp, uint16 arg)
     wp->col_c8 = 0;
 }
 
-void func_800D8EF4(SHL_WORK *wp)
+// Opens an Effect_explosion (effect 0x80) at the shot, sized by D_800D8F98[value_d0].
+void shl0b_explosion_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
 

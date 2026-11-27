@@ -14,16 +14,16 @@ typedef union
 // A 0x20-byte control block of ST04_ACTOR (at +0x348 and +0x368).
 typedef struct
 {
-    uint16 flags_0;         // 00
-    uint16 value_2;         // 02
-    sint16 timer_4;         // 04
-    sint16 value_6;         // 06
-    uint16 value_8;         // 08: hit kind bits
-    sint16 timer_A;         // 0A
-    STCOM_SVECTOR target_C; // 0C: where the actor turns or walks to
+    uint16 flags_0;          // 00
+    uint16 value_2;          // 02
+    sint16 timer_4;          // 04
+    sint16 value_6;          // 06
+    uint16 value_8;          // 08: hit kind bits
+    sint16 timer_A;          // 0A
+    STCOM_SVECTOR target_C;  // 0C: where the actor turns or walks to
     ST04_ACTOR_CTL_14 at_14; // 14
     uint16 value_1C;         // 1C: the waypoint index in the second block
-    uint16 value_1E;        // 1E
+    uint16 value_1E;         // 1E
 } ST04_ACTOR_CTL;
 
 // A 0x3C0-byte work slot as this stage's villagers use it: STAGE_ACTOR with the blocks at +0x348
@@ -149,8 +149,6 @@ typedef struct
 
 extern STAGE_FUNC D_8010C974[];
 extern STAGE_FUNC D_8010C9AC[];
-extern STAGE_FUNC D_80111C84[];
-extern STAGE_OBJ_FUNC D_80111C9C[];
 extern STAGE_FUNC D_80111D14[];
 extern STAGE_FUNC D_80111D20[];
 extern STAGE_SLOT_FUNC *D_8010A570[];
@@ -165,8 +163,6 @@ void func_80104E08(STAGE_FX *wp);
 void func_80105474(STAGE_WORK *wp);
 void func_80105794(STAGE_FX *wp);
 void func_80106BCC(STAGE_FX *wp);
-void func_80108FE0(STAGE_WORK *wp);
-void func_80109218(STAGE_OBJ *wp);
 void func_80109FA0(STAGE_WORK *wp);
 void func_8010A248(STAGE_WORK *wp);
 void func_80100200(void);
@@ -187,14 +183,11 @@ extern uint8 D_8010C9C0[];
 extern uint8 D_8010C9D0[];
 extern uint8 D_8010CA70[];
 extern uint8 D_8010CA9C[][3]; // by ctl2.value_1C: three weights (func_801076F0)
-extern uint8 D_80111CA8[];
-extern uint8 D_80111CD4[];
-extern uint8 D_80111D2C[]; // scene command (Sce_slot_open)
+extern uint8 D_80111D2C[];    // scene command (Sce_slot_open)
 
 extern uint8 D_800987B5; // Message_event[5]
 extern sint8 D_80111CE0[];
 void Close_WORK_50(void *wp);
-void func_80109C8C(STAGE_OBJ50 *wp);
 
 sint32 func_80107850(ST04_ACTOR *wp);
 
@@ -203,10 +196,6 @@ void func_80109FE8(STAGE_OBJ50 *wp);
 sint32 func_801077E8(ST04_ACTOR *wp);
 
 void func_80106BEC(ST04_ACTOR *wp);
-
-void func_8010919C(STAGE_OBJ50 *wp);
-
-void func_80109EB8(STAGE_OBJ50 *wp);
 
 void func_80107C24(ST04_ACTOR *wp);
 
@@ -224,7 +213,6 @@ extern STAGE_ROOM_FUNC *D_8010AEEC[];
 void Sce_script_timer_clear(void);
 extern uint8 D_8010BFD4[];
 extern STAGE_ROOM2_FUNC D_8010BFCC[];
-extern uint16 D_80111CB4[];
 STCOM_MATRIX *RotMatrixZ(sint32 r, STCOM_MATRIX *m);
 void func_8010A2D4(ST04_EV *wp);
 
@@ -374,12 +362,6 @@ void func_801085EC(ST04_ROCK *wp);
 sint32 func_80108794(ST04_ROCK *wp);
 void func_801088BC(ST04_ROCK *wp);
 
-extern STAGE_OBJ50_FUNC D_80111C90[]; // by variant_3
-extern STAGE_OBJ50_FUNC D_80111CC4[]; // by routine_0
-
-uint8 func_801099D8(STAGE_OBJ50 *wp);
-void func_8010967C(STAGE_OBJ50 *wp);
-
 // The box func_8010A484 tests a slot's position against.
 extern STCOM_SVECTOR D_80111D40; // highest x, y, z
 extern STCOM_SVECTOR D_80111D48; // lowest x, y, z
@@ -393,16 +375,14 @@ extern ST04_ACTOR_FUNC D_8010CAA8[];
 // The turn step toward a point (ROCK_NEO); this stage uses the int result unnarrowed.
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
-// The talk camera's point (func_8010528C).
+// The talk camera's point (st04_stcom04_talk_check).
 extern STCOM_FIXED_VECTOR D_80111D50;
 
 sint32 func_801076F0(ST04_ACTOR *wp);
 
-sint32 func_8010528C(ST04_ACTOR *wp);
+sint32 st04_stcom04_talk_check(ST04_ACTOR *wp);
 sint32 func_801053BC(void);
 
-void func_80109A60(STAGE_OBJ50 *wp);
-uint8 func_80109F34(STAGE_OBJ50 *wp);
 STCOM_MATRIX *RotMatrixX(sint32 r, STCOM_MATRIX *m);
 
 // STAGE_OBJ50's +0x48 word as a 16.16 height (a chest lid's), read by its integer half.
@@ -584,8 +564,8 @@ extern sint32 D_800A3988[]; // [0]: the talk camera distance
 extern sint32 D_800A398C;
 extern sint32 D_800A3990;
 extern STCOM_FIXED_VECTOR D_800A39D0; // the talk camera's point
-extern uint8 D_80111D60; // the saved D_800A395A[0]
-extern uint8 D_80111D64; // the saved D_800A395A[1]
+extern uint8 D_80111D60;              // the saved D_800A395A[0]
+extern uint8 D_80111D64;              // the saved D_800A395A[1]
 
 void func_80107264(ST04_ACTOR *wp);
 

@@ -67,7 +67,8 @@ segments:
       - {start: 0x72A0, type: c, name: stcom01, dir: ../stage_common}  # shared stage code
       - [0x9CB0, c, r3_st0b_9CB0]
       - {start: 0xE8A0, type: c, name: stcom23, dir: ../stage_common}  # shared stage code
-      - [0xF498, c, r3_st0b_F498]
+      - {start: 0xF498, type: c, name: stcom18, dir: ../stage_common}  # shared stage code
+      - [0xFA3C, c, r3_st0b_FA3C]
       - {start: 0x1083C, type: c, name: stcom06, dir: ../stage_common}  # shared stage code
       - [0x116E0, c, r3_st0b_116E0]
       - {start: 0x137DC, type: c, name: stcom35, dir: ../stage_common}  # shared stage code

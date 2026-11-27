@@ -283,7 +283,7 @@ void func_80118C3C(ST09_BOX *wp)
         {
             wp->pos_38.y -= 0x80;
             Set_Atari(&wp->pos_38, 0xA0, 0, D_8011E4F4[wp->variant_3 >> 4], wp->index_1,
-                          &wp->matrix.f.ctl.hit_4, D_8011E4EC[wp->variant_3 >> 4], 0, 0x80);
+                      &wp->matrix.f.ctl.hit_4, D_8011E4EC[wp->variant_3 >> 4], 0, 0x80);
             wp->pos_38.y += 0x80;
         }
     }
@@ -458,7 +458,7 @@ void func_80119374(STAGE_PANEL_WORK *wp)
     wp->routine_0++;
 }
 
-void func_80119390(STAGE_PANEL_WORK *wp)
+void st09_stcom19_wait_open(STAGE_PANEL_WORK *wp)
 {
     // Never used; they reserve retail's frame (stcom19_move's locals).
     STCOM_SVECTOR v;
@@ -531,7 +531,7 @@ void func_801194C8(STAGE_PANEL_WORK *wp)
     }
 }
 
-void func_801195F4(STAGE_PANEL_WORK *wp)
+void st09_stcom19_close(STAGE_PANEL_WORK *wp)
 {
     if (--wp->timer_B == 0)
     {
@@ -616,13 +616,13 @@ void func_801196C0(void)
                                 wp->kind_2  = 0x21;
                                 wp->value_3 = i;
                                 Model_work_init(wp, &wp->value_3);
-                                wp->dir_C           = list[k].spawn_E[i];
-                                wp->value_D         = count;
-                                pos                 = STAGE_CELL_TBL[cell].pos;
-                                wp->pos_38.x        = D_8011E5AC[wp->dir_C][wp->value_3].x +
-                                                      (STAGE_CELL_TBL[cell].pos.x + list[k].x_8);
-                                wp->pos_38.z        = D_8011E5AC[wp->dir_C][wp->value_3].z +
-                                                      (STAGE_CELL_TBL[cell].pos.z + list[k].z_C);
+                                wp->dir_C    = list[k].spawn_E[i];
+                                wp->value_D  = count;
+                                pos          = STAGE_CELL_TBL[cell].pos;
+                                wp->pos_38.x = D_8011E5AC[wp->dir_C][wp->value_3].x +
+                                               (STAGE_CELL_TBL[cell].pos.x + list[k].x_8);
+                                wp->pos_38.z = D_8011E5AC[wp->dir_C][wp->value_3].z +
+                                               (STAGE_CELL_TBL[cell].pos.z + list[k].z_C);
                                 wp->pos_38.y        = STAGE_CELL_TBL[cell].pos.y + list[k].y_A;
                                 wp->matrix.words[0] = 0x1000;
                                 wp->matrix.words[1] = 0;

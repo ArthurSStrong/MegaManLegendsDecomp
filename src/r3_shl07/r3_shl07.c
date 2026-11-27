@@ -2,12 +2,13 @@
 #include "shl07.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl07_move(SHL_WORK *wp)
 {
-    D_800D8C28[wp->routine_0](wp);
+    shl07_move_tbl[wp->routine_0](wp);
 }
 
-void func_800D8840(SHL_WORK *wp)
+// Routine 0: clears the homing slot and starts the sound.
+void shl07_init(SHL_WORK *wp)
 {
     SVECTOR unused_s;
     VECTOR unused_v;
@@ -18,7 +19,10 @@ void func_800D8840(SHL_WORK *wp)
     Sound_call2(0x12B, &wp->pos);
 }
 
-void func_800D888C(SHL_WORK *wp)
+// Routine 1: each frame, item drops (effect kind 0x87) within the weapon's range of the
+// player are pushed away by shl07_push_tbl[level], or, with a negative strength, pulled to the
+// player. Ends when the player leaves state 7, the timer runs out or value_100 passes the limit.
+void shl07_main(SHL_WORK *wp)
 {
     SHL_PLAYER *tp;
     SHL_FX *fx;
@@ -37,7 +41,7 @@ void func_800D888C(SHL_WORK *wp)
     p    = tp->pos;
     r    = Player_weapon_dist_calc(&Player_work, 7);
     r2   = r * 2;
-    push = D_800D8C30[Player_work.value_530];
+    push = shl07_push_tbl[Player_work.value_530];
     for (i = 0; i < 64; i++)
     {
         fx = &Effect_work_tbl[i];

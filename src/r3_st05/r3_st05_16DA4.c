@@ -16,10 +16,10 @@ void func_80116DA4(ST05_ACTOR *wp)
             wp->turn_64 = *(sint16 *)&wp->timer_C; // timer_C and value_D as one halfword
             // fall through
         case 1:
-            ctl->timer_A = (ctl->timer_A + Muku(&wp->position, &pl->position,
-                                                         (wp->rotation.y + ctl->timer_A) & 0xFFF,
-                                                         wp->turn_64)) &
-                           0xFFF;
+            ctl->timer_A =
+                (ctl->timer_A + Muku(&wp->position, &pl->position,
+                                     (wp->rotation.y + ctl->timer_A) & 0xFFF, wp->turn_64)) &
+                0xFFF;
             break;
     }
     if (wp->value_F & 2)
@@ -68,13 +68,13 @@ void func_80116F7C(ST05_ACTOR *wp)
             wp->routine_0++;
             break;
         case 1:
-            if (func_801171D0(wp))
+            if (st05_stcom04_talk_check(wp))
             {
                 wp->routine_0++;
             }
             break;
         case 2:
-            turn = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
+            turn           = Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64);
             wp->rotation.y = (wp->rotation.y + turn) & 0xFFF;
             if (turn == 0)
             {
@@ -135,7 +135,7 @@ void func_80117130(ST05_ACTOR *wp)
     wp->routine_1 = 0;
 }
 
-sint32 func_801171D0(ST05_ACTOR *wp)
+sint32 st05_stcom04_talk_check(ST05_ACTOR *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -144,14 +144,12 @@ sint32 func_801171D0(ST05_ACTOR *wp)
     {
         if ((sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) < 0)
         {
-            wp->turn_64 = (uint32) - (sint16)Muku(&wp->position, &pl->position,
-                                                           wp->rotation.y, 0x800) >>
-                          3;
+            wp->turn_64 =
+                (uint32) - (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
         }
         else
         {
-            wp->turn_64 =
-                (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
+            wp->turn_64 = (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
         }
         pl->target_184 = NULL;
         pl->flags_0 &= ~2;
@@ -353,10 +351,9 @@ void func_8011777C(ST05_ACTOR *wp)
             {
                 Sound_call(0x111, 0, 0);
             }
-            target         = &D_80131858[1];
-            wp->rotation.y = (wp->rotation.y +
-                              Muku(&wp->position, target, wp->rotation.y, wp->turn_64)) &
-                             0xFFF;
+            target = &D_80131858[1];
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, target, wp->rotation.y, wp->turn_64)) & 0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, wp->velocity.v.y, wp->velocity.v.z);
             dx = wp->position.x - target->x;
             dz = wp->position.z - target->z;
@@ -613,7 +610,7 @@ void func_80118090(ST05_ACTOR *wp)
     } while (0);
     wp->turn_B4 = Muku(&wp->position, &Player_work.position, wp->rotation.y, 0x80);
     EM_Char_Set(wp, 0x14, 0);
-    if ((uint32)func_80118D74(&Player_work.position, &wp->position) < 0x80)
+    if ((uint32)st05_calc_distance(&Player_work.position, &wp->position) < 0x80)
     {
         *(uint32 *)&wp->ctl.flags_0 = 1;
         D_801380AC                  = -(rcos(back) * 0xA8) >> 10;
@@ -632,7 +629,7 @@ void func_8011822C(ST05_ACTOR *wp)
     sint32 angle;
 
     pl = &ST05_PL;
-    if (Camera_moving() == 0 && (uint32)func_80118D74(&pl->position, &wp->position) >= 0x80)
+    if (Camera_moving() == 0 && (uint32)st05_calc_distance(&pl->position, &wp->position) >= 0x80)
     {
         wp->routine_1++;
         pl->value_448 = 0x82;
@@ -656,7 +653,7 @@ void func_8011822C(ST05_ACTOR *wp)
     snap:
         wp->rotation.y = Calc_degree2(&wp->position, &pl->position);
     }
-    if ((uint32)func_80118D74(&pl->position, &wp->position) < 0x80)
+    if ((uint32)st05_calc_distance(&pl->position, &wp->position) < 0x80)
     {
         pl->push_428.x += D_80138098 << 8;
         pl->push_428.z += D_801380AC << 8;
@@ -955,7 +952,7 @@ void func_80118D1C(STAGE_OBJ *wp)
     EM_Char_Move(wp);
 }
 
-sint32 func_80118D74(STCOM_SVECTOR *a, STCOM_SVECTOR *b)
+sint32 st05_calc_distance(STCOM_SVECTOR *a, STCOM_SVECTOR *b)
 {
     sint32 dx;
     sint32 dy;
@@ -1014,8 +1011,8 @@ void func_80118DE0(ST05_BOAT *wp)
         ctl->ground_1C = 1;
     }
     mask = (ctl->flags_0 >> 2) & 0x80;
-    Set_Atari(&wp->value_180, 0xC0, 0, 0x8000, wp->value_1, &ctl->hit_20,
-                  ctl->value_10 | 0x5880000, 0x800000, mask);
+    Set_Atari(&wp->value_180, 0xC0, 0, 0x8000, wp->value_1, &ctl->hit_20, ctl->value_10 | 0x5880000,
+              0x800000, mask);
     ctl->hit_20 = 0;
 }
 
@@ -1522,8 +1519,8 @@ void func_80119BE0(ST05_BOAT *wp, ST05_BOAT_CTL *ctl)
 
 sint32 func_80119D90(ST05_BOAT *wp)
 {
-    if (STCOM_ABS(wp->rotation.y -
-                  Calc_degree(&wp->position_fixed, &Player_work.position_fixed)) < 0x50)
+    if (STCOM_ABS(wp->rotation.y - Calc_degree(&wp->position_fixed, &Player_work.position_fixed)) <
+        0x50)
     {
         return 1;
     }
@@ -3364,13 +3361,13 @@ sint32 func_8011D830(ST05_BOSS *wp)
             ctl->hit_pos_B0 = wp->joint_180[(i - 4) * 3 + 2];
         }
         Set_Atari(&ctl->hit_pos_B0, 0xC8, 0, 0x8000, wp->value_1, &ctl->hit_10[i],
-                      ctl->value_8 | 0x4880000, 0x800000, 0);
+                  ctl->value_8 | 0x4880000, 0x800000, 0);
     }
     ctl->hit_pos_B0 = wp->joint_180[0];
     ctl->hit_pos_B0.x += rsin(wp->rotation.y + 0x800) >> 5;
     ctl->hit_pos_B0.z += rcos(wp->rotation.y + 0x800) >> 5;
     Set_Atari(&ctl->hit_pos_B0, 0xC8, 0, 0x8000, wp->value_1, &ctl->hit_10[8],
-                  ctl->value_8 | 0x4880000, 0x800000, 0);
+              ctl->value_8 | 0x4880000, 0x800000, 0);
     return 1;
 }
 

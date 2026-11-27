@@ -112,8 +112,8 @@ void func_8010C974(ST03_ACTOR *wp)
             wp->ctl.target_C = Obj_id_work(wp->timer_C)->position;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &wp->ctl.target_C,
-                                                             wp->rotation.y, wp->turn_64)) &
+            wp->rotation.y = (wp->rotation.y +
+                              Muku(&wp->position, &wp->ctl.target_C, wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             if (wp->value_A6 == 1)
@@ -462,10 +462,10 @@ void func_8010D404(ST03_ACTOR *wp)
             wp->turn_64 = 0x20;
             // fall through
         case 1:
-            ctl->target_C = Obj_id_work(wp->timer_C)->position;
-            wp->rotation.y =
-                (wp->rotation.y + Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64)) &
-                0xFFF;
+            ctl->target_C  = Obj_id_work(wp->timer_C)->position;
+            wp->rotation.y = (wp->rotation.y +
+                              Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64)) &
+                             0xFFF;
             break;
     }
 }
@@ -527,8 +527,8 @@ void func_8010D5EC(ST03_ACTOR *wp)
             wp->ctl.target_C = Obj_id_work(wp->timer_C)->position;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &wp->ctl.target_C,
-                                                             wp->rotation.y, wp->turn_64)) &
+            wp->rotation.y = (wp->rotation.y +
+                              Muku(&wp->position, &wp->ctl.target_C, wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             if (wp->value_A6 == 1)
@@ -597,16 +597,17 @@ void func_8010D7C4(ST03_ACTOR *wp)
                 wp->anim_AC            = 0;
                 wp->routine_2++;
                 wp->turn_64 =
-                    (uint32)STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >> 3;
+                    (uint32)STCOM_ABS(Muku(&wp->position, &pl->position, wp->rotation.y, 0x800)) >>
+                    3;
                 wp->velocity.v.x = 0;
                 wp->velocity.v.y = 0;
                 wp->velocity.v.z = 0;
             }
             break;
         case 1:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y,
-                                                             wp->turn_64)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64)) &
+                0xFFF;
             if (Moji_flag & 0x200000)
             {
                 wp->anim_AC = 8;
@@ -614,9 +615,9 @@ void func_8010D7C4(ST03_ACTOR *wp)
             }
             break;
         case 2:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y,
-                                                             wp->turn_64)) &
-                             0xFFF;
+            wp->rotation.y =
+                (wp->rotation.y + Muku(&wp->position, &pl->position, wp->rotation.y, wp->turn_64)) &
+                0xFFF;
             if (wp->value_A7 < 0)
             {
                 wp->anim_AC = 0;
@@ -738,8 +739,8 @@ void func_8010DC74(ST03_ACTOR *wp)
             wp->ctl.target_C.z = 0x53B;
             // fall through
         case 1:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &ctl->target_C,
-                                                             wp->rotation.y, wp->turn_64)) &
+            wp->rotation.y = (wp->rotation.y +
+                              Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             if (wp->value_A6 == 1)
@@ -809,8 +810,8 @@ void func_8010DE18(ST03_ACTOR *wp)
             ctl->target_C = Obj_id_work(wp->value_D)->position;
             // fall through
         case 3:
-            wp->rotation.y = (wp->rotation.y + Muku(&wp->position, &ctl->target_C,
-                                                             wp->rotation.y, wp->turn_64)) &
+            wp->rotation.y = (wp->rotation.y +
+                              Muku(&wp->position, &ctl->target_C, wp->rotation.y, wp->turn_64)) &
                              0xFFF;
             Obj_pos_set(wp, wp->velocity.v.x, 0, 0);
             if (wp->value_A6 == 1)
@@ -894,7 +895,7 @@ void func_8010E198(ST03_ACTOR *wp)
             wp->routine_1++;
             break;
         case 1:
-            if (func_8010E3A8(wp) == 0)
+            if (st03_stcom04_talk_check(wp) == 0)
             {
                 break;
             }
@@ -962,7 +963,7 @@ void func_8010E300(ST03_VIEW *wp)
     wp->routine_2 = 0;
 }
 
-sint32 func_8010E3A8(ST03_ACTOR *wp)
+sint32 st03_stcom04_talk_check(ST03_ACTOR *wp)
 {
     STCOM_PL_WORK *pl;
 
@@ -971,14 +972,12 @@ sint32 func_8010E3A8(ST03_ACTOR *wp)
     {
         if ((sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) < 0)
         {
-            wp->turn_64 = (uint32) - (sint16)Muku(&wp->position, &pl->position,
-                                                           wp->rotation.y, 0x800) >>
-                          3;
+            wp->turn_64 =
+                (uint32) - (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
         }
         else
         {
-            wp->turn_64 =
-                (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
+            wp->turn_64 = (sint16)Muku(&wp->position, &pl->position, wp->rotation.y, 0x800) >> 3;
         }
         pl->target_184 = NULL;
         pl->flags_0 &= ~2;

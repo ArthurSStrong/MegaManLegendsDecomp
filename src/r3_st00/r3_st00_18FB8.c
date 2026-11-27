@@ -75,7 +75,7 @@ void func_8011917C(ST00_CLUT_SCROLL *wp)
     for (i = 0; i < 4; i++)
     {
         u = Model_poly_group_get((void *)Stage_hed_model_get(D_8011CE88[i].key), D_8011CE88[i].i,
-                          D_8011CE88[i].j);
+                                 D_8011CE88[i].j);
         for (k = 0; k < D_8011CE88[i].count; k++)
         {
             uv = Quad_uv_get(u.c, k);
@@ -106,7 +106,7 @@ void func_801193D4(STCOM02_WORK *wp)
     wp->count_C                 = wp->step_20->count;
     wp->frame_D                 = 0;
     wp->dst_18                  = &D_800AD168[wp->script_1C->lo + (wp->script_1C->hi << 8)];
-    if (func_8011974C(wp))
+    if (st00_stcom02_step_next(wp))
     {
         Close_EFFECT_WORK(wp);
     }
@@ -118,7 +118,7 @@ void func_80119470(STCOM02_WORK *wp)
     STCOM02_STEP *step;
 
     step = wp->step_20;
-    if (wp->count_C < ++wp->frame_D && func_8011974C(wp) != 0)
+    if (wp->count_C < ++wp->frame_D && st00_stcom02_step_next(wp) != 0)
     {
         Close_EFFECT_WORK(wp);
     }
@@ -132,7 +132,7 @@ void func_80119470(STCOM02_WORK *wp)
 
 void func_80119518(STCOM02_WORK *wp)
 {
-    if (wp->count_C < ++wp->frame_D && func_8011974C(wp) != 0)
+    if (wp->count_C < ++wp->frame_D && st00_stcom02_step_next(wp) != 0)
     {
         Close_EFFECT_WORK(wp);
     }
@@ -175,7 +175,7 @@ void func_80119580(STCOM02_WORK *wp)
     }
 }
 
-sint32 func_8011974C(STCOM02_WORK *wp)
+sint32 st00_stcom02_step_next(STCOM02_WORK *wp)
 {
     sint32 unused[1]; // never used; retail reserves its 8-byte frame
     STCOM02_STEP *step;

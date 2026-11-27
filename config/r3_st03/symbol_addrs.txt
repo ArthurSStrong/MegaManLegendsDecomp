@@ -302,3 +302,6 @@ stcom37_talk = 0x8010A914; // type:func
 func_8010D3E4 = 0x8010D3E4; // type:func size:0x20
 func_8010D400 = 0x8010D400; // absolute:True
 func_8010D404 = 0x8010D404; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st03_stcom04_talk_check = 0x8010E3A8; // type:func

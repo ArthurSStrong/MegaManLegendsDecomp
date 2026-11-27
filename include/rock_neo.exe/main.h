@@ -91,7 +91,7 @@ void thread_init(void);
 void thread_exec(void);
 void Disp_env_set(void);
 void func_80017734(void);
-void func_800178FC(void);
+void Clut_buf_upload(void);
 void Fade_draw(void);
 void Sound_update(void);
 void Cd_cmd_exec(void);

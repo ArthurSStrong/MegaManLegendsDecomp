@@ -2,12 +2,13 @@
 #include "shl0c.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl0c_move(SHL_WORK *wp)
 {
-    D_800D90EC[wp->routine_0](wp);
+    shl0c_move_tbl[wp->routine_0](wp);
 }
 
-void func_800D8840(SHL_WORK *wp)
+// Routine 0: sets the shot up.
+void shl0c_init(SHL_WORK *wp)
 {
     SVECTOR rot;
     SVECTOR p;
@@ -46,12 +47,13 @@ void func_800D8840(SHL_WORK *wp)
     wp->old_pos                      = wp->pos;
     wp->draw.mdl.color_b4            = 0x02808080;
     Model_work_init(wp, 0);
-    func_800D8D74(wp);
+    shl0c_atari_set(wp);
     Sound_call2(0x134, &wp->pos);
     wp->routine_0++;
 }
 
-void func_800D8A88(SHL_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl0c_main(SHL_WORK *wp)
 {
     SVECTOR rot;
     SVECTOR p;
@@ -69,7 +71,7 @@ void func_800D8A88(SHL_WORK *wp)
         wp->draw.mdl.color_b4 = 0x02E0E0E0;
         Player_work.value_44c |= 3;
     }
-    else if (func_800D8E8C(wp))
+    else if (shl0c_enemy_shot_check(wp))
     {
         Player_work.value_44c |= 1;
     }
@@ -106,7 +108,7 @@ void func_800D8A88(SHL_WORK *wp)
     mp->pos.vz = wp->pos.vz = wp->fpos.h.z;
     wp->old_fpos            = wp->fpos;
     wp->old_pos             = wp->pos;
-    func_800D8D74(wp);
+    shl0c_atari_set(wp);
 }
 
 uint8 func_800D8D28(void)
@@ -118,7 +120,8 @@ uint8 func_800D8D28(void)
     return 1;
 }
 
-void func_800D8D74(SHL_WORK *wp)
+// Sets the shot's two hit boxes (hit and guard layer) one step ahead, sized by level.
+void shl0c_atari_set(SHL_WORK *wp)
 {
     SVECTOR p;
 
@@ -127,14 +130,16 @@ void func_800D8D74(SHL_WORK *wp)
     p.vz = (wp->fpos.w.z + (wp->vel.vz << 10)) >> 16;
     Set_Atari(&p, D_800D90AC[wp->value_f], 0, 0, wp->value_1, &wp->col_c4, 0x2000001, 0, 0x80);
     Set_Atari(&p, D_800D90AC[wp->value_f], 0, 0x4000, wp->value_1, &wp->col_bc, 0x28000001, 0,
-                  0x80);
+              0x80);
     wp->col_bc = 0;
     wp->col_c0 = 0;
     wp->col_c4 = 0;
     wp->col_c8 = 0;
 }
 
-uint8 func_800D8E8C(SHL_WORK *wp)
+// 1 if an enemy shot (Shl_work_tbl) is within 1000 units of the player and inside the arc
+// D_800D90CC[level] around the player's facing.
+uint8 shl0c_enemy_shot_check(SHL_WORK *wp)
 {
     SVECTOR p;
     SVECTOR r;

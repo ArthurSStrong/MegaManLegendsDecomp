@@ -2,13 +2,14 @@
 #include "shl06.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl06_move(SHL_WORK *wp)
 {
-    D_800D90CC[wp->routine_0](wp);
+    shl06_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_800D8854(SHL_WORK *wp)
+// Routine 0: launches the shot and its spread (value_528: 0, 2 or 4 more).
+void shl06_init(SHL_WORK *wp)
 {
     SVECTOR dir;
     SVECTOR rot;
@@ -18,59 +19,60 @@ void func_800D8854(SHL_WORK *wp)
 
     Homing_target_clear(wp->bit_d);
     rot.vx = Camera_pitch_get();
-    func_800D8E44(wp, rot.vx, wp->rot_y);
+    shl06_shot_launch(wp, rot.vx, wp->rot_y);
     np = Open_PL_SHL_WORK();
     if (np)
     {
-        func_800D8DD8(wp, np);
-        func_800D8E44(np, rot.vx, wp->rot_y + 0x80 + (rand() & 0x1F));
+        shl06_shot_copy(wp, np);
+        shl06_shot_launch(np, rot.vx, wp->rot_y + 0x80 + (rand() & 0x1F));
     }
     np = Open_PL_SHL_WORK();
     if (np)
     {
-        func_800D8DD8(wp, np);
-        func_800D8E44(np, rot.vx, wp->rot_y - 0x80 + (rand() & 0x1F));
+        shl06_shot_copy(wp, np);
+        shl06_shot_launch(np, rot.vx, wp->rot_y - 0x80 + (rand() & 0x1F));
     }
     if (Player_work.value_528 > 0)
     {
         np = Open_PL_SHL_WORK();
         if (np)
         {
-            func_800D8DD8(wp, np);
-            func_800D8E44(np, rot.vx, wp->rot_y + 0x100 + (rand() & 0x1F));
+            shl06_shot_copy(wp, np);
+            shl06_shot_launch(np, rot.vx, wp->rot_y + 0x100 + (rand() & 0x1F));
         }
         np = Open_PL_SHL_WORK();
         if (np)
         {
-            func_800D8DD8(wp, np);
-            func_800D8E44(np, rot.vx, wp->rot_y - 0x100 + (rand() & 0x1F));
+            shl06_shot_copy(wp, np);
+            shl06_shot_launch(np, rot.vx, wp->rot_y - 0x100 + (rand() & 0x1F));
         }
         if (Player_work.value_528 >= 2)
         {
             np = Open_PL_SHL_WORK();
             if (np)
             {
-                func_800D8DD8(wp, np);
-                func_800D8E44(np, rot.vx, wp->rot_y + 0x180 + (rand() & 0x1F));
+                shl06_shot_copy(wp, np);
+                shl06_shot_launch(np, rot.vx, wp->rot_y + 0x180 + (rand() & 0x1F));
             }
             np = Open_PL_SHL_WORK();
             if (np)
             {
-                func_800D8DD8(wp, np);
-                func_800D8E44(np, rot.vx, wp->rot_y - 0x180 + (rand() & 0x1F));
+                shl06_shot_copy(wp, np);
+                shl06_shot_launch(np, rot.vx, wp->rot_y - 0x180 + (rand() & 0x1F));
             }
         }
     }
     Sound_call2(0x12A, &wp->pos);
 }
 
-void func_800D8A6C(SHL_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl06_main(SHL_WORK *wp)
 {
     MATRIX unused;
 
     if (Shot_map_check(wp, 0x20) || wp->hit_7c)
     {
-        func_800D8C2C(wp);
+        shl06_explosion_set(wp);
         Close_PL_SHL_WORK(wp);
         return;
     }
@@ -92,7 +94,7 @@ void func_800D8A6C(SHL_WORK *wp)
     wp->draw.spr.x_90 = wp->pos.vx = wp->fpos.h.x;
     wp->draw.spr.y_92 = wp->pos.vy = wp->fpos.h.y;
     wp->draw.spr.z_94 = wp->pos.vz = wp->fpos.h.z;
-    func_800D8D28(wp);
+    shl06_atari_set(wp);
     if (++wp->routine_1 >= 6)
     {
         wp->routine_1 = 0;
@@ -101,7 +103,8 @@ void func_800D8A6C(SHL_WORK *wp)
     wp->draw.spr.scale_97 = D_800D909C[wp->routine_1].scale_97;
 }
 
-void func_800D8C2C(SHL_WORK *wp)
+// Opens an Effect_explosion (effect 0x80) at the shot, sized by the weapon level (up to 2).
+void shl06_explosion_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
     sint32 level;
@@ -127,7 +130,8 @@ void func_800D8CB8(SHL_WORK *wp, MATRIX *m)
 {
 }
 
-void func_800D8CC0(SHL_WORK *wp)
+// Opens an Effect_smoke (effect 0x83) at the shot.
+void shl06_smoke_set(SHL_WORK *wp)
 {
     SHL_FX *fx;
 
@@ -143,7 +147,8 @@ void func_800D8CC0(SHL_WORK *wp)
     }
 }
 
-void func_800D8D28(SHL_WORK *wp)
+// Sets the shot's hit capsule between its old and new position.
+void shl06_atari_set(SHL_WORK *wp)
 {
     sint32 flags;
 
@@ -160,7 +165,8 @@ void func_800D8D28(SHL_WORK *wp)
     }
 }
 
-void func_800D8DD8(SHL_WORK *wp, SHL_WORK *np)
+// Starts the extra shot np from wp's owner, position and facing.
+void shl06_shot_copy(SHL_WORK *wp, SHL_WORK *np)
 {
     np->flags_0 = 1;
     np->value_2 = wp->value_2;
@@ -170,7 +176,9 @@ void func_800D8DD8(SHL_WORK *wp, SHL_WORK *np)
     np->rot_y   = wp->rot_y;
 }
 
-void func_800D8E44(SHL_WORK *wp, sint32 rx, sint32 ry)
+// Launches a shot at pitch rx (a little up, random) and yaw ry, with the weapon's range as
+// speed and gravity ay 0x200; init fires 2, 4 or 6 extra ones fanned out by level.
+void shl06_shot_launch(SHL_WORK *wp, sint32 rx, sint32 ry)
 {
     SVECTOR dir;
     SVECTOR rot;
@@ -224,5 +232,5 @@ void func_800D8E44(SHL_WORK *wp, sint32 rx, sint32 ry)
     {
         wp->old_pos.pad = wp->pos.pad = 0x4208;
     }
-    func_800D8D28(wp);
+    shl06_atari_set(wp);
 }

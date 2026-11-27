@@ -16,13 +16,13 @@ typedef struct
 extern SHL0C_OBJ Shl_work_tbl[32];
 
 extern SHL_BOX D_800D9080;
-extern sint32 D_800D908C[];   // scale by value_f
-extern sint32 D_800D90AC[];   // hit size by value_f
-extern uint32 D_800D90CC[];   // aim range by value_f
-extern SHL_FUNC D_800D90EC[]; // routine_0 handlers
+extern sint32 D_800D908C[];       // scale by value_f
+extern sint32 D_800D90AC[];       // hit size by value_f
+extern uint32 D_800D90CC[];       // aim range by value_f
+extern SHL_FUNC shl0c_move_tbl[]; // routine_0 handlers
 
 uint8 func_800D8D28(void);
-void func_800D8D74(SHL_WORK *wp);
-uint8 func_800D8E8C(SHL_WORK *wp);
+void shl0c_atari_set(SHL_WORK *wp);
+uint8 shl0c_enemy_shot_check(SHL_WORK *wp);
 
 #endif // SHL0C_H

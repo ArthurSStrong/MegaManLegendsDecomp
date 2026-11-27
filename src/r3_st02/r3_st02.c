@@ -75,7 +75,7 @@ void func_801002C8(uint8 mode)
 }
 
 // Draws a translucent full-screen rectangle (abr: the blend mode).
-void func_8010032C(uint8 r, uint8 g, uint8 b, uint16 abr)
+void st02_screen_tile_draw(uint8 r, uint8 g, uint8 b, uint16 abr)
 {
     ST02_TILE *tile;
     DR_MODE *mode;
@@ -947,7 +947,7 @@ void func_80101B2C(STAGE_ROOM *wp)
     wp->tbl_A4 = D_8010738C;
 }
 
-void func_80101C80(STAGE_ROOM *wp)
+void st02_event_step_call(STAGE_ROOM *wp)
 {
     if (wp->routine_8 != 0xFF)
     {
@@ -999,11 +999,11 @@ void func_80101CC0(STAGE_ROOM *wp)
             }
             // fall through
         case 6:
-            func_80101C80(wp);
+            st02_event_step_call(wp);
             Sce_camera_script_exec();
             if (D_8010A5E4 != 0)
             {
-                func_8010032C(D_8010A5E8, D_8010A5EC, D_8010A5F0, D_8010A5F4);
+                st02_screen_tile_draw(D_8010A5E8, D_8010A5EC, D_8010A5F0, D_8010A5F4);
             }
             switch (D_8010A5E0)
             {

@@ -865,7 +865,7 @@ extern STAGE_OBJ_FUNC D_8011C718[];
 void Sound_call(sint32 id, sint32 a1, sint32 a2);
 void Swing_Camera(sint32 arg);
 
-// PsyQ's TILE (a flat rectangle), as func_80100614 fills it.
+// PsyQ's TILE (a flat rectangle), as st00_screen_tile_draw fills it.
 typedef struct
 {
     u_long tag;
@@ -874,7 +874,7 @@ typedef struct
     short w, h;
 } ST00_TILE;
 
-void func_80100614(uint8 r, uint8 g, uint8 b, uint16 abr);
+void st00_screen_tile_draw(uint8 r, uint8 g, uint8 b, uint16 abr);
 
 // ends when its emitter's routine does.
 typedef struct ST00_SPARK ST00_SPARK;
@@ -1027,7 +1027,7 @@ typedef struct
     uint8 reserved48[8];        // 48
 } ST00_STCOM19_WORK;
 
-void func_801127A0(ST00_STCOM19_WORK *wp);
+void st00_stcom19_wait_close(ST00_STCOM19_WORK *wp);
 
 extern STAGE_UVW D_8011CE10[];
 void func_80117D80(STAGE_FX *wp);
@@ -1133,7 +1133,7 @@ typedef struct
 typedef void (*ST00_ACTOR_FUNC)(ST00_ACTOR *wp);
 
 extern STAGE_OBJ_FUNC D_8011C80C[];
-sint32 func_8011974C(STCOM02_WORK *wp);
+sint32 st00_stcom02_step_next(STCOM02_WORK *wp);
 void func_80119580(STCOM02_WORK *wp);
 
 extern STAGE_OBJ_FUNC D_8011C7DC[];
@@ -1873,7 +1873,7 @@ sint32 Scr_height_check(void *wp);
 void func_80104E64(STAGE_STCOM15_WORK_348 *wp);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 void func_801050E8(STAGE_STCOM15_WORK_348 *wp);
 
 void func_80105740(STAGE_STCOM15_WORK_348 *wp);

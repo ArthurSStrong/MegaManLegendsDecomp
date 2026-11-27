@@ -165,7 +165,7 @@ typedef void (*SUB_FUNC)(SUB_WORK *wp);
 
 // Player_work and Game_work reached through their fixed addresses. GCC 2.7 keeps a
 // symbol's address in a saved register across calls, but rebuilds a literal address
-// with lui at each access, as retail does in some functions (func_8005F3D0).
+// with lui at each access, as retail does in some functions (sub_screen_key_item_refill).
 #define SUB_PLAYER_WORK ((SUB_PLAYER *)0x800B51B0)
 #define SUB_GAME_WORK   ((SUB_GAME *)0x800C1B10)
 
@@ -217,13 +217,13 @@ void Sub_screen_sort_sub(SUB_PLAYER *wp, sint32 a, sint32 b);
 void Sub_screen_rb_parts_calc(SUB_WORK *wp);
 void Sub_screen_back_ground_set(void);
 void Sub_screen_status_param_set(sint32 slot);
-void func_8005F608(SUB_SEL *wp);
-void func_8005F3D0(SUB_SEL *wp);
-void func_8005FAE4(SUB_SEL *wp);
-void func_8005FBB4(SUB_SEL *wp);
+void sub_screen_key_item_equip(SUB_SEL *wp);
+void sub_screen_key_item_refill(SUB_SEL *wp);
+void sub_screen_key_item_info(SUB_SEL *wp);
+void sub_screen_key_item_warp(SUB_SEL *wp);
 void func_8005FFBC(SUB_SEL *wp);
 sint32 Sub_screen_cancel_check(void);
-sint32 func_8005FDE4(SUB_GAME *gw);
+sint32 sub_screen_warp_check(SUB_GAME *gw);
 #ifdef __wasm32__
 // WebAssembly calls require the callee's fixed parameter signature.
 void Sound_call(sint16 id, uint32 arg1, uint32 arg2);

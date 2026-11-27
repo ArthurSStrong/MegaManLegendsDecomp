@@ -2,12 +2,13 @@
 #include "shl0d.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL0D_WORK *wp)
+void shl0d_move(SHL0D_WORK *wp)
 {
-    D_800D92B4[wp->routine_0](wp);
+    shl0d_move_tbl[wp->routine_0](wp);
 }
 
-void func_800D8840(SHL0D_WORK *wp)
+// Routine 0: sets the shot up.
+void shl0d_init(SHL0D_WORK *wp)
 {
     uint8 level;
     uint8 i;
@@ -30,7 +31,7 @@ void func_800D8840(SHL0D_WORK *wp)
     wp->beam.size_c0  = D_800D9268[level];
     wp->beam.flags_c4 = Player_weapon_attack_calc(&Player_work, 0xD);
     wp->beam.scale_c8 = D_800D9288[level];
-    func_800D8AB8(wp);
+    shl0d_beam_aim(wp);
     wp->color_b4 = 0x02808080;
     Model_work_init(wp, 0);
     for (i = 0; i < 16; i++)
@@ -38,11 +39,12 @@ void func_800D8840(SHL0D_WORK *wp)
         wp->beam.hit[i] = 0;
     }
     wp->box_78 = &D_800D92A8;
-    func_800D8D08(wp);
+    shl0d_beam_atari_set(wp);
     Sound_call2(0x136, &wp->pos);
 }
 
-void func_800D8988(SHL0D_WORK *wp)
+// Routine 1: runs the shot until it closes itself.
+void shl0d_main(SHL0D_WORK *wp)
 {
     SHL0D_BEAM *bp;
     sint32 len;
@@ -60,12 +62,12 @@ void func_800D8988(SHL0D_WORK *wp)
     {
         goto end;
     }
-    len = func_800D9010(wp);
+    len = shl0d_beam_wall_check(wp);
     if (len)
     {
         bp->len_bd = len;
     }
-    if (func_800D91FC(wp))
+    if (shl0d_beam_hit_check(wp))
     {
         wp->color_b4 = 0x02808080;
     }
@@ -80,8 +82,8 @@ void func_800D8988(SHL0D_WORK *wp)
     {
         Player_work.timer_562--;
     }
-    func_800D8AB8(wp);
-    func_800D8D08(wp);
+    shl0d_beam_aim(wp);
+    shl0d_beam_atari_set(wp);
 }
 
 uint8 func_800D8A6C(SHL0D_WORK *wp)
@@ -93,7 +95,9 @@ uint8 func_800D8A6C(SHL0D_WORK *wp)
     return 1;
 }
 
-void func_800D8AB8(SHL0D_WORK *wp)
+// Aims the beam: matrix from the camera pitch and the player's facing (rolling with the
+// frame), start at the arm tip, step and scale from the beam's length.
+void shl0d_beam_aim(SHL0D_WORK *wp)
 {
     VECTOR v;
     SVECTOR rot;
@@ -129,9 +133,10 @@ void func_800D8AB8(SHL0D_WORK *wp)
     ScaleMatrix(&wp->mtx_8c, &v);
 }
 
+// Sets the beam's hit capsules, one per 8 steps of its length (plus the remainder).
 // Retail separates mflo from the next mult by two instructions even across a register-based load;
 // tools/patches/maspsx-mflo-mult-register-load.patch makes maspsx do the same.
-void func_800D8D08(SHL0D_WORK *wp)
+void shl0d_beam_atari_set(SHL0D_WORK *wp)
 {
     VECTOR step;
     SVECTOR a;
@@ -157,8 +162,8 @@ void func_800D8D08(SHL0D_WORK *wp)
         b.vx = (wp->fpos.w.x + step.vx * (uint8)m) >> 16;
         b.vy = (wp->fpos.w.y + step.vy * (uint8)m) >> 16;
         b.vz = (wp->fpos.w.z + step.vz * (uint8)m) >> 16;
-        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
-                   &wp->beam.hit[i], bp->flags_c4 | 0x8000000, 0, 0x80);
+        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1, &wp->beam.hit[i],
+                   bp->flags_c4 | 0x8000000, 0, 0x80);
         wp->beam.hit[i * 2]     = 0;
         wp->beam.hit[i * 2 + 1] = 0;
     }
@@ -173,14 +178,16 @@ void func_800D8D08(SHL0D_WORK *wp)
         b.vx = (wp->fpos.w.x + step.vx * (uint8)(k & 0xF8)) >> 16;
         b.vy = (wp->fpos.w.y + step.vy * (uint8)(k & 0xF8)) >> 16;
         b.vz = (wp->fpos.w.z + step.vz * (uint8)(k & 0xF8)) >> 16;
-        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1,
-                   &wp->beam.hit[i], bp->flags_c4 | 0x8000000, 0, 0x80);
+        Set_Atari2(&a, bp->size_c0, &b, bp->size_c0, 0x200, 0x4000, wp->value_1, &wp->beam.hit[i],
+                   bp->flags_c4 | 0x8000000, 0, 0x80);
         wp->beam.hit[i * 2]     = 0;
         wp->beam.hit[i * 2 + 1] = 0;
     }
 }
 
-sint32 func_800D9010(SHL0D_WORK *wp)
+// Length up to the first step that hits the map (0 if none), with a wall spark (effect 0x8A)
+// there every 4 frames.
+sint32 shl0d_beam_wall_check(SHL0D_WORK *wp)
 {
     VECTOR step;
     SVECTOR a;
@@ -222,7 +229,8 @@ sint32 func_800D9010(SHL0D_WORK *wp)
     return 0;
 }
 
-sint32 func_800D91FC(SHL0D_WORK *wp)
+// 1 if any of the beam's hit capsules hit something.
+sint32 shl0d_beam_hit_check(SHL0D_WORK *wp)
 {
     uint8 i;
 

@@ -62,7 +62,7 @@ void main(void)
         Game_logo_draw();
         DrawSync(0);
         Fade_draw();
-        func_800178FC();
+        Clut_buf_upload();
         if (Debug_break != 0)
         {
             __asm__ volatile("break 0x400");

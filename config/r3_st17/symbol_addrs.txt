@@ -14,3 +14,51 @@ stcom02_move_tbl = 0x8011C588;
 // Stage-unique data.
 D_8011C5D4 = 0x8011C5D4; // STAGE_ANIM[5]
 D_8011C5E0 = 0x8011C5E0; // STAGE_ANIM[9]
+
+// stcom18 (stage_common/stcom18.c).
+stcom18_move = 0x801106D8; // type:func
+stcom18_move_init = 0x80110774; // type:func
+stcom18_move_main = 0x80110938; // type:func
+stcom18_move_hit = 0x80110BA0; // type:func
+stcom18_explosion_set = 0x80110C0C; // type:func
+stcom18_smoke_set = 0x80110C4C; // type:func
+stcom18_frame_tbl = 0x8011C0EC;
+stcom18_D_0001 = 0x8011C0ED;
+stcom18_frame2_tbl = 0x8011C0F8;
+stcom18_D_000D = 0x8011C0F9;
+stcom18_move_tbl = 0x8011C104;
+
+// stcom23 (stage_common/stcom23.c).
+stcom23_move = 0x8010FAE0; // type:func
+stcom23_move_init = 0x8010FB1C; // type:func
+stcom23_move_main = 0x8010FEC4; // type:func
+stcom23_func_085C = 0x8011033C; // type:func
+stcom23_launch0 = 0x80110344; // type:func
+stcom23_launch1 = 0x80110368; // type:func
+stcom23_func_08B8 = 0x80110398; // type:func
+stcom23_fly1 = 0x801103A0; // type:func
+stcom23_break0 = 0x801103F4; // type:func
+stcom23_break1 = 0x80110414; // type:func
+stcom23_hit_set = 0x80110434; // type:func
+stcom23_matrix_set = 0x801104DC; // type:func
+stcom23_puff = 0x8011058C; // type:func
+stcom23_trail_draw = 0x801105F8; // type:func
+stcom23_param_tbl = 0x8011BF8C;
+stcom23_D_0002 = 0x8011BF8E;
+stcom23_D_0004 = 0x8011BF90;
+stcom23_D_0006 = 0x8011BF92;
+stcom23_D_0008 = 0x8011BF94;
+stcom23_D_000C = 0x8011BF98;
+stcom23_D_0010 = 0x8011BF9C;
+stcom23_D_001C = 0x8011BFA8;
+stcom23_D_001F = 0x8011BFAB;
+stcom23_D_0020 = 0x8011BFAC;
+stcom23_D_0021 = 0x8011BFAD;
+stcom23_D_0022 = 0x8011BFAE;
+stcom23_D_0024 = 0x8011BFB0;
+stcom23_launch_tbl = 0x8011C0C0;
+stcom23_fly_tbl = 0x8011C0C8;
+stcom23_break_tbl = 0x8011C0D0;
+stcom23_puff_uv_tbl = 0x8011C0D8;
+stcom23_D_014D = 0x8011C0D9;
+stcom23_move_tbl = 0x8011C0E0;

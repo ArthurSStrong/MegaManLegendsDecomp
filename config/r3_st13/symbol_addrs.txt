@@ -386,5 +386,60 @@ stcom30_spawn1_tbl = 0x80117950;
 // func_8010D928 runs to 0x8010DA34; stcom22 calls 0x8010D9F8 (a real function in r3_st0e and
 // r3_st14), which here is the delay slot of its last func_80031BEC call. The call goes through
 // this alias.
-func_8010D928 = 0x8010D928; // type:func size:0x10C
 func_8010D9F8 = 0x8010D9F8; // absolute:True
+
+// Named after exact twins (tools/propagate_names.py).
+st13_event_step_call = 0x801139A8; // type:func
+
+// stcom16 (stage_common/stcom16.c).
+stcom16_move = 0x8010C764; // type:func
+stcom16_move_init = 0x8010C93C; // type:func
+stcom16_move_main = 0x8010CAD4; // type:func
+stcom16_erase = 0x8010D3E8; // type:func
+stcom16_drop_wait = 0x8010D408; // type:func
+stcom16_patrol = 0x8010D4C4; // type:func
+stcom16_walk = 0x8010D5B0; // type:func
+stcom16_look_turn = 0x8010D718; // type:func
+stcom16_look_end = 0x8010D7A0; // type:func
+stcom16_look = 0x8010D804; // type:func
+stcom16_look_wait = 0x8010D85C; // type:func
+stcom16_turn_back = 0x8010D88C; // type:func
+stcom16_chase = 0x8010D928; // type:func
+stcom16_charge = 0x8010DA34; // type:func
+stcom16_charge_init = 0x8010DB44; // type:func
+stcom16_charge_aim = 0x8010DB94; // type:func
+stcom16_charge_run = 0x8010DC5C; // type:func
+stcom16_charge_stop = 0x8010DDCC; // type:func
+stcom16_charge_wait = 0x8010DEC0; // type:func
+stcom16_bite = 0x8010DEF4; // type:func
+stcom16_claw = 0x8010E048; // type:func
+stcom16_claw_aim = 0x8010E084; // type:func
+stcom16_claw_wait = 0x8010E12C; // type:func
+stcom16_claw_out = 0x8010E148; // type:func
+stcom16_claw_back = 0x8010E170; // type:func
+stcom16_claw_end = 0x8010E1A8; // type:func
+stcom16_claw_appear = 0x8010E244; // type:func
+stcom16_claw_appear_wait = 0x8010E30C; // type:func
+stcom16_notice = 0x8010E3F8; // type:func
+stcom16_jump = 0x8010E504; // type:func
+stcom16_jump_start = 0x8010E6E8; // type:func
+stcom16_jump_air = 0x8010E730; // type:func
+stcom16_jump_land = 0x8010E7CC; // type:func
+stcom16_knock_back = 0x8010E83C; // type:func
+stcom16_die = 0x8010EB10; // type:func
+stcom16_vanish = 0x8010EB98; // type:func
+stcom16_vanish_init = 0x8010EC98; // type:func
+stcom16_vanish_turn = 0x8010ED4C; // type:func
+stcom16_vanish_run_start = 0x8010ED8C; // type:func
+stcom16_vanish_run = 0x8010EDF4; // type:func
+stcom16_vanish_turn_back = 0x8010EEAC; // type:func
+stcom16_ground_check = 0x8010EF4C; // type:func
+stcom16_R_0000 = 0x80100100;
+stcom16_D_0000 = 0x80118474;
+stcom16_move_tbl = 0x80118480;
+stcom16_state_tbl = 0x80118490;
+stcom16_patrol_tbl = 0x801184B4;
+stcom16_charge_tbl = 0x801184D0;
+stcom16_claw_tbl = 0x801184E4;
+stcom16_jump_tbl = 0x80118500;
+stcom16_vanish_tbl = 0x8011850C;

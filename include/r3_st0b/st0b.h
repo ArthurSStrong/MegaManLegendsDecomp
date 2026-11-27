@@ -576,8 +576,6 @@ extern uint8 D_8011B3D8[];
 extern sint16 D_8011B424[]; // func_8010C69C: the glow level per palette slot
 extern uint8 D_8011B454[];
 extern sint16 D_8011B460[];
-extern uint8 D_8011B61D[];
-extern uint8 D_8011B629[];
 extern sint32 D_8011B640[];
 extern sint32 D_8011B64C[];
 extern sint16 D_8011B66A[];
@@ -634,10 +632,6 @@ void func_80104598(ST0B_OBJ *wp);
 void func_80113674(STAGE_OBJ *wp);
 
 void func_80118758(ST0B_OBJ *wp);
-
-extern STAGE_OBJ_FUNC D_8011B634[];
-void func_8010F9CC(STAGE_OBJ *wp, STAGE_FX *fx);
-void func_8010FA0C(STAGE_OBJ *wp, STAGE_FX *fx);
 
 extern sint16 *D_8011A520[];
 extern sint16 *D_8011A548[];
@@ -845,12 +839,6 @@ void func_8010AC10(ST0B_CELL *cell, sint32 color);
 void func_8010ACE0(ST0B_CELL *cell, sint32 color);
 STCOM_SVECTOR func_8011010C(ST0B_10C_B *wp);
 void func_8010FB6C(ST0B_10C_B *wp);
-
-extern STCOM18_PAIR D_8011B61C[6];
-extern STCOM18_PAIR D_8011B628[6];
-void func_8010F534(STCOM18_WORK *wp);
-
-void func_8010F6F8(STCOM18_WORK *wp);
 
 extern STAGE_PL_SCRIPT_FUNC D_80120314[];
 void func_80118854(STAGE_PL_SCRIPT *wp);

@@ -137,3 +137,35 @@ stcom36_objs_end = 0x80101F58; // type:func
 stcom36_obj_bits = 0x8010AFBC;
 stcom36_E_0000 = 0x8010C010;
 stcom36_E2_0000 = 0x80111D98;
+
+// stcom40 (stage_common/stcom40.c): the chest and the box.
+stcom40_chest = 0x80108FE0; // type:func
+stcom40_chest_init = 0x8010901C; // type:func
+stcom40_chest_main = 0x801090CC; // type:func
+stcom40_chest_erase = 0x8010919C; // type:func
+stcom40_chest_closed = 0x80109218; // type:func
+stcom40_chest_wait = 0x80109254; // type:func
+stcom40_chest_open = 0x801092F8; // type:func
+stcom40_chest_hit_open = 0x801094D8; // type:func
+stcom40_lid_spawn = 0x8010967C; // type:func
+stcom40_chest_opened = 0x80109754; // type:func
+stcom40_lid = 0x801097E0; // type:func
+stcom40_chest_item_check = 0x801099D8; // type:func
+stcom40_chest_em_spawn = 0x80109A60; // type:func
+stcom40_box = 0x80109B28; // type:func
+stcom40_box_init = 0x80109BE8; // type:func
+stcom40_box_wait = 0x80109C8C; // type:func
+stcom40_box_open = 0x80109CCC; // type:func
+stcom40_box_erase = 0x80109EB8; // type:func
+stcom40_box_item_check = 0x80109F34; // type:func
+stcom40_R_0000 = 0x8010019C;
+stcom40_chest_tbl = 0x80111C84;
+stcom40_chest_type_tbl = 0x80111C90;
+stcom40_chest_closed_tbl = 0x80111C9C;
+stcom40_chest_model = 0x80111CA8;
+stcom40_lid_angle_tbl = 0x80111CB4;
+stcom40_box_tbl = 0x80111CC4;
+stcom40_box_model = 0x80111CD4;
+
+// Named after exact twins (tools/propagate_names.py).
+st04_stcom04_talk_check = 0x8010528C; // type:func

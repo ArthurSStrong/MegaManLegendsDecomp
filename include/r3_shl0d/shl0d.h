@@ -14,7 +14,7 @@ typedef struct
     sint32 size_c0;  // C0
     uint32 flags_c4; // C4
     sint32 scale_c8; // C8
-    uint32 hit[16];  // CC: hit accumulators, a pair per eight segments (func_800D8D08 passes
+    uint32 hit[16];  // CC: hit accumulators, a pair per eight segments (shl0d_beam_atari_set passes
                      // &hit[i] for pair i)
 } SHL0D_BEAM;
 
@@ -57,14 +57,14 @@ extern uint8 D_800D9260[];  // beam value_be by level
 extern sint32 D_800D9268[]; // beam size by level
 extern sint32 D_800D9288[]; // beam scale by level
 extern SHL_BOX D_800D92A8;
-extern SHL0D_FUNC D_800D92B4[]; // routine_0 handlers
+extern SHL0D_FUNC shl0d_move_tbl[]; // routine_0 handlers
 
 sint32 Scr_line_calc(SVECTOR *a, SVECTOR *b, SHL_BOX *box, sint32 mask);
 
 uint8 func_800D8A6C(SHL0D_WORK *wp);
-void func_800D8AB8(SHL0D_WORK *wp);
-void func_800D8D08(SHL0D_WORK *wp);
-sint32 func_800D9010(SHL0D_WORK *wp);
-sint32 func_800D91FC(SHL0D_WORK *wp);
+void shl0d_beam_aim(SHL0D_WORK *wp);
+void shl0d_beam_atari_set(SHL0D_WORK *wp);
+sint32 shl0d_beam_wall_check(SHL0D_WORK *wp);
+sint32 shl0d_beam_hit_check(SHL0D_WORK *wp);
 
 #endif // SHL0D_H

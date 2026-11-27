@@ -425,7 +425,7 @@ void func_80100A90(STAGE_ROOM *wp);
 sint32 func_80100B94(void);
 sint32 func_80100BB4(void);
 void func_80100BD4(STAGE_ROOM *wp);
-void func_80100E38(void);
+void st10_stcom36_script_run(void);
 void func_8010AF4C(STAGE_OBJ *wp);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);

@@ -2,23 +2,23 @@
 #include "shl05.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-void func_800D8804(SHL_WORK *wp)
+void shl05_move(SHL_WORK *wp)
 {
     SVECTOR p;
 
-    D_800D95EC[wp->routine_0](wp);
+    shl05_move_tbl[wp->routine_0](wp);
     p.vx = wp->draw.spr.x_90;
     p.vy = wp->draw.spr.y_92;
     p.vz = wp->draw.spr.z_94;
     if (wp->index_c)
     {
         Set_Atari(&p, 8, 0, 0x6000, wp->value_1, &wp->col_c4,
-                      D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
+                  D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
     }
     else
     {
         Set_Atari(&p, 8, 0, 0x4000, wp->value_1, &wp->col_c4,
-                      D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
+                  D_80089C6C[Player_work.value_51c].flags_0 | 0x8000000, 0, 0x80);
     }
     Model_Shadow_Trans(wp, 0x18, 0x200, 0);
     Solid_mover_set(wp);

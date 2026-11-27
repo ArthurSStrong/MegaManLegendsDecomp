@@ -1,9 +1,9 @@
 #include "common.h"
 #include "stage_common/stcom16.h"
 
-// Shared stage code, linked into 4 stages: r3_st09, r3_st0e, r3_st14 and r3_st1d. Each stage
-// compiles this file against its own copy of the assembly (TARGET_ASM, set by tools/cc.sh); the
-// names are the same in every stage's registry.
+// Shared stage code, linked into 5 stages: r3_st09, r3_st0e, r3_st13, r3_st14 and r3_st1d. Each
+// stage compiles this file against its own copy of the assembly (TARGET_ASM, set by tools/cc.sh);
+// the names are the same in every stage's registry.
 #define ASM_DIR TARGET_ASM "/stage_common/stcom16"
 
 // An enemy with two claws: it patrols, charges and bites when it sees the player, swipes up

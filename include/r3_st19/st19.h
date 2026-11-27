@@ -550,9 +550,6 @@ void func_80107178(ST19_OBJ *wp);
 
 void func_80104F34(ST19_OBJ *wp);
 
-void func_8010A04C(STAGE_OBJ *wp, STAGE_FX *fx);
-void func_8010A08C(STAGE_OBJ *wp, STAGE_FX *fx);
-
 extern sint16 *D_80119AE0[];
 extern sint16 *D_80119B60[];
 void func_801139E4(void *wp, STAGE_FACE16 *face, sint32 index);
@@ -586,8 +583,6 @@ void Close_WORK_5A4(void *wp);
 extern sint32 D_800BC7D4[];
 extern sint16 D_80118E88[];
 STAGE_OBJ *Open_EM_WORK(void);
-
-extern STAGE_OBJ_FUNC D_80118070[];
 
 void func_80111DE4(sint32 variant);
 extern STAGE_FX *D_8011F4A8[];
@@ -734,11 +729,6 @@ struct ST19_SPARK
 STCOM_SVECTOR func_8010A78C(ST19_10C_B *wp);
 void func_8010A1EC(ST19_10C_B *wp);
 void func_8010E7F4(ST19_SPARK *wp);
-
-extern STCOM18_PAIR D_80118058[6];
-extern STCOM18_PAIR D_80118064[6];
-void func_80109BB4(STCOM18_WORK *wp);
-void func_80109D78(STCOM18_WORK *wp);
 
 ST19_SPARK *func_8010E99C(STCOM_SVECTOR *pos, sint32 width, sint32 type, sint32 count, sint32 rise,
                           uint8 hide);
@@ -1653,7 +1643,7 @@ void Sce_file_read(sint32 arg0, sint32 arg1, sint32 arg2);
 sint32 Muku_elevation(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 
 sint32 Angle_ck(STCOM_FIXED_VECTOR *pos, sint32 rot, sint32 range, STCOM_FIXED_VECTOR *target,
-                     sint32 target_rot, sint32 target_range);
+                sint32 target_rot, sint32 target_range);
 
 void func_80114668(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);
 

@@ -11,3 +11,6 @@ stcom02_range_tbl = 0x801030E8;
 stcom02_D_006E = 0x801030EA;
 stcom02_D_0070 = 0x801030EC;
 stcom02_move_tbl = 0x8010318C;
+
+// Named after exact twins (tools/propagate_names.py).
+st15_event_step_call = 0x80100AF4; // type:func

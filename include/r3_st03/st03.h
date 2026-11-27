@@ -774,7 +774,7 @@ void func_8010DC34(STAGE_OBJ *wp);
 void func_8010DC54(STAGE_OBJ *wp);
 void func_8010E014(ST03_OBJ *wp);
 void func_8010E0A8(STAGE_ACTOR *wp);
-sint32 func_8010E3A8(ST03_ACTOR *wp);
+sint32 st03_stcom04_talk_check(ST03_ACTOR *wp);
 sint32 Muku(STCOM_SVECTOR *pos, STCOM_SVECTOR *target, sint32 rot, sint32 speed);
 void func_8010FA58(STAGE_SPARK *wp);
 void func_8010FAE4(STAGE_SPARK *wp);
