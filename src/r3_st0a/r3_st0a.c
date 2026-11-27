@@ -1,7 +1,7 @@
 #include "common.h"
 #include "st0a.h"
 
-void func_80100314(void)
+void st0a_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_801146A8;
     STAGE_TABLE_5A4 = D_801147E8;

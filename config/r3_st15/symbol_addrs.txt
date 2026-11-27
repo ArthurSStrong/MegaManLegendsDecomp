@@ -14,3 +14,6 @@ stcom02_move_tbl = 0x8010318C;
 
 // Named after exact twins (tools/propagate_names.py).
 st15_event_step_call = 0x80100AF4; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st15_slot_tbl_set = 0x80100034; // type:func

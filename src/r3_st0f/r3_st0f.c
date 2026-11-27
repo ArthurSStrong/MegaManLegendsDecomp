@@ -2,7 +2,7 @@
 #include "st0f.h"
 
 // Installs the stage's slot routine tables.
-void func_8010005C(void)
+void st0f_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_80104840;
     STAGE_TABLE_5A4      = D_801049C0;
@@ -34,10 +34,10 @@ void func_801000CC(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80104D04[D_80104D14[Game_work.value_51]], D_80104C64[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100210();
+    st0f_room_reset();
 }
 
-void func_80100210(void)
+void st0f_room_reset(void)
 {
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_801058F8, D_80105900[STAGE_GAME_VALUE_52]);

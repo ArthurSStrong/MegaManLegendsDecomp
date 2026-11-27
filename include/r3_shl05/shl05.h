@@ -34,15 +34,15 @@ typedef struct
 extern SHL05_LEVEL D_80089C6C[];
 
 extern SHL_BOX D_800D95B0;
-extern SHL05_SCALE D_800D95BC[6];
+extern SHL05_SCALE shl05_scale_tbl[6];
 extern SHL_FUNC shl05_move_tbl[]; // routine_0 handlers
-extern uint32 D_800D9600;         // distance to the player, scaled to 0x80
+extern uint32 shl05_player_dist;  // distance to the player, scaled to 0x80
 
-sint16 func_800D90B0(SHL_WORK *wp);
-void func_800D935C(SHL_WORK *wp);
-void func_800D9450(SHL_WORK *wp, SHL_FX *fx);
-void func_800D94C0(SHL_WORK *wp);
-sint32 func_800D9508(SVECTOR *a, SVECTOR *b);
+sint16 shl05_map_bounce(SHL_WORK *wp);
+void shl05_pos_update(SHL_WORK *wp);
+void shl05_explosion_set(SHL_WORK *wp, SHL_FX *fx);
+void shl05_player_dist_set(SHL_WORK *wp);
+sint32 shl05_vec_distance(SVECTOR *a, SVECTOR *b);
 void func_800D9574(SHL_WORK *wp, SHL_FX *fx);
 
 #endif // SHL05_H

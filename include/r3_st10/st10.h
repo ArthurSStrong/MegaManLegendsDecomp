@@ -430,12 +430,12 @@ void func_8010AF4C(STAGE_OBJ *wp);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
 void Sce_slot_open_keep(void *entry);
-void func_8010B660(ST10_SHOT *wp, sint32 arg);
+void st10_shl02_hit_effect_set(ST10_SHOT *wp, sint32 arg);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
-void func_8010B51C(ST10_SHOT *wp);
+void st10_shl02_atari_set(ST10_SHOT *wp);
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
-void func_8010AF9C(ST10_SHL *wp);
+void st10_shl02_init(ST10_SHL *wp);
 
 #endif

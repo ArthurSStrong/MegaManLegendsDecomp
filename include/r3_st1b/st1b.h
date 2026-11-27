@@ -453,10 +453,10 @@ extern uint8 D_80164007[];
 extern void *D_80164008[];
 
 void func_8010076C(STAGE_ROOM *wp);
-void func_801007A8(void);
+void st1b_slot_tbl_set(void);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
-void func_80100A20(void);
+void st1b_room_reset(void);
 void Sce_slot_open_list(uint8 *);
 void func_80100B30(STAGE_ROOM *wp);
 void func_801050E8(STAGE_OBJ *wp);

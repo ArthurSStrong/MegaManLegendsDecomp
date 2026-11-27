@@ -2,7 +2,7 @@
 #include "st12.h"
 
 // Installs the stage's slot routine tables.
-void func_801001D4(void)
+void st12_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_80107E38;
     STAGE_TABLE_5A4 = D_80107FC4;
@@ -13,7 +13,7 @@ void func_801001D4(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_8010023C(void)
+void st12_room_init(void)
 {
     Map_layer_set(D_801080D4[Game_work.value_51]);
     STAGE_MAP_AREA_SP.w  = STAGE_MAP_TBL[Game_work.value_51].w;
@@ -33,24 +33,25 @@ void func_8010023C(void)
     Obj_spawn_list(D_80108160[Game_work.value_51], D_800C356D);
     Fog_room_set(D_801082B0[D_80108330[Game_work.value_51]], D_801081E8[Game_work.value_51]);
     Automap_room_set(0);
-    func_801003B8();
+    st12_room_reset();
 }
 
-void func_801003B8(void)
+// Resets the room script's routines (routine_4..7 of D_800989F8).
+void st12_room_reset(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
 // Runs the current room's script (the second set once scene flag 0x1FF is set).
-void func_801003C8(void)
+void st12_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
-        D_80108410[Game_work.value_51](&D_800989F8);
+        st12_first_script_tbl[Game_work.value_51](&D_800989F8);
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_801083D0[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st12_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 
@@ -139,7 +140,9 @@ void func_8010070C(STAGE_ROOM_WORK *wp)
     }
 }
 
-sint32 func_801007B4(void)
+// Until scene flag 0x1FF is set: opens an extra slot, except when scene flag 0x238 is set or
+// when flag 0x21 is set without 0x6A at Game_work.value_52 7; then sets 0x1FF.
+sint32 st12_first_script(void)
 {
     if (!Sce_flag_test(0x21) || Sce_flag_test(0x6A) || STAGE_GAME_VALUE_52 != 7)
     {

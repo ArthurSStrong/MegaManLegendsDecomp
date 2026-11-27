@@ -2,19 +2,21 @@
 #include "shl09.h"
 
 // Module entry: ROCK_NEO.EXE's SHL table (0x80089A28) points every special weapon here.
-// type_3 selects the object: 0 the beam, 1 the orbiting shot, 2 its spark.
+// type_3 selects the object (shl09_type_tbl): 0 the beam, 1 the shot, 2 the spark.
 void shl09_move(SHL_WORK *wp)
 {
     wp->type_3 &= 0x7F;
-    D_800D9730[wp->type_3](wp);
+    shl09_type_tbl[wp->type_3](wp);
 }
 
-void func_800D8848(SHL_WORK *wp)
+// Type 0, the beam: runs its routine.
+void shl09_beam_move(SHL_WORK *wp)
 {
     shl09_move_tbl[wp->routine_0](wp);
 }
 
-void func_800D8884(SHL_WORK *wp)
+// Routine 0: sets the beam's model up at the player and lives 13 frames.
+void shl09_beam_init(SHL_WORK *wp)
 {
     wp->box_78 = &D_800D96F8;
     wp->col_bc = 0;
@@ -24,19 +26,21 @@ void func_800D8884(SHL_WORK *wp)
     wp->flags_0 |= 6;
     wp->flags_6 |= 0x20;
     Homing_target_clear(wp->bit_d);
-    func_800D9570(wp);
+    shl09_pos_from_player(wp);
     wp->old_fpos          = wp->fpos;
     wp->old_pos           = wp->pos;
     wp->draw.mdl.color_b4 = 0x02808080;
     Model_work_init(wp, &wp->type_3);
-    func_800D8F50(wp);
+    shl09_beam_set(wp);
     Sound_call2(0x12E, &wp->pos);
     wp->value_f   = 0xD;
     wp->value_e   = 0;
     wp->routine_0 = 1;
 }
 
-void func_800D896C(SHL_WORK *wp)
+// Routine 1: follows the player; at frame 9 opens the spark (and the shot when value_53e is
+// set); frames 8-10 also hit just in front of the player.
+void shl09_beam_main(SHL_WORK *wp)
 {
     if (--wp->value_f == 0)
     {
@@ -47,26 +51,29 @@ void func_800D896C(SHL_WORK *wp)
     {
         if (Player_work.value_53e)
         {
-            func_800D942C(wp);
+            shl09_shot_open(wp);
         }
-        func_800D947C(wp);
+        shl09_spark_open(wp);
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
-    func_800D9570(wp);
-    func_800D8F50(wp);
+    shl09_pos_from_player(wp);
+    shl09_beam_set(wp);
     if (wp->value_f >= 8 && wp->value_f <= 10)
     {
-        func_800D922C(wp);
+        shl09_front_atari_set(wp);
     }
 }
 
-void func_800D8A5C(SHL_WORK *wp)
+// Type 1, the shot: runs its routine.
+void shl09_shot_move(SHL_WORK *wp)
 {
-    D_800D9744[wp->routine_0](wp);
+    shl09_shot_tbl[wp->routine_0](wp);
 }
 
-void func_800D8A98(SHL_WORK *wp)
+// Routine 0: launches the shot's model from the player along the aim, for the weapon's range
+// / 50 frames.
+void shl09_shot_init(SHL_WORK *wp)
 {
     SVECTOR rot;
     VECTOR v;
@@ -82,7 +89,7 @@ void func_800D8A98(SHL_WORK *wp)
     RotMatrixYXZ(&rot, &wp->draw.mdl.mtx_8c);
     v.vx = v.vy = v.vz = 0x200;
     ScaleMatrix(&wp->draw.mdl.mtx_8c, &v);
-    func_800D9608(&wp->vel, 0x32);
+    shl09_aim_vec(&wp->vel, 0x32);
     wp->pos               = Player_work.pos_3c8;
     wp->draw.mdl.pos      = wp->pos;
     wp->fpos.w.x          = wp->pos.vx << 16;
@@ -92,13 +99,14 @@ void func_800D8A98(SHL_WORK *wp)
     wp->old_pos           = wp->pos;
     wp->draw.mdl.color_b4 = 0x02808080;
     Model_work_init(wp, &wp->type_3);
-    func_800D9398(wp);
+    shl09_shot_atari_set(wp);
     wp->value_e   = 4;
     wp->value_f   = Player_weapon_dist_calc(&Player_work, 9) / 50;
     wp->routine_0 = 1;
 }
 
-void func_800D8C64(SHL_WORK *wp)
+// Routine 1: flies until its time runs out or it hits the map, then fades.
+void shl09_shot_main(SHL_WORK *wp)
 {
     if (--wp->value_f == 0)
     {
@@ -118,10 +126,11 @@ void func_800D8C64(SHL_WORK *wp)
     wp->draw.mdl.pos.vx = wp->pos.vx = wp->fpos.h.x;
     wp->draw.mdl.pos.vy = wp->pos.vy = wp->fpos.h.y;
     wp->draw.mdl.pos.vz = wp->pos.vz = wp->fpos.h.z;
-    func_800D9398(wp);
+    shl09_shot_atari_set(wp);
 }
 
-void func_800D8D68(SHL_WORK *wp)
+// Routine 2: shrinks and darkens over 4 frames, then closes.
+void shl09_shot_fade(SHL_WORK *wp)
 {
     SVECTOR rot;
     VECTOR v;
@@ -140,36 +149,40 @@ void func_800D8D68(SHL_WORK *wp)
     }
 }
 
-void func_800D8E2C(SHL_WORK *wp)
+// Type 2, the spark: runs its routine.
+void shl09_spark_move(SHL_WORK *wp)
 {
-    D_800D9750[wp->routine_0](wp);
+    shl09_spark_tbl[wp->routine_0](wp);
 }
 
-void func_800D8E68(SHL_WORK *wp)
+// Routine 0: sets the spark sprite up.
+void shl09_spark_init(SHL_WORK *wp)
 {
     wp->routine_0         = 1;
     wp->bit_d             = 0;
     wp->draw.spr.code_88  = 0x3D48002C;
     wp->draw.spr.color_8c = 0x2E808080;
     wp->flags_0 |= 0x22;
-    wp->draw.spr.scale_96 = D_800D9724[wp->bit_d].scale_96;
-    wp->draw.spr.scale_97 = D_800D9724[wp->bit_d].scale_97;
+    wp->draw.spr.scale_96 = shl09_spark_scale_tbl[wp->bit_d].scale_96;
+    wp->draw.spr.scale_97 = shl09_spark_scale_tbl[wp->bit_d].scale_97;
     wp->draw.spr.size_98  = 0x60;
     wp->draw.spr.value_9a = 0xB;
 }
 
-void func_800D8EDC(SHL_WORK *wp)
+// Routine 1: steps the spark's scale; closes after 6 frames.
+void shl09_spark_main(SHL_WORK *wp)
 {
     wp->bit_d++;
-    wp->draw.spr.scale_96 = D_800D9724[wp->bit_d].scale_96;
-    wp->draw.spr.scale_97 = D_800D9724[wp->bit_d].scale_97;
+    wp->draw.spr.scale_96 = shl09_spark_scale_tbl[wp->bit_d].scale_96;
+    wp->draw.spr.scale_97 = shl09_spark_scale_tbl[wp->bit_d].scale_97;
     if (wp->bit_d >= 6)
     {
         Close_PL_SHL_WORK(wp);
     }
 }
 
-void func_800D8F50(SHL_WORK *wp)
+// Places the beam's model along the player's matrix, scaled by level, and sets its hit capsule.
+void shl09_beam_set(SHL_WORK *wp)
 {
     MATRIX m;
     SVECTOR dir;
@@ -201,23 +214,24 @@ void func_800D8F50(SHL_WORK *wp)
     dir.vx = (v.vx * 80) >> 4;
     dir.vy = (v.vy * 80) >> 4;
     dir.vz = (v.vz * 80) >> 4;
-    v.vx   = (p.vx << 16) + (dir.vx << 8) * D_800D9758[level];
-    v.vy   = (p.vy << 16) + (dir.vy << 8) * D_800D9758[level];
-    v.vz   = (p.vz << 16) + (dir.vz << 8) * D_800D9758[level];
+    v.vx   = (p.vx << 16) + (dir.vx << 8) * shl09_beam_reach_tbl[level];
+    v.vy   = (p.vy << 16) + (dir.vy << 8) * shl09_beam_reach_tbl[level];
+    v.vz   = (p.vz << 16) + (dir.vz << 8) * shl09_beam_reach_tbl[level];
     dir.vx = v.vx >> 16;
     dir.vy = v.vy >> 16;
     dir.vz = v.vz >> 16;
-    v.vx   = D_800D9798[level].width + 0x1000;
-    v.vz   = D_800D9798[level].width + 0x1000;
-    v.vy   = D_800D9798[level].len + 0x1000;
+    v.vx   = shl09_beam_scale_tbl[level].width + 0x1000;
+    v.vz   = shl09_beam_scale_tbl[level].width + 0x1000;
+    v.vy   = shl09_beam_scale_tbl[level].len + 0x1000;
     ScaleMatrix(&wp->draw.mdl.mtx_8c, &v);
-    Set_Atari2(&dir, D_800D9778[level], &wp->pos, D_800D9778[level], 0x200, 0x4000, wp->value_1,
-               &wp->col_bc, flags | 0x28000000, 0, 0x80);
+    Set_Atari2(&dir, shl09_beam_size_tbl[level], &wp->pos, shl09_beam_size_tbl[level], 0x200,
+               0x4000, wp->value_1, &wp->col_bc, flags | 0x28000000, 0, 0x80);
     wp->col_bc = 0;
     wp->col_c0 = 0;
 }
 
-void func_800D922C(SHL_WORK *wp)
+// Hit capsule just in front of the player, along the aim.
+void shl09_front_atari_set(SHL_WORK *wp)
 {
     SVECTOR d;
     SVECTOR a;
@@ -228,9 +242,9 @@ void func_800D922C(SHL_WORK *wp)
 
     f = Player_work.fpos;
     f.w.y -= 0x500000;
-    size  = D_800D97D8[Player_work.value_53c];
+    size  = shl09_front_size_tbl[Player_work.value_53c];
     flags = Player_weapon_attack_calc(&Player_work, 9);
-    func_800D9608(&d, 0x3C);
+    shl09_aim_vec(&d, 0x3C);
     a.vx = (f.w.x + (d.vx << 9)) >> 16;
     a.vy = (f.w.y + (d.vy << 9)) >> 16;
     a.vz = (f.w.z + (d.vz << 9)) >> 16;
@@ -245,18 +259,20 @@ void func_800D922C(SHL_WORK *wp)
 
 // The level goes through a sint8 local: retail loads it with lbu and sign-extends it in a
 // register (sll 24/sra 22); indexing with the field directly gives lb.
-void func_800D9398(SHL_WORK *wp)
+// Sets the shot's hit capsule between its old and new position.
+void shl09_shot_atari_set(SHL_WORK *wp)
 {
     sint8 level;
 
     level = Player_work.value_53c;
     Set_Atari2(&wp->pos, 8, &wp->old_pos, 0x5C, 0x200, 0x4000, wp->value_1, &wp->col_c4,
-               D_800D9704[level] | 0x8000000, 0, 0x80);
+               shl09_shot_flags_tbl[level] | 0x8000000, 0, 0x80);
     wp->col_c4 = 0;
     wp->col_c8 = 0;
 }
 
-void func_800D942C(SHL_WORK *wp)
+// Opens the type 1 shot.
+void shl09_shot_open(SHL_WORK *wp)
 {
     SHL_WORK *np;
 
@@ -270,7 +286,8 @@ void func_800D942C(SHL_WORK *wp)
     }
 }
 
-void func_800D947C(SHL_WORK *wp)
+// Opens the type 2 spark 100 units ahead of the player along the aim.
+void shl09_spark_open(SHL_WORK *wp)
 {
     SVECTOR d;
     SVECTOR p;
@@ -278,7 +295,7 @@ void func_800D947C(SHL_WORK *wp)
     SHL_WORK *np;
 
     p = Player_work.pos_3a8;
-    func_800D9608(&d, 100);
+    shl09_aim_vec(&d, 100);
     v.vx = (p.vx << 16) + (d.vx << 8);
     v.vy = (p.vy << 16) + (d.vy << 8);
     v.vz = (p.vz << 16) + (d.vz << 8);
@@ -295,7 +312,8 @@ void func_800D947C(SHL_WORK *wp)
     }
 }
 
-void func_800D9570(SHL_WORK *wp)
+// Moves the object to Player_work.pos_3c8.
+void shl09_pos_from_player(SHL_WORK *wp)
 {
     SVECTOR p;
 
@@ -308,7 +326,8 @@ void func_800D9570(SHL_WORK *wp)
     wp->draw.mdl.pos.vz = wp->pos.vz = p.vz;
 }
 
-void func_800D9608(SVECTOR *out, sint32 speed)
+// out = the aim direction (camera pitch, player facing) times speed / 16.
+void shl09_aim_vec(SVECTOR *out, sint32 speed)
 {
     MATRIX m;
     SVECTOR rot;

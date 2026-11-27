@@ -319,3 +319,6 @@ stcom37_talk = 0x801121E8; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st06_stcom34_move = 0x8011AFD0; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st06_slot_tbl_set = 0x801004B4; // type:func

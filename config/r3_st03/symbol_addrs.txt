@@ -305,3 +305,6 @@ func_8010D404 = 0x8010D404; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st03_stcom04_talk_check = 0x8010E3A8; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st03_slot_tbl_set = 0x801004BC; // type:func

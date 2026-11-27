@@ -204,3 +204,6 @@ stcom18_D_0001 = 0x8011B61D;
 stcom18_frame2_tbl = 0x8011B628;
 stcom18_D_000D = 0x8011B629;
 stcom18_move_tbl = 0x8011B634;
+
+// Named after exact twins (tools/propagate_names.py).
+st0b_slot_tbl_set = 0x8010037C; // type:func

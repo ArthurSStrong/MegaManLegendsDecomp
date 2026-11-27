@@ -443,3 +443,6 @@ stcom16_charge_tbl = 0x801184D0;
 stcom16_claw_tbl = 0x801184E4;
 stcom16_jump_tbl = 0x80118500;
 stcom16_vanish_tbl = 0x8011850C;
+
+// Named after exact twins (tools/propagate_names.py).
+st13_slot_tbl_set = 0x801002E8; // type:func

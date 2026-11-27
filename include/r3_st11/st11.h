@@ -4,15 +4,15 @@
 #include "common.h"
 #include "stage_common/stage.h"
 
-extern STAGE_OBJ_FUNC D_8010A490[];
+extern STAGE_OBJ_FUNC st11_shl02_move_tbl[];
 extern STAGE_SLOT_FUNC *D_8010945C[];
 extern STAGE_SLOT_FUNC *D_80109568[];
 extern STAGE_SLOT_FUNC D_80109584[];
 extern STAGE_SLOT_FUNC D_80109644[];
 extern STAGE_SLOT_FUNC D_80109684[];
 extern STAGE_SLOT_FUNC D_801096C4[];
-void func_801076A8(STAGE_OBJ *wp);
-void func_801000B4(void);
+void st11_shl02_move(STAGE_OBJ *wp);
+void st11_slot_tbl_set(void);
 
 extern uint8 D_80109B8C[];
 extern uint8 D_80109B94[];
@@ -39,13 +39,13 @@ void func_801003C4(STAGE_ROOM *wp);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
 extern uint8 D_80109BBC[][8];
-extern STAGE_ROOM_FUNC D_80109944[];
-extern STAGE_ROOM_FUNC *D_80109904[];
+extern STAGE_ROOM_FUNC st11_first_script_tbl[];
+extern STAGE_ROOM_FUNC *st11_room_script_tbl[];
 void Sce_slot_open_keep(void *entry);
 extern uint8 D_8010E1CC[];
-void func_80100284(void);
-void func_801002D0(void);
-sint32 func_80100578(void);
+void st11_room_reset(void);
+void st11_room_script(void);
+sint32 st11_first_script(void);
 
 extern void *D_80109768[];       // model table by room
 extern void *D_80109820[];       // exit list by room
@@ -53,9 +53,9 @@ extern void *D_801097BC[];       // spawn list by room
 extern uint8 D_80109824[][0x28]; // by room (Fog_room_set)
 extern uint8 D_8010984C[][8];    // by D_801098E4[room]
 extern sint32 D_801098E4[];
-void func_80107B00(STAGE_SHOT *wp);
-void func_80107C78(STAGE_SHOT *wp);
-void func_80107DBC(STAGE_SHOT *wp, sint32 arg);
+void st11_shl02_main(STAGE_SHOT *wp);
+void st11_shl02_atari_set(STAGE_SHOT *wp);
+void st11_shl02_hit_effect_set(STAGE_SHOT *wp, sint32 arg);
 
 // A copy of the special-weapon shot from r3_shl02 (its SHL_WORK) at 0x80112874: an object slot
 // with ROCK_NEO's generic layout up to 0x88, then a model's draw data.
@@ -102,6 +102,6 @@ typedef struct
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
-void func_801076F8(ST11_SHL *wp);
+void st11_shl02_init(ST11_SHL *wp);
 
 #endif // ST11_H

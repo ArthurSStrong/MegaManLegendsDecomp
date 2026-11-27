@@ -615,7 +615,7 @@ extern uint8 D_80116A98[][0x28];
 extern uint8 D_80116B38[][8];
 extern sint32 D_80116B90[];
 
-void func_80100780(void);
+void st19_room_reset(void);
 
 void Obj_pos_move(STCOM_SVECTOR *pos, STCOM_FIXED_VECTOR *fixed, sint32 angle, sint32 x, sint32 y,
                   sint32 z);

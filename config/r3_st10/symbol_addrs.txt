@@ -366,3 +366,10 @@ st10_event_step_call = 0x80101178; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st10_stcom36_script_run = 0x80100E38; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st10_slot_tbl_set = 0x801002EC; // type:func
+st10_shl02_init = 0x8010AF9C; // type:func
+st10_shl02_main = 0x8010B3A4; // type:func
+st10_shl02_atari_set = 0x8010B51C; // type:func
+st10_shl02_hit_effect_set = 0x8010B660; // type:func

@@ -931,12 +931,12 @@ void *Open_WORK_5A4(void);
 void Gauge_open(void *wp, sint32 a1, sint32 a2, sint32 a3, sint32 color);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
 // Set_Atari2 is declared in stage_common/stage.h.
-void func_80113744(ST0A_SHOT *wp);
-void func_80113888(ST0A_SHOT *wp, sint32 arg);
+void st0a_shl02_atari_set(ST0A_SHOT *wp);
+void st0a_shl02_hit_effect_set(ST0A_SHOT *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
-void func_801131C4(ST0A_SHL *wp);
+void st0a_shl02_init(ST0A_SHL *wp);
 void func_80110298(ST0A_10C_B *wp);
 void func_80110878(ST0A_10C_B *wp);
 void func_80110A0C(ST0A_10C_B *wp);

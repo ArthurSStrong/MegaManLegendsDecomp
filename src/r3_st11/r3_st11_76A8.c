@@ -1,13 +1,16 @@
 #include "common.h"
 #include "st11.h"
 
-void func_801076A8(STAGE_OBJ *wp)
+// A copy of shl02 (the stage's own copy of that weapon's shot; type_3 0x40 when another object
+// fires it): runs its routine.
+void st11_shl02_move(STAGE_OBJ *wp)
 {
-    D_8010A490[wp->routine_0](wp);
+    st11_shl02_move_tbl[wp->routine_0](wp);
     Solid_mover_set(wp);
 }
 
-void func_801076F8(ST11_SHL *wp)
+// Routine 0: launches the shot along the aim, spread by level.
+void st11_shl02_init(ST11_SHL *wp)
 {
     STCOM_SVECTOR rot;
     STCOM_FIXED_VECTOR v;
@@ -94,12 +97,13 @@ void func_801076F8(ST11_SHL *wp)
     wp->kind_2  = 0x2E;
     wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
-    func_80107DBC(wp, 0);
-    func_80107C78(wp);
+    st11_shl02_hit_effect_set(wp, 0);
+    st11_shl02_atari_set(wp);
     Sound_call2(0x120, &wp->pos);
 }
 
-void func_80107B00(STAGE_SHOT *wp)
+// Routine 1: flies for the weapon's range; closes on a hit, a wall or at the end.
+void st11_shl02_main(STAGE_SHOT *wp)
 {
     if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
@@ -111,7 +115,7 @@ void func_80107B00(STAGE_SHOT *wp)
         {
             Close_PL_SHL_WORK(wp);
         }
-        func_80107DBC(wp, 1);
+        st11_shl02_hit_effect_set(wp, 1);
         return;
     }
     wp->old_fpos = wp->fpos;
@@ -137,10 +141,11 @@ void func_80107B00(STAGE_SHOT *wp)
         }
         return;
     }
-    func_80107C78(wp);
+    st11_shl02_atari_set(wp);
 }
 
-void func_80107C78(STAGE_SHOT *wp)
+// Sets the shot's hit capsule ahead of its position.
+void st11_shl02_atari_set(STAGE_SHOT *wp)
 {
     STCOM_SVECTOR p;
     sint32 flags;
@@ -155,8 +160,8 @@ void func_80107C78(STAGE_SHOT *wp)
     }
     if (wp->type_3 & 0x40)
     {
-        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005,
-                   0, 0x80);
+        Set_Atari2(&p, 0x20, &wp->pos, 0x20, 0x200, 0xA000, wp->value_1, &wp->col_c4, 0x8000005, 0,
+                   0x80);
     }
     else if (wp->index_c)
     {
@@ -170,7 +175,8 @@ void func_80107C78(STAGE_SHOT *wp)
     }
 }
 
-void func_80107DBC(STAGE_SHOT *wp, sint32 arg)
+// Opens a hit effect (0x85) at the shot.
+void st11_shl02_hit_effect_set(STAGE_SHOT *wp, sint32 arg)
 {
     STAGE_SHOT_FX *fx;
 

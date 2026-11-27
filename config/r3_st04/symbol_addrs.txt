@@ -169,3 +169,6 @@ stcom40_box_model = 0x80111CD4;
 
 // Named after exact twins (tools/propagate_names.py).
 st04_stcom04_talk_check = 0x8010528C; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st04_slot_tbl_set = 0x80100200; // type:func

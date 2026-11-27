@@ -301,3 +301,6 @@ stcom26_count_tbl = 0x801141BC;
 stcom26_move_tbl = 0x80114214;
 stcom26_work_tbl = 0x80118548;
 stcom26_slot_tbl = 0x80118588;
+
+// Named after exact twins (tools/propagate_names.py).
+st08_slot_tbl_set = 0x8010031C; // type:func

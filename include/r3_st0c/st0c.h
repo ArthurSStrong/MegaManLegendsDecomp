@@ -463,7 +463,7 @@ extern void *D_80164008[];
 void func_8010012C(STAGE_ROOM *wp);
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
-void func_80100DE8(void);
+void st0c_room_reset(void);
 void func_80100E34(void);
 void Sce_slot_open_list(uint8 *);
 void func_80100F58(STAGE_ROOM *wp);
@@ -489,16 +489,16 @@ void func_801011D8(STAGE_OBJ *wp);
 void func_8010122C(STAGE_OBJ *wp);
 void func_80101280(STAGE_OBJ *wp);
 void Sce_slot_open_keep(void *entry);
-void func_8010ACA4(ST0C_SHOT *wp, sint32 arg);
+void st0c_shl02_hit_effect_set(ST0C_SHOT *wp, sint32 arg);
 sint32 Player_weapon_attack_calc(void *pl, sint32 arg);
-void func_8010AB60(ST0C_SHOT *wp);
+void st0c_shl02_atari_set(ST0C_SHOT *wp);
 sint32 Scr_cell_get(STCOM_SVECTOR *pos);
 uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 void Map_obj_remove(sint32 id);
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
-void func_8010A5E0(ST0C_SHL *wp);
+void st0c_shl02_init(ST0C_SHL *wp);
 
 // The player's second position (STAGE_PL_VIEW's fixed_428) read by its integer halves.
 #define ST0C_PL_FIXED_428 (*(STAGE_FIXED_VECTOR *)&STAGE_PL.fixed_428)

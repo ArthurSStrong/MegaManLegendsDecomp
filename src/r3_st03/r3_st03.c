@@ -6,7 +6,7 @@ void Sce_flag_off(sint32 flag);
 void stcom36_objs_open(sint8 room);
 #endif
 
-void func_801004BC(void)
+void st03_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_80114350;
     STAGE_TABLE_5A4 = D_801144E4;

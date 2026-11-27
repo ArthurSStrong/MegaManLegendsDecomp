@@ -183,7 +183,7 @@ void func_8010076C(STAGE_ROOM *wp)
     D_8010C574[wp->routine_4](wp);
 }
 
-void func_801007A8(void)
+void st1b_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_8010C608;
     STAGE_TABLE_5A4      = D_8010C79C;
@@ -240,10 +240,10 @@ void func_80100818(void)
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010CF08[D_8010D108[Game_work.value_51]], D_8010CDA0[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100A20();
+    st1b_room_reset();
 }
 
-void func_80100A20(void)
+void st1b_room_reset(void)
 {
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_8010DAA0, D_8010DAA8[STAGE_GAME_VALUE_52]);

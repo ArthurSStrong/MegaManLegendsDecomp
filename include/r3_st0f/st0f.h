@@ -65,7 +65,7 @@ extern STAGE_SLOT_FUNC D_801049DC[];
 extern STAGE_SLOT_FUNC D_80104A24[];
 extern STAGE_SLOT_FUNC D_80104A28[];
 extern STAGE_SLOT_FUNC D_80104A2C[];
-void func_8010005C(void);
+void st0f_slot_tbl_set(void);
 
 sint32 func_80100F54(void);
 
@@ -159,7 +159,7 @@ extern ST0F_OBJ_FUNC D_801060F4[];
 extern ST0F_OBJ_FUNC D_8010612C[];
 uint8 func_80104798(void);
 uint8 func_801047D8(void);
-void func_80100210(void);
+void st0f_room_reset(void);
 sint32 func_80103E08(void);
 sint32 func_80104490(ST0F_OBJ *wp);
 void func_801043CC(ST0F_OBJ *wp);

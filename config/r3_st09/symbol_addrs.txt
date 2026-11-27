@@ -285,3 +285,6 @@ Em_work_tbl = 0x8009F108; // absolute:True
 st09_stcom36_script_run = 0x80100AF8; // type:func
 st09_stcom19_wait_open = 0x80119390; // type:func
 st09_stcom19_close = 0x801195F4; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st09_slot_tbl_set = 0x80100330; // type:func

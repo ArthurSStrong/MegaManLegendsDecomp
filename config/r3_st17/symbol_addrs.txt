@@ -62,3 +62,10 @@ stcom23_break_tbl = 0x8011C0D0;
 stcom23_puff_uv_tbl = 0x8011C0D8;
 stcom23_D_014D = 0x8011C0D9;
 stcom23_move_tbl = 0x8011C0E0;
+
+// Named after exact twins (tools/propagate_names.py).
+st17_slot_tbl_set = 0x8010052C; // type:func
+st17_shl02_init = 0x801128C4; // type:func
+st17_shl02_main = 0x80112CCC; // type:func
+st17_shl02_atari_set = 0x80112E44; // type:func
+st17_shl02_hit_effect_set = 0x80112F88; // type:func

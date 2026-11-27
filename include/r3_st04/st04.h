@@ -165,7 +165,7 @@ void func_80105794(STAGE_FX *wp);
 void func_80106BCC(STAGE_FX *wp);
 void func_80109FA0(STAGE_WORK *wp);
 void func_8010A248(STAGE_WORK *wp);
-void func_80100200(void);
+void st04_slot_tbl_set(void);
 void func_80101B44(STAGE_ROOM *wp);
 
 void func_80109FDC(STAGE_OBJ *wp);

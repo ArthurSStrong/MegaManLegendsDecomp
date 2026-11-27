@@ -2,7 +2,7 @@
 #include "st06.h"
 
 // Installs the stage's slot routine tables.
-void func_801004B4(void)
+void st06_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_80121BD8;
     STAGE_TABLE_5A4 = D_80121D14;

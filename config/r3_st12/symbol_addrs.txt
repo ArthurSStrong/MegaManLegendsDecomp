@@ -207,3 +207,10 @@ stcom35_color_tbl = 0x80108B48;
 
 // Named after exact twins (tools/propagate_names.py).
 st12_event_step_call = 0x80100D48; // type:func
+st12_slot_tbl_set = 0x801001D4; // type:func
+st12_room_init = 0x8010023C; // type:func
+st12_room_reset = 0x801003B8; // type:func
+st12_room_script = 0x801003C8; // type:func
+st12_room_script_tbl = 0x801083D0;
+st12_first_script_tbl = 0x80108410;
+st12_first_script = 0x801007B4; // type:func

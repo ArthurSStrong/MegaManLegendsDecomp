@@ -1097,10 +1097,10 @@ typedef struct
 #define ST17_PL_SBYTE(offset) (*((sint8 *)&Player_work + (offset)))
 
 extern sint16 D_8011C23C[];
-void func_801128C4(ST17_SHL *wp);
-void func_80112CCC(ST17_SHL *wp);
-void func_80112E44(ST17_SHL *wp);
-void func_80112F88(ST17_SHL *wp, sint32 arg);
+void st17_shl02_init(ST17_SHL *wp);
+void st17_shl02_main(ST17_SHL *wp);
+void st17_shl02_atari_set(ST17_SHL *wp);
+void st17_shl02_hit_effect_set(ST17_SHL *wp, sint32 arg);
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);

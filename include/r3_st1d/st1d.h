@@ -494,7 +494,7 @@ extern uint8 D_80164007[];
 extern void *D_80164008[];
 extern ST1D_POS_REC D_80114AB0[];
 
-void func_80100288(void);
+void st1d_slot_tbl_set(void);
 void func_80100E38(STAGE_OBJ *wp);
 void func_80100FE0(STAGE_OBJ *wp);
 void func_80111D4C(STAGE_OBJ *wp);

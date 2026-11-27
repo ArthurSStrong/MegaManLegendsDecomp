@@ -263,3 +263,11 @@ stcom35_color_tbl = 0x8010D7E8;
 
 // Named after exact twins (tools/propagate_names.py).
 st0c_event_step_call = 0x80101968; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st0c_slot_tbl_set = 0x80100BB0; // type:func
+st0c_room_reset = 0x80100DE8; // type:func
+st0c_shl02_init = 0x8010A5E0; // type:func
+st0c_shl02_main = 0x8010A9E8; // type:func
+st0c_shl02_atari_set = 0x8010AB60; // type:func
+st0c_shl02_hit_effect_set = 0x8010ACA4; // type:func

@@ -11,3 +11,6 @@ stcom02_range_tbl = 0x80106E60;
 stcom02_D_006E = 0x80106E62;
 stcom02_D_0070 = 0x80106E64;
 stcom02_move_tbl = 0x80106F04;
+
+// Named after exact twins (tools/propagate_names.py).
+st07_slot_tbl_set = 0x80100048; // type:func

@@ -681,7 +681,7 @@ extern sint32 D_800BC778;
 
 void Sce_slot_list_clear(void);
 void Sce_exit_lock_list(void *a, void *b);
-void func_80100358(void);
+void st0d_room_reset(void);
 void func_80100DB4(STAGE_ROOM *wp);
 void func_80101608(STAGE_ROOM *wp);
 void func_8010283C(STAGE_OBJ *wp, STAGE_FACE *face, sint32 index);

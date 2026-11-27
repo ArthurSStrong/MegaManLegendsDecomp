@@ -27,3 +27,6 @@ StXX_shl38_move = 0x801019C0; // type:func
 
 // Named after exact twins (tools/propagate_names.py).
 st1e_event_step_call = 0x80101118; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st1e_slot_tbl_set = 0x801000AC; // type:func

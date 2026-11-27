@@ -392,3 +392,10 @@ st05_calc_distance = 0x80118D74; // type:func
 st05_stcom13_wait = 0x8010C664; // type:func
 st05_stcom37_talk = 0x80110344; // type:func
 st05_stcom04_talk_check = 0x801171D0; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st05_slot_tbl_set = 0x8010088C; // type:func
+st05_shl02_init = 0x80126990; // type:func
+st05_shl02_main = 0x80126D98; // type:func
+st05_shl02_atari_set = 0x80126F10; // type:func
+st05_shl02_hit_effect_set = 0x80127054; // type:func

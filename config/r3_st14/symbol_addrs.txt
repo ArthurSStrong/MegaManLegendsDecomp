@@ -308,3 +308,6 @@ stcom34_move_tbl = 0x80115A74;
 // which here is the store before its Sound_call2 tail. The call goes through this alias.
 func_8010D984 = 0x8010D984; // type:func size:0xAC
 func_8010D9F8 = 0x8010D9F8; // absolute:True
+
+// Named after exact twins (tools/propagate_names.py).
+st14_slot_tbl_set = 0x801001E8; // type:func

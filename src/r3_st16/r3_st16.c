@@ -6,7 +6,7 @@
 INCLUDE_RODATA("asm/r3_st16/nonmatchings/r3_st16", D_80100000);
 
 // Installs the stage's slot routine tables.
-void func_8010009C(void)
+void st16_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_801033D0;
     STAGE_TABLE_5A4      = D_80103470;

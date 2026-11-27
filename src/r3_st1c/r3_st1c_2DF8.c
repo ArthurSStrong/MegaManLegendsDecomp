@@ -1,8 +1,8 @@
 #include "common.h"
 #include "st1c.h"
 
-// The first of scene flags 0x54B to 0x552 that is set, or 0xFF.
-uint8 func_80102DF8(void)
+// The first donation item the player holds (scene flags 0x54B to 0x552), or 0xFF.
+uint8 st1c_donation_find(void)
 {
     sint32 i;
 
@@ -16,7 +16,8 @@ uint8 func_80102DF8(void)
     return 0xFF;
 }
 
-void func_80102E3C(ST1C_OBJ *wp)
+// Routine 0: sets the curator's model up.
+void st1c_curator_init(ST1C_OBJ *wp)
 {
     wp->flags_0 |= 2;
     Model_work_init(wp, NULL);
@@ -43,7 +44,8 @@ void func_80102E3C(ST1C_OBJ *wp)
     wp->routine_0++;
 }
 
-void func_80102F50(ST1C_OBJ *wp)
+// State 0: waits to be talked to; greets the first time (scene flag 0x40), then takes items.
+void st1c_curator_wait(ST1C_OBJ *wp)
 {
     if (Player_work.target_184 == wp)
     {
@@ -60,7 +62,8 @@ void func_80102F50(ST1C_OBJ *wp)
     Solid_set(wp, 1, -1, 0);
 }
 
-void func_80102FD0(ST1C_OBJ *wp)
+// State 1: camera on the curator, message 1, sets scene flag 0x40.
+void st1c_curator_greet(ST1C_OBJ *wp)
 {
     STCOM_FIXED_VECTOR pos;
     STCOM_PL_WORK *pl;
@@ -113,7 +116,9 @@ void func_80102FD0(ST1C_OBJ *wp)
     }
 }
 
-void func_80103178(ST1C_OBJ *wp)
+// State 2: takes the first donation item the player holds (message 3 + item) and puts it on
+// show (flag 0x54B + item off, 0x38 + item on); message 2 when there is none.
+void st1c_curator_take(ST1C_OBJ *wp)
 {
     STCOM_FIXED_VECTOR pos;
     sint32 slot;
@@ -135,7 +140,7 @@ void func_80103178(ST1C_OBJ *wp)
         case 1:
             if (Camera_moving() == 0)
             {
-                if (func_80102DF8() == 0xFF)
+                if (st1c_donation_find() == 0xFF)
                 {
                     wp->timer_C   = 1;
                     wp->routine_2 = 3;
@@ -160,7 +165,7 @@ void func_80103178(ST1C_OBJ *wp)
             if (--wp->timer_C == 0)
             {
                 EM_Char_Set(wp, 8, 0);
-                slot = func_80102DF8();
+                slot = st1c_donation_find();
                 if (slot == 0xFF)
                 {
                     Message_event_set(&wp->position, 1, 0, 2);
@@ -176,7 +181,7 @@ void func_80103178(ST1C_OBJ *wp)
             if (Message_event[0] == 0)
             {
                 Camera_return_resume();
-                slot = func_80102DF8();
+                slot = st1c_donation_find();
                 if (slot != 0xFF && *(uint8 *)&Moji_flag == 0)
                 {
                     Sce_flag_on(slot + 0x38);
@@ -205,26 +210,31 @@ void func_80103178(ST1C_OBJ *wp)
     }
 }
 
-void func_80103400(STAGE_OBJ *wp)
+// Routine 1: runs the curator's state (st1c_curator_tbl).
+void st1c_curator_main(STAGE_OBJ *wp)
 {
-    D_8010446C[wp->routine_1](wp);
+    st1c_curator_tbl[wp->routine_1](wp);
 }
 
-void func_8010343C(STAGE_OBJ *wp)
+// Routine 2: closes the curator.
+void st1c_curator_erase(STAGE_OBJ *wp)
 {
     Close_EM_WORK(wp);
 }
 
-void func_8010345C(STAGE_OBJ *wp)
+// The curator (EM_WORK): runs its routine and casts its shadow.
+void st1c_curator_move(STAGE_OBJ *wp)
 {
-    D_80104478[wp->routine_0](wp);
+    st1c_curator_move_tbl[wp->routine_0](wp);
     if ((uint8)wp->flags_0 & 2)
     {
         Model_Shadow_Trans(wp, 0x3C, 0x200, 0);
     }
 }
 
-void func_801034C8(ST1C_OBJ50 *wp)
+// An exhibit (WORK_50 kind 0x22, index_C = item): its model at st1c_exhibit_pos_tbl; shows
+// message 0x3C + item when the player looks at it.
+void st1c_exhibit_move(ST1C_OBJ50 *wp)
 {
     STCOM_FIXED_VECTOR scale;
     STCOM_SVECTOR rot;
@@ -235,7 +245,7 @@ void func_801034C8(ST1C_OBJ50 *wp)
     {
         case 0:
             wp->flags_0 |= 6;
-            wp->variant_3 = D_801044C4[wp->index_C];
+            wp->variant_3 = st1c_exhibit_model_tbl[wp->index_C];
             Model_work_init(wp, &wp->variant_3);
             if (wp->index_C == 5)
             {
@@ -245,15 +255,15 @@ void func_801034C8(ST1C_OBJ50 *wp)
             {
                 wp->color_40 = 0x808080;
             }
-            wp->pos_38.x = D_80104484[wp->index_C].x;
-            wp->pos_38.y = D_80104484[wp->index_C].y;
-            wp->pos_38.z = D_80104484[wp->index_C].z;
+            wp->pos_38.x = st1c_exhibit_pos_tbl[wp->index_C].x;
+            wp->pos_38.y = st1c_exhibit_pos_tbl[wp->index_C].y;
+            wp->pos_38.z = st1c_exhibit_pos_tbl[wp->index_C].z;
             wp->model_10 = D_801044CC;
             wp->routine_0++;
             // fall through
         case 1:
             rot.x = 0;
-            rot.y = D_80104484[wp->index_C].pad;
+            rot.y = st1c_exhibit_pos_tbl[wp->index_C].pad;
             rot.z = 0;
             RotMatrixYXZ(&rot, &wp->matrix);
             scale.x = 0x200;

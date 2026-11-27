@@ -2,7 +2,7 @@
 #include "st17.h"
 
 // Installs the stage's slot routine tables.
-void func_8010052C(void)
+void st17_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_8011A82C;
     STAGE_TABLE_5A4      = D_8011A9CC;

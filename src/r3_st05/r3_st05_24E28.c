@@ -737,7 +737,7 @@ void func_80126940(STAGE_OBJ *wp)
     Solid_mover_set(wp);
 }
 
-void func_80126990(ST05_SHL *wp)
+void st05_shl02_init(ST05_SHL *wp)
 {
     STCOM_SVECTOR rot;
     STCOM_FIXED_VECTOR v;
@@ -824,12 +824,12 @@ void func_80126990(ST05_SHL *wp)
     wp->kind_2  = 0x2E;
     wp->timer_b = Player_weapon_dist_calc(&Player_work, 2);
     wp->routine_0++;
-    func_80127054(wp, 0);
-    func_80126F10(wp);
+    st05_shl02_hit_effect_set(wp, 0);
+    st05_shl02_atari_set(wp);
     Sound_call2(0x120, &wp->pos);
 }
 
-void func_80126D98(STAGE_SHOT *wp)
+void st05_shl02_main(STAGE_SHOT *wp)
 {
     if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
@@ -841,7 +841,7 @@ void func_80126D98(STAGE_SHOT *wp)
         {
             Close_PL_SHL_WORK(wp);
         }
-        func_80127054(wp, 1);
+        st05_shl02_hit_effect_set(wp, 1);
         return;
     }
     wp->old_fpos = wp->fpos;
@@ -867,10 +867,10 @@ void func_80126D98(STAGE_SHOT *wp)
         }
         return;
     }
-    func_80126F10(wp);
+    st05_shl02_atari_set(wp);
 }
 
-void func_80126F10(STAGE_SHOT *wp)
+void st05_shl02_atari_set(STAGE_SHOT *wp)
 {
     STCOM_SVECTOR p;
     sint32 flags;
@@ -900,7 +900,7 @@ void func_80126F10(STAGE_SHOT *wp)
     }
 }
 
-void func_80127054(STAGE_SHOT *wp, sint32 arg)
+void st05_shl02_hit_effect_set(STAGE_SHOT *wp, sint32 arg)
 {
     STAGE_SHOT_FX *fx;
 

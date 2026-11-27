@@ -2,7 +2,7 @@
 #include "st01.h"
 
 // Installs the stage's slot routine tables.
-void func_80100030(void)
+void st01_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_80100C88;
     STAGE_TABLE_5A4 = D_80100CC8;
@@ -13,7 +13,7 @@ void func_80100030(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_80100098(void)
+void st01_room_init(void)
 {
     STAGE_MAP_WORK *mw;
     void *spawns;
@@ -36,12 +36,13 @@ void func_80100098(void)
 }
 
 // Runs the current room's script.
-void func_801001EC(void)
+void st01_room_script(void)
 {
-    D_80100F08[Game_work.value_51](&D_800989F8);
+    st01_room_script_tbl[Game_work.value_51](&D_800989F8);
 }
 
-void func_8010022C(STAGE_ROOM_WORK *wp)
+// Room 0: fades and starts scene event 0x47.
+void st01_room0_script(STAGE_ROOM_WORK *wp)
 {
     switch (wp->routine_4)
     {
@@ -82,7 +83,9 @@ void func_801002DC(void)
 {
 }
 
-void func_801002E4(STAGE_ROOM_WORK *wp)
+// The event's step routine (st01_event_step_call): at frame 0 moves two models down and starts
+// the child object; from frame 0x898 counts D_800BBA9C[0] down to -11.
+void st01_event_step(STAGE_ROOM_WORK *wp)
 {
     STAGE_WORK *child;
 
@@ -114,7 +117,8 @@ void func_801002E4(STAGE_ROOM_WORK *wp)
     }
 }
 
-void func_80100400(STAGE_ROOM_WORK *wp)
+// Starts the event's camera, step table and slots.
+void st01_event_init(STAGE_ROOM_WORK *wp)
 {
     uint8 *entry;
 
@@ -133,7 +137,9 @@ void st01_event_step_call(STAGE_ROOM_WORK *wp)
     }
 }
 
-void func_8010049C(STAGE_ROOM_WORK *wp)
+// Takes the player's control, plays XA 0x1E and runs the event's scripts until they end or are
+// skipped, then fades and goes back to Title_task.
+void st01_event_run(STAGE_ROOM_WORK *wp)
 {
     switch (wp->routine_4)
     {
@@ -164,7 +170,7 @@ void func_8010049C(STAGE_ROOM_WORK *wp)
             break;
         case 4:
             Fade_start(2);
-            func_80100400(wp);
+            st01_event_init(wp);
             wp->routine_4++;
             // fall through
         case 5:
@@ -263,12 +269,14 @@ void func_8010080C(STAGE_WORK *wp)
     EM_Char_Set(wp, 0, 0);
 }
 
-void func_801008C0(STAGE_WORK *wp)
+// The scrolling picture (WORK_50 slot): runs its routine.
+void st01_scroll_move(STAGE_WORK *wp)
 {
-    D_80101094[wp->routine_0](wp);
+    st01_scroll_tbl[wp->routine_0](wp);
 }
 
-void func_801008FC(STAGE_WORK *wp)
+// Routine 0: starts the picture 0xBE lines above the screen.
+void st01_scroll_init(STAGE_WORK *wp)
 {
     wp->routine_1    = 0;
     wp->routine_2    = 0;
@@ -277,7 +285,9 @@ void func_801008FC(STAGE_WORK *wp)
     wp->routine_0++;
 }
 
-void func_80100920(STAGE_WORK *wp)
+// Routine 1: draws 0xB0 lines of the picture, fading in and out over 16 lines at the top and
+// bottom, and scrolls it a line every 3 frames; closes after 0x400 lines.
+void st01_scroll_draw(STAGE_WORK *wp)
 {
     sint32 i;
     sint32 y;
@@ -287,16 +297,16 @@ void func_80100920(STAGE_WORK *wp)
     for (i = 0; i < 0x10; i++)
     {
         c = i << 3;
-        func_80100A70(wp, i + 0x20, y + i, 0x2000000 | (c << 16) | (c << 8) | c);
+        st01_scroll_line_draw(wp, i + 0x20, y + i, 0x2000000 | (c << 16) | (c << 8) | c);
     }
     for (i = 0; i < 0x90; i++)
     {
-        func_80100A70(wp, i + 0x30, y + 0x10 + i, 0x2808080);
+        st01_scroll_line_draw(wp, i + 0x30, y + 0x10 + i, 0x2808080);
     }
     for (i = 0; i < 0x10; i++)
     {
         c = (0x10 - i) << 3;
-        func_80100A70(wp, i + 0xC0, y + 0xA0 + i, 0x2000000 | (c << 16) | (c << 8) | c);
+        st01_scroll_line_draw(wp, i + 0xC0, y + 0xA0 + i, 0x2000000 | (c << 16) | (c << 8) | c);
     }
     if (++wp->routine_3 >= 3)
     {
@@ -310,7 +320,7 @@ void func_80100920(STAGE_WORK *wp)
 }
 
 // Draws one textured line of the scrolling picture.
-void func_80100A70(void *wp, sint32 y, sint32 v, uint32 color)
+void st01_scroll_line_draw(void *wp, sint32 y, sint32 v, uint32 color)
 {
     POLY_FT4 *p;
 

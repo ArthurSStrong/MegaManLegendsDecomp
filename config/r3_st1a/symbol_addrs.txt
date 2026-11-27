@@ -328,3 +328,6 @@ check_block = 0x8012C1C0; // type:func
 check_swing_camera = 0x8012C228; // type:func
 eve19_move_tbl = 0x801396C4;
 eve19_main_tbl = 0x801396CC;
+
+// Named after exact twins (tools/propagate_names.py).
+st1a_slot_tbl_set = 0x801006F8; // type:func

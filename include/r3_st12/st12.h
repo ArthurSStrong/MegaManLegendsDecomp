@@ -46,7 +46,7 @@ extern STAGE_SLOT_FUNC D_80107FE0[];
 extern STAGE_SLOT_FUNC D_80108034[];
 extern STAGE_SLOT_FUNC D_8010804C[];
 extern STAGE_SLOT_FUNC D_80108050[];
-void func_801001D4(void);
+void st12_slot_tbl_set(void);
 void st12_event_step_call(STAGE_ROOM_WORK *wp);
 
 void func_80100828(uint8 arg0);
@@ -71,8 +71,8 @@ void func_801004BC(STAGE_ROOM *wp);
 
 void func_80100468(STAGE_ROOM *wp);
 
-extern STAGE_ROOM_FUNC D_80108410[];  // room scripts by room (scene flag 0x1FF clear)
-extern STAGE_ROOM_FUNC *D_801083D0[]; // room scripts by script set, then room
+extern STAGE_ROOM_FUNC st12_first_script_tbl[]; // room scripts by room (scene flag 0x1FF clear)
+extern STAGE_ROOM_FUNC *st12_room_script_tbl[]; // room scripts by script set, then room
 void Sce_slot_open_keep(void *entry);
 extern STCOM_SVECTOR D_80108AC0[];
 extern uint32 D_80108AE0[];
@@ -81,9 +81,9 @@ uint32 Map_obj_model_swap(sint32 idx, uint32 key);
 extern uint8 D_801088F4[];
 extern STAGE_ROOM2_FUNC D_80108AF0[];
 extern STAGE_SCRIPT_ENTRY D_80108804[];
-void func_801003B8(void);
-void func_801003C8(void);
-sint32 func_801007B4(void);
+void st12_room_reset(void);
+void st12_room_script(void);
+sint32 st12_first_script(void);
 void func_80100880(STAGE_ROOM *wp);
 void func_80100B60(STAGE_ROOM *wp);
 void func_80100CC4(STAGE_ROOM *wp);

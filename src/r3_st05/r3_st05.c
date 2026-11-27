@@ -6,7 +6,7 @@ void stcom36_objs_end(void);
 #endif
 
 // Installs the stage's slot routine tables.
-void func_8010088C(void)
+void st05_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_8012D9C4;
     STAGE_TABLE_5A4 = D_8012DB04;

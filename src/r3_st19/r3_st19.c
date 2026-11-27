@@ -2,7 +2,7 @@
 #include "st19.h"
 
 // Installs the stage's slot routine tables.
-void func_8010055C(void)
+void st19_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_80116514;
     STAGE_TABLE_5A4      = D_801166A4;
@@ -50,11 +50,11 @@ void func_801005CC(void)
     Obj_spawn_list(spawns, D_800C356D);
     Fog_room_set(D_80116B38[D_80116B90[Game_work.value_51]], D_80116A98[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100780();
+    st19_room_reset();
 }
 
 // Sets up the room's scene flags and restarts its script.
-void func_80100780(void)
+void st19_room_reset(void)
 {
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_801171D0, D_801171D8[STAGE_GAME_VALUE_52]);

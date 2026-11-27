@@ -2,7 +2,7 @@
 #include "st1c.h"
 
 // Installs the stage's slot routine tables.
-void func_8010001C(void)
+void st1c_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0      = D_80103650;
     STAGE_TABLE_5A4      = D_80103790;
@@ -14,45 +14,48 @@ void func_8010001C(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_8010008C(void)
+void st1c_room_init(void)
 {
     void *spawn;
     sint16 *cells;
 
-    STAGE_MAP_WORK_PTR->w      = STAGE_MAP_TBL[Game_work.value_51].w;
-    STAGE_MAP_WORK_PTR->h      = STAGE_MAP_TBL[Game_work.value_51].h;
-    STAGE_MAP_WORK_PTR->x0     = STAGE_MAP_TBL[Game_work.value_51].x0;
-    STAGE_MAP_WORK_PTR->z0     = STAGE_MAP_TBL[Game_work.value_51].z0;
-    STAGE_MAP_WORK_PTR->x1     = STAGE_MAP_WORK_PTR->x0 + STAGE_MAP_WORK_PTR->w;
-    STAGE_MAP_WORK_PTR->z1     = STAGE_MAP_WORK_PTR->z0 + STAGE_MAP_WORK_PTR->h;
-    cells                = STAGE_MAP_TBL[Game_work.value_51].cells;
-    STAGE_PL_BYTE(0x44E) = 0;
-    spawn                = D_801038C0[Game_work.value_51];
-    STAGE_MAP_WORK_PTR->info   = STAGE_CELL_INFO;
-    STAGE_MAP_WORK_PTR->cells  = cells;
-    STAGE_MAP_WORK_PTR->exits  = D_80103940[Game_work.value_51];
+    STAGE_MAP_WORK_PTR->w     = STAGE_MAP_TBL[Game_work.value_51].w;
+    STAGE_MAP_WORK_PTR->h     = STAGE_MAP_TBL[Game_work.value_51].h;
+    STAGE_MAP_WORK_PTR->x0    = STAGE_MAP_TBL[Game_work.value_51].x0;
+    STAGE_MAP_WORK_PTR->z0    = STAGE_MAP_TBL[Game_work.value_51].z0;
+    STAGE_MAP_WORK_PTR->x1    = STAGE_MAP_WORK_PTR->x0 + STAGE_MAP_WORK_PTR->w;
+    STAGE_MAP_WORK_PTR->z1    = STAGE_MAP_WORK_PTR->z0 + STAGE_MAP_WORK_PTR->h;
+    cells                     = STAGE_MAP_TBL[Game_work.value_51].cells;
+    STAGE_PL_BYTE(0x44E)      = 0;
+    spawn                     = D_801038C0[Game_work.value_51];
+    STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
+    STAGE_MAP_WORK_PTR->cells = cells;
+    STAGE_MAP_WORK_PTR->exits = D_80103940[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_80103998[D_80103A18[Game_work.value_51]], D_80103948[Game_work.value_51]);
     Automap_room_set(0);
-    func_801001D0();
+    st1c_room_reset();
 }
 
-void func_801001D0(void)
+// Resets the room script's routines (routine_4..7 of D_800989F8).
+void st1c_room_reset(void)
 {
     *(uint32 *)&D_800989F8.routine_4 = 0;
 }
 
 // Runs the current room's script.
-void func_801001E0(void)
+void st1c_room_script(void)
 {
-    D_80103C84[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+    st1c_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
 }
 
-void func_80100234(STAGE_ROOM_WORK *wp)
+// Room 0: opens the slot list for the exhibit level once (and closes slot 0 while
+// Game_work.value_52 < 8).
+void st1c_room0_script(STAGE_ROOM_WORK *wp)
 {
     sint32 level;
 
-    level = func_80100360();
+    level = st1c_exhibit_level();
     if (wp->routine_4 == 0)
     {
         Sce_slot_open_list(&D_80103C3C[level]);
@@ -64,13 +67,15 @@ void func_80100234(STAGE_ROOM_WORK *wp)
     }
 }
 
-void func_801002B0(STAGE_ROOM_WORK *wp)
+// Room 1: opens the slot list for the exhibit level, and an exhibit (WORK_50 kind 0x22) for each
+// donated item (scene flags 0x38-0x3F).
+void st1c_room1_script(STAGE_ROOM_WORK *wp)
 {
     sint32 level;
     sint32 i;
     ST1C_OBJ50 *op;
 
-    level = func_80100360();
+    level = st1c_exhibit_level();
     if (wp->routine_4 == 0)
     {
         Sce_slot_open_list(&D_80103C5C[level]);
@@ -91,8 +96,9 @@ void func_801002B0(STAGE_ROOM_WORK *wp)
     }
 }
 
-// The level (0 to 3) from the scene flags 0x38 to 0x3F, weighted by D_80103C8C.
-uint8 func_80100360(void)
+// The exhibit level (0 to 3) from the donated items (scene flags 0x38 to 0x3F), weighted by
+// st1c_exhibit_weight_tbl.
+uint8 st1c_exhibit_level(void)
 {
     sint32 i;
     sint32 sum;
@@ -102,7 +108,7 @@ uint8 func_80100360(void)
     {
         if (Sce_flag_test(i))
         {
-            sum += D_80103C8C[i];
+            sum += st1c_exhibit_weight_tbl[i];
         }
     }
     if (sum >= 0x2E)

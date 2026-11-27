@@ -1,7 +1,7 @@
 #include "common.h"
 #include "st0d.h"
 
-void func_80100184(void)
+void st0d_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_8010BC98;
     STAGE_TABLE_5A4 = D_8010BDF0;
@@ -32,10 +32,10 @@ void func_801001EC(void)
     Fog_room_set(D_8010C2E4[D_8010C2F4[Game_work.value_51]], D_8010C1F4[Game_work.value_51]);
     Automap_room_set(0);
     *(uint32 *)&D_800989F8.routine_4 = 0;
-    func_80100358();
+    st0d_room_reset();
 }
 
-void func_80100358(void)
+void st0d_room_reset(void)
 {
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_8010C7D8, D_8010C7E0[STAGE_GAME_VALUE_52]);

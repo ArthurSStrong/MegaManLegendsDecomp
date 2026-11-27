@@ -93,3 +93,7 @@ stcom01_talk2_tbl = 0x801060B0;
 stcom01_talk_look_tbl = 0x801060BC;
 stcom01_talk_cam_tbl = 0x801060D4;
 stcom01_D_0788 = 0x801060E8;
+
+// Named after exact twins (tools/propagate_names.py).
+st0f_slot_tbl_set = 0x8010005C; // type:func
+st0f_room_reset = 0x80100210; // type:func

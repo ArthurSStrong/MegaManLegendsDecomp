@@ -2,7 +2,7 @@
 #include "st11.h"
 
 // Installs the stage's slot routine tables.
-void func_801000B4(void)
+void st11_slot_tbl_set(void)
 {
     STAGE_TABLE_3C0 = D_8010945C;
     STAGE_TABLE_5A4 = D_80109568;
@@ -13,31 +13,33 @@ void func_801000B4(void)
 }
 
 // Sets up the current room: models, map, spawns.
-void func_8010011C(void)
+void st11_room_init(void)
 {
     void *spawn;
     sint16 *cells;
 
     Map_layer_set(D_80109768[Game_work.value_51]);
-    STAGE_MAP_WORK_PTR->w      = STAGE_MAP_TBL[Game_work.value_51].w;
-    STAGE_MAP_WORK_PTR->h      = STAGE_MAP_TBL[Game_work.value_51].h;
-    STAGE_MAP_WORK_PTR->x0     = STAGE_MAP_TBL[Game_work.value_51].x0;
-    STAGE_MAP_WORK_PTR->z0     = STAGE_MAP_TBL[Game_work.value_51].z0;
-    STAGE_MAP_WORK_PTR->x1     = STAGE_MAP_WORK_PTR->x0 + STAGE_MAP_WORK_PTR->w;
-    STAGE_MAP_WORK_PTR->z1     = STAGE_MAP_WORK_PTR->z0 + STAGE_MAP_WORK_PTR->h;
-    cells                = STAGE_MAP_TBL[Game_work.value_51].cells;
-    STAGE_PL_BYTE(0x44E) = 1;
-    spawn                = D_801097BC[Game_work.value_51];
-    STAGE_MAP_WORK_PTR->info   = STAGE_CELL_INFO;
-    STAGE_MAP_WORK_PTR->cells  = cells;
-    STAGE_MAP_WORK_PTR->exits  = D_80109820[Game_work.value_51];
+    STAGE_MAP_WORK_PTR->w     = STAGE_MAP_TBL[Game_work.value_51].w;
+    STAGE_MAP_WORK_PTR->h     = STAGE_MAP_TBL[Game_work.value_51].h;
+    STAGE_MAP_WORK_PTR->x0    = STAGE_MAP_TBL[Game_work.value_51].x0;
+    STAGE_MAP_WORK_PTR->z0    = STAGE_MAP_TBL[Game_work.value_51].z0;
+    STAGE_MAP_WORK_PTR->x1    = STAGE_MAP_WORK_PTR->x0 + STAGE_MAP_WORK_PTR->w;
+    STAGE_MAP_WORK_PTR->z1    = STAGE_MAP_WORK_PTR->z0 + STAGE_MAP_WORK_PTR->h;
+    cells                     = STAGE_MAP_TBL[Game_work.value_51].cells;
+    STAGE_PL_BYTE(0x44E)      = 1;
+    spawn                     = D_801097BC[Game_work.value_51];
+    STAGE_MAP_WORK_PTR->info  = STAGE_CELL_INFO;
+    STAGE_MAP_WORK_PTR->cells = cells;
+    STAGE_MAP_WORK_PTR->exits = D_80109820[Game_work.value_51];
     Obj_spawn_list(spawn, D_800C356D);
     Fog_room_set(D_8010984C[D_801098E4[Game_work.value_51]], D_80109824[Game_work.value_51]);
     Automap_room_set(0);
-    func_80100284();
+    st11_room_reset();
 }
 
-void func_80100284(void)
+// Clears the room's slot list, locks the exits for Game_work.value_52 and resets the room
+// script's routines.
+void st11_room_reset(void)
 {
     Sce_slot_list_clear();
     Sce_exit_lock_list(D_80109BB4, D_80109BBC[STAGE_GAME_VALUE_52]);
@@ -45,15 +47,15 @@ void func_80100284(void)
 }
 
 // Runs the current room's script (the second set once scene flag 0x1FF is set).
-void func_801002D0(void)
+void st11_room_script(void)
 {
     if (!Sce_flag_test(0x1FF))
     {
-        D_80109944[Game_work.value_51](&D_800989F8);
+        st11_first_script_tbl[Game_work.value_51](&D_800989F8);
     }
     if (Sce_flag_test(0x1FF))
     {
-        D_80109904[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
+        st11_room_script_tbl[STAGE_GAME_VALUE_52][Game_work.value_51](&D_800989F8);
     }
 }
 
@@ -113,7 +115,8 @@ void func_80100524(STAGE_ROOM *wp)
     }
 }
 
-sint32 func_80100578(void)
+// Until scene flag 0x1FF is set: opens two extra slots by scene flags, then sets 0x1FF.
+sint32 st11_first_script(void)
 {
     if (D_800989F8.routine_4 == 0)
     {

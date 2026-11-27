@@ -19,23 +19,23 @@ typedef struct
 } SHL09_SIZE;
 
 extern SHL_BOX D_800D96F8;
-extern sint32 D_800D9704[];       // hit flags by Player_work.value_53c
-extern SHL09_SCALE D_800D9724[];  // type 2 sprite scales
-extern SHL_FUNC D_800D9730[];     // handlers by type_3
-extern SHL_FUNC shl09_move_tbl[]; // type 0 routine_0 handlers
-extern SHL_FUNC D_800D9744[];     // type 1 routine_0 handlers
-extern SHL_FUNC D_800D9750[];     // type 2 routine_0 handlers
-extern sint32 D_800D9758[];       // beam reach by level
-extern sint32 D_800D9778[];       // beam hit size by level
-extern SHL09_SIZE D_800D9798[];   // beam scale by level
-extern sint32 D_800D97D8[];       // hit size by level
+extern sint32 shl09_shot_flags_tbl[];       // hit flags by Player_work.value_53c
+extern SHL09_SCALE shl09_spark_scale_tbl[]; // type 2 sprite scales
+extern SHL_FUNC shl09_type_tbl[];           // handlers by type_3
+extern SHL_FUNC shl09_move_tbl[];           // type 0 routine_0 handlers
+extern SHL_FUNC shl09_shot_tbl[];           // type 1 routine_0 handlers
+extern SHL_FUNC shl09_spark_tbl[];          // type 2 routine_0 handlers
+extern sint32 shl09_beam_reach_tbl[];       // beam reach by level
+extern sint32 shl09_beam_size_tbl[];        // beam hit size by level
+extern SHL09_SIZE shl09_beam_scale_tbl[];   // beam scale by level
+extern sint32 shl09_front_size_tbl[];       // hit size by level
 
-void func_800D8F50(SHL_WORK *wp);
-void func_800D922C(SHL_WORK *wp);
-void func_800D9398(SHL_WORK *wp);
-void func_800D942C(SHL_WORK *wp);
-void func_800D947C(SHL_WORK *wp);
-void func_800D9570(SHL_WORK *wp);
-void func_800D9608(SVECTOR *out, sint32 speed);
+void shl09_beam_set(SHL_WORK *wp);
+void shl09_front_atari_set(SHL_WORK *wp);
+void shl09_shot_atari_set(SHL_WORK *wp);
+void shl09_shot_open(SHL_WORK *wp);
+void shl09_spark_open(SHL_WORK *wp);
+void shl09_pos_from_player(SHL_WORK *wp);
+void shl09_aim_vec(SVECTOR *out, sint32 speed);
 
 #endif // SHL09_H

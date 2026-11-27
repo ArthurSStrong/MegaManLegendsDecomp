@@ -24,7 +24,8 @@ void shl05_move(SHL_WORK *wp)
     Solid_mover_set(wp);
 }
 
-void func_800D8928(SHL_WORK *wp)
+// Routine 0: throws the bomb along the camera pitch and player facing, with gravity ay 0x200.
+void shl05_init(SHL_WORK *wp)
 {
     SVECTOR dir;
     SVECTOR rot;
@@ -66,38 +67,40 @@ void func_800D8928(SHL_WORK *wp)
     wp->old_fpos.w.z = wp->fpos.w.z - (wp->vel.vz << 10);
     Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
     wp->box_78            = &D_800D95B0;
-    wp->draw.spr.scale_96 = D_800D95BC[0].scale_96;
-    wp->draw.spr.scale_97 = D_800D95BC[0].scale_97;
+    wp->draw.spr.scale_96 = shl05_scale_tbl[0].scale_96;
+    wp->draw.spr.scale_97 = shl05_scale_tbl[0].scale_97;
     wp->draw.spr.size_98  = 0x18;
     wp->flags_0 |= 2;
     wp->value_74 = 1;
-    func_800D94C0(wp);
+    shl05_player_dist_set(wp);
     wp->draw.spr.x_90 = wp->pos.vx;
     wp->draw.spr.y_92 = wp->pos.vy - 8;
     wp->draw.spr.z_94 = wp->pos.vz;
     wp->value_e &= ~4;
     wp->routine_0++;
     Sound_call2(0x127, &wp->pos);
-    if (func_800D90B0(wp))
+    if (shl05_map_bounce(wp))
     {
         wp->routine_0 = 3;
         wp->bit_d     = 0;
     }
 }
 
-void func_800D8B90(SHL_WORK *wp)
+// Routine 1: flies and bounces; blows up on a hit, or goes to routine 3 once it stops or
+// after 150 frames.
+void shl05_bounce(SHL_WORK *wp)
 {
     SVECTOR unused;
     SHL_FX *fx;
 
-    func_800D94C0(wp);
+    shl05_player_dist_set(wp);
     if (Shot_map_check(wp, 0) || wp->hit_7c)
     {
         wp->draw.spr.value_9c = 0;
         fx                    = Open_EFFECT_WORK();
         if (fx)
         {
-            func_800D9450(wp, fx);
+            shl05_explosion_set(wp, fx);
         }
         wp->flags_0 = 0;
         Close_PL_SHL_WORK(wp);
@@ -106,7 +109,7 @@ void func_800D8B90(SHL_WORK *wp)
     wp->old_fpos          = wp->fpos;
     wp->old_pos           = wp->pos;
     wp->draw.spr.color_8c = 0x2C808080;
-    func_800D935C(wp);
+    shl05_pos_update(wp);
     Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
     Obj_pos_adj_round(&wp->fpos, &wp->pos);
     if ((Game_work.value_50 == 0x10 || Game_work.value_50 == 0x11) && wp->pos.vy >= -1)
@@ -115,7 +118,7 @@ void func_800D8B90(SHL_WORK *wp)
         Close_PL_SHL_WORK(wp);
         return;
     }
-    if (func_800D90B0(wp))
+    if (shl05_map_bounce(wp))
     {
         wp->routine_0 = 3;
         wp->bit_d     = 0;
@@ -136,11 +139,12 @@ void func_800D8B90(SHL_WORK *wp)
     wp->draw.spr.x_90     = wp->pos.vx;
     wp->draw.spr.y_92     = wp->pos.vy - 8;
     wp->draw.spr.z_94     = wp->pos.vz;
-    wp->draw.spr.scale_96 = D_800D95BC[wp->routine_1].scale_96;
-    wp->draw.spr.scale_97 = D_800D95BC[wp->routine_1].scale_97;
+    wp->draw.spr.scale_96 = shl05_scale_tbl[wp->routine_1].scale_96;
+    wp->draw.spr.scale_97 = shl05_scale_tbl[wp->routine_1].scale_97;
 }
 
-void func_800D8D60(SHL_WORK *wp)
+// Routine 2: explodes at once and closes.
+void shl05_explode(SHL_WORK *wp)
 {
     SHL_FX *fx;
 
@@ -154,13 +158,15 @@ void func_800D8D60(SHL_WORK *wp)
     fx                             = Open_EFFECT_WORK();
     if (fx)
     {
-        func_800D9450(wp, fx);
+        shl05_explosion_set(wp, fx);
     }
     wp->flags_0 = 0;
     Close_PL_SHL_WORK(wp);
 }
 
-void func_800D8DF4(SHL_WORK *wp)
+// Routine 3: keeps rolling and blinks (faster after 15 frames); explodes after 30 frames or on
+// a hit.
+void shl05_fuse(SHL_WORK *wp)
 {
     SHL_FX *fx;
     sint16 mask;
@@ -172,19 +178,19 @@ void func_800D8DF4(SHL_WORK *wp)
     }
     wp->old_fpos = wp->fpos;
     wp->old_pos  = wp->pos;
-    func_800D935C(wp);
+    shl05_pos_update(wp);
     Obj_pos_adj_round(&wp->old_fpos, &wp->old_pos);
     Obj_pos_adj_round(&wp->fpos, &wp->pos);
     if ((Game_work.value_50 == 0x10 || Game_work.value_50 == 0x11) && wp->pos.vy >= -1)
     {
         goto remove;
     }
-    func_800D90B0(wp);
+    shl05_map_bounce(wp);
     wp->draw.spr.x_90     = wp->pos.vx;
     wp->draw.spr.y_92     = wp->pos.vy - 8;
     wp->draw.spr.z_94     = wp->pos.vz;
-    wp->draw.spr.scale_96 = D_800D95BC[wp->routine_1].scale_96;
-    wp->draw.spr.scale_97 = D_800D95BC[wp->routine_1].scale_97;
+    wp->draw.spr.scale_96 = shl05_scale_tbl[wp->routine_1].scale_96;
+    wp->draw.spr.scale_97 = shl05_scale_tbl[wp->routine_1].scale_97;
     if (wp->vel.vx)
     {
         if (++wp->routine_1 >= 6)
@@ -192,7 +198,7 @@ void func_800D8DF4(SHL_WORK *wp)
             wp->routine_1 = 0;
         }
     }
-    func_800D94C0(wp);
+    shl05_player_dist_set(wp);
     if (wp->bit_d < 30)
     {
         if (wp->bit_d < 15)
@@ -221,13 +227,14 @@ end:
     fx = Open_EFFECT_WORK();
     if (fx)
     {
-        func_800D9450(wp, fx);
+        shl05_explosion_set(wp, fx);
     }
 remove:
     wp->flags_0 = 0;
     Close_PL_SHL_WORK(wp);
 }
 
+// Routine 4: sets the bomb's sprite at its position, nothing else (no code moves it here).
 void func_800D8FEC(SHL_WORK *wp)
 {
     wp->draw.spr.code_88  = 0x3D48000E;
@@ -243,7 +250,9 @@ void func_800D8FEC(SHL_WORK *wp)
     wp->flags_0 |= 2;
 }
 
-sint16 func_800D90B0(SHL_WORK *wp)
+// Map collision: on the floor (0x1000) the bomb stops when slow, otherwise bounces at 160/256 and
+// halves its horizontal speed; smoke and sound, velocity reflected. Returns 1 when it stopped.
+sint16 shl05_map_bounce(SHL_WORK *wp)
 {
     SHL05_FX *fx;
     sint32 hit;
@@ -252,7 +261,7 @@ sint16 func_800D90B0(SHL_WORK *wp)
 
     stop         = 0;
     wp->value_74 = 1;
-    func_800D94C0(wp);
+    shl05_player_dist_set(wp);
     hit = Scr_collision_check(wp);
     if (hit != 0)
     {
@@ -320,7 +329,8 @@ sint16 func_800D90B0(SHL_WORK *wp)
     return stop;
 }
 
-void func_800D935C(SHL_WORK *wp)
+// Adds the acceleration, clamps each velocity axis to 0x6000 and moves fpos.
+void shl05_pos_update(SHL_WORK *wp)
 {
     wp->vel.vx += wp->ax;
     wp->vel.vy += wp->ay;
@@ -358,7 +368,8 @@ void func_800D935C(SHL_WORK *wp)
     wp->pos.vz = wp->pos.vz;
 }
 
-void func_800D9450(SHL_WORK *wp, SHL_FX *fx)
+// Sets fx up as an Effect_explosion (effect 0x80) at the bomb, bigger at the higher level.
+void shl05_explosion_set(SHL_WORK *wp, SHL_FX *fx)
 {
     fx->routine_0 = 5;
     fx->kind_2    = 0x80;
@@ -375,22 +386,24 @@ void func_800D9450(SHL_WORK *wp, SHL_FX *fx)
     fx->pos_38 = wp->pos;
 }
 
-void func_800D94C0(SHL_WORK *wp)
+// Stores the bomb's distance to the player, scaled to 0..0x80, in shl05_player_dist.
+void shl05_player_dist_set(SHL_WORK *wp)
 {
     uint32 d;
 
-    d = func_800D9508(&Player_work.pos, &wp->pos);
+    d = shl05_vec_distance(&Player_work.pos, &wp->pos);
     if (d < 0x1C00)
     {
-        D_800D9600 = d >> 6;
+        shl05_player_dist = d >> 6;
     }
     else
     {
-        D_800D9600 = 0x80;
+        shl05_player_dist = 0x80;
     }
 }
 
-sint32 func_800D9508(SVECTOR *a, SVECTOR *b)
+// Distance between two points.
+sint32 shl05_vec_distance(SVECTOR *a, SVECTOR *b)
 {
     sint32 dx;
     sint32 dy;
@@ -402,6 +415,8 @@ sint32 func_800D9508(SVECTOR *a, SVECTOR *b)
     return SquareRoot0(dx * dx + dy * dy + dz * dz);
 }
 
+// Sets fx up as effect 0x19 at the bomb (when it lands where Game_work.value_50 is 11 and
+// y is -1; what that effect is is still unknown).
 void func_800D9574(SHL_WORK *wp, SHL_FX *fx)
 {
     fx->routine_0 = 1;

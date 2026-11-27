@@ -136,3 +136,7 @@ stcom40_chest_model = 0x80112470;
 stcom40_lid_angle_tbl = 0x8011247C;
 stcom40_box_tbl = 0x8011248C;
 stcom40_box_model = 0x8011249C;
+
+// Named after exact twins (tools/propagate_names.py).
+st0d_slot_tbl_set = 0x80100184; // type:func
+st0d_room_reset = 0x80100358; // type:func

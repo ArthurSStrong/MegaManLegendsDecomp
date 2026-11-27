@@ -992,9 +992,9 @@ void func_8010C37C(ST05_GUARD *wp);
 extern ST05_ACTOR_FUNC D_80131820[];
 void func_80116E8C(ST05_ACTOR *wp);
 
-void func_80126D98(STAGE_SHOT *wp);
-void func_80126F10(STAGE_SHOT *wp);
-void func_80127054(STAGE_SHOT *wp, sint32 arg);
+void st05_shl02_main(STAGE_SHOT *wp);
+void st05_shl02_atari_set(STAGE_SHOT *wp);
+void st05_shl02_hit_effect_set(STAGE_SHOT *wp, sint32 arg);
 
 sint32 SquareRoot0(sint32 v);
 sint32 st05_calc_distance(STCOM_SVECTOR *a, STCOM_SVECTOR *b);
@@ -1058,7 +1058,7 @@ typedef struct
 void Homing_target_clear(sint32 bit);
 sint16 Camera_pitch_get(void);
 sint32 Player_weapon_dist_calc(void *player, sint32 arg);
-void func_80126990(ST05_SHL *wp);
+void st05_shl02_init(ST05_SHL *wp);
 
 extern ST05_ACTOR_FUNC D_80131974[];
 

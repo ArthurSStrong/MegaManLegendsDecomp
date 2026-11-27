@@ -227,3 +227,6 @@ stcom34_move_tbl = 0x80110C10;
 stcom39_func_0000 = 0x8010859C; // type:func
 stcom39_func_0008 = 0x801085A4; // type:func
 stcom39_func_0010 = 0x801085AC; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st0e_slot_tbl_set = 0x8010010C; // type:func

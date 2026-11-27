@@ -239,3 +239,10 @@ stcom38_E2_0000 = 0x80114ED8;
 stcom39_func_0000 = 0x80100DD0; // type:func
 stcom39_func_0008 = 0x80100DD8; // type:func
 stcom39_func_0010 = 0x80100DE0; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st0a_slot_tbl_set = 0x80100314; // type:func
+st0a_shl02_init = 0x801131C4; // type:func
+st0a_shl02_main = 0x801135CC; // type:func
+st0a_shl02_atari_set = 0x80113744; // type:func
+st0a_shl02_hit_effect_set = 0x80113888; // type:func

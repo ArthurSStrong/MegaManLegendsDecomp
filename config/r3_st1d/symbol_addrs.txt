@@ -181,3 +181,6 @@ st1d_stcom16_die = 0x8010F454; // type:func
 st1d_stcom16_vanish_init = 0x8010F5DC; // type:func
 st1d_stcom16_vanish_turn = 0x8010F690; // type:func
 st1d_stcom16_ground_check = 0x8010F890; // type:func
+
+// Named after exact twins (tools/propagate_names.py).
+st1d_slot_tbl_set = 0x80100288; // type:func
